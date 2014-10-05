@@ -1,0 +1,7 @@
+<Tiles>
+	<Tile name="PlainFloor" id="1" code="." character="." color="bfbfbf"></Tile>
+	<Tile name="PlainWall" id="2" code="#" character="#" color="808080"></Tile>
+	<Tile name="Tree" id="3" code="T" character="T" color="007f00"></Tile>
+	<Tile name="Trawa" id="4" code="," character="." color="007f00"></Tile>
+	<Tile name="Dirt" id="5" code="-" character="." color="3f1f00"></Tile>
+</Tiles>
