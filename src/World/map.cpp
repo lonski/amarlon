@@ -30,7 +30,7 @@ bool Map::isInFov(u32 x, u32 y)
 {
   bool inFov = codMap.isInFov(x,y);
 
-  //if (inFov) getTile(x,y).explored = true;
+  if (inFov) getTile(x,y).explored = true;
 
   return inFov;
 }
@@ -40,14 +40,21 @@ bool Map::isBlocked(u32 x, u32 y)
   return !codMap.isWalkable(x,y);
 }
 
-bool Map::render(TCODConsole *console)
+void Map::render(TCODConsole *console)
 {
   for(u32 y = 0; y < _height; ++y)
   {
     for(u32 x = 0; x < _width; ++x)
     {
-      console->setChar(x, y, getChar(x, y) );
-      console->setCharForeground(x,y,getColor(x,y));
+      bool inFov = isInFov(x,y);
+      bool explored = isExplored(x,y);
+
+      if (inFov || explored)
+      {
+        TCODColor col = ( inFov ? getColor(x,y) : (getColor(x,y) * 0.6));
+        console->setChar(x, y, getChar(x, y) );
+        console->setCharForeground(x,y,col);
+      }
     }
   }
 }

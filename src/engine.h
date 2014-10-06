@@ -2,22 +2,29 @@
 #define ENGINE_H
 
 #include <libtcod.hpp>
+#include "CommandExecutor.h"
 
 class Map;
+class Actor;
 
 class Engine
 {
 public:
+  static int FovRadius;
+
   Engine();
 
   void render();
+  void processKey(TCOD_key_t& key);
 
   Map *currentMap() const;
   void setCurrentMap(Map *currentMap);
 
 private:
-  Map* _currentMap;
+  CommandExecutor cmd;
   TCODConsole* _console;
+  Map* _currentMap;
+  Actor* _player;
 
 };
 

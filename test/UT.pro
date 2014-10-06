@@ -23,7 +23,11 @@ SOURCES += main.cpp \
     ../src/DataGateways/MapGateway.cpp \
     ../src/utils.cpp \
     UtilsTest.cpp \
-    ../src/DataGateways/TileDB.cpp
+    ../src/DataGateways/TileDB.cpp \
+    CommandExecutorTest.cpp \
+    ../src/CommandExecutor.cpp \
+    ActorTest.cpp \
+    ../src/Actor/actor.cpp
 
 HEADERS += \
     ../src/DataGateways/DataGateway.h \
@@ -34,4 +38,6 @@ HEADERS += \
     ../include/xml/rapidxml_print.hpp \
     ../include/xml/rapidxml_utils.hpp \
     ../src/utils.h \
-    ../src/DataGateways/TileDB.h
+    ../src/DataGateways/TileDB.h \
+    ../src/CommandExecutor.h \
+    ../src/Actor/actor.h

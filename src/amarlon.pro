@@ -10,7 +10,11 @@ SOURCES += main.cpp \
     DataGateways/MapGateway.cpp \
     engine.cpp \
     utils.cpp \
-    DataGateways/TileDB.cpp
+    DataGateways/TileDB.cpp \
+    CommandExecutor.cpp \
+    Actor/actor.cpp \
+    Commands/command.cpp \
+    Commands/CmdMove.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -20,7 +24,11 @@ HEADERS += \
     World/TileType.h \
     engine.h \
     utils.h \
-    DataGateways/TileDB.h
+    DataGateways/TileDB.h \
+    CommandExecutor.h \
+    Actor/actor.h \
+    Commands/command.h \
+    Commands/CmdMove.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw

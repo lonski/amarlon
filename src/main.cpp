@@ -12,13 +12,17 @@ int main()
   TCODConsole::initRoot(screenWidth,screenHeight,"Amarlon",false);
 
   Engine engine;
+  TCOD_key_t lastKey;
+
+  //temp init
   Map::Gateway.loadMaps("d:/maps_saved.xml");
   engine.setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
 
   while ( !TCODConsole::isWindowClosed() )
   {
+    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL);
+    engine.processKey(lastKey);
     engine.render();
-    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,NULL,NULL);
     TCODConsole::flush();
   }
 

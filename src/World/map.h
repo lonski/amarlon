@@ -35,7 +35,7 @@ public:
   bool isInFov(u32 x, u32 y);
   bool isBlocked(u32 x, u32 y);
 
-  bool render(TCODConsole* console);
+  void render(TCODConsole* console);
 
   void computeFov(u32 x, u32 y, int radius);
   void fill(std::string tilesStr);
