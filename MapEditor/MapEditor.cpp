@@ -4,6 +4,12 @@
 #include "QFileDialog"
 #include <iostream>
 #include <fstream>
+#include "xml/rapidxml_print.hpp"
+#include "World/map.h"
+#include <QDebug>
+#include "Actor/actor.h"
+
+using namespace rapidxml;
 
 MapEditor::MapEditor(QWidget *parent)
   : QMainWindow(parent)
@@ -37,9 +43,9 @@ MapEditor::~MapEditor()
   delete ui;
 }
 
-void MapEditor::on_actionSave_triggered()
+QString MapEditor::dumpTilesToString()
 {
-  QString mapStr = "";
+  QString mapStr;
 
   for(int row = 0; row < rows; ++row)
   {
@@ -51,15 +57,72 @@ void MapEditor::on_actionSave_triggered()
     mapStr += "\n";
   }
 
-  //save
-  QString fileName = QFileDialog::getSaveFileName(this, "Save", "", "Amarlon txt map (*.txt);;All Files (*)");
-  QFile file(fileName);
-  file.open(QIODevice::WriteOnly);
-  file.write(mapStr.toStdString().c_str(), mapStr.size());
-  file.close();
+  if (mapStr.size())
+    mapStr.remove(mapStr.size()-1, 1);
 
-  fileName += "dsc";
-  mapDsc.save(fileName.toStdString());
+  return mapStr;
+}
+
+void MapEditor::on_actionSave_triggered()
+{
+  QString fileName = QFileDialog::getSaveFileName(this, "Save", "", "XML (*.xml);;All Files (*)");
+
+
+  xml_document<> doc;
+  xml_node<>* mapsRoot = doc.allocate_node(node_element,"Maps");
+  doc.append_node(mapsRoot);
+
+  //map node
+  xml_node<>* mapNode = doc.allocate_node(node_element,"Map");
+  mapsRoot->append_node(mapNode);
+
+  std::string mapId = std::to_string((int)ui->mapId->currentIndex());
+  xml_attribute<>* atrMapId = doc.allocate_attribute("id", doc.allocate_string(mapId.c_str(), mapId.size()));
+  mapNode->append_attribute( atrMapId );
+
+  std::string mapWidth = "100";
+  xml_attribute<>* atrMapW = doc.allocate_attribute("width", doc.allocate_string(mapWidth.c_str(), mapWidth.size()));
+  mapNode->append_attribute( atrMapW );
+
+  std::string mapHeight = "60";
+  xml_attribute<>* atrMapH = doc.allocate_attribute("height", doc.allocate_string(mapHeight.c_str(), mapHeight.size()));
+  mapNode->append_attribute( atrMapH );
+
+  //tiles
+  QString mapStr = dumpTilesToString();
+  xml_node<>* tilesNode = doc.allocate_node(node_element, "Tiles", doc.allocate_string(mapStr.toStdString().c_str(), mapStr.size()) );
+  mapNode->append_node(tilesNode);
+
+  //actors
+  xml_node<>* actorsRoot = doc.allocate_node(node_element, "Actors");
+  mapNode->append_node(actorsRoot);
+
+  for (auto aIter = _actors.begin(); aIter != _actors.end(); ++aIter)
+  {
+    ActorData& data = *aIter;
+
+    xml_node<>* actorNode = doc.allocate_node(node_element,"Actor");
+    actorsRoot->append_node(actorNode);
+
+    //id
+    std::string aIdStr = std::to_string((int)data.id);
+    xml_attribute<>* atrId = doc.allocate_attribute("id", doc.allocate_string(aIdStr.c_str(), aIdStr.size()));
+    actorNode->append_attribute( atrId );
+
+    //pos
+    std::string posX = std::to_string(data.x);
+    std::string posY = std::to_string(data.y);
+
+    xml_attribute<>* atrX = doc.allocate_attribute("x", doc.allocate_string(posX.c_str(), posX.size()));
+    xml_attribute<>* atrY = doc.allocate_attribute("y", doc.allocate_string(posY.c_str(), posY.size()));
+
+    actorNode->append_attribute( atrX );
+    actorNode->append_attribute( atrY );
+  }
+
+  std::ofstream file(fileName.toStdString());
+  file << doc;
+  file.close();
 }
 
 void MapEditor::on_map_itemChanged(QTableWidgetItem *item)
@@ -72,60 +135,14 @@ void MapEditor::on_map_itemChanged(QTableWidgetItem *item)
 void MapEditor::on_map_cellClicked(int row, int column)
 {
   ui->aType->setCurrentIndex(-1);
-
-  for (auto it = mapDsc.Actors.begin(); it != mapDsc.Actors.end(); ++it)
-  {
-    ActorDescription& d = *it;
-    if (d.x == column && d.y == row)
-    {
-      ui->aType->setCurrentIndex((int)d.type);
-      break;
-    }
-  }
-
   ui->posX->setValue(column);
   ui->posY->setValue(row);
-}
 
-void MapEditor::on_pushButton_clicked()
-{
-    bool exist = false;
-    for (auto it = mapDsc.Actors.begin(); it != mapDsc.Actors.end(); ++it)
-    {
-      ActorDescription& d = *it;
-      if (d.x == ui->posX->value() && d.y == ui->posY->value())
-      {
-        d.type = (ActorType)ui->aType->currentIndex();
-        d.x = ui->posX->value();
-        d.y = ui->posY->value();
-        exist = true;
-        break;
-      }
-    }
-
-    if (!exist)
-    {
-      ActorDescription actor;
-      actor.type = (ActorType)ui->aType->currentIndex();
-      actor.x = ui->posX->value();
-      actor.y = ui->posY->value();
-      mapDsc.Actors.push_back(actor);
-      ui->map->item(ui->posY->value(), ui->posX->value())->setBackground( QBrush(QColor(0xFF, 0, 0)) );
-    }
-
-    ui->map->clearSelection();
-}
-
-void MapEditor::on_pushButton_2_clicked()
-{
-  for (auto it = mapDsc.Actors.begin(); it != mapDsc.Actors.end(); ++it)
+  for (auto a = _actors.begin(); a != _actors.end(); ++a)
   {
-    ActorDescription& d = *it;
-    if (d.x == ui->posX->value() && d.y == ui->posY->value())
+    if (a->x == column && a->y == row)
     {
-      ui->aType->setCurrentIndex(-1);
-      ui->map->item(ui->posY->value(), ui->posX->value())->setBackground( QBrush(QColor(0xFF, 0xFF, 0xFF)) );
-      mapDsc.Actors.erase(it);
+      ui->aType->setCurrentIndex((int)a->id);
       break;
     }
   }
@@ -133,30 +150,76 @@ void MapEditor::on_pushButton_2_clicked()
 
 void MapEditor::on_actionLoad_triggered()
 {
-  QString fileName = QFileDialog::getOpenFileName(this, "Load", "", "Amarlon txt map (*.txt);;All Files (*)");
+  //QString fileName = QFileDialog::getOpenFileName(this, "Load", "", "All Files (*)");
 
-  //read map
-  std::ifstream ifs(fileName.toStdString());
-  std::string line;
-  int row = 0;
-  while(std::getline(ifs, line))
+  Map::Tiles.loadTiles("d:/tiles.xml");
+  Map::Gateway.loadMaps("d:/maps.xml");
+  Actor::DB.loadActors("d:/actors.xml");
+
+  currentMap = Map::Gateway.fetch(MapId::GameStart);
+
+  std::string mapStr = currentMap->tilesToStr();
+
+  qDebug() << mapStr.c_str();
+
+//  std::string line;
+//  int row = 0;
+//  while(std::getline(ifs, line))
+//  {
+//    for (size_t i = 0; i < line.size(); ++i)
+//    {
+//      ui->map->setItem(row, i, new QTableWidgetItem( QString(line[i]) ));
+//    }
+//    ++row;
+//  }
+
+  int y = 0;
+  int x = 0;
+  for (auto it = mapStr.begin(); it != mapStr.end(); ++it)
   {
-    for (size_t i = 0; i < line.size(); ++i)
+    if (*it == '\n')
     {
-      ui->map->setItem(row, i, new QTableWidgetItem( QString(line[i]) ));
+      ++y;
+      x = 0;
     }
-    ++row;
+    else
+    {
+      ui->map->setItem(y, x, new QTableWidgetItem( QString( *it ) ));
+      ++x;
+    }
   }
-  ifs.close();
 
-  //read description
-  mapDsc.Actors.clear();
-  mapDsc.load(fileName.toStdString() + "dsc");
+}
 
-  for (auto it = mapDsc.Actors.begin(); it != mapDsc.Actors.end(); ++it)
+void MapEditor::on_saveActor_clicked()
+{
+  if (ui->aType->currentIndex() > 0)
   {
-    ActorDescription& d = *it;
-    ui->map->item(d.y, d.x)->setBackground( QBrush(QColor(0xFF, 0x0, 0x0)) );
-  }
+    ActorData data;
+    data.x = ui->posX->value();
+    data.y = ui->posY->value();
+    data.id = (ActorType)ui->aType->currentIndex();
 
+    _actors.push_back(data);
+
+    ui->map->item(data.y, data.x)->setBackgroundColor(Qt::red);
+    ui->map->clearSelection();
+  }
+}
+
+//remove actor
+void MapEditor::on_pushButton_clicked()
+{
+  int column = ui->posX->value();
+  int row = ui->posY->value();
+
+  for (auto a = _actors.begin(); a != _actors.end(); ++a)
+  {
+    if (a->x == column && a->y == row)
+    {
+      _actors.erase(a);
+      ui->map->item(row, column)->setBackgroundColor(Qt::white);
+      break;
+    }
+  }
 }

@@ -43,47 +43,52 @@
        </property>
        <item>
         <property name="text">
+         <string>Null</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Player</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Orc</string>
+         <string>Ork</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Troll</string>
+         <string>Drzwi_Zamkniete</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>HealthPotion</string>
+         <string>Drzwi_Otwarte</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>LightingBoltScroll</string>
+         <string>Lozko</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>FireballScroll</string>
+         <string>Szafka</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>ConfusionScroll</string>
+         <string>Szafa</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Door</string>
+         <string>Fotel</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>OpenDoor</string>
+         <string>Piec</string>
         </property>
        </item>
       </widget>
@@ -146,30 +151,76 @@
         <string>Y</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="saveActor">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>100</y>
-         <width>101</width>
+         <width>91</width>
          <height>23</height>
         </rect>
        </property>
        <property name="text">
-        <string>Save</string>
+        <string>Save actor</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>130</y>
-         <width>101</width>
+         <width>91</width>
          <height>23</height>
         </rect>
        </property>
        <property name="text">
-        <string>Clear</string>
+        <string>Remove actor</string>
+       </property>
+      </widget>
+      <widget class="Line" name="line">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>160</y>
+         <width>141</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="mapId">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>200</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Null</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartGame</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>180</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Map id</string>
        </property>
       </widget>
      </widget>

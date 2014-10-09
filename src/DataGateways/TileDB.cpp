@@ -8,7 +8,7 @@ using namespace rapidxml;
 
 TileDB::TileDB()
 {
-  loadTiles("d:/tiles.xml");
+  //loadTiles("d:/tiles.xml");
 }
 
 TileType TileDB::getType(char ch)
@@ -78,6 +78,7 @@ bool TileDB::loadTiles(string fn)
   {
     vector<char> buffer;
     buffer.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
+    buffer.push_back('\0');
 
     xml_document<> doc;
     doc.parse<0>(&buffer[0]);

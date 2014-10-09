@@ -9,6 +9,8 @@ enum class CommandId
 {
   Null,
   Move,
+  OpenClose,
+  FullScreen,
   End
 };
 

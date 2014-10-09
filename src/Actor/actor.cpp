@@ -1,12 +1,12 @@
 #include "actor.h"
 #include "World/map.h"
 
-Actor::Actor(const std::string &name, char ch, int x, int y, TCODColor color)
-  : _x(x)
+ActorDB Actor::DB;
+
+Actor::Actor(ActorType aId, int x, int y)
+  : _id(aId)
+  , _x(x)
   , _y(y)
-  , _ch(ch)
-  , _name(name)
-  , _color(color)
 {
 }
 
@@ -16,9 +16,40 @@ void Actor::move(int dx, int dy)
   _y += dy;
 }
 
+void Actor::morph(ActorType newType)
+{
+  _id = newType;
+}
+
+bool Actor::isAlive() const
+{
+  //TODO
+  return ( getChar() == '@' );
+}
+
+bool Actor::isFovOnly() const
+{
+  return Actor::DB.isFovOnly(_id);
+}
+
+bool Actor::isTransparent() const
+{
+  return Actor::DB.isTransparent(_id);
+}
+
+bool Actor::blocks() const
+{
+  return Actor::DB.blocks(_id);;
+}
+
+ActorType Actor::getId() const
+{
+  return _id;
+}
+
 std::string Actor::getName() const
 {
-  return _name;
+  return Actor::DB.getName(_id);;
 }
 
 int Actor::getX() const
@@ -41,12 +72,12 @@ void Actor::setY(int y)
 }
 TCODColor Actor::getColor() const
 {
-  return _color;
+  return Actor::DB.getColor(_id);;
 }
 
-char Actor::getChar() const
+unsigned char Actor::getChar() const
 {
-  return _ch;
+  return Actor::DB.getChar(_id);;
 }
 
 

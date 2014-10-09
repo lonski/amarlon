@@ -7,7 +7,7 @@ int Engine::FovRadius = 20;
 Engine::Engine()
   : _console(TCODConsole::root)
 {
-  _player = new Actor("player",'@', 40, 40);
+  _player = new Actor(ActorType::Player, 40, 40);
 }
 
 void Engine::render()

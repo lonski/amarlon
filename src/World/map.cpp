@@ -1,14 +1,15 @@
 #include "map.h"
+#include "Actor/actor.h"
 #include <iostream>
 
 TileDB Map::Tiles;
 MapGateway Map::Gateway;
 
 Map::Map(u32 width, u32 height, MapId id)
-  : _width(width)
+  : _id(id)
+  , _width(width)
   , _height(height)
   , codMap(width, height)
-  , _id(id)
 {
   for (u32 y = 0; y < height; ++y)
   {
@@ -21,12 +22,12 @@ Map::Map(u32 width, u32 height, MapId id)
   }  
 }
 
-bool Map::isExplored(u32 x, u32 y)
+bool Map::isExplored(int x, int y)
 {
   return getTile(x,y).explored;
 }
 
-bool Map::isInFov(u32 x, u32 y)
+bool Map::isInFov(int x, int y)
 {
   bool inFov = codMap.isInFov(x,y);
 
@@ -35,13 +36,58 @@ bool Map::isInFov(u32 x, u32 y)
   return inFov;
 }
 
-bool Map::isBlocked(u32 x, u32 y)
+bool Map::isBlocked(int x, int y)
 {
-  return !codMap.isWalkable(x,y);
+  bool terrianBlocks = !codMap.isWalkable(x,y);
+  bool actorBlocks = false;
+
+  for(auto aIter = _actors.begin(); aIter != _actors.end(); ++aIter)
+  {
+    Actor* a = *aIter;
+    if (a->getX() == x && a->getY() == y && a->blocks())
+    {
+      actorBlocks = true;
+      break;
+    }
+  }
+
+  return terrianBlocks || actorBlocks;
+}
+
+void Map::addActor(Actor *actor)
+{
+  if (actor->isAlive())
+  {
+    _actors.push_back(actor);
+  }
+  else
+  {
+    _actors.push_front(actor);
+  }
+
+  int x( actor->getX() );
+  int y( actor->getY() );
+  if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
+  {
+    codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
+  }
+}
+
+Actor *Map::getActor(int x, int y)
+{
+  for (auto a = _actors.begin(); a != _actors.end(); ++a)
+  {
+    Actor *actor = *a;
+    if (actor->getX() == x && actor->getY() == y)
+      return actor;
+  }
+
+  return nullptr;
 }
 
 void Map::render(TCODConsole *console)
 {
+  //render tiles
   for(u32 y = 0; y < _height; ++y)
   {
     for(u32 x = 0; x < _width; ++x)
@@ -57,9 +103,25 @@ void Map::render(TCODConsole *console)
       }
     }
   }
+
+  //render actors
+  for (auto aIter = _actors.begin(); aIter != _actors.end(); ++aIter)
+  {
+    Actor* actor = *aIter;
+
+    bool inFov = isInFov(actor->getX(), actor->getY());
+    bool onlyInFov = actor->isFovOnly();
+    bool explored = isExplored(actor->getX(), actor->getY());
+
+    if (inFov || (!onlyInFov && explored) )
+    {
+      console->putChar(actor->getX(), actor->getY(), actor->getChar());
+      console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());      
+    }
+  }
 }
 
-void Map::computeFov(u32 x, u32 y, int radius)
+void Map::computeFov(int x, int y, int radius)
 {
   codMap.computeFov(x,y,radius);
 }

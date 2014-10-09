@@ -1,5 +1,7 @@
 #include "MapGateway.h"
 #include "World/map.h"
+#include "Actor/ActorType.h"
+#include "Actor/actor.h"
 #include <xml/rapidxml_print.hpp>
 #include <fstream>
 #include <iostream>
@@ -38,15 +40,31 @@ void MapGateway::loadMaps(string fn)
   xml_node<>* mapNode = maps->first_node("Map");
   while(mapNode != nullptr)
   {
-    u32 x = stoi(mapNode->first_attribute("width")->value());
-    u32 y = stoi(mapNode->first_attribute("height")->value());
+    int x = stoi(mapNode->first_attribute("width")->value());
+    int y = stoi(mapNode->first_attribute("height")->value());
     MapId id = (MapId)stoi(mapNode->first_attribute("id")->value());
 
     xml_node<>* tilesNode = mapNode->first_node("Tiles");
     string fillStr = tilesNode->value();
-
-    Map* map = new Map(x, y, id);
+    Map* map = new Map(x, y, id);    
     map->fill( fillStr );
+
+    xml_node<>* actorsRoot = mapNode->first_node("Actors");
+    if (actorsRoot != nullptr)
+    {
+      xml_node<>* actorNode = actorsRoot->first_node("Actor");
+      while ( actorNode != nullptr )
+      {
+        int aX = stoi(actorNode->first_attribute("x")->value());
+        int aY = stoi(actorNode->first_attribute("y")->value());
+        ActorType aId = (ActorType)stoi(actorNode->first_attribute("id")->value());
+
+        map->addActor( new Actor(aId, aX, aY) );
+
+        actorNode = actorNode->next_sibling();
+      }
+    }
+
     _maps[id] = map;
 
     mapNode = mapNode->next_sibling();
@@ -84,6 +102,8 @@ void MapGateway::saveMaps(string fn)
     mapNode->append_attribute( aId );
 
     string strTiles = map->tilesToStr();
+
+    std::cout << strTiles.c_str();
 
     xml_node<>* tiles = doc.allocate_node(node_element, "Tiles", doc.allocate_string(strTiles.c_str()) );
     mapNode->append_node(tiles);

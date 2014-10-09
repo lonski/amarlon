@@ -3,22 +3,29 @@
 
 #include <string>
 #include <libtcod.hpp>
+#include "ActorType.h"
+#include "DataGateways/ActorDB.h"
 
 class Map;
 
 class Actor
 {
 public:
-  Actor(const std::string& name,
-        char ch,
-        int getX = 0,
-        int getY = 0,
-        TCODColor getColor = TCODColor::white);
+  static ActorDB DB;
+
+  Actor(ActorType aId, int x = 0, int y = 0);
 
   void move(int dx, int dy);
+  void morph(ActorType newType);
+
+  bool isAlive() const;
+  bool isFovOnly() const;
+  bool isTransparent() const;
+  bool blocks() const;
 
   //read only data
-  char getChar() const;  
+  ActorType getId() const;
+  unsigned char getChar() const;
   TCODColor getColor() const;
   std::string getName() const;
   //mutable data
@@ -28,10 +35,8 @@ public:
   void setY(int getY);
 
 private:
+  ActorType _id;
   int _x, _y;
-  char _ch;
-  std::string _name;
-  TCODColor _color;
 
 };
 

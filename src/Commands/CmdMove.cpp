@@ -29,6 +29,10 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key, Actor* executor, Map* map)
     if ( !blocked )
     {
       executor->move(dx, dy);
+      if (!executor->isTransparent())
+      {
+        //TODO: manage transparency
+      }
     }
     else
     {

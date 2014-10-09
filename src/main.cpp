@@ -9,14 +9,18 @@ int main()
   const int screenWidth = 100;
   const int screenHeight = 60;
 
-  TCODConsole::initRoot(screenWidth,screenHeight,"Amarlon",false);
+  TCODConsole::initRoot(screenWidth,screenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
 
   Engine engine;
   TCOD_key_t lastKey;
 
   //temp init
-  Map::Gateway.loadMaps("d:/maps_saved.xml");
+  Map::Tiles.loadTiles("d:/tiles.xml");
+  Actor::DB.loadActors("d:/actors.xml");
+  Map::Gateway.loadMaps("d:/maps.xml");
+
   engine.setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
+  //~~
 
   while ( !TCODConsole::isWindowClosed() )
   {

@@ -14,7 +14,10 @@ SOURCES += main.cpp \
     CommandExecutor.cpp \
     Actor/actor.cpp \
     Commands/command.cpp \
-    Commands/CmdMove.cpp
+    Commands/CmdMove.cpp \
+    DataGateways/ActorDB.cpp \
+    Commands/CmdOpen.cpp \
+    Commands/CmdFullscreen.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -28,11 +31,16 @@ HEADERS += \
     CommandExecutor.h \
     Actor/actor.h \
     Commands/command.h \
-    Commands/CmdMove.h
+    Commands/CmdMove.h \
+    DataGateways/ActorDB.h \
+    Actor/ActorType.h \
+    Commands/CmdOpen.h \
+    Commands/CmdFullscreen.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw-debug
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw
 
 INCLUDEPATH += $$PWD/../include
+INCLUDEPATH += $$PWD/../include/libtcod
 DEPENDPATH += $$PWD/../include

@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <vector>
+#include <list>
 #include <stdexcept>
 #include <libtcod.hpp>
 #include "MapId.h"
@@ -9,6 +10,8 @@
 #include "DataGateways/MapGateway.h"
 
 typedef unsigned int u32;
+
+class Actor;
 
 struct Tile
 {
@@ -25,19 +28,22 @@ class Map
 public:
   typedef std::vector< std::vector<Tile> > TileMatrix;
   typedef std::vector<Tile> TileRow;
+  typedef std::list<Actor*> ActorArray;
 
   static TileDB Tiles;
   static MapGateway Gateway;
 
   Map(u32 width, u32 height, MapId id = MapId::Null);
 
-  bool isExplored(u32 x, u32 y);
-  bool isInFov(u32 x, u32 y);
-  bool isBlocked(u32 x, u32 y);
+  bool isExplored(int x, int y);
+  bool isInFov(int x, int y);
+  bool isBlocked(int x, int y);
 
+  void addActor(Actor* actor);
+  Actor* getActor(int x, int y);
   void render(TCODConsole* console);
 
-  void computeFov(u32 x, u32 y, int radius);
+  void computeFov(int x, int y, int radius);
   void fill(std::string tilesStr);
   std::string tilesToStr();
 
@@ -53,10 +59,11 @@ public:
 
 
 private:
+  MapId _id;
   u32 _width, _height;
   TileMatrix _tiles;
   TCODMap codMap;
-  MapId _id;
+  ActorArray _actors;
 
   Tile& getTile(u32 x, u32 y);
   void validateMapCoords(u32 x, u32 y);
