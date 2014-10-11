@@ -1,13 +1,20 @@
 #include "actor.h"
 #include "World/map.h"
+#include <iostream>
 
 ActorDB Actor::DB;
 
 Actor::Actor(ActorType aId, int x, int y)
-  : _id(aId)
+  : afContainer(nullptr)
+  , afPickable(nullptr)
+  , afDestrucible(nullptr)
+  , _id(aId)
   , _x(x)
   , _y(y)
 {
+  afContainer = Actor::DB.getContainer(aId);
+  afPickable = Actor::DB.getPickable(aId);
+  afDestrucible = Actor::DB.getDestrucible(aId);
 }
 
 void Actor::move(int dx, int dy)
@@ -23,8 +30,7 @@ void Actor::morph(ActorType newType)
 
 bool Actor::isAlive() const
 {
-  //TODO
-  return ( getChar() == '@' );
+  return  afDestrucible && afDestrucible->isAlive();
 }
 
 bool Actor::isFovOnly() const

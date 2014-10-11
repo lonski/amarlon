@@ -1,6 +1,7 @@
 #include "map.h"
 #include "Actor/actor.h"
 #include <iostream>
+#include <algorithm>
 
 TileDB Map::Tiles;
 MapGateway Map::Gateway;
@@ -73,16 +74,48 @@ void Map::addActor(Actor *actor)
   }
 }
 
-Actor *Map::getActor(int x, int y)
+Actor *Map::getFirstActor(int x, int y)
 {
-  for (auto a = _actors.begin(); a != _actors.end(); ++a)
+  auto aIter = std::find_if(_actors.begin(), _actors.end(), [&](Actor* a)
   {
-    Actor *actor = *a;
-    if (actor->getX() == x && actor->getY() == y)
-      return actor;
+    return (a->getX() == x && a->getY() == y);
+  });
+
+  return ( aIter == _actors.end() ? nullptr : *aIter );
+}
+
+std::vector<Actor *> Map::getActors(int x, int y, bool (*filterFun)(Actor*) )
+{
+  std::vector<Actor*> r;
+
+  std::for_each(_actors.begin(), _actors.end(), [&](Actor* a)
+  {
+    if (a->getX() == x && a->getY() == y)
+    {
+      if ( filterFun == nullptr || filterFun(a))
+        r.push_back(a);
+    }
+  });
+
+  return r;
+}
+
+bool Map::removeActor(Actor* toRemove)
+{
+  auto aIter = std::find(_actors.begin(), _actors.end(), toRemove);
+  bool found = (aIter != _actors.end());
+
+  if (found)
+  {
+    _actors.erase(aIter);
   }
 
-  return nullptr;
+  return found;
+}
+
+const Map::ActorArray &Map::actors() const
+{
+  return _actors;
 }
 
 void Map::render(TCODConsole *console)
@@ -114,11 +147,24 @@ void Map::render(TCODConsole *console)
     bool explored = isExplored(actor->getX(), actor->getY());
 
     if (inFov || (!onlyInFov && explored) )
-    {
+    {      
       console->putChar(actor->getX(), actor->getY(), actor->getChar());
       console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());      
     }
   }
+}
+
+void Map::updateActorCells()
+{
+  std::for_each(_actors.begin(), _actors.end(), [&](Actor* a){ updateActorCell(a); });
+}
+
+void Map::updateActorCell(Actor* actor)
+{
+  codMap.setProperties(actor->getX(),
+                       actor->getY(),
+                       actor->isTransparent(),
+                       codMap.isWalkable(actor->getX(), actor->getY()));
 }
 
 void Map::computeFov(int x, int y, int radius)

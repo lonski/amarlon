@@ -40,8 +40,14 @@ public:
   bool isBlocked(int x, int y);
 
   void addActor(Actor* actor);
-  Actor* getActor(int x, int y);
+  Actor* getFirstActor(int x, int y);
+  std::vector<Actor*> getActors(int x, int y, bool (*filterFun)(Actor *) = nullptr);
+  bool removeActor(Actor *toRemove);
+  const ActorArray& actors() const;
+
   void render(TCODConsole* console);
+  void updateActorCells();
+  void updateActorCell(Actor *actor);
 
   void computeFov(int x, int y, int radius);
   void fill(std::string tilesStr);

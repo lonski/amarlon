@@ -17,7 +17,16 @@ SOURCES += main.cpp \
     Commands/CmdMove.cpp \
     DataGateways/ActorDB.cpp \
     Commands/CmdOpen.cpp \
-    Commands/CmdFullscreen.cpp
+    Commands/CmdFullscreen.cpp \
+    Actor/ActorFeatures/container.cpp \
+    Commands/CmdInventory.cpp \
+    Actor/ActorFeatures/pickable.cpp \
+    Commands/CmdPick.cpp \
+    Utils/ItemPickerGui.cpp \
+    Utils/ItemPicker.cpp \
+    Commands/CmdDrop.cpp \
+    Utils/InventoryManager.cpp \
+    Actor/ActorFeatures/destrucible.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -35,7 +44,16 @@ HEADERS += \
     DataGateways/ActorDB.h \
     Actor/ActorType.h \
     Commands/CmdOpen.h \
-    Commands/CmdFullscreen.h
+    Commands/CmdFullscreen.h \
+    Actor/ActorFeatures/container.h \
+    Commands/CmdInventory.h \
+    Actor/ActorFeatures/pickable.h \
+    Commands/CmdPick.h \
+    Utils/ItemPickerGui.h \
+    Utils/ItemPicker.h \
+    Commands/CmdDrop.h \
+    Utils/InventoryManager.h \
+    Actor/ActorFeatures/destrucible.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw

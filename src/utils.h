@@ -47,4 +47,24 @@ static inline TCODColor strToColor(const std::string& str)
   return col;
 }
 
+static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
+{
+  bool handled = true;
+
+  switch(key.vk)
+  {
+    case TCODK_DOWN: dy++; break;
+    case TCODK_UP: dy--; break;
+    case TCODK_LEFT: dx--; break;
+    case TCODK_RIGHT: dx++; break;
+    case TCODK_KP7: dx--; dy--; break;
+    case TCODK_KP9: dx++; dy--; break;
+    case TCODK_KP1: dx--; dy++; break;
+    case TCODK_KP3: dx++; dy++; break;
+    default: handled = false; break;
+  }
+
+  return handled;
+}
+
 #endif // UTILS_H

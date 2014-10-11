@@ -2,6 +2,8 @@
 #include "utils.h"
 #include <fstream>
 #include <vector>
+#include "Actor/actor.h"
+#include <algorithm>
 
 using namespace std;
 using namespace rapidxml;
@@ -60,6 +62,50 @@ bool ActorDB::isTransparent(ActorType type)
   return a;
 }
 
+Container *ActorDB::getContainer(ActorType type)
+{
+  Container* cont = nullptr;
+
+  if (_containers.count(type))
+  {
+    ContainerDescription& dsc = _containers[type];
+    cont = new Container(dsc.maxSize);
+
+    std::for_each(dsc.content.begin(), dsc.content.end(), [&](ActorType id)
+    {
+      cont->add(new Actor(id));
+    });
+  }
+
+  return cont;
+}
+
+Pickable *ActorDB::getPickable(ActorType type)
+{
+  Pickable* pickable = nullptr;
+
+  if (_pickables.count(type))
+  {
+    //PickableDescription& dsc = _pickables[type];
+    pickable = new Pickable;
+  }
+
+  return pickable;
+}
+
+Destrucible *ActorDB::getDestrucible(ActorType type)
+{
+  Destrucible* dest = nullptr;
+
+  if (_destrucibles.count(type))
+  {
+    DestrucibleDescription& dsc = _destrucibles[type];
+    dest = new Destrucible(dsc.maxHp);
+  }
+
+  return dest;
+}
+
 bool ActorDB::loadActors(std::string fn)
 {
   bool success = false;
@@ -79,6 +125,7 @@ bool ActorDB::loadActors(std::string fn)
 
     while( actorNode != nullptr )
     {
+      // ===== ACTOR DESCRIPTION ===== //
       ActorDescription actorDsc;
       actorDsc.name = actorNode->first_attribute("name")->value();
 
@@ -98,6 +145,46 @@ bool ActorDB::loadActors(std::string fn)
       actorDsc.transparent = (bool)std::stoi( actorNode->first_attribute("transparent")->value() );
 
       _actors[id] = actorDsc;
+
+      // ===== CONTAINER DESCRIPTION ===== //
+      xml_node<>* containerNode = actorNode->first_node("Container");
+      if ( containerNode )
+      {
+        ContainerDescription contDsc;
+        contDsc.maxSize = std::stol(containerNode->first_attribute("maxSize")->value());
+
+        xml_node<>* contentNode = containerNode->first_node("Content");
+        while ( contentNode )
+        {
+          ActorType aid = (ActorType)std::stol( contentNode->first_attribute("aid")->value() );
+          contDsc.content.push_back( aid );
+
+          contentNode = contentNode->next_sibling();
+        }
+
+        _containers[id] = contDsc;
+      }
+
+      // ===== PICKABLE DESCRIPTION ===== //
+      xml_node<>* pickableNode = actorNode->first_node("Pickable");
+      if (pickableNode)
+      {
+        PickableDescription pickDsc;
+        _pickables[id] = pickDsc;
+      }
+
+      // ===== DESTRUCIBLE DESCRIPTION ===== //
+      xml_node<>* destNode = actorNode->first_node("Destrucible");
+      if (destNode)
+      {
+        DestrucibleDescription destDsc;
+
+        destDsc.maxHp = std::stof( destNode->first_attribute("maxHp")->value() );
+
+        _destrucibles[id] = destDsc;
+      }
+
+      //~~~~~ NEXT
       actorNode = actorNode->next_sibling();
     }
 

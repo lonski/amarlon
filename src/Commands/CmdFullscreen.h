@@ -7,7 +7,7 @@ class CmdFullscreen : public Command
 {
 public:
   CmdFullscreen();
-  bool accept(TCOD_key_t &key, Actor*, Map*);
+  bool accept(TCOD_key_t &key, Map* map, Actor* executor);
 
 };
 

@@ -5,6 +5,7 @@
 #include <xml/rapidxml_print.hpp>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 using namespace rapidxml;
 using namespace std;

@@ -7,6 +7,17 @@ int Engine::FovRadius = 20;
 Engine::Engine()
   : _console(TCODConsole::root)
 {
+}
+
+void Engine::init()
+{
+  //temp init
+  Map::Tiles.loadTiles("d:/tiles.xml");
+  Actor::DB.loadActors("d:/actors.xml");
+  Map::Gateway.loadMaps("d:/maps.xml");
+
+  setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
+
   _player = new Actor(ActorType::Player, 40, 40);
 }
 
@@ -25,7 +36,7 @@ void Engine::render()
 
 void Engine::processKey(TCOD_key_t &key)
 {
-  cmd.execute(key, _player, _currentMap);
+  CommandExecutor::execute(key, _currentMap, _player);
 }
 
 Map *Engine::currentMap() const

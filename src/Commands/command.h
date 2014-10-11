@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <libtcod.hpp>
+#include <iostream>
 #include "Actor/actor.h"
 #include "World/map.h"
 
@@ -11,6 +12,9 @@ enum class CommandId
   Move,
   OpenClose,
   FullScreen,
+  Inventory,
+  Pick,
+  Drop,
   End
 };
 
@@ -21,7 +25,7 @@ public:
   virtual ~Command() {}
   static Command* create(CommandId cmd);
 
-  virtual bool accept(TCOD_key_t& key, Actor* executor, Map* map) = 0;
+  virtual bool accept(TCOD_key_t &key, Map* map, Actor* executor) = 0;
 
 };
 

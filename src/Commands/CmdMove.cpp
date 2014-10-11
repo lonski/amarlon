@@ -1,42 +1,39 @@
 #include "CmdMove.h"
+#include "utils.h"
 
 CmdMoveOrAttack::CmdMoveOrAttack()
 {
 }
 
-bool CmdMoveOrAttack::accept(TCOD_key_t &key, Actor* executor, Map* map)
+bool CmdMoveOrAttack::accept(TCOD_key_t &key, Map* map, Actor* executor)
 {
-  bool accepted = true;
-
   int dx(0), dy(0);
-  switch(key.vk)
-  {
-    case TCODK_KP2: dy++; break;
-    case TCODK_KP8: dy--; break;
-    case TCODK_KP4: dx--; break;
-    case TCODK_KP6: dx++; break;
-    case TCODK_KP7: dx--; dy--; break;
-    case TCODK_KP9: dx++; dy--; break;
-    case TCODK_KP1: dx--; dy++; break;
-    case TCODK_KP3: dx++; dy++; break;
-    default: accepted = false; break;
-  }
+  bool accepted = handleDirectionKey(key, dx, dy);
 
   if ( accepted )
   {
-    bool blocked = map->isBlocked(executor->getX() + dx, executor->getY() + dy);
+    int targetX = executor->getX() + dx;
+    int targetY = executor->getY() + dy;
+    bool blocked = map->isBlocked(targetX, targetY);
 
     if ( !blocked )
     {
       executor->move(dx, dy);
-      if (!executor->isTransparent())
-      {
-        //TODO: manage transparency
-      }
     }
     else
     {
-      //TODO: attack
+      std::vector<Actor*> toAttack = map->getActors(targetX, targetY, [&](Actor* a) -> bool
+      {
+        return a->afDestrucible && a->afDestrucible->isAlive();
+      });
+
+      //attack
+      if (!toAttack.empty())
+      {
+        assert(toAttack.size() == 1);
+        Actor* enemy = toAttack[0];
+        // ...TODO attack
+      }
     }
   }
 

@@ -8,6 +8,7 @@
 #include "World/map.h"
 #include <QDebug>
 #include "Actor/actor.h"
+#include <QInputDialog>
 
 using namespace rapidxml;
 
@@ -77,20 +78,20 @@ void MapEditor::on_actionSave_triggered()
   mapsRoot->append_node(mapNode);
 
   std::string mapId = std::to_string((int)ui->mapId->currentIndex());
-  xml_attribute<>* atrMapId = doc.allocate_attribute("id", doc.allocate_string(mapId.c_str(), mapId.size()));
+  xml_attribute<>* atrMapId = doc.allocate_attribute("id", doc.allocate_string(mapId.c_str()));
   mapNode->append_attribute( atrMapId );
 
   std::string mapWidth = "100";
-  xml_attribute<>* atrMapW = doc.allocate_attribute("width", doc.allocate_string(mapWidth.c_str(), mapWidth.size()));
+  xml_attribute<>* atrMapW = doc.allocate_attribute("width", doc.allocate_string(mapWidth.c_str()));
   mapNode->append_attribute( atrMapW );
 
   std::string mapHeight = "60";
-  xml_attribute<>* atrMapH = doc.allocate_attribute("height", doc.allocate_string(mapHeight.c_str(), mapHeight.size()));
+  xml_attribute<>* atrMapH = doc.allocate_attribute("height", doc.allocate_string(mapHeight.c_str()));
   mapNode->append_attribute( atrMapH );
 
   //tiles
   QString mapStr = dumpTilesToString();
-  xml_node<>* tilesNode = doc.allocate_node(node_element, "Tiles", doc.allocate_string(mapStr.toStdString().c_str(), mapStr.size()) );
+  xml_node<>* tilesNode = doc.allocate_node(node_element, "Tiles", doc.allocate_string(mapStr.toStdString().c_str()) );
   mapNode->append_node(tilesNode);
 
   //actors
@@ -106,15 +107,15 @@ void MapEditor::on_actionSave_triggered()
 
     //id
     std::string aIdStr = std::to_string((int)data.id);
-    xml_attribute<>* atrId = doc.allocate_attribute("id", doc.allocate_string(aIdStr.c_str(), aIdStr.size()));
+    xml_attribute<>* atrId = doc.allocate_attribute("id", doc.allocate_string(aIdStr.c_str()));
     actorNode->append_attribute( atrId );
 
     //pos
     std::string posX = std::to_string(data.x);
     std::string posY = std::to_string(data.y);
 
-    xml_attribute<>* atrX = doc.allocate_attribute("x", doc.allocate_string(posX.c_str(), posX.size()));
-    xml_attribute<>* atrY = doc.allocate_attribute("y", doc.allocate_string(posY.c_str(), posY.size()));
+    xml_attribute<>* atrX = doc.allocate_attribute("x", doc.allocate_string(posX.c_str()));
+    xml_attribute<>* atrY = doc.allocate_attribute("y", doc.allocate_string(posY.c_str()));
 
     actorNode->append_attribute( atrX );
     actorNode->append_attribute( atrY );
@@ -132,46 +133,48 @@ void MapEditor::on_map_itemChanged(QTableWidgetItem *item)
     (*it)->setText(item->text());
 }
 
+void MapEditor::dumpActorsToList(int row, int column)
+{
+  for (auto a = _actors.begin(); a != _actors.end(); ++a)
+  {
+    if (a->x == column && a->y == row)
+    {
+      int uId = (int)a->id;
+      if (uId < ui->aType->count())
+        ui->aList->addItem( ui->aType->itemText(uId) );
+    }
+  }
+}
+
 void MapEditor::on_map_cellClicked(int row, int column)
 {
   ui->aType->setCurrentIndex(-1);
   ui->posX->setValue(column);
   ui->posY->setValue(row);
+  ui->aList->clear();
 
-  for (auto a = _actors.begin(); a != _actors.end(); ++a)
-  {
-    if (a->x == column && a->y == row)
-    {
-      ui->aType->setCurrentIndex((int)a->id);
-      break;
-    }
-  }
+  dumpActorsToList(row, column);
 }
 
 void MapEditor::on_actionLoad_triggered()
 {
   //QString fileName = QFileDialog::getOpenFileName(this, "Load", "", "All Files (*)");
 
+  _actors.clear();
+
   Map::Tiles.loadTiles("d:/tiles.xml");
   Map::Gateway.loadMaps("d:/maps.xml");
   Actor::DB.loadActors("d:/actors.xml");
 
+  ui->aType->clear();
+  for (int aT = (int)ActorType::Null; aT != (int)ActorType::End; ++aT)
+  {
+    ui->aType->addItem( Actor::DB.getName((ActorType)aT).c_str() );
+  }
+
   currentMap = Map::Gateway.fetch(MapId::GameStart);
 
   std::string mapStr = currentMap->tilesToStr();
-
-  qDebug() << mapStr.c_str();
-
-//  std::string line;
-//  int row = 0;
-//  while(std::getline(ifs, line))
-//  {
-//    for (size_t i = 0; i < line.size(); ++i)
-//    {
-//      ui->map->setItem(row, i, new QTableWidgetItem( QString(line[i]) ));
-//    }
-//    ++row;
-//  }
 
   int y = 0;
   int x = 0;
@@ -189,6 +192,17 @@ void MapEditor::on_actionLoad_triggered()
     }
   }
 
+  for ( Map::ActorArray::const_iterator a = currentMap->actors().begin();
+        a != currentMap->actors().end();
+        ++a)
+  {
+    Actor* cA = *a;
+    _actors.push_back( ActorData(cA->getId(), cA->getX(), cA->getY()) );
+
+    QTableWidgetItem* cMapGridItem = ui->map->item(cA->getY(), cA->getX());
+    cMapGridItem->setBackgroundColor(Qt::red);
+  }
+
 }
 
 void MapEditor::on_saveActor_clicked()
@@ -204,6 +218,7 @@ void MapEditor::on_saveActor_clicked()
 
     ui->map->item(data.y, data.x)->setBackgroundColor(Qt::red);
     ui->map->clearSelection();
+    ui->aList->addItem( ui->aType->itemText((int)data.id) );
   }
 }
 
@@ -213,13 +228,53 @@ void MapEditor::on_pushButton_clicked()
   int column = ui->posX->value();
   int row = ui->posY->value();
 
+  QString aName = ui->aList->currentItem()->text();
+  int uId = ui->aType->findText(aName);
+
   for (auto a = _actors.begin(); a != _actors.end(); ++a)
   {
-    if (a->x == column && a->y == row)
+    if (a->x == column && a->y == row && (int)a->id == uId)
     {
       _actors.erase(a);
-      ui->map->item(row, column)->setBackgroundColor(Qt::white);
+      ui->aList->clear();
+      dumpActorsToList(row, column);
+      if (ui->aList->count() == 0)
+        ui->map->item(row, column)->setBackgroundColor(Qt::white);
       break;
     }
   }
+}
+
+void MapEditor::on_pushButton_2_clicked()
+{
+    bool ok = false;
+    QString newName = QInputDialog::getText(this,"Podaj nazwę typu nowego aktora", "Nawa", QLineEdit::Normal, "", &ok);
+    if (ok)
+    {
+        ui->aType->addItem(newName);
+    }
+}
+
+void MapEditor::on_pushButton_3_clicked()
+{
+    bool ok = false;
+    QString newName = QInputDialog::getText(this,"Podaj nazwę nowej mapy", "Nawa", QLineEdit::Normal, "", &ok);
+    if (ok)
+    {
+        ui->mapId->addItem(newName);
+    }
+}
+
+void MapEditor::on_aList_itemClicked(QListWidgetItem *item)
+{
+//  QString aName = item->text();
+//  int uId = ui->aType->findText(aName);
+
+//  if (uId < ui->aType->count())
+  //    ui->aType->setCurrentIndex(uId);
+}
+
+void MapEditor::onKeyPressEvent(QKeyEvent *event)
+{
+  QInputDialog::getText(0,"sdf","sdfdd");
 }

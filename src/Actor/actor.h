@@ -5,6 +5,9 @@
 #include <libtcod.hpp>
 #include "ActorType.h"
 #include "DataGateways/ActorDB.h"
+#include "ActorFeatures/container.h"
+#include "ActorFeatures/pickable.h"
+#include "ActorFeatures/destrucible.h"
 
 class Map;
 
@@ -33,6 +36,10 @@ public:
   void setX(int getX);
   int getY() const;
   void setY(int getY);
+
+  Container* afContainer;
+  Pickable* afPickable;
+  Destrucible* afDestrucible;
 
 private:
   ActorType _id;

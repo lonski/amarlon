@@ -17,6 +17,8 @@ INCLUDEPATH += ../src
 DEPENDPATH += ../src
 INCLUDEPATH += ../include
 DEPENDPATH += ../include
+INCLUDEPATH += ../include/libtcod
+DEPENDPATH += ../include/libtcod
 
 SOURCES += main.cpp\
         MapEditor.cpp \
@@ -24,7 +26,10 @@ SOURCES += main.cpp\
     ../src/World/map.cpp \
     ../src/Actor/actor.cpp \
     ../src/DataGateways/TileDB.cpp \
-    ../src/DataGateways/ActorDB.cpp
+    ../src/DataGateways/ActorDB.cpp \
+    ../src/Actor/ActorFeatures/container.cpp \
+    ../src/Actor/ActorFeatures/pickable.cpp \
+    ../src/Actor/ActorFeatures/destrucible.cpp
 
 HEADERS  += MapEditor.h \
     ../src/Actor/ActorDescription.h \
@@ -38,7 +43,10 @@ HEADERS  += MapEditor.h \
     ../src/Actor/actor.h \
     ../src/Actor/ActorType.h \
     ../src/DataGateways/TileDB.h \
-    ../src/DataGateways/ActorDB.h
+    ../src/DataGateways/ActorDB.h \
+    ../src/Actor/ActorFeatures/container.h \
+    ../src/Actor/ActorFeatures/pickable.h \
+    ../src/Actor/ActorFeatures/destrucible.h
 
 FORMS    += MapEditor.ui
 

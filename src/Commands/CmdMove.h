@@ -7,7 +7,7 @@ class CmdMoveOrAttack : public Command
 {
 public:
   CmdMoveOrAttack();
-  bool accept(TCOD_key_t &key, Actor* executor, Map* map);
+  bool accept(TCOD_key_t &key, Map* map, Actor* executor);
 
 };
 

@@ -1,11 +1,14 @@
 #include "CmdOpen.h"
 #include <iostream>
+#include "utils.h"
+#include <Utils/ItemPicker.h>
+#include <algorithm>
 
 CmdOpenClose::CmdOpenClose()
 {
 }
 
-bool CmdOpenClose::accept(TCOD_key_t &key, Actor *executor, Map *map)
+bool CmdOpenClose::accept(TCOD_key_t &key, Map *map, Actor *executor)
 {
   bool accepted = ( key.vk == TCODK_CHAR && (key.c == 'o' || key.c == 'c') );
   bool open = key.c == 'o';
@@ -18,18 +21,43 @@ bool CmdOpenClose::accept(TCOD_key_t &key, Actor *executor, Map *map)
     int dx(0), dy(0);
     selectDirection(dx, dy);
 
-    Actor* target = map->getActor(x+dx, y+dy);
+    Actor* target = map->getFirstActor(x+dx, y+dy);
     if ( target )
-    {
-      if ( target->getId() == ActorType::Drzwi_Zamkniete && open )
+    {      
+      //TODO: more generic openable, lock support
+      if ( open )
       {
-        target->morph(ActorType::Drzwi_Otwarte);
+        //open doors
+        if ( target->getId() == ActorType::Drzwi_Zamkniete)
+        {
+          target->morph(ActorType::Drzwi_Otwarte);
+          map->updateActorCell(target);
+        }
+
+        //display container
+        if ( target->afContainer )
+        {
+          ItemPicker picker(executor, target->afContainer->content());
+          std::vector<Actor*> itemsPicked = picker.pick(true);
+
+          std::for_each(itemsPicked.begin(), itemsPicked.end(), [&](Actor* a)
+          {
+            target->afContainer->remove(a);
+          });
+        }
+
+      }
+      else
+      {
+        //close doors
+        if ( target->getId() == ActorType::Drzwi_Otwarte)
+        {
+          target->morph(ActorType::Drzwi_Zamkniete);
+          map->updateActorCell(target);
+        }
       }
 
-      if ( target->getId() == ActorType::Drzwi_Otwarte && !open )
-      {
-        target->morph(ActorType::Drzwi_Zamkniete);
-      }
+
     }
   }
 
@@ -39,24 +67,7 @@ bool CmdOpenClose::accept(TCOD_key_t &key, Actor *executor, Map *map)
 void CmdOpenClose::selectDirection(int& dx, int& dy)
 {
   TCOD_key_t lastKey;
-  while ( !TCODConsole::isWindowClosed() )
-  {
-    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS|TCOD_EVENT_MOUSE,&lastKey,NULL);
+  TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS|TCOD_EVENT_MOUSE,&lastKey,NULL, true);
 
-    switch(lastKey.vk)
-    {
-      case TCODK_KP7 : dy = -1; dx = -1; break;
-      case TCODK_KP9 : dy = -1; dx =  1; break;
-      case TCODK_KP1 : dy =  1; dx = -1; break;
-      case TCODK_KP3 : dy =  1; dx =  1; break;
-      case TCODK_KP8 : dy = -1; dx =  0; break;
-      case TCODK_KP4 : dy =  0; dx = -1; break;
-      case TCODK_KP2 : dy =  1; dx =  0; break;
-      case TCODK_KP6 : dy =  0; dx =  1; break;
-      default:;
-    }
-
-    if ( dx != 0 || dy != 0)
-      break;
-  }
+  handleDirectionKey(lastKey, dx, dy);
 }

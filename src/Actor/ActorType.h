@@ -12,7 +12,13 @@ enum class ActorType
   Szafka,
   Szafa,
   Fotel,
-  Piec
+  Piec,
+  Stol,
+  Blat,
+  Butelka_wina,
+  Eliksir_zycia,
+  Ksiazka_kucharska,
+  End
 };
 
 #endif // ACTORTYPE_H

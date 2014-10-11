@@ -14,14 +14,14 @@ public:
 
   Engine();
 
-  void render();
+  void init();
+  void render(); 
   void processKey(TCOD_key_t& key);
 
   Map *currentMap() const;
   void setCurrentMap(Map *currentMap);
 
 private:
-  CommandExecutor cmd;
   TCODConsole* _console;
   Map* _currentMap;
   Actor* _player;

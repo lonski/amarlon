@@ -7,7 +7,7 @@ class CmdOpenClose : public Command
 {
 public:
   CmdOpenClose();
-  bool accept(TCOD_key_t &key, Actor* executor, Map* map);
+  bool accept(TCOD_key_t &key, Map* map, Actor* executor);
 
 private:
   void selectDirection(int &dx, int &dy);
