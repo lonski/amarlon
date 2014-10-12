@@ -1,5 +1,5 @@
 #include "CmdMove.h"
-#include "utils.h"
+#include "Utils/utils.h"
 
 CmdMoveOrAttack::CmdMoveOrAttack()
 {
@@ -24,15 +24,15 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key, Map* map, Actor* executor)
     {
       std::vector<Actor*> toAttack = map->getActors(targetX, targetY, [&](Actor* a) -> bool
       {
-        return a->afDestrucible && a->afDestrucible->isAlive();
+        return a->afDestrucible() && a->afDestrucible()->isAlive();
       });
 
       //attack
-      if (!toAttack.empty())
+      if (!toAttack.empty() && executor->afAttacker() )
       {
         assert(toAttack.size() == 1);
         Actor* enemy = toAttack[0];
-        // ...TODO attack
+        executor->afAttacker()->attack(enemy);
       }
     }
   }

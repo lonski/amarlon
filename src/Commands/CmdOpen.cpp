@@ -1,6 +1,6 @@
 #include "CmdOpen.h"
 #include <iostream>
-#include "utils.h"
+#include "Utils/utils.h"
 #include <Utils/ItemPicker.h>
 #include <algorithm>
 
@@ -35,14 +35,14 @@ bool CmdOpenClose::accept(TCOD_key_t &key, Map *map, Actor *executor)
         }
 
         //display container
-        if ( target->afContainer )
+        if ( target->afContainer() )
         {
-          ItemPicker picker(executor, target->afContainer->content());
+          ItemPicker picker(executor, target->afContainer()->content());
           std::vector<Actor*> itemsPicked = picker.pick(true);
 
           std::for_each(itemsPicked.begin(), itemsPicked.end(), [&](Actor* a)
           {
-            target->afContainer->remove(a);
+            target->afContainer()->remove(a);
           });
         }
 

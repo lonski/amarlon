@@ -7,10 +7,13 @@
 #include <libtcod.hpp>
 #include "xml/rapidxml.hpp"
 #include "Actor/ActorType.h"
+#include "Actor/ActorFeatures/AiType.h"
 
 class Container;
 class Pickable;
 class Destrucible;
+class Attacker;
+class Ai;
 
 struct ActorDescription
 {
@@ -38,6 +41,16 @@ struct DestrucibleDescription
   float maxHp;
 };
 
+struct AttackerDescription
+{
+  float power;
+};
+
+struct AiDescription
+{
+  AiType type;
+};
+
 class ActorDB
 {
 public:
@@ -54,6 +67,8 @@ public:
   Container* getContainer(ActorType type);
   Pickable* getPickable(ActorType type);
   Destrucible* getDestrucible(ActorType type);
+  Attacker* getAttacker(ActorType type);
+  Ai* getAi(ActorType type);
 
   bool loadActors(std::string fn);
 
@@ -62,6 +77,8 @@ private:
   std::map<ActorType, ContainerDescription> _containers;
   std::map<ActorType, PickableDescription> _pickables;
   std::map<ActorType, DestrucibleDescription> _destrucibles;
+  std::map<ActorType, AttackerDescription> _attackers;
+  std::map<ActorType, AiDescription> _ais;
 
 };
 

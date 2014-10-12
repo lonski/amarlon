@@ -15,7 +15,7 @@ bool CmdPick::accept(TCOD_key_t &key, Map *map, Actor *executor)
     std::vector<Actor*> items = map->getActors(executor->getX(), executor->getY(),
                                 [](Actor* a) -> bool
                                 {
-                                  return a->afPickable;
+                                  return a->afPickable();
                                 });
 
     ItemPicker picker(executor, items);

@@ -9,7 +9,6 @@ SOURCES += main.cpp \
     World/map.cpp \
     DataGateways/MapGateway.cpp \
     engine.cpp \
-    utils.cpp \
     DataGateways/TileDB.cpp \
     CommandExecutor.cpp \
     Actor/actor.cpp \
@@ -22,11 +21,16 @@ SOURCES += main.cpp \
     Commands/CmdInventory.cpp \
     Actor/ActorFeatures/pickable.cpp \
     Commands/CmdPick.cpp \
-    Utils/ItemPickerGui.cpp \
     Utils/ItemPicker.cpp \
     Commands/CmdDrop.cpp \
     Utils/InventoryManager.cpp \
-    Actor/ActorFeatures/destrucible.cpp
+    Actor/ActorFeatures/destrucible.cpp \
+    Actor/ActorFeatures/attacker.cpp \
+    Actor/ActorFeatures/ai.cpp \
+    Actor/ActorFeatures/MonsterAi.cpp \
+    Gui/gui.cpp \
+    Gui/ItemPickerGui.cpp \
+    Utils/utils.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -35,7 +39,6 @@ HEADERS += \
     World/MapId.h \
     World/TileType.h \
     engine.h \
-    utils.h \
     DataGateways/TileDB.h \
     CommandExecutor.h \
     Actor/actor.h \
@@ -49,11 +52,18 @@ HEADERS += \
     Commands/CmdInventory.h \
     Actor/ActorFeatures/pickable.h \
     Commands/CmdPick.h \
-    Utils/ItemPickerGui.h \
     Utils/ItemPicker.h \
     Commands/CmdDrop.h \
     Utils/InventoryManager.h \
-    Actor/ActorFeatures/destrucible.h
+    Actor/ActorFeatures/destrucible.h \
+    Actor/ActorFeatures/attacker.h \
+    Actor/ActorFeatures/ai.h \
+    Actor/ActorFeatures/MonsterAi.h \
+    Actor/ActorFeatures/AiType.h \
+    Gui/gui.h \
+    Gui/ItemPickerGui.h \
+    Utils/glodef.h \
+    Utils/utils.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw

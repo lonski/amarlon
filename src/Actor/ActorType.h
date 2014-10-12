@@ -18,6 +18,7 @@ enum class ActorType
   Butelka_wina,
   Eliksir_zycia,
   Ksiazka_kucharska,
+  Corpse,
   End
 };
 

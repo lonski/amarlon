@@ -7,10 +7,15 @@ class Pickable
 {
 public:
   Pickable();
+  virtual ~Pickable() {}
+  void setOwner(Actor* owner);
 
-  virtual bool pick(Actor* owner, Actor* picker);
-  virtual Actor* drop(Actor* owner);
-  virtual void use(Actor* owner, Actor* user);
+  virtual bool pick(Actor* picker);
+  virtual Actor* drop();
+  virtual void use(Actor* user);
+
+private:
+  Actor* _owner;
 
 };
 

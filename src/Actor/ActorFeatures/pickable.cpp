@@ -2,28 +2,34 @@
 #include "Actor/actor.h"
 
 Pickable::Pickable()
+  : _owner(nullptr)
 {
 }
 
-bool Pickable::pick(Actor *owner, Actor *picker)
+void Pickable::setOwner(Actor *owner)
+{
+  _owner = owner;
+}
+
+bool Pickable::pick(Actor *picker)
 {
   bool r = false;
 
-  if ( picker->afContainer )
+  if ( picker->afContainer() && _owner )
   {
-    r = picker->afContainer->add(owner);
+    r = picker->afContainer()->add(_owner);
   }
 
   return r;
 }
 
-Actor *Pickable::drop(Actor *owner)
+Actor *Pickable::drop()
 {
   //in future for example block when cursed item
-  return owner;
+  return _owner;
 }
 
-void Pickable::use(Actor *owner, Actor *user)
+void Pickable::use(Actor *user)
 {
 
 }

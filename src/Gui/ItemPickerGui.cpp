@@ -2,6 +2,7 @@
 #include <libtcod.hpp>
 #include <Actor/actor.h>
 #include <algorithm>
+#include "Utils/glodef.h"
 
 ItemPickerGui::ItemPickerGui()
 {
@@ -9,8 +10,8 @@ ItemPickerGui::ItemPickerGui()
 
 void ItemPickerGui::pick(const std::vector<Actor *> items, std::string title)
 {
-  static const int conWidth=50;
-  static const int conHeight=28;
+  static const int conWidth = gloConsoleWidth / 2;
+  static const int conHeight = 28;
   static TCODConsole con(conWidth,conHeight);
 
   // display the inventory frame
@@ -27,7 +28,7 @@ void ItemPickerGui::pick(const std::vector<Actor *> items, std::string title)
   });
 
   // blit the inventory console on the root console
-  TCODConsole::blit(&con, 0, 0, conWidth, conHeight, TCODConsole::root, 50 - conWidth/2, 30 - conHeight/2 );
+  TCODConsole::blit(&con, 0, 0, conWidth, conHeight, TCODConsole::root, gloConsoleWidth / 2 - conWidth/2, gloConsoleHeight / 2 - conHeight/2 );
   TCODConsole::flush();
 }
 

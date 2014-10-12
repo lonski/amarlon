@@ -1,7 +1,7 @@
 #ifndef ITEMPICKER_H
 #define ITEMPICKER_H
 
-#include <Utils/ItemPickerGui.h>
+#include <Gui/ItemPickerGui.h>
 
 class Map;
 

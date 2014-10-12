@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "World/map.h"
 #include "Actor/actor.h"
+#include "Utils/utils.h"
+#include "Gui/gui.h"
 
 ItemPicker::ItemPicker(Actor *executor, const std::vector<Actor *> &items)
   : _items(items)
@@ -47,7 +49,9 @@ void ItemPicker::pickSingleItem(Actor* target)
 {
   if (_executor)
   {
-    target->afPickable->pick(target, _executor);
+    target->afPickable()->pick(_executor);
+    std::string eName = _executor->getName() == "Player" ? "You" : _executor->getName();
+    Gui::Root.message(eName + " picked " + (target->getName()) + ".", TCODColor::darkYellow );
   }
 
   _itemsPicked.push_back(target);

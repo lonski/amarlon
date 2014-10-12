@@ -13,7 +13,7 @@ bool CmdInventory::accept(TCOD_key_t &key, Map *, Actor *executor)
 
   if (accepted)
   {
-    if ( executor->afContainer )
+    if ( executor->afContainer() )
     {
       InventoryManager inv(executor);
       inv.setTitle("Inventory");

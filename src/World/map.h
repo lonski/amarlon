@@ -42,6 +42,7 @@ public:
   void addActor(Actor* actor);
   Actor* getFirstActor(int x, int y);
   std::vector<Actor*> getActors(int x, int y, bool (*filterFun)(Actor *) = nullptr);
+  std::vector<Actor*> getActors(bool (*filterFun)(Actor *));
   bool removeActor(Actor *toRemove);
   const ActorArray& actors() const;
 

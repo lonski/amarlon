@@ -100,6 +100,19 @@ std::vector<Actor *> Map::getActors(int x, int y, bool (*filterFun)(Actor*) )
   return r;
 }
 
+std::vector<Actor *> Map::getActors(bool (*filterFun)(Actor *))
+{
+  std::vector<Actor*> r;
+
+  std::for_each(_actors.begin(), _actors.end(), [&](Actor* a)
+  {
+    if ( filterFun == nullptr || filterFun(a))
+      r.push_back(a);
+  });
+
+  return r;
+}
+
 bool Map::removeActor(Actor* toRemove)
 {
   auto aIter = std::find(_actors.begin(), _actors.end(), toRemove);

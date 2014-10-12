@@ -16,6 +16,7 @@ public:
 
   void init();
   void render(); 
+  void updateAis();
   void processKey(TCOD_key_t& key);
 
   Map *currentMap() const;
@@ -24,7 +25,6 @@ public:
 private:
   TCODConsole* _console;
   Map* _currentMap;
-  Actor* _player;
 
 };
 

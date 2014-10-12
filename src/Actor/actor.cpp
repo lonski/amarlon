@@ -3,18 +3,18 @@
 #include <iostream>
 
 ActorDB Actor::DB;
+Actor* Actor::Player(nullptr);
 
 Actor::Actor(ActorType aId, int x, int y)
-  : afContainer(nullptr)
-  , afPickable(nullptr)
-  , afDestrucible(nullptr)
-  , _id(aId)
+  : _id(aId)
   , _x(x)
   , _y(y)
-{
-  afContainer = Actor::DB.getContainer(aId);
-  afPickable = Actor::DB.getPickable(aId);
-  afDestrucible = Actor::DB.getDestrucible(aId);
+{  
+  setAfContainer  ( Actor::DB.getContainer  (aId) );
+  setAfPickable   ( Actor::DB.getPickable   (aId) );
+  setAfDestrucible( Actor::DB.getDestrucible(aId) );
+  setAfAttacker   ( Actor::DB.getAttacker   (aId) );
+  setAfAi         ( Actor::DB.getAi         (aId) );
 }
 
 void Actor::move(int dx, int dy)
@@ -26,11 +26,23 @@ void Actor::move(int dx, int dy)
 void Actor::morph(ActorType newType)
 {
   _id = newType;
+
+  delete _afContainer;
+  delete _afPickable;
+  delete _afDestrucible;
+  delete _afAttacker;
+  delete _afAi;
+
+  setAfContainer  ( Actor::DB.getContainer  (_id) );
+  setAfPickable   ( Actor::DB.getPickable   (_id) );
+  setAfDestrucible( Actor::DB.getDestrucible(_id) );
+  setAfAttacker   ( Actor::DB.getAttacker   (_id) );
+  setAfAi         ( Actor::DB.getAi         (_id) );
 }
 
 bool Actor::isAlive() const
 {
-  return  afDestrucible && afDestrucible->isAlive();
+  return  afDestrucible() && afDestrucible()->isAlive();
 }
 
 bool Actor::isFovOnly() const
@@ -76,6 +88,63 @@ void Actor::setY(int y)
 {
   _y = y;
 }
+Container *Actor::afContainer() const
+{
+  return _afContainer;
+}
+
+void Actor::setAfContainer(Container *afContainer)
+{
+  _afContainer = afContainer;
+  if (_afContainer)
+    _afContainer->setOwner(this);
+}
+Pickable *Actor::afPickable() const
+{
+  return _afPickable;
+}
+
+void Actor::setAfPickable(Pickable *afPickable)
+{
+  _afPickable = afPickable;
+  if (_afPickable)
+    _afPickable->setOwner(this);
+}
+Destrucible *Actor::afDestrucible() const
+{
+  return _afDestrucible;
+}
+
+void Actor::setAfDestrucible(Destrucible *afDestrucible)
+{
+  _afDestrucible = afDestrucible;
+  if (_afDestrucible)
+    _afDestrucible->setOwner(this);
+}
+Attacker *Actor::afAttacker() const
+{
+  return _afAttacker;
+}
+
+void Actor::setAfAttacker(Attacker *afAttacker)
+{
+  _afAttacker = afAttacker;
+  if (_afAttacker)
+    _afAttacker->setOwner(this);
+}
+Ai *Actor::afAi() const
+{
+  return _afAi;
+}
+
+void Actor::setAfAi(Ai *afAi)
+{
+  _afAi = afAi;
+  if (_afAi)
+    _afAi->setOwner(this);
+}
+
+
 TCODColor Actor::getColor() const
 {
   return Actor::DB.getColor(_id);;
@@ -85,7 +154,3 @@ unsigned char Actor::getChar() const
 {
   return Actor::DB.getChar(_id);;
 }
-
-
-
-

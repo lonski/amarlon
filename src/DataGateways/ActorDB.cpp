@@ -1,5 +1,5 @@
 #include "ActorDB.h"
-#include "utils.h"
+#include "Utils/utils.h"
 #include <fstream>
 #include <vector>
 #include "Actor/actor.h"
@@ -106,6 +106,32 @@ Destrucible *ActorDB::getDestrucible(ActorType type)
   return dest;
 }
 
+Attacker *ActorDB::getAttacker(ActorType type)
+{
+  Attacker* att = nullptr;
+
+  if (_attackers.count(type))
+  {
+    AttackerDescription& dsc = _attackers[type];
+    att = new Attacker(dsc.power);
+  }
+
+  return att;
+}
+
+Ai *ActorDB::getAi(ActorType type)
+{
+  Ai* ai = nullptr;
+
+  if (_ais.count(type))
+  {
+    AiDescription& dsc = _ais[type];
+    ai = Ai::create(dsc.type);
+  }
+
+  return ai;
+}
+
 bool ActorDB::loadActors(std::string fn)
 {
   bool success = false;
@@ -182,6 +208,28 @@ bool ActorDB::loadActors(std::string fn)
         destDsc.maxHp = std::stof( destNode->first_attribute("maxHp")->value() );
 
         _destrucibles[id] = destDsc;
+      }
+
+      // ===== DESTRUCIBLE DESCRIPTION ===== //
+      xml_node<>* attackerNode = actorNode->first_node("Attacker");
+      if (attackerNode)
+      {
+        AttackerDescription attDsc;
+
+        attDsc.power = std::stof( attackerNode->first_attribute("power")->value() );
+
+        _attackers[id] = attDsc;
+      }
+
+      // ===== AI DESCRIPTION ===== //
+      xml_node<>* aiNode = actorNode->first_node("Ai");
+      if (aiNode)
+      {
+        AiDescription aiDsc;
+
+        aiDsc.type = (AiType)std::stol( aiNode->first_attribute("type")->value() );
+
+        _ais[id] = aiDsc;
       }
 
       //~~~~~ NEXT

@@ -6,6 +6,23 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
+#include <iostream>
+#include <algorithm>
+
+template<typename T>
+std::string to_stringp(T t, int prec = 1)
+{
+  std::stringstream ss;
+  ss << std::setprecision(prec) << t;
+  return ss.str();
+}
+
+static inline std::string tolowers(const std::string& str)
+{
+  std::string r;
+  std::transform(str.begin(), str.end(), r.begin(), [&](char c){ return std::tolower(c);});
+  return r;
+}
 
 static inline std::string colorToStr(TCODColor color)
 {

@@ -1,26 +1,33 @@
 #include <iostream>
+#include "Utils/glodef.h"
 #include "engine.h"
 #include "World/map.h"
+#include "Gui/gui.h"
 
 using namespace std;
 
 int main()
 {
-  const int screenWidth = 100;
-  const int screenHeight = 60;
 
-  TCODConsole::initRoot(screenWidth,screenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
+  TCODConsole::initRoot(gloScreenWidth,gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
+
+  TCODMouse::showCursor(false);
   TCOD_key_t lastKey;
 
   Engine engine;
+  Gui::Root.message(":: Welcome to Amarlon! ::", TCODColor::sky);
+
   engine.init();
 
   while ( !TCODConsole::isWindowClosed() )
   {
-    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL);
-    engine.processKey(lastKey);
     engine.render();
+    Gui::Root.render();
+    engine.updateAis();
     TCODConsole::flush();
+
+    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
+    engine.processKey(lastKey);
   }
 
   return 0;
