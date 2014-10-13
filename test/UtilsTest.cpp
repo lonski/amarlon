@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "utils.h"
+#include "Utils/utils.h"
 #include "DataGateways/TileDB.h"
 
 TEST(UtilsTest, color2str)
@@ -24,5 +24,5 @@ TEST(UtilsTest, str2color)
 TEST(UtilsTest, loadTiles)
 {
   TileDB tiles;
-  tiles.loadTiles("d:/tiles.xml");
+  tiles.loadTiles("../amarlon/tiles.xml");
 }

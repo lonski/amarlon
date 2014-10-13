@@ -8,7 +8,6 @@ using namespace rapidxml;
 
 TileDB::TileDB()
 {
-  //loadTiles("d:/tiles.xml");
 }
 
 TileType TileDB::getType(char ch)

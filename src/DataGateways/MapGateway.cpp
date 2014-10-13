@@ -104,8 +104,6 @@ void MapGateway::saveMaps(string fn)
 
     string strTiles = map->tilesToStr();
 
-    std::cout << strTiles.c_str();
-
     xml_node<>* tiles = doc.allocate_node(node_element, "Tiles", doc.allocate_string(strTiles.c_str()) );
     mapNode->append_node(tiles);
 

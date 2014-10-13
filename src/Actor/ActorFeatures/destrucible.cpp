@@ -19,14 +19,12 @@ bool Destrucible::isAlive() const
   return (_hp > 0);
 }
 
-float Destrucible::takeDamage(float power)
+void Destrucible::takeDamage(float power)
 {
   _hp -= power;
 
   if ( _hp <= 0 )
     die();
-
-  return power;
 }
 
 void Destrucible::die()

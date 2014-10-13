@@ -3,5 +3,4 @@
 
 TEST(CmdExecTest, create)
 {
-  CommandExecutor cmd;
 }

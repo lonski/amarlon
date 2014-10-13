@@ -4,31 +4,37 @@
 			<Content aid="12"/>
 		</Container>
 		<Destrucible maxHp="20"/>
+		<Attacker power="5"/>
 	</Actor>
-	<Actor name="Ork" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
 		<Destrucible maxHp="10"/>
+		<Attacker power="2"/>
+		<Ai type="1"/>
 	</Actor>
-	<Actor name="Drzwi_Zamkniete" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="Drzwi_Otwarte" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0"/>
-	<Actor name="Lozko" id="5" character="253" color="efefef" transparent="1" blocks="1" fovOnly="0"/>
-	<Actor name="Szafka" id="6" character="254" color="906030" transparent="1" blocks="1" fovOnly="0">
+	<Actor name="DoorClosed" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="DoorOpen" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Bed" id="5" character="253" color="efefef" transparent="1" blocks="1" fovOnly="0"/>
+	<Actor name="Locker" id="6" character="254" color="906030" transparent="1" blocks="1" fovOnly="0">
 		<Container maxSize="5">
 			<Content aid="13"/>
 			<Content aid="14"/>
 		</Container>
 	</Actor>
-	<Actor name="Szafa" id="7" character="252" color="906030" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="Fotel" id="8" character="251" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
-	<Actor name="Piec" id="9" character="&" color="eeeeee" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="Stol" id="10" character="10" color="906030" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="Blat" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="Butelka wina" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Wardrobe" id="7" character="252" color="906030" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Chair" id="8" character="251" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Furnace" id="9" character="&" color="eeeeee" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Table" id="10" character="10" color="906030" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Worktop" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Bootle of wine" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
 		<Pickable/>
 	</Actor>
-	<Actor name="Eliksir zycia" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
 		<Pickable/>
 	</Actor>
-	<Actor name="Ksiazka kucharska" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
+		<Pickable/>
+	</Actor>
+	<Actor name="Orc corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
 		<Pickable/>
 	</Actor>
 </Actors>

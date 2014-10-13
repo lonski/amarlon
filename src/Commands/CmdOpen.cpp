@@ -28,9 +28,9 @@ bool CmdOpenClose::accept(TCOD_key_t &key, Map *map, Actor *executor)
       if ( open )
       {
         //open doors
-        if ( target->getId() == ActorType::Drzwi_Zamkniete)
+        if ( target->getId() == ActorType::DoorClosed)
         {
-          target->morph(ActorType::Drzwi_Otwarte);
+          target->morph(ActorType::DoorOpen);
           map->updateActorCell(target);
         }
 
@@ -50,9 +50,9 @@ bool CmdOpenClose::accept(TCOD_key_t &key, Map *map, Actor *executor)
       else
       {
         //close doors
-        if ( target->getId() == ActorType::Drzwi_Otwarte)
+        if ( target->getId() == ActorType::DoorOpen)
         {
-          target->morph(ActorType::Drzwi_Zamkniete);
+          target->morph(ActorType::DoorClosed);
           map->updateActorCell(target);
         }
       }

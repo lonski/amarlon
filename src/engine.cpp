@@ -13,9 +13,9 @@ Engine::Engine()
 void Engine::init()
 {
   //temp init
-  Map::Tiles.loadTiles("d:/tiles.xml");
-  Actor::DB.loadActors("d:/actors.xml");
-  Map::Gateway.loadMaps("d:/maps.xml");
+  Map::Tiles.loadTiles("../amarlon/tiles.xml");
+  Actor::DB.loadActors("../amarlon/actors.xml");
+  Map::Gateway.loadMaps("../amarlon/maps.xml");
 
   setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
 

@@ -71,9 +71,17 @@ static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
   switch(key.vk)
   {
     case TCODK_DOWN: dy++; break;
+    case TCODK_KP2: dy++; break;
+
     case TCODK_UP: dy--; break;
+    case TCODK_KP8: dy--; break;
+
     case TCODK_LEFT: dx--; break;
+    case TCODK_KP4: dx--; break;
+
     case TCODK_RIGHT: dx++; break;
+    case TCODK_KP6: dx++; break;
+
     case TCODK_KP7: dx--; dy--; break;
     case TCODK_KP9: dx++; dy--; break;
     case TCODK_KP1: dx--; dy++; break;

@@ -41,14 +41,15 @@ TEST(MapTest, fillMap)
   Map map(5 ,3);
   map.fill(mapFill);
 
-  ASSERT_EQ(map.getChar(0,0), '#');
-  ASSERT_EQ(map.getChar(3,1), '.');
-  ASSERT_EQ(map.getChar(2,2), '#');
-  ASSERT_EQ(map.getChar(0,2), 'T');
+  ASSERT_EQ(map.getChar(0,0), Map::Tiles.getChar(TileType::PlainWall));
+  ASSERT_EQ(map.getChar(3,1), Map::Tiles.getChar(TileType::PlainFloor));
+  ASSERT_EQ(map.getChar(2,2), Map::Tiles.getChar(TileType::PlainWall));
+  ASSERT_EQ(map.getChar(0,2), Map::Tiles.getChar(TileType::Tree));
 }
 
 TEST(MapTest, getChar_Color)
 {
+  Map::Tiles.loadTiles("../amarlon/tiles.xml");
   std::string mapFill =
   "#####\n"
   "#...#\n"
@@ -57,11 +58,12 @@ TEST(MapTest, getChar_Color)
   Map map(5 ,3);
   map.fill(mapFill);
 
-  ASSERT_TRUE(map.getColor(0,2) == TCODColor::darkerGreen);
+  ASSERT_TRUE(map.getColor(0,2) == Map::Tiles.getColor(TileType::Tree));
 }
 
 TEST(MapTest, tilesToStr)
 {
+  Map::Tiles.loadTiles("../amarlon/tiles.xml");
   std::string mapFill =
   "#####\n"
   "#...#\n"
@@ -77,6 +79,7 @@ TEST(MapTest, tilesToStr)
 
 TEST(MapTest, tileThatBlocks)
 {
+  Map::Tiles.loadTiles("../amarlon/tiles.xml");
   std::string mapFill =
   "#####\n"
   "#...#\n"

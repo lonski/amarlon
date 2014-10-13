@@ -24,8 +24,8 @@ void Attacker::attack(Actor *enemy)
     std::string enemyName = enemy->getName() == "Player" ? "you" : enemy->getName();
     std::string atackerName = _owner->getName() == "Player" ? "You" : _owner->getName();
 
-    float dmgDone = enemy->afDestrucible()->takeDamage(_power);
+    Gui::Root.message(atackerName + " hit " + enemyName + " for " + to_stringp(_power) + "hp!", TCODColor::red);
+    enemy->afDestrucible()->takeDamage(_power);
 
-    Gui::Root.message(atackerName + " hit " + enemyName + " for " + to_stringp(dmgDone) + "hp!", TCODColor::red);
   }
 }

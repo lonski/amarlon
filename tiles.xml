@@ -2,7 +2,7 @@
 	<Tile name="PlainFloor" id="1" code="." character="." color="bfbfbf" walkable="1" transparent="1"></Tile>
 	<Tile name="PlainWall" id="2" code="#" character="#" color="808080" walkable="0" transparent="0"></Tile>
 	<Tile name="Tree" id="3" code="T" character="T" color="007f00"  walkable="0" transparent="0"></Tile>
-	<Tile name="Trawa" id="4" code="," character="." color="007f00"  walkable="1" transparent="1"></Tile>
+	<Tile name="Grass" id="4" code="," character="." color="007f00"  walkable="1" transparent="1"></Tile>
 	<Tile name="Dirt" id="5" code="-" character="." color="3f1f00"  walkable="1" transparent="1"></Tile>
 	<Tile name="Water" id="6" code="=" character="=" color="0000aa"  walkable="0" transparent="1"></Tile>
 </Tiles>

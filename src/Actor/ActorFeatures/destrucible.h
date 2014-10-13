@@ -10,7 +10,7 @@ public:
   void setOwner(Actor* owner);
 
   bool isAlive() const;
-  float takeDamage(float power);
+  void takeDamage(float power);
   void die();
 
 private:

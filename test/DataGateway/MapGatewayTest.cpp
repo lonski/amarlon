@@ -13,7 +13,7 @@ TEST(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
 TEST(MapGatewayTest, fetchExistingMap_givesMap)
 {
   MapGateway gateway;
-  gateway.loadMaps("d:/maps_saved.xml");
+  gateway.loadMaps("../amarlon/maps.xml");
   Map* map = gateway.fetch(MapId::GameStart);
 
   ASSERT_TRUE(map != nullptr);
@@ -22,27 +22,29 @@ TEST(MapGatewayTest, fetchExistingMap_givesMap)
 
 TEST(MapGatewayTest, mapHasValidTiles)
 {
+  Map::Tiles.loadTiles("../amarlon/tiles.xml");
   MapGateway gateway;
-  gateway.loadMaps("d:/maps_saved.xml");
+  gateway.loadMaps("../amarlon/maps.xml");
   Map* map = gateway.fetch(MapId::GameStart);
 
-  ASSERT_EQ(map->getChar(39,27), '.');
+  ASSERT_EQ(map->getChar(39,27), Map::Tiles.getChar(TileType::PlainFloor));
 }
 
 TEST(MapGatewayTest, mapHasValidTiles2)
 {
+  Map::Tiles.loadTiles("../amarlon/tiles.xml");
   MapGateway gateway;
-  gateway.loadMaps("d:/maps_saved.xml");
-  Map* map = gateway.fetch(MapId::Test);
+  gateway.loadMaps("../amarlon/maps.xml");
+  Map* map = gateway.fetch(MapId::GameStart);
 
-  ASSERT_EQ(map->getChar(1,1), '.');
+  ASSERT_EQ(map->getChar(1,1), Map::Tiles.getChar(TileType::Tree));
 }
 
 TEST(MapGatewayTest, saveMaps)
 {
   MapGateway gateway;
-  gateway.loadMaps("d:/maps.xml");
-  gateway.saveMaps("d:/maps_saved.xml");
+  gateway.loadMaps("../amarlon/maps.xml");
+  gateway.saveMaps("../amarlon/maps_saved.xml");
 }
 
 
