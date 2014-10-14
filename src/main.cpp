@@ -10,6 +10,7 @@ int main()
 {
 
   TCODConsole::initRoot(gloScreenWidth,gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
+  TCODConsole::root->setCustomFont("../amarlon/terminal.png");
 
   TCODMouse::showCursor(false);
   TCOD_key_t lastKey;

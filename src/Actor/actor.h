@@ -40,7 +40,6 @@ public:
   int getY() const;
   void setY(int getY);
 
-
   Container*   afContainer()   const;
   Pickable*    afPickable()    const;
   Destrucible* afDestrucible() const;
