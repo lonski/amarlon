@@ -12,7 +12,7 @@ void InventoryManager::display()
 {
   if (_actor->afContainer())
   {
-    pickerGui.pick(_actor->afContainer()->content(),_title);
+    pickerGui.render(_actor->afContainer()->content(),_title);
     pickerGui.captureItemIndex();
   }
 }

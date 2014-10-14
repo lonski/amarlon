@@ -28,7 +28,7 @@ std::vector<Actor*> ItemPicker::pick(bool forceGui)
 void ItemPicker::pickItemsByGui()
 {
   ItemPickerGui pickerGui;
-  pickerGui.pick(_items);
+  pickerGui.render(_items);
 
   int index = pickerGui.captureItemIndex();
 
@@ -51,7 +51,7 @@ void ItemPicker::pickSingleItem(Actor* target)
   {
     target->afPickable()->pick(_executor);
     std::string eName = _executor->getName() == "Player" ? "You" : _executor->getName();
-    Gui::Root.message(eName + " picked " + (target->getName()) + ".", TCODColor::darkYellow );
+    Gui::Root.message(eName + " picked " + tolowers(target->getName()) + ".", TCODColor::darkYellow );
   }
 
   _itemsPicked.push_back(target);

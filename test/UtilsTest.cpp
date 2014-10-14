@@ -26,3 +26,10 @@ TEST(UtilsTest, loadTiles)
   TileDB tiles;
   tiles.loadTiles("../amarlon/tiles.xml");
 }
+
+TEST(UtilsTest, tolowers)
+{
+  std::string str = "Cycki";
+  ASSERT_EQ(tolowers(str), "cycki");
+}
+

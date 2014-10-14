@@ -9,8 +9,8 @@ using namespace std;
 int main()
 {
 
-  TCODConsole::initRoot(gloScreenWidth,gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
   TCODConsole::root->setCustomFont("../amarlon/terminal.png");
+  TCODConsole::initRoot(gloScreenWidth,gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
 
   TCODMouse::showCursor(false);
   TCOD_key_t lastKey;

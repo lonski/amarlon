@@ -18,9 +18,9 @@ std::string to_stringp(T t, int prec = 1)
 }
 
 static inline std::string tolowers(const std::string& str)
-{
-  std::string r;
-  std::transform(str.begin(), str.end(), r.begin(), [&](char c){ return std::tolower(c);});
+{  
+  std::string r(str);
+  std::transform(r.begin(), r.end(), r.begin(), ::tolower);
   return r;
 }
 
