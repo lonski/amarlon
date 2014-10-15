@@ -1,7 +1,7 @@
 #ifndef MONSTERAI_H
 #define MONSTERAI_H
 
-#include "ai.h"
+#include "Ai.h"
 
 class MonsterAi : public Ai
 {

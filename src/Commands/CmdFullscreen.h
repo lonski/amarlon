@@ -1,7 +1,7 @@
 #ifndef CMDFULLSCREEN_H
 #define CMDFULLSCREEN_H
 
-#include "command.h"
+#include "Command.h"
 
 class CmdFullscreen : public Command
 {

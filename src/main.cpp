@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Utils/glodef.h"
-#include "engine.h"
-#include "World/map.h"
-#include "Gui/gui.h"
+#include "Engine.h"
+#include "World/Map.h"
+#include "Gui/Gui.h"
 
 using namespace std;
 

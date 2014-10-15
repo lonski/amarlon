@@ -1,5 +1,5 @@
-#include "pickable.h"
-#include "Actor/actor.h"
+#include "Pickable.h"
+#include "Actor/Actor.h"
 
 Pickable::Pickable()
   : _owner(nullptr)

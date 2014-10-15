@@ -1,7 +1,7 @@
 #include "MonsterAi.h"
 #include <iostream>
-#include "World/map.h"
-#include "Actor/actor.h"
+#include "World/Map.h"
+#include "Actor/Actor.h"
 #include <cmath>
 
 int MonsterAi::TrackingTurns = 5;

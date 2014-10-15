@@ -1,7 +1,7 @@
 #include "MapGateway.h"
-#include "World/map.h"
+#include "World/Map.h"
 #include "Actor/ActorType.h"
-#include "Actor/actor.h"
+#include "Actor/Actor.h"
 #include <xml/rapidxml_print.hpp>
 #include <fstream>
 #include <iostream>

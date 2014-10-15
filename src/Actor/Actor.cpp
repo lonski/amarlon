@@ -1,5 +1,5 @@
-#include "actor.h"
-#include "World/map.h"
+#include "Actor.h"
+#include "World/Map.h"
 #include <iostream>
 
 ActorDB Actor::DB;

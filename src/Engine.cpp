@@ -1,6 +1,6 @@
-#include "engine.h"
-#include "World/map.h"
-#include "Actor/actor.h"
+#include "Engine.h"
+#include "World/Map.h"
+#include "Actor/Actor.h"
 #include <algorithm>
 
 int Engine::FovRadius = 20;

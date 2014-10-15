@@ -1,4 +1,4 @@
-#include "command.h"
+#include "Command.h"
 #include "CmdMove.h"
 #include "CmdOpen.h"
 #include "CmdFullscreen.h"

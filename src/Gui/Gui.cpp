@@ -1,4 +1,4 @@
-#include "gui.h"
+#include "Gui.h"
 #include <algorithm>
 #include <iostream>
 

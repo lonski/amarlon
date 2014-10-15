@@ -1,8 +1,8 @@
 #include "ActorDB.h"
-#include "Utils/utils.h"
+#include "Utils/Utils.h"
 #include <fstream>
 #include <vector>
-#include "Actor/actor.h"
+#include "Actor/Actor.h"
 #include <algorithm>
 
 using namespace std;

@@ -1,10 +1,10 @@
-#include "attacker.h"
-#include "Actor/actor.h"
+#include "Attacker.h"
+#include "Actor/Actor.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include "Gui/gui.h"
-#include "Utils/utils.h"
+#include "Gui/Gui.h"
+#include "Utils/Utils.h"
 
 Attacker::Attacker(float power)
   : _owner(nullptr)

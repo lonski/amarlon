@@ -1,6 +1,6 @@
-#include "destrucible.h"
-#include "Actor/actor.h"
-#include "Gui/gui.h"
+#include "Destrucible.h"
+#include "Actor/Actor.h"
+#include "Gui/Gui.h"
 
 Destrucible::Destrucible(float maxHp)
   : _owner(nullptr)

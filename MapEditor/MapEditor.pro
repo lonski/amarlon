@@ -23,13 +23,13 @@ DEPENDPATH += ../include/libtcod
 SOURCES += main.cpp\
         MapEditor.cpp \
     ../src/DataGateways/MapGateway.cpp \
-    ../src/World/map.cpp \
-    ../src/Actor/actor.cpp \
+    ../src/World/Map.cpp \
+    ../src/Actor/Actor.cpp \
     ../src/DataGateways/TileDB.cpp \
     ../src/DataGateways/ActorDB.cpp \
-    ../src/Actor/ActorFeatures/container.cpp \
-    ../src/Actor/ActorFeatures/pickable.cpp \
-    ../src/Actor/ActorFeatures/destrucible.cpp
+    ../src/Actor/ActorFeatures/Container.cpp \
+    ../src/Actor/ActorFeatures/Pickable.cpp \
+    ../src/Actor/ActorFeatures/Destrucible.cpp
 
 HEADERS  += MapEditor.h \
     ../src/Actor/ActorDescription.h \
@@ -38,19 +38,20 @@ HEADERS  += MapEditor.h \
     ../include/xml/rapidxml_print.hpp \
     ../include/xml/rapidxml_utils.hpp \
     ../src/DataGateways/MapGateway.h \
-    ../src/World/map.h \
+    ../src/World/Map.h \
     ../src/World/MapId.h \
-    ../src/Actor/actor.h \
+    ../src/Actor/Actor.h \
     ../src/Actor/ActorType.h \
     ../src/DataGateways/TileDB.h \
     ../src/DataGateways/ActorDB.h \
-    ../src/Actor/ActorFeatures/container.h \
-    ../src/Actor/ActorFeatures/pickable.h \
-    ../src/Actor/ActorFeatures/destrucible.h
+    ../src/Actor/ActorFeatures/Container.h \
+    ../src/Actor/ActorFeatures/Pickable.h \
+    ../src/Actor/ActorFeatures/Destrucible.h
 
 FORMS    += MapEditor.ui
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
+unix: LIBS += -L$$PWD/../lib/ -ltcod
 
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include

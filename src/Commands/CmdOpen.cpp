@@ -1,6 +1,6 @@
 #include "CmdOpen.h"
 #include <iostream>
-#include "Utils/utils.h"
+#include "Utils/Utils.h"
 #include <Utils/ItemPicker.h>
 #include <algorithm>
 

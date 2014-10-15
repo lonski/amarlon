@@ -1,7 +1,7 @@
 #ifndef CMDPICK_H
 #define CMDPICK_H
 
-#include "command.h"
+#include "Command.h"
 
 class CmdPick : public Command
 {

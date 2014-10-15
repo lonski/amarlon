@@ -1,7 +1,7 @@
 #ifndef CMDOPEN_H
 #define CMDOPEN_H
 
-#include "command.h"
+#include "Command.h"
 
 class CmdOpenClose : public Command
 {

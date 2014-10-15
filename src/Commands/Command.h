@@ -3,8 +3,8 @@
 
 #include <libtcod.hpp>
 #include <iostream>
-#include "Actor/actor.h"
-#include "World/map.h"
+#include "Actor/Actor.h"
+#include "World/Map.h"
 
 enum class CommandId
 {

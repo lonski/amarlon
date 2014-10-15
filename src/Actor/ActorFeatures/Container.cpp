@@ -1,7 +1,7 @@
-#include "container.h"
+#include "Container.h"
 #include <algorithm>
 #include <iostream>
-#include "Actor/actor.h"
+#include "Actor/Actor.h"
 #include <Gui/ItemPickerGui.h>
 
 Container::Container(size_t maxSize)

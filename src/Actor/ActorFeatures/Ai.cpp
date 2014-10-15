@@ -1,5 +1,5 @@
-#include "ai.h"
-#include "Actor/actor.h"
+#include "Ai.h"
+#include "Actor/Actor.h"
 #include <iostream>
 #include "MonsterAi.h"
 

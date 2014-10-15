@@ -3,7 +3,7 @@
 
 #include <libtcod.hpp>
 #include <vector>
-#include "Commands/command.h"
+#include "Commands/Command.h"
 
 class Actor;
 class Map;

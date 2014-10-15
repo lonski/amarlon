@@ -1,6 +1,6 @@
 #include "ItemPickerGui.h"
 #include <libtcod.hpp>
-#include <Actor/actor.h>
+#include <Actor/Actor.h>
 #include <algorithm>
 #include "Utils/glodef.h"
 

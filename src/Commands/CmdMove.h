@@ -1,7 +1,7 @@
 #ifndef CMDMOVE_H
 #define CMDMOVE_H
 
-#include "command.h"
+#include "Command.h"
 
 class CmdMoveOrAttack : public Command
 {

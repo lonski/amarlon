@@ -5,11 +5,11 @@
 #include <libtcod.hpp>
 #include "ActorType.h"
 #include "DataGateways/ActorDB.h"
-#include "ActorFeatures/container.h"
-#include "ActorFeatures/pickable.h"
-#include "ActorFeatures/destrucible.h"
-#include "ActorFeatures/attacker.h"
-#include "ActorFeatures/ai.h"
+#include "ActorFeatures/Container.h"
+#include "ActorFeatures/Pickable.h"
+#include "ActorFeatures/Destrucible.h"
+#include "ActorFeatures/Attacker.h"
+#include "ActorFeatures/Ai.h"
 
 class Map;
 

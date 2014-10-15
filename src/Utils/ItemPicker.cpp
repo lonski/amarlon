@@ -1,9 +1,9 @@
 #include "ItemPicker.h"
 #include <algorithm>
-#include "World/map.h"
-#include "Actor/actor.h"
-#include "Utils/utils.h"
-#include "Gui/gui.h"
+#include "World/Map.h"
+#include "Actor/Actor.h"
+#include "Utils/Utils.h"
+#include "Gui/Gui.h"
 
 ItemPicker::ItemPicker(Actor *executor, const std::vector<Actor *> &items)
   : _items(items)

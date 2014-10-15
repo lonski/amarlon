@@ -1,7 +1,7 @@
 #ifndef CMDINVENTORY_H
 #define CMDINVENTORY_H
 
-#include "command.h"
+#include "Command.h"
 
 class CmdInventory : public Command
 {

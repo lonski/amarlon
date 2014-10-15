@@ -1,7 +1,7 @@
 #ifndef CMDDROP_H
 #define CMDDROP_H
 
-#include "command.h"
+#include "Command.h"
 
 class CmdDrop : public Command
 {

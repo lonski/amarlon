@@ -6,64 +6,64 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     DataGateways/DataGateway.cpp \
-    World/map.cpp \
+    World/Map.cpp \
     DataGateways/MapGateway.cpp \
     DataGateways/TileDB.cpp \
     CommandExecutor.cpp \
-    Actor/actor.cpp \
-    Commands/command.cpp \
+    Actor/Actor.cpp \
+    Commands/Command.cpp \
     Commands/CmdMove.cpp \
     DataGateways/ActorDB.cpp \
     Commands/CmdOpen.cpp \
     Commands/CmdFullscreen.cpp \
-    Actor/ActorFeatures/container.cpp \
+    Actor/ActorFeatures/Container.cpp \
     Commands/CmdInventory.cpp \
-    Actor/ActorFeatures/pickable.cpp \
+    Actor/ActorFeatures/Pickable.cpp \
     Commands/CmdPick.cpp \
     Utils/ItemPicker.cpp \
     Commands/CmdDrop.cpp \
     Utils/InventoryManager.cpp \
-    Actor/ActorFeatures/destrucible.cpp \
-    Actor/ActorFeatures/attacker.cpp \
-    Actor/ActorFeatures/ai.cpp \
+    Actor/ActorFeatures/Destrucible.cpp \
+    Actor/ActorFeatures/Attacker.cpp \
+    Actor/ActorFeatures/Ai.cpp \
     Actor/ActorFeatures/MonsterAi.cpp \
-    Gui/gui.cpp \
+    Gui/Gui.cpp \
     Gui/ItemPickerGui.cpp \
-    Utils/utils.cpp \
+    Utils/Utils.cpp \
     Engine.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
-    World/map.h \
+    World/Map.h \
     DataGateways/MapGateway.h \
     World/MapId.h \
     World/TileType.h \
-    engine.h \
+    Engine.h \
     DataGateways/TileDB.h \
     CommandExecutor.h \
-    Actor/actor.h \
-    Commands/command.h \
+    Actor/Actor.h \
+    Commands/Command.h \
     Commands/CmdMove.h \
     DataGateways/ActorDB.h \
     Actor/ActorType.h \
     Commands/CmdOpen.h \
     Commands/CmdFullscreen.h \
-    Actor/ActorFeatures/container.h \
+    Actor/ActorFeatures/Container.h \
     Commands/CmdInventory.h \
-    Actor/ActorFeatures/pickable.h \
+    Actor/ActorFeatures/Pickable.h \
     Commands/CmdPick.h \
     Utils/ItemPicker.h \
     Commands/CmdDrop.h \
     Utils/InventoryManager.h \
-    Actor/ActorFeatures/destrucible.h \
-    Actor/ActorFeatures/attacker.h \
-    Actor/ActorFeatures/ai.h \
+    Actor/ActorFeatures/Destrucible.h \
+    Actor/ActorFeatures/Attacker.h \
+    Actor/ActorFeatures/Ai.h \
     Actor/ActorFeatures/MonsterAi.h \
     Actor/ActorFeatures/AiType.h \
-    Gui/gui.h \
+    Gui/Gui.h \
     Gui/ItemPickerGui.h \
     Utils/glodef.h \
-    Utils/utils.h
+    Utils/Utils.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

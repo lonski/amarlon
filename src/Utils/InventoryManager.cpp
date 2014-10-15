@@ -1,5 +1,5 @@
 #include "InventoryManager.h"
-#include "Actor/actor.h"
+#include "Actor/Actor.h"
 #include "ItemPicker.h"
 #include <algorithm>
 

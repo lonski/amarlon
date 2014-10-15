@@ -1,5 +1,5 @@
-#include "map.h"
-#include "Actor/actor.h"
+#include "Map.h"
+#include "Actor/Actor.h"
 #include <iostream>
 #include <algorithm>
 
