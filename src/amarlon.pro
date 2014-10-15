@@ -8,7 +8,6 @@ SOURCES += main.cpp \
     DataGateways/DataGateway.cpp \
     World/map.cpp \
     DataGateways/MapGateway.cpp \
-    engine.cpp \
     DataGateways/TileDB.cpp \
     CommandExecutor.cpp \
     Actor/actor.cpp \
@@ -30,7 +29,8 @@ SOURCES += main.cpp \
     Actor/ActorFeatures/MonsterAi.cpp \
     Gui/gui.cpp \
     Gui/ItemPickerGui.cpp \
-    Utils/utils.cpp
+    Utils/utils.cpp \
+    Engine.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
