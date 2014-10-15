@@ -15,6 +15,7 @@ Ai *Ai::create(AiType type)
   switch (type)
   {
     case AiType::Monster: ai = new MonsterAi;
+    default:;
   }
 
   return ai;
@@ -25,7 +26,7 @@ void Ai::setOwner(Actor *owner)
   _owner = owner;
 }
 
-void Ai::update(Map *map)
+void Ai::update(Map*)
 {
   if (_owner)
   {

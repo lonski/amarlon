@@ -29,7 +29,7 @@ Actor *Pickable::drop()
   return _owner;
 }
 
-void Pickable::use(Actor *user)
+void Pickable::use(Actor*)
 {
 
 }
