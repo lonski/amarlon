@@ -5,7 +5,7 @@
 #include "Utils/Utils.h"
 #include "Gui/Gui.h"
 
-ItemPicker::ItemPicker(Actor *executor, const std::vector<Actor *> &items)
+ItemPicker::ItemPicker(const std::vector<Actor *> &items, Actor *executor)
   : _items(items)
   , _executor(executor)
 {
@@ -27,10 +27,7 @@ std::vector<Actor*> ItemPicker::pick(bool forceGui)
 
 void ItemPicker::pickItemsByGui()
 {
-  ItemPickerGui pickerGui;
-  pickerGui.render(_items);
-
-  int index = pickerGui.captureItemIndex();
+  int index = _pickerGui.pick(_items);
 
   if (index == -1) //take all
   {

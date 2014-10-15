@@ -37,7 +37,7 @@ bool CmdOpenClose::accept(TCOD_key_t &key, Map *map, Actor *executor)
         //display container
         if ( target->afContainer() )
         {
-          ItemPicker picker(executor, target->afContainer()->content());
+          ItemPicker picker(target->afContainer()->content(), executor);
           std::vector<Actor*> itemsPicked = picker.pick(true);
 
           std::for_each(itemsPicked.begin(), itemsPicked.end(), [&](Actor* a)

@@ -16,7 +16,7 @@ public:
   std::vector<Actor*> pickItems();
 
 private:
-  ItemPickerGui pickerGui;
+  ItemPickerGui _pickerGui;
   Actor* _actor;
   std::string _title;
 

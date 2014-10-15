@@ -18,7 +18,7 @@ bool CmdPick::accept(TCOD_key_t &key, Map *map, Actor *executor)
                                   return a->afPickable();
                                 });
 
-    ItemPicker picker(executor, items);
+    ItemPicker picker(items, executor);
     items = picker.pick();
 
     std::for_each(items.begin(), items.end(), [&](Actor* a)

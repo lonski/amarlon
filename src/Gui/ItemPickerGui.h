@@ -10,19 +10,32 @@ class Actor;
 class ItemPickerGui
 {
 public:
-  ItemPickerGui(int width = 30, int height = 20);
+  ItemPickerGui(std::string title = "", int width = 30, int height = 20);
 
-  void render(const std::vector<Actor *> items, std::string title = "");
-  int captureItemIndex(TCOD_keycode_t takeAllKey = TCODK_KPENTER);
+  /**
+   * @return index of choosen item in array
+   *         Special cases:
+   *         -2 -> no item selected
+   *         -1 -> all items selected
+   */
+  int pick(const std::vector<Actor *> &items);
+  void setTitle(const std::string &title);
 
 private:
+  std::string _title;
+
   const int _conWidth;
   const int _conHeight;
   TCODConsole _console;
 
+  const std::vector<Actor *>* _items;
+  int _index;
+
+  void render();
   void renderConsoleFrame(std::string title);
   void blitConsole();
-  void renderItems(const std::vector<Actor *> &items);
+  void renderItems();
+  void handlePressedKey(TCOD_key_t key);
 
 };
 

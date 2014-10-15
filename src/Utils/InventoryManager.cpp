@@ -11,15 +11,15 @@ InventoryManager::InventoryManager(Actor* actor)
 void InventoryManager::display()
 {
   if (_actor->afContainer())
-  {
-    pickerGui.render(_actor->afContainer()->content(),_title);
-    pickerGui.captureItemIndex();
+  {    
+    _pickerGui.pick(_actor->afContainer()->content());
   }
 }
 
 void InventoryManager::setTitle(const std::string &title)
 {
   _title = title;
+  _pickerGui.setTitle(_title);
 }
 
 std::vector<Actor *> InventoryManager::pickItems()
@@ -28,7 +28,7 @@ std::vector<Actor *> InventoryManager::pickItems()
 
   if (_actor->afContainer())
   {
-    ItemPicker picker(NULL, _actor->afContainer()->content());
+    ItemPicker picker(_actor->afContainer()->content());
     picked = picker.pick(true);
 
     std::for_each(picked.begin(), picked.end(), [&](Actor* a)
