@@ -67,7 +67,7 @@ HEADERS += \
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
-unix:  LIBS += -L$$PWD/../lib/ -ltcod-mingw
+unix:  LIBS += -L$$PWD/../lib/ -ltcod
 
 INCLUDEPATH += $$PWD/../include
 INCLUDEPATH += $$PWD/../include/libtcod
