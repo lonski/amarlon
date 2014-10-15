@@ -66,8 +66,8 @@ HEADERS += \
     Utils/utils.h
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/ -ltcod-mingw
+win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
+unix:  LIBS += -L$$PWD/../lib/ -ltcod-mingw
 
 INCLUDEPATH += $$PWD/../include
 INCLUDEPATH += $$PWD/../include/libtcod
