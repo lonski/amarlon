@@ -93,30 +93,17 @@ Pickable *ActorDB::getPickable(ActorType type)
   return pickable;
 }
 
-Destrucible *ActorDB::getDestrucible(ActorType type)
+Fighter *ActorDB::getFighter(ActorType type)
 {
-  Destrucible* dest = nullptr;
+  Fighter* f = nullptr;
 
-  if (_destrucibles.count(type))
+  if (_fighters.count(type))
   {
-    DestrucibleDescription& dsc = _destrucibles[type];
-    dest = new Destrucible(dsc.maxHp);
+    FighterDescription& dsc = _fighters[type];
+    f = new Fighter(dsc.power, dsc.maxHp);
   }
 
-  return dest;
-}
-
-Attacker *ActorDB::getAttacker(ActorType type)
-{
-  Attacker* att = nullptr;
-
-  if (_attackers.count(type))
-  {
-    AttackerDescription& dsc = _attackers[type];
-    att = new Attacker(dsc.power);
-  }
-
-  return att;
+  return f;
 }
 
 Ai *ActorDB::getAi(ActorType type)
@@ -200,25 +187,15 @@ bool ActorDB::loadActors(std::string fn)
       }
 
       // ===== DESTRUCIBLE DESCRIPTION ===== //
-      xml_node<>* destNode = actorNode->first_node("Destrucible");
-      if (destNode)
+      xml_node<>* fighterNode = actorNode->first_node("Fighter");
+      if (fighterNode)
       {
-        DestrucibleDescription destDsc;
+        FighterDescription fDsc;
 
-        destDsc.maxHp = std::stof( destNode->first_attribute("maxHp")->value() );
+        fDsc.power = std::stof( fighterNode->first_attribute("power")->value() );
+        fDsc.maxHp = std::stof( fighterNode->first_attribute("maxHp")->value() );
 
-        _destrucibles[id] = destDsc;
-      }
-
-      // ===== DESTRUCIBLE DESCRIPTION ===== //
-      xml_node<>* attackerNode = actorNode->first_node("Attacker");
-      if (attackerNode)
-      {
-        AttackerDescription attDsc;
-
-        attDsc.power = std::stof( attackerNode->first_attribute("power")->value() );
-
-        _attackers[id] = attDsc;
+        _fighters[id] = fDsc;
       }
 
       // ===== AI DESCRIPTION ===== //

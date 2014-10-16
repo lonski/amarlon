@@ -11,9 +11,8 @@ Actor::Actor(ActorType aId, int x, int y)
   , _y(y)
 {  
   setAfContainer  ( Actor::DB.getContainer  (aId) );
-  setAfPickable   ( Actor::DB.getPickable   (aId) );
-  setAfDestrucible( Actor::DB.getDestrucible(aId) );
-  setAfAttacker   ( Actor::DB.getAttacker   (aId) );
+  setAfPickable   ( Actor::DB.getPickable   (aId) );  
+  setAfFighter    ( Actor::DB.getFighter    (aId) );
   setAfAi         ( Actor::DB.getAi         (aId) );
 }
 
@@ -29,20 +28,18 @@ void Actor::morph(ActorType newType)
 
   delete _afContainer;
   delete _afPickable;
-  delete _afDestrucible;
-  delete _afAttacker;
+  delete _afFighter;
   delete _afAi;
 
-  setAfContainer  ( Actor::DB.getContainer  (_id) );
-  setAfPickable   ( Actor::DB.getPickable   (_id) );
-  setAfDestrucible( Actor::DB.getDestrucible(_id) );
-  setAfAttacker   ( Actor::DB.getAttacker   (_id) );
-  setAfAi         ( Actor::DB.getAi         (_id) );
+  setAfContainer( Actor::DB.getContainer(_id) );
+  setAfPickable ( Actor::DB.getPickable (_id) );
+  setAfFighter  ( Actor::DB.getFighter  (_id) );
+  setAfAi       ( Actor::DB.getAi       (_id) );
 }
 
 bool Actor::isAlive() const
 {
-  return  afDestrucible() && afDestrucible()->isAlive();
+  return  afFighter() && afFighter()->isAlive();
 }
 
 bool Actor::isFovOnly() const
@@ -110,28 +107,19 @@ void Actor::setAfPickable(Pickable *afPickable)
   if (_afPickable)
     _afPickable->setOwner(this);
 }
-Destrucible *Actor::afDestrucible() const
+
+Fighter *Actor::afFighter() const
 {
-  return _afDestrucible;
+  return _afFighter;
 }
 
-void Actor::setAfDestrucible(Destrucible *afDestrucible)
+void Actor::setAfFighter(Fighter *afFighter)
 {
-  _afDestrucible = afDestrucible;
-  if (_afDestrucible)
-    _afDestrucible->setOwner(this);
-}
-Attacker *Actor::afAttacker() const
-{
-  return _afAttacker;
+  _afFighter = afFighter;
+  if (_afFighter)
+    _afFighter->setOwner(this);
 }
 
-void Actor::setAfAttacker(Attacker *afAttacker)
-{
-  _afAttacker = afAttacker;
-  if (_afAttacker)
-    _afAttacker->setOwner(this);
-}
 Ai *Actor::afAi() const
 {
   return _afAi;

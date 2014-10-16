@@ -23,14 +23,14 @@ SOURCES += main.cpp \
     Utils/ItemPicker.cpp \
     Commands/CmdDrop.cpp \
     Utils/InventoryManager.cpp \
-    Actor/ActorFeatures/Destrucible.cpp \
-    Actor/ActorFeatures/Attacker.cpp \
     Actor/ActorFeatures/Ai.cpp \
     Actor/ActorFeatures/MonsterAi.cpp \
     Gui/Gui.cpp \
     Gui/ItemPickerGui.cpp \
     Utils/Utils.cpp \
-    Engine.cpp
+    Engine.cpp \
+    Actor/ActorFeatures/ActorFeature.cpp \
+    Actor/ActorFeatures/Fighter.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -55,15 +55,15 @@ HEADERS += \
     Utils/ItemPicker.h \
     Commands/CmdDrop.h \
     Utils/InventoryManager.h \
-    Actor/ActorFeatures/Destrucible.h \
-    Actor/ActorFeatures/Attacker.h \
     Actor/ActorFeatures/Ai.h \
     Actor/ActorFeatures/MonsterAi.h \
     Actor/ActorFeatures/AiType.h \
     Gui/Gui.h \
     Gui/ItemPickerGui.h \
     Utils/glodef.h \
-    Utils/Utils.h
+    Utils/Utils.h \
+    Actor/ActorFeatures/ActorFeature.h \
+    Actor/ActorFeatures/Fighter.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

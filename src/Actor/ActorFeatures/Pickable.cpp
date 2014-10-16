@@ -2,13 +2,7 @@
 #include "Actor/Actor.h"
 
 Pickable::Pickable()
-  : _owner(nullptr)
 {
-}
-
-void Pickable::setOwner(Actor *owner)
-{
-  _owner = owner;
 }
 
 bool Pickable::pick(Actor *picker)

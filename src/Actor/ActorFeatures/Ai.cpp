@@ -4,7 +4,6 @@
 #include "MonsterAi.h"
 
 Ai::Ai()
-  : _owner(nullptr)
 {
 }
 
@@ -19,11 +18,6 @@ Ai *Ai::create(AiType type)
   }
 
   return ai;
-}
-
-void Ai::setOwner(Actor *owner)
-{
-  _owner = owner;
 }
 
 void Ai::update(Map*)

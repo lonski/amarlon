@@ -5,14 +5,8 @@
 #include <Gui/ItemPickerGui.h>
 
 Container::Container(size_t maxSize)
-  : _owner(nullptr)
-  , _maxSize(maxSize)
+  : _maxSize(maxSize)
 {
-}
-
-void Container::setOwner(Actor *owner)
-{
-  _owner = owner;
 }
 
 bool Container::add(Actor *actor)

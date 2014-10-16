@@ -11,8 +11,7 @@
 
 class Container;
 class Pickable;
-class Destrucible;
-class Attacker;
+class Fighter;
 class Ai;
 
 struct ActorDescription
@@ -36,13 +35,9 @@ struct PickableDescription
 
 };
 
-struct DestrucibleDescription
+struct FighterDescription
 {
   float maxHp;
-};
-
-struct AttackerDescription
-{
   float power;
 };
 
@@ -66,8 +61,7 @@ public:
   //ActorFeatures
   Container* getContainer(ActorType type);
   Pickable* getPickable(ActorType type);
-  Destrucible* getDestrucible(ActorType type);
-  Attacker* getAttacker(ActorType type);
+  Fighter* getFighter(ActorType type);
   Ai* getAi(ActorType type);
 
   bool loadActors(std::string fn);
@@ -76,8 +70,7 @@ private:
   std::map<ActorType, ActorDescription> _actors;
   std::map<ActorType, ContainerDescription> _containers;
   std::map<ActorType, PickableDescription> _pickables;
-  std::map<ActorType, DestrucibleDescription> _destrucibles;
-  std::map<ActorType, AttackerDescription> _attackers;
+  std::map<ActorType, FighterDescription> _fighters;
   std::map<ActorType, AiDescription> _ais;
 
 };

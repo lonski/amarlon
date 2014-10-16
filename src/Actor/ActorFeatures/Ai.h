@@ -1,24 +1,21 @@
 #ifndef AI_H
 #define AI_H
 
+#include "ActorFeature.h"
 #include "AiType.h"
 
 class Actor;
 class Map;
 
-class Ai
+class Ai : public ActorFeature
 {
 public:
   Ai();
   virtual ~Ai() {}
 
-  void setOwner(Actor* owner);
   virtual void update(Map* map);
 
   static Ai* create(AiType type);
-
-protected:
-  Actor* _owner;
 
 };
 

@@ -3,14 +3,14 @@
 
 #include <vector>
 #include <string>
+#include "ActorFeature.h"
 
 class Actor;
 
-class Container
+class Container : public ActorFeature
 {
 public:
   Container(size_t maxSize);
-  void setOwner(Actor* owner);
 
   bool add(Actor* actor);
   bool remove(Actor* actor);
@@ -21,7 +21,6 @@ public:
   void setMaxSize(const size_t &maxSize);
 
 private:
-  Actor* _owner;
   std::vector<Actor*> _inventory;
   size_t _maxSize;
 

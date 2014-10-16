@@ -64,9 +64,9 @@ void MonsterAi::huntPlayer()
       _owner->move(0, stepDy);
     }
   }
-  else if ( _owner->afAttacker() )
+  else if ( _owner->afFighter() )
   {
-    _owner->afAttacker()->attack(Actor::Player);
+    _owner->afFighter()->attack(Actor::Player);
   }
 }
 

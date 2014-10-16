@@ -7,8 +7,7 @@
 #include "DataGateways/ActorDB.h"
 #include "ActorFeatures/Container.h"
 #include "ActorFeatures/Pickable.h"
-#include "ActorFeatures/Destrucible.h"
-#include "ActorFeatures/Attacker.h"
+#include "ActorFeatures/Fighter.h"
 #include "ActorFeatures/Ai.h"
 
 class Map;
@@ -42,14 +41,12 @@ public:
 
   Container*   afContainer()   const;
   Pickable*    afPickable()    const;
-  Destrucible* afDestrucible() const;
-  Attacker*    afAttacker()    const;
+  Fighter*     afFighter()     const;
   Ai*          afAi()          const;
 
   void setAfContainer  (Container*   afContainer);
   void setAfPickable   (Pickable*    afPickable);
-  void setAfDestrucible(Destrucible* afDestrucible);
-  void setAfAttacker   (Attacker*    afAttacker);
+  void setAfFighter    (Fighter*     afFighter);
   void setAfAi         (Ai*          afAi);
 
 private:
@@ -57,10 +54,9 @@ private:
   int _x, _y;
 
   Container* _afContainer;
-  Pickable* _afPickable;
-  Destrucible* _afDestrucible;
-  Attacker* _afAttacker;
-  Ai*       _afAi;
+  Pickable*  _afPickable;
+  Fighter*   _afFighter;
+  Ai*        _afAi;
 
 };
 

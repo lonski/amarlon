@@ -3,12 +3,10 @@
 		<Container maxSize="30">
 			<Content aid="12"/>
 		</Container>
-		<Destrucible maxHp="20"/>
-		<Attacker power="5"/>
+		<Fighter power="5" maxHp="20"/>
 	</Actor>
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Destrucible maxHp="10"/>
-		<Attacker power="2"/>
+		<Fighter  power="2" maxHp="10"/>
 		<Ai type="1"/>
 	</Actor>
 	<Actor name="DoorClosed" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0"/>
