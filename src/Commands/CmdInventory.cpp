@@ -1,4 +1,4 @@
-#include "cmdinventory.h"
+#include "CmdInventory.h"
 #include <iostream>
 #include <algorithm>
 #include "Utils/InventoryManager.h"
