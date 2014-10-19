@@ -19,14 +19,10 @@ void CmdClose::execute(Map *map, Actor *executor)
   _dSelector.select(dx, dy);
 
   Actor* target = map->getFirstActor(x+dx, y+dy);
-  if ( target )
+  if ( target && target->afOpenable() )
   {
-    //TODO: more generic closable, lock support
-
-    //close doors
-    if ( target->getId() == ActorType::DoorOpen)
+    if ( target->afOpenable()->close(executor) )
     {
-      target->morph(ActorType::DoorClosed);
       map->updateActorCell(target);
     }
   }
