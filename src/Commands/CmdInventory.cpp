@@ -7,19 +7,17 @@ CmdInventory::CmdInventory()
 {
 }
 
-bool CmdInventory::accept(TCOD_key_t &key, Map *, Actor *executor)
+bool CmdInventory::accept(TCOD_key_t &key)
 {
-  bool accepted = ( key.vk == TCODK_CHAR && key.c == 'i' );
+  return ( key.vk == TCODK_CHAR && key.c == 'i' );
+}
 
-  if (accepted)
+void CmdInventory::execute(Map *map, Actor *executor)
+{
+  if ( executor->afContainer() )
   {
-    if ( executor->afContainer() )
-    {
-      InventoryManager inv(executor);
-      inv.setTitle("Inventory");
-      inv.display();
-    }
+    InventoryManager inv(executor);
+    inv.setTitle("Inventory");
+    inv.display();
   }
-
-  return accepted;
 }

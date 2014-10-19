@@ -8,12 +8,19 @@ class Actor;
 class Pickable : public ActorFeature
 {
 public:
-  Pickable();
+  Pickable(bool stackable = false, int amount = 1);
   virtual ~Pickable() {}
 
-  virtual bool pick(Actor* picker);
-  virtual Actor* drop();
   virtual void use(Actor* user);
+  Actor* spilt(int amount);
+
+  int getAmount() const;
+  void setAmount(int getAmount);
+  bool isStackable() const;
+
+private:
+  bool _stackable;
+  int _amount;
 
 };
 

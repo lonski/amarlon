@@ -1,4 +1,4 @@
-#include "ItemPickerGui.h"
+#include "ItemPickerWindow.h"
 #include "Utils/glodef.h"
 #include "Actor/Actor.h"
 #include <libtcod.hpp>
@@ -47,16 +47,24 @@ void ItemPickerGui::render()
 void ItemPickerGui::renderConsoleFrame(std::string title)
 {
   _console.setDefaultForeground(TCODColor(200,180,50));
-  _console.printFrame(0, 0, _conWidth, _conHeight, true, TCOD_BKGND_DEFAULT, title.empty() ? NULL : title.c_str() );
+  _console.printFrame(0, 0, _conWidth, _conHeight, true, TCOD_BKGND_DEFAULT,
+                      title.empty() ? NULL : title.c_str() );
 }
 
 void ItemPickerGui::renderItems()
 {
   int row = 0;
+  int amount = 1;
   std::for_each(_items->begin(), _items->end(), [&](Actor* actor)
   {
-    _console.setDefaultForeground( row == _index ? TCODColor::white : TCODColor::lighterGrey);
-    _console.print(2,++row,"%s", actor->getName().c_str());
+    amount = actor->afPickable()->getAmount();
+
+    _console.setDefaultForeground( row == _index ? TCODColor::white : TCODColor::lighterGrey);    
+
+    if (amount > 1)
+      _console.print(2,++row,"%s (%d)", actor->getName().c_str(), amount);
+    else
+      _console.print(2,++row,"%s", actor->getName().c_str());
   });
 }
 

@@ -32,7 +32,8 @@ struct ContainerDescription
 
 struct PickableDescription
 {
-
+  bool stackable;
+  int amount;
 };
 
 struct FighterDescription

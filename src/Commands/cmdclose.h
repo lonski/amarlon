@@ -1,13 +1,13 @@
-#ifndef CMDOPEN_H
-#define CMDOPEN_H
+#ifndef CMDCLOSE_H
+#define CMDCLOSE_H
 
 #include "Command.h"
 #include "Utils/DirectionSelector.h"
 
-class CmdOpen : public Command
+class CmdClose : public Command
 {
 public:
-  CmdOpen();
+  CmdClose();
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Map* map, Actor* executor);
 
@@ -16,4 +16,4 @@ private:
 
 };
 
-#endif // CMDOPEN_H
+#endif // CMDCLOSE_H

@@ -10,19 +10,20 @@ class Actor;
 class Container : public ActorFeature
 {
 public:
-  Container(size_t maxSize);
+  Container(size_t slotCount);
 
   bool add(Actor* actor);
   bool remove(Actor* actor);
   const std::vector<Actor*>& content() const;
   size_t size() const;
 
-  size_t maxSize() const;
-  void setMaxSize(const size_t &maxSize);
+  size_t slotCount() const;
+  void setSlotCount(const size_t &slotCount);
 
+  bool pushNewItem(Actor *actor);
 private:
   std::vector<Actor*> _inventory;
-  size_t _maxSize;
+  size_t _slotCount;
 
 };
 

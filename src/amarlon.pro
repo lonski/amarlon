@@ -26,11 +26,14 @@ SOURCES += main.cpp \
     Actor/ActorFeatures/Ai.cpp \
     Actor/ActorFeatures/MonsterAi.cpp \
     Gui/Gui.cpp \
-    Gui/ItemPickerGui.cpp \
     Utils/Utils.cpp \
     Engine.cpp \
     Actor/ActorFeatures/ActorFeature.cpp \
-    Actor/ActorFeatures/Fighter.cpp
+    Actor/ActorFeatures/Fighter.cpp \
+    Gui/ItemPickerWindow.cpp \
+    Gui/AmountWindow.cpp \
+    Commands/CmdClose.cpp \
+    Utils/DirectionSelector.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -59,11 +62,14 @@ HEADERS += \
     Actor/ActorFeatures/MonsterAi.h \
     Actor/ActorFeatures/AiType.h \
     Gui/Gui.h \
-    Gui/ItemPickerGui.h \
     Utils/glodef.h \
     Utils/Utils.h \
     Actor/ActorFeatures/ActorFeature.h \
-    Actor/ActorFeatures/Fighter.h
+    Actor/ActorFeatures/Fighter.h \
+    Gui/ItemPickerWindow.h \
+    Gui/AmountWindow.h \
+    Commands/CmdClose.h \
+    Utils/DirectionSelector.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

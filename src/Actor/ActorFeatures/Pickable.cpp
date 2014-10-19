@@ -1,29 +1,43 @@
 #include "Pickable.h"
 #include "Actor/Actor.h"
+#include <iostream>
 
-Pickable::Pickable()
+Pickable::Pickable(bool stackable, int amount)
+  : _stackable(stackable)
+  , _amount(amount)
 {
 }
 
-bool Pickable::pick(Actor *picker)
+Actor* Pickable::spilt(int amount)
 {
-  bool r = false;
+  Actor* r = _owner;
 
-  if ( picker->afContainer() && _owner )
+  if ( isStackable() && amount < _amount && amount > 0 )
   {
-    r = picker->afContainer()->add(_owner);
+    setAmount(_amount - amount);
+    r = new Actor( _owner->getId(), _owner->getX(), _owner->getY() );
+    r->afPickable()->setAmount(amount);    
   }
 
   return r;
 }
 
-Actor *Pickable::drop()
-{
-  //in future for example block when cursed item
-  return _owner;
-}
-
 void Pickable::use(Actor*)
 {
-
+  //todo
 }
+
+bool Pickable::isStackable() const
+{
+  return _stackable;
+}
+int Pickable::getAmount() const
+{
+  return _amount;
+}
+
+void Pickable::setAmount(int amount)
+{
+  _amount = amount;
+}
+

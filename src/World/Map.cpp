@@ -159,6 +159,7 @@ void Map::render(TCODConsole *console)
     bool onlyInFov = actor->isFovOnly();
     bool explored = isExplored(actor->getX(), actor->getY());
 
+
     if (inFov || (!onlyInFov && explored) )
     {      
       console->putChar(actor->getX(), actor->getY(), actor->getChar());

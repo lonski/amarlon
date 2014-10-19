@@ -33,7 +33,7 @@ std::vector<Actor *> InventoryManager::pickItems()
 
     std::for_each(picked.begin(), picked.end(), [&](Actor* a)
     {
-      _actor->afContainer()->remove( a->afPickable()->drop() );
+      _actor->afContainer()->remove( a );
     });
   }
 

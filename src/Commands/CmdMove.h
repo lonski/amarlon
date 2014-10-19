@@ -7,7 +7,14 @@ class CmdMoveOrAttack : public Command
 {
 public:
   CmdMoveOrAttack();
-  bool accept(TCOD_key_t &key, Map* map, Actor* executor);
+  virtual bool accept(TCOD_key_t &key);
+  virtual void execute(Map* map, Actor* executor);
+
+  virtual void setDirection(int dx, int dy);
+
+private:
+  int _dx;
+  int _dy;
 
 };
 

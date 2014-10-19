@@ -86,8 +86,8 @@ Pickable *ActorDB::getPickable(ActorType type)
 
   if (_pickables.count(type))
   {
-    //PickableDescription& dsc = _pickables[type];
-    pickable = new Pickable;
+    PickableDescription& dsc = _pickables[type];
+    pickable = new Pickable(dsc.stackable, dsc.amount);
   }
 
   return pickable;
@@ -119,6 +119,38 @@ Ai *ActorDB::getAi(ActorType type)
   return ai;
 }
 
+template<typename T>
+T getAttribute(xml_node<>* node, std::string attribute)
+{
+  T result;
+  xml_attribute<>* nodeAtr = node->first_attribute(attribute.c_str());
+
+  if ( nodeAtr )
+  {
+    std::string value = nodeAtr->value();
+
+    std::stringstream ss;
+    ss << value;
+    ss >> result;
+  }
+
+  return result;
+}
+
+template<>
+std::string getAttribute<std::string>(xml_node<>* node, std::string attribute)
+{
+  xml_attribute<>* nodeAtr = node->first_attribute(attribute.c_str());
+  std::string value;
+
+  if ( nodeAtr )
+  {
+    value = nodeAtr->value();
+  }
+
+  return value;
+}
+
 bool ActorDB::loadActors(std::string fn)
 {
   bool success = false;
@@ -140,22 +172,22 @@ bool ActorDB::loadActors(std::string fn)
     {
       // ===== ACTOR DESCRIPTION ===== //
       ActorDescription actorDsc;
-      actorDsc.name = actorNode->first_attribute("name")->value();
+      actorDsc.name = getAttribute<std::string>(actorNode, "name");
 
-      std::string charStr = actorNode->first_attribute("character")->value();
+      std::string charStr = getAttribute<std::string>(actorNode, "character");
       if (charStr.size() > 1 || std::isdigit(charStr[0]))
         actorDsc.character = (unsigned char)std::stol(charStr);
       else
         actorDsc.character = charStr[0];
 
-      string colorStr = actorNode->first_attribute("color")->value();
+      string colorStr = getAttribute<std::string>(actorNode, "color");
       actorDsc.color = strToColor(colorStr);
 
-      ActorType id = (ActorType)std::stoi( actorNode->first_attribute("id")->value() );
+      ActorType id = (ActorType)getAttribute<int>(actorNode, "id");
 
-      actorDsc.blocks = (bool)std::stoi( actorNode->first_attribute("blocks")->value() );
-      actorDsc.fovOnly = (bool)std::stoi( actorNode->first_attribute("fovOnly")->value() );
-      actorDsc.transparent = (bool)std::stoi( actorNode->first_attribute("transparent")->value() );
+      actorDsc.blocks = getAttribute<bool>(actorNode, "blocks");
+      actorDsc.fovOnly = getAttribute<bool>(actorNode, "fovOnly");
+      actorDsc.transparent = getAttribute<bool>(actorNode, "transparent");
 
       _actors[id] = actorDsc;
 
@@ -164,12 +196,13 @@ bool ActorDB::loadActors(std::string fn)
       if ( containerNode )
       {
         ContainerDescription contDsc;
-        contDsc.maxSize = std::stol(containerNode->first_attribute("maxSize")->value());
+
+        contDsc.maxSize = getAttribute<int>(containerNode, "maxSize");
 
         xml_node<>* contentNode = containerNode->first_node("Content");
         while ( contentNode )
-        {
-          ActorType aid = (ActorType)std::stol( contentNode->first_attribute("aid")->value() );
+        {          
+          ActorType aid = (ActorType)getAttribute<int>(contentNode, "aid");
           contDsc.content.push_back( aid );
 
           contentNode = contentNode->next_sibling();
@@ -183,6 +216,11 @@ bool ActorDB::loadActors(std::string fn)
       if (pickableNode)
       {
         PickableDescription pickDsc;
+
+        pickDsc.stackable = getAttribute<bool>(pickableNode, "stackable");
+        pickDsc.amount = getAttribute<int>(pickableNode, "amount");
+        if ( pickDsc.amount == 0) pickDsc.amount = 1;
+
         _pickables[id] = pickDsc;
       }
 
@@ -192,8 +230,8 @@ bool ActorDB::loadActors(std::string fn)
       {
         FighterDescription fDsc;
 
-        fDsc.power = std::stof( fighterNode->first_attribute("power")->value() );
-        fDsc.maxHp = std::stof( fighterNode->first_attribute("maxHp")->value() );
+        fDsc.power = getAttribute<float>(fighterNode, "power");
+        fDsc.maxHp = getAttribute<float>(fighterNode, "maxHp");
 
         _fighters[id] = fDsc;
       }
@@ -204,7 +242,7 @@ bool ActorDB::loadActors(std::string fn)
       {
         AiDescription aiDsc;
 
-        aiDsc.type = (AiType)std::stol( aiNode->first_attribute("type")->value() );
+        aiDsc.type = (AiType)getAttribute<int>(aiNode, "type");
 
         _ais[id] = aiDsc;
       }

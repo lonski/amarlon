@@ -1,41 +1,52 @@
 #include "CmdMove.h"
 #include "Utils/Utils.h"
+#
 
 CmdMoveOrAttack::CmdMoveOrAttack()
+  : _dx(0)
+  , _dy(0)
 {
 }
 
-bool CmdMoveOrAttack::accept(TCOD_key_t &key, Map* map, Actor* executor)
+bool CmdMoveOrAttack::accept(TCOD_key_t &key)
 {
-  int dx(0), dy(0);
-  bool accepted = handleDirectionKey(key, dx, dy);
+  _dx = 0;
+  _dy = 0;
+  return handleDirectionKey(key, _dx, _dy);
+}
 
-  if ( accepted )
+void CmdMoveOrAttack::execute(Map *map, Actor *executor)
+{
+  int targetX = executor->getX() + _dx;
+  int targetY = executor->getY() + _dy;
+  bool blocked = map->isBlocked(targetX, targetY);
+
+  if ( !blocked )
   {
-    int targetX = executor->getX() + dx;
-    int targetY = executor->getY() + dy;
-    bool blocked = map->isBlocked(targetX, targetY);
-
-    if ( !blocked )
+    executor->move(_dx, _dy);
+  }
+  else
+  {
+    std::vector<Actor*> toAttack = map->getActors(targetX, targetY, [&](Actor* a) -> bool
     {
-      executor->move(dx, dy);
-    }
-    else
-    {
-      std::vector<Actor*> toAttack = map->getActors(targetX, targetY, [&](Actor* a) -> bool
-      {
-        return a->afFighter() && a->afFighter()->isAlive();
-      });
+      return a->afFighter() && a->afFighter()->isAlive();
+    });
 
-      //attack
-      if (!toAttack.empty() && executor->afFighter() )
-      {
-        assert(toAttack.size() == 1);
-        Actor* enemy = toAttack[0];
-        executor->afFighter()->attack(enemy);
-      }
+    //attack
+    if (!toAttack.empty() && executor->afFighter() )
+    {
+      assert(toAttack.size() == 1);
+      Actor* enemy = toAttack[0];
+      executor->afFighter()->attack(enemy);
     }
   }
+}
 
-  return accepted;
+void CmdMoveOrAttack::setDirection(int dx, int dy)
+{
+  if (dx > 0) _dx = 1;
+  else if (dx < 0) _dx = -1;
+
+  if (dy > 0) _dy = 1;
+  else if (dy < 0) _dy = -1;
 }

@@ -1,31 +1,42 @@
 #include "CmdPick.h"
 #include <Utils/ItemPicker.h>
+#include <Gui/AmountWindow.h>
+#include <Actor/ActorFeatures/Container.h>
 #include <algorithm>
 
 CmdPick::CmdPick()
 {
 }
 
-bool CmdPick::accept(TCOD_key_t &key, Map *map, Actor *executor)
+bool CmdPick::accept(TCOD_key_t &key)
 {
-  bool accepted = ( key.vk == TCODK_CHAR && key.c == ',' );
+  return ( key.vk == TCODK_CHAR && key.c == ',' );
+}
 
-  if (accepted)
+void CmdPick::execute(Map *map, Actor *executor)
+{
+  std::vector<Actor*> items = map->getActors(executor->getX(), executor->getY(),
+                              [](Actor* a) -> bool
+                              {
+                                return a->afPickable();
+                              });
+
+  ItemPicker picker(items, executor);
+  items = picker.pick();
+
+  std::for_each(items.begin(), items.end(), [&](Actor* a)
   {
-    std::vector<Actor*> items = map->getActors(executor->getX(), executor->getY(),
-                                [](Actor* a) -> bool
-                                {
-                                  return a->afPickable();
-                                });
+    map->removeActor(a);
+  });
+}
 
-    ItemPicker picker(items, executor);
-    items = picker.pick();
+void CmdPick::execute(Container* container, Actor *executor, bool forceGui)
+{
+  ItemPicker picker(container->content(), executor);
+  std::vector<Actor*> itemsPicked = picker.pick(forceGui);
 
-    std::for_each(items.begin(), items.end(), [&](Actor* a)
-    {
-      map->removeActor(a);
-    });
-  }
-
-  return accepted;
+  std::for_each(itemsPicked.begin(), itemsPicked.end(), [&](Actor* a)
+  {
+    container->remove(a);
+  });
 }

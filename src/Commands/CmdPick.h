@@ -3,11 +3,15 @@
 
 #include "Command.h"
 
+class Container;
+
 class CmdPick : public Command
 {
 public:
   CmdPick();
-  bool accept(TCOD_key_t &key, Map* map, Actor* executor);
+  virtual bool accept(TCOD_key_t &key);
+  virtual void execute(Map* map, Actor* executor);
+  virtual void execute(Container *container, Actor* executor, bool forceGui = true);
 
 };
 

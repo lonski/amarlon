@@ -77,7 +77,8 @@ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 			<Actor id="4" x="61" y="33"/>
 			<Actor id="11" x="47" y="29"/>
 			<Actor id="11" x="47" y="28"/>
-			<Actor id="13" x="41" y="32"/>
+			<Actor id="13" x="41" y="32">
+			</Actor>
 			<Actor id="12" x="41" y="33"/>
 			<Actor id="14" x="41" y="33"/>
 		</Actors>

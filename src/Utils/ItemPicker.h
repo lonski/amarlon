@@ -1,7 +1,7 @@
 #ifndef ITEMPICKER_H
 #define ITEMPICKER_H
 
-#include <Gui/ItemPickerGui.h>
+#include <Gui/ItemPickerWindow.h>
 
 class Map;
 
@@ -11,7 +11,7 @@ public:
   ItemPicker(const std::vector<Actor *> &items, Actor* executor = nullptr);
   std::vector<Actor *> pick(bool forceGui = false);
 
-  void pickSingleItem(Actor* target);
+  void pickSingleItem(Actor* target, bool takAll = false);
   void pickItemsByGui();
 private:
   const std::vector<Actor*>& _items;

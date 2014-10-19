@@ -4,14 +4,12 @@ CmdFullscreen::CmdFullscreen()
 {
 }
 
-bool CmdFullscreen::accept(TCOD_key_t &key, Map*, Actor*)
+bool CmdFullscreen::accept(TCOD_key_t &key)
 {
-  bool accepted = ( key.vk == TCODK_F12 );
+  return ( key.vk == TCODK_F12 );
+}
 
-  if (accepted)
-  {
-    TCODConsole::root->setFullscreen( !TCODConsole::root->isFullscreen() );
-  }
-
-  return accepted;
+void CmdFullscreen::execute(Map*, Actor*)
+{
+  TCODConsole::root->setFullscreen( !TCODConsole::root->isFullscreen() );
 }

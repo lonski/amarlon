@@ -4,6 +4,7 @@
 #include "Actor/Actor.h"
 #include "Utils/Utils.h"
 #include "Gui/Gui.h"
+#include "Gui/AmountWindow.h"
 
 ItemPicker::ItemPicker(const std::vector<Actor *> &items, Actor *executor)
   : _items(items)
@@ -33,7 +34,7 @@ void ItemPicker::pickItemsByGui()
   {
     std::for_each(_items.begin(), _items.end(), [&](Actor* a)
     {
-      pickSingleItem(a);
+      pickSingleItem(a, true);
     });
   }
   else if (index < (int)_items.size() && index >= 0) //take one
@@ -42,13 +43,35 @@ void ItemPicker::pickItemsByGui()
   }
 }
 
-void ItemPicker::pickSingleItem(Actor* target)
+void ItemPicker::pickSingleItem(Actor* target, bool takAll)
 {
-  if (_executor)
+  bool stackable = target->afPickable()->isStackable();
+  int amount = target->afPickable()->getAmount();
+
+  //handle stackable
+  if ( stackable && amount > 1 && !takAll)
   {
-    target->afPickable()->pick(_executor);
+    AmountWindow aw(amount);
+    int tmpAmount = aw.getAmount();
+
+    if (tmpAmount < amount)
+    {
+      amount = tmpAmount;
+      target = target->afPickable()->spilt(amount);
+    }
+  }
+
+  if ( _executor ) //is null when dropping item from player's inventory
+  {
     std::string eName = _executor->getName() == "Player" ? "You" : _executor->getName();
-    Gui::Root.message(eName + " picked " + tolowers(target->getName()) + ".", TCODColor::darkYellow );
+    std::string iName = tolowers(target->getName());
+
+    _executor->afContainer()->add(target);
+
+    if (amount > 1)
+      Gui::Root.message(eName + " picked " + iName + " (" + std::to_string(amount) + ").", TCODColor::darkYellow );
+    else
+      Gui::Root.message(eName + " picked " + iName + ".", TCODColor::darkYellow );
   }
 
   _itemsPicked.push_back(target);

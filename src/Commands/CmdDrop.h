@@ -7,7 +7,8 @@ class CmdDrop : public Command
 {
 public:
   CmdDrop();
-  bool accept(TCOD_key_t &key, Map* map, Actor* executor);
+  virtual bool accept(TCOD_key_t &key);
+  virtual void execute(Map* map, Actor* executor);
 
 };
 

@@ -17,8 +17,9 @@ bool CommandExecutor::executeCommand(TCOD_key_t &key, Map *map, Actor *executor)
   for (auto c = _commands.begin(); c != _commands.end(); ++c)
   {
     Command* cmd = *c;
-    if ( cmd->accept(key, map, executor) )
+    if ( cmd->accept(key) )
     {
+      cmd->execute(map, executor);
       r = true;
       break;
     }

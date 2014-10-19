@@ -2,26 +2,66 @@
 #include <algorithm>
 #include <iostream>
 #include "Actor/Actor.h"
-#include <Gui/ItemPickerGui.h>
+#include <Gui/ItemPickerWindow.h>
 
 Container::Container(size_t maxSize)
-  : _maxSize(maxSize)
+  : _slotCount(maxSize)
 {
 }
 
 bool Container::add(Actor *actor)
 {
-  bool spaceAvail = size() < _maxSize;
+  bool added = false;
 
-  if (spaceAvail)
+  //handle stackable
+  if ( actor->afPickable()->isStackable() )
+  {
+    auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](Actor* iItem)
+                   {
+                     return iItem->getId() == actor->getId();
+                   });
+
+    if (invIter != _inventory.end()) //merge
+    {
+      Actor* actorToStackWith = *invIter;
+
+      int invAmount = actorToStackWith->afPickable()->getAmount();
+      int amountToStack = actor->afPickable()->getAmount();
+
+      actorToStackWith->afPickable()->setAmount( invAmount + amountToStack );
+
+      delete actor;
+      actor = nullptr;
+      added = true;
+    }
+    else
+    {
+      added = pushNewItem(actor);
+    }
+
+  }
+  //handle non stackable
+  else
+  {
+    added = pushNewItem(actor);
+  }
+
+  return added;
+}
+
+bool Container::pushNewItem(Actor *actor)
+{
+  bool slotsAvail = size() < _slotCount;
+
+  if (slotsAvail)
     _inventory.push_back(actor);
 
-  return spaceAvail;
+  return slotsAvail;
 }
 
 bool Container::remove(Actor *actor)
 {
-  auto aIter = std::find(_inventory.begin(), _inventory.end(), actor);
+  auto aIter = std::find(_inventory.begin(), _inventory.end(),actor);
   bool found = (aIter != _inventory.end());
 
   if (found)
@@ -41,13 +81,13 @@ size_t Container::size() const
 {
   return _inventory.size();
 }
-size_t Container::maxSize() const
+size_t Container::slotCount() const
 {
-  return _maxSize;
+  return _slotCount;
 }
 
-void Container::setMaxSize(const size_t &maxSize)
+void Container::setSlotCount(const size_t &maxSize)
 {
-  _maxSize = maxSize;
+  _slotCount = maxSize;
 }
 

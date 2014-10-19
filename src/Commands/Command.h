@@ -10,11 +10,12 @@ enum class CommandId
 {
   Null,
   Move,
-  OpenClose,
+  Open,
   FullScreen,
   Inventory,
   Pick,
   Drop,
+  Close,
   End
 };
 
@@ -25,7 +26,8 @@ public:
   virtual ~Command() {}
   static Command* create(CommandId cmd);
 
-  virtual bool accept(TCOD_key_t &key, Map* map, Actor* executor) = 0;
+  virtual bool accept(TCOD_key_t &key) = 0;
+  virtual void execute(Map* map, Actor* executor) = 0;
 
 };
 

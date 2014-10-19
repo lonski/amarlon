@@ -1,7 +1,7 @@
 #ifndef INVENTORYMANAGER_H
 #define INVENTORYMANAGER_H
 
-#include "Gui/ItemPickerGui.h"
+#include "Gui/ItemPickerWindow.h"
 #include <string>
 
 class Actor;
