@@ -7,12 +7,14 @@
 #include <libtcod.hpp>
 #include "xml/rapidxml.hpp"
 #include "Actor/ActorType.h"
-#include "Actor/ActorFeatures/AiType.h"
+#include "Actor/ActorFeatures/Ai/AiType.h"
+#include "Actor/ActorFeatures/Openable/OpenableType.h"
 
 class Container;
 class Pickable;
 class Fighter;
 class Ai;
+class Openable;
 
 struct ActorDescription
 {
@@ -47,6 +49,11 @@ struct AiDescription
   AiType type;
 };
 
+struct OpenableDescription
+{
+  OpenableType type;
+};
+
 class ActorDB
 {
 public:
@@ -64,6 +71,7 @@ public:
   Pickable* getPickable(ActorType type);
   Fighter* getFighter(ActorType type);
   Ai* getAi(ActorType type);
+  Openable* getOpenable(ActorType type);
 
   bool loadActors(std::string fn);
 
@@ -73,6 +81,7 @@ private:
   std::map<ActorType, PickableDescription> _pickables;
   std::map<ActorType, FighterDescription> _fighters;
   std::map<ActorType, AiDescription> _ais;
+  std::map<ActorType, OpenableDescription> _openables;
 
 };
 

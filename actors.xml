@@ -9,14 +9,19 @@
 		<Fighter  power="2" maxHp="10"/>
 		<Ai type="1"/>
 	</Actor>
-	<Actor name="DoorClosed" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="DoorOpen" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="DoorClosed" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
+		<Openable type="0"/>
+	</Actor>
+	<Actor name="DoorOpen" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
+		<Openable type="0"/>
+	</Actor>	
 	<Actor name="Bed" id="5" character="253" color="efefef" transparent="1" blocks="1" fovOnly="0"/>
 	<Actor name="Locker" id="6" character="254" color="906030" transparent="1" blocks="1" fovOnly="0">
 		<Container maxSize="5">
 			<Content aid="13"/>
 			<Content aid="14"/>
 		</Container>
+		<Openable type="1"/>
 	</Actor>
 	<Actor name="Wardrobe" id="7" character="252" color="906030" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Chair" id="8" character="251" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
@@ -24,7 +29,7 @@
 	<Actor name="Table" id="10" character="10" color="906030" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Worktop" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Bootle of wine" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="3"/>
+		<Pickable stackable="1" amount="3"/>
 	</Actor>
 	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="1"/>

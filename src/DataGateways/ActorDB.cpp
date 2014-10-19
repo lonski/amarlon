@@ -119,6 +119,19 @@ Ai *ActorDB::getAi(ActorType type)
   return ai;
 }
 
+Openable *ActorDB::getOpenable(ActorType type)
+{
+  Openable* op = nullptr;
+
+  if (_openables.count(type))
+  {
+    OpenableDescription& dsc = _openables[type];
+    op = Openable::create(dsc.type);
+  }
+
+  return op;
+}
+
 template<typename T>
 T getAttribute(xml_node<>* node, std::string attribute)
 {
@@ -245,6 +258,16 @@ bool ActorDB::loadActors(std::string fn)
         aiDsc.type = (AiType)getAttribute<int>(aiNode, "type");
 
         _ais[id] = aiDsc;
+      }
+
+      // ===== OPENABLE DESCRIPTION ===== //
+      xml_node<>* openableNode = actorNode->first_node("Openable");
+      if (openableNode)
+      {
+        OpenableDescription opDsc;
+
+        opDsc.type = (OpenableType)getAttribute<int>(openableNode, "type");
+        _openables[id] = opDsc;
       }
 
       //~~~~~ NEXT

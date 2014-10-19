@@ -14,6 +14,7 @@ Actor::Actor(ActorType aId, int x, int y)
   setAfPickable   ( Actor::DB.getPickable   (aId) );  
   setAfFighter    ( Actor::DB.getFighter    (aId) );
   setAfAi         ( Actor::DB.getAi         (aId) );
+  setAfOpenable   ( Actor::DB.getOpenable   (aId) );
 }
 
 void Actor::move(int dx, int dy)
@@ -30,11 +31,13 @@ void Actor::morph(ActorType newType)
   delete _afPickable;
   delete _afFighter;
   delete _afAi;
+  delete _afOpenable;
 
   setAfContainer( Actor::DB.getContainer(_id) );
   setAfPickable ( Actor::DB.getPickable (_id) );
   setAfFighter  ( Actor::DB.getFighter  (_id) );
   setAfAi       ( Actor::DB.getAi       (_id) );
+  setAfOpenable ( Actor::DB.getOpenable (_id) );
 }
 
 bool Actor::isAlive() const
@@ -125,11 +128,23 @@ Ai *Actor::afAi() const
   return _afAi;
 }
 
+Openable *Actor::afOpenable() const
+{
+  return _afOpenable;
+}
+
 void Actor::setAfAi(Ai *afAi)
 {
   _afAi = afAi;
   if (_afAi)
     _afAi->setOwner(this);
+}
+
+void Actor::setAfOpenable(Openable *afOpenable)
+{
+  _afOpenable = afOpenable;
+  if (_afOpenable)
+    _afOpenable->setOwner(this);
 }
 
 

@@ -24,22 +24,12 @@ void CmdOpen::execute(Map *map, Actor *executor)
   _dSelector.select(dx, dy);
 
   Actor* target = map->getFirstActor(x+dx, y+dy);
-  if ( target )
+
+  if ( target && target->afOpenable() )
   {
-    //TODO: more generic openable, lock support
-
-    //open doors
-    if ( target->getId() == ActorType::DoorClosed)
+    if ( target->afOpenable()->open(executor) )
     {
-      target->morph(ActorType::DoorOpen);
       map->updateActorCell(target);
-    }
-
-    //display container
-    if ( target->afContainer() )
-    {
-      CmdPick pickCommand;
-      pickCommand.execute(target->afContainer(), executor);
     }
   }
 }

@@ -8,7 +8,8 @@
 #include "ActorFeatures/Container.h"
 #include "ActorFeatures/Pickable.h"
 #include "ActorFeatures/Fighter.h"
-#include "ActorFeatures/Ai.h"
+#include "ActorFeatures/Ai/Ai.h"
+#include "ActorFeatures/Openable/Openable.h"
 
 class Map;
 
@@ -43,11 +44,13 @@ public:
   Pickable*    afPickable()    const;
   Fighter*     afFighter()     const;
   Ai*          afAi()          const;
+  Openable*    afOpenable()    const;
 
   void setAfContainer  (Container*   afContainer);
   void setAfPickable   (Pickable*    afPickable);
   void setAfFighter    (Fighter*     afFighter);
   void setAfAi         (Ai*          afAi);
+  void setAfOpenable   (Openable*    afOpenable);
 
 private:
   ActorType _id;
@@ -57,6 +60,7 @@ private:
   Pickable*  _afPickable;
   Fighter*   _afFighter;
   Ai*        _afAi;
+  Openable*  _afOpenable;
 
 };
 

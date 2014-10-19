@@ -78,6 +78,7 @@ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 			<Actor id="11" x="47" y="29"/>
 			<Actor id="11" x="47" y="28"/>
 			<Actor id="13" x="41" y="32">
+				<Pickable stackable="1" amount="8"/>
 			</Actor>
 			<Actor id="12" x="41" y="33"/>
 			<Actor id="14" x="41" y="33"/>

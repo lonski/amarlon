@@ -23,8 +23,6 @@ SOURCES += main.cpp \
     Utils/ItemPicker.cpp \
     Commands/CmdDrop.cpp \
     Utils/InventoryManager.cpp \
-    Actor/ActorFeatures/Ai.cpp \
-    Actor/ActorFeatures/MonsterAi.cpp \
     Gui/Gui.cpp \
     Utils/Utils.cpp \
     Engine.cpp \
@@ -33,7 +31,12 @@ SOURCES += main.cpp \
     Gui/ItemPickerWindow.cpp \
     Gui/AmountWindow.cpp \
     Commands/CmdClose.cpp \
-    Utils/DirectionSelector.cpp
+    Utils/DirectionSelector.cpp \
+    Actor/ActorFeatures/Openable/Openable.cpp \
+    Actor/ActorFeatures/Openable/OpenableContainer.cpp \
+    Actor/ActorFeatures/Openable/OpenableDoor.cpp \
+    Actor/ActorFeatures/Ai/Ai.cpp \
+    Actor/ActorFeatures/Ai/MonsterAi.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -58,9 +61,6 @@ HEADERS += \
     Utils/ItemPicker.h \
     Commands/CmdDrop.h \
     Utils/InventoryManager.h \
-    Actor/ActorFeatures/Ai.h \
-    Actor/ActorFeatures/MonsterAi.h \
-    Actor/ActorFeatures/AiType.h \
     Gui/Gui.h \
     Utils/glodef.h \
     Utils/Utils.h \
@@ -69,7 +69,14 @@ HEADERS += \
     Gui/ItemPickerWindow.h \
     Gui/AmountWindow.h \
     Commands/CmdClose.h \
-    Utils/DirectionSelector.h
+    Utils/DirectionSelector.h \
+    Actor/ActorFeatures/Openable/Openable.h \
+    Actor/ActorFeatures/Openable/OpenableContainer.h \
+    Actor/ActorFeatures/Openable/OpenableDoor.h \
+    Actor/ActorFeatures/Openable/OpenableType.h \
+    Actor/ActorFeatures/Ai/Ai.h \
+    Actor/ActorFeatures/Ai/AiType.h \
+    Actor/ActorFeatures/Ai/MonsterAi.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
