@@ -36,7 +36,14 @@ SOURCES += main.cpp \
     Actor/ActorFeatures/Openable/OpenableContainer.cpp \
     Actor/ActorFeatures/Openable/OpenableDoor.cpp \
     Actor/ActorFeatures/Ai/Ai.cpp \
-    Actor/ActorFeatures/Ai/MonsterAi.cpp
+    Actor/ActorFeatures/Ai/MonsterAi.cpp \
+    Actor/Effects/Effect.cpp \
+    Actor/Effects/LockEffect.cpp \
+    Commands/CmdUse.cpp \
+    Utils/TargetSelector/TargetSelector.cpp \
+    Actor/Effects/HealEffect.cpp \
+    Utils/TargetSelector/ExecutorSelector.cpp \
+    Utils/TargetSelector/SingleNeighbourSelector.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -76,7 +83,17 @@ HEADERS += \
     Actor/ActorFeatures/Openable/OpenableType.h \
     Actor/ActorFeatures/Ai/Ai.h \
     Actor/ActorFeatures/Ai/AiType.h \
-    Actor/ActorFeatures/Ai/MonsterAi.h
+    Actor/ActorFeatures/Ai/MonsterAi.h \
+    Actor/Effects/Effect.h \
+    Actor/Effects/LockEffect.h \
+    DataGateways/ActorDescriptions.h \
+    Actor/Effects/EffectType.h \
+    Utils/SelectorType.h \
+    Commands/CmdUse.h \
+    Utils/TargetSelector/TargetSelector.h \
+    Actor/Effects/HealEffect.h \
+    Utils/TargetSelector/ExecutorSelector.h \
+    Utils/TargetSelector/SingleNeighbourSelector.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

@@ -13,6 +13,7 @@ public:
   void attack(Actor* enemy);
   void takeDamage(float power);
   void die();
+  int heal(int hp);
 
 private:
   float _power;

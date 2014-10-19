@@ -1,10 +1,13 @@
 #include "Pickable.h"
 #include "Actor/Actor.h"
+#include "Actor/Effects/Effect.h"
+#include "Gui/Gui.h"
 #include <iostream>
 
 Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
+  , _effect(nullptr)
 {
 }
 
@@ -22,15 +25,40 @@ Actor* Pickable::spilt(int amount)
   return r;
 }
 
-void Pickable::use(Actor*)
+bool Pickable::use(Actor* executor, std::vector<Actor*> targets)
 {
-  //todo
+  bool r = false;
+
+  if (_effect != nullptr)
+  {    
+    r = _effect->apply(executor, targets);
+  }
+
+  return r;
+}
+
+int Pickable::getUsesCount() const
+{
+  if (_effect)
+    return _effect->getUsesCount();
+
+  return 0;
 }
 
 bool Pickable::isStackable() const
 {
   return _stackable;
 }
+Effect *Pickable::getEffect() const
+{
+  return _effect;
+}
+
+void Pickable::setEffect(Effect *effect)
+{
+  _effect = effect;
+}
+
 int Pickable::getAmount() const
 {
   return _amount;

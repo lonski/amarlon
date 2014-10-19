@@ -3,7 +3,8 @@
 #include "OpenableContainer.h"
 
 Openable::Openable()
-  :_locked(false)
+  : _locked(false)
+  , _lockId(0)
 {
 }
 
@@ -37,4 +38,14 @@ bool Openable::isLocked() const
 {
   return _locked;
 }
+int Openable::getLockId() const
+{
+  return _lockId;
+}
+
+void Openable::setLockId(int lockId)
+{
+  _lockId = lockId;
+}
+
 

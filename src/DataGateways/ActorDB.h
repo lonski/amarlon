@@ -6,53 +6,7 @@
 #include <vector>
 #include <libtcod.hpp>
 #include "xml/rapidxml.hpp"
-#include "Actor/ActorType.h"
-#include "Actor/ActorFeatures/Ai/AiType.h"
-#include "Actor/ActorFeatures/Openable/OpenableType.h"
-
-class Container;
-class Pickable;
-class Fighter;
-class Ai;
-class Openable;
-
-struct ActorDescription
-{
-  std::string name;
-  unsigned char character;
-  TCODColor color;
-  bool blocks;
-  bool fovOnly;
-  bool transparent;
-};
-
-struct ContainerDescription
-{
-  size_t maxSize;
-  std::vector<ActorType> content;
-};
-
-struct PickableDescription
-{
-  bool stackable;
-  int amount;
-};
-
-struct FighterDescription
-{
-  float maxHp;
-  float power;
-};
-
-struct AiDescription
-{
-  AiType type;
-};
-
-struct OpenableDescription
-{
-  OpenableType type;
-};
+#include "ActorDescriptions.h"
 
 class ActorDB
 {
@@ -82,6 +36,7 @@ private:
   std::map<ActorType, FighterDescription> _fighters;
   std::map<ActorType, AiDescription> _ais;
   std::map<ActorType, OpenableDescription> _openables;
+  std::map<ActorType, EffectDescription> _effects;
 
 };
 

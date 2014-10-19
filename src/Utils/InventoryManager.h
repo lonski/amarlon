@@ -13,7 +13,8 @@ public:
 
   void display();
   void setTitle(const std::string& title);
-  std::vector<Actor*> pickItems();
+  std::vector<Actor*> pickItems(bool singlePick = false);
+  Actor* chooseItemToUse();
 
 private:
   ItemPickerGui _pickerGui;

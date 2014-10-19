@@ -16,6 +16,7 @@ enum class CommandId
   Pick,
   Drop,
   Close,
+  Use,
   End
 };
 

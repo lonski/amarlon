@@ -15,12 +15,12 @@ bool OpenableDoor::open(Actor*)
   {
     if ( !isLocked() )
     {
-      _owner->morph(ActorType::DoorOpen);
+      _owner->morph(ActorType::DoorOpen);      
       r = true;
     }
     else
     {
-      Gui::Root.message("The door are closed.");
+      Gui::Root.message("The door are locked.");
     }
   }
 
@@ -34,7 +34,20 @@ bool OpenableDoor::close(Actor*)
   if (_owner->getId() == ActorType::DoorOpen)
   {
     _owner->morph(ActorType::DoorClosed);
+    _owner->afOpenable()->unlock();
     r = true;
+  }
+
+  return r;
+}
+
+bool OpenableDoor::lock()
+{
+  bool r = false;
+
+  if (_owner->getId() == ActorType::DoorClosed)
+  {
+    r = Openable::lock();
   }
 
   return r;

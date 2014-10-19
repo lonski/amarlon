@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "Actor/Actor.h"
+#include "Actor/Effects/Effect.h"
 #include <algorithm>
 
 using namespace std;
@@ -71,9 +72,11 @@ Container *ActorDB::getContainer(ActorType type)
     ContainerDescription& dsc = _containers[type];
     cont = new Container(dsc.maxSize);
 
-    std::for_each(dsc.content.begin(), dsc.content.end(), [&](ActorType id)
+    std::for_each(dsc.content.begin(), dsc.content.end(), [&](ContainerDescription::AmountedActor aa)
     {
-      cont->add(new Actor(id));
+      Actor* nActor = new Actor(aa.type);
+      nActor->afPickable()->setAmount(aa.amount);
+      cont->add(nActor);
     });
   }
 
@@ -86,8 +89,17 @@ Pickable *ActorDB::getPickable(ActorType type)
 
   if (_pickables.count(type))
   {
-    PickableDescription& dsc = _pickables[type];
-    pickable = new Pickable(dsc.stackable, dsc.amount);
+    PickableDescription& pDsc = _pickables[type];
+    pickable = new Pickable(pDsc.stackable, pDsc.amount);
+
+    if (_effects.count(type))
+    {
+      EffectDescription& eDsc = _effects[type];
+      Effect* effect = Effect::create(eDsc.type);
+      effect->load(eDsc);
+
+      pickable->setEffect(effect);
+    }
   }
 
   return pickable;
@@ -127,6 +139,9 @@ Openable *ActorDB::getOpenable(ActorType type)
   {
     OpenableDescription& dsc = _openables[type];
     op = Openable::create(dsc.type);
+
+    op->setLockId(dsc.lockId);
+    op->_locked = dsc.locked;
   }
 
   return op;
@@ -135,7 +150,7 @@ Openable *ActorDB::getOpenable(ActorType type)
 template<typename T>
 T getAttribute(xml_node<>* node, std::string attribute)
 {
-  T result;
+  T result(0);
   xml_attribute<>* nodeAtr = node->first_attribute(attribute.c_str());
 
   if ( nodeAtr )
@@ -215,8 +230,12 @@ bool ActorDB::loadActors(std::string fn)
         xml_node<>* contentNode = containerNode->first_node("Content");
         while ( contentNode )
         {          
-          ActorType aid = (ActorType)getAttribute<int>(contentNode, "aid");
-          contDsc.content.push_back( aid );
+          ContainerDescription::AmountedActor cActor;
+          cActor.type = (ActorType)getAttribute<int>(contentNode, "aid");
+          cActor.amount = getAttribute<int>(contentNode, "amount");
+          if (cActor.amount == 0) cActor.amount = 1;
+
+          contDsc.content.push_back( cActor );
 
           contentNode = contentNode->next_sibling();
         }
@@ -235,6 +254,19 @@ bool ActorDB::loadActors(std::string fn)
         if ( pickDsc.amount == 0) pickDsc.amount = 1;
 
         _pickables[id] = pickDsc;
+
+        // == effects == //
+        xml_node<>* effectNode = pickableNode->first_node("Effect");
+        if ( effectNode )
+        {
+          EffectDescription effDsc;
+          effDsc.type = (EffectType)getAttribute<int>(effectNode, "type");
+          effDsc.lockId = getAttribute<int>(effectNode, "lockId");
+          effDsc.uses = getAttribute<int>(effectNode, "uses");
+          effDsc.heal = getAttribute<int>(effectNode, "heal");
+
+          _effects[id] = effDsc;
+        }
       }
 
       // ===== DESTRUCIBLE DESCRIPTION ===== //
@@ -267,6 +299,8 @@ bool ActorDB::loadActors(std::string fn)
         OpenableDescription opDsc;
 
         opDsc.type = (OpenableType)getAttribute<int>(openableNode, "type");
+        opDsc.lockId = getAttribute<int>(openableNode, "lockId");
+        opDsc.locked = getAttribute<bool>(openableNode, "locked");
         _openables[id] = opDsc;
       }
 

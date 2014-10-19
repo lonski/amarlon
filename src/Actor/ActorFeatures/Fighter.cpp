@@ -46,3 +46,18 @@ void Fighter::die()
     _owner->morph(ActorType::Corpse);
   }
 }
+
+int Fighter::heal(int hp)
+{
+  int healed = hp;
+
+  _hp += hp;
+
+  if ( _hp > _maxHp )
+  {
+    healed -= (_hp - _maxHp);
+    _hp = _maxHp;
+  }
+
+  return healed;
+}

@@ -9,17 +9,18 @@
 		<Fighter  power="2" maxHp="10"/>
 		<Ai type="1"/>
 	</Actor>
-	<Actor name="DoorClosed" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
-		<Openable type="0"/>
+	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
+		<Openable type="0" lockId="5" locked="1"/>
 	</Actor>
-	<Actor name="DoorOpen" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
-		<Openable type="0"/>
+	<Actor name="Door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
+		<Openable type="0" lockId="5" locked="0"/>
 	</Actor>	
-	<Actor name="Bed" id="5" character="253" color="efefef" transparent="1" blocks="1" fovOnly="0"/>
+	<Actor name="Bed" id="5" character="253" color="efefef" transparent="1" blocks="0" fovOnly="0"/>
 	<Actor name="Locker" id="6" character="254" color="906030" transparent="1" blocks="1" fovOnly="0">
 		<Container maxSize="5">
-			<Content aid="13"/>
+			<Content aid="13" amount="8"/>
 			<Content aid="14"/>
+			<Content aid="16"/>
 		</Container>
 		<Openable type="1"/>
 	</Actor>
@@ -32,12 +33,19 @@
 		<Pickable stackable="1" amount="3"/>
 	</Actor>
 	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1"/>
+		<Pickable stackable="1" amount="1">
+			<Effect type="1" uses="1" heal="2"/>
+		</Pickable>
 	</Actor>
 	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1"/>
 	</Actor>
 	<Actor name="Orc corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1"/>
+	</Actor>
+	<Actor name="House key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1">
+			<Effect type="0" lockId="5" uses="-1"/>
+		</Pickable>
 	</Actor>
 </Actors>

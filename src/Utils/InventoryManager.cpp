@@ -22,14 +22,14 @@ void InventoryManager::setTitle(const std::string &title)
   _pickerGui.setTitle(_title);
 }
 
-std::vector<Actor *> InventoryManager::pickItems()
+std::vector<Actor *> InventoryManager::pickItems(bool singlePick)
 {
   std::vector<Actor*> picked;
 
   if (_actor->afContainer())
   {
     ItemPicker picker(_actor->afContainer()->content());
-    picked = picker.pick(true);
+    picked = picker.pick(true, singlePick);
 
     std::for_each(picked.begin(), picked.end(), [&](Actor* a)
     {
@@ -38,4 +38,19 @@ std::vector<Actor *> InventoryManager::pickItems()
   }
 
   return picked;
+}
+
+Actor *InventoryManager::chooseItemToUse()
+{
+  Actor* toUse = nullptr;
+
+  if (_actor->afContainer())
+  {
+    ItemPicker picker(_actor->afContainer()->content());
+
+    std::vector<Actor*> items = picker.pick(true, true);
+    if (!items.empty()) toUse = items[0];
+  }
+
+  return toUse;
 }

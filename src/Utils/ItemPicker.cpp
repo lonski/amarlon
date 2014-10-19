@@ -9,11 +9,14 @@
 ItemPicker::ItemPicker(const std::vector<Actor *> &items, Actor *executor)
   : _items(items)
   , _executor(executor)
+  , _singlePick(false)
 {
 }
 
-std::vector<Actor*> ItemPicker::pick(bool forceGui)
+std::vector<Actor*> ItemPicker::pick(bool forceGui, bool singlePick)
 {
+  _singlePick = singlePick;
+
   if (_items.size() > 1 || (forceGui && !_items.empty()))
   {
     pickItemsByGui();
@@ -30,7 +33,7 @@ void ItemPicker::pickItemsByGui()
 {
   int index = _pickerGui.pick(_items);
 
-  if (index == -1) //take all
+  if (index == -1 && !_singlePick) //take all
   {
     std::for_each(_items.begin(), _items.end(), [&](Actor* a)
     {
@@ -51,8 +54,12 @@ void ItemPicker::pickSingleItem(Actor* target, bool takAll)
   //handle stackable
   if ( stackable && amount > 1 && !takAll)
   {
-    AmountWindow aw(amount);
-    int tmpAmount = aw.getAmount();
+    int tmpAmount = 1;
+    if ( !_singlePick )
+    {
+      AmountWindow aw(amount);
+      tmpAmount = aw.getAmount();
+    }
 
     if (tmpAmount < amount)
     {
