@@ -3,6 +3,7 @@
 
 #include "../ActorFeature.h"
 #include "AiType.h"
+#include "DataGateways/ActorDescriptions.h"
 
 class Actor;
 class Map;
@@ -16,6 +17,7 @@ public:
   virtual void update(Map* map);
 
   static Ai* create(AiType type);
+  static Ai* create(const AiDescription& dsc);
 
 };
 

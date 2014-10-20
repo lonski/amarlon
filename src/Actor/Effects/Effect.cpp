@@ -15,6 +15,19 @@ Effect *Effect::create(EffectType type)
   {
     case EffectType::Lock: e = new LockEffect; break;
     case EffectType::Heal: e = new HealEffect; break;
+    default:;
+  }
+
+  return e;
+}
+
+Effect *Effect::create(const EffectDescription &dsc)
+{
+  Effect* e = Effect::create(dsc.type);
+
+  if ( e != nullptr )
+  {
+    e->load(dsc);
   }
 
   return e;

@@ -43,7 +43,8 @@ SOURCES += main.cpp \
     Utils/TargetSelector/TargetSelector.cpp \
     Actor/Effects/HealEffect.cpp \
     Utils/TargetSelector/ExecutorSelector.cpp \
-    Utils/TargetSelector/SingleNeighbourSelector.cpp
+    Utils/TargetSelector/SingleNeighbourSelector.cpp \
+    DataGateways/Parsers/ActorParser.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -93,7 +94,9 @@ HEADERS += \
     Utils/TargetSelector/TargetSelector.h \
     Actor/Effects/HealEffect.h \
     Utils/TargetSelector/ExecutorSelector.h \
-    Utils/TargetSelector/SingleNeighbourSelector.h
+    Utils/TargetSelector/SingleNeighbourSelector.h \
+    DataGateways/Parsers/ActorParser.h \
+    Utils/XmlUtils.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

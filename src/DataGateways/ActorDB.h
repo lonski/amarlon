@@ -36,7 +36,6 @@ private:
   std::map<ActorType, FighterDescription> _fighters;
   std::map<ActorType, AiDescription> _ais;
   std::map<ActorType, OpenableDescription> _openables;
-  std::map<ActorType, EffectDescription> _effects;
 
 };
 

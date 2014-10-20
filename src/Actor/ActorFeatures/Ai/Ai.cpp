@@ -20,6 +20,11 @@ Ai *Ai::create(AiType type)
   return ai;
 }
 
+Ai *Ai::create(const AiDescription &dsc)
+{
+  return Ai::create(dsc.type);
+}
+
 void Ai::update(Map*)
 {
   if (_owner)

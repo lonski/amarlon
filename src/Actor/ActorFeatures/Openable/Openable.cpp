@@ -22,6 +22,19 @@ Openable *Openable::create(OpenableType type)
   return o;
 }
 
+Openable *Openable::create(const OpenableDescription &dsc)
+{
+  Openable* op = Openable::create((dsc.type));
+
+  if ( op != nullptr )
+  {
+    op->setLockId(dsc.lockId);
+    op->_locked = dsc.locked;
+  }
+
+  return op;
+}
+
 bool Openable::lock()
 {
   _locked = true;

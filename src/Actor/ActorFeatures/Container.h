@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "ActorFeature.h"
+#include "DataGateways/ActorDescriptions.h"
 
 class Actor;
 
@@ -11,6 +12,7 @@ class Container : public ActorFeature
 {
 public:
   Container(size_t slotCount);
+  static Container* create(const ContainerDescription& dsc);
 
   bool add(Actor* actor);
   bool remove(Actor* actor);

@@ -1,6 +1,7 @@
 #ifndef ACTORDESCRIPTIONS_H
 #define ACTORDESCRIPTIONS_H
 
+#include <cstring>
 #include <string>
 #include <vector>
 #include <libtcod.hpp>
@@ -17,12 +18,23 @@ class Openable;
 
 struct ActorDescription
 {
+  ActorType id;
   std::string name;
   unsigned char character;
   TCODColor color;
   bool blocks;
   bool fovOnly;
-  bool transparent;
+  bool transparent;  
+};
+
+struct EffectDescription
+{
+  EffectDescription() { memset(this, 0, sizeof *this); }
+
+  EffectType type;
+  int lockId;
+  int uses;
+  int heal;
 };
 
 struct ContainerDescription
@@ -41,6 +53,7 @@ struct PickableDescription
 {
   bool stackable;
   int amount;
+  EffectDescription effect;
 };
 
 struct FighterDescription
@@ -59,14 +72,6 @@ struct OpenableDescription
   OpenableType type;
   int lockId;
   bool locked;
-};
-
-struct EffectDescription
-{
-  EffectType type;
-  int lockId;
-  int uses;
-  int heal;
 };
 
 #endif // ACTORDESCRIPTIONS_H

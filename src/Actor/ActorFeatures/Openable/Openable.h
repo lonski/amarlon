@@ -3,6 +3,7 @@
 
 #include "../ActorFeature.h"
 #include "OpenableType.h"
+#include "DataGateways/ActorDescriptions.h"
 
 class Actor;
 
@@ -13,6 +14,7 @@ public:
   ~Openable() {}
 
   static Openable* create(OpenableType type);
+  static Openable* create(const OpenableDescription& dsc);
 
   virtual bool open(Actor* executor) = 0;
   virtual bool close(Actor* executor) = 0;
@@ -23,6 +25,7 @@ public:
 
   int getLockId() const;
   void setLockId(int getLockId);
+
 
 protected:
   friend class ActorDB;

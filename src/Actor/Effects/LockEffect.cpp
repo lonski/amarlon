@@ -8,7 +8,7 @@ LockEffect::LockEffect()
 {
 }
 
-void LockEffect::load(EffectDescription dsc)
+void LockEffect::load(const EffectDescription &dsc)
 {
   _lockId = dsc.lockId;
   _usesCount = dsc.uses;

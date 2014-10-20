@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "ActorFeature.h"
+#include "DataGateways/ActorDescriptions.h"
 
 class Actor;
 class Effect;
@@ -12,6 +13,7 @@ class Pickable : public ActorFeature
 public:
   Pickable(bool stackable = false, int amount = 1);
   virtual ~Pickable() {}
+  static Pickable* create(const PickableDescription& dsc);
 
   virtual bool use(Actor *executor, std::vector<Actor *> targets);
   virtual int getUsesCount() const;

@@ -9,7 +9,7 @@ public:
   HealEffect();
 
   virtual bool apply(Actor* executor, std::vector<Actor*> targets);
-  virtual void load(EffectDescription dsc);
+  virtual void load(const EffectDescription& dsc);
 
   virtual SelectorType getSelectorType()
   {

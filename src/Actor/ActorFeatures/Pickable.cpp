@@ -11,6 +11,16 @@ Pickable::Pickable(bool stackable, int amount)
 {
 }
 
+Pickable *Pickable::create(const PickableDescription &dsc)
+{
+  Pickable* pickable = new Pickable(dsc.stackable, dsc.amount);
+
+  Effect* effect = Effect::create(dsc.effect);
+  pickable->setEffect(effect);
+
+  return pickable;
+}
+
 Actor* Pickable::spilt(int amount)
 {
   Actor* r = _owner;

@@ -3,6 +3,7 @@
 
 enum class EffectType
 {
+  Null,
   Lock,
   Heal
 };

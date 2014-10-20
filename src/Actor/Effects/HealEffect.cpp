@@ -23,7 +23,7 @@ bool HealEffect::apply(Actor *executor, std::vector<Actor *>)
   return r;
 }
 
-void HealEffect::load(EffectDescription dsc)
+void HealEffect::load(const EffectDescription &dsc)
 {
   _healAmount = dsc.heal;
   _usesCount = dsc.uses;

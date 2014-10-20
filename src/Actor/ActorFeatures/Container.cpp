@@ -9,6 +9,20 @@ Container::Container(size_t maxSize)
 {
 }
 
+Container *Container::create(const ContainerDescription &dsc)
+{
+  Container* cont = new Container(dsc.maxSize);
+
+  std::for_each(dsc.content.begin(), dsc.content.end(), [&](ContainerDescription::AmountedActor aa)
+  {
+    Actor* nActor = new Actor(aa.type);
+    nActor->afPickable()->setAmount(aa.amount);
+    cont->add(nActor);
+  });
+
+  return cont;
+}
+
 bool Container::add(Actor *actor)
 {
   bool added = false;

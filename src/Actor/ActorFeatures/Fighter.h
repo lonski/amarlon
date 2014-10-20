@@ -2,11 +2,13 @@
 #define FIGHTER_H
 
 #include "ActorFeature.h"
+#include "DataGateways/ActorDescriptions.h"
 
 class Fighter : public ActorFeature
 {
 public:
   Fighter(float power, float maxHp);
+  static Fighter* create(const FighterDescription& dsc);
 
   bool isAlive() const;
 

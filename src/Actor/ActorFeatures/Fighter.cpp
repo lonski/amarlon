@@ -13,6 +13,11 @@ Fighter::Fighter(float power, float maxHp)
 {
 }
 
+Fighter *Fighter::create(const FighterDescription &dsc)
+{
+  return new Fighter(dsc.power, dsc.maxHp);
+}
+
 void Fighter::attack(Actor *enemy)
 {
   if ( enemy->isAlive() )
