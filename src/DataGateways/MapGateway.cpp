@@ -3,9 +3,11 @@
 #include "Actor/ActorType.h"
 #include "Actor/Actor.h"
 #include <xml/rapidxml_print.hpp>
+#include "Parsers/ActorParser.h"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <memory>
 
 using namespace rapidxml;
 using namespace std;
@@ -60,7 +62,11 @@ void MapGateway::loadMaps(string fn)
         int aY = stoi(actorNode->first_attribute("y")->value());
         ActorType aId = (ActorType)stoi(actorNode->first_attribute("id")->value());
 
-        map->addActor( new Actor(aId, aX, aY) );
+        Actor* actor = new Actor(aId, aX, aY);
+
+        overwriteActorFeatures(actorNode, actor);
+
+        map->addActor( actor );
 
         actorNode = actorNode->next_sibling();
       }
@@ -71,6 +77,23 @@ void MapGateway::loadMaps(string fn)
     mapNode = mapNode->next_sibling();
   }
 
+}
+
+void MapGateway::overwriteActorFeatures(xml_node<>* actorNode, Actor* actor)
+{
+  ActorParser actorParser(actorNode);
+
+  unique_ptr<ContainerDescription> dscContainer( actorParser.parseContainerDsc() );
+  unique_ptr<PickableDescription>  dscPickable ( actorParser.parsePickableDsc() );
+  unique_ptr<OpenableDescription>  dscOpenable ( actorParser.parseOpenableDsc() );
+  unique_ptr<FighterDescription>   dscFighter  ( actorParser.parseFighterDsc() );
+  unique_ptr<AiDescription>        dscAi       ( actorParser.parseAiDsc() );
+
+  if ( dscContainer ) actor->setAfContainer( Container::create(*dscContainer) );
+  if ( dscPickable  ) actor->setAfPickable ( Pickable::create(*dscPickable) );
+  if ( dscOpenable  ) actor->setAfOpenable ( Openable::create(*dscOpenable) );
+  if ( dscFighter   ) actor->setAfFighter  ( Fighter::create(*dscFighter) );
+  if ( dscAi        ) actor->setAfAi       ( Ai::create(*dscAi) );
 }
 
 void MapGateway::saveMaps(string fn)

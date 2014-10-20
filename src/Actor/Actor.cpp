@@ -9,6 +9,11 @@ Actor::Actor(ActorType aId, int x, int y)
   : _id(aId)
   , _x(x)
   , _y(y)
+  , _afContainer(nullptr)
+  , _afPickable(nullptr)
+  , _afFighter(nullptr)
+  , _afAi(nullptr)
+  , _afOpenable(nullptr)
 {  
   setAfContainer  ( Actor::DB.getContainer  (aId) );
   setAfPickable   ( Actor::DB.getPickable   (aId) );  
@@ -26,12 +31,6 @@ void Actor::move(int dx, int dy)
 void Actor::morph(ActorType newType)
 {
   _id = newType;
-
-  delete _afContainer;
-  delete _afPickable;
-  delete _afFighter;
-  delete _afAi;
-  delete _afOpenable;
 
   setAfContainer( Actor::DB.getContainer(_id) );
   setAfPickable ( Actor::DB.getPickable (_id) );
@@ -95,7 +94,9 @@ Container *Actor::afContainer() const
 
 void Actor::setAfContainer(Container *afContainer)
 {
+  delete _afContainer;
   _afContainer = afContainer;
+
   if (_afContainer)
     _afContainer->setOwner(this);
 }
@@ -106,7 +107,9 @@ Pickable *Actor::afPickable() const
 
 void Actor::setAfPickable(Pickable *afPickable)
 {
+  delete _afPickable;
   _afPickable = afPickable;
+
   if (_afPickable)
     _afPickable->setOwner(this);
 }
@@ -118,7 +121,9 @@ Fighter *Actor::afFighter() const
 
 void Actor::setAfFighter(Fighter *afFighter)
 {
+  delete _afFighter;
   _afFighter = afFighter;
+
   if (_afFighter)
     _afFighter->setOwner(this);
 }
@@ -135,14 +140,18 @@ Openable *Actor::afOpenable() const
 
 void Actor::setAfAi(Ai *afAi)
 {
+  delete _afAi;
   _afAi = afAi;
+
   if (_afAi)
     _afAi->setOwner(this);
 }
 
 void Actor::setAfOpenable(Openable *afOpenable)
 {
+  delete _afOpenable;
   _afOpenable = afOpenable;
+
   if (_afOpenable)
     _afOpenable->setOwner(this);
 }

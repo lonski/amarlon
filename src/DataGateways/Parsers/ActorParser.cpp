@@ -41,7 +41,6 @@ ActorDescription *ActorParser::parseActorDsc()
     string colorStr = getAttribute<std::string>(_xml, "color");
     actorDsc->color = strToColor(colorStr);
 
-
     actorDsc->blocks = getAttribute<bool>(_xml, "blocks");
     actorDsc->fovOnly = getAttribute<bool>(_xml, "fovOnly");
     actorDsc->transparent = getAttribute<bool>(_xml, "transparent");

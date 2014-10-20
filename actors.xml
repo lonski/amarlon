@@ -10,20 +10,13 @@
 		<Ai type="1"/>
 	</Actor>
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
-		<Openable type="0" lockId="5" locked="1"/>
+		<Openable type="0" lockId="0" locked="0"/>
 	</Actor>
 	<Actor name="Door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
-		<Openable type="0" lockId="5" locked="0"/>
-	</Actor>	
-	<Actor name="Bed" id="5" character="253" color="efefef" transparent="1" blocks="0" fovOnly="0"/>
-	<Actor name="Locker" id="6" character="254" color="906030" transparent="1" blocks="1" fovOnly="0">
-		<Container maxSize="5">
-			<Content aid="13" amount="8"/>
-			<Content aid="14"/>
-			<Content aid="16"/>
-		</Container>
-		<Openable type="1"/>
+		<Openable type="0" lockId="0" locked="0"/>
 	</Actor>
+	<Actor name="Bed" id="5" character="253" color="efefef" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Locker" id="6" character="254" color="906030" transparent="1" blocks="1" fovOnly="0"/>
 	<Actor name="Wardrobe" id="7" character="252" color="906030" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Chair" id="8" character="251" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
 	<Actor name="Furnace" id="9" character="&" color="eeeeee" transparent="0" blocks="1" fovOnly="0"/>
@@ -43,7 +36,7 @@
 	<Actor name="Orc corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1"/>
 	</Actor>
-	<Actor name="House key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1">
 			<Effect type="1" lockId="5" uses="-1"/>
 		</Pickable>

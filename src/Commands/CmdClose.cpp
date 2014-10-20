@@ -1,4 +1,5 @@
 #include "CmdClose.h"
+#include "Actor/Actor.h"
 
 CmdClose::CmdClose()
 {

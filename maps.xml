@@ -68,11 +68,20 @@ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 			<Actor id="8" x="46" y="34"/>
 			<Actor id="8" x="46" y="32"/>
 			<Actor id="5" x="42" y="28"/>
-			<Actor id="6" x="41" y="28"/>
+			<Actor id="6" x="41" y="28">
+				<Container maxSize="5">
+					<Content aid="13" amount="8"/>
+					<Content aid="14"/>
+					<Content aid="16"/>
+				</Container>
+				<Openable type="1"/>
+			</Actor>
 			<Actor id="7" x="41" y="30"/>
 			<Actor id="7" x="42" y="30"/>
 			<Actor id="3" x="44" y="29"/>
-			<Actor id="3" x="44" y="33"/>
+			<Actor id="3" x="44" y="33">
+				<Openable type="0" lockId="5" locked="1"/>
+			</Actor>
 			<Actor id="3" x="48" y="33"/>
 			<Actor id="4" x="61" y="33"/>
 			<Actor id="11" x="47" y="29"/>

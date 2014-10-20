@@ -3,8 +3,10 @@
 
 #include <map>
 #include <World/MapId.h>
+#include <xml/rapidxml_print.hpp>
 
 class Map;
+class Actor;
 
 class MapGateway
 {
@@ -16,6 +18,7 @@ public:
 
 private:
   std::map<MapId, Map*> _maps;
+  void overwriteActorFeatures(rapidxml::xml_node<>* actorNode, Actor* actor);
 
 };
 
