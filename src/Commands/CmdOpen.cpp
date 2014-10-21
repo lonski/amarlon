@@ -4,6 +4,8 @@
 #include <Utils/ItemPicker.h>
 #include <algorithm>
 #include "CmdPick.h"
+#include "World/Map.h"
+#include "Engine.h"
 
 CmdOpen::CmdOpen()
 {
@@ -14,8 +16,9 @@ bool CmdOpen::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'o' );
 }
 
-void CmdOpen::execute(Map *map, Actor *executor)
+void CmdOpen::execute(Engine *engine, Actor *executor)
 {
+  Map* map = engine->currentMap();
   int x = executor->getX();
   int y = executor->getY();
 

@@ -39,6 +39,11 @@ void Actor::morph(ActorType newType)
   setAfOpenable ( Actor::DB.getOpenable (_id) );
 }
 
+void Actor::changeType(ActorType newType)
+{
+  _id = newType;
+}
+
 bool Actor::isAlive() const
 {
   return  afFighter() && afFighter()->isAlive();

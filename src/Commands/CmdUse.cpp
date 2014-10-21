@@ -5,6 +5,8 @@
 #include "Actor/Effects/Effect.h"
 #include "Utils/DirectionSelector.h"
 #include "Gui/Gui.h"
+#include "Utils/Messenger.h"
+#include "Engine.h"
 
 CmdUse::CmdUse()
 {
@@ -15,9 +17,12 @@ bool CmdUse::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'u' );
 }
 
-void CmdUse::execute(Map *map, Actor *executor)
+void CmdUse::execute(Engine *engine, Actor *executor)
 {
-  Actor* item = selectItemToUse(executor);
+  InventoryManager inv(executor);
+  Actor* item = inv.chooseItemToUse();
+
+  engine->update();
 
   if (item && item->afPickable()->getEffect())
   {
@@ -26,7 +31,7 @@ void CmdUse::execute(Map *map, Actor *executor)
 
     if (tSelector != nullptr)
     {
-      std::vector<Actor*> targets = tSelector->select(executor, map);
+      std::vector<Actor*> targets = tSelector->select(executor, engine->currentMap());
       Pickable* toUse = item->afPickable();
 
       if ( toUse->use( executor, targets ) && toUse->getUsesCount() == 0)
@@ -38,22 +43,9 @@ void CmdUse::execute(Map *map, Actor *executor)
       delete tSelector;
     }
   }
-  else
+  else if ( item )
   {
-    Gui::Root.message(item->getName() + " is not usable.");
+    Messenger::message()->actorNotUsable(item);
   }
 
-}
-
-Actor* CmdUse::selectItemToUse(Actor *executor)
-{
-  TCODConsole::root->saveApf("tmp");
-
-  InventoryManager inv(executor);
-  Actor* item = inv.chooseItemToUse();
-
-  TCODConsole::root->loadApf("tmp");
-  TCODConsole::root->flush();
-
-  return item;
 }

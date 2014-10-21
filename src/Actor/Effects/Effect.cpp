@@ -1,6 +1,6 @@
 #include "Effect.h"
 #include "LockEffect.h"
-#include "HealEffect.h"
+#include "SelfHealEffect.h"
 
 Effect::Effect()
   : _usesCount(0)
@@ -14,7 +14,7 @@ Effect *Effect::create(EffectType type)
   switch(type)
   {
     case EffectType::Lock: e = new LockEffect; break;
-    case EffectType::Heal: e = new HealEffect; break;
+    case EffectType::SelfHeal: e = new SelfHealEffect; break;
     default:;
   }
 

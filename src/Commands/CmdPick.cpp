@@ -3,6 +3,8 @@
 #include <Gui/AmountWindow.h>
 #include <Actor/ActorFeatures/Container.h>
 #include <algorithm>
+#include "World/Map.h"
+#include "Engine.h"
 
 CmdPick::CmdPick()
 {
@@ -13,8 +15,9 @@ bool CmdPick::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == ',' );
 }
 
-void CmdPick::execute(Map *map, Actor *executor)
+void CmdPick::execute(Engine *engine, Actor *executor)
 {
+  Map* map = engine->currentMap();
   std::vector<Actor*> items = map->getActors(executor->getX(), executor->getY(),
                               [](Actor* a) -> bool
                               {

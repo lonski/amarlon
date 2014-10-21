@@ -5,7 +5,7 @@ enum class EffectType
 {
   Null,
   Lock,
-  Heal
+  SelfHeal
 };
 
 #endif // EFFECTTYPE_H

@@ -41,10 +41,11 @@ SOURCES += main.cpp \
     Actor/Effects/LockEffect.cpp \
     Commands/CmdUse.cpp \
     Utils/TargetSelector/TargetSelector.cpp \
-    Actor/Effects/HealEffect.cpp \
+    Actor/Effects/SelfHealEffect.cpp \
     Utils/TargetSelector/ExecutorSelector.cpp \
     Utils/TargetSelector/SingleNeighbourSelector.cpp \
-    DataGateways/Parsers/ActorParser.cpp
+    DataGateways/Parsers/ActorParser.cpp \
+    Utils/Messenger.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -92,11 +93,12 @@ HEADERS += \
     Utils/SelectorType.h \
     Commands/CmdUse.h \
     Utils/TargetSelector/TargetSelector.h \
-    Actor/Effects/HealEffect.h \
+    Actor/Effects/SelfHealEffect.h \
     Utils/TargetSelector/ExecutorSelector.h \
     Utils/TargetSelector/SingleNeighbourSelector.h \
     DataGateways/Parsers/ActorParser.h \
-    Utils/XmlUtils.h
+    Utils/XmlUtils.h \
+    Utils/Messenger.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

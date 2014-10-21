@@ -130,7 +130,6 @@ void MapGateway::saveMaps(string fn)
     xml_node<>* tiles = doc.allocate_node(node_element, "Tiles", doc.allocate_string(strTiles.c_str()) );
     mapNode->append_node(tiles);
 
-
   }
 
   //save

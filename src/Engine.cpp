@@ -1,13 +1,21 @@
 #include "Engine.h"
 #include "World/Map.h"
 #include "Actor/Actor.h"
+#include "Gui/Gui.h"
 #include <algorithm>
+#include "Utils/Messenger.h"
 
 int Engine::FovRadius = 20;
 
 Engine::Engine()
   : _console(TCODConsole::root)
+  , _gui(nullptr)
 {
+}
+
+Engine::~Engine()
+{
+  delete _gui;
 }
 
 void Engine::init()
@@ -17,9 +25,20 @@ void Engine::init()
   Actor::DB.loadActors("../amarlon/actors.xml");
   Map::Gateway.loadMaps("../amarlon/maps.xml");
 
+  _gui = new Gui;
+
   setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
 
   Actor::Player = new Actor(ActorType::Player, 42, 28);
+
+  Messenger::message()->setGui(_gui);
+}
+
+void Engine::update()
+{
+  render();
+  updateAis();
+  getConsole()->flush();
 }
 
 void Engine::render()
@@ -29,6 +48,11 @@ void Engine::render()
   {
     _currentMap->computeFov(Actor::Player->getX(), Actor::Player->getY(), FovRadius);
     _currentMap->render(_console);
+  }
+
+  if (_gui)
+  {
+    _gui->render();
   }
 
   _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
@@ -48,7 +72,7 @@ void Engine::updateAis()
 
 void Engine::processKey(TCOD_key_t &key)
 {
-  CommandExecutor::execute(key, _currentMap, Actor::Player);
+  CommandExecutor::execute(key, this, Actor::Player);
 }
 
 Map *Engine::currentMap() const
@@ -60,4 +84,24 @@ void Engine::setCurrentMap(Map *currentMap)
 {
   _currentMap = currentMap;
 }
+TCODConsole *Engine::getConsole() const
+{
+  return _console;
+}
+
+void Engine::setConsole(TCODConsole *console)
+{
+  _console = console;
+}
+Gui *Engine::getGui() const
+{
+  return _gui;
+}
+
+void Engine::setGui(Gui *gui)
+{
+  _gui = gui;
+}
+
+
 

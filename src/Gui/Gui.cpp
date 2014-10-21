@@ -2,8 +2,6 @@
 #include <algorithm>
 #include <iostream>
 
-Gui Gui::Root;
-
 Gui::Gui()
   : _frameColor(TCODColor::darkerOrange)
 {

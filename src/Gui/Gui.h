@@ -10,8 +10,6 @@
 class Gui
 {
 public:
-  static Gui Root;
-
   const size_t LogSize = 17;
 
   const int bottomConWidth = 20;

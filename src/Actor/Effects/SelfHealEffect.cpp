@@ -1,20 +1,20 @@
-#include "HealEffect.h"
+#include "SelfHealEffect.h"
 #include <Actor/Actor.h>
+#include "Utils/Messenger.h"
 #include "Gui/Gui.h"
 
-HealEffect::HealEffect()
+SelfHealEffect::SelfHealEffect()
 {
 }
 
-bool HealEffect::apply(Actor *executor, std::vector<Actor *>)
+bool SelfHealEffect::apply(Actor *executor, std::vector<Actor *>)
 {
   bool r = false;
 
   if ( executor->afFighter() )
   {
     int healed = executor->afFighter()->heal(_healAmount);
-
-    Gui::Root.message("You've been healed for "+std::to_string(healed)+".", TCODColor::lighterBlue);
+    Messenger::message()->actorHealed(executor, healed);
 
     --_usesCount;
     r = true;
@@ -23,7 +23,7 @@ bool HealEffect::apply(Actor *executor, std::vector<Actor *>)
   return r;
 }
 
-void HealEffect::load(const EffectDescription &dsc)
+void SelfHealEffect::load(const EffectDescription &dsc)
 {
   _healAmount = dsc.heal;
   _usesCount = dsc.uses;

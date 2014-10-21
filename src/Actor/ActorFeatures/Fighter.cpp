@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Gui/Gui.h"
 #include "Utils/Utils.h"
+#include "Utils/Messenger.h"
 
 Fighter::Fighter(float power, float maxHp)
   : _power(power)
@@ -22,10 +23,8 @@ void Fighter::attack(Actor *enemy)
 {
   if ( enemy->isAlive() )
   {
-    std::string enemyName = enemy->getName() == "Player" ? "you" : enemy->getName();
-    std::string atackerName = _owner->getName() == "Player" ? "You" : _owner->getName();
+    Messenger::message()->actorHit(_owner, enemy, _power);
 
-    Gui::Root.message(atackerName + " hit " + enemyName + " for " + to_stringp(_power) + "hp!", TCODColor::red);
     enemy->afFighter()->takeDamage(_power);
   }
 }
@@ -47,7 +46,7 @@ void Fighter::die()
 {
   if (_owner)
   {
-    Gui::Root.message( _owner->getName() + " dies.", TCODColor::darkRed );
+    Messenger::message()->actorDies(_owner);
     _owner->morph(ActorType::Corpse);
   }
 }

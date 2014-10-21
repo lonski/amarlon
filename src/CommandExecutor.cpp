@@ -10,7 +10,7 @@ CommandExecutor::CommandExecutor()
   }
 }
 
-bool CommandExecutor::executeCommand(TCOD_key_t &key, Map *map, Actor *executor)
+bool CommandExecutor::executeCommand(TCOD_key_t &key, Engine *engine, Actor *executor)
 {
   bool r = false;
 
@@ -19,7 +19,7 @@ bool CommandExecutor::executeCommand(TCOD_key_t &key, Map *map, Actor *executor)
     Command* cmd = *c;
     if ( cmd->accept(key) )
     {
-      cmd->execute(map, executor);
+      cmd->execute(engine, executor);
       r = true;
       break;
     }
@@ -28,10 +28,10 @@ bool CommandExecutor::executeCommand(TCOD_key_t &key, Map *map, Actor *executor)
   return r;
 }
 
-bool CommandExecutor::execute(TCOD_key_t& key, Map *map, Actor *executor)
+bool CommandExecutor::execute(TCOD_key_t& key, Engine *engine, Actor *executor)
 {
   if ( _inst == nullptr)
     _inst = new CommandExecutor;
 
-  return _inst->executeCommand(key, map, executor);
+  return _inst->executeCommand(key, engine, executor);
 }

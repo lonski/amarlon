@@ -1,6 +1,7 @@
 #include "OpenableDoor.h"
 #include "Actor/Actor.h"
 #include "Gui/Gui.h"
+#include "Utils/Messenger.h"
 #include <iostream>
 
 OpenableDoor::OpenableDoor()
@@ -15,12 +16,12 @@ bool OpenableDoor::open(Actor*)
   {
     if ( !isLocked() )
     {
-      _owner->morph(ActorType::DoorOpen);      
+      _owner->changeType(ActorType::DoorOpen);
       r = true;
     }
     else
     {
-      Gui::Root.message("The door are locked.");
+      Messenger::message()->actorIsLocked(_owner);
     }
   }
 
@@ -33,7 +34,7 @@ bool OpenableDoor::close(Actor*)
 
   if (_owner->getId() == ActorType::DoorOpen)
   {
-    _owner->morph(ActorType::DoorClosed);
+    _owner->changeType(ActorType::DoorClosed);
     _owner->afOpenable()->unlock();
     r = true;
   }

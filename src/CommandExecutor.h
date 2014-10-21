@@ -7,12 +7,13 @@
 
 class Actor;
 class Map;
+class Engine;
 
 class CommandExecutor
 {
 public:
-  static bool execute(TCOD_key_t &key, Map* map, Actor* executor);
-  bool executeCommand(TCOD_key_t &key, Map* map, Actor* executor);
+  static bool execute(TCOD_key_t &key, Engine* engine, Actor* executor);
+  bool executeCommand(TCOD_key_t &key, Engine *engine, Actor* executor);
 
 private:
   CommandExecutor();

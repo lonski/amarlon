@@ -4,7 +4,8 @@
 #include <libtcod.hpp>
 #include <iostream>
 #include "Actor/Actor.h"
-#include "World/Map.h"
+
+class Engine;
 
 enum class CommandId
 {
@@ -28,7 +29,7 @@ public:
   static Command* create(CommandId cmd);
 
   virtual bool accept(TCOD_key_t &key) = 0;
-  virtual void execute(Map* map, Actor* executor) = 0;
+  virtual void execute(Engine* engine, Actor* executor) = 0;
 
 };
 

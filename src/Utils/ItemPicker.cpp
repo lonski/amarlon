@@ -5,6 +5,7 @@
 #include "Utils/Utils.h"
 #include "Gui/Gui.h"
 #include "Gui/AmountWindow.h"
+#include "Utils/Messenger.h"
 
 ItemPicker::ItemPicker(const std::vector<Actor *> &items, Actor *executor)
   : _items(items)
@@ -70,15 +71,8 @@ void ItemPicker::pickSingleItem(Actor* target, bool takAll)
 
   if ( _executor ) //is null when dropping item from player's inventory
   {
-    std::string eName = _executor->getName() == "Player" ? "You" : _executor->getName();
-    std::string iName = tolowers(target->getName());
-
     _executor->afContainer()->add(target);
-
-    if (amount > 1)
-      Gui::Root.message(eName + " picked " + iName + " (" + std::to_string(amount) + ").", TCODColor::darkYellow );
-    else
-      Gui::Root.message(eName + " picked " + iName + ".", TCODColor::darkYellow );
+    Messenger::message()->actorPicked(_executor, target, amount);
   }
 
   _itemsPicked.push_back(target);

@@ -3,6 +3,7 @@
 #include "Gui/Gui.h"
 #include "Utils/Utils.h"
 #include "Utils/DirectionSelector.h"
+#include "Utils/Messenger.h"
 
 LockEffect::LockEffect()
 {
@@ -14,7 +15,7 @@ void LockEffect::load(const EffectDescription &dsc)
   _usesCount = dsc.uses;
 }
 
-bool LockEffect::apply(Actor*, std::vector<Actor *> targets)
+bool LockEffect::apply(Actor* executor, std::vector<Actor *> targets)
 {
   bool r = false;
 
@@ -29,7 +30,7 @@ bool LockEffect::apply(Actor*, std::vector<Actor *> targets)
       {
         if ( toOpen->unlock() )
         {
-          Gui::Root.message("You unlocked the "+tolowers(target->getName())+".");
+          Messenger::message()->actorHasBeenUnLocked(executor, target);
         }
         r = true;
       }
@@ -37,7 +38,7 @@ bool LockEffect::apply(Actor*, std::vector<Actor *> targets)
       {
         if ( toOpen->lock() )
         {
-          Gui::Root.message("You locked the "+tolowers(target->getName())+".");
+          Messenger::message()->actorHasBeenLocked(executor, target);
         }
         r = true;
       }

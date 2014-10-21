@@ -3,10 +3,10 @@
 
 #include "Effect.h"
 
-class HealEffect : public Effect
+class SelfHealEffect : public Effect
 {
 public:
-  HealEffect();
+  SelfHealEffect();
 
   virtual bool apply(Actor* executor, std::vector<Actor*> targets);
   virtual void load(const EffectDescription& dsc);

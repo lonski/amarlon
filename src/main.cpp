@@ -16,16 +16,13 @@ int main()
   TCOD_key_t lastKey;
 
   Engine engine;
-  Gui::Root.message(":: Welcome to Amarlon! ::", TCODColor::sky);
-
   engine.init();
+
+  engine.getGui()->message(":: Welcome to Amarlon! ::", TCODColor::sky);
 
   while ( !TCODConsole::isWindowClosed() )
   {
-    engine.render();
-    Gui::Root.render();
-    engine.updateAis();
-    TCODConsole::flush();
+    engine.update();
 
     TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
     engine.processKey(lastKey);

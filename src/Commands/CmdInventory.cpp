@@ -12,7 +12,7 @@ bool CmdInventory::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'i' );
 }
 
-void CmdInventory::execute(Map*, Actor *executor)
+void CmdInventory::execute(Engine*, Actor *executor)
 {
   if ( executor->afContainer() )
   {

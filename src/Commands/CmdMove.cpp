@@ -1,6 +1,7 @@
 #include "CmdMove.h"
 #include "Utils/Utils.h"
-#
+#include "World/Map.h"
+#include "Engine.h"
 
 CmdMoveOrAttack::CmdMoveOrAttack()
   : _dx(0)
@@ -15,8 +16,9 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
   return handleDirectionKey(key, _dx, _dy);
 }
 
-void CmdMoveOrAttack::execute(Map *map, Actor *executor)
+void CmdMoveOrAttack::execute(Engine *engine, Actor *executor)
 {
+  Map* map = engine->currentMap();
   int targetX = executor->getX() + _dx;
   int targetY = executor->getY() + _dy;
   bool blocked = map->isBlocked(targetX, targetY);
