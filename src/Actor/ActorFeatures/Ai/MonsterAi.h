@@ -9,6 +9,7 @@ public:
   static int TrackingTurns;
   MonsterAi();
 
+  virtual ActorFeature* clone();
   virtual void update(Map* map);
 
   void updatePosition();

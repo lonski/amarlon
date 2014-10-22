@@ -61,4 +61,10 @@ void Openable::setLockId(int lockId)
   _lockId = lockId;
 }
 
+void Openable::setLocked(bool locked)
+{
+  _locked = locked;
+}
+
+
 

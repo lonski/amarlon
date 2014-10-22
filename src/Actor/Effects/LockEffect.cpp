@@ -9,10 +9,27 @@ LockEffect::LockEffect()
 {
 }
 
+Effect *LockEffect::clone()
+{
+  LockEffect* cloned = new LockEffect;
+  cloned->load( save() );
+
+  return cloned;
+}
+
 void LockEffect::load(const EffectDescription &dsc)
 {
   _lockId = dsc.lockId;
   _usesCount = dsc.uses;
+}
+
+EffectDescription LockEffect::save()
+{
+  EffectDescription dsc;
+  dsc.lockId = _lockId;
+  dsc.uses = _usesCount;
+
+  return dsc;
 }
 
 bool LockEffect::apply(Actor* executor, std::vector<Actor *> targets)

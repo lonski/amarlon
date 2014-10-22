@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Actor/Actor.h"
 #include <Gui/ItemPickerWindow.h>
+#include <memory>
 
 Container::Container(size_t maxSize)
   : _slotCount(maxSize)
@@ -13,14 +14,36 @@ Container *Container::create(const ContainerDescription &dsc)
 {
   Container* cont = new Container(dsc.maxSize);
 
-  std::for_each(dsc.content.begin(), dsc.content.end(), [&](ContainerDescription::AmountedActor aa)
+  std::for_each(dsc.content.begin(), dsc.content.end(), [&](ContainerDescription::Content ca)
   {
-    Actor* nActor = new Actor(aa.type);
-    nActor->afPickable()->setAmount(aa.amount);
-    cont->add(nActor);
+    ActorType aId = ca.actorType;
+    if( aId != ActorType::Null )
+    {
+      Actor* nActor = new Actor(aId);
+
+      if (ca.container) nActor->setAfContainer( Container::create( *ca.container ) );
+      if (ca.openable)  nActor->setAfOpenable ( Openable::create ( *ca.openable  ) );
+      if (ca.pickable)  nActor->setAfPickable ( Pickable::create ( *ca.pickable  ) );
+      if (ca.fighter)   nActor->setAfFighter  ( Fighter::create  ( *ca.fighter   ) );
+      if (ca.ai)        nActor->setAfAi       ( Ai::create       ( *ca.ai        ) );
+
+      cont->add(nActor);
+    }
   });
 
   return cont;
+}
+
+Container *Container::clone()
+{
+  Container* cloned = new Container( _slotCount );
+
+  std::for_each(_inventory.begin(), _inventory.end(), [&](Actor* a)
+  {
+    cloned->add( a->clone() );
+  });
+
+  return cloned;
 }
 
 bool Container::add(Actor *actor)
@@ -54,7 +77,7 @@ bool Container::add(Actor *actor)
     }
 
   }
-  //handle non stackable
+  //handle non-stackable
   else
   {
     added = pushNewItem(actor);

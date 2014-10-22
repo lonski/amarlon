@@ -63,15 +63,28 @@ ContainerDescription *ActorParser::parseContainerDsc()
       contDsc->maxSize = getAttribute<int>(containerNode, "maxSize");
 
       xml_node<>* contentNode = containerNode->first_node("Content");
+      ActorParser aParser;
       while ( contentNode )
       {
-        ContainerDescription::AmountedActor cActor;
-        cActor.type = (ActorType)getAttribute<int>(contentNode, "aid");
-        cActor.amount = getAttribute<int>(contentNode, "amount");
-        if (cActor.amount == 0) cActor.amount = 1;
+        aParser.setSource(contentNode);
 
-        contDsc->content.push_back( cActor );
+        ContainerDescription::Content cActor;
+        ActorDescription* aDsc = aParser.parseActorDsc();
+        if (aDsc != nullptr)
+        {
+          cActor.actorType = aDsc->id;
 
+          cActor.container = aParser.parseContainerDsc();
+          cActor.openable  = aParser.parseOpenableDsc();
+          cActor.pickable  = aParser.parsePickableDsc();
+          cActor.fighter   = aParser.parseFighterDsc();
+          cActor.ai        = aParser.parseAiDsc();
+
+          contDsc->content.push_back( cActor );
+
+          delete aDsc;
+          aDsc = nullptr;
+        }
         contentNode = contentNode->next_sibling();
       }
     }

@@ -10,6 +10,7 @@ public:
   virtual ~ActorFeature() = 0;
 
   void setOwner(Actor* owner);
+  virtual ActorFeature* clone() = 0;
 
 protected:
   Actor* _owner;

@@ -24,3 +24,13 @@ bool OpenableContainer::close(Actor*)
 {
   return true;
 }
+
+ActorFeature *OpenableContainer::clone()
+{
+  OpenableContainer* cloned = new OpenableContainer;
+  cloned->setLockId( getLockId() );
+  cloned->setLocked( isLocked() );
+
+  return cloned;
+}
+

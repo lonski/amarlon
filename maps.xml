@@ -70,9 +70,13 @@ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 			<Actor id="5" x="42" y="28"/>
 			<Actor id="6" x="41" y="28">
 				<Container maxSize="5">
-					<Content aid="13" amount="8"/>
-					<Content aid="14"/>
-					<Content aid="16"/>
+					<Content id="13">
+						<Pickable stackable="1" amount="9">
+							<Effect type="2" uses="1" heal="5"/>
+						</Pickable>
+					</Content>
+					<Content id="14"/>
+					<Content id="16"/>
 				</Container>
 				<Openable type="1"/>
 			</Actor>

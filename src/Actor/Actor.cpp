@@ -2,6 +2,9 @@
 #include "World/Map.h"
 #include <iostream>
 
+#define private public
+#include "Actor/Effects/SelfHealEffect.h"
+
 ActorDB Actor::DB;
 Actor* Actor::Player(nullptr);
 
@@ -37,6 +40,19 @@ void Actor::morph(ActorType newType)
   setAfFighter  ( Actor::DB.getFighter  (_id) );
   setAfAi       ( Actor::DB.getAi       (_id) );
   setAfOpenable ( Actor::DB.getOpenable (_id) );
+}
+
+Actor *Actor::clone()
+{
+  Actor* cloned = new Actor( getId(), getX(), getY() );
+
+  cloned->setAfContainer( dynamic_cast<Container*>( _afContainer ? _afContainer->clone() : nullptr ) );
+  cloned->setAfPickable ( dynamic_cast<Pickable*> ( _afPickable  ? _afPickable->clone()  : nullptr ) );
+  cloned->setAfOpenable ( dynamic_cast<Openable*> ( _afOpenable  ? _afOpenable->clone()  : nullptr ) );
+  cloned->setAfFighter  ( dynamic_cast<Fighter*>  ( _afFighter   ? _afFighter->clone()   : nullptr ) );
+  cloned->setAfAi       ( dynamic_cast<Ai*>       ( _afAi        ? _afAi->clone()        : nullptr ) );
+
+  return cloned;
 }
 
 void Actor::changeType(ActorType newType)
@@ -117,6 +133,7 @@ void Actor::setAfPickable(Pickable *afPickable)
 
   if (_afPickable)
     _afPickable->setOwner(this);
+
 }
 
 Fighter *Actor::afFighter() const

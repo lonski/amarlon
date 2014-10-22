@@ -22,6 +22,7 @@ public:
   virtual bool lock();
   virtual bool unlock();
   bool isLocked() const;
+  void setLocked(bool locked);
 
   int getLockId() const;
   void setLockId(int getLockId);

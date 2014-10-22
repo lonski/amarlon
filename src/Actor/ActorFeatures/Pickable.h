@@ -18,6 +18,7 @@ public:
   virtual bool use(Actor *executor, std::vector<Actor *> targets);
   virtual int getUsesCount() const;
   Actor* spilt(int amount);
+  virtual ActorFeature* clone();
 
   int getAmount() const;
   void setAmount(int getAmount);

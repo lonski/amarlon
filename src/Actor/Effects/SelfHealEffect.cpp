@@ -28,3 +28,20 @@ void SelfHealEffect::load(const EffectDescription &dsc)
   _healAmount = dsc.heal;
   _usesCount = dsc.uses;
 }
+
+EffectDescription SelfHealEffect::save()
+{
+  EffectDescription dsc;
+  dsc.heal = _healAmount;
+  dsc.uses = _usesCount;
+
+  return dsc;
+}
+
+Effect *SelfHealEffect::clone()
+{
+  SelfHealEffect* cloned = new SelfHealEffect;
+  cloned->load( save() );
+
+  return cloned;
+}

@@ -14,6 +14,7 @@ public:
   Container(size_t slotCount);
   static Container* create(const ContainerDescription& dsc);
 
+  virtual Container* clone();
   bool add(Actor* actor);
   bool remove(Actor* actor);
   const std::vector<Actor*>& content() const;

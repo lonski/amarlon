@@ -10,6 +10,7 @@ public:
 
   virtual bool open(Actor* executor);
   virtual bool close(Actor* executor);
+  virtual ActorFeature* clone();
 
 };
 

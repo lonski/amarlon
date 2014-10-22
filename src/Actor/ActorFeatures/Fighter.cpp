@@ -19,6 +19,12 @@ Fighter *Fighter::create(const FighterDescription &dsc)
   return new Fighter(dsc.power, dsc.maxHp);
 }
 
+ActorFeature *Fighter::clone()
+{
+  Fighter* cloned = new Fighter(_power, _maxHp);
+  return cloned;
+}
+
 void Fighter::attack(Actor *enemy)
 {
   if ( enemy->isAlive() )

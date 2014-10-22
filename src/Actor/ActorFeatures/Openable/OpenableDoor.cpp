@@ -42,6 +42,15 @@ bool OpenableDoor::close(Actor*)
   return r;
 }
 
+ActorFeature *OpenableDoor::clone()
+{
+  OpenableDoor* cloned = new OpenableDoor;
+  cloned->setLockId( getLockId() );
+  cloned->setLocked( isLocked() );
+
+  return cloned;
+}
+
 bool OpenableDoor::lock()
 {
   bool r = false;

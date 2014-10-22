@@ -14,6 +14,17 @@ MonsterAi::MonsterAi()
 {
 }
 
+ActorFeature *MonsterAi::clone()
+{
+  MonsterAi* cloned = new MonsterAi;
+  cloned->_map = _map;
+  cloned->_trackCount = _trackCount;
+  cloned->_cX = _cX;
+  cloned->_cY = _cY;
+
+  return cloned;
+}
+
 void MonsterAi::update(Map *map)
 {
   _map = map;

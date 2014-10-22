@@ -28,11 +28,19 @@ Actor* Pickable::spilt(int amount)
   if ( isStackable() && amount < _amount && amount > 0 )
   {
     setAmount(_amount - amount);
-    r = new Actor( _owner->getId(), _owner->getX(), _owner->getY() );
+    r = _owner->clone();
     r->afPickable()->setAmount(amount);    
   }
 
   return r;
+}
+
+ActorFeature *Pickable::clone()
+{
+  Pickable* cloned = new Pickable(isStackable(), getAmount());
+  cloned->setEffect( _effect->clone() );
+
+  return cloned;
 }
 
 bool Pickable::use(Actor* executor, std::vector<Actor*> targets)

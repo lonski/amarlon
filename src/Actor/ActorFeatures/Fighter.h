@@ -9,6 +9,7 @@ class Fighter : public ActorFeature
 public:
   Fighter(float power, float maxHp);
   static Fighter* create(const FighterDescription& dsc);
+  virtual ActorFeature* clone();
 
   bool isAlive() const;
 

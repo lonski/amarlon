@@ -23,6 +23,7 @@ public:
 
   void move(int dx, int dy);
   void morph(ActorType newType);
+  Actor* clone();
   void changeType(ActorType newType);
 
   bool isAlive() const;

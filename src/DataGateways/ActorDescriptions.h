@@ -16,17 +16,6 @@ class Fighter;
 class Ai;
 class Openable;
 
-struct ActorDescription
-{
-  ActorType id;
-  std::string name;
-  unsigned char character;
-  TCODColor color;
-  bool blocks;
-  bool fovOnly;
-  bool transparent;  
-};
-
 struct EffectDescription
 {
   EffectDescription() { memset(this, 0, sizeof *this); }
@@ -37,16 +26,16 @@ struct EffectDescription
   int heal;
 };
 
-struct ContainerDescription
+//===
+struct ActorDescription
 {
-  struct AmountedActor
-  {
-    ActorType type;
-    int amount;
-  };
-
-  size_t maxSize;
-  std::vector<AmountedActor> content;
+  ActorType id;
+  std::string name;
+  unsigned char character;
+  TCODColor color;
+  bool blocks;
+  bool fovOnly;
+  bool transparent;  
 };
 
 struct PickableDescription
@@ -73,5 +62,25 @@ struct OpenableDescription
   int lockId;
   bool locked;
 };
+
+struct ContainerDescription
+{
+  struct Content
+  {
+    ActorType actorType;
+    ContainerDescription* container;
+    PickableDescription* pickable;
+    FighterDescription* fighter;
+    AiDescription* ai;
+    OpenableDescription* openable;
+
+    Content() { memset(this, 0, sizeof *this); }
+  };
+
+  size_t maxSize;
+  std::vector<Content> content;
+};
+
+//===
 
 #endif // ACTORDESCRIPTIONS_H

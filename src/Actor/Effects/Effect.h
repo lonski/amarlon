@@ -16,9 +16,11 @@ public:
 
   static Effect* create(EffectType type);
   static Effect* create(const EffectDescription& dsc);
+  virtual Effect* clone() = 0;
 
   virtual bool apply(Actor* executor, std::vector<Actor*> targets) = 0;
   virtual void load(const EffectDescription& dsc) = 0;
+  virtual EffectDescription save() = 0;
 
   virtual SelectorType getSelectorType() = 0;
   virtual int getUsesCount() const;
