@@ -1,15 +1,13 @@
 language: cpp
 
 before_install:
-  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-
+    - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+    - sudo apt-get update -qq
+   
 install:
-  - sudo apt-get update
-  - sudo apt-get install libqt4-dev qt4-qmake
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install libstdc++-4.8-dev
+    - sudo apt-get install qt5-default qttools5-dev-tools qtbase5-dev-tools
 
 script:
-  - qmake -project
-  - qmake src/amarlon.pro
-  - make
+    - cd src
+    - qmake amarlon.pro
+    - make
