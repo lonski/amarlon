@@ -35,7 +35,8 @@ void CmdPick::execute(Engine *engine, Actor *executor)
 
 void CmdPick::execute(Container* container, Actor *executor, bool forceGui)
 {
-  ItemPicker picker(container->content(), executor);
+  std::vector<Actor*> items = container->content();
+  ItemPicker picker(items, executor);
   std::vector<Actor*> itemsPicked = picker.pick(forceGui);
 
   std::for_each(itemsPicked.begin(), itemsPicked.end(), [&](Actor* a)

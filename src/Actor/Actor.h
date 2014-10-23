@@ -2,6 +2,7 @@
 #define ACTOR_H
 
 #include <string>
+#include <memory>
 #include <libtcod.hpp>
 #include "ActorType.h"
 #include "DataGateways/ActorDB.h"
@@ -65,5 +66,7 @@ private:
   Openable*  _afOpenable;
 
 };
+
+typedef std::shared_ptr<Actor> ActorPtr;
 
 #endif // ACTOR_H

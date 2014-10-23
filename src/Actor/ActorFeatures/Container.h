@@ -17,7 +17,7 @@ public:
   virtual Container* clone();
   bool add(Actor* actor);
   bool remove(Actor* actor);
-  const std::vector<Actor*>& content() const;
+  std::vector<Actor *> content(bool(*filterFun)(Actor *) = nullptr);
   size_t size() const;
 
   size_t slotCount() const;

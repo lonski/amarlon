@@ -53,6 +53,21 @@ void Engine::render()
   if (_gui)
   {
     _gui->render();
+    std::vector<Actor*> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
+                                                              Actor::Player->getY(),
+                                                              [&](Actor* a) -> bool
+                                                              {
+                                                                return a != Actor::Player;
+                                                              });
+
+    TCODColor itemViewColor = TCODColor::darkLime;
+    std::vector< Gui::LogEntry > items;
+    std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
+    {
+      items.push_back( Gui::LogEntry( a->getName(), itemViewColor ) );
+    });
+
+    _gui->renderViewPanel(&items);
   }
 
   _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());

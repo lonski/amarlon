@@ -45,10 +45,11 @@ Actor *InventoryManager::chooseItemToUse()
   Actor* toUse = nullptr;
 
   if (_actor->afContainer())
-  {
-    ItemPicker picker(_actor->afContainer()->content());
+  {        
+    std::vector<Actor*> items = _actor->afContainer()->content();
+    ItemPicker picker(items);
 
-    std::vector<Actor*> items = picker.pick(true, true);
+    items = picker.pick(true, true);
     if (!items.empty()) toUse = items[0];
   }
 

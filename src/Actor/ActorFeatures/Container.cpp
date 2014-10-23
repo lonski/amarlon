@@ -10,7 +10,7 @@ Container::Container(size_t maxSize)
 {
 }
 
-Container *Container::create(const ContainerDescription &dsc)
+Container* Container::create(const ContainerDescription &dsc)
 {
   Container* cont = new Container(dsc.maxSize);
 
@@ -109,9 +109,16 @@ bool Container::remove(Actor *actor)
   return found;
 }
 
-const std::vector<Actor *> &Container::content() const
+std::vector<Actor *> Container::content(bool(*filterFun)(Actor*))
 {
-  return _inventory;
+  std::vector<Actor *> items = _inventory;
+
+//  if ( filterFun != nullptr )
+//    std::copy_if(_inventory.begin(), _inventory.end(), items.begin(), filterFun);
+//  else
+//    std::copy(_inventory.begin(), _inventory.end(), items.begin());
+
+  return items;
 }
 
 size_t Container::size() const

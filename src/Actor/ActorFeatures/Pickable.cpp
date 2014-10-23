@@ -38,7 +38,7 @@ Actor* Pickable::spilt(int amount)
 ActorFeature *Pickable::clone()
 {
   Pickable* cloned = new Pickable(isStackable(), getAmount());
-  cloned->setEffect( _effect->clone() );
+  cloned->setEffect( _effect ? _effect->clone() : nullptr );
 
   return cloned;
 }
