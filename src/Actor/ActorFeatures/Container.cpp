@@ -111,7 +111,16 @@ bool Container::remove(Actor *actor)
 
 std::vector<Actor *> Container::content(bool(*filterFun)(Actor*))
 {
-  std::vector<Actor *> items = _inventory;
+  std::vector<Actor *> items;
+
+  for (auto i = _inventory.begin(); i != _inventory.end(); ++i)
+  {
+    if ( (filterFun == nullptr) ||
+         (filterFun && (*filterFun)(*i)))
+    {
+      items.push_back(*i);
+    }
+  }
 
 //  if ( filterFun != nullptr )
 //    std::copy_if(_inventory.begin(), _inventory.end(), items.begin(), filterFun);

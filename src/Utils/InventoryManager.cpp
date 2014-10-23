@@ -28,7 +28,8 @@ std::vector<Actor *> InventoryManager::pickItems(bool singlePick)
 
   if (_actor->afContainer())
   {
-    ItemPicker picker(_actor->afContainer()->content());
+    std::vector<Actor*> allItems = _actor->afContainer()->content();
+    ItemPicker picker(allItems);
     picked = picker.pick(true, singlePick);
 
     std::for_each(picked.begin(), picked.end(), [&](Actor* a)
@@ -46,7 +47,10 @@ Actor *InventoryManager::chooseItemToUse()
 
   if (_actor->afContainer())
   {        
-    std::vector<Actor*> items = _actor->afContainer()->content();
+    std::vector<Actor*> items = _actor->afContainer()->content( [&](Actor* a)
+    {
+      return a->afPickable() && a->afPickable()->getEffect();
+    });
     ItemPicker picker(items);
 
     items = picker.pick(true, true);
