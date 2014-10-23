@@ -7,6 +7,7 @@
 class Map;
 class Actor;
 class Gui;
+struct LogEntry;
 
 class Engine
 {
@@ -36,6 +37,7 @@ private:
 
   void render();
   void updateAis();
+  std::vector<LogEntry> getActorsBenethPlayersFeet();
 
 };
 

@@ -7,20 +7,11 @@
 #include <list>
 #include <vector>
 #include <utility>
+#include "Utils/LogEntry.h"
 
 class Gui
 {
 public:
-  struct LogEntry
-  {
-    std::string msg;
-    TCODColor color;
-
-    LogEntry(const std::string& m, TCODColor c)
-      : msg(m)
-      , color(c)
-    {}
-  };
 
   const size_t LogSize = 17;
 
@@ -42,7 +33,7 @@ public:
   void render();
   void renderRightPanel();
   void renderMessageLog();
-  void renderViewPanel(std::vector<LogEntry> *items = nullptr);
+  void renderViewPanel(const std::vector<LogEntry>& items);
 
   void message(std::string msg, TCODColor color = TCODColor::white);
 

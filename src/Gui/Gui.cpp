@@ -33,7 +33,7 @@ void Gui::render()
 {
   renderRightPanel();
   renderMessageLog();
-  renderViewPanel();
+  renderViewPanel(std::vector<LogEntry>());
 }
 
 void Gui::renderRightPanel()
@@ -61,29 +61,28 @@ void Gui::renderMessageLog()
   TCODConsole::blit(logCon, 0, 0, logConWidth, logConHeight, TCODConsole::root, 0, gloScreenHeight - logConHeight );
 }
 
-void Gui::renderViewPanel(std::vector<LogEntry> *items)
+void Gui::renderViewPanel(const std::vector<LogEntry>& items)
 {
   //log frame
   viewCon->setDefaultForeground(_frameColor);
   viewCon->printFrame(0, 0, viewConWidth, viewConHeight, true, TCOD_BKGND_DEFAULT);
 
   int row = 1;
-  int msgLimit = viewConHeight - 2;
+  int msgLimit = viewConHeight - 3;
 
-  if (items)
-    std::for_each(items->begin(), items->end(), [&](LogEntry& entry)
+  std::for_each(items.begin(), items.end(), [&](const LogEntry& entry)
+  {
+    if ( row < msgLimit )
     {
-      if ( row < msgLimit )
-      {
-        viewCon->setDefaultForeground(entry.color);
-        viewCon->print(2, ++row, entry.msg.c_str());
-      }
-      else if (row == msgLimit)
-      {
-        viewCon->setDefaultForeground(entry.color);
-        viewCon->print(2, ++row, "...");
-      }
-    });
+      viewCon->setDefaultForeground(entry.color);
+      viewCon->print(2, ++row, entry.msg.c_str());
+    }
+    else if (row == msgLimit)
+    {
+      viewCon->setDefaultForeground(entry.color);
+      viewCon->print(2, ++row, "...");
+    }
+  });
 
   TCODConsole::blit(viewCon, 0, 0, viewConWidth, viewConHeight, TCODConsole::root, logConWidth, gloScreenHeight - viewConHeight );
 }

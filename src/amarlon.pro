@@ -98,7 +98,8 @@ HEADERS += \
     Utils/TargetSelector/SingleNeighbourSelector.h \
     DataGateways/Parsers/ActorParser.h \
     Utils/XmlUtils.h \
-    Utils/Messenger.h
+    Utils/Messenger.h \
+    Utils/LogEntry.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

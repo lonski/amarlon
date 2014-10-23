@@ -52,22 +52,8 @@ void Engine::render()
 
   if (_gui)
   {
-    _gui->render();
-    std::vector<Actor*> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
-                                                              Actor::Player->getY(),
-                                                              [&](Actor* a) -> bool
-                                                              {
-                                                                return a != Actor::Player;
-                                                              });
-
-    TCODColor itemViewColor = TCODColor::darkLime;
-    std::vector< Gui::LogEntry > items;
-    std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
-    {
-      items.push_back( Gui::LogEntry( a->getName(), itemViewColor ) );
-    });
-
-    _gui->renderViewPanel(&items);
+    _gui->render();   
+    _gui->renderViewPanel(getActorsBenethPlayersFeet());
   }
 
   _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
@@ -116,6 +102,34 @@ Gui *Engine::getGui() const
 void Engine::setGui(Gui *gui)
 {
   _gui = gui;
+}
+
+std::vector<LogEntry> Engine::getActorsBenethPlayersFeet()
+{
+  std::vector<Actor*> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
+                                                            Actor::Player->getY(),
+                                                            [&](Actor* a) -> bool
+                                                            {
+                                                              return a != Actor::Player;
+                                                            });
+
+  TCODColor itemViewColor = TCODColor::darkLime;
+  std::vector< LogEntry > items;
+
+  std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
+  {
+    int amount = 0;
+    if ( a->afPickable() ) amount = a->afPickable()->getAmount();
+    std::string entryMsg = entryMsg = a->getName();
+
+    if (amount > 1)
+      entryMsg += " (" + std::to_string(amount) + ")";
+
+
+    items.push_back( LogEntry( entryMsg, itemViewColor ) );
+  });
+
+  return items;
 }
 
 
