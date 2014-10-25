@@ -46,7 +46,11 @@ SOURCES += main.cpp \
     Utils/TargetSelector/ExecutorSelector.cpp \
     Utils/TargetSelector/SingleNeighbourSelector.cpp \
     DataGateways/Parsers/ActorParser.cpp \
-    Utils/Messenger.cpp
+    Utils/Messenger.cpp \
+    Gui/Widget/widget.cpp \
+    Gui/Widget/bar.cpp \
+    Gui/Widget/panel.cpp \
+    Gui/Widget/list.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -100,7 +104,11 @@ HEADERS += \
     DataGateways/Parsers/ActorParser.h \
     Utils/XmlUtils.h \
     Utils/Messenger.h \
-    Utils/LogEntry.h
+    Gui/Widget/widget.h \
+    Gui/Widget/bar.h \
+    Gui/Widget/panel.h \
+    Gui/Widget/list.h \
+    Utils/colored_string.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

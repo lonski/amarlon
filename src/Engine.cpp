@@ -4,6 +4,8 @@
 #include "Gui/Gui.h"
 #include <algorithm>
 #include "Utils/Messenger.h"
+#include "Gui/Widget/panel.h"
+#include "Gui/Widget/bar.h"
 
 namespace amarlon {
 
@@ -60,6 +62,7 @@ void Engine::render()
 
   _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
   _console->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
+
 }
 
 void Engine::updateAis()
@@ -106,7 +109,7 @@ void Engine::setGui(gui::Gui *gui)
   _gui = gui;
 }
 
-std::vector<LogEntry> Engine::getActorsBenethPlayersFeet()
+std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
 {
   std::vector<Actor*> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
                                                             Actor::Player->getY(),
@@ -116,7 +119,7 @@ std::vector<LogEntry> Engine::getActorsBenethPlayersFeet()
                                                             });
 
   TCODColor itemViewColor = TCODColor::darkLime;
-  std::vector< LogEntry > items;
+  std::vector< ColoredString > items;
 
   std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
   {
@@ -131,7 +134,7 @@ std::vector<LogEntry> Engine::getActorsBenethPlayersFeet()
     if (amount > 1)
       entryMsg = entryMsg + " (" + std::to_string(amount) + ")";
 
-    items.push_back( LogEntry( entryMsg, itemViewColor ) );
+    items.push_back( ColoredString( entryMsg, itemViewColor ) );
   });
 
   return items;

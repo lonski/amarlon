@@ -1,6 +1,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "Utils/colored_string.h"
 #include <libtcod.hpp>
 #include "CommandExecutor.h"
 
@@ -12,7 +13,6 @@ class Actor;
 namespace gui {
   class Gui;
 }
-struct LogEntry;
 
 class Engine
 {
@@ -42,7 +42,7 @@ private:
 
   void render();
   void updateAis();
-  std::vector<LogEntry> getActorsBenethPlayersFeet();
+  std::vector<ColoredString> getActorsBenethPlayersFeet();
 
 };
 

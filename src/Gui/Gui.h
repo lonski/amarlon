@@ -3,13 +3,19 @@
 
 #include "Utils/glodef.h"
 #include <libtcod.hpp>
+#include <memory>
 #include <string>
 #include <list>
 #include <vector>
 #include <utility>
-#include "Utils/LogEntry.h"
+#include "Widget/list.h"
 
 namespace amarlon { namespace gui {
+
+class Panel;
+class List;
+typedef std::shared_ptr<Panel> PanelPtr;
+typedef std::shared_ptr<List> ListPtr;
 
 class Gui
 {
@@ -29,26 +35,25 @@ public:
   const int viewConHeight;
 
   Gui();
-  ~Gui();
+  ~Gui() {}
 
   void render();
   void renderRightPanel();
   void renderMessageLog();
-  void renderViewPanel(const std::vector<LogEntry>& items);
+  void renderViewPanel(const std::vector<ColoredString>& items);
 
   void message(std::string msg, TCODColor color = TCODColor::white);
 
 private:
-
-  std::list< LogEntry > _msgLog;
   TCODColor _frameColor;
 
-  TCODConsole* rCon;
-  TCODConsole* bCon;
+  PanelPtr _rightPanel;
 
-  TCODConsole* logCon;
-  TCODConsole* viewCon;
+  PanelPtr _logPanel;
+  ListPtr _log;
 
+  PanelPtr _viewPanel;
+  ListPtr _viewList;
 
 };
 
