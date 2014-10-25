@@ -4,6 +4,8 @@
 #include <vector>
 #include "Utils/SelectorType.h"
 
+namespace amarlon {
+
 class Actor;
 class Map;
 
@@ -18,5 +20,7 @@ public:
   virtual std::vector<Actor*> select(Actor* executor, Map* map, bool (*filterFun)(Actor*) = nullptr) = 0;
 
 };
+
+}
 
 #endif // TARGETSELECTOR_H

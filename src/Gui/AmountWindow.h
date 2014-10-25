@@ -4,6 +4,8 @@
 #include <string>
 #include <libtcod.hpp>
 
+namespace amarlon {
+
 class AmountWindow
 {
 public:
@@ -28,4 +30,5 @@ private:
 
 };
 
+}
 #endif // AMOUNTWINDOW_H

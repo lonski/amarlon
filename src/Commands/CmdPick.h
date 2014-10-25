@@ -3,6 +3,8 @@
 
 #include "Command.h"
 
+namespace amarlon {
+
 class Container;
 
 class CmdPick : public Command
@@ -14,5 +16,7 @@ public:
   virtual void execute(Container *container, Actor* executor, bool forceGui = true);
 
 };
+
+}
 
 #endif // CMDPICK_H

@@ -5,6 +5,8 @@
 #include <string>
 #include <libtcod.hpp>
 
+namespace amarlon {
+
 class Actor;
 
 class ItemPickerGui
@@ -39,4 +41,5 @@ private:
 
 };
 
+}
 #endif // ITEMPICKER_H

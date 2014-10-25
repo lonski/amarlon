@@ -1,6 +1,8 @@
 #ifndef MESSENGER_H
 #define MESSENGER_H
 
+namespace amarlon {
+
 class Gui;
 class Actor;
 
@@ -28,5 +30,7 @@ private:
   Gui* _gui;
 
 };
+
+}
 
 #endif // MESSENGER_H

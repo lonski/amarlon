@@ -3,6 +3,8 @@
 #include "World/Map.h"
 #include "Engine.h"
 
+namespace amarlon {
+
 CmdClose::CmdClose()
 {
 }
@@ -30,4 +32,6 @@ void CmdClose::execute(Engine *engine, Actor *executor)
       map->updateActorCell(target);
     }
   }
+}
+
 }

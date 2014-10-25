@@ -5,6 +5,8 @@
 #include <algorithm>
 #include "Utils/Messenger.h"
 
+namespace amarlon {
+
 int Engine::FovRadius = 20;
 
 Engine::Engine()
@@ -135,5 +137,4 @@ std::vector<LogEntry> Engine::getActorsBenethPlayersFeet()
   return items;
 }
 
-
-
+}

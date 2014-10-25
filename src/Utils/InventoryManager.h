@@ -4,6 +4,8 @@
 #include "Gui/ItemPickerWindow.h"
 #include <string>
 
+namespace amarlon {
+
 class Actor;
 
 class InventoryManager
@@ -22,5 +24,7 @@ private:
   std::string _title;
 
 };
+
+}
 
 #endif // INVENTORYMANAGER_H

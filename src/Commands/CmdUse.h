@@ -3,6 +3,8 @@
 
 #include "Command.h"
 
+namespace amarlon {
+
 class CmdUse : public Command
 {
 public:
@@ -12,5 +14,7 @@ public:
   virtual void execute(Engine* engine, Actor* executor);
 
 };
+
+}
 
 #endif // CMDUSE_H

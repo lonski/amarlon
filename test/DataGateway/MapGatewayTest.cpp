@@ -2,6 +2,8 @@
 #include "DataGateways/MapGateway.h"
 #include "World/map.h"
 
+namespace amarlon {
+
 TEST(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
 {
   MapGateway gateway;
@@ -47,4 +49,4 @@ TEST(MapGatewayTest, saveMaps)
   gateway.saveMaps("../amarlon/maps_saved.xml");
 }
 
-
+}

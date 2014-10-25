@@ -1,6 +1,8 @@
 #ifndef SELECTORTYPE_H
 #define SELECTORTYPE_H
 
+namespace amarlon {
+
 enum class SelectorType
 {
   SingleNeighbour,
@@ -9,5 +11,7 @@ enum class SelectorType
   AreaNeighbour,
   Executor
 };
+
+}
 
 #endif // SELECTORTYPE_H

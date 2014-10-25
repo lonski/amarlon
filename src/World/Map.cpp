@@ -3,6 +3,8 @@
 #include <iostream>
 #include <algorithm>
 
+namespace amarlon {
+
 TileDB Map::Tiles;
 MapGateway Map::Gateway;
 
@@ -329,5 +331,4 @@ void Map::setId(const MapId &id)
   _id = id;
 }
 
-
-
+}

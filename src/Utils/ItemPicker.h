@@ -3,6 +3,8 @@
 
 #include <Gui/ItemPickerWindow.h>
 
+namespace amarlon {
+
 class Map;
 
 class ItemPicker
@@ -22,5 +24,7 @@ private:
   void pickSingleItem(Actor* target, bool takAll = false);
 
 };
+
+}
 
 #endif // ITEMPICKER_H

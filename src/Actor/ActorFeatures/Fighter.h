@@ -4,6 +4,8 @@
 #include "ActorFeature.h"
 #include "DataGateways/ActorDescriptions.h"
 
+namespace amarlon {
+
 class Fighter : public ActorFeature
 {
 public:
@@ -26,5 +28,7 @@ private:
   float _hp;
 
 };
+
+}
 
 #endif // FIGHTER_H

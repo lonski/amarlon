@@ -1,6 +1,8 @@
 #ifndef ACTORFEATURE_H
 #define ACTORFEATURE_H
 
+namespace amarlon {
+
 class Actor;
 
 class ActorFeature
@@ -17,5 +19,7 @@ protected:
   Actor* _owner;
 
 };
+
+}
 
 #endif // ACTORFEATURE_H

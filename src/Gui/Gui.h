@@ -9,6 +9,8 @@
 #include <utility>
 #include "Utils/LogEntry.h"
 
+namespace amarlon {
+
 class Gui
 {
 public:
@@ -50,4 +52,5 @@ private:
 
 };
 
+}
 #endif // GUI_H

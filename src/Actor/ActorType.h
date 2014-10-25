@@ -1,6 +1,8 @@
 #ifndef ACTORTYPE_H
 #define ACTORTYPE_H
 
+namespace amarlon {
+
 enum class ActorType
 {
   Null,  
@@ -21,5 +23,7 @@ enum class ActorType
   Corpse,
   End
 };
+
+}
 
 #endif // ACTORTYPE_H

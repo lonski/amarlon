@@ -5,6 +5,8 @@
 #include "OpenableType.h"
 #include "DataGateways/ActorDescriptions.h"
 
+namespace amarlon {
+
 class Actor;
 
 class Openable : public ActorFeature
@@ -34,5 +36,7 @@ protected:
   int _lockId;
 
 };
+
+}
 
 #endif // OPENABLE_H

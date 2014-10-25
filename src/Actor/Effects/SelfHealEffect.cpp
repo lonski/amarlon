@@ -3,6 +3,8 @@
 #include "Utils/Messenger.h"
 #include "Gui/Gui.h"
 
+namespace amarlon {
+
 SelfHealEffect::SelfHealEffect()
 {
 }
@@ -58,4 +60,6 @@ bool SelfHealEffect::isEqual(Effect *rhs)
   }
 
   return equal;
+}
+
 }

@@ -3,6 +3,8 @@
 
 #include "Openable.h"
 
+namespace amarlon {
+
 class OpenableContainer : public Openable
 {
 public:
@@ -15,5 +17,7 @@ public:
   virtual bool close(Actor* executor);
 
 };
+
+}
 
 #endif // OPENABLECONTAINER_H

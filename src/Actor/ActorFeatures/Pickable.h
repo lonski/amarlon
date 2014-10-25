@@ -5,6 +5,8 @@
 #include "ActorFeature.h"
 #include "DataGateways/ActorDescriptions.h"
 
+namespace amarlon {
+
 class Actor;
 class Effect;
 
@@ -35,5 +37,7 @@ private:
   Effect* _effect;
 
 };
+
+}
 
 #endif // PICKABLE_H

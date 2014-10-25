@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include <World/map.h>
 
+namespace amarlon {
+
 TEST(MapTest, mapCreation)
 {
   Map map(100, 60);
@@ -90,4 +92,6 @@ TEST(MapTest, tileThatBlocks)
 
   EXPECT_TRUE(map.isBlocked(0,0));
   EXPECT_FALSE(map.isBlocked(3,2));
+}
+
 }

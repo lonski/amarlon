@@ -8,6 +8,8 @@
 #include "Utils/Messenger.h"
 #include "Engine.h"
 
+namespace amarlon {
+
 CmdUse::CmdUse()
 {
 }
@@ -47,5 +49,7 @@ void CmdUse::execute(Engine *engine, Actor *executor)
   {
     Messenger::message()->actorNotUsable(item);
   }
+
+}
 
 }

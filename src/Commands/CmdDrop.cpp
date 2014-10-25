@@ -4,6 +4,8 @@
 #include "Engine.h"
 #include <algorithm>
 
+namespace amarlon {
+
 CmdDrop::CmdDrop()
 {
 }
@@ -24,4 +26,6 @@ void CmdDrop::execute(Engine *engine, Actor *executor)
     a->setY( executor->getY() );
     engine->currentMap()->addActor(a);
   });
+}
+
 }

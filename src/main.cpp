@@ -11,12 +11,12 @@ int main()
   try
   {
     TCODConsole::root->setCustomFont("../amarlon/terminal.png");
-    TCODConsole::initRoot(gloScreenWidth,gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
+    TCODConsole::initRoot(amarlon::gloScreenWidth,amarlon::gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
 
     TCODMouse::showCursor(false);
     TCOD_key_t lastKey;
 
-    Engine engine;
+    amarlon::Engine engine;
     engine.init();
 
     engine.getGui()->message(":: Welcome to Amarlon! ::", TCODColor::sky);

@@ -6,6 +6,8 @@
 #include "DataGateways/ActorDescriptions.h"
 #include "Utils/SelectorType.h"
 
+namespace amarlon {
+
 class Actor;
 
 class Effect
@@ -30,5 +32,7 @@ protected:
   int _usesCount;
 
 };
+
+}
 
 #endif // EFFECT_H

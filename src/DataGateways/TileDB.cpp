@@ -3,6 +3,8 @@
 #include <fstream>
 #include <vector>
 
+namespace amarlon {
+
 using namespace std;
 using namespace rapidxml;
 
@@ -108,4 +110,6 @@ bool TileDB::loadTiles(string fn)
   }
 
   return success;
+}
+
 }

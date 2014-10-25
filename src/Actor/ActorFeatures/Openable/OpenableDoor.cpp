@@ -4,6 +4,8 @@
 #include "Utils/Messenger.h"
 #include <iostream>
 
+namespace amarlon {
+
 OpenableDoor::OpenableDoor()
 {
 }
@@ -74,4 +76,6 @@ bool OpenableDoor::lock()
   }
 
   return r;
+}
+
 }

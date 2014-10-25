@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Actor/Actor.h"
 
+namespace amarlon {
+
 class Engine;
 
 enum class CommandId
@@ -32,5 +34,7 @@ public:
   virtual void execute(Engine* engine, Actor* executor) = 0;
 
 };
+
+}
 
 #endif // COMMAND_H

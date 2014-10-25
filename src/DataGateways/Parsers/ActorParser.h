@@ -4,6 +4,8 @@
 #include "../ActorDescriptions.h"
 #include "xml/rapidxml.hpp"
 
+namespace amarlon {
+
 class ActorParser
 {
 public:
@@ -23,5 +25,7 @@ private:
   rapidxml::xml_node<>* _xml;
 
 };
+
+}
 
 #endif // ACTORPARSER_H

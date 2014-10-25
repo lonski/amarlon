@@ -2,6 +2,28 @@
 #include <algorithm>
 #include <iostream>
 
+namespace amarlon {
+
+void renderBar(int x, int y, int width, const char *name, float value,
+                    float maxValue, const TCODColor &barColor, const TCODColor &backColor, TCODConsole* con)
+{
+  // fill the background
+  con->setDefaultBackground(backColor);
+  con->rect(x,y,width,1,false,TCOD_BKGND_SET);
+
+  int barWidth = (int)(value / maxValue * width);
+  if ( barWidth > 0 )
+  {
+    // draw the bar
+    con->setDefaultBackground(barColor);
+    con->rect(x,y,barWidth,1,false,TCOD_BKGND_SET);
+  }
+
+  // print text on top of the bar
+  con->setDefaultForeground(TCODColor::white);
+  con->printEx(x+width/2, y, TCOD_BKGND_NONE,TCOD_CENTER,	"%s : %g/%g", name, value, maxValue);
+}
+
 Gui::Gui()
   : LogSize(17)
   , rightConWidth(20)
@@ -51,6 +73,8 @@ void Gui::renderRightPanel()
   rCon->setDefaultForeground(_frameColor);
   rCon->printFrame(0, 0, rightConWidth, rightConHeight, true, TCOD_BKGND_DEFAULT);
 
+  renderBar(2,4,16,"HP",3,10,TCODColor::red, TCODColor::darkerRed,rCon);
+
   TCODConsole::blit(rCon, 0, 0, rightConWidth, rightConHeight, TCODConsole::root, gloScreenWidth - rightConWidth, 0 );
 }
 
@@ -94,4 +118,6 @@ void Gui::renderViewPanel(const std::vector<LogEntry>& items)
   });
 
   TCODConsole::blit(viewCon, 0, 0, viewConWidth, viewConHeight, TCODConsole::root, logConWidth, gloScreenHeight - viewConHeight );
+}
+
 }

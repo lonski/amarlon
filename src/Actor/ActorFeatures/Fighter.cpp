@@ -7,6 +7,8 @@
 #include "Utils/Utils.h"
 #include "Utils/Messenger.h"
 
+namespace amarlon {
+
 Fighter::Fighter(float power, float maxHp)
   : _power(power)
   , _maxHp(maxHp)
@@ -84,4 +86,6 @@ int Fighter::heal(int hp)
   }
 
   return healed;
+}
+
 }

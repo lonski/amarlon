@@ -7,6 +7,8 @@
 #include "Gui/AmountWindow.h"
 #include "Utils/Messenger.h"
 
+namespace amarlon {
+
 ItemPicker::ItemPicker(const std::vector<Actor *> &items, Actor *executor)
   : _items(items)
   , _executor(executor)
@@ -76,4 +78,6 @@ void ItemPicker::pickSingleItem(Actor* target, bool takAll)
   }
 
   _itemsPicked.push_back(target);
+}
+
 }

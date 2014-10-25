@@ -12,6 +12,8 @@
 #include "ActorFeatures/Ai/Ai.h"
 #include "ActorFeatures/Openable/Openable.h"
 
+namespace amarlon {
+
 class Map;
 
 class Actor
@@ -72,4 +74,5 @@ private:
 
 typedef std::shared_ptr<Actor> ActorPtr;
 
+}
 #endif // ACTOR_H

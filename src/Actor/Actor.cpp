@@ -2,8 +2,7 @@
 #include "World/Map.h"
 #include <iostream>
 
-#define private public
-#include "Actor/Effects/SelfHealEffect.h"
+namespace amarlon {
 
 ActorDB Actor::DB;
 Actor* Actor::Player(nullptr);
@@ -209,4 +208,6 @@ TCODColor Actor::getColor() const
 unsigned char Actor::getChar() const
 {
   return Actor::DB.getChar(_id);;
+}
+
 }

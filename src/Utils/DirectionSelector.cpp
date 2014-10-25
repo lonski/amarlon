@@ -2,6 +2,8 @@
 #include <libtcod.hpp>
 #include "Utils.h"
 
+namespace amarlon {
+
 DirectionSelector::DirectionSelector()
 {
 }
@@ -12,4 +14,6 @@ void DirectionSelector::select(int &dx, int &dy)
   TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS|TCOD_EVENT_MOUSE,&lastKey,NULL, true);
 
   handleDirectionKey(lastKey, dx, dy);
+}
+
 }

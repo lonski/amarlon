@@ -3,6 +3,8 @@
 #include "ItemPicker.h"
 #include <algorithm>
 
+namespace amarlon {
+
 InventoryManager::InventoryManager(Actor* actor)
   : _actor(actor)
 {
@@ -58,4 +60,6 @@ Actor *InventoryManager::chooseItemToUse()
   }
 
   return toUse;
+}
+
 }

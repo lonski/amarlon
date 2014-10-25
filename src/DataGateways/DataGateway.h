@@ -8,6 +8,8 @@
 #include <iomanip>
 #include <cstring>
 
+namespace amarlon {
+
 class DataGateway
 {
   typedef std::map<std::string, std::string> TagMap;
@@ -161,6 +163,8 @@ template<typename T>
 void DataGateway::retriveData(int section, std::string tag, std::vector<T> &data)
 {
   retriveData(toString(section), tag, data);
+}
+
 }
 
 #endif // DATAGATEWAY_H

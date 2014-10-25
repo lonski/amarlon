@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <memory>
 
+namespace amarlon {
+
 using namespace rapidxml;
 using namespace std;
 
@@ -135,5 +137,7 @@ void MapGateway::saveMaps(string fn)
   //save
   ofstream ofs(fn);
   ofs << doc;
+
+}
 
 }

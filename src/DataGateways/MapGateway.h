@@ -5,6 +5,8 @@
 #include <World/MapId.h>
 #include <xml/rapidxml_print.hpp>
 
+namespace amarlon {
+
 class Map;
 class Actor;
 
@@ -21,5 +23,7 @@ private:
   void overwriteActorFeatures(rapidxml::xml_node<>* actorNode, Actor* actor);
 
 };
+
+}
 
 #endif // MAPGATEWAY_H

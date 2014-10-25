@@ -10,6 +10,8 @@
 #include "Actor/ActorFeatures/Openable/OpenableType.h"
 #include "Actor/Effects/EffectType.h"
 
+namespace amarlon {
+
 class Container;
 class Pickable;
 class Fighter;
@@ -82,5 +84,6 @@ struct ContainerDescription
 };
 
 //===
+}
 
 #endif // ACTORDESCRIPTIONS_H

@@ -3,6 +3,8 @@
 #include "World/Map.h"
 #include "Actor/Actor.h"
 
+namespace amarlon {
+
 SingleNeighbourSelector::SingleNeighbourSelector()
 {
 }
@@ -15,4 +17,6 @@ std::vector<Actor*> SingleNeighbourSelector::select(Actor *executor, Map *map, b
   dSelector.select(dx, dy);
 
   return map->getActors(executor->getX()+dx, executor->getY()+dy, filterFun);
+}
+
 }

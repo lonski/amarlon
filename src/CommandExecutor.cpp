@@ -1,5 +1,7 @@
 #include "CommandExecutor.h"
 
+namespace amarlon {
+
 CommandExecutor* CommandExecutor::_inst = nullptr;
 
 CommandExecutor::CommandExecutor()
@@ -34,4 +36,6 @@ bool CommandExecutor::execute(TCOD_key_t& key, Engine *engine, Actor *executor)
     _inst = new CommandExecutor;
 
   return _inst->executeCommand(key, engine, executor);
+}
+
 }

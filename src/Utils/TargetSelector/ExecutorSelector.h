@@ -3,6 +3,8 @@
 
 #include "TargetSelector.h"
 
+namespace amarlon {
+
 class ExecutorSelector : public TargetSelector
 {
 public:
@@ -11,5 +13,7 @@ public:
   virtual std::vector<Actor*> select(Actor* executor, Map* map, bool (*filterFun)(Actor*) = nullptr);
 
 };
+
+}
 
 #endif // EXECUTORSELECTOR_H

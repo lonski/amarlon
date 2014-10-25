@@ -2,6 +2,8 @@
 #include "Utils/glodef.h"
 #include <iostream>
 
+namespace amarlon {
+
 AmountWindow::AmountWindow(int defAmount, std::string title)
   : _title(title)
   , _conWidth(21)
@@ -97,5 +99,7 @@ void AmountWindow::handlePressedKey(const TCOD_key_t &key)
   }
 
   _amount = std::stol(aStr);
+
+}
 
 }

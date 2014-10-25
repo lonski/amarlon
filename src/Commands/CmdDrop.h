@@ -3,6 +3,8 @@
 
 #include "Command.h"
 
+namespace amarlon {
+
 class CmdDrop : public Command
 {
 public:
@@ -11,5 +13,7 @@ public:
   virtual void execute(Engine* engine, Actor* executor);
 
 };
+
+}
 
 #endif // CMDDROP_H

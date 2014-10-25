@@ -4,6 +4,8 @@
 #include <libtcod.hpp>
 #include "CommandExecutor.h"
 
+namespace amarlon {
+
 class Map;
 class Actor;
 class Gui;
@@ -40,5 +42,7 @@ private:
   std::vector<LogEntry> getActorsBenethPlayersFeet();
 
 };
+
+}
 
 #endif // ENGINE_H

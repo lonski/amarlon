@@ -5,6 +5,8 @@
 #include "Utils/DirectionSelector.h"
 #include "Utils/Messenger.h"
 
+namespace amarlon {
+
 LockEffect::LockEffect()
 {
 }
@@ -77,4 +79,6 @@ bool LockEffect::apply(Actor* executor, std::vector<Actor *> targets)
   }
 
   return r;
+}
+
 }

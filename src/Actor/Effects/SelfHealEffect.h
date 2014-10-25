@@ -3,6 +3,8 @@
 
 #include "Effect.h"
 
+namespace amarlon {
+
 class SelfHealEffect : public Effect
 {
 public:
@@ -24,5 +26,7 @@ private:
   int _healAmount;
 
 };
+
+}
 
 #endif // HEALEFFECT_H

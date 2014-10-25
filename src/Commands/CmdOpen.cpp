@@ -7,6 +7,8 @@
 #include "World/Map.h"
 #include "Engine.h"
 
+namespace amarlon {
+
 CmdOpen::CmdOpen()
 {
 }
@@ -35,4 +37,6 @@ void CmdOpen::execute(Engine *engine, Actor *executor)
       map->updateActorCell(target);
     }
   }
+}
+
 }

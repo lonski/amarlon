@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "DataGateways/DataGateway.h"
 
+namespace amarlon {
+
 TEST(DataGatewayTest, addData_TagAndSectionExitsts)
 {
   DataGateway data;
@@ -126,3 +128,4 @@ TEST(DataGatewayTest, retriveStringWithSpaces)
   ASSERT_EQ(data.retriveDataStr("s1", "t1"), "ala ma kota");
 }
 
+}

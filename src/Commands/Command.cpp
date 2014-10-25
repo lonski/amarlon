@@ -8,6 +8,8 @@
 #include "CmdClose.h"
 #include "CmdUse.h"
 
+namespace amarlon {
+
 Command *Command::create(CommandId cmd)
 {
   Command* c = NULL;
@@ -28,3 +30,4 @@ Command *Command::create(CommandId cmd)
   return c;
 }
 
+}

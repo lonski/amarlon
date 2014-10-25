@@ -4,6 +4,8 @@
 #include <string>
 #include "libtcod.hpp"
 
+namespace amarlon {
+
 struct LogEntry
 {
   std::string msg;
@@ -14,5 +16,7 @@ struct LogEntry
     , color(c)
   {}
 };
+
+}
 
 #endif // LOGENTRY_H

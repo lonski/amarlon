@@ -6,6 +6,8 @@
 #include "World/Map.h"
 #include "Engine.h"
 
+namespace amarlon {
+
 CmdPick::CmdPick()
 {
 }
@@ -43,4 +45,6 @@ void CmdPick::execute(Container* container, Actor *executor, bool forceGui)
   {
     container->remove(a);
   });
+}
+
 }

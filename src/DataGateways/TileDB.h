@@ -7,6 +7,8 @@
 #include "xml/rapidxml.hpp"
 #include "World/TileType.h"
 
+namespace amarlon {
+
 struct TileDescription
 {
   char character;
@@ -34,5 +36,7 @@ private:
   std::map<TileType, TileDescription> _tiles;
 
 };
+
+}
 
 #endif // TILEDB_H

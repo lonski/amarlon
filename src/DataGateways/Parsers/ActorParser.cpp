@@ -3,6 +3,8 @@
 #include "Utils/Utils.h"
 #include <string>
 
+namespace amarlon {
+
 using namespace rapidxml;
 using namespace std;
 
@@ -178,4 +180,6 @@ OpenableDescription *ActorParser::parseOpenableDsc()
   }
 
   return opDsc;
+}
+
 }

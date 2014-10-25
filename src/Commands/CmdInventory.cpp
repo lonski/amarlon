@@ -3,6 +3,8 @@
 #include <algorithm>
 #include "Utils/InventoryManager.h"
 
+namespace amarlon {
+
 CmdInventory::CmdInventory()
 {
 }
@@ -20,4 +22,6 @@ void CmdInventory::execute(Engine*, Actor *executor)
     inv.setTitle("Inventory");
     inv.display();
   }
+}
+
 }

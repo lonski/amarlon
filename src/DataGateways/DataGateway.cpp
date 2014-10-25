@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iterator>
 
+namespace amarlon {
+
 using namespace std;
 
 vector<string> explode(string str, char ch)
@@ -156,4 +158,6 @@ bool DataGateway::tagExists(string section, string tag) const
 size_t DataGateway::getSectionCount() const
 {
   return m_sections.size();
+}
+
 }

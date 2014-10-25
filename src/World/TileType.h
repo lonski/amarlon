@@ -1,6 +1,8 @@
 #ifndef TILETYPE_H
 #define TILETYPE_H
 
+namespace amarlon {
+
 enum class TileType
 {
   Null,
@@ -11,5 +13,7 @@ enum class TileType
   Dirt,
   Water
 };
+
+}
 
 #endif // TILETYPE_H

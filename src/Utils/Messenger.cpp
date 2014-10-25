@@ -3,6 +3,8 @@
 #include "Actor/Actor.h"
 #include "Utils/Utils.h"
 
+namespace amarlon {
+
 using namespace std;
 
 Messenger* Messenger::_msg(nullptr);
@@ -105,4 +107,6 @@ void Messenger::actorNotUsable(Actor *actor)
   string msg = eName + " is not usable.";
 
   _gui->message(msg);
+}
+
 }

@@ -4,6 +4,8 @@
 #include "Gui/Gui.h"
 #include <iostream>
 
+namespace amarlon {
+
 Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
@@ -111,3 +113,4 @@ void Pickable::incAmount(int inc)
   _amount += inc;
 }
 
+}

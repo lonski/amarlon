@@ -3,6 +3,8 @@
 
 #include "Effect.h"
 
+namespace amarlon {
+
 class LockEffect : public Effect
 {
 public:
@@ -24,5 +26,7 @@ private:
   int _lockId;
 
 };
+
+}
 
 #endif // OPENEFFECT_H

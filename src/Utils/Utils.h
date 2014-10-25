@@ -9,6 +9,8 @@
 #include <iostream>
 #include <algorithm>
 
+namespace amarlon {
+
 template<typename T>
 std::string to_stringp(T t, int prec = 1)
 {
@@ -92,4 +94,5 @@ static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
   return handled;
 }
 
+}
 #endif // UTILS_H

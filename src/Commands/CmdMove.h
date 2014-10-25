@@ -3,6 +3,8 @@
 
 #include "Command.h"
 
+namespace amarlon {
+
 class CmdMoveOrAttack : public Command
 {
 public:
@@ -17,5 +19,7 @@ private:
   int _dy;
 
 };
+
+}
 
 #endif // CMDMOVE_H

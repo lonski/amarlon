@@ -4,6 +4,8 @@
 #include "Actor/Actor.h"
 #include <cmath>
 
+namespace amarlon {
+
 int MonsterAi::TrackingTurns = 5;
 
 MonsterAi::MonsterAi()
@@ -98,4 +100,6 @@ void MonsterAi::updatePosition()
 {
   _cX = _owner->getX();
   _cY = _owner->getY();
+}
+
 }

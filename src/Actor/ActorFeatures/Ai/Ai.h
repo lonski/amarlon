@@ -5,6 +5,8 @@
 #include "AiType.h"
 #include "DataGateways/ActorDescriptions.h"
 
+namespace amarlon {
+
 class Actor;
 class Map;
 
@@ -20,5 +22,7 @@ public:
   static Ai* create(const AiDescription& dsc);
 
 };
+
+}
 
 #endif // AI_H

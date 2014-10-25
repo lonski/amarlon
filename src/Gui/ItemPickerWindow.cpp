@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iostream>
 
+namespace amarlon {
+
 ItemPickerGui::ItemPickerGui(std::string title, int width, int height)
   : _title(title)
   , _conWidth(width)
@@ -116,5 +118,4 @@ void ItemPickerGui::setTitle(const std::string &title)
   _title = title;
 }
 
-
-
+}

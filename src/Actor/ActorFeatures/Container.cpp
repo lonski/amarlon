@@ -5,6 +5,8 @@
 #include <Gui/ItemPickerWindow.h>
 #include <memory>
 
+namespace amarlon {
+
 Container::Container(size_t maxSize)
   : _slotCount(maxSize)
 {
@@ -159,3 +161,4 @@ void Container::setSlotCount(const size_t &maxSize)
   _slotCount = maxSize;
 }
 
+}

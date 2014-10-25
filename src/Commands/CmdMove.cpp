@@ -3,6 +3,8 @@
 #include "World/Map.h"
 #include "Engine.h"
 
+namespace amarlon {
+
 CmdMoveOrAttack::CmdMoveOrAttack()
   : _dx(0)
   , _dy(0)
@@ -51,4 +53,6 @@ void CmdMoveOrAttack::setDirection(int dx, int dy)
 
   if (dy > 0) _dy = 1;
   else if (dy < 0) _dy = -1;
+}
+
 }

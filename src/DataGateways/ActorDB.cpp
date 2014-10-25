@@ -8,6 +8,8 @@
 #include <memory>
 #include "Parsers/ActorParser.h"
 
+namespace amarlon {
+
 using namespace std;
 using namespace rapidxml;
 
@@ -143,4 +145,6 @@ bool ActorDB::loadActors(std::string fn)
   }
 
   return success;
+}
+
 }

@@ -2,6 +2,8 @@
 #include "Utils/utils.h"
 #include "DataGateways/TileDB.h"
 
+namespace amarlon {
+
 TEST(UtilsTest, color2str)
 {
   TCODColor color(255,0,0);
@@ -33,3 +35,4 @@ TEST(UtilsTest, tolowers)
   ASSERT_EQ(tolowers(str), "cycki");
 }
 
+}

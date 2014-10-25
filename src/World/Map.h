@@ -9,6 +9,8 @@
 #include "DataGateways/TileDB.h"
 #include "DataGateways/MapGateway.h"
 
+namespace amarlon {
+
 typedef unsigned int u32;
 
 class Actor;
@@ -76,4 +78,5 @@ private:
 
 };
 
+}
 #endif // MAP_H

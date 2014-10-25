@@ -1,6 +1,8 @@
 #include "OpenableContainer.h"
 #include "Commands/CmdPick.h"
 
+namespace amarlon {
+
 OpenableContainer::OpenableContainer()
 {
 }
@@ -47,3 +49,4 @@ bool OpenableContainer::isEqual(ActorFeature *rhs)
   return equal;
 }
 
+}

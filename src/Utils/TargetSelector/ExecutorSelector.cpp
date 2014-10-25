@@ -1,5 +1,7 @@
 #include "ExecutorSelector.h"
 
+namespace amarlon {
+
 ExecutorSelector::ExecutorSelector()
 {
 }
@@ -10,4 +12,6 @@ std::vector<Actor *> ExecutorSelector::select(Actor *executor, Map*, bool(*)(Act
   targets.push_back(executor);
 
   return targets;
+}
+
 }

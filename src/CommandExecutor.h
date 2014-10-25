@@ -5,6 +5,8 @@
 #include <vector>
 #include "Commands/Command.h"
 
+namespace amarlon {
+
 class Actor;
 class Map;
 class Engine;
@@ -22,5 +24,7 @@ private:
   std::vector<Command*> _commands;
 
 };
+
+}
 
 #endif // COMMANDEXECUTOR_H

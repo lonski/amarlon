@@ -2,6 +2,8 @@
 #include "LockEffect.h"
 #include "SelfHealEffect.h"
 
+namespace amarlon {
+
 Effect::Effect()
   : _usesCount(0)
 {
@@ -36,4 +38,6 @@ Effect *Effect::create(const EffectDescription &dsc)
 int Effect::getUsesCount() const
 {
   return _usesCount;
+}
+
 }

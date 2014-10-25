@@ -4,6 +4,8 @@
 #include "Command.h"
 #include "Utils/DirectionSelector.h"
 
+namespace amarlon {
+
 class CmdClose : public Command
 {
 public:
@@ -15,5 +17,7 @@ private:
   DirectionSelector _dSelector;
 
 };
+
+}
 
 #endif // CMDCLOSE_H

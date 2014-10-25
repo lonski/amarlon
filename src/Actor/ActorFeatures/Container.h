@@ -6,6 +6,8 @@
 #include "ActorFeature.h"
 #include "DataGateways/ActorDescriptions.h"
 
+namespace amarlon {
+
 class Actor;
 
 class Container : public ActorFeature
@@ -31,5 +33,7 @@ private:
   size_t _slotCount;
 
 };
+
+}
 
 #endif // CONTAINER_H

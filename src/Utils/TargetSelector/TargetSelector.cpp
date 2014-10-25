@@ -2,6 +2,8 @@
 #include "ExecutorSelector.h"
 #include "SingleNeighbourSelector.h"
 
+namespace amarlon {
+
 TargetSelector::TargetSelector()
 {
 }
@@ -18,4 +20,6 @@ TargetSelector *TargetSelector::create(SelectorType type)
   }
 
   return ts;
+}
+
 }

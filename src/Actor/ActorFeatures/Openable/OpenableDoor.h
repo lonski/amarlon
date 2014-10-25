@@ -3,6 +3,8 @@
 
 #include "Openable.h"
 
+namespace amarlon {
+
 class OpenableDoor : public Openable
 {
 public:
@@ -17,5 +19,7 @@ public:
   virtual bool lock();
 
 };
+
+}
 
 #endif // OPENABLEDOOR_H

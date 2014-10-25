@@ -3,6 +3,8 @@
 #include <iostream>
 #include "MonsterAi.h"
 
+namespace amarlon {
+
 Ai::Ai()
 {
 }
@@ -31,4 +33,6 @@ void Ai::update(Map*)
   {
     std::cout << "\n" << _owner->getName() << " updates";
   }
+}
+
 }

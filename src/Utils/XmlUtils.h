@@ -4,6 +4,8 @@
 #include <sstream>
 #include "xml/rapidxml.hpp"
 
+namespace amarlon {
+
 template<typename T>
 T getAttribute(rapidxml::xml_node<>* node, std::string attribute)
 {
@@ -36,4 +38,5 @@ std::string getAttribute<std::string>(rapidxml::xml_node<>* node, std::string at
   return value;
 }
 
+}
 #endif // XMLUTILS_H

@@ -3,6 +3,8 @@
 
 #include "Ai.h"
 
+namespace amarlon {
+
 class MonsterAi : public Ai
 {
 public:
@@ -24,5 +26,7 @@ private:
   void huntPlayer();
 
 };
+
+}
 
 #endif // MONSTERAI_H

@@ -3,6 +3,8 @@
 
 #include "TargetSelector.h"
 
+namespace amarlon {
+
 class SingleNeighbourSelector : public TargetSelector
 {
 public:
@@ -10,5 +12,7 @@ public:
 
   virtual std::vector<Actor*> select(Actor* executor, Map* map, bool (*filterFun)(Actor*) = nullptr);
 };
+
+}
 
 #endif // SINGLENEIGHBOURSELECTOR_H

@@ -8,6 +8,8 @@
 #include "xml/rapidxml.hpp"
 #include "ActorDescriptions.h"
 
+namespace amarlon {
+
 class ActorDB
 {
 public:
@@ -39,4 +41,5 @@ private:
 
 };
 
+}
 #endif // ACTORDB_H

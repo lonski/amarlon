@@ -5,6 +5,8 @@
 #include "Actor/Effects/SelfHealEffect.h"
 #undef private
 
+namespace amarlon {
+
 class ActorTest : public ::testing::Test
 {
   virtual void SetUp()
@@ -132,4 +134,6 @@ TEST_F(ActorTest, actorEqual_different_fighter)
   a1->afFighter()->_power = 666;
 
   ASSERT_FALSE( a1->isEqual(a2.get()) );
+}
+
 }

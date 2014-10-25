@@ -2,6 +2,8 @@
 #include "OpenableDoor.h"
 #include "OpenableContainer.h"
 
+namespace amarlon {
+
 Openable::Openable()
   : _locked(false)
   , _lockId(0)
@@ -66,5 +68,4 @@ void Openable::setLocked(bool locked)
   _locked = locked;
 }
 
-
-
+}
