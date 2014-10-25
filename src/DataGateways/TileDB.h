@@ -2,6 +2,7 @@
 #define TILEDB_H
 
 #include <map>
+#include <string>
 #include "libtcod.hpp"
 #include "xml/rapidxml.hpp"
 #include "World/TileType.h"
