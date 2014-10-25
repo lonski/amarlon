@@ -7,9 +7,21 @@ script:
     - sudo apt-get install -qq gcc-4.8
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
     - sudo update-alternatives --config gcc
+    - sudo apt-get install -qq mercurial libsdl-dev
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
     - gcc --version
+    - hg clone https://bitbucket.org/jice/libtcod
+    - cd libtcod
+    - make -f makefiles/makefile-linux debug
+    - cp ./libtcod_debug.so ../lib/libtcod.so
+    - cp ./libtcodxx_debug.so ../lib/libtcodxx.so
+    - cd -
+    - cd lib
+    - ln -s libtcod.so libtcod.so.1
+    - ln -s libtcodxx.so libtcodxx.so.1
+    - cd -
     - cd src
     - qmake amarlon.pro
-    - make
+    - make -j`grep -c processor /proc/cpuinfo`
+
