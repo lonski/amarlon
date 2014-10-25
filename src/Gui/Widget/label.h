@@ -3,6 +3,7 @@
 
 #include "widget.h"
 #include "libtcod.hpp"
+#include <string>
 
 namespace amarlon { namespace gui {
 
