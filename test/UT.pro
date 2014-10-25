@@ -69,7 +69,8 @@ SOURCES += \
     ../src/Gui/Widget/bar.cpp \
     ../src/Gui/Widget/list.cpp \
     ../src/Gui/Widget/panel.cpp \
-    ../src/Gui/Widget/widget.cpp
+    ../src/Gui/Widget/widget.cpp \
+    ../src/Gui/Widget/label.cpp
 
 
 HEADERS += \
@@ -129,5 +130,6 @@ HEADERS += \
     ../src/Gui/Widget/bar.h \
     ../src/Gui/Widget/list.h \
     ../src/Gui/Widget/panel.h \
-    ../src/Gui/Widget/widget.h
+    ../src/Gui/Widget/widget.h \
+    ../src/Gui/Widget/label.h
 
