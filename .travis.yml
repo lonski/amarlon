@@ -14,7 +14,6 @@ script:
     - hg clone https://bitbucket.org/jice/libtcod
     - cd libtcod
     - make -f makefiles/makefile-linux debug
-    - ls -al
     - cp ./libtcod_debug.so ../lib/libtcod.so
     - cp ./libtcodxx_debug.so ../lib/libtcodxx.so
     - cd -
