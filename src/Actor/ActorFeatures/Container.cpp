@@ -46,12 +46,27 @@ Container *Container::clone()
   return cloned;
 }
 
+bool Container::isEqual(ActorFeature *rhs)
+{
+  bool equal = false;
+  Container* crhs = dynamic_cast<Container*>(rhs);
+
+  if (crhs)
+  {
+    equal = (_slotCount == crhs->_slotCount);
+    equal &= std::equal(_inventory.begin(), _inventory.end(), crhs->_inventory.begin(),
+                        std::mem_fun(&Actor::isEqual));
+  }
+
+  return equal;
+}
+
 bool Container::add(Actor *actor)
 {
   bool added = false;
 
   //handle stackable
-  if ( actor->afPickable()->isStackable() )
+  if ( actor->afPickable() && actor->afPickable()->isStackable() )
   {
     auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](Actor* iItem)
                    {

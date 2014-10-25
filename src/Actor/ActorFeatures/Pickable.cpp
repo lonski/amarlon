@@ -43,6 +43,21 @@ ActorFeature *Pickable::clone()
   return cloned;
 }
 
+bool Pickable::isEqual(ActorFeature *rhs)
+{
+  bool equal = false;
+  Pickable* crhs = dynamic_cast<Pickable*>(rhs);
+
+  if (crhs)
+  {
+    equal = (_stackable == crhs->_stackable);
+    //equal &= (_amount == crhs->_amount);  no amount comparing
+    if ( getEffect() ) equal &= (getEffect()->isEqual( crhs->getEffect() ));
+  }
+
+  return equal;
+}
+
 bool Pickable::use(Actor* executor, std::vector<Actor*> targets)
 {
   bool r = false;

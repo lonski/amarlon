@@ -34,3 +34,16 @@ ActorFeature *OpenableContainer::clone()
   return cloned;
 }
 
+bool OpenableContainer::isEqual(ActorFeature *rhs)
+{
+  bool equal = false;
+  OpenableContainer* crhs = dynamic_cast<OpenableContainer*>(rhs);
+
+  if (crhs)
+  {
+    equal = (_lockId == crhs->_lockId);
+  }
+
+  return equal;
+}
+

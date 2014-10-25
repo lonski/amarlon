@@ -11,6 +11,7 @@ public:
 
   void setOwner(Actor* owner);
   virtual ActorFeature* clone() = 0;
+  virtual bool isEqual(ActorFeature* rhs) = 0;
 
 protected:
   Actor* _owner;

@@ -15,6 +15,8 @@ public:
   static Container* create(const ContainerDescription& dsc);
 
   virtual Container* clone();
+  virtual bool isEqual(ActorFeature* rhs);
+
   bool add(Actor* actor);
   bool remove(Actor* actor);
   std::vector<Actor *> content(bool(*filterFun)(Actor *) = nullptr);

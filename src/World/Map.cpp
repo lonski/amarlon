@@ -6,6 +6,8 @@
 TileDB Map::Tiles;
 MapGateway Map::Gateway;
 
+using namespace std;
+
 Map::Map(u32 width, u32 height, MapId id)
   : _id(id)
   , _width(width)
@@ -57,6 +59,11 @@ bool Map::isBlocked(int x, int y)
 
 void Map::addActor(Actor *actor)
 {
+//  find_if(_actors.begin(), _actors.end(), [&](Actor* a)
+//  {
+//    return *a == *actor;
+//  });
+
   if (actor->isAlive())
   {
     _actors.push_back(actor);

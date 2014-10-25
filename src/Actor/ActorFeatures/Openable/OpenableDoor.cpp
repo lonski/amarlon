@@ -51,6 +51,19 @@ ActorFeature *OpenableDoor::clone()
   return cloned;
 }
 
+bool OpenableDoor::isEqual(ActorFeature *rhs)
+{
+  bool equal = false;
+  OpenableDoor* crhs = dynamic_cast<OpenableDoor*>(rhs);
+
+  if (crhs)
+  {
+    equal = (_lockId == crhs->_lockId);
+  }
+
+  return equal;
+}
+
 bool OpenableDoor::lock()
 {
   bool r = false;

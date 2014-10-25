@@ -17,6 +17,20 @@ Effect *LockEffect::clone()
   return cloned;
 }
 
+bool LockEffect::isEqual(Effect *rhs)
+{
+  bool equal = false;
+  LockEffect* crhs = dynamic_cast<LockEffect*>(rhs);
+
+  if(crhs)
+  {
+    equal = _lockId == crhs->_lockId;
+    equal &= _usesCount == crhs->_usesCount;
+  }
+
+  return equal;
+}
+
 void LockEffect::load(const EffectDescription &dsc)
 {
   _lockId = dsc.lockId;

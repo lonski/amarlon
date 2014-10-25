@@ -45,3 +45,17 @@ Effect *SelfHealEffect::clone()
 
   return cloned;
 }
+
+bool SelfHealEffect::isEqual(Effect *rhs)
+{
+  bool equal = false;
+  SelfHealEffect* crhs = dynamic_cast<SelfHealEffect*>(rhs);
+
+  if(crhs)
+  {
+    equal = _healAmount == crhs->_healAmount;
+    equal &= _usesCount == crhs->_usesCount;
+  }
+
+  return equal;
+}

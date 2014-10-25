@@ -10,6 +10,8 @@ public:
   MonsterAi();
 
   virtual ActorFeature* clone();
+  virtual bool isEqual(ActorFeature *rhs);
+
   virtual void update(Map* map);
 
   void updatePosition();

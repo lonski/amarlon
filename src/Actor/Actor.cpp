@@ -25,6 +25,15 @@ Actor::Actor(ActorType aId, int x, int y)
   setAfOpenable   ( Actor::DB.getOpenable   (aId) );
 }
 
+Actor::~Actor()
+{
+  delete _afAi;
+  delete _afContainer;
+  delete _afFighter;
+  delete _afOpenable;
+  delete _afPickable;
+}
+
 void Actor::move(int dx, int dy)
 {
   _x += dx;
@@ -53,6 +62,19 @@ Actor *Actor::clone()
   cloned->setAfAi       ( dynamic_cast<Ai*>       ( _afAi        ? _afAi->clone()        : nullptr ) );
 
   return cloned;
+}
+
+bool Actor::isEqual(Actor *rhs)
+{
+  bool equal = ( getId() == rhs->getId() );
+
+  if ( afContainer() ) equal &= afContainer()->isEqual( rhs->afContainer() );
+  if ( afOpenable() ) equal &= afOpenable()->isEqual( rhs->afOpenable() );
+  if ( afPickable() ) equal &= afPickable()->isEqual( rhs->afPickable() );
+  if ( afFighter() ) equal &= afFighter()->isEqual( rhs->afFighter() );
+  if ( afAi() ) equal &= afAi()->isEqual( rhs->afAi() );
+
+  return equal;
 }
 
 void Actor::changeType(ActorType newType)

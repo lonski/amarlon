@@ -25,6 +25,19 @@ ActorFeature *MonsterAi::clone()
   return cloned;
 }
 
+bool MonsterAi::isEqual(ActorFeature *rhs)
+{
+  bool equal = false;
+  MonsterAi* crhs = dynamic_cast<MonsterAi*>(rhs);
+
+  if (crhs)
+  {
+    equal = true;
+  }
+
+  return equal;
+}
+
 void MonsterAi::update(Map *map)
 {
   _map = map;

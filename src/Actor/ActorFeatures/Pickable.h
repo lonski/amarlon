@@ -15,10 +15,12 @@ public:
   virtual ~Pickable() {}
   static Pickable* create(const PickableDescription& dsc);
 
+  virtual ActorFeature* clone();
+  virtual bool isEqual(ActorFeature *rhs);
+
   virtual bool use(Actor *executor, std::vector<Actor *> targets);
   virtual int getUsesCount() const;
   Actor* spilt(int amount);
-  virtual ActorFeature* clone();
 
   int getAmount() const;
   void setAmount(int getAmount);

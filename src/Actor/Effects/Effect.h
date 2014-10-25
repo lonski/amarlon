@@ -17,6 +17,7 @@ public:
   static Effect* create(EffectType type);
   static Effect* create(const EffectDescription& dsc);
   virtual Effect* clone() = 0;
+  virtual bool isEqual(Effect* rhs) = 0;
 
   virtual bool apply(Actor* executor, std::vector<Actor*> targets) = 0;
   virtual void load(const EffectDescription& dsc) = 0;

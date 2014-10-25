@@ -25,6 +25,20 @@ ActorFeature *Fighter::clone()
   return cloned;
 }
 
+bool Fighter::isEqual(ActorFeature *rhs)
+{
+  bool equal = false;
+  Fighter* crhs = dynamic_cast<Fighter*>(rhs);
+
+  if (crhs)
+  {
+    equal = (_power == crhs->_power);
+    equal &= (_maxHp == crhs->_maxHp);
+  }
+
+  return equal;
+}
+
 void Fighter::attack(Actor *enemy)
 {
   if ( enemy->isAlive() )

@@ -8,9 +8,11 @@ class OpenableDoor : public Openable
 public:
   OpenableDoor();
 
+  virtual ActorFeature* clone();
+  virtual bool isEqual(ActorFeature *rhs);
+
   virtual bool open(Actor* executor);
   virtual bool close(Actor* executor);
-  virtual ActorFeature* clone();
 
   virtual bool lock();
 

@@ -21,10 +21,13 @@ public:
   static Actor* Player;
 
   Actor(ActorType aId, int x = 0, int y = 0);
+  ~Actor();
+
+  Actor* clone();
+  bool isEqual(Actor* rhs);
 
   void move(int dx, int dy);
   void morph(ActorType newType);
-  Actor* clone();
   void changeType(ActorType newType);
 
   bool isAlive() const;
