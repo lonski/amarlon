@@ -3,6 +3,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++0x -g -Wall -Wextra -Wformat-security
 
 SOURCES += main.cpp \
     DataGateways/DataGateway.cpp \
@@ -103,7 +104,7 @@ HEADERS += \
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
-unix:  LIBS += -L$$PWD/../lib/ -ltcod
+unix:  LIBS += -L$$PWD/../lib/ -ltcod -ltcodxx
 
 INCLUDEPATH += $$PWD/../include
 INCLUDEPATH += $$PWD/../include/libtcod
