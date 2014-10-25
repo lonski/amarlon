@@ -65,6 +65,10 @@ std::string DataGateway::retriveDataStr(std::string section, std::string tag)
 }
 
 DataGateway::DataGateway()
+  : newSectionMark('|')
+  , newTagMark(';')
+  , valueMark('=')
+  , vectorSeparator('^')
 {
 }
 

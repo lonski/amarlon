@@ -15,10 +15,10 @@ class DataGateway
 
   SectionMap m_sections;
 
-  const char newSectionMark = '|';
-  const char newTagMark = ';';
-  const char valueMark = '=';
-  const char vectorSeparator = '^';
+  const char newSectionMark;
+  const char newTagMark;
+  const char valueMark;
+  const char vectorSeparator;
 
 public:
   template<typename T>
