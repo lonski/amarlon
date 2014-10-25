@@ -56,8 +56,12 @@ void Engine::render()
 
   if (_gui)
   {
-    _gui->render();   
-    _gui->renderViewPanel(getActorsBenethPlayersFeet());
+    _gui->setPlayerName(Actor::Player->getName());
+    _gui->setHpBar(Actor::Player->afFighter()->getHp(), Actor::Player->afFighter()->getMaxHp());
+
+    _gui->setViewList(getActorsBenethPlayersFeet());
+
+    _gui->render();
   }
 
   _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());

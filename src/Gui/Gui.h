@@ -14,8 +14,13 @@ namespace amarlon { namespace gui {
 
 class Panel;
 class List;
+class Bar;
+class Label;
+
 typedef std::shared_ptr<Panel> PanelPtr;
 typedef std::shared_ptr<List> ListPtr;
+typedef std::shared_ptr<Bar> BarPtr;
+typedef std::shared_ptr<Label> LabelPtr;
 
 class Gui
 {
@@ -38,23 +43,25 @@ public:
   ~Gui() {}
 
   void render();
-  void renderRightPanel();
-  void renderMessageLog();
-  void renderViewPanel(const std::vector<ColoredString>& items);
 
   void message(std::string msg, TCODColor color = TCODColor::white);
+  void setViewList(const std::vector<ColoredString>& items);
+  void setHpBar(float value, float maxValue);
+  void setPlayerName(std::string name);
 
 private:
   TCODColor _frameColor;
 
-  PanelPtr _rightPanel;
-
-  PanelPtr _logPanel;
   ListPtr _log;
-
-  PanelPtr _viewPanel;
   ListPtr _viewList;
+  BarPtr _hpBar;
+  LabelPtr _playerName;
 
+  std::vector<WidgetPtr> _widgets;
+
+  void setupRightPanel();
+  void setupLogPanel();
+  void setupViewPanel();
 };
 
 }}

@@ -88,4 +88,14 @@ int Fighter::heal(int hp)
   return healed;
 }
 
+float Fighter::getHp() const
+{
+  return _hp;
+}
+
+float Fighter::getMaxHp() const
+{
+  return _maxHp;
+}
+
 }

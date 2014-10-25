@@ -22,6 +22,9 @@ public:
   void die();
   int heal(int hp);
 
+  float getHp() const;
+  float getMaxHp() const;
+
 private:
   float _power;
   float _maxHp;

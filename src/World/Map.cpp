@@ -66,7 +66,7 @@ void Map::addActor(Actor *actor)
   bool stacked = false;
 
   //stackable possible
-  if ( actor->afPickable() )
+  if ( actor->afPickable() && actor->afPickable()->isStackable() )
   {
     auto found = find_if(_actors.begin(), _actors.end(),
                          [&](Actor* a)

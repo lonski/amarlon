@@ -50,7 +50,8 @@ SOURCES += main.cpp \
     Gui/Widget/widget.cpp \
     Gui/Widget/bar.cpp \
     Gui/Widget/panel.cpp \
-    Gui/Widget/list.cpp
+    Gui/Widget/list.cpp \
+    Gui/Widget/label.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -108,7 +109,8 @@ HEADERS += \
     Gui/Widget/bar.h \
     Gui/Widget/panel.h \
     Gui/Widget/list.h \
-    Utils/colored_string.h
+    Utils/colored_string.h \
+    Gui/Widget/label.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
