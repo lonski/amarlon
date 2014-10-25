@@ -1,0 +1,9 @@
+*.*~
+*.bak
+*.tmp
+*.o
+*.a
+*.so
+*.so.*
+src/Makefile
+**/amarlon
