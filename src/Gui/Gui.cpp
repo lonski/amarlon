@@ -3,7 +3,16 @@
 #include <iostream>
 
 Gui::Gui()
-  : _frameColor(TCODColor::darkerOrange)
+  : LogSize(17)
+  , rightConWidth(20)
+  , rightConHeight(gloScreenHeight)
+  , bottomConWidth(gloScreenWidth - 20)
+  , bottomConHeight(20)
+  , logConWidth((gloScreenWidth - 20) / 2)
+  , logConHeight(20)
+  , viewConWidth((gloScreenWidth - 20) / 2)
+  , viewConHeight(20)
+  , _frameColor(TCODColor::darkerOrange)
 {
   rCon = new TCODConsole(rightConWidth, rightConHeight);
   bCon = new TCODConsole(bottomConWidth, bottomConHeight);

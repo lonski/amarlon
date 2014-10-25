@@ -4,6 +4,8 @@
 
 AmountWindow::AmountWindow(int defAmount, std::string title)
   : _title(title)
+  , _conWidth(21)
+  , _conHeight(5)
   , _console(_conWidth, _conHeight)
   , _amount(defAmount)
   , _firstHit(true)

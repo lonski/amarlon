@@ -12,20 +12,19 @@
 class Gui
 {
 public:
+  const size_t LogSize;
 
-  const size_t LogSize = 17;
+  const int rightConWidth;
+  const int rightConHeight;
 
-  const int rightConWidth = 20;
-  const int rightConHeight = gloScreenHeight;
+  const int bottomConWidth;
+  const int bottomConHeight;
 
-  const int bottomConWidth = gloScreenWidth - 20;
-  const int bottomConHeight = 20;
+  const int logConWidth;
+  const int logConHeight;
 
-  const int logConWidth = (gloScreenWidth - 20) / 2;
-  const int logConHeight = 20;
-
-  const int viewConWidth = (gloScreenWidth - 20) / 2;
-  const int viewConHeight = 20;
+  const int viewConWidth;
+  const int viewConHeight;
 
   Gui();
   ~Gui();
