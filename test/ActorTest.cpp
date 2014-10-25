@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #define private public
-#include "Actor/actor.h"
+#include "Actor/Actor.h"
 #include "World/Map.h"
 #include "Actor/Effects/SelfHealEffect.h"
 #undef private
@@ -11,9 +11,9 @@ class ActorTest : public ::testing::Test
 {
   virtual void SetUp()
   {
-    Map::Tiles.loadTiles("../amarlon/tiles.xml");
-    Actor::DB.loadActors("../amarlon/actors.xml");
-    Map::Gateway.loadMaps("../amarlon/maps.xml");
+    Map::Tiles.loadTiles("../tiles.xml");
+    Actor::DB.loadActors("../actors.xml");
+    Map::Gateway.loadMaps("../maps.xml");
   }
 
   virtual void TearDown()

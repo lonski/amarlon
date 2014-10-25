@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "DataGateways/MapGateway.h"
-#include "World/map.h"
+#include "World/Map.h"
 
 namespace amarlon {
 
@@ -15,7 +15,7 @@ TEST(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
 TEST(MapGatewayTest, fetchExistingMap_givesMap)
 {
   MapGateway gateway;
-  gateway.loadMaps("../amarlon/maps.xml");
+  gateway.loadMaps("../maps.xml");
   Map* map = gateway.fetch(MapId::GameStart);
 
   ASSERT_TRUE(map != nullptr);
@@ -24,9 +24,9 @@ TEST(MapGatewayTest, fetchExistingMap_givesMap)
 
 TEST(MapGatewayTest, mapHasValidTiles)
 {
-  Map::Tiles.loadTiles("../amarlon/tiles.xml");
+  Map::Tiles.loadTiles("../tiles.xml");
   MapGateway gateway;
-  gateway.loadMaps("../amarlon/maps.xml");
+  gateway.loadMaps("../maps.xml");
   Map* map = gateway.fetch(MapId::GameStart);
 
   ASSERT_EQ(map->getChar(39,27), Map::Tiles.getChar(TileType::PlainFloor));
@@ -34,9 +34,9 @@ TEST(MapGatewayTest, mapHasValidTiles)
 
 TEST(MapGatewayTest, mapHasValidTiles2)
 {
-  Map::Tiles.loadTiles("../amarlon/tiles.xml");
+  Map::Tiles.loadTiles("../tiles.xml");
   MapGateway gateway;
-  gateway.loadMaps("../amarlon/maps.xml");
+  gateway.loadMaps("../maps.xml");
   Map* map = gateway.fetch(MapId::GameStart);
 
   ASSERT_EQ(map->getChar(1,1), Map::Tiles.getChar(TileType::Tree));
@@ -45,8 +45,8 @@ TEST(MapGatewayTest, mapHasValidTiles2)
 TEST(MapGatewayTest, saveMaps)
 {
   MapGateway gateway;
-  gateway.loadMaps("../amarlon/maps.xml");
-  gateway.saveMaps("../amarlon/maps_saved.xml");
+  gateway.loadMaps("../maps.xml");
+  gateway.saveMaps("../maps_saved.xml");
 }
 
 }

@@ -3,6 +3,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++0x -g -Wall -Wextra -Wformat-security
 
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
@@ -13,8 +14,8 @@ DEPENDPATH += $$PWD/../include/libtcod
 INCLUDEPATH += $$PWD/../src
 DEPENDPATH += $$PWD/../src
 
-unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lgtest
-unix:!macx|win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
+win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw -lgtest
+unix: LIBS += -L$$PWD/../lib/ -ltcod -ltcodxx -lgtest
 
 SOURCES += \
     ActorTest.cpp \
@@ -68,7 +69,7 @@ SOURCES += \
 
 
 HEADERS += \
-    ../src/World/map.h \
+    ../src/World/Map.h \
     ../src/Actor/Actor.h \
     ../src/Actor/ActorType.h \
     ../src/Actor/ActorFeatures/ActorFeature.h \
