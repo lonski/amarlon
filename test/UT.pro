@@ -3,6 +3,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++0x -g -Wall -Wextra -Wformat-security
 
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
@@ -15,6 +16,7 @@ DEPENDPATH += $$PWD/../src
 
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lgtest
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
+unix: LIBS += -L$$PWD/../lib/ -ltcod -ltcodxx -lgtest
 
 SOURCES += \
     ActorTest.cpp \
