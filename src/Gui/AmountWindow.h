@@ -16,8 +16,8 @@ public:
 private:
   std::string _title;
 
-  const int _conWidth = 21;
-  const int _conHeight = 5;
+  const int _conWidth;
+  const int _conHeight;
   TCODConsole _console;
 
   int _amount;
