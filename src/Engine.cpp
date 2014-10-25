@@ -118,13 +118,16 @@ std::vector<LogEntry> Engine::getActorsBenethPlayersFeet()
 
   std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
   {
-    int amount = 0;
-    if ( a->afPickable() ) amount = a->afPickable()->getAmount();
-    std::string entryMsg = entryMsg = a->getName();
+    int amount = 1;
+    if ( a->afPickable() )
+    {
+      amount = a->afPickable()->getAmount();
+    }
+
+    std::string entryMsg = a->getName();
 
     if (amount > 1)
-      entryMsg += " (" + std::to_string(amount) + ")";
-
+      entryMsg = entryMsg + " (" + std::to_string(amount) + ")";
 
     items.push_back( LogEntry( entryMsg, itemViewColor ) );
   });

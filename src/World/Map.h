@@ -64,7 +64,6 @@ public:
   MapId getId() const;
   void setId(const MapId &id);
 
-
 private:
   MapId _id;
   u32 _width, _height;

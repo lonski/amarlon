@@ -59,25 +59,50 @@ bool Map::isBlocked(int x, int y)
 
 void Map::addActor(Actor *actor)
 {
-//  find_if(_actors.begin(), _actors.end(), [&](Actor* a)
-//  {
-//    return *a == *actor;
-//  });
-
-  if (actor->isAlive())
-  {
-    _actors.push_back(actor);
-  }
-  else
-  {
-    _actors.push_front(actor);
-  }
-
   int x( actor->getX() );
   int y( actor->getY() );
-  if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
+  bool stacked = false;
+
+  //stackable possible
+  if ( actor->afPickable() )
   {
-    codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
+    auto found = find_if(_actors.begin(), _actors.end(),
+                         [&](Actor* a)
+                         {
+                           return a->getX() == x &&
+                                  a->getY() == y &&
+                                  a->isEqual(actor);
+                         });
+
+    //stack it
+    if ( found != _actors.end() )
+    {
+      Actor* toStackWith = *found;
+
+      toStackWith->afPickable()->incAmount( actor->afPickable()->getAmount() );
+      stacked = true;
+      delete actor;
+      actor = NULL;
+    }
+  }
+
+  //add without stacking
+  if ( !stacked )
+  {
+    //keep alive actors on top
+    if (actor->isAlive())
+    {
+      _actors.push_back(actor);
+    }
+    else
+    {
+      _actors.push_front(actor);
+    }
+
+    if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
+    {
+      codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
+    }
   }
 }
 

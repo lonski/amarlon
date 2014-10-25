@@ -24,6 +24,7 @@ public:
 
   int getAmount() const;
   void setAmount(int getAmount);
+  void incAmount(int inc);
   bool isStackable() const;
   Effect *getEffect() const;
   void setEffect(Effect *getEffect);

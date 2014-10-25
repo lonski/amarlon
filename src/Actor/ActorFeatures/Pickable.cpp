@@ -28,6 +28,10 @@ Actor* Pickable::spilt(int amount)
   if ( isStackable() && amount < _amount && amount > 0 )
   {
     setAmount(_amount - amount);
+
+    assert( _amount > 0 );
+    assert( amount > 0 );
+
     r = _owner->clone();
     r->afPickable()->setAmount(amount);    
   }
@@ -100,5 +104,10 @@ int Pickable::getAmount() const
 void Pickable::setAmount(int amount)
 {
   _amount = amount;
+}
+
+void Pickable::incAmount(int inc)
+{
+  _amount += inc;
 }
 
