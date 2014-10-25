@@ -8,7 +8,10 @@ namespace amarlon {
 
 class Map;
 class Actor;
-class Gui;
+
+namespace gui {
+  class Gui;
+}
 struct LogEntry;
 
 class Engine
@@ -29,13 +32,13 @@ public:
   TCODConsole *getConsole() const;
   void setConsole(TCODConsole *getConsole);
 
-  Gui *getGui() const;
-  void setGui(Gui *getGui);
+  gui::Gui *getGui() const;
+  void setGui(gui::Gui *getGui);
 
 private:
   TCODConsole* _console;
   Map* _currentMap;
-  Gui* _gui;
+  gui::Gui* _gui;
 
   void render();
   void updateAis();

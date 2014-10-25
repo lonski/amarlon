@@ -5,9 +5,9 @@
 #include <algorithm>
 #include <iostream>
 
-namespace amarlon {
+namespace amarlon { namespace gui {
 
-ItemPickerGui::ItemPickerGui(std::string title, int width, int height)
+ItemPickerWindow::ItemPickerWindow(std::string title, int width, int height)
   : _title(title)
   , _conWidth(width)
   , _conHeight(height)
@@ -17,7 +17,7 @@ ItemPickerGui::ItemPickerGui(std::string title, int width, int height)
 {
 }
 
-int ItemPickerGui::pick(const std::vector<Actor *> &items)
+int ItemPickerWindow::pick(const std::vector<Actor *> &items)
 {
   TCOD_key_t key;
 
@@ -39,21 +39,21 @@ int ItemPickerGui::pick(const std::vector<Actor *> &items)
   return _index;
 }
 
-void ItemPickerGui::render()
+void ItemPickerWindow::render()
 {
   renderConsoleFrame(_title);
   renderItems();
   blitConsole();
 }
 
-void ItemPickerGui::renderConsoleFrame(std::string title)
+void ItemPickerWindow::renderConsoleFrame(std::string title)
 {
   _console.setDefaultForeground(TCODColor(200,180,50));
   _console.printFrame(0, 0, _conWidth, _conHeight, true, TCOD_BKGND_DEFAULT,
                       title.empty() ? NULL : title.c_str() );
 }
 
-void ItemPickerGui::renderItems()
+void ItemPickerWindow::renderItems()
 {
   int row = 0;
   int amount = 1;
@@ -70,7 +70,7 @@ void ItemPickerGui::renderItems()
   });
 }
 
-void ItemPickerGui::blitConsole()
+void ItemPickerWindow::blitConsole()
 {
   int posX = gloConsoleWidth  / 2 - _conWidth  / 2;
   int posY = gloConsoleHeight / 2 - _conHeight / 2;
@@ -79,7 +79,7 @@ void ItemPickerGui::blitConsole()
   TCODConsole::flush();
 }
 
-void ItemPickerGui::handlePressedKey(TCOD_key_t key)
+void ItemPickerWindow::handlePressedKey(TCOD_key_t key)
 {
   switch( key.vk )
   {
@@ -113,9 +113,9 @@ void ItemPickerGui::handlePressedKey(TCOD_key_t key)
   }
 }
 
-void ItemPickerGui::setTitle(const std::string &title)
+void ItemPickerWindow::setTitle(const std::string &title)
 {
   _title = title;
 }
 
-}
+}}

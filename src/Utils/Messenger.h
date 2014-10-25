@@ -3,7 +3,9 @@
 
 namespace amarlon {
 
-class Gui;
+namespace gui {
+  class Gui;
+}
 class Actor;
 
 class Messenger
@@ -11,7 +13,7 @@ class Messenger
 public:
   static Messenger* message();
 
-  void setGui(Gui* gui);
+  void setGui(gui::Gui* gui);
 
   void actorHit(Actor* atacker, Actor* victim, int amount);
   void actorDies(Actor* victim);
@@ -27,7 +29,7 @@ private:
   Messenger& operator=(const Messenger&);
 
   static Messenger* _msg;
-  Gui* _gui;
+  gui::Gui* _gui;
 
 };
 

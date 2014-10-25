@@ -22,7 +22,7 @@ Messenger *Messenger::message()
   return _msg;
 }
 
-void Messenger::setGui(Gui *gui)
+void Messenger::setGui(gui::Gui *gui)
 {
   _gui = gui;
 }

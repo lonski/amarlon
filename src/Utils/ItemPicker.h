@@ -6,6 +6,7 @@
 namespace amarlon {
 
 class Map;
+class Actor;
 
 class ItemPicker
 {
@@ -17,7 +18,7 @@ private:
   const std::vector<Actor*>& _items;
   std::vector<Actor*> _itemsPicked;
   Actor* _executor;
-  ItemPickerGui _pickerGui;
+  gui::ItemPickerWindow _pickerGui;
   bool _singlePick;
 
   void pickItemsByGui();

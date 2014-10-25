@@ -4,7 +4,7 @@
 #include <string>
 #include <libtcod.hpp>
 
-namespace amarlon {
+namespace amarlon { namespace gui {
 
 class AmountWindow
 {
@@ -30,5 +30,5 @@ private:
 
 };
 
-}
+}}
 #endif // AMOUNTWINDOW_H

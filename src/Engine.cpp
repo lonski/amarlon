@@ -27,7 +27,7 @@ void Engine::init()
   Actor::DB.loadActors("../amarlon/actors.xml");
   Map::Gateway.loadMaps("../amarlon/maps.xml");
 
-  _gui = new Gui;
+  _gui = new gui::Gui;
 
   setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
 
@@ -96,12 +96,12 @@ void Engine::setConsole(TCODConsole *console)
 {
   _console = console;
 }
-Gui *Engine::getGui() const
+gui::Gui *Engine::getGui() const
 {
   return _gui;
 }
 
-void Engine::setGui(Gui *gui)
+void Engine::setGui(gui::Gui *gui)
 {
   _gui = gui;
 }

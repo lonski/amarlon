@@ -19,7 +19,7 @@ public:
   Actor* chooseItemToUse();
 
 private:
-  ItemPickerGui _pickerGui;
+  gui::ItemPickerWindow _pickerGui;
   Actor* _actor;
   std::string _title;
 

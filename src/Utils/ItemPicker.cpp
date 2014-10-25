@@ -60,7 +60,7 @@ void ItemPicker::pickSingleItem(Actor* target, bool takAll)
     int tmpAmount = 1;
     if ( !_singlePick )
     {
-      AmountWindow aw(amount);
+      gui::AmountWindow aw(amount);
       tmpAmount = aw.getAmount();
     }
 

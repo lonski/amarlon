@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-namespace amarlon {
+namespace amarlon { namespace gui {
 
 void renderBar(int x, int y, int width, const char *name, float value,
                     float maxValue, const TCODColor &barColor, const TCODColor &backColor, TCODConsole* con)
@@ -120,4 +120,4 @@ void Gui::renderViewPanel(const std::vector<LogEntry>& items)
   TCODConsole::blit(viewCon, 0, 0, viewConWidth, viewConHeight, TCODConsole::root, logConWidth, gloScreenHeight - viewConHeight );
 }
 
-}
+}}

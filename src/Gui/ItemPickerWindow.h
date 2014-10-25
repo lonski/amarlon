@@ -9,10 +9,12 @@ namespace amarlon {
 
 class Actor;
 
-class ItemPickerGui
+namespace gui {
+
+class ItemPickerWindow
 {
 public:
-  ItemPickerGui(std::string title = "", int width = 30, int height = 20);
+  ItemPickerWindow(std::string title = "", int width = 30, int height = 20);
 
   /**
    * @return index of choosen item in array
@@ -41,5 +43,5 @@ private:
 
 };
 
-}
+}}
 #endif // ITEMPICKER_H

@@ -2,7 +2,7 @@
 #include "Utils/glodef.h"
 #include <iostream>
 
-namespace amarlon {
+namespace amarlon { namespace gui {
 
 AmountWindow::AmountWindow(int defAmount, std::string title)
   : _title(title)
@@ -102,4 +102,4 @@ void AmountWindow::handlePressedKey(const TCOD_key_t &key)
 
 }
 
-}
+}}
