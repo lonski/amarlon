@@ -65,7 +65,11 @@ SOURCES += \
     ../src/Gui/Gui.cpp \
     ../src/Gui/ItemPickerWindow.cpp \
     ../src/CommandExecutor.cpp \
-    ../src/Engine.cpp
+    ../src/Engine.cpp \
+    ../src/Gui/Widget/bar.cpp \
+    ../src/Gui/Widget/list.cpp \
+    ../src/Gui/Widget/panel.cpp \
+    ../src/Gui/Widget/widget.cpp
 
 
 HEADERS += \
@@ -121,5 +125,9 @@ HEADERS += \
     ../src/Gui/Gui.h \
     ../src/Gui/ItemPickerWindow.h \
     ../src/CommandExecutor.h \
-    ../src/Engine.h
+    ../src/Engine.h \
+    ../src/Gui/Widget/bar.h \
+    ../src/Gui/Widget/list.h \
+    ../src/Gui/Widget/panel.h \
+    ../src/Gui/Widget/widget.h
 
