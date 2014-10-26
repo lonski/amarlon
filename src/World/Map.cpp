@@ -290,16 +290,16 @@ Tile &Map::getTile(u32 x, u32 y)
 void Map::validateMapCoords(u32 x, u32 y)
 {
   if (x >= _width || y >= _height)
-    throw std::out_of_range("Koordynaty mapy wieksze niz jej rozmiary!\n y=" +
+    throw std::out_of_range("Requested map coordinates beyond map borders!\n y=" +
                             std::to_string(y) + ", height="+std::to_string(_height) +
                             " x="+std::to_string(x) + " width=" + std::to_string(_width)
                             );
 
   if (y >= _tiles.size())
-    throw std::out_of_range("Nie zainicjalizowane tile!");
+    throw std::out_of_range("Tile not initalized!");
 
   if (x >= _tiles[y].size())
-    throw std::out_of_range("Nie zainicjalizowane tile!");
+    throw std::out_of_range("Tile not initalized!");
 }
 //~~~~~
 
