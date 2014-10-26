@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include <algorithm>
 #include <iostream>
+#include <stdexcept>
 
 namespace amarlon {
 
