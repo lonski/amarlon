@@ -6,15 +6,14 @@
 		<Fighter power="5" maxHp="20"/>
 		<Wearer>
 			<ItemSlot type="1"/>
-			<ItemSlot type="2">
+			<ItemSlot type="3">
 				<Equipped id="17"/>
-			</ItemSlot>
-			<ItemSlot type="3"/>
-			<ItemSlot type="4">
-				<Equipped id="18"/>
-			</ItemSlot>
+			</ItemSlot>			
 			<ItemSlot type="5"/>
 			<ItemSlot type="6"/>
+			<ItemSlot type="7">
+				<Equipped id="18"/>
+			</ItemSlot>
 		</Wearer>
 	</Actor>
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
@@ -54,10 +53,10 @@
 		</Pickable>
 	</Actor>
 	<Actor name="Linen clothes" id="17" character="[" color="#FFFF99" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="2"/>
+		<Pickable stackable="0" amount="1" itemSlot="3"/>
 	</Actor>
 	<Actor name="Leather boots" id="18" character="[" color="#993300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="4"/>
+		<Pickable stackable="0" amount="1" itemSlot="7"/>
 	</Actor>
 	
 </Actors>

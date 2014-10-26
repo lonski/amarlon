@@ -23,17 +23,6 @@ void CmdInventory::execute(Engine*, Actor *executor)
     inv.display();
   }
 
-  std::cout << "\n=======";
-  if ( executor->afWearer() )
-  {
-  for(int s = (int)ItemSlotType::Null; s != (int)ItemSlotType::End; ++s)
-    {
-      ItemSlotType slot = (ItemSlotType)s;
-      std::cout << "\nhas slot "<< s << " : " << executor->afWearer()->hasSlot(slot);
-      std::cout << " eq = " << executor->afWearer()->equipped(slot);
-    }
-  }
-  else std::cout << "\nNo wearer!\n";
 }
 
 }

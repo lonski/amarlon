@@ -18,7 +18,7 @@ public:
     Actor::DB.loadActors("../actors.xml");
 
     WearerDescription dsc;
-    dsc.itemSlots.push_back(ItemSlotType::Body);
+    dsc.itemSlots.push_back(ItemSlotType::Armor);
     dsc.itemSlots.push_back(ItemSlotType::Feet);
 
     wearer.reset( Wearer::create(dsc) );
@@ -35,7 +35,7 @@ protected:
 
 TEST_F(WearerTest, loadsSlots_from_description)
 {
-  EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Body) );
+  EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Armor) );
   EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Feet) );
 
   EXPECT_FALSE( wearer->hasSlot(ItemSlotType::Head) );
@@ -44,20 +44,20 @@ TEST_F(WearerTest, loadsSlots_from_description)
 TEST_F(WearerTest, equip_item)
 {
   //not equipped
-  ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Body) );
+  ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Armor) );
 
   Actor* clothArmor = new Actor( ActorType::LinenClothes );
 
   //equip and check if equipped correctly
   ASSERT_TRUE( wearer->equip(clothArmor) );
-  ASSERT_TRUE( wearer->isEquipped(ItemSlotType::Body) );
-  ASSERT_EQ( wearer->equipped(ItemSlotType::Body), clothArmor );
+  ASSERT_TRUE( wearer->isEquipped(ItemSlotType::Armor) );
+  ASSERT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
   ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Feet) );
 
   //try to over-equip
   Actor* overeq = new Actor(ActorType::LinenClothes);
   EXPECT_FALSE( wearer->equip(overeq) );
-  EXPECT_EQ( wearer->equipped(ItemSlotType::Body), clothArmor );
+  EXPECT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
 
   delete overeq;
   overeq = nullptr;
@@ -66,7 +66,7 @@ TEST_F(WearerTest, equip_item)
 TEST_F(WearerTest, unequip_item)
 {
   //try to unequip not equipped
-  ASSERT_EQ( wearer->unequip(ItemSlotType::Body ), nullptr );
+  ASSERT_EQ( wearer->unequip(ItemSlotType::Armor ), nullptr );
 
   //equip and then unequip
   Actor* boots = new Actor( ActorType::LeatherBoots );
@@ -107,11 +107,11 @@ TEST_F(WearerTest, compare_test)
   ASSERT_TRUE( w1->isEqual(w2.get()) );
 
   //compare by slots
-  w1->_itemSlots[ ItemSlotType::Body ] = nullptr;
+  w1->_itemSlots[ ItemSlotType::Armor ] = nullptr;
   ASSERT_FALSE( w1->isEqual(w2.get()) );
 
   WearerDescription dsc;
-  dsc.itemSlots.push_back(ItemSlotType::Body);
+  dsc.itemSlots.push_back(ItemSlotType::Armor);
   dsc.itemSlots.push_back(ItemSlotType::Feet);
   dsc.eqItems.maxSize = 2;
 
