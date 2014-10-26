@@ -23,6 +23,7 @@ public:
   ~Engine();
 
   void init();
+  void render();
   void update();
   void processKey(TCOD_key_t& key);
 
@@ -40,7 +41,6 @@ private:
   Map* _currentMap;
   gui::Gui* _gui;
 
-  void render();
   void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();
 

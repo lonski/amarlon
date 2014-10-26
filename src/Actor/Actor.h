@@ -11,6 +11,7 @@
 #include "ActorFeatures/Fighter.h"
 #include "ActorFeatures/Ai/Ai.h"
 #include "ActorFeatures/Openable/Openable.h"
+#include "ActorFeatures/Wearer/wearer.h"
 
 namespace amarlon {
 
@@ -53,12 +54,14 @@ public:
   Fighter*     afFighter()     const;
   Ai*          afAi()          const;
   Openable*    afOpenable()    const;
+  Wearer*      afWearer()      const;
 
   void setAfContainer  (Container*   afContainer);
   void setAfPickable   (Pickable*    afPickable);
   void setAfFighter    (Fighter*     afFighter);
   void setAfAi         (Ai*          afAi);
   void setAfOpenable   (Openable*    afOpenable);
+  void setAfWearer     (Wearer*    afWearer);
 
 private:
   ActorType _id;
@@ -69,6 +72,7 @@ private:
   Fighter*   _afFighter;
   Ai*        _afAi;
   Openable*  _afOpenable;
+  Wearer*    _afWearer;
 
 };
 

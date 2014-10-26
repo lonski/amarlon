@@ -25,8 +25,6 @@ typedef std::shared_ptr<Label> LabelPtr;
 class Gui
 {
 public:
-  const size_t LogSize;
-
   const int rightConWidth;
   const int rightConHeight;
 
@@ -38,6 +36,8 @@ public:
 
   const int viewConWidth;
   const int viewConHeight;
+
+  const size_t LogSize;
 
   Gui();
   ~Gui() {}

@@ -9,8 +9,7 @@
 namespace amarlon { namespace gui {
 
 Gui::Gui()
-  : LogSize(17)
-  , rightConWidth(20)
+  : rightConWidth(20)
   , rightConHeight(gloScreenHeight)
   , bottomConWidth(gloScreenWidth - 20)
   , bottomConHeight(20)
@@ -18,6 +17,7 @@ Gui::Gui()
   , logConHeight(20)
   , viewConWidth((gloScreenWidth - 20) / 2)
   , viewConHeight(20)
+  , LogSize( logConHeight - 3 ) // 3 is for frame
   , _frameColor(TCODColor::darkerOrange)
 
 {

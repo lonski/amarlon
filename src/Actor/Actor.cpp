@@ -16,12 +16,14 @@ Actor::Actor(ActorType aId, int x, int y)
   , _afFighter(nullptr)
   , _afAi(nullptr)
   , _afOpenable(nullptr)
+  , _afWearer(nullptr)
 {  
   setAfContainer  ( Actor::DB.getContainer  (aId) );
   setAfPickable   ( Actor::DB.getPickable   (aId) );  
   setAfFighter    ( Actor::DB.getFighter    (aId) );
   setAfAi         ( Actor::DB.getAi         (aId) );
   setAfOpenable   ( Actor::DB.getOpenable   (aId) );
+  setAfWearer     ( Actor::DB.getWearer     (aId) );
 }
 
 Actor::~Actor()
@@ -31,6 +33,14 @@ Actor::~Actor()
   delete _afFighter;
   delete _afOpenable;
   delete _afPickable;
+  delete _afWearer;
+
+  _afAi = nullptr;
+  _afContainer = nullptr;
+  _afFighter = nullptr;
+  _afOpenable = nullptr;
+  _afPickable = nullptr;
+  _afWearer = nullptr;
 }
 
 void Actor::move(int dx, int dy)
@@ -48,6 +58,7 @@ void Actor::morph(ActorType newType)
   setAfFighter  ( Actor::DB.getFighter  (_id) );
   setAfAi       ( Actor::DB.getAi       (_id) );
   setAfOpenable ( Actor::DB.getOpenable (_id) );
+  setAfWearer   ( Actor::DB.getWearer   (_id) );
 }
 
 Actor *Actor::clone()
@@ -59,19 +70,24 @@ Actor *Actor::clone()
   cloned->setAfOpenable ( dynamic_cast<Openable*> ( _afOpenable  ? _afOpenable->clone()  : nullptr ) );
   cloned->setAfFighter  ( dynamic_cast<Fighter*>  ( _afFighter   ? _afFighter->clone()   : nullptr ) );
   cloned->setAfAi       ( dynamic_cast<Ai*>       ( _afAi        ? _afAi->clone()        : nullptr ) );
+  cloned->setAfWearer   ( dynamic_cast<Wearer*>   ( _afWearer    ? _afWearer->clone()    : nullptr ) );
 
   return cloned;
 }
 
 bool Actor::isEqual(Actor *rhs)
 {
-  bool equal = ( getId() == rhs->getId() );
+  bool equal = rhs != nullptr && ( getId() == rhs->getId() );
 
-  if ( afContainer() ) equal &= afContainer()->isEqual( rhs->afContainer() );
-  if ( afOpenable() ) equal &= afOpenable()->isEqual( rhs->afOpenable() );
-  if ( afPickable() ) equal &= afPickable()->isEqual( rhs->afPickable() );
-  if ( afFighter() ) equal &= afFighter()->isEqual( rhs->afFighter() );
-  if ( afAi() ) equal &= afAi()->isEqual( rhs->afAi() );
+  if (equal)
+  {
+    if ( afContainer() ) equal &= afContainer()->isEqual( rhs->afContainer() );
+    if ( afOpenable() ) equal &= afOpenable()->isEqual( rhs->afOpenable() );
+    if ( afPickable() ) equal &= afPickable()->isEqual( rhs->afPickable() );
+    if ( afFighter() ) equal &= afFighter()->isEqual( rhs->afFighter() );
+    if ( afAi() ) equal &= afAi()->isEqual( rhs->afAi() );
+    if ( afWearer() ) equal &= afWearer()->isEqual( rhs->afWearer() );
+  }
 
   return equal;
 }
@@ -181,6 +197,11 @@ Openable *Actor::afOpenable() const
   return _afOpenable;
 }
 
+Wearer *Actor::afWearer() const
+{
+  return _afWearer;
+}
+
 void Actor::setAfAi(Ai *afAi)
 {
   delete _afAi;
@@ -197,6 +218,15 @@ void Actor::setAfOpenable(Openable *afOpenable)
 
   if (_afOpenable)
     _afOpenable->setOwner(this);
+}
+
+void Actor::setAfWearer(Wearer *afWearer)
+{
+  delete _afWearer;
+  _afWearer = afWearer;
+
+  if (_afWearer)
+    _afWearer->setOwner(this);
 }
 
 

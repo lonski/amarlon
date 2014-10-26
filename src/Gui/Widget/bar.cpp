@@ -9,6 +9,7 @@ Bar::Bar()
   , _bgColor(TCODColor::darkerRed)
   , _fgColor(TCODColor::red)
   , _displayValues(true)
+  , _textColor(TCODColor::white)
 {
 }
 
@@ -16,24 +17,24 @@ void Bar::render(TCODConsole &console)
 {
     // fill the background
     console.setDefaultBackground(_bgColor);
-    console.rect(_x,_y,_width,1,false,TCOD_BKGND_SET);
+    console.rect(_x,_y,_width,3,false,TCOD_BKGND_SET);
 
-    int barWidth = (int)(_value / _maxValue * _width);
+    // draw the bar
+    int barWidth = static_cast<int>(_value / _maxValue * _width);
     if ( barWidth > 0 )
     {
-      // draw the bar
       console.setDefaultBackground(_fgColor);
-      console.rect(_x,_y,barWidth,1,false,TCOD_BKGND_SET);
+      console.rect(_x, _y, barWidth, 3, false, TCOD_BKGND_SET);
     }
 
     // print text on top of the bar
-    console.setDefaultForeground(TCODColor::white);
+    console.setDefaultForeground(_textColor);
 
     if ( _displayValues )
-      console.printEx(_x+_width/2, _y, TCOD_BKGND_NONE,TCOD_CENTER,
+      console.printEx(_x+_width/2, _y+1, TCOD_BKGND_NONE,TCOD_CENTER,
                       "%s%g/%g", _name.empty() ? "" : (_name + " : ").c_str(), _value, _maxValue);
     else
-      console.printEx(_x+_width/2, _y, TCOD_BKGND_NONE,TCOD_CENTER,	"%s", _name.c_str());
+      console.printEx(_x+_width/2, _y+1, TCOD_BKGND_NONE,TCOD_CENTER,	"%s", _name.c_str());
 
 }
 
@@ -100,6 +101,16 @@ void Bar::setDisplayValues(bool displayValues)
 {
   _displayValues = displayValues;
 }
+TCODColor Bar::getTextColor() const
+{
+  return _textColor;
+}
+
+void Bar::setTextColor(const TCODColor &textColor)
+{
+  _textColor = textColor;
+}
+
 
 
 

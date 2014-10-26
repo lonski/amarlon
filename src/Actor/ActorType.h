@@ -21,6 +21,9 @@ enum class ActorType
   HealthPotion,
   CookBook,
   Corpse,
+  PantryKey,
+  LinenClothes,
+  LeatherBoots,
   End
 };
 

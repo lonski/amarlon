@@ -20,9 +20,12 @@ public:
   FighterDescription*   parseFighterDsc();
   AiDescription*        parseAiDsc();
   OpenableDescription*  parseOpenableDsc();
+  WearerDescription*    parseWearerDsc();
 
 private:
   rapidxml::xml_node<>* _xml;
+
+  void parseContainerContentNode(ContainerDescription* contDsc, rapidxml::xml_node<>* contentNode);
 
 };
 

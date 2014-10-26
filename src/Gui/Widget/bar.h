@@ -36,6 +36,9 @@ public:
   bool displayValues() const;
   void setDisplayValues(bool displayValues);
 
+  TCODColor getTextColor() const;
+  void setTextColor(const TCODColor &getTextColor);
+
 private:
   int _width;
   std::string _name;
@@ -44,6 +47,7 @@ private:
   TCODColor _bgColor;
   TCODColor _fgColor;
   bool _displayValues;
+  TCODColor _textColor;
 
 };
 

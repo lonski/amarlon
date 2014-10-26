@@ -51,6 +51,28 @@ ActorDescription *ActorParser::parseActorDsc()
   return actorDsc;
 }
 
+void ActorParser::parseContainerContentNode(ContainerDescription* contDsc, xml_node<>* contentNode)
+{
+  ActorParser aParser(contentNode);
+  ContainerDescription::Content cActor;
+  ActorDescription* aDsc = aParser.parseActorDsc();
+  if (aDsc != nullptr)
+  {
+    cActor.actorType = aDsc->id;
+
+    cActor.container = aParser.parseContainerDsc();
+    cActor.openable  = aParser.parseOpenableDsc();
+    cActor.pickable  = aParser.parsePickableDsc();
+    cActor.fighter   = aParser.parseFighterDsc();
+    cActor.ai        = aParser.parseAiDsc();
+
+    contDsc->content.push_back( cActor );
+
+    delete aDsc;
+    aDsc = nullptr;
+  }
+}
+
 ContainerDescription *ActorParser::parseContainerDsc()
 {
   ContainerDescription* contDsc = nullptr;
@@ -65,30 +87,13 @@ ContainerDescription *ActorParser::parseContainerDsc()
       contDsc->maxSize = getAttribute<int>(containerNode, "maxSize");
 
       xml_node<>* contentNode = containerNode->first_node("Content");
-      ActorParser aParser;
+
       while ( contentNode )
       {
-        aParser.setSource(contentNode);
-
-        ContainerDescription::Content cActor;
-        ActorDescription* aDsc = aParser.parseActorDsc();
-        if (aDsc != nullptr)
-        {
-          cActor.actorType = aDsc->id;
-
-          cActor.container = aParser.parseContainerDsc();
-          cActor.openable  = aParser.parseOpenableDsc();
-          cActor.pickable  = aParser.parsePickableDsc();
-          cActor.fighter   = aParser.parseFighterDsc();
-          cActor.ai        = aParser.parseAiDsc();
-
-          contDsc->content.push_back( cActor );
-
-          delete aDsc;
-          aDsc = nullptr;
-        }
+        parseContainerContentNode(contDsc, contentNode);
         contentNode = contentNode->next_sibling();
       }
+
     }
   }
 
@@ -109,6 +114,7 @@ PickableDescription *ActorParser::parsePickableDsc()
       pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
+      pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
 
       // == effects == //
       xml_node<>* effectNode = pickableNode->first_node("Effect");
@@ -180,6 +186,39 @@ OpenableDescription *ActorParser::parseOpenableDsc()
   }
 
   return opDsc;
+}
+
+WearerDescription *ActorParser::parseWearerDsc()
+{
+  WearerDescription* wrDsc = nullptr;
+
+  if ( _xml != nullptr )
+  {
+    xml_node<>* wearerNode = _xml->first_node("Wearer");
+    if (wearerNode)
+    {
+      wrDsc = new WearerDescription;
+
+      xml_node<>* itemSlotNode = wearerNode->first_node("ItemSlot");
+      while (itemSlotNode)
+      {
+        ItemSlotType slot = (ItemSlotType)getAttribute<int>(itemSlotNode, "type");
+        wrDsc->itemSlots.push_back(slot);
+
+        xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");
+        if ( equippedNode )
+        {
+          parseContainerContentNode(&wrDsc->eqItems, equippedNode );
+        }
+
+        itemSlotNode = itemSlotNode->next_sibling();
+      }
+
+      wrDsc->eqItems.maxSize = wrDsc->itemSlots.size();
+    }
+  }
+
+  return wrDsc;
 }
 
 }

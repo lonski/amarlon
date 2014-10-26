@@ -8,6 +8,7 @@ QMAKE_CXXFLAGS += -std=c++0x -g -Wall -Wextra -Wformat-security
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
 
+INCLUDEPATH += $$PWD/../../
 INCLUDEPATH += $$PWD/../include/libtcod
 DEPENDPATH += $$PWD/../include/libtcod
 
@@ -70,7 +71,9 @@ SOURCES += \
     ../src/Gui/Widget/list.cpp \
     ../src/Gui/Widget/panel.cpp \
     ../src/Gui/Widget/widget.cpp \
-    ../src/Gui/Widget/label.cpp
+    ../src/Gui/Widget/label.cpp \
+    ../src/Actor/ActorFeatures/Wearer/wearer.cpp \
+    WearerTest.cpp
 
 
 HEADERS += \
@@ -131,5 +134,7 @@ HEADERS += \
     ../src/Gui/Widget/list.h \
     ../src/Gui/Widget/panel.h \
     ../src/Gui/Widget/widget.h \
-    ../src/Gui/Widget/label.h
+    ../src/Gui/Widget/label.h \
+    ../src/Actor/ActorFeatures/Wearer/item_slot_type.h \
+    ../src/Actor/ActorFeatures/Wearer/wearer.h
 

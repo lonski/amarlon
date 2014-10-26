@@ -28,6 +28,7 @@ public:
   Fighter* getFighter(ActorType type);
   Ai* getAi(ActorType type);
   Openable* getOpenable(ActorType type);
+  Wearer* getWearer(ActorType type);
 
   bool loadActors(std::string fn);
 
@@ -38,6 +39,7 @@ private:
   std::map<ActorType, FighterDescription> _fighters;
   std::map<ActorType, AiDescription> _ais;
   std::map<ActorType, OpenableDescription> _openables;
+  std::map<ActorType, WearerDescription> _wearers;
 
 };
 

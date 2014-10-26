@@ -92,6 +92,11 @@ Openable *ActorDB::getOpenable(ActorType type)
   return _openables.count(type) ? Openable::create( _openables[type] ) : nullptr;
 }
 
+Wearer *ActorDB::getWearer(ActorType type)
+{
+  return _wearers.count(type) ? Wearer::create( _wearers[type] ) : nullptr;
+}
+
 bool ActorDB::loadActors(std::string fn)
 {
   bool success = false;
@@ -134,6 +139,9 @@ bool ActorDB::loadActors(std::string fn)
 
         unique_ptr<OpenableDescription> opDsc( actorParser.parseOpenableDsc() );
         if ( opDsc ) _openables[id] = *opDsc;
+
+        unique_ptr<WearerDescription> wrDsc( actorParser.parseWearerDsc() );
+        if ( wrDsc ) _wearers[id] = *wrDsc;
       }
 
       //~~~~~ NEXT

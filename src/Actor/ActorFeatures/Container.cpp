@@ -12,6 +12,11 @@ Container::Container(size_t maxSize)
 {
 }
 
+Container::~Container()
+{
+  std::for_each(_inventory.begin(), _inventory.end(), [](Actor* a){ delete a; });
+}
+
 Container* Container::create(const ContainerDescription &dsc)
 {
   Container* cont = new Container(dsc.maxSize);
@@ -28,6 +33,7 @@ Container* Container::create(const ContainerDescription &dsc)
       if (ca.pickable)  nActor->setAfPickable ( Pickable::create ( *ca.pickable  ) );
       if (ca.fighter)   nActor->setAfFighter  ( Fighter::create  ( *ca.fighter   ) );
       if (ca.ai)        nActor->setAfAi       ( Ai::create       ( *ca.ai        ) );
+      if (ca.wearer)    nActor->setAfWearer   ( Wearer::create   ( *ca.wearer    ) );
 
       cont->add(nActor);
     }

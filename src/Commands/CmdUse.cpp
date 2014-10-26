@@ -24,7 +24,7 @@ void CmdUse::execute(Engine *engine, Actor *executor)
   InventoryManager inv(executor);
   Actor* item = inv.chooseItemToUse();
 
-  engine->update();
+  engine->render();
 
   if (item && item->afPickable()->getEffect())
   {

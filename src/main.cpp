@@ -24,6 +24,7 @@ int main()
     while ( !TCODConsole::isWindowClosed() )
     {
       engine.update();
+      engine.render();
 
       TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
       engine.processKey(lastKey);

@@ -40,9 +40,7 @@ void Engine::init()
 
 void Engine::update()
 {
-  render();
   updateAis();
-  getConsole()->flush();
 }
 
 void Engine::render()
@@ -57,7 +55,9 @@ void Engine::render()
   if (_gui)
   {
     _gui->setPlayerName(Actor::Player->getName());
-    _gui->setHpBar(Actor::Player->afFighter()->getHp(), Actor::Player->afFighter()->getMaxHp());
+
+    if ( Actor::Player->isAlive() )
+      _gui->setHpBar(Actor::Player->afFighter()->getHp(), Actor::Player->afFighter()->getMaxHp());
 
     _gui->setViewList(getActorsBenethPlayersFeet());
 
@@ -67,6 +67,7 @@ void Engine::render()
   _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
   _console->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
 
+  getConsole()->flush();
 }
 
 void Engine::updateAis()
@@ -94,7 +95,7 @@ void Engine::setCurrentMap(Map *currentMap)
 {
   _currentMap = currentMap;
 }
-TCODConsole *Engine::getConsole() const
+TCODConsole* Engine::getConsole() const
 {
   return _console;
 }
@@ -103,7 +104,7 @@ void Engine::setConsole(TCODConsole *console)
 {
   _console = console;
 }
-gui::Gui *Engine::getGui() const
+gui::Gui* Engine::getGui() const
 {
   return _gui;
 }

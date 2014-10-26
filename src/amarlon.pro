@@ -51,7 +51,8 @@ SOURCES += main.cpp \
     Gui/Widget/bar.cpp \
     Gui/Widget/panel.cpp \
     Gui/Widget/list.cpp \
-    Gui/Widget/label.cpp
+    Gui/Widget/label.cpp \
+    Actor/ActorFeatures/Wearer/wearer.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -110,7 +111,9 @@ HEADERS += \
     Gui/Widget/panel.h \
     Gui/Widget/list.h \
     Utils/colored_string.h \
-    Gui/Widget/label.h
+    Gui/Widget/label.h \
+    Actor/ActorFeatures/Wearer/wearer.h \
+    Actor/ActorFeatures/Wearer/item_slot_type.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

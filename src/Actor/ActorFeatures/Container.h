@@ -1,6 +1,7 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
+#include <memory>
 #include <vector>
 #include <string>
 #include "ActorFeature.h"
@@ -14,6 +15,7 @@ class Container : public ActorFeature
 {
 public:
   Container(size_t slotCount);
+  virtual ~Container();
   static Container* create(const ContainerDescription& dsc);
 
   virtual Container* clone();
@@ -33,6 +35,8 @@ private:
   size_t _slotCount;
 
 };
+
+typedef std::shared_ptr<Container> ContainerPtr;
 
 }
 

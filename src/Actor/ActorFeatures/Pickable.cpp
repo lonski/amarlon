@@ -16,6 +16,7 @@ Pickable::Pickable(bool stackable, int amount)
 Pickable *Pickable::create(const PickableDescription &dsc)
 {
   Pickable* pickable = new Pickable(dsc.stackable, dsc.amount);
+  pickable->_itemSlot = dsc.itemSlot;
 
   Effect* effect = Effect::create(dsc.effect);
   pickable->setEffect(effect);
@@ -97,6 +98,16 @@ void Pickable::setEffect(Effect *effect)
 {
   _effect = effect;
 }
+ItemSlotType Pickable::getItemSlot() const
+{
+  return _itemSlot;
+}
+
+void Pickable::setItemSlot(const ItemSlotType &itemSlot)
+{
+  _itemSlot = itemSlot;
+}
+
 
 int Pickable::getAmount() const
 {

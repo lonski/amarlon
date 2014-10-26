@@ -4,6 +4,7 @@
 #include <vector>
 #include "ActorFeature.h"
 #include "DataGateways/ActorDescriptions.h"
+#include "Wearer/item_slot_type.h"
 
 namespace amarlon {
 
@@ -31,10 +32,14 @@ public:
   Effect *getEffect() const;
   void setEffect(Effect *getEffect);
 
+  ItemSlotType getItemSlot() const;
+  void setItemSlot(const ItemSlotType &getItemSlot);
+
 private:
   bool _stackable;
   int _amount;
   Effect* _effect;
+  ItemSlotType _itemSlot;
 
 };
 

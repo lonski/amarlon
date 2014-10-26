@@ -9,6 +9,7 @@
 #include "Actor/ActorFeatures/Ai/AiType.h"
 #include "Actor/ActorFeatures/Openable/OpenableType.h"
 #include "Actor/Effects/EffectType.h"
+#include "Actor/ActorFeatures/Wearer/item_slot_type.h"
 
 namespace amarlon {
 
@@ -17,6 +18,7 @@ class Pickable;
 class Fighter;
 class Ai;
 class Openable;
+class Wearer;
 
 struct EffectDescription
 {
@@ -45,6 +47,7 @@ struct PickableDescription
   bool stackable;
   int amount;
   EffectDescription effect;
+  ItemSlotType itemSlot;
 };
 
 struct FighterDescription
@@ -65,6 +68,8 @@ struct OpenableDescription
   bool locked;
 };
 
+struct WearerDescription;
+
 struct ContainerDescription
 {
   struct Content
@@ -75,12 +80,19 @@ struct ContainerDescription
     FighterDescription* fighter;
     AiDescription* ai;
     OpenableDescription* openable;
+    WearerDescription* wearer;
 
     Content() { memset(this, 0, sizeof *this); }
   };
 
   size_t maxSize;
   std::vector<Content> content;
+};
+
+struct WearerDescription
+{
+  std::vector<ItemSlotType> itemSlots;
+  ContainerDescription eqItems;
 };
 
 //===
