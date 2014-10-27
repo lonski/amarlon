@@ -60,11 +60,11 @@ void ActorParser::parseContainerContentNode(ContainerDescription* contDsc, xml_n
   {
     cActor.actorType = aDsc->id;
 
-    cActor.container = aParser.parseContainerDsc();
-    cActor.openable  = aParser.parseOpenableDsc();
-    cActor.pickable  = aParser.parsePickableDsc();
-    cActor.fighter   = aParser.parseFighterDsc();
-    cActor.ai        = aParser.parseAiDsc();
+    cActor.container.reset( aParser.parseContainerDsc() );
+    cActor.openable.reset( aParser.parseOpenableDsc() );
+    cActor.pickable.reset( aParser.parsePickableDsc() );
+    cActor.fighter.reset( aParser.parseFighterDsc() );
+    cActor.ai.reset( aParser.parseAiDsc() );
 
     contDsc->content.push_back( cActor );
 

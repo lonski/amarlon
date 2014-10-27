@@ -8,7 +8,6 @@ QMAKE_CXXFLAGS += -std=c++0x -g -Wall -Wextra -Wformat-security
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
 
-INCLUDEPATH += $$PWD/../../
 INCLUDEPATH += $$PWD/../include/libtcod
 DEPENDPATH += $$PWD/../include/libtcod
 

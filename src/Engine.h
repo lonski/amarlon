@@ -10,6 +10,8 @@ namespace amarlon {
 class Map;
 class Actor;
 
+typedef std::shared_ptr<Map> MapPtr;
+
 namespace gui {
   class Gui;
 }
@@ -28,7 +30,7 @@ public:
   void processKey(TCOD_key_t& key);
 
   Map* currentMap() const;
-  void setCurrentMap(Map *currentMap);
+  void setCurrentMap(amarlon::MapPtr currentMap);
 
   TCODConsole *getConsole() const;
   void setConsole(TCODConsole *getConsole);
@@ -38,7 +40,7 @@ public:
 
 private:
   TCODConsole* _console;
-  Map* _currentMap;
+  MapPtr _currentMap;
   gui::Gui* _gui;
 
   void updateAis();

@@ -11,9 +11,11 @@ Wearer::Wearer()
 {
 }
 
-Wearer* Wearer::create(const  WearerDescription& dsc)
+Wearer* Wearer::create(WearerDescription dsc)
 {
   Wearer* w = new Wearer;
+
+  dsc.eqItems.maxSize = dsc.itemSlots.size();
 
   std::for_each(dsc.itemSlots.begin(), dsc.itemSlots.end(), [&](ItemSlotType slot)
   {
@@ -84,10 +86,10 @@ bool Wearer::equip(Actor *item)
 
   if ( item && item->afPickable())
   {
-    ItemSlotType slot = item->afPickable()->getItemSlot();
+    ItemSlotType slot = item->afPickable()->getItemSlot();    
     if ( _itemSlots.count(slot) && !isEquipped(slot) )
-    {
-      r = _equippedItems->add(item);
+    {    
+      r = _equippedItems->add(item);      
       if ( r ) _itemSlots[slot] = item;
     }
   }

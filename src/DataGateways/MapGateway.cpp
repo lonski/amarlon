@@ -18,9 +18,9 @@ MapGateway::MapGateway()
 {
 }
 
-Map* MapGateway::fetch(MapId id)
+MapPtr MapGateway::fetch(MapId id)
 {
-  Map* map = nullptr;
+  MapPtr map(nullptr);
 
   if (_maps.count(id))
   {
@@ -51,7 +51,7 @@ void MapGateway::loadMaps(string fn)
 
     xml_node<>* tilesNode = mapNode->first_node("Tiles");
     string fillStr = tilesNode->value();
-    Map* map = new Map(x, y, id);    
+    MapPtr map( new Map(x, y, id) );
     map->fill( fillStr );
 
     xml_node<>* actorsRoot = mapNode->first_node("Actors");
@@ -111,7 +111,7 @@ void MapGateway::saveMaps(string fn)
   for (auto m = _maps.begin(); m != _maps.end(); ++m)
   {
     MapId id = m->first;
-    Map* map = m->second;
+    MapPtr map = m->second;
 
     xml_node<>* mapNode = doc.allocate_node(node_element, "Map");
     mapsNode->append_node(mapNode);

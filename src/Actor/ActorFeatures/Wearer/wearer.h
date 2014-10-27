@@ -14,7 +14,7 @@ class Wearer : public ActorFeature
 public:
   Wearer();
   virtual ~Wearer() {}
-  static Wearer* create(const WearerDescription& dsc);
+  static Wearer* create(WearerDescription dsc);
 
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature* rhs);

@@ -22,6 +22,7 @@ public:
     dsc.itemSlots.push_back(ItemSlotType::Boots);
 
     wearer.reset( Wearer::create(dsc) );
+    std::cout << " wearer size = " << wearer->_equippedItems->slotCount();
   }
   virtual void TearDown()
   {
@@ -49,6 +50,8 @@ TEST_F(WearerTest, equip_item)
   Actor* clothArmor = new Actor( ActorType::LinenClothes );
 
   //equip and check if equipped correctly
+  EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Armor) );
+
   ASSERT_TRUE( wearer->equip(clothArmor) );
   ASSERT_TRUE( wearer->isEquipped(ItemSlotType::Armor) );
   ASSERT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
@@ -74,9 +77,11 @@ TEST_F(WearerTest, unequip_item)
   Actor* unequipped = wearer->unequip(ItemSlotType::Boots);
 
   //check if unequipped correctly
-  ASSERT_EQ(unequipped, boots);
-  ASSERT_FALSE(wearer->isEquipped(ItemSlotType::Boots));
-  ASSERT_EQ( wearer->equipped(ItemSlotType::Boots), nullptr);
+  EXPECT_EQ(unequipped, boots);
+  EXPECT_FALSE(wearer->isEquipped(ItemSlotType::Boots));
+  EXPECT_EQ( wearer->equipped(ItemSlotType::Boots), nullptr);
+
+  delete boots;
 }
 
 TEST_F(WearerTest, clone_wearer)

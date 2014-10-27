@@ -36,6 +36,7 @@ public:
   static MapGateway Gateway;
 
   Map(u32 width, u32 height, MapId id = MapId::Null);
+  ~Map();
 
   bool isExplored(int x, int y);
   bool isInFov(int x, int y);

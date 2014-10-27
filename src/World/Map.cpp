@@ -24,7 +24,16 @@ Map::Map(u32 width, u32 height, MapId id)
       row.push_back(Tile());
     }
     _tiles.push_back(row);
-  }  
+    }
+}
+
+Map::~Map()
+{
+  std::for_each(_actors.begin(), _actors.end(), [](Actor* a)
+  {
+    delete a;
+    a = nullptr;
+  });
 }
 
 bool Map::isExplored(int x, int y)

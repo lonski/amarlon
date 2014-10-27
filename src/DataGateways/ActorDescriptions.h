@@ -1,6 +1,7 @@
 #ifndef ACTORDESCRIPTIONS_H
 #define ACTORDESCRIPTIONS_H
 
+#include <memory>
 #include <cstring>
 #include <string>
 #include <vector>
@@ -72,15 +73,17 @@ struct WearerDescription;
 
 struct ContainerDescription
 {
+  ContainerDescription() : maxSize(0) {}
+
   struct Content
   {
     ActorType actorType;
-    ContainerDescription* container;
-    PickableDescription* pickable;
-    FighterDescription* fighter;
-    AiDescription* ai;
-    OpenableDescription* openable;
-    WearerDescription* wearer;
+    std::shared_ptr<ContainerDescription> container;
+    std::shared_ptr<PickableDescription> pickable;
+    std::shared_ptr<FighterDescription> fighter;
+    std::shared_ptr<AiDescription> ai;
+    std::shared_ptr<OpenableDescription> openable;
+    std::shared_ptr<WearerDescription> wearer;
 
     Content() { memset(this, 0, sizeof *this); }
   };

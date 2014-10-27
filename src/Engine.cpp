@@ -77,7 +77,7 @@ void Engine::updateAis()
   {
     std::for_each(_currentMap->actors().begin(), _currentMap->actors().end(), [&](Actor* a)
     {
-      if (a->afAi()) a->afAi()->update(_currentMap);
+      if (a->afAi()) a->afAi()->update( currentMap() );
     });
   }
 }
@@ -87,12 +87,12 @@ void Engine::processKey(TCOD_key_t &key)
   CommandExecutor::execute(key, this, Actor::Player);
 }
 
-Map *Engine::currentMap() const
+Map* Engine::currentMap() const
 {
-  return _currentMap;
+  return _currentMap.get();
 }
 
-void Engine::setCurrentMap(Map *currentMap)
+void Engine::setCurrentMap(MapPtr currentMap)
 {
   _currentMap = currentMap;
 }
