@@ -13,6 +13,11 @@ Pickable::Pickable(bool stackable, int amount)
 {
 }
 
+Pickable::~Pickable()
+{
+  delete _effect;
+}
+
 Pickable *Pickable::create(const PickableDescription &dsc)
 {
   Pickable* pickable = new Pickable(dsc.stackable, dsc.amount);
