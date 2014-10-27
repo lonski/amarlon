@@ -15,7 +15,8 @@ class Pickable : public ActorFeature
 {
 public:
   Pickable(bool stackable = false, int amount = 1);
-  virtual ~Pickable() {}
+  virtual ~Pickable();
+
   static Pickable* create(const PickableDescription& dsc);
 
   virtual ActorFeature* clone();
