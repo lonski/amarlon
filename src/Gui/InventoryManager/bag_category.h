@@ -1,6 +1,7 @@
 #ifndef BAG_CATEGORY_H
 #define BAG_CATEGORY_H
 
+#include <string>
 #include <Gui/Widget/panel.h>
 #include <Gui/Widget/label.h>
 

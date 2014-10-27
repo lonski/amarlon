@@ -1,6 +1,7 @@
 #ifndef PANEL_H
 #define PANEL_H
 
+#include <string>
 #include <vector>
 #include "widget.h"
 #include "libtcod.hpp"
