@@ -4,6 +4,7 @@
 namespace amarlon { namespace gui {
 
 List::List()
+  : _fixedSize(true)
 {
 }
 
@@ -29,7 +30,7 @@ size_t List::size()
 
 void List::push(ColoredString entry)
 {
-  if ( _entries.size() == _maxSize )
+  if ( _entries.size() == _maxSize && _fixedSize )
   {
     _entries.pop_front();
   }
@@ -46,5 +47,15 @@ void List::setMaxSize(const size_t &maxSize)
 {
   _maxSize = maxSize;
 }
+bool List::isFixedSize() const
+{
+  return _fixedSize;
+}
+
+void List::setFixedSize(bool fixedSize)
+{
+  _fixedSize = fixedSize;
+}
+
 
 }}

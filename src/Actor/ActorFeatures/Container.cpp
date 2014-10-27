@@ -111,7 +111,7 @@ bool Container::add(Actor *actor)
 
 bool Container::pushNewItem(Actor *actor)
 {
-  bool slotsAvail = size() < _slotCount;
+  bool slotsAvail = (size() < _slotCount);
 
   if (slotsAvail)
     _inventory.push_back(actor);

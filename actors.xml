@@ -11,9 +11,9 @@
 			</ItemSlot>			
 			<ItemSlot type="5"/>
 			<ItemSlot type="6"/>
-			<ItemSlot type="7">
-				<Equipped id="18"/>
+				<Equipped id="18">
 			</ItemSlot>
+			<ItemSlot type="7"/>
 		</Wearer>
 	</Actor>
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
@@ -56,7 +56,7 @@
 		<Pickable stackable="0" amount="1" itemSlot="3"/>
 	</Actor>
 	<Actor name="Leather boots" id="18" character="[" color="#993300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="7"/>
+		<Pickable stackable="0" amount="1" itemSlot="6"/>
 	</Actor>
 	
 </Actors>

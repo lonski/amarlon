@@ -7,6 +7,8 @@
 #include "Gui/Widget/panel.h"
 #include "Gui/Widget/bar.h"
 
+#include "Gui/InventoryManager/inventory_window.h"
+
 namespace amarlon {
 
 int Engine::FovRadius = 20;
@@ -60,7 +62,6 @@ void Engine::render()
       _gui->setHpBar(Actor::Player->afFighter()->getHp(), Actor::Player->afFighter()->getMaxHp());
 
     _gui->setViewList(getActorsBenethPlayersFeet());
-
     _gui->render();
   }
 

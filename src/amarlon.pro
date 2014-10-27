@@ -52,7 +52,11 @@ SOURCES += main.cpp \
     Gui/Widget/panel.cpp \
     Gui/Widget/list.cpp \
     Gui/Widget/label.cpp \
-    Actor/ActorFeatures/Wearer/wearer.cpp
+    Actor/ActorFeatures/Wearer/wearer.cpp \
+    Gui/InventoryManager/inventory_window.cpp \
+    Gui/InventoryManager/body_slot.cpp \
+    Gui/InventoryManager/body_slots_manager.cpp \
+    Gui/InventoryManager/bag_category.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -113,7 +117,11 @@ HEADERS += \
     Utils/colored_string.h \
     Gui/Widget/label.h \
     Actor/ActorFeatures/Wearer/wearer.h \
-    Actor/ActorFeatures/Wearer/item_slot_type.h
+    Actor/ActorFeatures/Wearer/item_slot_type.h \
+    Gui/InventoryManager/inventory_window.h \
+    Gui/InventoryManager/body_slot.h \
+    Gui/InventoryManager/body_slots_manager.h \
+    Gui/InventoryManager/bag_category.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

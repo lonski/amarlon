@@ -23,11 +23,17 @@ public:
   size_t getMaxSize() const;
   void setMaxSize(const size_t &getMaxSize);
 
+  bool isFixedSize() const;
+  void setFixedSize(bool fixedSize);
+
 private:
   size_t _maxSize;
+  bool _fixedSize;
   std::list<ColoredString> _entries;
 
 };
+
+typedef std::shared_ptr<List> ListPtr;
 
 }}
 

@@ -8,8 +8,8 @@ Panel::Panel(const int& w, const int& h)
   , _height(h)
   , _frame(true)
   , _frameColor(TCODColor::darkerOrange)
+  , _titleColor(TCODColor::lighterOrange)
   , _panel(new TCODConsole(_width, _height))
-
 {
 }
 
@@ -17,8 +17,9 @@ void Panel::render(TCODConsole& console)
 {
   if (_frame)
   {
-    _panel->setDefaultForeground(_frameColor);
-    _panel->printFrame(0, 0, _width, _height, true, TCOD_BKGND_DEFAULT);
+    _panel->setDefaultForeground(_frameColor);    
+    _panel->setDefaultBackground(_titleColor);
+    _panel->printFrame(0, 0, _width, _height, true, TCOD_BKGND_DEFAULT, _title.empty() ? NULL : _title.c_str() );
   }
 
   std::for_each(_widgets.begin(), _widgets.end(), [&](WidgetPtr w){ w->render(*_panel); });
@@ -44,6 +45,8 @@ int Panel::getWidth() const
 void Panel::setWidth(int width)
 {
   _width = width;
+  _panel.reset( new TCODConsole(_width, _height) );
+
 }
 int Panel::getHeight() const
 {
@@ -53,6 +56,47 @@ int Panel::getHeight() const
 void Panel::setHeight(int height)
 {
   _height = height;
+  _panel.reset( new TCODConsole(_width, _height) );
 }
+std::string Panel::setTitle() const
+{
+  return _title;
+}
+
+void Panel::setTitle(const std::string &title)
+{
+  _title = title;
+}
+TCODColor Panel::getTitleColor() const
+{
+  return _titleColor;
+}
+
+void Panel::setTitleColor(const TCODColor &titleColor)
+{
+  _titleColor = titleColor;
+}
+bool Panel::isFramed() const
+{
+    return _frame;
+}
+
+void Panel::setFrame(bool frame)
+{
+    _frame = frame;
+}
+TCODColor Panel::getFrameColor() const
+{
+  return _frameColor;
+}
+
+void Panel::setFrameColor(const TCODColor &frameColor)
+{
+  _frameColor = frameColor;
+}
+
+
+
+
 
 }}

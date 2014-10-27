@@ -21,11 +21,21 @@ public:
   TCODColor getColor() const;
   void setColor(const TCODColor &getColor);
 
+  TCOD_alignment_t getAligment() const;
+  void setAligment(const TCOD_alignment_t &getAligment);
+
+  TCODColor getBgcolor() const;
+  void setBgcolor(const TCODColor &getBgcolor);
+
 private:
   std::string _value;
   TCODColor _color;
+  TCODColor _bgcolor;
+  TCOD_alignment_t _aligment;
 
 };
+
+typedef std::shared_ptr<Label> LabelPtr;
 
 }}
 

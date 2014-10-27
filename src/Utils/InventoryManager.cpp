@@ -12,10 +12,11 @@ InventoryManager::InventoryManager(Actor* actor)
 
 void InventoryManager::display()
 {
-  if (_actor->afContainer())
-  {    
-    _pickerGui.pick(_actor->afContainer()->content());
-  }
+//  if (_actor->afContainer())
+//  {
+//    _pickerGui.pick(_actor->afContainer()->content());
+//  }
+  _invGui.show(*TCODConsole::root);
 }
 
 void InventoryManager::setTitle(const std::string &title)

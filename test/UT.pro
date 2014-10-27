@@ -73,7 +73,11 @@ SOURCES += \
     ../src/Gui/Widget/widget.cpp \
     ../src/Gui/Widget/label.cpp \
     ../src/Actor/ActorFeatures/Wearer/wearer.cpp \
-    WearerTest.cpp
+    WearerTest.cpp \
+    ../src/Gui/InventoryManager/bag_category.cpp \
+    ../src/Gui/InventoryManager/body_slot.cpp \
+    ../src/Gui/InventoryManager/body_slots_manager.cpp \
+    ../src/Gui/InventoryManager/inventory_window.cpp
 
 
 HEADERS += \
@@ -136,5 +140,9 @@ HEADERS += \
     ../src/Gui/Widget/widget.h \
     ../src/Gui/Widget/label.h \
     ../src/Actor/ActorFeatures/Wearer/item_slot_type.h \
-    ../src/Actor/ActorFeatures/Wearer/wearer.h
+    ../src/Actor/ActorFeatures/Wearer/wearer.h \
+    ../src/Gui/InventoryManager/bag_category.h \
+    ../src/Gui/InventoryManager/body_slot.h \
+    ../src/Gui/InventoryManager/body_slots_manager.h \
+    ../src/Gui/InventoryManager/inventory_window.h
 

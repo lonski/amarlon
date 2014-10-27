@@ -15,10 +15,10 @@ public:
 
   virtual void render(TCODConsole& console) = 0;
 
-  int getX() const;
-  int getY() const;
+  virtual int getX() const;
+  virtual int getY() const;
 
-  void setPosition(int x, int y);
+  virtual void setPosition(int x, int y);
 
 protected:
   int _x;

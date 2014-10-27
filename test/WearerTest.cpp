@@ -19,7 +19,7 @@ public:
 
     WearerDescription dsc;
     dsc.itemSlots.push_back(ItemSlotType::Armor);
-    dsc.itemSlots.push_back(ItemSlotType::Feet);
+    dsc.itemSlots.push_back(ItemSlotType::Boots);
 
     wearer.reset( Wearer::create(dsc) );
   }
@@ -36,9 +36,9 @@ protected:
 TEST_F(WearerTest, loadsSlots_from_description)
 {
   EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Armor) );
-  EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Feet) );
+  EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Boots) );
 
-  EXPECT_FALSE( wearer->hasSlot(ItemSlotType::Head) );
+  EXPECT_FALSE( wearer->hasSlot(ItemSlotType::Helmet) );
 }
 
 TEST_F(WearerTest, equip_item)
@@ -52,7 +52,7 @@ TEST_F(WearerTest, equip_item)
   ASSERT_TRUE( wearer->equip(clothArmor) );
   ASSERT_TRUE( wearer->isEquipped(ItemSlotType::Armor) );
   ASSERT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
-  ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Feet) );
+  ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Boots) );
 
   //try to over-equip
   Actor* overeq = new Actor(ActorType::LinenClothes);
@@ -71,12 +71,12 @@ TEST_F(WearerTest, unequip_item)
   //equip and then unequip
   Actor* boots = new Actor( ActorType::LeatherBoots );
   ASSERT_TRUE( wearer->equip(boots) );
-  Actor* unequipped = wearer->unequip(ItemSlotType::Feet);
+  Actor* unequipped = wearer->unequip(ItemSlotType::Boots);
 
   //check if unequipped correctly
   ASSERT_EQ(unequipped, boots);
-  ASSERT_FALSE(wearer->isEquipped(ItemSlotType::Feet));
-  ASSERT_EQ( wearer->equipped(ItemSlotType::Feet), nullptr);
+  ASSERT_FALSE(wearer->isEquipped(ItemSlotType::Boots));
+  ASSERT_EQ( wearer->equipped(ItemSlotType::Boots), nullptr);
 }
 
 TEST_F(WearerTest, clone_wearer)
@@ -112,7 +112,7 @@ TEST_F(WearerTest, compare_test)
 
   WearerDescription dsc;
   dsc.itemSlots.push_back(ItemSlotType::Armor);
-  dsc.itemSlots.push_back(ItemSlotType::Feet);
+  dsc.itemSlots.push_back(ItemSlotType::Boots);
   dsc.eqItems.maxSize = 2;
 
   w1.reset( Wearer::create(dsc) );
