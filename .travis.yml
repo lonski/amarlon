@@ -4,7 +4,7 @@ script:
     - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
     - echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
     - sudo apt-get update -qq
-    - sudo apt-get install -qq gcc-4.8
+    - sudo apt-get install -qq gcc-4.8 valgrind
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
     - sudo update-alternatives --config gcc
     - sudo apt-get install -qq mercurial libsdl-dev
@@ -36,7 +36,7 @@ script:
     - cd ../test
     - qmake
     - make -j`grep -c processor /proc/cpuinfo`
-    - LD_LIBRARY_PATH=../lib ./UT
+    - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./UT
 
 notifications:
   recipients:
