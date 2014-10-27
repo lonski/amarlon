@@ -16,6 +16,7 @@ script:
     - sudo cmake .. -DBUILD_SHARED_LIBS=1
     - sudo make -j`grep -c processor /proc/cpuinfo`
     - cd -
+    - mkdir ./lib
     - sudo ln -s /usr/src/gtest/build/libgtest.so ./lib/libgtest.so
     - sudo ln -s /usr/src/gtest/build/libgtest_main.so ./lib/libgtest_main.so
     - hg clone https://bitbucket.org/jice/libtcod
