@@ -22,7 +22,6 @@ public:
     dsc.itemSlots.push_back(ItemSlotType::Boots);
 
     wearer.reset( Wearer::create(dsc) );
-    std::cout << " wearer size = " << wearer->_equippedItems->slotCount();
   }
   virtual void TearDown()
   {
