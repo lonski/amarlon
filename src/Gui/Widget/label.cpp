@@ -14,7 +14,7 @@ void Label::render(TCODConsole &console)
   console.setDefaultForeground(_color);
   console.setDefaultBackground(_bgcolor);
   console.printEx(_x, _y,
-                  _bgcolor == TCODColor::black ? TCOD_BKGND_NONE : TCOD_BKGND_SET,
+                  TCOD_BKGND_SET,
                   _aligment, "%s", _value.c_str());
 }
 std::string Label::getValue() const

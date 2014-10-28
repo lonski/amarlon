@@ -115,6 +115,7 @@ PickableDescription *ActorParser::parsePickableDsc()
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
       pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
+      pickDsc->category = (PickableCategory)getAttribute<int>(pickableNode, "category");
 
       // == effects == //
       xml_node<>* effectNode = pickableNode->first_node("Effect");

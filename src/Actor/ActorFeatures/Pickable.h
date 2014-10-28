@@ -2,9 +2,10 @@
 #define PICKABLE_H
 
 #include <vector>
-#include "ActorFeature.h"
-#include "DataGateways/ActorDescriptions.h"
-#include "Wearer/item_slot_type.h"
+#include <Actor/ActorFeatures/ActorFeature.h>
+#include <DataGateways/ActorDescriptions.h>
+#include <Actor/ActorFeatures/Wearer/item_slot_type.h>
+#include <Actor/ActorFeatures/pickable_category.h>
 
 namespace amarlon {
 
@@ -36,11 +37,15 @@ public:
   ItemSlotType getItemSlot() const;
   void setItemSlot(const ItemSlotType &getItemSlot);
 
+  PickableCategory getCategory() const;
+  void setCategory(const PickableCategory &getCategory);
+
 private:
   bool _stackable;
   int _amount;
   Effect* _effect;
   ItemSlotType _itemSlot;
+  PickableCategory _category;
 
 };
 

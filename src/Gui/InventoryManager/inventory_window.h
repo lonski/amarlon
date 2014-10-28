@@ -3,9 +3,14 @@
 
 #include "libtcod.hpp"
 #include <memory>
-#include "../Widget/panel.h"
+#include <Gui/Widget/categorized_menu.h>
+#include <Gui/Widget/panel.h>
 
-namespace amarlon { namespace gui {
+namespace amarlon {
+
+class Actor;
+
+namespace gui {
 
 class Panel;
 typedef std::shared_ptr<Panel> PanelPtr;
@@ -16,16 +21,19 @@ public:
   const int windowHeight;
   const int windowWidth;
 
-  InventoryWindow();
+  InventoryWindow(const std::vector<Actor*>& items);
 
   void render(TCODConsole& console);
   void show(TCODConsole& console);
 
-  void setupBagPanelWidgets();
-  void setupBodyPanelWidgets();
 private:
   Panel _bodyPanel;
   Panel _bagPanel;
+  CategorizedMenuPtr _bagMenu;
+  const std::vector<Actor*> _items;
+
+  void setupBagPanelWidgets();
+  void setupBodyPanelWidgets();
 
 };
 

@@ -23,4 +23,15 @@ void Widget::setPosition(int x, int y)
   _y = y;
 }
 
+std::string Widget::getTag(const std::string &tagName)
+{
+  auto tag = _tags.find(tagName);
+  return tag == _tags.end() ? "" : tag->second;
+}
+
+void Widget::setTag(const std::string &tagName, const std::string &tagValue)
+{
+  _tags[tagName] = tagValue;
+}
+
 }}

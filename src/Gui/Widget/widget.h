@@ -2,6 +2,8 @@
 #define WIDGET_H
 
 #include <memory>
+#include <map>
+#include <string>
 
 class TCODConsole;
 
@@ -20,7 +22,11 @@ public:
 
   virtual void setPosition(int x, int y);
 
+  virtual std::string getTag(const std::string& tagName);
+  virtual void setTag(const std::string& tagName, const std::string& tagValue);
+
 protected:
+  std::map<std::string, std::string> _tags;
   int _x;
   int _y;
 

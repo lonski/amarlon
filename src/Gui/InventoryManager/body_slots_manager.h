@@ -10,20 +10,10 @@ namespace amarlon { namespace gui {
 class BodySlotsManager : public Panel
 {
 public:
-  BodySlotsManager(int w, int h) : Panel(w,h) { setFrame(false); }
-  void addSlot(const std::string& name, ItemSlotType type, const std::string& value = "")
-  {
-    BodySlotPtr newSlot( new BodySlot(getWidth() - 2*_margin, name) );
-    newSlot->setSlotValue(value);
-    newSlot->setPosition( _margin, _margin + _slots.size() * 5);
-    _slots[type] = newSlot;
-    addWidget(newSlot);
-  }
+  BodySlotsManager(int w, int h);
 
-  BodySlotPtr getSlot(ItemSlotType type)
-  {
-    return _slots.count(type) ? _slots[type] : BodySlotPtr();
-  }
+  void addSlot(const std::string& name, ItemSlotType type, const std::string& value = "");
+  BodySlotPtr getSlot(ItemSlotType type);
 
   int getMargin() const { return _margin; }
   void setMargin(int margin) { _margin = margin; }

@@ -56,7 +56,8 @@ SOURCES += main.cpp \
     Gui/InventoryManager/inventory_window.cpp \
     Gui/InventoryManager/body_slot.cpp \
     Gui/InventoryManager/body_slots_manager.cpp \
-    Gui/InventoryManager/bag_category.cpp
+    Gui/Widget/categorized_menu.cpp \
+    Gui/Widget/selectable_label.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -121,7 +122,9 @@ HEADERS += \
     Gui/InventoryManager/inventory_window.h \
     Gui/InventoryManager/body_slot.h \
     Gui/InventoryManager/body_slots_manager.h \
-    Gui/InventoryManager/bag_category.h
+    Actor/ActorFeatures/pickable_category.h \
+    Gui/Widget/categorized_menu.h \
+    Gui/Widget/selectable_label.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

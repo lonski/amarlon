@@ -3,7 +3,6 @@
 
 #include <string>
 #include <Gui/ItemPickerWindow.h>
-#include <Gui/InventoryManager/inventory_window.h>
 
 namespace amarlon {
 
@@ -20,7 +19,6 @@ public:
   Actor* chooseItemToUse();
 
 private:
-  gui::InventoryWindow _invGui;
   gui::ItemPickerWindow _pickerGui;
   Actor* _actor;
   std::string _title;

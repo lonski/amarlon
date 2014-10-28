@@ -11,6 +11,7 @@
 #include "Actor/ActorFeatures/Openable/OpenableType.h"
 #include "Actor/Effects/EffectType.h"
 #include "Actor/ActorFeatures/Wearer/item_slot_type.h"
+#include <Actor/ActorFeatures/pickable_category.h>
 
 namespace amarlon {
 
@@ -49,6 +50,7 @@ struct PickableDescription
   int amount;
   EffectDescription effect;
   ItemSlotType itemSlot;
+  PickableCategory category;
 };
 
 struct FighterDescription

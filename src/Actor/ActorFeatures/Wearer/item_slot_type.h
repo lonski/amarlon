@@ -1,6 +1,8 @@
 #ifndef ITEM_SLOT_TYPE_H
 #define ITEM_SLOT_TYPE_H
 
+namespace amarlon {
+
 enum class ItemSlotType
 {
   Null = 0,
@@ -22,5 +24,37 @@ enum class ItemSlotType
 
   End = 15
 };
+
+static inline const char* ItemSlotType2Str(ItemSlotType slot)
+{
+  return (const char *[]){
+          "Invalid-Null",
+
+          "Helmet",
+          "Amulet",
+          "Armor",
+          "Belt",
+          "Hands",
+          "Boots",
+          "Main hand",
+          "Offhand",
+          "Left ring",
+          "Right ring",
+          "Cloak",
+          "Arrows",
+          "Bolts",
+          "Bullets",
+
+          "Invalid-End"
+          }[(int)slot];
+}
+
+static inline const char* ItemSlotType2Str(int slot)
+{
+  return ItemSlotType2Str(static_cast<ItemSlotType>(slot));
+}
+
+
+}
 
 #endif // ITEM_SLOT_TYPE_H

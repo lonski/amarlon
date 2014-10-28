@@ -13,13 +13,13 @@ public:
 
   void setSlotName(const std::string& name);
   void setSlotValue(const std::string& value);
+private:
+  LabelPtr _slotName;
+  LabelPtr _slotValue;
 
   void InitalizeNameLabel(const std::string &name);
   void initalizeValueLabel();
   void initalizeSeparator();
-private:
-  LabelPtr _slotName;
-  LabelPtr _slotValue;
 
 };
 
