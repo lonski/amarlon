@@ -40,18 +40,18 @@ TCOD_alignment_t Label::getAligment() const
   return _aligment;
 }
 
-void Label::setAligment(const TCOD_alignment_t &aligment)
+void Label::setAligment(const TCOD_alignment_t &aligmnet)
 {
-  _aligment = aligment;
+  _aligment = aligmnet;
 }
 TCODColor Label::getBgcolor() const
 {
   return _bgcolor;
 }
 
-void Label::setBgcolor(const TCODColor &bgcolor)
+void Label::setBgcolor(const TCODColor &bgColor)
 {
-  _bgcolor = bgcolor;
+  _bgcolor = bgColor;
 }
 
 

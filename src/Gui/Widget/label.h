@@ -16,16 +16,16 @@ public:
   virtual void render(TCODConsole& console);
 
   std::string getValue() const;
-  void setValue(const std::string &getValue);
+  void setValue(const std::string &value);
 
   TCODColor getColor() const;
-  void setColor(const TCODColor &getColor);
+  void setColor(const TCODColor &color);
 
   TCOD_alignment_t getAligment() const;
-  void setAligment(const TCOD_alignment_t &getAligment);
+  void setAligment(const TCOD_alignment_t &aligmnet);
 
   TCODColor getBgcolor() const;
-  void setBgcolor(const TCODColor &getBgcolor);
+  void setBgcolor(const TCODColor &bgColor);
 
 private:
   std::string _value;

@@ -54,10 +54,9 @@ SOURCES += main.cpp \
     Gui/Widget/label.cpp \
     Actor/ActorFeatures/Wearer/wearer.cpp \
     Gui/InventoryManager/inventory_window.cpp \
-    Gui/InventoryManager/body_slot.cpp \
-    Gui/InventoryManager/body_slots_manager.cpp \
-    Gui/Widget/categorized_menu.cpp \
-    Gui/Widget/selectable_label.cpp
+    Gui/Widget/menu/label_menu_item.cpp \
+    Gui/Widget/menu/slot_menu_item.cpp \
+    Gui/Widget/menu/menu.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -120,11 +119,11 @@ HEADERS += \
     Actor/ActorFeatures/Wearer/wearer.h \
     Actor/ActorFeatures/Wearer/item_slot_type.h \
     Gui/InventoryManager/inventory_window.h \
-    Gui/InventoryManager/body_slot.h \
-    Gui/InventoryManager/body_slots_manager.h \
     Actor/ActorFeatures/pickable_category.h \
-    Gui/Widget/categorized_menu.h \
-    Gui/Widget/selectable_label.h
+    Gui/Widget/menu/label_menu_item.h \
+    Gui/Widget/menu/slot_menu_item.h \
+    Gui/Widget/menu/menu_item.h \
+    Gui/Widget/menu/menu.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

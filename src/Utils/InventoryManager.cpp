@@ -13,12 +13,8 @@ InventoryManager::InventoryManager(Actor* actor)
 
 void InventoryManager::display()
 {
-  std::vector<Actor*> allItems = _actor->afContainer()->content();
-  gui::InventoryWindow invWindow( allItems );
-//  if (_actor->afContainer())
-//  {
-//    _pickerGui.pick(_actor->afContainer()->content());
-//  }
+  gui::InventoryWindow invWindow( _actor );
+
   invWindow.show(*TCODConsole::root);
 }
 

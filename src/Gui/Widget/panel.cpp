@@ -96,7 +96,4 @@ void Panel::setFrameColor(const TCODColor &frameColor)
 }
 
 
-
-
-
 }}

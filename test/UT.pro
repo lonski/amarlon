@@ -73,12 +73,10 @@ SOURCES += \
     ../src/Gui/Widget/label.cpp \
     ../src/Actor/ActorFeatures/Wearer/wearer.cpp \
     WearerTest.cpp \
-    ../src/Gui/InventoryManager/body_slot.cpp \
-    ../src/Gui/InventoryManager/body_slots_manager.cpp \
     ../src/Gui/InventoryManager/inventory_window.cpp \
-    ../src/Gui/Widget/categorized_menu.cpp \
-    ../src/Gui/Widget/selectable_label.cpp
-
+    ../src/Gui/Widget/menu/label_menu_item.cpp \
+    ../src/Gui/Widget/menu/menu.cpp \
+    ../src/Gui/Widget/menu/slot_menu_item.cpp
 
 HEADERS += \
     ../src/World/Map.h \
@@ -141,9 +139,9 @@ HEADERS += \
     ../src/Gui/Widget/label.h \
     ../src/Actor/ActorFeatures/Wearer/item_slot_type.h \
     ../src/Actor/ActorFeatures/Wearer/wearer.h \
-    ../src/Gui/InventoryManager/body_slot.h \
-    ../src/Gui/InventoryManager/body_slots_manager.h \
     ../src/Gui/InventoryManager/inventory_window.h \
-    ../src/Gui/Widget/categorized_menu.h \
-    ../src/Gui/Widget/selectable_label.h
+    ../src/Gui/Widget/menu/label_menu_item.h \
+    ../src/Gui/Widget/menu/menu_item.h \
+    ../src/Gui/Widget/menu/menu.h \
+    ../src/Gui/Widget/menu/slot_menu_item.h
 
