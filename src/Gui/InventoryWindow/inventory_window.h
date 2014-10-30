@@ -5,6 +5,7 @@
 #include <libtcod.hpp>
 #include <Gui/Widget/menu/menu.h>
 #include <Gui/Widget/panel.h>
+#include <Gui/InventoryWindow/inventory_manager.h>
 
 namespace amarlon {
 
@@ -18,13 +19,6 @@ typedef std::shared_ptr<Panel> PanelPtr;
 
 class InventoryWindow
 {  
-private:
-  enum WindowPanel
-  {
-    BODYSLOTS,
-    INVENTORY
-  };
-
 public:
   const int windowHeight;
   const int windowWidth;
@@ -35,22 +29,27 @@ public:
   void show();
 
 private:
+  enum WindowPanel
+  {
+    BODYSLOTS,
+    INVENTORY
+  };
+
   std::map<WindowPanel, MenuPtr> _panels;
   WindowPanel _activePanel;
 
-  std::map<int, Actor*> _bagItems;
-
   Engine* _engine;
 
-  void setupBagPanelWidgets();
-  void setupBodyPanelWidgets();
-  void fillBag();
+  InventoryManagerPtr _invMgr;
+
   void fillBodySlots();
 
   void handleKey(TCOD_key_t key);
   void activateNextPanel();
+  void activatePreviousPanel();
   MenuItemPtr getSelectedItem();
 
+  void manageBodySlots();
 };
 
 }}

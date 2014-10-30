@@ -19,6 +19,7 @@ Container::~Container()
 
 Container* Container::create(const ContainerDescription &dsc)
 {
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Container* cont = new Container(dsc.maxSize);
 
   std::for_each(dsc.content.begin(), dsc.content.end(), [&](ContainerDescription::Content ca)

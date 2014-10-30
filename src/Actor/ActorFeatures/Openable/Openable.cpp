@@ -26,6 +26,7 @@ Openable *Openable::create(OpenableType type)
 
 Openable *Openable::create(const OpenableDescription &dsc)
 {
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Openable* op = Openable::create((dsc.type));
 
   if ( op != nullptr )

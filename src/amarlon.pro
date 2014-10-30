@@ -51,12 +51,13 @@ SOURCES += main.cpp \
     Gui/Widget/list.cpp \
     Gui/Widget/label.cpp \
     Actor/ActorFeatures/Wearer/wearer.cpp \
-    Gui/InventoryManager/inventory_window.cpp \
+    Gui/InventoryWindow/inventory_window.cpp \
     Gui/Widget/menu/label_menu_item.cpp \
     Gui/Widget/menu/slot_menu_item.cpp \
     Gui/Widget/menu/menu.cpp \
     Gui/text_window.cpp \
-    Gui/Widget/menu/items_menu.cpp
+    Gui/Widget/menu/items_menu.cpp \
+    Gui/InventoryWindow/inventory_manager.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -116,7 +117,7 @@ HEADERS += \
     Gui/Widget/label.h \
     Actor/ActorFeatures/Wearer/wearer.h \
     Actor/ActorFeatures/Wearer/item_slot_type.h \
-    Gui/InventoryManager/inventory_window.h \
+    Gui/InventoryWindow/inventory_window.h \
     Actor/ActorFeatures/pickable_category.h \
     Gui/Widget/menu/label_menu_item.h \
     Gui/Widget/menu/slot_menu_item.h \
@@ -124,7 +125,8 @@ HEADERS += \
     Gui/Widget/menu/menu.h \
     Gui/text_window.h \
     Gui/message_box.h \
-    Gui/Widget/menu/items_menu.h
+    Gui/Widget/menu/items_menu.h \
+    Gui/InventoryWindow/inventory_manager.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

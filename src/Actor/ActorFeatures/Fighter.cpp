@@ -18,6 +18,7 @@ Fighter::Fighter(float power, float maxHp)
 
 Fighter *Fighter::create(const FighterDescription &dsc)
 {
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   return new Fighter(dsc.power, dsc.maxHp);
 }
 

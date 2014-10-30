@@ -7,7 +7,7 @@
 #include "Gui/Widget/panel.h"
 #include "Gui/Widget/bar.h"
 
-#include "Gui/InventoryManager/inventory_window.h"
+#include "Gui/InventoryWindow/inventory_window.h"
 
 namespace amarlon {
 

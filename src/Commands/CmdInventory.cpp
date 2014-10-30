@@ -1,7 +1,7 @@
 #include "CmdInventory.h"
 #include <iostream>
 #include <algorithm>
-#include <Gui/InventoryManager/inventory_window.h>
+#include <Gui/InventoryWindow/inventory_window.h>
 
 namespace amarlon {
 

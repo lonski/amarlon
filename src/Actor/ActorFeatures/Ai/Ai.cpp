@@ -11,6 +11,7 @@ Ai::Ai()
 
 Ai *Ai::create(AiType type)
 {
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Ai* ai = nullptr;
 
   switch (type)

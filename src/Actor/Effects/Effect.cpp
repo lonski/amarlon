@@ -25,6 +25,7 @@ Effect *Effect::create(EffectType type)
 
 Effect *Effect::create(const EffectDescription &dsc)
 {
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Effect* e = Effect::create(dsc.type);
 
   if ( e != nullptr )

@@ -71,12 +71,13 @@ SOURCES += \
     ../src/Gui/Widget/label.cpp \
     ../src/Actor/ActorFeatures/Wearer/wearer.cpp \
     WearerTest.cpp \
-    ../src/Gui/InventoryManager/inventory_window.cpp \
+    ../src/Gui/InventoryWindow/inventory_window.cpp \
     ../src/Gui/Widget/menu/label_menu_item.cpp \
     ../src/Gui/Widget/menu/menu.cpp \
     ../src/Gui/Widget/menu/slot_menu_item.cpp \
     ../src/Gui/text_window.cpp \
-    ../src/Gui/Widget/menu/items_menu.cpp
+    ../src/Gui/Widget/menu/items_menu.cpp \
+    ../src/Gui/InventoryWindow/inventory_manager.cpp
 
 HEADERS += \
     ../src/World/Map.h \
@@ -138,11 +139,12 @@ HEADERS += \
     ../src/Gui/Widget/label.h \
     ../src/Actor/ActorFeatures/Wearer/item_slot_type.h \
     ../src/Actor/ActorFeatures/Wearer/wearer.h \
-    ../src/Gui/InventoryManager/inventory_window.h \
+    ../src/Gui/InventoryWindow/inventory_window.h \
     ../src/Gui/Widget/menu/label_menu_item.h \
     ../src/Gui/Widget/menu/menu_item.h \
     ../src/Gui/Widget/menu/menu.h \
     ../src/Gui/Widget/menu/slot_menu_item.h \
     ../src/Gui/text_window.h \
-    ../src/Gui/Widget/menu/items_menu.h
+    ../src/Gui/Widget/menu/items_menu.h \
+    ../src/Gui/InventoryWindow/inventory_manager.h
 

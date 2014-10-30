@@ -36,6 +36,7 @@ public:
 
   ItemSlotType getItemSlot() const;
   void setItemSlot(const ItemSlotType &getItemSlot);
+  bool isEquippable();
 
   PickableCategory getCategory() const;
   void setCategory(const PickableCategory &getCategory);

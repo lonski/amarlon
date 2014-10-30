@@ -13,6 +13,7 @@ Wearer::Wearer()
 
 Wearer* Wearer::create(WearerDescription dsc)
 {
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Wearer* w = new Wearer;
 
   dsc.eqItems.maxSize = dsc.itemSlots.size();
