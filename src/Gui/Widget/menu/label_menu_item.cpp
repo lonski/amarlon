@@ -4,6 +4,7 @@ namespace amarlon { namespace gui {
 
 LabelMenuItem::LabelMenuItem()
 {
+  setColor(TCODColor::lightChartreuse);
 }
 
 void LabelMenuItem::render(TCODConsole &console)

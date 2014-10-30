@@ -11,6 +11,36 @@
 
 namespace amarlon {
 
+static inline std::vector<std::string> explode(const std::string& str, char ch)
+{
+  std::vector<std::string> result;
+  std::string line;
+
+  for (auto s = str.begin(); s != str.end(); ++s)
+  {
+    if (*s == ch)
+    {
+      if (!line.empty())
+      {
+        result.push_back(line);
+        line.clear();
+      }
+    }
+    else
+    {
+      line += *s;
+    }
+  }
+
+  if (!line.empty())
+  {
+    result.push_back(line);
+    line.clear();
+  }
+
+  return result;
+}
+
 template<typename T>
 std::string to_stringp(T t, int prec = 1)
 {
@@ -93,6 +123,7 @@ static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
 
   return handled;
 }
+
 
 }
 #endif // UTILS_H

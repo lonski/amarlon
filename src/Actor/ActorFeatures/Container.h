@@ -6,6 +6,7 @@
 #include <string>
 #include "ActorFeature.h"
 #include "DataGateways/ActorDescriptions.h"
+#include <functional>
 
 namespace amarlon {
 
@@ -23,7 +24,7 @@ public:
 
   bool add(Actor* actor);
   bool remove(Actor* actor);
-  std::vector<Actor *> content(bool(*filterFun)(Actor *) = nullptr);
+  std::vector<Actor *> content(std::function<bool(Actor *)>* filterFun = nullptr);
   size_t size() const;
 
   size_t slotCount() const;

@@ -45,7 +45,6 @@ SOURCES += \
     ../src/DataGateways/Parsers/ActorParser.cpp \
     ../src/World/Map.cpp \
     ../src/Utils/DirectionSelector.cpp \
-    ../src/Utils/InventoryManager.cpp \
     ../src/Utils/ItemPicker.cpp \
     ../src/Utils/Messenger.cpp \
     ../src/Utils/Utils.cpp \
@@ -53,7 +52,6 @@ SOURCES += \
     ../src/Utils/TargetSelector/SingleNeighbourSelector.cpp \
     ../src/Utils/TargetSelector/TargetSelector.cpp \
     ../src/Commands/CmdClose.cpp \
-    ../src/Commands/CmdDrop.cpp \
     ../src/Commands/CmdFullscreen.cpp \
     ../src/Commands/CmdInventory.cpp \
     ../src/Commands/CmdMove.cpp \
@@ -76,7 +74,9 @@ SOURCES += \
     ../src/Gui/InventoryManager/inventory_window.cpp \
     ../src/Gui/Widget/menu/label_menu_item.cpp \
     ../src/Gui/Widget/menu/menu.cpp \
-    ../src/Gui/Widget/menu/slot_menu_item.cpp
+    ../src/Gui/Widget/menu/slot_menu_item.cpp \
+    ../src/Gui/text_window.cpp \
+    ../src/Gui/Widget/menu/items_menu.cpp
 
 HEADERS += \
     ../src/World/Map.h \
@@ -108,7 +108,6 @@ HEADERS += \
     ../src/World/TileType.h \
     ../src/Utils/DirectionSelector.h \
     ../src/Utils/glodef.h \
-    ../src/Utils/InventoryManager.h \
     ../src/Utils/ItemPicker.h \
     ../src/Utils/LogEntry.h \
     ../src/Utils/Messenger.h \
@@ -143,5 +142,7 @@ HEADERS += \
     ../src/Gui/Widget/menu/label_menu_item.h \
     ../src/Gui/Widget/menu/menu_item.h \
     ../src/Gui/Widget/menu/menu.h \
-    ../src/Gui/Widget/menu/slot_menu_item.h
+    ../src/Gui/Widget/menu/slot_menu_item.h \
+    ../src/Gui/text_window.h \
+    ../src/Gui/Widget/menu/items_menu.h
 

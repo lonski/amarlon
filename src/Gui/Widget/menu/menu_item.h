@@ -2,6 +2,7 @@
 #define MENU_ITEM_H
 
 #include <memory>
+#include <iostream>
 #include <Gui/Widget/widget.h>
 
 namespace amarlon { namespace gui {
@@ -14,7 +15,6 @@ public:
 
   virtual void select() = 0;
   virtual void deselect() = 0;
-  virtual int getHeight() = 0;
   virtual bool selected() const
   {
     return _selected;
@@ -22,7 +22,6 @@ public:
 
 protected:
   bool _selected;
-  int _height;
 
 };
 

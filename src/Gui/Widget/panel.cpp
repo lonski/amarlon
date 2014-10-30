@@ -4,8 +4,7 @@
 namespace amarlon { namespace gui {
 
 Panel::Panel(const int& w, const int& h)
-  : _width(w)
-  , _height(h)
+  : Widget(w,h)
   , _frame(true)
   , _frameColor(TCODColor::darkerOrange)
   , _titleColor(TCODColor::lighterOrange)
@@ -14,10 +13,11 @@ Panel::Panel(const int& w, const int& h)
 }
 
 void Panel::render(TCODConsole& console)
-{
+{  
+
   if (_frame)
   {
-    _panel->setDefaultForeground(_frameColor);    
+    _panel->setDefaultForeground(_frameColor);
     _panel->setDefaultBackground(_titleColor);
     _panel->printFrame(0, 0, _width, _height, true, TCOD_BKGND_DEFAULT, _title.empty() ? NULL : _title.c_str() );
   }
@@ -37,20 +37,15 @@ void Panel::addWidget(WidgetPtr widget)
   _widgets.push_back( widget );
 }
 
-int Panel::getWidth() const
+void Panel::removeAllWidgets()
 {
-  return _width;
+  _widgets.clear();
 }
 
 void Panel::setWidth(int width)
 {
   _width = width;
   _panel.reset( new TCODConsole(_width, _height) );
-
-}
-int Panel::getHeight() const
-{
-  return _height;
 }
 
 void Panel::setHeight(int height)

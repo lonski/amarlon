@@ -1,5 +1,6 @@
 #include "menu.h"
 #include <algorithm>
+#include <iostream>
 #include <Gui/Widget/label.h>
 
 namespace amarlon { namespace gui {
@@ -12,6 +13,7 @@ public:
   Header(const int& w, const std::string& title)
     : Panel(w, 3) //frame + label
     , _lHeader(new Label)
+
   {
     setFrameColor(TCODColor::darkYellow);
 
@@ -26,7 +28,7 @@ private:
 
 };
 
-typedef std::shared_ptr<Header> headerPtr;
+typedef std::shared_ptr<Header> HeaderPtr;
 //~~~
 
 // === MENU === //
@@ -34,6 +36,7 @@ typedef std::shared_ptr<Header> headerPtr;
 Menu::Menu(const int &width, const int &height)
   : Panel(width, height)
   , _currentIndex(-1)
+  , _showCategories(true)
 {
 }
 
@@ -54,11 +57,22 @@ MenuItemPtr Menu::getSelectedItem()
   return r;
 }
 
+MenuItemPtr Menu::find(int id)
+{
+  auto found = std::find_if(_items.begin(), _items.end(), [&id](MenuItemPtr item)
+  {
+    return item->getTag( "id" ) == std::to_string(id);
+  });
+
+  return found == _items.end() ? MenuItemPtr() : *found;
+}
+
 void Menu::render(TCODConsole &console)
 {
   int margin = isFramed() ? 2 : 0;
   int itemWidth = getWidth() - 2*margin;
   int row = margin;
+  int totalHeight = margin * 2;
 
   std::sort(_items.begin(), _items.end(), [](MenuItemPtr l, MenuItemPtr r)
   {
@@ -69,23 +83,32 @@ void Menu::render(TCODConsole &console)
   for(size_t i = 0; i < _items.size(); ++i)
   {
     MenuItemPtr item = _items[i];
-    std::string itemCat = item->getTag("category");
-    if ( itemCat != cat )
-    {
-      cat = itemCat;
-      headerPtr newCatPanel( new Header(itemWidth, cat ) );
-      newCatPanel->setPosition( margin, row );
-      row += newCatPanel->getHeight();
+    int extraMargin = 0;
 
-      addWidget( newCatPanel );
+    if ( _showCategories )
+    {
+      std::string itemCat = item->getTag("category");
+      if ( itemCat != cat )
+      {
+        cat = itemCat;
+        HeaderPtr newCatPanel( new Header(itemWidth, cat ) );
+        newCatPanel->setPosition( margin, row );
+        row += newCatPanel->getHeight();
+
+        totalHeight += newCatPanel->getHeight();
+        addWidget( newCatPanel );
+      }
+      if ( !itemCat.empty() ) ++extraMargin; //add extra margin for items under category
     }
 
-    int extraMargin = (itemCat.empty() ? 0 : 1); //add extra margin for items under category
     item->setPosition(margin + extraMargin, row);
 
-    addWidget( item );
+    totalHeight += item->getHeight();
+    addWidget( item );            
     row += item->getHeight();
   }
+
+  if ( totalHeight > getHeight() ) setHeight( totalHeight );
 
   Panel::render(console);
 }
@@ -141,8 +164,11 @@ int Menu::getCurrentIndex() const
 
 void Menu::clear()
 {
+  if ( cIndexIsValid() ) _items[_currentIndex]->deselect();
+
   _items.clear();
   _currentIndex = -1;
+  removeAllWidgets();
 }
 
 bool Menu::cIndexIsValid()
@@ -166,6 +192,60 @@ void Menu::activate()
     _currentIndex = 0;
     _items[ _currentIndex ]->select();
   }
+}
+bool Menu::showCategories() const
+{
+  return _showCategories;
+}
+
+void Menu::setShowCategories(bool showCategories)
+{
+  _showCategories = showCategories;
+}
+
+
+int Menu::choose(TCODConsole& console)
+{
+  int id = -1;
+  TCOD_key_t key;
+
+  while( !(key.vk == TCODK_ESCAPE) &&
+         !(key.vk == TCODK_ENTER ) &&
+         !(key.vk == TCODK_KPENTER) &&
+         !(TCODConsole::isWindowClosed()))
+  {
+    render(console);
+    console.flush();
+
+    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+
+    switch ( key.vk )
+    {
+      case TCODK_DOWN:
+      case TCODK_KP2:
+      {
+        selectNext();
+        break;
+      }
+      case TCODK_UP:
+      case TCODK_KP8:
+      {
+        selectPrevious();
+        break;
+      }
+
+      default:;
+    }
+
+  }
+
+  if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER)
+  {
+    MenuItemPtr s = getSelectedItem();
+    if ( s ) id = std::stol( s->getTag("id") );
+  }
+
+  return id;
 }
 
 }}

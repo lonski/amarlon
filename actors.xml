@@ -1,19 +1,31 @@
 <Actors>
 	<Actor name="Player" id="1" character="@" color="ffffff" transparent="0" blocks="1" fovOnly="1">
-		<Container maxSize="30">
+		<Container maxSize="10">
 			<Content id="12"/>
+			<Content id="17"/>
 		</Container>
 		<Fighter power="5" maxHp="20"/>
 		<Wearer>
 			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
 			<ItemSlot type="3">
-				<Equipped id="17"/>
-			</ItemSlot>			
+				<Equipped id="20"/>
+			</ItemSlot>	
+			<ItemSlot type="4">
+				<Equipped id="19"/>
+			</ItemSlot>	
 			<ItemSlot type="5"/>
-			<ItemSlot type="6"/>
-				<Equipped id="18">
+			<ItemSlot type="6">
+				<Equipped id="18"/>
 			</ItemSlot>
 			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+			<ItemSlot type="13"/>
+			<ItemSlot type="14"/>			
 		</Wearer>
 	</Actor>
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
@@ -52,11 +64,17 @@
 			<Effect type="1" lockId="5" uses="-1" category="0"/>
 		</Pickable>
 	</Actor>
-	<Actor name="Linen clothes" id="17" character="[" color="#FFFF99" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Linen clothes" id="17" character="[" color="FFFF99" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
 	</Actor>
-	<Actor name="Leather boots" id="18" character="[" color="#993300" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" itemSlot="6" category="2"/>
+	</Actor>
+	<Actor name="Belt of hill giant strength" id="19" character="[" color="FFCC66" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="4" category="2"/>
+	</Actor>
+	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
 	</Actor>
 	
 </Actors>

@@ -9,6 +9,7 @@
 namespace amarlon {
 
 class Actor;
+class Engine;
 
 namespace gui {
 
@@ -28,25 +29,27 @@ public:
   const int windowHeight;
   const int windowWidth;
 
-  InventoryWindow(Actor* actor);
+  InventoryWindow(Engine* engine);
 
-  void render(TCODConsole& console);
-  void show(TCODConsole& console);
+  void render();
+  void show();
 
 private:
   std::map<WindowPanel, MenuPtr> _panels;
+  WindowPanel _activePanel;
 
   std::map<int, Actor*> _bagItems;
 
-  Actor* _actor;
-  WindowPanel _activePanel;
+  Engine* _engine;
 
   void setupBagPanelWidgets();
   void setupBodyPanelWidgets();
   void fillBag();
+  void fillBodySlots();
 
   void handleKey(TCOD_key_t key);
   void activateNextPanel();
+  MenuItemPtr getSelectedItem();
 
 };
 

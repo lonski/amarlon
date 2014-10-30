@@ -11,11 +11,17 @@ List::List()
 void List::render(TCODConsole &console)
 {
   int row = _y;
+  int maxWidth = 1;
+
   std::for_each(_entries.begin(), _entries.end(), [&](ColoredString& entry)
   {
+    if ( entry.str.size() > (unsigned)maxWidth ) maxWidth = entry.str.size();
     console.setDefaultForeground(entry.color);
     console.print(_x, ++row, entry.str.c_str());
   });
+
+  setHeight(row);
+  setWidth(maxWidth);
 }
 
 void List::clear()

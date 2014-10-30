@@ -13,6 +13,9 @@ public:
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Engine* engine, Actor* executor);
 
+private:
+  Actor * acquireItemToUse(Actor *executor, Engine *engine);
+
 };
 
 }

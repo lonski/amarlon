@@ -17,7 +17,6 @@ enum class CommandId
   FullScreen,
   Inventory,
   Pick,
-  Drop,
   Close,
   Use,
   End

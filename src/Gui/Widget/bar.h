@@ -15,9 +15,6 @@ public:
 
   virtual void render(TCODConsole& console);
 
-  int getWidth() const;
-  void setWidth(int getWidth);
-
   std::string getName() const;
   void setName(const std::string &getName);
 
@@ -40,7 +37,6 @@ public:
   void setTextColor(const TCODColor &getTextColor);
 
 private:
-  int _width;
   std::string _name;
   float _value;
   float _maxValue;
@@ -50,6 +46,8 @@ private:
   TCODColor _textColor;
 
 };
+
+typedef std::shared_ptr<Bar> BarPtr;
 
 }}
 

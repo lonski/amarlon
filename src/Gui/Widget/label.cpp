@@ -16,6 +16,8 @@ void Label::render(TCODConsole &console)
   console.printEx(_x, _y,
                   TCOD_BKGND_SET,
                   _aligment, "%s", _value.c_str());
+
+  setWidth(_value.size());
 }
 std::string Label::getValue() const
 {

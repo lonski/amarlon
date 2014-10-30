@@ -12,9 +12,6 @@ public:
   AmountWindow(int defAmount, std::string title = "Enter amount");
   int getAmount();
 
-  void renderFrame();
-  void renderAmount();
-  void blitConsole();
 private:
   std::string _title;
 
@@ -26,6 +23,9 @@ private:
   bool _firstHit;
 
   void render();
+  void renderFrame();
+  void renderAmount();
+  void blitConsole();
   void handlePressedKey(const TCOD_key_t& key);
 
 };

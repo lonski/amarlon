@@ -3,7 +3,7 @@
 namespace amarlon { namespace gui {
 
 Bar::Bar()
-  : _width(10)
+  : Widget(10, 3)
   , _value(0)
   , _maxValue(10)
   , _bgColor(TCODColor::darkerRed)
@@ -17,14 +17,14 @@ void Bar::render(TCODConsole &console)
 {
     // fill the background
     console.setDefaultBackground(_bgColor);
-    console.rect(_x,_y,_width,3,false,TCOD_BKGND_SET);
+    console.rect(_x,_y, _width, _height,false,TCOD_BKGND_SET);
 
     // draw the bar
     int barWidth = static_cast<int>(_value / _maxValue * _width);
     if ( barWidth > 0 )
     {
       console.setDefaultBackground(_fgColor);
-      console.rect(_x, _y, barWidth, 3, false, TCOD_BKGND_SET);
+      console.rect(_x, _y, barWidth, _height, false, TCOD_BKGND_SET);
     }
 
     // print text on top of the bar
@@ -38,15 +38,6 @@ void Bar::render(TCODConsole &console)
 
 }
 
-int Bar::getWidth() const
-{
-  return _width;
-}
-
-void Bar::setWidth(int width)
-{
-  _width = width;
-}
 std::string Bar::getName() const
 {
   return _name;
@@ -110,15 +101,5 @@ void Bar::setTextColor(const TCODColor &textColor)
 {
   _textColor = textColor;
 }
-
-
-
-
-
-
-
-
-
-
 
 }}

@@ -18,12 +18,10 @@ public:
 
   void addWidget(Widget* widget);
   void addWidget(WidgetPtr widget);
+  void removeAllWidgets();
 
-  int getWidth() const;
-  void setWidth(int width);
-
-  int getHeight() const;
-  void setHeight(int height);
+  virtual void setWidth(int width);
+  virtual void setHeight(int height);
 
   std::string setTitle() const;
   void setTitle(const std::string &setTitle);
@@ -38,8 +36,6 @@ public:
   void setFrameColor(const TCODColor &getFrameColor);
 
 private:
-  int _width;
-  int _height;
   bool _frame;
   TCODColor _frameColor;
   std::string _title;

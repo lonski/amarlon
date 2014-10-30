@@ -8,22 +8,22 @@
 #include <Gui/Widget/list.h>
 #include <Gui/Widget/menu/label_menu_item.h>
 #include <Gui/Widget/menu/slot_menu_item.h>
+#include <Gui/message_box.h>
+#include <Gui/Widget/menu/items_menu.h>
+#include <Engine.h>
+#include <World/Map.h>
+#include <Gui/AmountWindow.h>
 
 namespace amarlon { namespace gui {
 
-InventoryWindow::InventoryWindow(Actor *actor)
+InventoryWindow::InventoryWindow(Engine *engine)
   : windowHeight( gloScreenHeight )
   , windowWidth( gloScreenWidth )  
-  , _actor(actor)
   , _activePanel(INVENTORY)
+  , _engine(engine)
 {
-  _panels[INVENTORY] = MenuPtr( new Menu(windowWidth / 2, windowHeight) );
+  _panels[INVENTORY] = MenuPtr( new ItemsMenu(windowWidth / 2, windowHeight) );
   _panels[BODYSLOTS] = MenuPtr( new Menu(windowWidth / 2, windowHeight) );
-
-  setupBagPanelWidgets();
-  setupBodyPanelWidgets();
-
-  //_panels[INVENTORY]->activate();
 }
 
 // === INVENTORY SETUP === //
@@ -38,44 +38,30 @@ void InventoryWindow::setupBagPanelWidgets()
 void InventoryWindow::fillBag()
 {
   _panels[INVENTORY]->clear();
+
   _bagItems.clear();
-
-  std::vector<Actor*> items = _actor->afContainer()->content();
-  int id = -1;
-  std::for_each(items.begin(), items.end(), [&](Actor* i)
-  {
-    Pickable* item = i->afPickable();
-    assert( item );
-
-    std::string category = PickableCategory2Str( item->getCategory() );
-    std::string name = i->getName();
-
-    if ( item->getAmount() > 1 && item->isStackable() )
-    {
-      name += " (" + std::to_string( item->getAmount() ) + ")";
-    }
-
-    LabelMenuItemPtr newItem( new LabelMenuItem );
-    newItem->setValue( name );
-    newItem->setTag("category", category);
-    newItem->setTag("id", std::to_string(++id));
-    newItem->setColor(TCODColor::lightChartreuse);
-
-    _panels[INVENTORY]->addItem(newItem);
-
-    _bagItems.insert( std::make_pair(id, i) );
-  });
+  ItemsMenuPtr invMenu = std::dynamic_pointer_cast<ItemsMenu>( _panels[INVENTORY] );
+  assert( invMenu );
+  std::vector<Actor*> items = Actor::Player->afContainer()->content();
+  _bagItems = invMenu->fillWithItems<LabelMenuItem>( items );
 
 }
 //~~~
 
 // === BODY SLOTS SETUP === //
+
 void InventoryWindow::setupBodyPanelWidgets()
 {
   _panels[BODYSLOTS]->setTitle("Equipped items");
 
-  Wearer* wearer = _actor->afWearer();
+  fillBodySlots();
 
+}
+
+void InventoryWindow::fillBodySlots()
+{
+  _panels[BODYSLOTS]->clear();
+  Wearer* wearer = Actor::Player->afWearer();
   assert(wearer);
 
   for( int i = (int)ItemSlotType::Null + 1; i != (int)ItemSlotType::End; ++i)
@@ -90,7 +76,7 @@ void InventoryWindow::setupBodyPanelWidgets()
 
       SlotMenuItemPtr newSlot( new SlotMenuItem( _panels[BODYSLOTS]->getWidth() - 4 ) );
       newSlot->setSlotName( slotName );
-      newSlot->setSlotValue( slotValue );
+      newSlot->setValue( slotValue );
       newSlot->setTag( "id", std::to_string(i) );
 
       _panels[BODYSLOTS]->addItem( newSlot );
@@ -100,28 +86,32 @@ void InventoryWindow::setupBodyPanelWidgets()
 }
 //~~~
 
-void InventoryWindow::render(TCODConsole &console)
-{
+void InventoryWindow::render()
+{  
   for (auto pIter = _panels.begin(); pIter != _panels.end(); ++pIter)
   {
-    pIter->second->render(console);
+    pIter->second->render(*_engine->getConsole());
   }
 }
 
-void InventoryWindow::show(TCODConsole &console)
+void InventoryWindow::show()
 {
+  setupBagPanelWidgets();
+  setupBodyPanelWidgets();
+
   TCOD_key_t key;
 
-  while( !(key.vk == TCODK_ESCAPE)               &&
-         !(key.vk == TCODK_CHAR && key.c == 'i') &&
-         !(TCODConsole::isWindowClosed()))
-  {      
-    render(console);
-    console.flush();
+  while( !TCODConsole::isWindowClosed() )
+  {
+    render();
+    _engine->getConsole()->flush();
 
     TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
 
     handleKey(key);
+
+    if ( (key.vk == TCODK_CHAR && key.c == 'i') || (key.vk == TCODK_ESCAPE) )
+      break;
   }
 
 }
@@ -151,21 +141,206 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     default:;
   }
 
-  //temp for tests
   if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER)
   {
-    int index = _panels[INVENTORY]->getCurrentIndex();
-    if ( index > -1 )
-    {
-      MenuItemPtr sItem = _panels[INVENTORY]->getSelectedItem();
-      int id = std::stol( sItem->getTag("id") );
+    MenuItemPtr menuItem = getSelectedItem();
+    int id = std::stol( menuItem->getTag("id") );
 
+    if ( _activePanel == INVENTORY )
+    {
       Actor* selected = _bagItems[ id ];
-      std::cout << "\n Item selected = " << selected->getName();
-      std::cout.flush();
+      Pickable* pickable = selected->afPickable();
+
+      Menu itemMenu(40, 1);
+      itemMenu.setTitle( selected->getName() );
+      itemMenu.centerPosition();
+
+      if ( pickable->getItemSlot() != ItemSlotType::Null )
+      {
+        LabelMenuItemPtr itemEquip( new LabelMenuItem );
+        itemEquip->setValue("Equip");
+        itemEquip->setTag("id", "1");
+        itemMenu.addItem( itemEquip );
+      }
+
+      LabelMenuItemPtr itemDrop( new LabelMenuItem );
+      itemDrop->setValue("Drop");
+      itemDrop->setTag("id", "2");
+      itemMenu.addItem( itemDrop );
+
+      itemMenu.selectNext();
+      int id = itemMenu.choose(*_engine->getConsole());
+
+      if ( id == 1 ) //equip
+      {
+        ItemSlotType slot = pickable->getItemSlot();
+        Wearer* wearer = Actor::Player->afWearer();
+        Container* container = Actor::Player->afContainer();
+        if ( wearer->hasSlot( slot ) ) //check if have valid slot
+        {
+          bool canEquip = false;
+          if ( wearer->isEquipped(slot) ) //unequip existing item
+          {
+            Actor* unequipped = wearer->unequip(slot);
+            if ( unequipped )
+            {
+              if ( !container->add(unequipped) )
+              {
+                msgError("You have no free space in inventory,\nto put "+unequipped->getName()+"!");
+                wearer->equip( unequipped );
+                assert( wearer->isEquipped(slot) );
+              }else canEquip = true;
+            }else msgError("Cannot unequip " + wearer->equipped(slot)->getName() + "!");
+          }else canEquip = true;
+
+          if ( canEquip )
+          {
+
+            SlotMenuItemPtr slotItem = std::dynamic_pointer_cast<SlotMenuItem>( _panels[BODYSLOTS]->find((int)slot) );
+            assert( slotItem );
+            slotItem->setValue("");
+
+            if ( container->remove( selected ) )
+            {
+              if ( wearer->equip( selected ) )
+              {
+                slotItem->setValue( selected->getName() );
+              }else msgError( "Cannot equip item!" );
+            }else msgError( "Cannot remove "+selected->getName()+" from inventory." );
+          }
+
+          render();
+          fillBag();
+          fillBodySlots();
+
+        }else msgError( "You haven't got appropriate slot to equip this item." );
+      }
+      else if ( id == 2 ) //drop
+      {
+        menuItem->deselect();
+        render();
+
+        bool removed = false;
+        if ( pickable->isStackable() && pickable->getAmount() > 1 )
+        {
+          AmountWindow aWin( pickable->getAmount() );
+          int amount = aWin.getAmount();
+
+          if ( amount > 0)
+          {
+            if ( amount < pickable->getAmount() )
+            {
+              selected = pickable->spilt(amount);
+              removed = (selected != nullptr);
+            }
+            else
+            {
+              removed = Actor::Player->afContainer()->remove( selected );
+            }
+          }
+        }
+        else
+        {
+          removed = Actor::Player->afContainer()->remove( selected );
+        }
+
+        if ( removed )
+        {
+          selected->setX( Actor::Player->getX() );
+          selected->setY( Actor::Player->getY() );
+          _engine->currentMap()->addActor( selected );
+          fillBag();
+        }else msgError( "Cannot remove "+selected->getName()+" from inventory." );
+      }
+
     }
+    else if ( _activePanel == BODYSLOTS )
+    {
+      SlotMenuItemPtr slotItem = std::dynamic_pointer_cast<SlotMenuItem>( menuItem );
+      ItemSlotType slot = static_cast<ItemSlotType>(id);
+      Wearer* wearer = Actor::Player->afWearer();
+      Actor* selected = wearer->equipped( slot );
+
+      if ( selected ) //if item is equipped, then unequip
+      {
+        slotItem->setValue("");
+        selected = wearer->unequip( slot );
+        if ( selected )
+        {
+          if (Actor::Player->afContainer()->add( selected ) )
+          {
+            fillBag();
+          } else
+          {
+            msgError("Item cannot be unequipped:\nNot enough space in inventory");
+            //equip back
+            wearer->equip( selected );
+            fillBodySlots();
+          }
+        } else msgError("Item cannot be unequipped!");
+      }
+      else //show window with equippable items
+      {
+        std::function<bool(Actor*)> filterFun = [&](Actor* a)-> bool
+        {
+          return a->afPickable() && a->afPickable()->getItemSlot() == slot;
+        };
+
+        std::vector<Actor*> equipableItems = Actor::Player->afContainer()->content( &filterFun );
+
+        if ( equipableItems.empty() )
+        {
+          msgError("You don't have any item, that fit this slot.");
+        }
+        else
+        {
+          ItemsMenu equipMenu;
+          equipMenu.setTitle("Choose item to equip");
+          equipMenu.setShowCategories(false);
+          equipMenu.centerPosition();
+
+          std::map<int, Actor*> mappedItems = equipMenu.fillWithItems<LabelMenuItem>( equipableItems );
+          equipMenu.selectNext();
+          int choosed = equipMenu.choose(*_engine->getConsole());
+
+          auto found = mappedItems.find(choosed);
+          if ( found != mappedItems.end() )
+          {
+            Actor* toEquip = found->second;
+            if (Actor::Player->afContainer()->remove( toEquip ))
+            {
+              if ( !wearer->equip( toEquip ) )
+              {
+                msgError( "Cannot equip item!" );
+                Actor::Player->afContainer()->add( toEquip );
+              }
+
+              fillBag();
+              fillBodySlots();
+
+            }else msgError( "Cannot remove item from inventory!" );
+          }
+
+        }
+
+      }
+
+    }
+
   }
 
+}
+
+MenuItemPtr InventoryWindow::getSelectedItem()
+{
+  MenuItemPtr sItem;
+  int index = _panels[_activePanel]->getCurrentIndex();
+  if ( index > -1 )
+  {
+    sItem = _panels[_activePanel]->getSelectedItem();
+  }
+
+  return sItem;
 }
 
 void InventoryWindow::activateNextPanel()

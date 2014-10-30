@@ -22,8 +22,6 @@ SOURCES += main.cpp \
     Actor/ActorFeatures/Pickable.cpp \
     Commands/CmdPick.cpp \
     Utils/ItemPicker.cpp \
-    Commands/CmdDrop.cpp \
-    Utils/InventoryManager.cpp \
     Gui/Gui.cpp \
     Utils/Utils.cpp \
     Engine.cpp \
@@ -56,7 +54,9 @@ SOURCES += main.cpp \
     Gui/InventoryManager/inventory_window.cpp \
     Gui/Widget/menu/label_menu_item.cpp \
     Gui/Widget/menu/slot_menu_item.cpp \
-    Gui/Widget/menu/menu.cpp
+    Gui/Widget/menu/menu.cpp \
+    Gui/text_window.cpp \
+    Gui/Widget/menu/items_menu.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -79,8 +79,6 @@ HEADERS += \
     Actor/ActorFeatures/Pickable.h \
     Commands/CmdPick.h \
     Utils/ItemPicker.h \
-    Commands/CmdDrop.h \
-    Utils/InventoryManager.h \
     Gui/Gui.h \
     Utils/glodef.h \
     Utils/Utils.h \
@@ -123,7 +121,10 @@ HEADERS += \
     Gui/Widget/menu/label_menu_item.h \
     Gui/Widget/menu/slot_menu_item.h \
     Gui/Widget/menu/menu_item.h \
-    Gui/Widget/menu/menu.h
+    Gui/Widget/menu/menu.h \
+    Gui/text_window.h \
+    Gui/message_box.h \
+    Gui/Widget/menu/items_menu.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw
