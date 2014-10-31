@@ -77,7 +77,8 @@ SOURCES += \
     ../src/Gui/Widget/menu/slot_menu_item.cpp \
     ../src/Gui/text_window.cpp \
     ../src/Gui/Widget/menu/items_menu.cpp \
-    ../src/Gui/InventoryWindow/inventory_manager.cpp
+    ../src/Gui/InventoryWindow/bag_manager.cpp \
+    ../src/Gui/InventoryWindow/body_manager.cpp
 
 HEADERS += \
     ../src/World/Map.h \
@@ -146,5 +147,6 @@ HEADERS += \
     ../src/Gui/Widget/menu/slot_menu_item.h \
     ../src/Gui/text_window.h \
     ../src/Gui/Widget/menu/items_menu.h \
-    ../src/Gui/InventoryWindow/inventory_manager.h
+    ../src/Gui/InventoryWindow/bag_manager.h \
+    ../src/Gui/InventoryWindow/body_manager.h
 
