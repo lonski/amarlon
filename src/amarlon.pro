@@ -57,7 +57,8 @@ SOURCES += main.cpp \
     Gui/Widget/menu/menu.cpp \
     Gui/text_window.cpp \
     Gui/Widget/menu/items_menu.cpp \
-    Gui/InventoryWindow/inventory_manager.cpp
+    Gui/InventoryWindow/bag_manager.cpp \
+    Gui/InventoryWindow/body_manager.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -126,7 +127,8 @@ HEADERS += \
     Gui/text_window.h \
     Gui/message_box.h \
     Gui/Widget/menu/items_menu.h \
-    Gui/InventoryWindow/inventory_manager.h
+    Gui/InventoryWindow/bag_manager.h \
+    Gui/InventoryWindow/body_manager.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

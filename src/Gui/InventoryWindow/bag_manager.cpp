@@ -1,4 +1,4 @@
-#include "inventory_manager.h"
+#include "bag_manager.h"
 #include <Actor/Actor.h>
 #include <Gui/Widget/menu/label_menu_item.h>
 #include <Gui/Widget/menu/slot_menu_item.h>
@@ -9,7 +9,7 @@
 
 namespace amarlon { namespace gui {
 
-InventoryManager::InventoryManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine* engine)
+BagManager::BagManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine* engine)
   : _invMenu(invMenu)
   , _bodyMenu(bodyMenu)
   , _engine(engine)
@@ -17,7 +17,7 @@ InventoryManager::InventoryManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engin
   fillBag();
 }
 
-void InventoryManager::fillBag()
+void BagManager::fillBag()
 {
   _invMenu->clear();
   _bagItems.clear();
@@ -26,8 +26,14 @@ void InventoryManager::fillBag()
   _bagItems = _invMenu->fillWithItems<LabelMenuItem>( items );
 }
 
+void BagManager::render()
+{
+  _invMenu->render( *_engine->getConsole() );
+  _bodyMenu->render( *_engine->getConsole() );
+}
+
 // === OPERATION CHOOSING === //
-void InventoryManager::manage()
+void BagManager::manage()
 {
   MenuItemPtr menuItem = _invMenu->getSelectedItem();
   Actor* selectedItem = _bagItems[ std::stol( menuItem->getTag("id") ) ];
@@ -47,11 +53,10 @@ void InventoryManager::manage()
 
     fillBag();
     render();
-
   }
 }
 
-InventoryManager::ItemOperation InventoryManager::chooseItemOperationFromMenu(Actor* selected)
+BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selected)
 {
   MenuPtr itemMenu( new Menu(40, 1) );
   itemMenu->centerPosition();
@@ -77,14 +82,14 @@ InventoryManager::ItemOperation InventoryManager::chooseItemOperationFromMenu(Ac
 // ~~~ OPERATION CHOOSING ~~~ //
 
 // === EQUIP === //
-void InventoryManager::equip(Actor* item)
+void BagManager::equip(Actor* item)
 {
   ItemSlotType itemSlot = item->afPickable()->getItemSlot();
   Wearer* playerWearer = Actor::Player->afWearer();
 
   if ( playerWearer->hasSlot( itemSlot ) )
   {
-    if ( canEquip(item) ) doTheEquip(item);
+    if ( canEquip(itemSlot) ) doTheEquip(item);
   }
   else
   {
@@ -93,11 +98,10 @@ void InventoryManager::equip(Actor* item)
 
 }
 
-bool InventoryManager::canEquip(Actor* item)
+bool BagManager::canEquip(ItemSlotType slot)
 {
   Wearer* playerWearer = Actor::Player->afWearer();
   Container* playerContainer = Actor::Player->afContainer();
-  ItemSlotType slot = item->afPickable()->getItemSlot();
 
   bool slotIsFree = !playerWearer->isEquipped(slot);
 
@@ -119,7 +123,7 @@ bool InventoryManager::canEquip(Actor* item)
   return slotIsFree;
 }
 
-void InventoryManager::doTheEquip(Actor* item)
+void BagManager::doTheEquip(Actor* item)
 {
   ItemSlotType slot = item->afPickable()->getItemSlot();
   Wearer* wearer = Actor::Player->afWearer();
@@ -149,7 +153,7 @@ void InventoryManager::doTheEquip(Actor* item)
 // ~~~ EQUIP ~~~ //
 
 // === DROP === //
-void InventoryManager::drop(Actor* item)
+void BagManager::drop(Actor* item)
 {
   bool stackableHandlingNeeded = item->afPickable()->isStackable() &&
                                  item->afPickable()->getAmount() > 1;
@@ -169,7 +173,7 @@ void InventoryManager::drop(Actor* item)
   }
 }
 
-bool InventoryManager::handleStackableDrop(Actor*& item)
+bool BagManager::handleStackableDrop(Actor*& item)
 {
   bool removed = false;
 
@@ -190,11 +194,5 @@ bool InventoryManager::handleStackableDrop(Actor*& item)
 }
 
 // ~~~ DROP ~~~ //
-
-void InventoryManager::render()
-{
-  _invMenu->render( *_engine->getConsole() );
-  _bodyMenu->render( *_engine->getConsole() );
-}
 
 }}

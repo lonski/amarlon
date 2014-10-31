@@ -248,4 +248,10 @@ int Menu::choose(TCODConsole& console)
   return id;
 }
 
+void Menu::select(int index)
+{
+  _currentIndex = index;
+  activate();
+}
+
 }}

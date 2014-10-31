@@ -10,10 +10,10 @@ namespace amarlon {
   class Engine;
 namespace gui {
 
-class InventoryManager
+class BagManager
 {
 public:
-  InventoryManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine *engine);
+  BagManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine *engine);
 
   void manage();
   void fillBag();
@@ -37,14 +37,14 @@ private:
   bool handleStackableDrop(Actor*& item);
 
   void equip(Actor* item);
-  bool canEquip(Actor *item);
+  bool canEquip(ItemSlotType slot);
   void doTheEquip(Actor* item);
 
   ItemOperation chooseItemOperationFromMenu(Actor* selected);
 
 };
 
-typedef std::shared_ptr<InventoryManager> InventoryManagerPtr;
+typedef std::shared_ptr<BagManager> BagManagerPtr;
 
 }}
 

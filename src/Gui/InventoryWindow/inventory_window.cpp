@@ -22,58 +22,29 @@ InventoryWindow::InventoryWindow(Engine *engine)
   , _activePanel(INVENTORY)
   , _engine(engine)
 {
-  ItemsMenuPtr invMenu( new ItemsMenu(windowWidth / 2, windowHeight) );
-  invMenu->setPosition(windowWidth / 2, 0);
-  invMenu->setTitle("Inventory");
+  initalize();
+}
+
+void InventoryWindow::initalize()
+{
+  ItemsMenuPtr bagMenu( new ItemsMenu(windowWidth / 2, windowHeight) );
+  bagMenu->setPosition(windowWidth / 2, 0);
+  bagMenu->setTitle("Inventory");
 
   MenuPtr bodyMenu( new Menu(windowWidth / 2, windowHeight) );
   bodyMenu->setTitle("Equipped items");
 
-  _panels[INVENTORY] = invMenu;
+  _panels[INVENTORY] = bagMenu;
   _panels[BODYSLOTS] = bodyMenu;
 
-  _invMgr.reset( new InventoryManager( invMenu, bodyMenu, _engine ) );
-}
-
-void InventoryWindow::render()
-{
-  for (auto pIter = _panels.begin(); pIter != _panels.end(); ++pIter)
-  {
-    pIter->second->render(*_engine->getConsole());
-  }
-}
-
-void InventoryWindow::fillBodySlots()
-{
-  _panels[BODYSLOTS]->clear();
-  Wearer* wearer = Actor::Player->afWearer();
-  assert(wearer);
-
-  for( int i = (int)ItemSlotType::Null + 1; i != (int)ItemSlotType::End; ++i)
-  {
-    ItemSlotType slot = static_cast<ItemSlotType>(i);
-    if ( wearer->hasSlot(slot) )
-    {
-      Actor* eq = wearer->equipped(slot);
-
-      std::string slotValue = eq ? eq->getName() : "";
-      std::string slotName = ItemSlotType2Str(i);
-
-      SlotMenuItemPtr newSlot( new SlotMenuItem( _panels[BODYSLOTS]->getWidth() - 4 ) );
-      newSlot->setSlotName( slotName );
-      newSlot->setValue( slotValue );
-      newSlot->setTag( "id", std::to_string(i) );
-
-      _panels[BODYSLOTS]->addItem( newSlot );
-    }
-  }
-
+  _bagMgr.reset( new BagManager( bagMenu, bodyMenu, _engine ) );
+  _bodyMgr.reset( new BodyManager( bodyMenu ) );
 }
 
 void InventoryWindow::show()
 {
-  fillBodySlots();
-  _invMgr->fillBag();
+  _bodyMgr->fillBodySlots();
+  _bagMgr->fillBag();
 
   TCOD_key_t key;
 
@@ -90,6 +61,14 @@ void InventoryWindow::show()
       break;
   }
 
+}
+
+void InventoryWindow::render()
+{
+  for (auto pIter = _panels.begin(); pIter != _panels.end(); ++pIter)
+  {
+    pIter->second->render(*_engine->getConsole());
+  }
 }
 
 void InventoryWindow::handleKey(TCOD_key_t key)
@@ -128,12 +107,12 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     case TCODK_ENTER:
     case TCODK_KPENTER:
     {
-      if ( getSelectedItem() )
+      if ( _panels[_activePanel]->getSelectedItem() )
       {
         switch( _activePanel)
         {
-          case INVENTORY: _invMgr->manage(); break;
-          case BODYSLOTS: manageBodySlots(); break;
+          case INVENTORY: _bagMgr->manage(); break;
+          case BODYSLOTS: _bodyMgr->manage(); _bagMgr->fillBag(); break;
         }
       }
       break;
@@ -141,93 +120,6 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     default:;
   }
 
-}
-
-void InventoryWindow::manageBodySlots()
-{
-  MenuItemPtr menuItem = getSelectedItem();
-  int menuItemId = std::stol( menuItem->getTag("id") );
-
-  SlotMenuItemPtr slotItem = std::dynamic_pointer_cast<SlotMenuItem>( menuItem );
-  ItemSlotType slot = static_cast<ItemSlotType>(menuItemId);
-  Wearer* wearer = Actor::Player->afWearer();
-  Actor* selected = wearer->equipped( slot );
-
-  if ( selected ) //if item is equipped, then unequip
-  {
-    slotItem->setValue("");
-    selected = wearer->unequip( slot );
-    if ( selected )
-    {
-      if (Actor::Player->afContainer()->add( selected ) )
-      {
-        _invMgr->fillBag();
-      } else
-      {
-        msgError("Item cannot be unequipped:\nNot enough space in inventory");
-        //equip back
-        wearer->equip( selected );
-        fillBodySlots();
-      }
-    } else msgError("Item cannot be unequipped!");
-  }
-  else //show window with equippable items
-  {
-    std::function<bool(Actor*)> filterFun = [&](Actor* a)-> bool
-    {
-      return a->afPickable() && a->afPickable()->getItemSlot() == slot;
-    };
-
-    std::vector<Actor*> equipableItems = Actor::Player->afContainer()->content( &filterFun );
-
-    if ( equipableItems.empty() )
-    {
-      msgError("You don't have any item, that fit this slot.");
-    }
-    else
-    {
-      ItemsMenu equipMenu;
-      equipMenu.setTitle("Choose item to equip");
-      equipMenu.setShowCategories(false);
-      equipMenu.centerPosition();
-
-      std::map<int, Actor*> mappedItems = equipMenu.fillWithItems<LabelMenuItem>( equipableItems );
-      equipMenu.selectNext();
-      int choosed = equipMenu.choose(*_engine->getConsole());
-
-      auto found = mappedItems.find(choosed);
-      if ( found != mappedItems.end() )
-      {
-        Actor* toEquip = found->second;
-        if (Actor::Player->afContainer()->remove( toEquip ))
-        {
-          if ( !wearer->equip( toEquip ) )
-          {
-            msgError( "Cannot equip item!" );
-            Actor::Player->afContainer()->add( toEquip );
-          }
-
-          _invMgr->fillBag();
-          fillBodySlots();
-
-        }else msgError( "Cannot remove item from inventory!" );
-      }
-
-    }
-
-  }
-}
-
-MenuItemPtr InventoryWindow::getSelectedItem()
-{
-  MenuItemPtr sItem;
-  int index = _panels[_activePanel]->getCurrentIndex();
-  if ( index > -1 )
-  {
-    sItem = _panels[_activePanel]->getSelectedItem();
-  }
-
-  return sItem;
 }
 
 void InventoryWindow::activateNextPanel()
