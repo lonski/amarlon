@@ -1,6 +1,7 @@
 #ifndef CMDPICK_H
 #define CMDPICK_H
 
+#include <functional>
 #include "Command.h"
 
 namespace amarlon {
@@ -10,10 +11,9 @@ class Container;
 class CmdPick : public Command
 {
 public:
-  CmdPick();
+  CmdPick(Engine* engine);
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Engine* engine, Actor* executor);
-  virtual void execute(Container *container, Actor* executor, bool forceGui = true);
+  virtual void execute(Actor* executor);
 
 };
 

@@ -1,14 +1,14 @@
 #include "CmdPick.h"
-#include <Utils/ItemPicker.h>
-#include <Gui/AmountWindow.h>
-#include <Actor/ActorFeatures/Container.h>
-#include <algorithm>
-#include "World/Map.h"
-#include "Engine.h"
+#include <Engine.h>
+#include <World/Map.h>
+#include <Actor/Actor.h>
+#include <Gui/pick_up_window.h>
+#include <functional>
 
 namespace amarlon {
 
-CmdPick::CmdPick()
+CmdPick::CmdPick(Engine* engine)
+  : Command(engine)
 {
 }
 
@@ -17,34 +17,16 @@ bool CmdPick::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == ',' );
 }
 
-void CmdPick::execute(Engine *engine, Actor *executor)
+void CmdPick::execute(Actor *executor)
 {
-  Map* map = engine->currentMap();
-  std::vector<Actor*> items = map->getActors(executor->getX(), executor->getY(),
-                              [](Actor* a) -> bool
-                              {
-                                return a->afPickable();
-                              });
+  int x( executor->getX() );
+  int y( executor->getY() );
 
-  ItemPicker picker(items, executor);
-  items = picker.pick();
+  Container& container = _engine->currentMap()->getActorsContainer(x, y);
 
-  std::for_each(items.begin(), items.end(), [&](Actor* a)
-  {
-    map->removeActor(a);
-  });
-}
+  gui::PickUpWindow pickupWin(*executor, container, [](Actor* a){ return a->afPickable(); });
 
-void CmdPick::execute(Container* container, Actor *executor, bool forceGui)
-{
-  std::vector<Actor*> items = container->content();
-  ItemPicker picker(items, executor);
-  std::vector<Actor*> itemsPicked = picker.pick(forceGui);
-
-  std::for_each(itemsPicked.begin(), itemsPicked.end(), [&](Actor* a)
-  {
-    container->remove(a);
-  });
+  pickupWin.show();
 }
 
 }

@@ -56,8 +56,8 @@ void AmountWindow::renderAmount()
 
 void AmountWindow::blitConsole()
 {
-  int posX = gloScreenWidth  / 2 - _conWidth  / 2;
-  int posY = gloScreenHeight / 2 - _conHeight / 2;
+  int posX = gloConsoleWidth  / 2 - _conWidth  / 2;
+  int posY = gloConsoleHeight / 2 - _conHeight / 2;
 
   TCODConsole::blit(&_console, 0, 0, _conWidth, _conHeight, TCODConsole::root, posX, posY);
   TCODConsole::flush();

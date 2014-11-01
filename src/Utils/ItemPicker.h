@@ -1,28 +1,27 @@
 #ifndef ITEMPICKER_H
 #define ITEMPICKER_H
 
-#include <Gui/ItemPickerWindow.h>
-
 namespace amarlon {
 
-class Map;
 class Actor;
 
 class ItemPicker
 {
 public:
-  ItemPicker(const std::vector<Actor *> &items, Actor* executor = nullptr);
-  std::vector<Actor *> pick(bool forceGui = false, bool singlePick = false);
+  ItemPicker(Actor *picker, Actor*& toPick);
+
+  /**
+   * @brief Invokes the picking. Handles stackable. If item is stackable
+   *        and is spilted, then toPick actor addres is changed to a new instance of Actor class.
+   *        That's why it is given by a reference to a pointer.
+   * @return The amount of items picked. If not staskable, then max amount is equal to 1. If failed
+   *         to pickup item, then return is 0.
+   */
+  int pick();
 
 private:
-  const std::vector<Actor*>& _items;
-  std::vector<Actor*> _itemsPicked;
-  Actor* _executor;
-  gui::ItemPickerWindow _pickerGui;
-  bool _singlePick;
-
-  void pickItemsByGui();
-  void pickSingleItem(Actor* target, bool takAll = false);
+  Actor* _picker;
+  Actor*& _toPick;
 
 };
 

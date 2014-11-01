@@ -35,7 +35,7 @@ public:
   TCODColor getFrameColor() const;
   void setFrameColor(const TCODColor &getFrameColor);
 
-private:
+protected:
   bool _frame;
   TCODColor _frameColor;
   std::string _title;

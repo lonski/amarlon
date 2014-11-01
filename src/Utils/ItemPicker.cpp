@@ -1,83 +1,45 @@
 #include "ItemPicker.h"
-#include <algorithm>
-#include "World/Map.h"
 #include "Actor/Actor.h"
-#include "Utils/Utils.h"
-#include "Gui/Gui.h"
 #include "Gui/AmountWindow.h"
-#include "Utils/Messenger.h"
+#include <Utils/Messenger.h>
+#include <iostream>
 
 namespace amarlon {
 
-ItemPicker::ItemPicker(const std::vector<Actor *> &items, Actor *executor)
-  : _items(items)
-  , _executor(executor)
-  , _singlePick(false)
+ItemPicker::ItemPicker(Actor* picker, Actor*& toPick)
+  : _picker(picker)
+  , _toPick(toPick)
 {
 }
 
-std::vector<Actor*> ItemPicker::pick(bool forceGui, bool singlePick)
+int ItemPicker::pick()
 {
-  _singlePick = singlePick;
+  bool stackable = _toPick->afPickable()->isStackable();
+  int amount = _toPick->afPickable()->getAmount();
+  std::string itemName = _toPick->getName(); //'cause it is possible that the item does not exists after pickin' up
 
-  if (_items.size() > 1 || (forceGui && !_items.empty()))
+  if ( stackable && amount > 1)
   {
-    pickItemsByGui();
-  }
-  else if (!_items.empty())
-  {
-    pickSingleItem(_items[0]);
-  }
-
-  return _itemsPicked;
-}
-
-void ItemPicker::pickItemsByGui()
-{
-  int index = _pickerGui.pick(_items);
-
-  if (index == -1 && !_singlePick) //take all
-  {
-    std::for_each(_items.begin(), _items.end(), [&](Actor* a)
-    {
-      pickSingleItem(a, true);
-    });
-  }
-  else if (index < (int)_items.size() && index >= 0) //take one
-  {
-    pickSingleItem(_items[index]);
-  }
-}
-
-void ItemPicker::pickSingleItem(Actor* target, bool takAll)
-{
-  bool stackable = target->afPickable()->isStackable();
-  int amount = target->afPickable()->getAmount();
-
-  //handle stackable
-  if ( stackable && amount > 1 && !takAll)
-  {
-    int tmpAmount = 1;
-    if ( !_singlePick )
-    {
-      gui::AmountWindow aw(amount);
-      tmpAmount = aw.getAmount();
-    }
+    int tmpAmount = gui::AmountWindow(amount).getAmount();
 
     if (tmpAmount < amount)
     {
       amount = tmpAmount;
-      target = target->afPickable()->spilt(amount);
+      _toPick = _toPick->afPickable()->spilt(amount);
     }
   }
 
-  if ( _executor ) //is null when dropping item from player's inventory
+  if ( _picker->afContainer()->add(_toPick) )
   {
-    _executor->afContainer()->add(target);
-    Messenger::message()->actorPicked(_executor, target, amount);
+    Messenger::message()->actorPicked(_picker->getName(), itemName, amount);
+  }
+  else
+  {
+    amount = 0;
   }
 
-  _itemsPicked.push_back(target);
+  return amount;
 }
+
 
 }

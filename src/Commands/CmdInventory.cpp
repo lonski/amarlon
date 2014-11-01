@@ -5,7 +5,8 @@
 
 namespace amarlon {
 
-CmdInventory::CmdInventory()
+CmdInventory::CmdInventory(Engine *engine)
+  : Command(engine)
 {
 }
 
@@ -14,9 +15,9 @@ bool CmdInventory::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'i' );
 }
 
-void CmdInventory::execute(Engine* engine, Actor*)
+void CmdInventory::execute(Actor*)
 {  
-  if ( !_invWindow ) _invWindow.reset( new gui::InventoryWindow(engine) );
+  if ( !_invWindow ) _invWindow.reset( new gui::InventoryWindow(_engine) );
 
   _invWindow->show();
 }

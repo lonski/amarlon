@@ -45,6 +45,25 @@ void Menu::addItem(MenuItemPtr item)
   _items.push_back( item );
 }
 
+bool Menu::removeItem(int id)
+{
+  auto found = std::find_if(_items.begin(), _items.end(),
+  [&id](MenuItemPtr item)
+  {
+    return item->getTag( "id" ) == std::to_string(id);
+  });
+
+  bool r = found != _items.end();
+  if ( r )
+  {
+    deactivate();
+    _currentIndex = -1;
+    _items.erase( found );
+  }
+
+  return r;
+}
+
 MenuItemPtr Menu::getSelectedItem()
 {
   MenuItemPtr r;
@@ -59,7 +78,8 @@ MenuItemPtr Menu::getSelectedItem()
 
 MenuItemPtr Menu::find(int id)
 {
-  auto found = std::find_if(_items.begin(), _items.end(), [&id](MenuItemPtr item)
+  auto found = std::find_if(_items.begin(), _items.end(),
+  [&id](MenuItemPtr item)
   {
     return item->getTag( "id" ) == std::to_string(id);
   });
@@ -69,6 +89,8 @@ MenuItemPtr Menu::find(int id)
 
 void Menu::render(TCODConsole &console)
 {
+  removeAllWidgets();
+
   int margin = isFramed() ? 2 : 0;
   int itemWidth = getWidth() - 2*margin;
   int row = margin;
@@ -202,7 +224,6 @@ void Menu::setShowCategories(bool showCategories)
 {
   _showCategories = showCategories;
 }
-
 
 int Menu::choose(TCODConsole& console)
 {

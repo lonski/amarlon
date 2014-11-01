@@ -5,7 +5,8 @@
 
 namespace amarlon {
 
-CmdClose::CmdClose()
+CmdClose::CmdClose(Engine *engine)
+  : Command(engine)
 {
 }
 
@@ -14,9 +15,9 @@ bool CmdClose::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'c' );
 }
 
-void CmdClose::execute(Engine *engine, Actor *executor)
+void CmdClose::execute(Actor *executor)
 {
-  Map* map = engine->currentMap();
+  Map* map = _engine->currentMap();
   int x = executor->getX();
   int y = executor->getY();
 

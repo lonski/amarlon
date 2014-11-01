@@ -26,10 +26,18 @@ void Widget::setPosition(int x, int y)
   _y = y;
 }
 
-void Widget::centerPosition()
+void Widget::centerPosition(bool centerOfGameWindow)
 {
- setPosition( gloScreenWidth / 2 - getWidth() / 2,
-               gloScreenHeight / 2 - getHeight() / 2);
+  if ( centerOfGameWindow )
+  {
+    setPosition( gloScreenWidth / 2 - getWidth() / 2,
+                 gloScreenHeight / 2 - getHeight() / 2);
+  }
+  else
+  {
+    setPosition( gloConsoleWidth / 2 - getWidth() / 2,
+                 gloConsoleHeight / 2 - getHeight() / 2);
+  }
 }
 
 std::string Widget::getTag(const std::string &tagName)

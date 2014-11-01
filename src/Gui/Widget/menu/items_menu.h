@@ -14,7 +14,7 @@ public:
   ItemsMenu(const int &width = 50, const int &height = 1);
 
   template<typename MenuItem_t>
-  std::map<int, Actor *> fillWithItems(const std::vector<Actor *> &items)
+  std::map<int, Actor *> fillWithItems(const std::vector<Actor *>& items)
   {
     std::map<int, Actor*> mappedItems;
     int id = -1;

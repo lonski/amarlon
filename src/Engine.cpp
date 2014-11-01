@@ -16,6 +16,7 @@ int Engine::FovRadius = 20;
 Engine::Engine()
   : _console(TCODConsole::root)
   , _gui(nullptr)
+  , cmdExecutor( new CommandExecutor(this) )
 {
 }
 
@@ -73,18 +74,23 @@ void Engine::render()
 
 void Engine::updateAis()
 {
-  if (_currentMap != nullptr)
-  {
-    std::for_each(_currentMap->actors().begin(), _currentMap->actors().end(), [&](Actor* a)
-    {
-      if (a->afAi()) a->afAi()->update( currentMap() );
-    });
-  }
+/*
+ *
+ *  !!! TODO !!! Make a function "Apply unction to actors" on map, and then pass only function to execute
+ *
+ */
+//  if (_currentMap != nullptr)
+//  {
+//    std::for_each(_currentMap->actors().begin(), _currentMap->actors().end(), [&](Actor* a)
+//    {
+//      if (a->afAi()) a->afAi()->update( currentMap() );
+//    });
+//  }
 }
 
 void Engine::processKey(TCOD_key_t &key)
 {
-  CommandExecutor::execute(key, this, Actor::Player);
+  cmdExecutor->execute(key, Actor::Player);
 }
 
 Map* Engine::currentMap() const

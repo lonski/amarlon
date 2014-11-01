@@ -3,7 +3,8 @@
 
 namespace amarlon {
 
-CmdFullscreen::CmdFullscreen()
+CmdFullscreen::CmdFullscreen(Engine *engine)
+  : Command(engine)
 {
 }
 
@@ -12,9 +13,9 @@ bool CmdFullscreen::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_F12 );
 }
 
-void CmdFullscreen::execute(Engine* engine, Actor*)
+void CmdFullscreen::execute(Actor*)
 {
-  TCODConsole::root->setFullscreen( !engine->getConsole()->isFullscreen() );
+  TCODConsole::root->setFullscreen( !_engine->getConsole()->isFullscreen() );
 }
 
 }

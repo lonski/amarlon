@@ -53,11 +53,9 @@ void Messenger::actorDies(Actor *victim)
   _gui->message(msg, TCODColor::darkerRed);
 }
 
-void Messenger::actorPicked(Actor *picker, Actor *picked, int amount)
+void Messenger::actorPicked(std::string pickerName, std::string itemName, int amount)
 {
-  string pickerName = picker->getName();
-  string itemName = tolowers(picked->getName());
-  string msg = pickerName + " picked " + itemName;
+  string msg = pickerName + " picked " + tolowers(itemName);
 
   if (amount > 1)
     msg += " (" + to_string(amount) + ").";
@@ -65,6 +63,14 @@ void Messenger::actorPicked(Actor *picker, Actor *picked, int amount)
     msg += ".";
 
   _gui->message(msg, TCODColor::darkYellow);
+}
+
+void Messenger::actorPicked(Actor *picker, Actor *picked, int amount)
+{
+  string pickerName = picker->getName();
+  string itemName = picked->getName();
+
+  actorPicked(pickerName, itemName, amount);
 }
 
 void Messenger::actorIsLocked(Actor *openableActor)

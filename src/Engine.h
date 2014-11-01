@@ -42,6 +42,7 @@ private:
   TCODConsole* _console;
   MapPtr _currentMap;
   gui::Gui* _gui;
+  CommandExecutorPtr cmdExecutor;
 
   void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();

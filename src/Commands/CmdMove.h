@@ -8,9 +8,9 @@ namespace amarlon {
 class CmdMoveOrAttack : public Command
 {
 public:
-  CmdMoveOrAttack();
+  CmdMoveOrAttack(Engine *engine);
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Engine* engine, Actor* executor);
+  virtual void execute(Actor* executor);
 
   virtual void setDirection(int dx, int dy);
 

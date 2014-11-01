@@ -15,6 +15,7 @@ public:
   Menu(const int &width, const int &height);
 
   virtual void addItem(MenuItemPtr item);
+  virtual bool removeItem(int id);
   virtual MenuItemPtr getSelectedItem();
   virtual MenuItemPtr find(int id);
 

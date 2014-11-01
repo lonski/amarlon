@@ -8,10 +8,10 @@ namespace amarlon {
 class CmdUse : public Command
 {
 public:
-  CmdUse();
+  CmdUse(Engine* engine);
 
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Engine* engine, Actor* executor);
+  virtual void execute(Actor* executor);
 
 private:
   Actor * acquireItemToUse(Actor *executor, Engine *engine);

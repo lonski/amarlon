@@ -27,7 +27,6 @@ SOURCES += main.cpp \
     Engine.cpp \
     Actor/ActorFeatures/ActorFeature.cpp \
     Actor/ActorFeatures/Fighter.cpp \
-    Gui/ItemPickerWindow.cpp \
     Gui/AmountWindow.cpp \
     Commands/CmdClose.cpp \
     Utils/DirectionSelector.cpp \
@@ -58,7 +57,8 @@ SOURCES += main.cpp \
     Gui/text_window.cpp \
     Gui/Widget/menu/items_menu.cpp \
     Gui/InventoryWindow/bag_manager.cpp \
-    Gui/InventoryWindow/body_manager.cpp
+    Gui/InventoryWindow/body_manager.cpp \
+    Gui/pick_up_window.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -86,7 +86,6 @@ HEADERS += \
     Utils/Utils.h \
     Actor/ActorFeatures/ActorFeature.h \
     Actor/ActorFeatures/Fighter.h \
-    Gui/ItemPickerWindow.h \
     Gui/AmountWindow.h \
     Commands/CmdClose.h \
     Utils/DirectionSelector.h \
@@ -128,7 +127,8 @@ HEADERS += \
     Gui/message_box.h \
     Gui/Widget/menu/items_menu.h \
     Gui/InventoryWindow/bag_manager.h \
-    Gui/InventoryWindow/body_manager.h
+    Gui/InventoryWindow/body_manager.h \
+    Gui/pick_up_window.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

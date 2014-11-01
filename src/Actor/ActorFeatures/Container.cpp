@@ -2,13 +2,13 @@
 #include <algorithm>
 #include <iostream>
 #include "Actor/Actor.h"
-#include <Gui/ItemPickerWindow.h>
 #include <memory>
 
 namespace amarlon {
 
 Container::Container(size_t maxSize)
   : _slotCount(maxSize)
+  , _pushToFront(false)
 {
 }
 
@@ -110,18 +110,30 @@ bool Container::add(Actor *actor)
   return added;
 }
 
+bool Container::addFront(Actor *actor)
+{
+  _pushToFront = true;
+  bool r = add(actor);
+  _pushToFront = false;
+
+  return r;
+}
+
 bool Container::pushNewItem(Actor *actor)
 {
   bool slotsAvail = (_inventory.size() < _slotCount);
 
   if (slotsAvail)
-    _inventory.push_back(actor);
+  {
+    _pushToFront ? _inventory.push_front(actor) : _inventory.push_back(actor);
+  }
 
   return slotsAvail;
 }
 
 bool Container::remove(Actor *actor)
 {
+
   auto aIter = std::find(_inventory.begin(), _inventory.end(),actor);
   bool found = (aIter != _inventory.end());
 
@@ -129,7 +141,33 @@ bool Container::remove(Actor *actor)
   {
     _inventory.erase(aIter);
   }
+//  else   EL STUPIDO!  EL STUPIDO! EL STUPIDO! EL STUPIDO! KAIN REOVING STACKABLE! IS MADE BY SPILT, STUPPIDO!
+//  {
+//    //stackable possible
+//    std::cout << "\n looking " << (actor->afPickable());
+//    if ( actor->afPickable() && actor->afPickable()->isStackable() )
+//    {
+//      auto aFound = find_if(_inventory.begin(), _inventory.end(),
+//                           [&](Actor* a)
+//                           {
+//                             return a->isEqual(actor);
+//                           });
 
+//      //change amount
+//      std::cout << "\n searched";
+//      if ( aFound != _inventory.end() )
+//      {
+//        std::cout << "\n avail!";
+//        Actor* toStackWith = *aFound;
+
+//        toStackWith->afPickable()->decAmount( actor->afPickable()->getAmount() );
+//        found = true;
+//        delete actor;
+//        actor = NULL;
+//      }
+//    }
+//  }
+  std::cout.flush();
   return found;
 }
 

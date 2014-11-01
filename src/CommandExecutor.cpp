@@ -2,17 +2,15 @@
 
 namespace amarlon {
 
-CommandExecutor* CommandExecutor::_inst = nullptr;
-
-CommandExecutor::CommandExecutor()
+CommandExecutor::CommandExecutor(Engine* engine)
 {
   for (int e = (int)CommandId::Null+1; e < (int)CommandId::End; ++e)
   {
-    _commands.push_back( Command::create( (CommandId)e ) );
+    _commands.push_back( Command::create( (CommandId)e, engine ) );
   }
 }
 
-bool CommandExecutor::executeCommand(TCOD_key_t &key, Engine *engine, Actor *executor)
+bool CommandExecutor::execute(TCOD_key_t &key, Actor *executor)
 {
   bool r = false;
 
@@ -21,21 +19,13 @@ bool CommandExecutor::executeCommand(TCOD_key_t &key, Engine *engine, Actor *exe
     Command* cmd = *c;
     if ( cmd->accept(key) )
     {
-      cmd->execute(engine, executor);
+      cmd->execute(executor);
       r = true;
       break;
     }
   }
 
   return r;
-}
-
-bool CommandExecutor::execute(TCOD_key_t& key, Engine *engine, Actor *executor)
-{
-  if ( _inst == nullptr)
-    _inst = new CommandExecutor;
-
-  return _inst->executeCommand(key, engine, executor);
 }
 
 }

@@ -1,8 +1,9 @@
 #ifndef COMMANDEXECUTOR_H
 #define COMMANDEXECUTOR_H
 
-#include <libtcod.hpp>
+#include <memory>
 #include <vector>
+#include <libtcod.hpp>
 #include "Commands/Command.h"
 
 namespace amarlon {
@@ -14,16 +15,15 @@ class Engine;
 class CommandExecutor
 {
 public:
-  static bool execute(TCOD_key_t &key, Engine* engine, Actor* executor);
-  bool executeCommand(TCOD_key_t &key, Engine *engine, Actor* executor);
+  CommandExecutor(Engine *engine);
+  bool execute(TCOD_key_t &key, Actor* executor);
 
 private:
-  CommandExecutor();
-  static CommandExecutor* _inst;
-
   std::vector<Command*> _commands;
 
 };
+
+typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 
 }
 

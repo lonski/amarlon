@@ -9,7 +9,8 @@
 
 namespace amarlon {
 
-CmdOpen::CmdOpen()
+CmdOpen::CmdOpen(Engine *engine)
+  : Command(engine)
 {
 }
 
@@ -18,9 +19,9 @@ bool CmdOpen::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'o' );
 }
 
-void CmdOpen::execute(Engine *engine, Actor *executor)
+void CmdOpen::execute(Actor *executor)
 {
-  Map* map = engine->currentMap();
+  Map* map = _engine->currentMap();
   int x = executor->getX();
   int y = executor->getY();
 

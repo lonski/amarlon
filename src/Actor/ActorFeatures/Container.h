@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <list>
 #include <string>
 #include "ActorFeature.h"
 #include "DataGateways/ActorDescriptions.h"
@@ -15,6 +16,11 @@ class Actor;
 class Container : public ActorFeature
 {
 public:
+  typedef std::list<Actor*>::iterator iterator;
+
+  iterator begin() { return _inventory.begin(); }
+  iterator end() { return _inventory.end(); }
+
   Container(size_t slotCount);
   virtual ~Container();
   static Container* create(const ContainerDescription& dsc);
@@ -23,6 +29,7 @@ public:
   virtual bool isEqual(ActorFeature* rhs);
 
   bool add(Actor* actor);
+  bool addFront(Actor* actor);
   bool remove(Actor* actor);
   std::vector<Actor *> content(std::function<bool(Actor *)>* filterFun = nullptr);
   size_t size() const;
@@ -30,10 +37,12 @@ public:
   size_t slotCount() const;
   void setSlotCount(const size_t &slotCount);
 
-  bool pushNewItem(Actor *actor);
 private:
-  std::vector<Actor*> _inventory;
+  std::list<Actor*> _inventory;
   size_t _slotCount;
+  bool _pushToFront;
+
+  bool pushNewItem(Actor *actor);
 
 };
 

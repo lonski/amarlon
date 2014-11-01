@@ -1,5 +1,6 @@
 #include "OpenableContainer.h"
-#include "Commands/CmdPick.h"
+#include <Gui/pick_up_window.h>
+#include <Actor/Actor.h>
 
 namespace amarlon {
 
@@ -13,8 +14,8 @@ bool OpenableContainer::open(Actor *executor)
 
   if ( _owner->afContainer() )
   {
-    CmdPick pickCommand;
-    pickCommand.execute(_owner->afContainer(), executor);
+    gui::PickUpWindow pickuper(*executor, *_owner->afContainer(), [](Actor* a){ return a->afPickable();});
+    pickuper.show();
 
     r = true;
   }

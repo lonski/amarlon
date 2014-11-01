@@ -29,11 +29,6 @@ Map::Map(u32 width, u32 height, MapId id)
 
 Map::~Map()
 {
-  std::for_each(_actors.begin(), _actors.end(), [](Actor* a)
-  {
-    delete a;
-    a = nullptr;
-  });
 }
 
 bool Map::isExplored(int x, int y)
@@ -55,10 +50,10 @@ bool Map::isBlocked(int x, int y)
   bool terrianBlocks = !codMap.isWalkable(x,y);
   bool actorBlocks = false;
 
-  for(auto aIter = _actors.begin(); aIter != _actors.end(); ++aIter)
-  {
-    Actor* a = *aIter;
-    if (a->getX() == x && a->getY() == y && a->blocks())
+  Tile& tile = getTile(x, y);
+  for(auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
+  {    
+    if ( (*aIter)->blocks() )
     {
       actorBlocks = true;
       break;
@@ -72,106 +67,65 @@ void Map::addActor(Actor *actor)
 {
   int x( actor->getX() );
   int y( actor->getY() );
-  bool stacked = false;
+  Tile& tile = getTile(x, y);
 
-  //stackable possible
-  if ( actor->afPickable() && actor->afPickable()->isStackable() )
+  //keep alive actors on top
+  std::function<bool(Actor*)> addFunBack = [&tile](Actor* a){ return tile.actors->add(a); };
+  std::function<bool(Actor*)> addFunFront = [&tile](Actor* a){ return tile.actors->addFront(a); };
+
+  std::function<bool(Actor*)> addFun = actor->isAlive() ? addFunBack : addFunFront;
+
+  if ( !addFun(actor) ) throw std::logic_error("Failed to add actor to tile!");
+
+  //update transparency
+  if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
   {
-    auto found = find_if(_actors.begin(), _actors.end(),
-                         [&](Actor* a)
-                         {
-                           return a->getX() == x &&
-                                  a->getY() == y &&
-                                  a->isEqual(actor);
-                         });
-
-    //stack it
-    if ( found != _actors.end() )
-    {
-      Actor* toStackWith = *found;
-
-      toStackWith->afPickable()->incAmount( actor->afPickable()->getAmount() );
-      stacked = true;
-      delete actor;
-      actor = NULL;
-    }
+    codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
   }
 
-  //add without stacking
-  if ( !stacked )
-  {
-    //keep alive actors on top
-    if (actor->isAlive())
-    {
-      _actors.push_back(actor);
-    }
-    else
-    {
-      _actors.push_front(actor);
-    }
-
-    if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
-    {
-      codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
-    }
-  }
 }
 
 Actor *Map::getFirstActor(int x, int y)
 {
-  auto aIter = std::find_if(_actors.begin(), _actors.end(), [&](Actor* a)
-  {
-    return (a->getX() == x && a->getY() == y);
-  });
-
-  return ( aIter == _actors.end() ? nullptr : *aIter );
+  Tile& tile = getTile(x, y);
+  return tile.actors->size() > 0 ? *tile.actors->begin() : nullptr;
 }
 
 std::vector<Actor *> Map::getActors(int x, int y, bool (*filterFun)(Actor*) )
 {
   std::vector<Actor*> r;
+  Tile& tile = getTile(x, y);
 
-  std::for_each(_actors.begin(), _actors.end(), [&](Actor* a)
-  {
-    if (a->getX() == x && a->getY() == y)
-    {
-      if ( filterFun == nullptr || filterFun(a))
-        r.push_back(a);
-    }
+  std::for_each(tile.actors->begin(), tile.actors->end(), [&](Actor* a)
+  {    
+    if ( filterFun == nullptr || filterFun(a))  r.push_back(a);
   });
 
   return r;
 }
 
-std::vector<Actor *> Map::getActors(bool (*filterFun)(Actor *))
+std::vector<Actor *> Map::getActors(std::function<bool(Actor *)>* filterFun)
 {
   std::vector<Actor*> r;
 
-  std::for_each(_actors.begin(), _actors.end(), [&](Actor* a)
+  for(auto tileRow = _tiles.begin(); tileRow != _tiles.end(); ++tileRow)
   {
-    if ( filterFun == nullptr || filterFun(a))
-      r.push_back(a);
-  });
+    for(auto tile = tileRow->begin(); tile != tileRow->end(); ++tile)
+    {
+      std::for_each(tile->actors->begin(), tile->actors->end(), [&](Actor* a)
+      {
+        if ( filterFun == nullptr || (*filterFun)(a)) r.push_back(a);
+      });
+    }
+  }
 
   return r;
 }
 
 bool Map::removeActor(Actor* toRemove)
 {
-  auto aIter = std::find(_actors.begin(), _actors.end(), toRemove);
-  bool found = (aIter != _actors.end());
-
-  if (found)
-  {
-    _actors.erase(aIter);
-  }
-
-  return found;
-}
-
-const Map::ActorArray &Map::actors() const
-{
-  return _actors;
+  Tile& tile = getTile(toRemove->getX(), toRemove->getY());
+  return tile.actors->remove( toRemove );
 }
 
 void Map::render(TCODConsole *console)
@@ -194,26 +148,28 @@ void Map::render(TCODConsole *console)
   }
 
   //render actors
-  for (auto aIter = _actors.begin(); aIter != _actors.end(); ++aIter)
+  std::for_each(_tiles.begin(), _tiles.end(), [&](TileRow& tileRow)
   {
-    Actor* actor = *aIter;
+    std::for_each(tileRow.begin(), tileRow.end(), [&](Tile& tile)
+    {
+      for (auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
+      {
+        Actor* actor = *aIter;
 
-    bool inFov = isInFov(actor->getX(), actor->getY());
-    bool onlyInFov = actor->isFovOnly();
-    bool explored = isExplored(actor->getX(), actor->getY());
+        bool inFov = isInFov(actor->getX(), actor->getY());
+        bool onlyInFov = actor->isFovOnly();
+        bool explored = isExplored(actor->getX(), actor->getY());
 
 
-    if (inFov || (!onlyInFov && explored) )
-    {      
-      console->putChar(actor->getX(), actor->getY(), actor->getChar());
-      console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());      
-    }
-  }
-}
+        if (inFov || (!onlyInFov && explored) )
+        {
+          console->putChar(actor->getX(), actor->getY(), actor->getChar());
+          console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());
+        }
+      }
+    });
+  });
 
-void Map::updateActorCells()
-{
-  std::for_each(_actors.begin(), _actors.end(), [&](Actor* a){ updateActorCell(a); });
 }
 
 void Map::updateActorCell(Actor* actor)
@@ -338,6 +294,11 @@ MapId Map::getId() const
 void Map::setId(const MapId &id)
 {
   _id = id;
+}
+
+Container &Map::getActorsContainer(u32 x, u32 y)
+{
+  return *getTile(x,y).actors;
 }
 
 }

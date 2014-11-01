@@ -13,7 +13,8 @@
 
 namespace amarlon {
 
-CmdUse::CmdUse()
+CmdUse::CmdUse(Engine *engine)
+  : Command(engine)
 {
 }
 
@@ -22,11 +23,11 @@ bool CmdUse::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'u' );
 }
 
-void CmdUse::execute(Engine *engine, Actor *executor)
+void CmdUse::execute(Actor *executor)
 {  
-  Actor* item = acquireItemToUse(executor, engine);
+  Actor* item = acquireItemToUse(executor, _engine);
 
-  engine->render();
+  _engine->render();
 
   if (item && item->afPickable()->getEffect())
   {
@@ -35,7 +36,7 @@ void CmdUse::execute(Engine *engine, Actor *executor)
 
     if (tSelector != nullptr)
     {
-      std::vector<Actor*> targets = tSelector->select(executor, engine->currentMap());
+      std::vector<Actor*> targets = tSelector->select(executor, _engine->currentMap());
       Pickable* toUse = item->afPickable();
 
       if ( toUse->use( executor, targets ) && toUse->getUsesCount() == 0)

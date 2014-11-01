@@ -5,8 +5,9 @@
 
 namespace amarlon {
 
-CmdMoveOrAttack::CmdMoveOrAttack()
-  : _dx(0)
+CmdMoveOrAttack::CmdMoveOrAttack(Engine* engine)
+  : Command(engine)
+  , _dx(0)
   , _dy(0)
 {
 }
@@ -18,9 +19,9 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
   return handleDirectionKey(key, _dx, _dy);
 }
 
-void CmdMoveOrAttack::execute(Engine *engine, Actor *executor)
+void CmdMoveOrAttack::execute(Actor *executor)
 {
-  Map* map = engine->currentMap();
+  Map* map = _engine->currentMap();
   int targetX = executor->getX() + _dx;
   int targetY = executor->getY() + _dy;
   bool blocked = map->isBlocked(targetX, targetY);

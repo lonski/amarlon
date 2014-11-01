@@ -25,12 +25,15 @@ enum class CommandId
 class Command
 {
 public:
-  Command() {}
+  Command(Engine* engine): _engine(engine) {}
   virtual ~Command() {}
-  static Command* create(CommandId cmd);
+  static Command* create(CommandId cmd, Engine* engine);
 
   virtual bool accept(TCOD_key_t &key) = 0;
-  virtual void execute(Engine* engine, Actor* executor) = 0;
+  virtual void execute(Actor* executor) = 0;
+
+protected:
+  Engine* _engine;
 
 };
 

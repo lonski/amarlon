@@ -21,7 +21,7 @@ public:
   virtual int getY() const;
 
   virtual void setPosition(int x, int y);
-  virtual void centerPosition();
+  virtual void centerPosition(bool centerOfGameWindow = true);
 
   virtual std::string getTag(const std::string& tagName);
   virtual void setTag(const std::string& tagName, const std::string& tagValue);

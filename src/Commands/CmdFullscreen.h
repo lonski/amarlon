@@ -8,9 +8,9 @@ namespace amarlon {
 class CmdFullscreen : public Command
 {
 public:
-  CmdFullscreen();
+  CmdFullscreen(Engine* engine);
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Engine* engine, Actor* executor);
+  virtual void execute(Actor* executor);
 
 };
 

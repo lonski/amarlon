@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "World/Map.h"
 #include "Gui/Gui.h"
+#include <Gui/message_box.h>
 
 using namespace std;
 
@@ -23,11 +24,18 @@ int main()
 
     while ( !TCODConsole::isWindowClosed() )
     {
-      engine.update();
-      engine.render();
+      try
+      {
+        engine.update();
+        engine.render();
 
-      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
-      engine.processKey(lastKey);
+        TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
+        engine.processKey(lastKey);
+      }
+      catch(std::exception& e)
+      {
+        amarlon::gui::msgError("Fatal error:\n"+std::string(e.what()));
+      }
     }
   }
   catch(std::exception &e)

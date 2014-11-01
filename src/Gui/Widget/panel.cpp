@@ -13,7 +13,9 @@ Panel::Panel(const int& w, const int& h)
 }
 
 void Panel::render(TCODConsole& console)
-{  
+{
+  _panel->setDefaultBackground(TCODColor::black);
+  _panel->rect( 0 , 0 , _width, _height, false,TCOD_BKGND_SET);
 
   if (_frame)
   {

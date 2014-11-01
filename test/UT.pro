@@ -61,7 +61,6 @@ SOURCES += \
     ../src/Commands/Command.cpp \
     ../src/Gui/AmountWindow.cpp \
     ../src/Gui/Gui.cpp \
-    ../src/Gui/ItemPickerWindow.cpp \
     ../src/CommandExecutor.cpp \
     ../src/Engine.cpp \
     ../src/Gui/Widget/bar.cpp \
@@ -78,7 +77,8 @@ SOURCES += \
     ../src/Gui/text_window.cpp \
     ../src/Gui/Widget/menu/items_menu.cpp \
     ../src/Gui/InventoryWindow/bag_manager.cpp \
-    ../src/Gui/InventoryWindow/body_manager.cpp
+    ../src/Gui/InventoryWindow/body_manager.cpp \
+    ../src/Gui/pick_up_window.cpp
 
 HEADERS += \
     ../src/World/Map.h \
@@ -130,7 +130,6 @@ HEADERS += \
     ../src/Commands/Command.h \
     ../src/Gui/AmountWindow.h \
     ../src/Gui/Gui.h \
-    ../src/Gui/ItemPickerWindow.h \
     ../src/CommandExecutor.h \
     ../src/Engine.h \
     ../src/Gui/Widget/bar.h \
@@ -148,5 +147,6 @@ HEADERS += \
     ../src/Gui/text_window.h \
     ../src/Gui/Widget/menu/items_menu.h \
     ../src/Gui/InventoryWindow/bag_manager.h \
-    ../src/Gui/InventoryWindow/body_manager.h
+    ../src/Gui/InventoryWindow/body_manager.h \
+    ../src/Gui/pick_up_window.h
 
