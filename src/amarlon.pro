@@ -58,7 +58,8 @@ SOURCES += main.cpp \
     Gui/Widget/menu/items_menu.cpp \
     Gui/InventoryWindow/bag_manager.cpp \
     Gui/InventoryWindow/body_manager.cpp \
-    Gui/pick_up_window.cpp
+    Gui/pick_up_window.cpp \
+    Utils/console_freezer.cpp
 
 HEADERS += \
     DataGateways/DataGateway.h \
@@ -128,7 +129,8 @@ HEADERS += \
     Gui/Widget/menu/items_menu.h \
     Gui/InventoryWindow/bag_manager.h \
     Gui/InventoryWindow/body_manager.h \
-    Gui/pick_up_window.h
+    Gui/pick_up_window.h \
+    Utils/console_freezer.h
 
 
 win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw

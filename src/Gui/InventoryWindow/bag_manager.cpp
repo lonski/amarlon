@@ -9,8 +9,8 @@
 
 namespace amarlon { namespace gui {
 
-BagManager::BagManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine* engine)
-  : _invMenu(invMenu)
+BagManager::BagManager(ItemsMenuPtr bagMenu, MenuPtr bodyMenu, Engine* engine)
+  : _bagMenu(bagMenu)
   , _bodyMenu(bodyMenu)
   , _engine(engine)
 {
@@ -19,23 +19,23 @@ BagManager::BagManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine* engine)
 
 void BagManager::fillBag()
 {
-  _invMenu->clear();
+  _bagMenu->clear();
   _bagItems.clear();
 
   std::vector<Actor*> items = Actor::Player->afContainer()->content();
-  _bagItems = _invMenu->fillWithItems<LabelMenuItem>( items );
+  _bagItems = _bagMenu->fillWithItems<LabelMenuItem>( items );
 }
 
 void BagManager::render()
 {
-  _invMenu->render( *_engine->getConsole() );
+  _bagMenu->render( *_engine->getConsole() );
   _bodyMenu->render( *_engine->getConsole() );
 }
 
 // === OPERATION CHOOSING === //
 void BagManager::manage()
 {
-  MenuItemPtr menuItem = _invMenu->getSelectedItem();
+  MenuItemPtr menuItem = _bagMenu->getSelectedItem();
   Actor* selectedItem = _bagItems[ std::stol( menuItem->getTag("id") ) ];
 
   if ( selectedItem )

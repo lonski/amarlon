@@ -4,6 +4,8 @@
 #include <vector>
 #include <functional>
 #include <libtcod.hpp>
+#include <Utils/console_freezer.h>
+#include <Gui/Widget/menu/items_menu.h>
 
 namespace amarlon {
 
@@ -31,6 +33,9 @@ private:
   Actor& _picker;
   Container& _container;
   std::function<bool(Actor*)> _filterFunc;
+
+  ConsoleFreezer _freezer;
+  gui::ItemsMenu _menu;
 
 };
 

@@ -78,7 +78,8 @@ SOURCES += \
     ../src/Gui/Widget/menu/items_menu.cpp \
     ../src/Gui/InventoryWindow/bag_manager.cpp \
     ../src/Gui/InventoryWindow/body_manager.cpp \
-    ../src/Gui/pick_up_window.cpp
+    ../src/Gui/pick_up_window.cpp \
+    ../src/Utils/console_freezer.cpp
 
 HEADERS += \
     ../src/World/Map.h \
@@ -148,5 +149,6 @@ HEADERS += \
     ../src/Gui/Widget/menu/items_menu.h \
     ../src/Gui/InventoryWindow/bag_manager.h \
     ../src/Gui/InventoryWindow/body_manager.h \
-    ../src/Gui/pick_up_window.h
+    ../src/Gui/pick_up_window.h \
+    ../src/Utils/console_freezer.h
 

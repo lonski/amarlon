@@ -13,7 +13,7 @@ namespace gui {
 class BagManager
 {
 public:
-  BagManager(ItemsMenuPtr invMenu, MenuPtr bodyMenu, Engine *engine);
+  BagManager(ItemsMenuPtr bagMenu, MenuPtr bodyMenu, Engine *engine);
 
   void manage();
   void fillBag();
@@ -26,7 +26,7 @@ private:
   };
 
   std::map<int, Actor*> _bagItems;
-  ItemsMenuPtr _invMenu;
+  ItemsMenuPtr _bagMenu;
   MenuPtr _bodyMenu;
 
   Engine* _engine;
