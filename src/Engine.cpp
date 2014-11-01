@@ -74,18 +74,13 @@ void Engine::render()
 
 void Engine::updateAis()
 {
-/*
- *
- *  !!! TODO !!! Make a function "Apply unction to actors" on map, and then pass only function to execute
- *
- */
-//  if (_currentMap != nullptr)
-//  {
-//    std::for_each(_currentMap->actors().begin(), _currentMap->actors().end(), [&](Actor* a)
-//    {
-//      if (a->afAi()) a->afAi()->update( currentMap() );
-//    });
-//  }
+  if (_currentMap != nullptr)
+  {
+    std::function<bool(Actor*)> filter = [](Actor* a)->bool{ return a->afAi();};
+    std::vector<Actor*> ais = currentMap()->getActors( &filter );
+
+    std::for_each( ais.begin(), ais.end(), [&](Actor* a){a->afAi()->update( currentMap() );});
+  }
 }
 
 void Engine::processKey(TCOD_key_t &key)

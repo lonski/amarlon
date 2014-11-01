@@ -23,7 +23,7 @@ public:
   static ActorDB DB;
   static Actor* Player;
 
-  Actor(ActorType aId, int x = 0, int y = 0);
+  Actor(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
   ~Actor();
 
   Actor* clone();
@@ -66,6 +66,7 @@ public:
 private:
   ActorType _id;
   int _x, _y;
+  Map* _map;
 
   Container* _afContainer;
   Pickable*  _afPickable;

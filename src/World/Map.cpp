@@ -52,7 +52,7 @@ bool Map::isBlocked(int x, int y)
 
   Tile& tile = getTile(x, y);
   for(auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
-  {    
+  {
     if ( (*aIter)->blocks() )
     {
       actorBlocks = true;
@@ -122,54 +122,55 @@ std::vector<Actor *> Map::getActors(std::function<bool(Actor *)>* filterFun)
   return r;
 }
 
-bool Map::removeActor(Actor* toRemove)
-{
+bool Map::removeActor(Actor *toRemove)
+{  
   Tile& tile = getTile(toRemove->getX(), toRemove->getY());
-  return tile.actors->remove( toRemove );
+  bool r = tile.actors->remove( toRemove );
+  return r;
 }
 
 void Map::render(TCODConsole *console)
 {
-  //render tiles
   for(u32 y = 0; y < _height; ++y)
   {
     for(u32 x = 0; x < _width; ++x)
     {
-      bool inFov = isInFov(x,y);
-      bool explored = isExplored(x,y);
-
-      if (inFov || explored)
-      {
-        TCODColor col = ( inFov ? getColor(x,y) : (getColor(x,y) * 0.6));
-        console->setChar(x, y, getChar(x, y) );
-        console->setCharForeground(x,y,col);
-      }
+      renderTile(x, y, console);
+      renderActorsOnTile(x, y, console);
     }
   }
+}
 
-  //render actors
-  std::for_each(_tiles.begin(), _tiles.end(), [&](TileRow& tileRow)
-  {
-    std::for_each(tileRow.begin(), tileRow.end(), [&](Tile& tile)
+void Map::renderTile(u32 x, u32 y, TCODConsole *console)
+{
+    bool inFov = isInFov(x,y);
+    bool explored = isExplored(x,y);
+
+    if (inFov || explored)
     {
-      for (auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
+      TCODColor col = ( inFov ? getColor(x,y) : (getColor(x,y) * 0.6));
+      console->setChar(x, y, getChar(x, y) );
+      console->setCharForeground(x,y,col);
+    }
+}
+
+void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
+{
+    Tile& tile = getTile(x, y);
+    for (auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
+    {
+      Actor* actor = *aIter;
+
+      bool inFov = isInFov(actor->getX(), actor->getY());
+      bool onlyInFov = actor->isFovOnly();
+      bool explored = isExplored(actor->getX(), actor->getY());
+
+      if (inFov || (!onlyInFov && explored) )
       {
-        Actor* actor = *aIter;
-
-        bool inFov = isInFov(actor->getX(), actor->getY());
-        bool onlyInFov = actor->isFovOnly();
-        bool explored = isExplored(actor->getX(), actor->getY());
-
-
-        if (inFov || (!onlyInFov && explored) )
-        {
-          console->putChar(actor->getX(), actor->getY(), actor->getChar());
-          console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());
-        }
+        console->putChar(actor->getX(), actor->getY(), actor->getChar());
+        console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());
       }
-    });
-  });
-
+    }
 }
 
 void Map::updateActorCell(Actor* actor)
@@ -244,7 +245,7 @@ char Map::getChar(u32 x, u32 y)
 }
 
 //===== Map getTile
-Tile &Map::getTile(u32 x, u32 y)
+Tile&Map::getTile(u32 x, u32 y)
 {
   validateMapCoords(x, y);
 
@@ -296,9 +297,20 @@ void Map::setId(const MapId &id)
   _id = id;
 }
 
-Container &Map::getActorsContainer(u32 x, u32 y)
+Container& Map::getActorsContainer(u32 x, u32 y)
 {
   return *getTile(x,y).actors;
+}
+
+void Map::performActionOnActors(std::function<void(Actor *)> func)
+{
+  std::for_each(_tiles.begin(), _tiles.end(), [&func](TileRow& tr)
+  {
+    std::for_each(tr.begin(), tr.end(), [&func](Tile& tile)
+    {
+      tile.actors->performActionOnActors( func );
+    });
+  });
 }
 
 }

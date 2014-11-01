@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <vector>
+#include <functional>
 #include <memory>
 #include <list>
 #include <stdexcept>
@@ -36,7 +37,6 @@ class Map
 public:
   typedef std::vector< std::vector<Tile> > TileMatrix;
   typedef std::vector<Tile> TileRow;
-  typedef std::list<Actor*> ActorArray;
 
   static TileDB Tiles;
   static MapGateway Gateway;
@@ -49,13 +49,15 @@ public:
   bool isBlocked(int x, int y);
 
   void addActor(Actor* actor);
+  bool removeActor(Actor *toRemove);
   Actor* getFirstActor(int x, int y);
   std::vector<Actor*> getActors(int x, int y, bool (*filterFun)(Actor *) = nullptr);
   std::vector<Actor*> getActors(std::function<bool(Actor*)>* filterFun);
-  bool removeActor(Actor *toRemove);
+  Container& getActorsContainer(u32 x, u32 y);
+
+  void performActionOnActors(std::function<void(Actor*)> func);
 
   void render(TCODConsole* console);
-//  /void updateActorCells();
   void updateActorCell(Actor *actor);
 
   void computeFov(int x, int y, int radius);
@@ -71,7 +73,6 @@ public:
   void setHeight(const u32 &height);
   MapId getId() const;
   void setId(const MapId &id);
-  Container& getActorsContainer(u32 x, u32 y);
 
 private:
   MapId _id;
@@ -81,6 +82,8 @@ private:
 
   Tile& getTile(u32 x, u32 y);
   void validateMapCoords(u32 x, u32 y);
+  void renderTile(u32 x, u32 y, TCODConsole *console);
+  void renderActorsOnTile(u32 x, u32 y, TCODConsole *console);
 
 };
 

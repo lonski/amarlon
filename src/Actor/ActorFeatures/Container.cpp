@@ -79,7 +79,7 @@ bool Container::add(Actor *actor)
   {
     auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](Actor* iItem)
                    {
-                     return iItem->getId() == actor->getId();
+                     return iItem->isEqual( actor);
                    });
 
     if (invIter != _inventory.end()) //merge
@@ -141,33 +141,7 @@ bool Container::remove(Actor *actor)
   {
     _inventory.erase(aIter);
   }
-//  else   EL STUPIDO!  EL STUPIDO! EL STUPIDO! EL STUPIDO! KAIN REOVING STACKABLE! IS MADE BY SPILT, STUPPIDO!
-//  {
-//    //stackable possible
-//    std::cout << "\n looking " << (actor->afPickable());
-//    if ( actor->afPickable() && actor->afPickable()->isStackable() )
-//    {
-//      auto aFound = find_if(_inventory.begin(), _inventory.end(),
-//                           [&](Actor* a)
-//                           {
-//                             return a->isEqual(actor);
-//                           });
 
-//      //change amount
-//      std::cout << "\n searched";
-//      if ( aFound != _inventory.end() )
-//      {
-//        std::cout << "\n avail!";
-//        Actor* toStackWith = *aFound;
-
-//        toStackWith->afPickable()->decAmount( actor->afPickable()->getAmount() );
-//        found = true;
-//        delete actor;
-//        actor = NULL;
-//      }
-//    }
-//  }
-  std::cout.flush();
   return found;
 }
 
@@ -184,11 +158,6 @@ std::vector<Actor *> Container::content(std::function<bool(Actor*)>* filterFun/*
     }
   }
 
-//  if ( filterFun != nullptr )
-//    std::copy_if(_inventory.begin(), _inventory.end(), items.begin(), filterFun);
-//  else
-//    std::copy(_inventory.begin(), _inventory.end(), items.begin());
-
   return items;
 }
 
@@ -196,6 +165,12 @@ size_t Container::size() const
 {
   return _inventory.size();
 }
+
+void Container::performActionOnActors(std::function<void(Actor *)> fun)
+{
+  std::for_each(_inventory.begin(), _inventory.end(), fun);
+}
+
 size_t Container::slotCount() const
 {
   return _slotCount;
