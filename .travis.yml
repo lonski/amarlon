@@ -22,17 +22,18 @@ script:
     - hg clone https://bitbucket.org/jice/libtcod
     - cd libtcod
     - make -f makefiles/makefile-linux debug
-    - cp ./libtcod_debug.so ../lib/libtcod_debug.so
-    - cp ./libtcodxx_debug.so ../lib/libtcodxx_debug.so
-    - cp ./libtcod_debug.so ../lib/libtcod.so
-    - cp ./libtcodxx_debug.so ../lib/libtcodxx.so
+    - mkdir ../src/lib
+    - cp ./libtcod_debug.so ../src/lib/libtcod_debug.so
+    - cp ./libtcodxx_debug.so ../src/lib/libtcodxx_debug.so
+    - cp ./libtcod_debug.so ../src/lib/libtcod.so
+    - cp ./libtcodxx_debug.so ../src/lib/libtcodxx.so
     - cd -
-    - cd lib
+    - cd src/lib
     - ln -s libtcod.so libtcod.so.1
     - ln -s libtcodxx.so libtcodxx.so.1
     - cd -
     - cd src
-    - qmake amarlon.pro
+    - cmake .
     - make -j`grep -c processor /proc/cpuinfo`
     - cd ../test
     - qmake

@@ -11,7 +11,7 @@ int main()
 {
   try
   {
-    TCODConsole::root->setCustomFont("../amarlon/terminal.png");
+    TCODConsole::root->setCustomFont("terminal.png");
     TCODConsole::initRoot(amarlon::gloScreenWidth,amarlon::gloScreenHeight,"Amarlon",false, TCOD_RENDERER_SDL);
 
     TCODMouse::showCursor(false);

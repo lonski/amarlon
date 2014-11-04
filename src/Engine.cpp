@@ -28,9 +28,9 @@ Engine::~Engine()
 void Engine::init()
 {
   //temp init
-  Map::Tiles.loadTiles("../amarlon/tiles.xml");
-  Actor::DB.loadActors("../amarlon/actors.xml");
-  Map::Gateway.loadMaps("../amarlon/maps.xml");
+  Map::Tiles.loadTiles("tiles.xml");
+  Actor::DB.loadActors("actors.xml");
+  Map::Gateway.loadMaps("maps.xml");
 
   _gui = new gui::Gui;
 
