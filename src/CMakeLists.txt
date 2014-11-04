@@ -1,0 +1,147 @@
+cmake_minimum_required(VERSION 2.8.4)
+project(amarlon)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES
+    Actor/ActorFeatures/Ai/Ai.cpp
+    Actor/ActorFeatures/Ai/Ai.h
+    Actor/ActorFeatures/Ai/AiType.h
+    Actor/ActorFeatures/Ai/MonsterAi.cpp
+    Actor/ActorFeatures/Ai/MonsterAi.h
+    Actor/ActorFeatures/Openable/Openable.cpp
+    Actor/ActorFeatures/Openable/Openable.h
+    Actor/ActorFeatures/Openable/OpenableContainer.cpp
+    Actor/ActorFeatures/Openable/OpenableContainer.h
+    Actor/ActorFeatures/Openable/OpenableDoor.cpp
+    Actor/ActorFeatures/Openable/OpenableDoor.h
+    Actor/ActorFeatures/Openable/OpenableType.h
+    Actor/ActorFeatures/Wearer/item_slot_type.h
+    Actor/ActorFeatures/Wearer/wearer.cpp
+    Actor/ActorFeatures/Wearer/wearer.h
+    Actor/ActorFeatures/ActorFeature.cpp
+    Actor/ActorFeatures/ActorFeature.h
+    Actor/ActorFeatures/Container.cpp
+    Actor/ActorFeatures/Container.h
+    Actor/ActorFeatures/Fighter.cpp
+    Actor/ActorFeatures/Fighter.h
+    Actor/ActorFeatures/Pickable.cpp
+    Actor/ActorFeatures/Pickable.h
+    Actor/ActorFeatures/pickable_category.h
+    Actor/Effects/Effect.cpp
+    Actor/Effects/Effect.h
+    Actor/Effects/EffectType.h
+    Actor/Effects/LockEffect.cpp
+    Actor/Effects/LockEffect.h
+    Actor/Effects/SelfHealEffect.cpp
+    Actor/Effects/SelfHealEffect.h
+    Actor/Actor.cpp
+    Actor/Actor.h
+    Actor/ActorType.h
+    Commands/CmdClose.cpp
+    Commands/CmdClose.h
+    Commands/CmdFullscreen.cpp
+    Commands/CmdFullscreen.h
+    Commands/CmdInventory.cpp
+    Commands/CmdInventory.h
+    Commands/CmdMove.cpp
+    Commands/CmdMove.h
+    Commands/CmdOpen.cpp
+    Commands/CmdOpen.h
+    Commands/CmdPick.cpp
+    Commands/CmdPick.h
+    Commands/CmdUse.cpp
+    Commands/CmdUse.h
+    Commands/Command.cpp
+    Commands/Command.h
+    DataGateways/Parsers/ActorParser.cpp
+    DataGateways/Parsers/ActorParser.h
+    DataGateways/ActorDB.cpp
+    DataGateways/ActorDB.h
+    DataGateways/ActorDescriptions.h
+    DataGateways/DataGateway.cpp
+    DataGateways/DataGateway.h
+    DataGateways/MapGateway.cpp
+    DataGateways/MapGateway.h
+    DataGateways/TileDB.cpp
+    DataGateways/TileDB.h
+    Gui/InventoryWindow/bag_manager.cpp
+    Gui/InventoryWindow/bag_manager.h
+    Gui/InventoryWindow/body_manager.cpp
+    Gui/InventoryWindow/body_manager.h
+    Gui/InventoryWindow/inventory_window.cpp
+    Gui/InventoryWindow/inventory_window.h
+    Gui/Widget/menu/items_menu.cpp
+    Gui/Widget/menu/items_menu.h
+    Gui/Widget/menu/label_menu_item.cpp
+    Gui/Widget/menu/label_menu_item.h
+    Gui/Widget/menu/menu.cpp
+    Gui/Widget/menu/menu.h
+    Gui/Widget/menu/menu_item.h
+    Gui/Widget/menu/slot_menu_item.cpp
+    Gui/Widget/menu/slot_menu_item.h
+    Gui/Widget/bar.cpp
+    Gui/Widget/bar.h
+    Gui/Widget/label.cpp
+    Gui/Widget/label.h
+    Gui/Widget/list.cpp
+    Gui/Widget/list.h
+    Gui/Widget/panel.cpp
+    Gui/Widget/panel.h
+    Gui/Widget/widget.cpp
+    Gui/Widget/widget.h
+    Gui/AmountWindow.cpp
+    Gui/AmountWindow.h
+    Gui/Gui.cpp
+    Gui/Gui.h
+    Gui/message_box.h
+    Gui/pick_up_window.cpp
+    Gui/pick_up_window.h
+    Gui/text_window.cpp
+    Gui/text_window.h
+    Utils/TargetSelector/ExecutorSelector.cpp
+    Utils/TargetSelector/ExecutorSelector.h
+    Utils/TargetSelector/SingleNeighbourSelector.cpp
+    Utils/TargetSelector/SingleNeighbourSelector.h
+    Utils/TargetSelector/TargetSelector.cpp
+    Utils/TargetSelector/TargetSelector.h
+    Utils/colored_string.h
+    Utils/DirectionSelector.cpp
+    Utils/DirectionSelector.h
+    Utils/glodef.h
+    Utils/ItemPicker.cpp
+    Utils/ItemPicker.h
+    Utils/Messenger.cpp
+    Utils/Messenger.h
+    Utils/SelectorType.h
+    Utils/Utils.cpp
+    Utils/Utils.h
+    Utils/XmlUtils.h
+    World/Map.cpp
+    World/Map.h
+    World/MapId.h
+    World/TileType.h
+    CommandExecutor.cpp
+    CommandExecutor.h
+    Engine.cpp
+    Engine.h
+    main.cpp)
+
+include_directories(${PROJECT_SOURCE_DIR}/../include)
+include_directories(${PROJECT_SOURCE_DIR}/../include/libtcod)
+include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/Actor)
+include_directories(${PROJECT_SOURCE_DIR}/Actor/ActorFeatures)
+include_directories(${PROJECT_SOURCE_DIR}/Actor/Effects)
+include_directories(${PROJECT_SOURCE_DIR}/Commands)
+include_directories(${PROJECT_SOURCE_DIR}/DataGateways)
+include_directories(${PROJECT_SOURCE_DIR}/DataGateways/Parsers)
+include_directories(${PROJECT_SOURCE_DIR}/Gui)
+include_directories(${PROJECT_SOURCE_DIR}/Gui/Widget)
+include_directories(${PROJECT_SOURCE_DIR}/Utils)
+include_directories(${PROJECT_SOURCE_DIR}/Utils/TargetSelector)
+include_directories(${PROJECT_SOURCE_DIR}/World)
+
+add_executable(amarlon ${SOURCE_FILES})
+TARGET_LINK_LIBRARIES(amarlon ${PROJECT_SOURCE_DIR}/lib/libtcod.so)
+TARGET_LINK_LIBRARIES(amarlon ${PROJECT_SOURCE_DIR}/lib/libtcodxx.so)
