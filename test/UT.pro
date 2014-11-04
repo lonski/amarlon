@@ -14,8 +14,8 @@ DEPENDPATH += $$PWD/../include/libtcod
 INCLUDEPATH += $$PWD/../src
 DEPENDPATH += $$PWD/../src
 
-win32: LIBS += -L$$PWD/../lib/ -ltcod-mingw -lgtest
-unix: LIBS += -L$$PWD/../lib/ -ltcod -ltcodxx -lgtest
+win32: LIBS += -L$$PWD/../src/lib/ -ltcod-mingw -lgtest
+unix: LIBS += -L$$PWD/../src/lib/ -ltcod -ltcodxx -lgtest
 
 SOURCES += \
     ActorTest.cpp \
