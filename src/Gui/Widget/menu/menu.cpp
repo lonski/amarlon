@@ -269,10 +269,30 @@ int Menu::choose(TCODConsole& console)
   return id;
 }
 
-void Menu::select(int index)
+bool Menu::select(int index)
 {
+  bool selected = false;
+
+  std::sort(_items.begin(), _items.end(), [](MenuItemPtr l, MenuItemPtr r)
+  {
+    return l->getTag("category") < r->getTag("category");
+  });
+
+  for(auto i = _items.begin(); i != _items.end(); ++i) (*i)->deselect();
+
   _currentIndex = index;
-  activate();
+  if ( cIndexIsValid() )
+  {
+    _items[ _currentIndex ]->select();
+    selected = true;
+  }
+
+  return selected;
+}
+
+bool Menu::selectFirst()
+{
+  return select(0);
 }
 
 }}

@@ -16,7 +16,7 @@ bool CmdInventory::accept(TCOD_key_t &key)
 }
 
 void CmdInventory::execute(Actor*)
-{  
+{
   if ( !_invWindow ) _invWindow.reset( new gui::InventoryWindow(_engine) );
 
   _invWindow->show();

@@ -64,7 +64,7 @@ void MapGateway::loadMaps(string fn)
         int aY = stoi(actorNode->first_attribute("y")->value());
         ActorType aId = (ActorType)stoi(actorNode->first_attribute("id")->value());
 
-        Actor* actor = new Actor(aId, aX, aY);
+        Actor* actor = new Actor(aId, aX, aY, map.get());
 
         overwriteActorFeatures(actorNode, actor);
 

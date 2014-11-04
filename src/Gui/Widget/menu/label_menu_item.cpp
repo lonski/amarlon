@@ -15,22 +15,28 @@ void LabelMenuItem::render(TCODConsole &console)
 
 void LabelMenuItem::select()
 {
-  TCODColor temp = _label.getBgcolor();
+  if (!_selected)
+  {
+    TCODColor temp = _label.getBgcolor();
 
-  _label.setBgcolor( _label.getColor() );
-  _label.setColor( temp );
+    _label.setBgcolor( _label.getColor() );
+    _label.setColor( temp );
 
-  _selected = true;
+    _selected = true;
+  }
 }
 
 void LabelMenuItem::deselect()
 {
-  TCODColor temp = _label.getColor();
+  if (_selected)
+  {
+    TCODColor temp = _label.getColor();
 
-  _label.setColor( _label.getBgcolor() );
-  _label.setBgcolor( temp );
+    _label.setColor( _label.getBgcolor() );
+    _label.setBgcolor( temp );
 
-  _selected = false;
+    _selected = false;
+  }
 }
 
 std::string LabelMenuItem::getValue() const

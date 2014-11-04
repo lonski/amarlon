@@ -33,6 +33,7 @@ public:
   bool remove(Actor* actor);
   std::vector<Actor *> content(std::function<bool(Actor *)>* filterFun = nullptr);
   size_t size() const;
+  void performActionOnActors(std::function<void(Actor*)> fun);
 
   size_t slotCount() const;
   void setSlotCount(const size_t &slotCount);

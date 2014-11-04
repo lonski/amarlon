@@ -22,7 +22,8 @@ public:
   virtual void render(TCODConsole& console);
   virtual int choose(TCODConsole& console);
 
-  virtual void select(int index);
+  virtual bool select(int index);
+  virtual bool selectFirst();
   virtual int selectNext();
   virtual int selectPrevious();
   virtual int getCurrentIndex() const;

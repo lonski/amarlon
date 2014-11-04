@@ -7,16 +7,17 @@ namespace amarlon {
 ActorDB Actor::DB;
 Actor* Actor::Player(nullptr);
 
-Actor::Actor(ActorType aId, int x, int y)
+Actor::Actor(ActorType aId, int x, int y, Map *map)
   : _id(aId)
   , _x(x)
   , _y(y)
+  , _map(map)
   , _afContainer(nullptr)
   , _afPickable(nullptr)
   , _afFighter(nullptr)
   , _afAi(nullptr)
   , _afOpenable(nullptr)
-  , _afWearer(nullptr)
+  , _afWearer(nullptr)  
 {  
   setAfContainer  ( Actor::DB.getContainer  (aId) );
   setAfPickable   ( Actor::DB.getPickable   (aId) );  
@@ -45,8 +46,12 @@ Actor::~Actor()
 
 void Actor::move(int dx, int dy)
 {
+  if ( _map ) _map->removeActor( this );
+
   _x += dx;
   _y += dy;
+
+  if ( _map ) _map->addActor( this );
 }
 
 void Actor::morph(ActorType newType)
@@ -134,7 +139,9 @@ int Actor::getX() const
 
 void Actor::setX(int x)
 {
+  if ( _map ) _map->removeActor( this );
   _x = x;
+  if ( _map ) _map->addActor( this );
 }
 int Actor::getY() const
 {
@@ -143,7 +150,9 @@ int Actor::getY() const
 
 void Actor::setY(int y)
 {
+  if ( _map ) _map->removeActor( this );
   _y = y;
+  if ( _map ) _map->addActor( this );
 }
 Container *Actor::afContainer() const
 {
