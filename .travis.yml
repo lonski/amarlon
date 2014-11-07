@@ -23,10 +23,10 @@ script:
     - cd libtcod
     - make -f makefiles/makefile-linux debug
     - mkdir ../src/lib
-    - cp ./libtcod_debug.so ../src/lib/libtcod_debug.so
-    - cp ./libtcodxx_debug.so ../src/lib/libtcodxx_debug.so
-    - cp ./libtcod_debug.so ../src/lib/libtcod.so
-    - cp ./libtcodxx_debug.so ../src/lib/libtcodxx.so
+    - cp ./libtcod_debug.so ../lib/libtcod_debug.so
+    - cp ./libtcodxx_debug.so ../lib/libtcodxx_debug.so
+    - cp ./libtcod_debug.so ../lib/libtcod.so
+    - cp ./libtcodxx_debug.so ../lib/libtcodxx.so
     - cd -
     - cd src/lib
     - ln -s libtcod.so libtcod.so.1
