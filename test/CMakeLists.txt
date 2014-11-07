@@ -1,4 +1,4 @@
-find_package(GTest HINTS "/usr/local/lib/" REQUIRED)
+find_package(GTest REQUIRED)
 
 set(SOURCE_FILES
     ActorTest.cpp
