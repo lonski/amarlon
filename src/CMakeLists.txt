@@ -1,8 +1,3 @@
-cmake_minimum_required(VERSION 2.8.4)
-project(amarlon)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-
 set(SOURCE_FILES
     Actor/ActorFeatures/Ai/Ai.cpp
     Actor/ActorFeatures/Ai/Ai.h
@@ -129,21 +124,5 @@ set(SOURCE_FILES
     Engine.h
     main.cpp)
 
-include_directories(${PROJECT_SOURCE_DIR}/../include)
-include_directories(${PROJECT_SOURCE_DIR}/../include/libtcod)
-include_directories(${PROJECT_SOURCE_DIR})
-include_directories(${PROJECT_SOURCE_DIR}/Actor)
-include_directories(${PROJECT_SOURCE_DIR}/Actor/ActorFeatures)
-include_directories(${PROJECT_SOURCE_DIR}/Actor/Effects)
-include_directories(${PROJECT_SOURCE_DIR}/Commands)
-include_directories(${PROJECT_SOURCE_DIR}/DataGateways)
-include_directories(${PROJECT_SOURCE_DIR}/DataGateways/Parsers)
-include_directories(${PROJECT_SOURCE_DIR}/Gui)
-include_directories(${PROJECT_SOURCE_DIR}/Gui/Widget)
-include_directories(${PROJECT_SOURCE_DIR}/Utils)
-include_directories(${PROJECT_SOURCE_DIR}/Utils/TargetSelector)
-include_directories(${PROJECT_SOURCE_DIR}/World)
-
 add_executable(amarlon ${SOURCE_FILES})
-TARGET_LINK_LIBRARIES(amarlon ${PROJECT_SOURCE_DIR}/lib/libtcod.so)
-TARGET_LINK_LIBRARIES(amarlon ${PROJECT_SOURCE_DIR}/lib/libtcodxx.so)
+target_link_libraries(amarlon ${TCOD_LIBRARIES})

@@ -17,8 +17,8 @@ script:
     - sudo make -j`grep -c processor /proc/cpuinfo`
     - cd -
     - mkdir ./lib
-    - sudo ln -s /usr/src/gtest/build/libgtest.so ./lib/libgtest.so
-    - sudo ln -s /usr/src/gtest/build/libgtest_main.so ./lib/libgtest_main.so
+    - sudo ln -s /usr/src/gtest/build/libgtest.so /usr/local/lib/libgtest.so
+    - sudo ln -s /usr/src/gtest/build/libgtest_main.so /usr/local/lib/libgtest_main.so
     - hg clone https://bitbucket.org/jice/libtcod
     - cd libtcod
     - make -f makefiles/makefile-linux debug
@@ -32,11 +32,9 @@ script:
     - ln -s libtcod.so libtcod.so.1
     - ln -s libtcodxx.so libtcodxx.so.1
     - cd -
-    - cd src
-    - cmake .
-    - make -j`grep -c processor /proc/cpuinfo`
-    - cd ../test
-    - qmake
+    - mkdir build
+    - cd build
+    - cmake ..
     - make -j`grep -c processor /proc/cpuinfo`
     - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./UT
 
