@@ -7,7 +7,7 @@
 #include <list>
 #include <vector>
 #include <utility>
-#include "Widget/list.h"
+#include "widget/list.h"
 
 namespace amarlon { namespace gui {
 

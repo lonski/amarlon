@@ -35,7 +35,6 @@ script:
     - cd build
     - cmake ..
     - make -j`grep -c processor /proc/cpuinfo`
-    - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./ut_amarlon
 
 notifications:
   recipients:
