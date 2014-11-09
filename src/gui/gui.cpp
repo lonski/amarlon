@@ -1,10 +1,10 @@
 #include "gui.h"
 #include <algorithm>
 #include <iostream>
-#include "Widget/panel.h"
-#include "Widget/list.h"
-#include "Widget/bar.h"
-#include "Widget/label.h"
+#include "widget/panel.h"
+#include "widget/list.h"
+#include "widget/bar.h"
+#include "widget/label.h"
 #include <Engine.h>
 
 namespace amarlon { namespace gui {
