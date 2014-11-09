@@ -31,9 +31,9 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/item_picker.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/messenger.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/utils.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/executor_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/single_neighbour_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/target_elector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_elector.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdClose.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdFullscreen.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdInventory.cpp
