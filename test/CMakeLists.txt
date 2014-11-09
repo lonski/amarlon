@@ -1,4 +1,4 @@
-find_package(GTest REQUIRED)
+find_package(gtest REQUIRED)
 
 set(SOURCE_FILES
     ActorTest.cpp
@@ -42,7 +42,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdPick.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdUse.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/Command.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/AmountWindow.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/amount_window.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Gui.cpp
     ${PROJECT_SOURCE_DIR}/src/CommandExecutor.cpp
     ${PROJECT_SOURCE_DIR}/src/Engine.cpp
@@ -53,15 +53,15 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/label.cpp
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/wearer.cpp
     WearerTest.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/InventoryWindow/inventory_window.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/inventory_window.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/label_menu_item.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/menu.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/slot_menu_item.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/text_window.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/text_window.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/items_menu.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/InventoryWindow/bag_manager.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/InventoryWindow/body_manager.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/pick_up_window.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/bag_manager.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/body_manager.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/pick_up_window.cpp
     ${PROJECT_SOURCE_DIR}/src/Utils/console_freezer.cpp
     ${PROJECT_SOURCE_DIR}/src/World/Map.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Actor.h
@@ -91,7 +91,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/World/MapId.h
     ${PROJECT_SOURCE_DIR}/src/World/TileType.h
     ${PROJECT_SOURCE_DIR}/src/Utils/DirectionSelector.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/glodef.h
     ${PROJECT_SOURCE_DIR}/src/Utils/ItemPicker.h
 #    ${PROJECT_SOURCE_DIR}/src/Utils/LogEntry.h
     ${PROJECT_SOURCE_DIR}/src/Utils/Messenger.h
@@ -110,7 +109,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdPick.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdUse.h
     ${PROJECT_SOURCE_DIR}/src/Commands/Command.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/AmountWindow.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/amount_window.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Gui.h
     ${PROJECT_SOURCE_DIR}/src/CommandExecutor.h
     ${PROJECT_SOURCE_DIR}/src/Engine.h
@@ -121,16 +120,16 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/label.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/wearer.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/InventoryWindow/inventory_window.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/inventory_window.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/label_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/menu_item.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/menu.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/slot_menu_item.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/text_window.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/text_window.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/menu/items_menu.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/InventoryWindow/bag_manager.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/InventoryWindow/body_manager.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/pick_up_window.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/bag_manager.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/body_manager.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/Window/pick_up_window.h
     ${PROJECT_SOURCE_DIR}/src/Utils/console_freezer.h
 )
 

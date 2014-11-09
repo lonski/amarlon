@@ -118,6 +118,8 @@ set(SOURCE_FILES
     Utils/console_freezer.cpp
     Utils/Utils.cpp
     Utils/Utils.h
+    Utils/configuration.cpp
+    Utils/configuration.h
     Utils/XmlUtils.h
     World/Map.cpp
     World/Map.h

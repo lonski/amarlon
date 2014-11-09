@@ -3,30 +3,32 @@
 #include "World/Map.h"
 #include "Gui/Gui.h"
 #include <Gui/message_box.h>
-#include <Utils/singleton.h>
+#include <stdexcept>
+#include <Utils/configuration.h>
 
 using namespace std;
 
 int main()
 {
-
   try
   {
-    TCODConsole::root->setCustomFont("prestige12.png",TCOD_FONT_LAYOUT_TCOD | TCOD_FONT_TYPE_GRAYSCALE);
+    amarlon::Configuration cfg;
+    if (!cfg.load("config.cfg")) throw std::runtime_error("Missing configuration file [config.cfg]!");
 
+    amarlon::Engine::instance().init(&cfg);
+
+    TCODConsole::root->setCustomFont(cfg.getFont(),TCOD_FONT_LAYOUT_TCOD | TCOD_FONT_TYPE_GREYSCALE);
     TCODConsole::initRoot(amarlon::Engine::screenWidth,
                           amarlon::Engine::screenHeight,
                           "Amarlon",
                           false,
                           TCOD_RENDERER_SDL);
 
+    TCODConsole::root->setFullscreen( std::stol(cfg.get("fullscreen")) );
     TCODMouse::showCursor(false);
-    TCOD_key_t lastKey;
-
-    amarlon::Engine::instance().init();
-
     amarlon::Engine::instance().gui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
 
+    TCOD_key_t lastKey;
     while ( !TCODConsole::isWindowClosed() )
     {
       try

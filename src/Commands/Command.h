@@ -25,7 +25,7 @@ class Command
 {
 public:
   Command() = default;
-  virtual ~Command() = default;
+  virtual ~Command() {}
   static Command* create(CommandId cmd);
 
   virtual bool accept(TCOD_key_t &key) = 0;

@@ -10,5 +10,6 @@ src/Makefile
 *.user
 .idea/
 lib/
-build/
+build/*.exe
+build/*.dll
 include/gtest

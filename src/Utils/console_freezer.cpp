@@ -9,12 +9,12 @@ ConsoleFreezer::ConsoleFreezer(TCODConsole *console)
 
 void ConsoleFreezer::freeze()
 {
-  _console->saveApf("tmp");
+  _console->saveApf("data/tmp");
 }
 
 void ConsoleFreezer::restore()
 {
-  _console->loadApf("tmp");
+  _console->loadApf("data/tmp");
 }
 
 }

@@ -6,38 +6,49 @@
 #include "Utils/Messenger.h"
 #include "Gui/Widget/panel.h"
 #include "Gui/Widget/bar.h"
+#include "Utils/configuration.h"
 
 namespace amarlon {
 
 int Engine::FovRadius = 20;
+int Engine::consoleWidth = 100;
+int Engine::consoleHeight = 60;
+int Engine::rightPanelWidth = 20;
+int Engine::bottomPanelHeight = 15;
+int Engine::screenWidth = 100 + Engine::rightPanelWidth;
+int Engine::screenHeight = 60 + Engine::bottomPanelHeight;
 
 Engine::Engine()
-  : _gui(nullptr)
+  : _config(nullptr)
 {
 }
 
 Engine::~Engine()
 {
-  delete _gui;
 }
 
-void Engine::init()
+void Engine::init(Configuration* cfg)
 {
+  _config = cfg;
   _cmdExecutor.reset( new CommandExecutor );
   _windowManager.reset( new gui::WindowManager );
+  _gui.reset( new gui::Gui );
 
-  //temp init
-  Map::Tiles.loadTiles("tiles.xml");
-  Actor::DB.loadActors("actors.xml");
-  Map::Gateway.loadMaps("maps.xml");
+  Engine::consoleWidth      = std::stol( _config->get("console_width") );
+  Engine::consoleHeight     = std::stol( _config->get("console_height") );
+  Engine::rightPanelWidth   = std::stol( _config->get("right_panel_width") );
+  Engine::bottomPanelHeight = std::stol( _config->get("bottom_panel_height") );;
+  Engine::screenWidth       = Engine::consoleWidth + Engine::rightPanelWidth;
+  Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
 
-  _gui = new gui::Gui;
-
-  setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
+  Map::Tiles.loadTiles( cfg->get("tiles_file") );
+  Actor::DB.loadActors( cfg->get("actors_file") );
+  Map::Gateway.loadMaps( cfg->get("maps_file") );
 
   Actor::Player = new Actor(ActorType::Player, 42, 28);
+  Messenger::message()->setGui(_gui.get());
 
-  Messenger::message()->setGui(_gui);
+  setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
 }
 
 void Engine::update()

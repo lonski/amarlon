@@ -1,0 +1,80 @@
+<Actors>
+	<Actor name="Player" id="1" character="@" color="ffffff" transparent="0" blocks="1" fovOnly="1">
+		<Container maxSize="3">
+			<Content id="12"/>
+			<Content id="17"/>
+		</Container>
+		<Fighter power="5" maxHp="20"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3">
+				<Equipped id="20"/>
+			</ItemSlot>	
+			<ItemSlot type="4">
+				<Equipped id="19"/>
+			</ItemSlot>	
+			<ItemSlot type="5"/>
+			<ItemSlot type="6">
+				<Equipped id="18"/>
+			</ItemSlot>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+			<ItemSlot type="13"/>
+			<ItemSlot type="14"/>			
+		</Wearer>
+	</Actor>
+	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+		<Fighter  power="2" maxHp="10"/>
+		<Ai type="1"/>
+	</Actor>
+	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
+		<Openable type="0" lockId="0" locked="0"/>
+	</Actor>
+	<Actor name="Door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
+		<Openable type="0" lockId="0" locked="0"/>
+	</Actor>
+	<Actor name="Bed" id="5" character="177" color="efefef" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Locker" id="6" character="226" color="906030" transparent="1" blocks="1" fovOnly="0"/>
+	<Actor name="Wardrobe" id="7" character="224" color="906030" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Chair" id="8" character="=" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Furnace" id="9" character="&" color="eeeeee" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Table" id="10" character="10" color="906030" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Worktop" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Bootle of wine" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="3" category="4"/>
+	</Actor>
+	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="4">
+			<Effect type="2" uses="1" heal="2"/>
+		</Pickable>
+	</Actor>
+	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="0"/>
+	</Actor>
+	<Actor name="Orc corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="0"/>
+	</Actor>
+	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1">
+			<Effect type="1" lockId="5" uses="-1" category="0"/>
+		</Pickable>
+	</Actor>
+	<Actor name="Linen clothes" id="17" character="[" color="FFFF99" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
+	</Actor>
+	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="6" category="2"/>
+	</Actor>
+	<Actor name="Belt of hill giant strength" id="19" character="[" color="FFCC66" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="4" category="2"/>
+	</Actor>
+	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
+	</Actor>
+	
+</Actors>
