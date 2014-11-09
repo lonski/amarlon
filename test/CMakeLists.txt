@@ -4,7 +4,7 @@ set(SOURCE_FILES
     ActorTest.cpp
     CommandExecutorTest.cpp
     main.cpp
-    utilsTest.cpp
+    UtilsTest.cpp
     DataGateway/DataGatewayTest.cpp
     DataGateway/MapGatewayTest.cpp
     World/MapTest.cpp
