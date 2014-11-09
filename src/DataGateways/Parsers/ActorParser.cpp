@@ -1,6 +1,6 @@
 #include "ActorParser.h"
-#include "Utils/XmlUtils.h"
-#include "Utils/Utils.h"
+#include <utils/xml_utils.h>
+#include <utils/utils.h>
 #include <string>
 
 namespace amarlon {

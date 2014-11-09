@@ -1,5 +1,5 @@
 #include "text_window.h"
-#include <Utils/Utils.h>
+#include <utils/utils.h>
 #include <Gui/Widget/label.h>
 
 namespace amarlon { namespace gui {

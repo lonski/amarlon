@@ -3,7 +3,7 @@
 #include <Gui/message_box.h>
 #include <Actor/ActorFeatures/Container.h>
 #include <Gui/Window/amount_window.h>
-#include <Utils/ItemPicker.h>
+#include <utils/item_picker.h>
 
 namespace amarlon { namespace gui {
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 #include <libtcod.hpp>
-#include <Utils/console_freezer.h>
+#include <utils/console_freezer.h>
 #include <Gui/Widget/menu/items_menu.h>
 #include <Gui/Window/window.h>
 

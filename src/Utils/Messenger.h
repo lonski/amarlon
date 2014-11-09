@@ -21,6 +21,7 @@ public:
   void actorDies(Actor* victim);
   void actorPicked(Actor* picker, Actor* picked, int amount);
   void actorPicked(std::string pickerName, std::string itemName, int amount);
+  void actorDropped(Actor* dropper, Actor* dropped, int amount);
   void actorIsLocked(Actor* openableActor);
   void actorHealed(Actor* healed, int amount);
   void actorHasBeenLocked(Actor* locker, Actor* locked);

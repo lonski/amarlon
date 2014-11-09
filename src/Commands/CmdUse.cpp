@@ -1,11 +1,11 @@
 #include "CmdUse.h"
 #include <functional>
-#include "Utils/SelectorType.h"
-#include "Utils/TargetSelector/TargetSelector.h"
+#include "utils/selector_type.h"
+#include "utils/target_selector/target_selector.h"
 #include "Actor/Effects/Effect.h"
-#include "Utils/DirectionSelector.h"
+#include "utils/direction_selector.h"
 #include "Gui/Gui.h"
-#include "Utils/Messenger.h"
+#include "utils/messenger.h"
 #include "Engine.h"
 #include <Gui/Widget/menu/items_menu.h>
 #include <Gui/Widget/menu/label_menu_item.h>

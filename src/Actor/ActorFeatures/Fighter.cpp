@@ -4,8 +4,8 @@
 #include <iomanip>
 #include <sstream>
 #include "Gui/Gui.h"
-#include "Utils/Utils.h"
-#include "Utils/Messenger.h"
+#include <utils/utils.h>
+#include <utils/messenger.h>
 
 namespace amarlon {
 

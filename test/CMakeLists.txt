@@ -4,7 +4,7 @@ set(SOURCE_FILES
     ActorTest.cpp
     CommandExecutorTest.cpp
     main.cpp
-    UtilsTest.cpp
+    utilsTest.cpp
     DataGateway/DataGatewayTest.cpp
     DataGateway/MapGatewayTest.cpp
     World/MapTest.cpp
@@ -27,13 +27,13 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.cpp
     ${PROJECT_SOURCE_DIR}/src/World/Map.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/DirectionSelector.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/ItemPicker.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/Messenger.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/Utils.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/TargetSelector/ExecutorSelector.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/TargetSelector/SingleNeighbourSelector.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/TargetSelector/TargetSelector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/item_picker.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/messenger.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/utils.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/executor_selector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/single_neighbour_selector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/target_elector.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdClose.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdFullscreen.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdInventory.cpp
@@ -43,7 +43,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdUse.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/Command.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/amount_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/Gui/Gui.cpp
+    ${PROJECT_SOURCE_DIR}/src/Gui/gui.cpp
     ${PROJECT_SOURCE_DIR}/src/CommandExecutor.cpp
     ${PROJECT_SOURCE_DIR}/src/Engine.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/bar.cpp
@@ -62,7 +62,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/bag_manager.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/body_manager.cpp
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/pick_up_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/console_freezer.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/console_freezer.cpp
     ${PROJECT_SOURCE_DIR}/src/World/Map.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Actor.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorType.h
@@ -90,16 +90,16 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/World/Map.h
     ${PROJECT_SOURCE_DIR}/src/World/MapId.h
     ${PROJECT_SOURCE_DIR}/src/World/TileType.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/DirectionSelector.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/ItemPicker.h
-#    ${PROJECT_SOURCE_DIR}/src/Utils/LogEntry.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/Messenger.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/SelectorType.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/Utils.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/XmlUtils.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/TargetSelector/ExecutorSelector.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/TargetSelector/SingleNeighbourSelector.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/TargetSelector/TargetSelector.h
+    ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.h
+    ${PROJECT_SOURCE_DIR}/src/utils/item_picker.h
+#    ${PROJECT_SOURCE_DIR}/src/utils/LogEntry.h
+    ${PROJECT_SOURCE_DIR}/src/utils/messenger.h
+    ${PROJECT_SOURCE_DIR}/src/utils/selector_type.h
+    ${PROJECT_SOURCE_DIR}/src/utils/utils.h
+    ${PROJECT_SOURCE_DIR}/src/utils/xml_utils.h
+    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/executor_selector.h
+    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/Single_neighbour_selector.h
+    ${PROJECT_SOURCE_DIR}/src/utils/target_elector/target_elector.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdClose.h
 #    ${PROJECT_SOURCE_DIR}/src/Commands/CmdDrop.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdFullscreen.h
@@ -110,7 +110,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdUse.h
     ${PROJECT_SOURCE_DIR}/src/Commands/Command.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/amount_window.h
-    ${PROJECT_SOURCE_DIR}/src/Gui/Gui.h
+    ${PROJECT_SOURCE_DIR}/src/Gui/gui.h
     ${PROJECT_SOURCE_DIR}/src/CommandExecutor.h
     ${PROJECT_SOURCE_DIR}/src/Engine.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Widget/bar.h
@@ -130,9 +130,9 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/bag_manager.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/body_manager.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/pick_up_window.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/console_freezer.h
-    ${PROJECT_SOURCE_DIR}/src/Utils/configuration.cpp
-    ${PROJECT_SOURCE_DIR}/src/Utils/configuration.h
+    ${PROJECT_SOURCE_DIR}/src/utils/console_freezer.h
+    ${PROJECT_SOURCE_DIR}/src/utils/configuration.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/configuration.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.h
 )

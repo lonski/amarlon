@@ -4,7 +4,7 @@
 #include "Gui/Gui.h"
 #include <Gui/message_box.h>
 #include <stdexcept>
-#include <Utils/configuration.h>
+#include <utils/configuration.h>
 
 using namespace std;
 

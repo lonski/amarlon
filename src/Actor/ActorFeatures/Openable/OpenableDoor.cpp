@@ -1,7 +1,7 @@
 #include "OpenableDoor.h"
 #include "Actor/Actor.h"
 #include "Gui/Gui.h"
-#include "Utils/Messenger.h"
+#include <utils/messenger.h>
 #include <iostream>
 
 namespace amarlon {

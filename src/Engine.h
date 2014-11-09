@@ -2,8 +2,8 @@
 #define ENGINE_H
 
 #include <libtcod.hpp>
-#include <Utils/singleton.h>
-#include "Utils/colored_string.h"
+#include <utils/singleton.h>
+#include <utils/colored_string.h>
 #include "CommandExecutor.h"
 #include <Gui/Window/window_manager.h>
 

@@ -91,8 +91,8 @@ set(SOURCE_FILES
     Gui/Window/amount_window.h
     Gui/Window/window_manager.cpp
     Gui/Window/window_manager.h
-    Gui/Gui.cpp
-    Gui/Gui.h
+    Gui/gui.cpp
+    Gui/gui.h
     Gui/message_box.h
     Gui/Window/pick_up_window.cpp
     Gui/Window/pick_up_window.h
@@ -100,27 +100,27 @@ set(SOURCE_FILES
     Gui/Window/text_window.h
     Gui/Window/window.cpp
     Gui/Window/window.h
-    Utils/TargetSelector/ExecutorSelector.cpp
-    Utils/TargetSelector/ExecutorSelector.h
-    Utils/TargetSelector/SingleNeighbourSelector.cpp
-    Utils/TargetSelector/SingleNeighbourSelector.h
-    Utils/TargetSelector/TargetSelector.cpp
-    Utils/TargetSelector/TargetSelector.h
-    Utils/colored_string.h
-    Utils/DirectionSelector.cpp
-    Utils/DirectionSelector.h
-    Utils/ItemPicker.cpp
-    Utils/ItemPicker.h
-    Utils/Messenger.cpp
-    Utils/Messenger.h
-    Utils/SelectorType.h
-    Utils/console_freezer.h
-    Utils/console_freezer.cpp
-    Utils/Utils.cpp
-    Utils/Utils.h
-    Utils/configuration.cpp
-    Utils/configuration.h
-    Utils/XmlUtils.h
+    utils/target_selector/executor_selector.cpp
+    utils/target_selector/executor_selector.h
+    utils/target_selector/single_neighbour_selector.cpp
+    utils/target_selector/single_neighbour_selector.h
+    utils/target_selector/target_selector.cpp
+    utils/target_selector/target_selector.h
+    utils/colored_string.h
+    utils/direction_selector.cpp
+    utils/direction_selector.h
+    utils/item_picker.cpp
+    utils/item_picker.h
+    utils/messenger.cpp
+    utils/messenger.h
+    utils/selector_type.h
+    utils/console_freezer.h
+    utils/console_freezer.cpp
+    utils/utils.cpp
+    utils/utils.h
+    utils/configuration.cpp
+    utils/configuration.h
+    utils/xml_utils.h
     World/Map.cpp
     World/Map.h
     World/MapId.h

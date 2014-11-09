@@ -1,7 +1,7 @@
-#include "Messenger.h"
+#include "messenger.h"
 #include "Gui/Gui.h"
 #include "Actor/Actor.h"
-#include "Utils/Utils.h"
+#include <utils/utils.h>
 
 namespace amarlon {
 
@@ -56,6 +56,21 @@ void Messenger::actorDies(Actor *victim)
 void Messenger::actorPicked(std::string pickerName, std::string itemName, int amount)
 {
   string msg = pickerName + " picked " + tolowers(itemName);
+
+  if (amount > 1)
+    msg += " (" + to_string(amount) + ").";
+  else
+    msg += ".";
+
+  _gui->message(msg, TCODColor::darkYellow);
+}
+
+void Messenger::actorDropped(Actor *dropper, Actor *dropped, int amount)
+{
+  string dropperName = dropper->getName();
+  string itemName = dropped->getName();
+
+  string msg = dropperName + " dropped " + tolowers(itemName);
 
   if (amount > 1)
     msg += " (" + to_string(amount) + ").";

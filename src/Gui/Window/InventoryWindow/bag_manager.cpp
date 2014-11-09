@@ -6,6 +6,7 @@
 #include <Gui/Window/amount_window.h>
 #include <Engine.h>
 #include <World/Map.h>
+#include <utils/messenger.h>
 
 namespace amarlon { namespace gui {
 
@@ -164,6 +165,7 @@ void BagManager::drop(Actor* item)
   {
     item->setX( Actor::Player->getX() );
     item->setY( Actor::Player->getY() );
+    Messenger::message()->actorDropped(Actor::Player, item, item->afPickable()->getAmount());
     Engine::instance().currentMap().addActor( item );
   }
   else

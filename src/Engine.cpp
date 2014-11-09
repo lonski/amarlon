@@ -3,10 +3,10 @@
 #include "Actor/Actor.h"
 #include "Gui/Gui.h"
 #include <algorithm>
-#include "Utils/Messenger.h"
+#include <utils/messenger.h>
 #include "Gui/Widget/panel.h"
 #include "Gui/Widget/bar.h"
-#include "Utils/configuration.h"
+#include <utils/configuration.h>
 
 namespace amarlon {
 

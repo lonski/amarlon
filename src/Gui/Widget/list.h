@@ -2,9 +2,9 @@
 #define LIST_H
 
 #include <list>
-#include "widget.h"
-#include "Utils/colored_string.h"
-#include "libtcod.hpp"
+#include <libtcod.hpp>
+#include <Gui/Widget/widget.h>
+#include <utils/colored_string.h>
 
 namespace amarlon { namespace gui {
 

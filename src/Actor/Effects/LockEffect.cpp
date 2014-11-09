@@ -1,9 +1,9 @@
 #include "LockEffect.h"
 #include "Actor/Actor.h"
 #include "Gui/Gui.h"
-#include "Utils/Utils.h"
-#include "Utils/DirectionSelector.h"
-#include "Utils/Messenger.h"
+#include "utils/utils.h"
+#include "utils/direction_selector.h"
+#include "utils/messenger.h"
 
 namespace amarlon {
 

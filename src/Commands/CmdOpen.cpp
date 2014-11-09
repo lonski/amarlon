@@ -1,7 +1,7 @@
 #include "CmdOpen.h"
 #include <iostream>
-#include "Utils/Utils.h"
-#include <Utils/ItemPicker.h>
+#include <utils/utils.h>
+#include <utils/item_picker.h>
 #include <algorithm>
 #include "CmdPick.h"
 #include "World/Map.h"

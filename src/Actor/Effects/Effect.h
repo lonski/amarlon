@@ -4,7 +4,7 @@
 #include <vector>
 #include "EffectType.h"
 #include "DataGateways/ActorDescriptions.h"
-#include "Utils/SelectorType.h"
+#include "utils/selector_type.h"
 
 namespace amarlon {
 

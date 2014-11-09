@@ -2,7 +2,7 @@
 #define CMDOPEN_H
 
 #include "Command.h"
-#include "Utils/DirectionSelector.h"
+#include "utils/direction_selector.h"
 
 namespace amarlon {
 
