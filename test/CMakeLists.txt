@@ -133,6 +133,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Utils/console_freezer.h
     ${PROJECT_SOURCE_DIR}/src/Utils/configuration.cpp
     ${PROJECT_SOURCE_DIR}/src/Utils/configuration.h
+    ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.cpp
+    ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.h
 )
 
 add_executable(ut_amarlon ${SOURCE_FILES})
