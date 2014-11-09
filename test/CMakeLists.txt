@@ -98,7 +98,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/utils.h
     ${PROJECT_SOURCE_DIR}/src/utils/xml_utils.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.h
-    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/Single_neighbour_selector.h
+    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdClose.h
 #    ${PROJECT_SOURCE_DIR}/src/Commands/CmdDrop.h
