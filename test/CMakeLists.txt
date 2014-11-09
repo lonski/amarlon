@@ -1,4 +1,4 @@
-find_package(gtest REQUIRED)
+find_package(GTest REQUIRED)
 
 set(SOURCE_FILES
     ActorTest.cpp
@@ -131,6 +131,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/InventoryWindow/body_manager.h
     ${PROJECT_SOURCE_DIR}/src/Gui/Window/pick_up_window.h
     ${PROJECT_SOURCE_DIR}/src/Utils/console_freezer.h
+    ${PROJECT_SOURCE_DIR}/src/Utils/configuration.cpp
+    ${PROJECT_SOURCE_DIR}/src/Utils/configuration.h
 )
 
 add_executable(ut_amarlon ${SOURCE_FILES})
