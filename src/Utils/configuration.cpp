@@ -1,5 +1,6 @@
 #include "configuration.h"
 #include <fstream>
+#include <stdexcept>
 
 namespace amarlon {
 
