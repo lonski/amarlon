@@ -15,7 +15,7 @@ class Engine;
 class CommandExecutor
 {
 public:
-  CommandExecutor(Engine *engine);
+  CommandExecutor();
   bool execute(TCOD_key_t &key, Actor* executor);
 
 private:

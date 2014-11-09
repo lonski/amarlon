@@ -1,7 +1,6 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include "Utils/glodef.h"
 #include <libtcod.hpp>
 #include <memory>
 #include <string>

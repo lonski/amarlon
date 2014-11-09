@@ -7,8 +7,6 @@
 
 namespace amarlon {
 
-class Engine;
-
 enum class CommandId
 {
   Null,
@@ -19,21 +17,19 @@ enum class CommandId
   Pick,
   Close,
   Use,
+  Help,
   End
 };
 
 class Command
 {
 public:
-  Command(Engine* engine): _engine(engine) {}
-  virtual ~Command() {}
-  static Command* create(CommandId cmd, Engine* engine);
+  Command() = default;
+  virtual ~Command() = default;
+  static Command* create(CommandId cmd);
 
   virtual bool accept(TCOD_key_t &key) = 0;
   virtual void execute(Actor* executor) = 0;
-
-protected:
-  Engine* _engine;
 
 };
 

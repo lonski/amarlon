@@ -9,7 +9,7 @@ namespace amarlon {
 class CmdClose : public Command
 {
 public:
-  CmdClose(Engine* engine);
+  CmdClose();
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Actor* executor);
 

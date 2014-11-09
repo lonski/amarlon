@@ -1,12 +1,12 @@
 #include "CmdInventory.h"
 #include <iostream>
 #include <algorithm>
-#include <Gui/InventoryWindow/inventory_window.h>
+#include <Engine.h>
+#include <Gui/Window/InventoryWindow/inventory_window.h>
 
 namespace amarlon {
 
-CmdInventory::CmdInventory(Engine *engine)
-  : Command(engine)
+CmdInventory::CmdInventory()
 {
 }
 
@@ -17,9 +17,9 @@ bool CmdInventory::accept(TCOD_key_t &key)
 
 void CmdInventory::execute(Actor*)
 {
-  if ( !_invWindow ) _invWindow.reset( new gui::InventoryWindow(_engine) );
-
-  _invWindow->show();
+  Engine::instance().windowManager()
+                    .getWindow<gui::InventoryWindow>()
+                    .show();
 }
 
 }

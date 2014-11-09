@@ -1,5 +1,5 @@
 #include "widget.h"
-#include <Utils/glodef.h>
+#include <Engine.h>
 
 namespace amarlon { namespace gui {
 
@@ -30,13 +30,13 @@ void Widget::centerPosition(bool centerOfGameWindow)
 {
   if ( centerOfGameWindow )
   {
-    setPosition( gloScreenWidth / 2 - getWidth() / 2,
-                 gloScreenHeight / 2 - getHeight() / 2);
+    setPosition( Engine::screenWidth / 2 - getWidth() / 2,
+                 Engine::screenHeight / 2 - getHeight() / 2);
   }
   else
   {
-    setPosition( gloConsoleWidth / 2 - getWidth() / 2,
-                 gloConsoleHeight / 2 - getHeight() / 2);
+    setPosition( Engine::consoleWidth / 2 - getWidth() / 2,
+                 Engine::consoleHeight / 2 - getHeight() / 2);
   }
 }
 

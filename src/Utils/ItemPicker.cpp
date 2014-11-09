@@ -1,8 +1,9 @@
 #include "ItemPicker.h"
 #include "Actor/Actor.h"
-#include "Gui/AmountWindow.h"
+#include "Gui/Window/amount_window.h"
 #include <Utils/Messenger.h>
 #include <iostream>
+#include <Gui/message_box.h>
 
 namespace amarlon {
 
@@ -17,10 +18,16 @@ int ItemPicker::pick()
   bool stackable = _toPick->afPickable()->isStackable();
   int amount = _toPick->afPickable()->getAmount();
   std::string itemName = _toPick->getName(); //'cause it is possible that the item does not exists after pickin' up
+  Actor* pickableTmp = _toPick; //to rollback spilting amount, when cant pickup (container full)
 
   if ( stackable && amount > 1)
   {
-    int tmpAmount = gui::AmountWindow(amount).getAmount();
+    int tmpAmount = Engine::instance().windowManager()
+                                      .getWindow<gui::AmountWindow>()
+                                      .setMaxAmount(amount)
+                                      .show()
+                                      .downcast<gui::AmountWindow>()
+                                      .getAmount();
 
     if (tmpAmount < amount)
     {
@@ -35,7 +42,11 @@ int ItemPicker::pick()
   }
   else
   {
+    //rollback spilting
+    if ( stackable ) pickableTmp->afPickable()->incAmount( amount );
     amount = 0;
+
+    gui::msgError("Cannot pick up "+itemName+":\nnot enough space in inventory.");
   }
 
   return amount;

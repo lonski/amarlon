@@ -1,6 +1,5 @@
 #include "menu.h"
 #include <algorithm>
-#include <iostream>
 #include <Gui/Widget/label.h>
 
 namespace amarlon { namespace gui {

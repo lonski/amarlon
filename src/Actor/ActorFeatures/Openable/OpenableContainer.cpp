@@ -1,6 +1,7 @@
 #include "OpenableContainer.h"
-#include <Gui/pick_up_window.h>
+#include <Gui/Window/pick_up_window.h>
 #include <Actor/Actor.h>
+#include <Engine.h>
 
 namespace amarlon {
 
@@ -14,8 +15,12 @@ bool OpenableContainer::open(Actor *executor)
 
   if ( _owner->afContainer() )
   {
-    gui::PickUpWindow pickuper(*executor, *_owner->afContainer(), [](Actor* a){ return a->afPickable();});
-    pickuper.show();
+    Engine::instance().windowManager()
+                      .getWindow<gui::PickUpWindow>()
+                      .setPicker(executor)
+                      .setContainer(_owner->afContainer())
+                      .setFilterFunction( [](Actor* a){ return a->afPickable();} )
+                      .show();
 
     r = true;
   }

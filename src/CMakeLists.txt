@@ -33,6 +33,8 @@ set(SOURCE_FILES
     Actor/Actor.cpp
     Actor/Actor.h
     Actor/ActorType.h
+    Commands/CmdHelp.cpp
+    Commands/CmdHelp.h
     Commands/CmdClose.cpp
     Commands/CmdClose.h
     Commands/CmdFullscreen.cpp
@@ -60,12 +62,12 @@ set(SOURCE_FILES
     DataGateways/MapGateway.h
     DataGateways/TileDB.cpp
     DataGateways/TileDB.h
-    Gui/InventoryWindow/bag_manager.cpp
-    Gui/InventoryWindow/bag_manager.h
-    Gui/InventoryWindow/body_manager.cpp
-    Gui/InventoryWindow/body_manager.h
-    Gui/InventoryWindow/inventory_window.cpp
-    Gui/InventoryWindow/inventory_window.h
+    Gui/Window/InventoryWindow/bag_manager.cpp
+    Gui/Window/InventoryWindow/bag_manager.h
+    Gui/Window/InventoryWindow/body_manager.cpp
+    Gui/Window/InventoryWindow/body_manager.h
+    Gui/Window/InventoryWindow/inventory_window.cpp
+    Gui/Window/InventoryWindow/inventory_window.h
     Gui/Widget/menu/items_menu.cpp
     Gui/Widget/menu/items_menu.h
     Gui/Widget/menu/label_menu_item.cpp
@@ -85,15 +87,19 @@ set(SOURCE_FILES
     Gui/Widget/panel.h
     Gui/Widget/widget.cpp
     Gui/Widget/widget.h
-    Gui/AmountWindow.cpp
-    Gui/AmountWindow.h
+    Gui/Window/amount_window.cpp
+    Gui/Window/amount_window.h
+    Gui/Window/window_manager.cpp
+    Gui/Window/window_manager.h
     Gui/Gui.cpp
     Gui/Gui.h
     Gui/message_box.h
-    Gui/pick_up_window.cpp
-    Gui/pick_up_window.h
-    Gui/text_window.cpp
-    Gui/text_window.h
+    Gui/Window/pick_up_window.cpp
+    Gui/Window/pick_up_window.h
+    Gui/Window/text_window.cpp
+    Gui/Window/text_window.h
+    Gui/Window/window.cpp
+    Gui/Window/window.h
     Utils/TargetSelector/ExecutorSelector.cpp
     Utils/TargetSelector/ExecutorSelector.h
     Utils/TargetSelector/SingleNeighbourSelector.cpp
@@ -103,7 +109,6 @@ set(SOURCE_FILES
     Utils/colored_string.h
     Utils/DirectionSelector.cpp
     Utils/DirectionSelector.h
-    Utils/glodef.h
     Utils/ItemPicker.cpp
     Utils/ItemPicker.h
     Utils/Messenger.cpp

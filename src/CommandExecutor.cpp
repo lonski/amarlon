@@ -2,11 +2,11 @@
 
 namespace amarlon {
 
-CommandExecutor::CommandExecutor(Engine* engine)
+CommandExecutor::CommandExecutor()
 {
   for (int e = (int)CommandId::Null+1; e < (int)CommandId::End; ++e)
   {
-    _commands.push_back( Command::create( (CommandId)e, engine ) );
+    _commands.push_back( Command::create( static_cast<CommandId>(e) ) );
   }
 }
 

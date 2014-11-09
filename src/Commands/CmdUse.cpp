@@ -13,8 +13,7 @@
 
 namespace amarlon {
 
-CmdUse::CmdUse(Engine *engine)
-  : Command(engine)
+CmdUse::CmdUse()
 {
 }
 
@@ -25,9 +24,9 @@ bool CmdUse::accept(TCOD_key_t &key)
 
 void CmdUse::execute(Actor *executor)
 {  
-  Actor* item = acquireItemToUse(executor, _engine);
+  Actor* item = acquireItemToUse(executor);
 
-  _engine->render();
+  Engine::instance().render();
 
   if (item && item->afPickable()->getEffect())
   {
@@ -36,7 +35,7 @@ void CmdUse::execute(Actor *executor)
 
     if (tSelector != nullptr)
     {
-      std::vector<Actor*> targets = tSelector->select(executor, _engine->currentMap());
+      std::vector<Actor*> targets = tSelector->select(executor, &Engine::instance().currentMap());
       Pickable* toUse = item->afPickable();
 
       if ( toUse->use( executor, targets ) && toUse->getUsesCount() == 0)
@@ -55,7 +54,7 @@ void CmdUse::execute(Actor *executor)
 
 }
 
-Actor* CmdUse::acquireItemToUse(Actor* executor, Engine* engine)
+Actor* CmdUse::acquireItemToUse(Actor* executor)
 {
   Actor* item = nullptr;
 
@@ -69,7 +68,7 @@ Actor* CmdUse::acquireItemToUse(Actor* executor, Engine* engine)
   if ( !usableItems.empty() )
   {
     std::map<int, Actor*> mItems = itemsMenu.fillWithItems<gui::LabelMenuItem>( usableItems );
-    auto choosen = mItems.find( itemsMenu.choose(*engine->getConsole()) );
+    auto choosen = mItems.find( itemsMenu.choose(*TCODConsole::root) );
     if ( choosen != mItems.end() ) item = choosen->second;
   }
   else gui::msgError("You don't have any usable items!");

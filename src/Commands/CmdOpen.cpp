@@ -9,8 +9,7 @@
 
 namespace amarlon {
 
-CmdOpen::CmdOpen(Engine *engine)
-  : Command(engine)
+CmdOpen::CmdOpen()
 {
 }
 
@@ -21,7 +20,7 @@ bool CmdOpen::accept(TCOD_key_t &key)
 
 void CmdOpen::execute(Actor *executor)
 {
-  Map* map = _engine->currentMap();
+  Map& map = Engine::instance().currentMap();
   int x = executor->getX();
   int y = executor->getY();
 
@@ -29,13 +28,13 @@ void CmdOpen::execute(Actor *executor)
 
   _dSelector.select(dx, dy);
 
-  Actor* target = map->getFirstActor(x+dx, y+dy);
+  Actor* target = map.getFirstActor(x+dx, y+dy);
 
   if ( target && target->afOpenable() )
   {
     if ( target->afOpenable()->open(executor) )
     {
-      map->updateActorCell(target);
+      map.updateActorCell(target);
     }
   }
 }

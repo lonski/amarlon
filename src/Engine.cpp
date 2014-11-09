@@ -7,16 +7,12 @@
 #include "Gui/Widget/panel.h"
 #include "Gui/Widget/bar.h"
 
-#include "Gui/InventoryWindow/inventory_window.h"
-
 namespace amarlon {
 
 int Engine::FovRadius = 20;
 
 Engine::Engine()
-  : _console(TCODConsole::root)
-  , _gui(nullptr)
-  , cmdExecutor( new CommandExecutor(this) )
+  : _gui(nullptr)
 {
 }
 
@@ -27,6 +23,9 @@ Engine::~Engine()
 
 void Engine::init()
 {
+  _cmdExecutor.reset( new CommandExecutor );
+  _windowManager.reset( new gui::WindowManager );
+
   //temp init
   Map::Tiles.loadTiles("tiles.xml");
   Actor::DB.loadActors("actors.xml");
@@ -48,11 +47,11 @@ void Engine::update()
 
 void Engine::render()
 {
-  _console->clear();
+  TCODConsole::root->clear();
   if (_currentMap != nullptr)
   {
     _currentMap->computeFov(Actor::Player->getX(), Actor::Player->getY(), FovRadius);
-    _currentMap->render(_console);
+    _currentMap->render(TCODConsole::root);
   }
 
   if (_gui)
@@ -66,10 +65,10 @@ void Engine::render()
     _gui->render();
   }
 
-  _console->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
-  _console->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
+  TCODConsole::root->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
+  TCODConsole::root->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
 
-  getConsole()->flush();
+  TCODConsole::root->flush();
 }
 
 void Engine::updateAis()
@@ -77,43 +76,35 @@ void Engine::updateAis()
   if (_currentMap != nullptr)
   {
     std::function<bool(Actor*)> filter = [](Actor* a)->bool{ return a->afAi();};
-    std::vector<Actor*> ais = currentMap()->getActors( &filter );
+    std::vector<Actor*> ais = currentMap().getActors( &filter );
 
-    std::for_each( ais.begin(), ais.end(), [&](Actor* a){a->afAi()->update( currentMap() );});
+    std::for_each( ais.begin(), ais.end(), [&](Actor* a){a->afAi()->update( &currentMap() );});
   }
 }
 
 void Engine::processKey(TCOD_key_t &key)
 {
-  cmdExecutor->execute(key, Actor::Player);
+  _cmdExecutor->execute(key, Actor::Player);
 }
 
-Map* Engine::currentMap() const
+Map &Engine::currentMap() const
 {
-  return _currentMap.get();
+  return *_currentMap;
 }
 
 void Engine::setCurrentMap(MapPtr currentMap)
 {
   _currentMap = currentMap;
 }
-TCODConsole* Engine::getConsole() const
+
+gui::Gui& Engine::gui() const
 {
-  return _console;
+  return *_gui;
 }
 
-void Engine::setConsole(TCODConsole *console)
+gui::WindowManager& Engine::windowManager() const
 {
-  _console = console;
-}
-gui::Gui* Engine::getGui() const
-{
-  return _gui;
-}
-
-void Engine::setGui(gui::Gui *gui)
-{
-  _gui = gui;
+  return *_windowManager;
 }
 
 std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()

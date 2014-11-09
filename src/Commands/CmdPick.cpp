@@ -2,13 +2,12 @@
 #include <Engine.h>
 #include <World/Map.h>
 #include <Actor/Actor.h>
-#include <Gui/pick_up_window.h>
+#include <Gui/Window/pick_up_window.h>
 #include <functional>
 
 namespace amarlon {
 
-CmdPick::CmdPick(Engine* engine)
-  : Command(engine)
+CmdPick::CmdPick()
 {
 }
 
@@ -22,11 +21,14 @@ void CmdPick::execute(Actor *executor)
   int x( executor->getX() );
   int y( executor->getY() );
 
-  Container& container = _engine->currentMap()->getActorsContainer(x, y);
+  Container& container = Engine::instance().currentMap().getActorsContainer(x, y);
 
-  gui::PickUpWindow pickupWin(*executor, container, [](Actor* a){ return a->afPickable(); });
-
-  pickupWin.show();
+  Engine::instance().windowManager()
+                    .getWindow<gui::PickUpWindow>()
+                    .setPicker(executor)
+                    .setContainer(&container)
+                    .setFilterFunction( [](Actor* a){ return a->afPickable(); } )
+                    .show();
 }
 
 }

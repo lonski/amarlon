@@ -1,17 +1,14 @@
-#ifndef CMDPICK_H
-#define CMDPICK_H
+#ifndef CMDHELP_H
+#define CMDHELP_H
 
-#include <functional>
 #include "Command.h"
 
 namespace amarlon {
 
-class Container;
-
-class CmdPick : public Command
+class CmdHelp : public Command
 {
 public:
-  CmdPick();
+  CmdHelp();
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Actor* executor);
 
@@ -19,4 +16,4 @@ public:
 
 }
 
-#endif // CMDPICK_H
+#endif // CMDHELP_H

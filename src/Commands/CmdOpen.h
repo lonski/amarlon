@@ -9,7 +9,7 @@ namespace amarlon {
 class CmdOpen : public Command
 {
 public:
-  CmdOpen(Engine* engine);
+  CmdOpen();
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Actor* executor);
 

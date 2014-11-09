@@ -13,12 +13,9 @@ namespace gui{
 class CmdInventory : public Command
 {
 public:
-  CmdInventory(Engine* engine);
+  CmdInventory();
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Actor*);
-
-private:
-  std::shared_ptr<gui::InventoryWindow> _invWindow;
 
 };
 

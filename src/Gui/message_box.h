@@ -3,22 +3,27 @@
 
 #include <string>
 #include <libtcod.hpp>
-#include <Gui/text_window.h>
+#include <Gui/Window/text_window.h>
+#include <Engine.h>
 
 namespace amarlon { namespace gui {
 
 static inline void msgError(const std::string& text)
 {
-  TextWindow msg(text);
-  msg.setFrameColor(TCODColor::red);
-  msg.show(*TCODConsole::root);
+  Engine::instance().windowManager()
+                    .getWindow<TextWindow>()
+                    .setWindowFrameColor(TCODColor::red)
+                    .setWindowText(text)
+                    .show();
 }
 
 static inline void msgInfo(const std::string& text)
 {
-  TextWindow msg(text);
-  msg.setFrameColor(TCODColor::darkerOrange);
-  msg.show(*TCODConsole::root);
+  Engine::instance().windowManager()
+                    .getWindow<TextWindow>()
+                    .setWindowFrameColor(TCODColor::darkerOrange)
+                    .setWindowText(text)
+                    .show();
 }
 
 }}

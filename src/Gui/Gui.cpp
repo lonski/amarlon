@@ -5,18 +5,19 @@
 #include "Widget/list.h"
 #include "Widget/bar.h"
 #include "Widget/label.h"
+#include <Engine.h>
 
 namespace amarlon { namespace gui {
 
 Gui::Gui()
-  : rightConWidth(20)
-  , rightConHeight(gloScreenHeight)
-  , bottomConWidth(gloScreenWidth - 20)
-  , bottomConHeight(20)
-  , logConWidth((gloScreenWidth - 20) / 2)
-  , logConHeight(20)
-  , viewConWidth((gloScreenWidth - 20) / 2)
-  , viewConHeight(20)
+  : rightConWidth( Engine::rightPanelWidth )
+  , rightConHeight(Engine::screenHeight)
+  , bottomConWidth(Engine::screenWidth - Engine::rightPanelWidth)
+  , bottomConHeight(Engine::bottomPanelHeight)
+  , logConWidth((bottomConWidth) / 2)
+  , logConHeight(bottomConHeight)
+  , viewConWidth((bottomConWidth) / 2)
+  , viewConHeight(bottomConHeight)
   , LogSize( logConHeight - 3 ) // 3 is for frame
   , _frameColor(TCODColor::darkerOrange)
 
@@ -29,7 +30,7 @@ Gui::Gui()
 void Gui::setupRightPanel()
 {
   PanelPtr rightPanel( new Panel(rightConWidth, rightConHeight) );
-  rightPanel->setPosition( gloScreenWidth - rightConWidth, 0 );
+  rightPanel->setPosition( Engine::screenWidth - rightConWidth, 0 );
 
   _playerName.reset( new Label );
   _playerName->setPosition(2,2);
@@ -51,7 +52,7 @@ void Gui::setupLogPanel()
   _log->setMaxSize(LogSize);
 
   PanelPtr logPanel( new Panel(logConWidth, logConHeight) );
-  logPanel->setPosition(0, gloScreenHeight - logConHeight);
+  logPanel->setPosition(0, Engine::screenHeight - logConHeight);
   logPanel->addWidget(_log);
 
   _widgets.push_back( logPanel );
@@ -64,7 +65,7 @@ void Gui::setupViewPanel()
   _viewList->setMaxSize(LogSize);
 
   PanelPtr viewPanel( new Panel(viewConWidth, viewConHeight) );
-  viewPanel->setPosition(logConWidth, gloScreenHeight - viewConHeight);
+  viewPanel->setPosition(logConWidth, Engine::screenHeight - viewConHeight);
   viewPanel->addWidget(_viewList);
 
   _widgets.push_back( viewPanel );
