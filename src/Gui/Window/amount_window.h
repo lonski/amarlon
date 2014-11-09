@@ -3,7 +3,7 @@
 
 #include <string>
 #include <libtcod.hpp>
-#include <Gui/Window/window.h>
+#include <gui/window/window.h>
 
 namespace amarlon { namespace gui {
 

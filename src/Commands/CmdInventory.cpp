@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <Engine.h>
-#include <Gui/Window/InventoryWindow/inventory_window.h>
+#include <gui/window/inventory_window/inventory_window.h>
 
 namespace amarlon {
 

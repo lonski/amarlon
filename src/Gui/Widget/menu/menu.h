@@ -4,8 +4,8 @@
 #include <memory>
 #include <map>
 #include <libtcod.hpp>
-#include <Gui/Widget/panel.h>
-#include <Gui/Widget/menu/menu_item.h>
+#include <gui/widget/panel.h>
+#include <gui/widget/menu/menu_item.h>
 
 namespace amarlon { namespace gui {
 

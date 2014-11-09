@@ -1,7 +1,7 @@
 #include "Pickable.h"
 #include "Actor/Actor.h"
 #include "Actor/Effects/Effect.h"
-#include "Gui/Gui.h"
+#include "gui/gui.h"
 #include <iostream>
 
 namespace amarlon {

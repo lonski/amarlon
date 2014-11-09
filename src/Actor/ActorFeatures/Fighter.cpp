@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include "Gui/Gui.h"
+#include "gui/gui.h"
 #include <utils/utils.h>
 #include <utils/messenger.h>
 

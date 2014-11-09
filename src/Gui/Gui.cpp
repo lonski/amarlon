@@ -1,4 +1,4 @@
-#include "Gui.h"
+#include "gui.h"
 #include <algorithm>
 #include <iostream>
 #include "Widget/panel.h"

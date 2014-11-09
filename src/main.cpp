@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Engine.h"
 #include "World/Map.h"
-#include "Gui/Gui.h"
-#include <Gui/message_box.h>
+#include "gui/gui.h"
+#include <gui/message_box.h>
 #include <stdexcept>
 #include <utils/configuration.h>
 

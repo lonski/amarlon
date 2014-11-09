@@ -2,10 +2,10 @@
 #define BODY_SLOT_H
 
 #include <iostream>
-#include <Gui/Widget/panel.h>
-#include <Gui/Widget/label.h>
-#include <Gui/Widget/menu/menu_item.h>
-#include <Gui/Widget/bar.h>
+#include <gui/widget/panel.h>
+#include <gui/widget/label.h>
+#include <gui/widget/menu/menu_item.h>
+#include <gui/widget/bar.h>
 
 namespace amarlon { namespace gui {
 

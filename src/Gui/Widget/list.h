@@ -3,7 +3,7 @@
 
 #include <list>
 #include <libtcod.hpp>
-#include <Gui/Widget/widget.h>
+#include <gui/widget/widget.h>
 #include <utils/colored_string.h>
 
 namespace amarlon { namespace gui {

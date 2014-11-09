@@ -5,7 +5,7 @@
 #include <utils/singleton.h>
 #include <utils/colored_string.h>
 #include "CommandExecutor.h"
-#include <Gui/Window/window_manager.h>
+#include <gui/window/window_manager.h>
 
 namespace amarlon {
 

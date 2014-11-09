@@ -1,6 +1,6 @@
 #include "OpenableDoor.h"
 #include "Actor/Actor.h"
-#include "Gui/Gui.h"
+#include "gui/gui.h"
 #include <utils/messenger.h>
 #include <iostream>
 

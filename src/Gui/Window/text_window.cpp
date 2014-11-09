@@ -1,6 +1,6 @@
 #include "text_window.h"
 #include <utils/utils.h>
-#include <Gui/Widget/label.h>
+#include <gui/widget/label.h>
 
 namespace amarlon { namespace gui {
 

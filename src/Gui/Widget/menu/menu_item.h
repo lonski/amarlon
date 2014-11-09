@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <iostream>
-#include <Gui/Widget/widget.h>
+#include <gui/widget/widget.h>
 
 namespace amarlon { namespace gui {
 

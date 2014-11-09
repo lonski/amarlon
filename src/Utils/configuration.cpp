@@ -52,8 +52,6 @@ std::string Configuration::get(const std::string &tag)
     return found->second;
   else
     throw std::runtime_error("Configuration tag \""+tag+"\" not available!");
-
-  return "";
 }
 
 Configuration& Configuration::set(const std::string &tag, const std::string &value)

@@ -1,5 +1,5 @@
 #include "OpenableContainer.h"
-#include <Gui/Window/pick_up_window.h>
+#include <gui/window/pick_up_window.h>
 #include <Actor/Actor.h>
 #include <Engine.h>
 

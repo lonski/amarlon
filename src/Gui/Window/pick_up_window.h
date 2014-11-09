@@ -5,8 +5,8 @@
 #include <functional>
 #include <libtcod.hpp>
 #include <utils/console_freezer.h>
-#include <Gui/Widget/menu/items_menu.h>
-#include <Gui/Window/window.h>
+#include <gui/widget/menu/items_menu.h>
+#include <gui/window/window.h>
 
 namespace amarlon {
 

@@ -2,8 +2,8 @@
 #define TEXT_WINDOW_H
 
 #include <string>
-#include <Gui/Widget/panel.h>
-#include <Gui/Window/window.h>
+#include <gui/widget/panel.h>
+#include <gui/window/window.h>
 
 namespace amarlon { namespace gui {
 

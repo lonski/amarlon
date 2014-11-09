@@ -3,7 +3,7 @@
 
 #include <map>
 #include <memory>
-#include <Gui/Window/window.h>
+#include <gui/window/window.h>
 
 namespace amarlon { namespace gui {
 

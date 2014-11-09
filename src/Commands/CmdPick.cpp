@@ -2,7 +2,7 @@
 #include <Engine.h>
 #include <World/Map.h>
 #include <Actor/Actor.h>
-#include <Gui/Window/pick_up_window.h>
+#include <gui/window/pick_up_window.h>
 #include <functional>
 
 namespace amarlon {

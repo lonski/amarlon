@@ -1,6 +1,6 @@
 #include "LockEffect.h"
 #include "Actor/Actor.h"
-#include "Gui/Gui.h"
+#include "gui/gui.h"
 #include "utils/utils.h"
 #include "utils/direction_selector.h"
 #include "utils/messenger.h"

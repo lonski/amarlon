@@ -1,5 +1,5 @@
 #include "messenger.h"
-#include "Gui/Gui.h"
+#include "gui/gui.h"
 #include "Actor/Actor.h"
 #include <utils/utils.h>
 

@@ -1,10 +1,10 @@
 #ifndef ITEMS_MENU_H
 #define ITEMS_MENU_H
 
-#include <Gui/Widget/menu/menu.h>
+#include <gui/widget/menu/menu.h>
 #include <Actor/Actor.h>
 #include <algorithm>
-//#include <Gui/Widget/menu/slot_menu_item.h>
+//#include <gui/widget/menu/slot_menu_item.h>
 
 namespace amarlon { namespace gui {
 

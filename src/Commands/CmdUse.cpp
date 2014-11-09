@@ -4,12 +4,12 @@
 #include "utils/target_selector/target_selector.h"
 #include "Actor/Effects/Effect.h"
 #include "utils/direction_selector.h"
-#include "Gui/Gui.h"
+#include "gui/gui.h"
 #include "utils/messenger.h"
 #include "Engine.h"
-#include <Gui/Widget/menu/items_menu.h>
-#include <Gui/Widget/menu/label_menu_item.h>
-#include <Gui/message_box.h>
+#include <gui/widget/menu/items_menu.h>
+#include <gui/widget/menu/label_menu_item.h>
+#include <gui/message_box.h>
 
 namespace amarlon {
 
