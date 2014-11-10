@@ -1,7 +1,7 @@
 #include "CmdMove.h"
 #include <utils/utils.h>
-#include "World/Map.h"
-#include "Engine.h"
+#include <world/map.h>
+#include <engine.h>
 
 namespace amarlon {
 

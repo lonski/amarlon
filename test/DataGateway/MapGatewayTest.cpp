@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "DataGateways/MapGateway.h"
-#include "World/Map.h"
+#include <world/map.h>
 #include <memory>
 
 namespace amarlon {

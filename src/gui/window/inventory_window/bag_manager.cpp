@@ -4,8 +4,8 @@
 #include <gui/widget/menu/slot_menu_item.h>
 #include <gui/message_box.h>
 #include <gui/window/amount_window.h>
-#include <Engine.h>
-#include <World/Map.h>
+#include <engine.h>
+#include <world/map.h>
 #include <utils/messenger.h>
 
 namespace amarlon { namespace gui {

@@ -5,7 +5,7 @@
 #include "widget/list.h"
 #include "widget/bar.h"
 #include "widget/label.h"
-#include <Engine.h>
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 

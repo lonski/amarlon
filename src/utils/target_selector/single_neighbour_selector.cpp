@@ -1,6 +1,6 @@
 #include "single_neighbour_selector.h"
 #include <utils/direction_selector.h>
-#include <World/Map.h>
+#include <world/map.h>
 #include <Actor/Actor.h>
 
 namespace amarlon {

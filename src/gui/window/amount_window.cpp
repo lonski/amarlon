@@ -1,5 +1,5 @@
 #include "amount_window.h"
-#include <Engine.h>
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 

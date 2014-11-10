@@ -1,7 +1,7 @@
 #include "CmdClose.h"
 #include "Actor/Actor.h"
-#include "World/Map.h"
-#include "Engine.h"
+#include <world/map.h>
+#include <engine.h>
 
 namespace amarlon {
 

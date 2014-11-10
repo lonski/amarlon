@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Engine.h"
-#include "World/Map.h"
+#include <engine.h>
+#include <world/map.h>
 #include "gui/gui.h"
 #include <gui/message_box.h>
 #include <stdexcept>

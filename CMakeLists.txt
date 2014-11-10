@@ -22,7 +22,7 @@ include_directories(${PROJECT_SOURCE_DIR}/gui/widget/window)
 include_directories(${PROJECT_SOURCE_DIR}/gui/widget/window/inventory_window)
 include_directories(${PROJECT_SOURCE_DIR}/utils)
 include_directories(${PROJECT_SOURCE_DIR}/utils/target_selector)
-include_directories(${PROJECT_SOURCE_DIR}/World)
+include_directories(${PROJECT_SOURCE_DIR}/world)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")

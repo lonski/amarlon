@@ -1,6 +1,6 @@
 #include "CmdHelp.h"
 #include <gui/window/text_window.h>
-#include <Engine.h>
+#include <engine.h>
 #include <sstream>
 #include <iomanip>
 

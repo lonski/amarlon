@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include <World/Map.h>
+#include <world/map.h>
 
 namespace amarlon {
 

@@ -4,8 +4,8 @@
 #include <utils/item_picker.h>
 #include <algorithm>
 #include "CmdPick.h"
-#include "World/Map.h"
-#include "Engine.h"
+#include <world/map.h>
+#include <engine.h>
 
 namespace amarlon {
 

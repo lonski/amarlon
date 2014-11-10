@@ -6,7 +6,7 @@
 #include "utils/direction_selector.h"
 #include "gui/gui.h"
 #include "utils/messenger.h"
-#include "Engine.h"
+#include <engine.h>
 #include <gui/widget/menu/items_menu.h>
 #include <gui/widget/menu/label_menu_item.h>
 #include <gui/message_box.h>

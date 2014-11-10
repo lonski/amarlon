@@ -1,7 +1,7 @@
 #include "OpenableContainer.h"
 #include <gui/window/pick_up_window.h>
 #include <Actor/Actor.h>
-#include <Engine.h>
+#include <engine.h>
 
 namespace amarlon {
 

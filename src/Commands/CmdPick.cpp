@@ -1,6 +1,6 @@
 #include "CmdPick.h"
-#include <Engine.h>
-#include <World/Map.h>
+#include <engine.h>
+#include <world/map.h>
 #include <Actor/Actor.h>
 #include <gui/window/pick_up_window.h>
 #include <functional>

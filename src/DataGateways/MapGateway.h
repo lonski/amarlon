@@ -3,7 +3,7 @@
 
 #include <map>
 #include <memory>
-#include <World/MapId.h>
+#include <world/map_id.h>
 #include <xml/rapidxml_print.hpp>
 
 namespace amarlon {

@@ -3,9 +3,9 @@
 
 #include <map>
 #include <string>
-#include "libtcod.hpp"
-#include "xml/rapidxml.hpp"
-#include "World/TileType.h"
+#include <libtcod.hpp>
+#include <xml/rapidxml.hpp>
+#include <world/tile_type.h>
 
 namespace amarlon {
 

@@ -26,7 +26,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.cpp
-    ${PROJECT_SOURCE_DIR}/src/World/Map.cpp
+    ${PROJECT_SOURCE_DIR}/src/world/map.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/item_picker.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/messenger.cpp
@@ -44,8 +44,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/Command.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/gui.cpp
-    ${PROJECT_SOURCE_DIR}/src/CommandExecutor.cpp
-    ${PROJECT_SOURCE_DIR}/src/Engine.cpp
+    ${PROJECT_SOURCE_DIR}/src/command_executor.cpp
+    ${PROJECT_SOURCE_DIR}/src/engine.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/list.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/panel.cpp
@@ -63,7 +63,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/console_freezer.cpp
-    ${PROJECT_SOURCE_DIR}/src/World/Map.h
+    ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Actor.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorType.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ActorFeature.h
@@ -87,9 +87,9 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.h
-    ${PROJECT_SOURCE_DIR}/src/World/Map.h
-    ${PROJECT_SOURCE_DIR}/src/World/MapId.h
-    ${PROJECT_SOURCE_DIR}/src/World/TileType.h
+    ${PROJECT_SOURCE_DIR}/src/world/map.h
+    ${PROJECT_SOURCE_DIR}/src/world/map_id.h
+    ${PROJECT_SOURCE_DIR}/src/world/tile_type.h
     ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/item_picker.h
 #    ${PROJECT_SOURCE_DIR}/src/utils/LogEntry.h
@@ -111,8 +111,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/Command.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/gui.h
-    ${PROJECT_SOURCE_DIR}/src/CommandExecutor.h
-    ${PROJECT_SOURCE_DIR}/src/Engine.h
+    ${PROJECT_SOURCE_DIR}/src/command_executor.h
+    ${PROJECT_SOURCE_DIR}/src/engine.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/list.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/panel.h

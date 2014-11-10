@@ -1,6 +1,5 @@
 #include "Actor.h"
-#include "World/Map.h"
-#include <iostream>
+#include <world/map.h>
 
 namespace amarlon {
 

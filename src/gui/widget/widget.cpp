@@ -1,5 +1,5 @@
 #include "widget.h"
-#include <Engine.h>
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 

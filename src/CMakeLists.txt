@@ -121,14 +121,14 @@ set(SOURCE_FILES
     utils/configuration.cpp
     utils/configuration.h
     utils/xml_utils.h
-    World/Map.cpp
-    World/Map.h
-    World/MapId.h
-    World/TileType.h
-    CommandExecutor.cpp
-    CommandExecutor.h
-    Engine.cpp
-    Engine.h
+    world/map.cpp
+    world/map.h
+    world/map_id.h
+    world/tile_type.h
+    command_executor.cpp
+    command_executor.h
+    engine.cpp
+    engine.h
     main.cpp)
 
 add_executable(amarlon ${SOURCE_FILES})

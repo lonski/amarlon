@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #define private public
 #include "Actor/Actor.h"
-#include "World/Map.h"
+#include <world/map.h>
 #include "Actor/Effects/SelfHealEffect.h"
 #undef private
 

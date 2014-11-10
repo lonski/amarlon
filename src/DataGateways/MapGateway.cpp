@@ -1,5 +1,5 @@
 #include "MapGateway.h"
-#include "World/Map.h"
+#include <world/map.h>
 #include "Actor/ActorType.h"
 #include "Actor/Actor.h"
 #include <xml/rapidxml_print.hpp>

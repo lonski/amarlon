@@ -4,7 +4,7 @@
 #include <string>
 #include <libtcod.hpp>
 #include <gui/window/text_window.h>
-#include <Engine.h>
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 
