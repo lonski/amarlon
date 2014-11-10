@@ -15,7 +15,7 @@ class WearerTest : public ::testing::Test
 public:
   virtual void SetUp()
   {
-    Actor::DB.loadActors("../actors.xml");
+    Actor::DB.loadActors("data/actors.xml");
 
     WearerDescription dsc;
     dsc.itemSlots.push_back(ItemSlotType::Armor);

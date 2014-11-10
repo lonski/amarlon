@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Utils/Utils.h"
+#include "utils/utils.h"
 #include "DataGateways/TileDB.h"
 
 namespace amarlon {
@@ -26,7 +26,7 @@ TEST(UtilsTest, str2color)
 TEST(UtilsTest, loadTiles)
 {
   TileDB tiles;
-  tiles.loadTiles("../tiles.xml");
+  tiles.loadTiles("data/tiles.xml");
 }
 
 TEST(UtilsTest, tolowers)
