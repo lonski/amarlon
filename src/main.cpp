@@ -42,7 +42,8 @@ int main()
       }
       catch(std::exception& e)
       {
-        amarlon::gui::msgError("Fatal error:\n"+std::string(e.what()));
+        amarlon::gui::msgBox("Fatal error:\n"+std::string(e.what()),
+                             amarlon::gui::MsgType::Error);
       }
     }
   }

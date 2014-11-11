@@ -26,7 +26,7 @@ Window& TextWindow::show()
          !(key.vk == TCODK_ENTER   ) &&
          !(key.vk == TCODK_KPENTER ) &&
          !(TCODConsole::isWindowClosed()))
-  {
+  {  
     displayText();
 
     _panel->render(*TCODConsole::root);

@@ -93,7 +93,7 @@ void BagManager::equip(Actor* item)
   }
   else
   {
-    msgError( "You haven't got appropriate slot to equip this item." );
+    msgBox( "You haven't got appropriate slot to equip this item.", gui::MsgType::Error);
   }
 
 }
@@ -112,12 +112,14 @@ bool BagManager::canEquip(ItemSlotType slot)
       slotIsFree = playerContainer->add(unequipped);
       if ( !slotIsFree )
       {
-        msgError("You have no free space in inventory for "+unequipped->getName()+"!");
+        msgBox("You have no free space in inventory for "+unequipped->getName()+"!",
+               gui::MsgType::Error);
         playerWearer->equip( unequipped );
         assert( playerWearer->isEquipped(slot) );
       }
     }
-    else msgError("Cannot unequip " + playerWearer->equipped(slot)->getName() + "!");
+    else msgBox("Cannot unequip " + playerWearer->equipped(slot)->getName() + "!",
+                gui::MsgType::Error);
   }
 
   return slotIsFree;
@@ -141,12 +143,12 @@ void BagManager::doTheEquip(Actor* item)
     }
     else
     {
-      msgError( "Cannot equip item!" );
+      msgBox( "Cannot equip item!", gui::MsgType::Error );
     }
   }
   else
   {
-    msgError( "Cannot remove "+item->getName()+" from inventory." );
+    msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
   }
 
 }
@@ -170,7 +172,7 @@ void BagManager::drop(Actor* item)
   }
   else
   {
-    msgError( "Cannot remove "+item->getName()+" from inventory." );
+    msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
   }
 }
 

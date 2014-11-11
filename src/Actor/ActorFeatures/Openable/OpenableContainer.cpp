@@ -27,7 +27,8 @@ bool OpenableContainer::open(Actor *executor)
     auto inventoryFullAction =
     [&](const std::string& item)
     {
-      gui::msgError("Cannot pickup "+item+" from "+tolowers(_owner->getName())+":\nInventory is full!");
+      gui::msgBox("Cannot pickup "+item+" from "+tolowers(_owner->getName())+":\nInventory is full!",
+                  gui::MsgType::Error);
     };
 
     Engine::instance().windowManager()

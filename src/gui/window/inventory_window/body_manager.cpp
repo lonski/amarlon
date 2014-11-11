@@ -72,13 +72,14 @@ void BodyManager::unequipItem(ItemSlotType slot)
 
     if ( !playerContainer->add(item) )
     {
-      msgError("Item cannot be unequipped:\nNot enough space in inventory");
+      msgBox("Item cannot be unequipped:\nNot enough space in inventory",
+             gui::MsgType::Error);
       playerWearer->equip(item);
     }
   }
   else
   {
-    msgError("Item cannot be unequipped!");
+    msgBox("Item cannot be unequipped!", gui::MsgType::Error);
   }
 }
 
@@ -113,7 +114,7 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
   }
   else
   {
-    msgError("You don't have any item, that fit this slot.");
+    msgBox("You don't have any item, that fit this slot.", gui::MsgType::Error);
   }
 
 }
@@ -124,13 +125,13 @@ void BodyManager::equipItem(Actor* toEquip)
   {
     if ( !Actor::Player->afWearer()->equip( toEquip ) )
     {
-      msgError( "Cannot equip item!" );
+      msgBox( "Cannot equip item!", gui::MsgType::Error );
       Actor::Player->afContainer()->add( toEquip );
     }
   }
   else
   {
-    msgError( "Cannot remove item from inventory!" );
+    msgBox( "Cannot remove item from inventory!", gui::MsgType::Error );
   }
 }
 

@@ -33,7 +33,8 @@ void CmdPutInto::execute(Actor *executor)
     auto containerFullAction =
     [&target](const std::string& item)
     {
-      gui::msgError("Cannot put "+item+" into "+tolowers(target->getName())+":\nNot enough space!");
+      gui::msgBox("Cannot put "+item+" into "+tolowers(target->getName())+":\nNot enough space!",
+                  gui::MsgType::Error);
     };
 
     Engine::instance().windowManager()
@@ -47,7 +48,8 @@ void CmdPutInto::execute(Actor *executor)
   }
   else if ( target )
   {
-    gui::msgError("You cannot put anything into "+tolowers(target->getName())+".");
+    gui::msgBox("You cannot put anything into "+tolowers(target->getName())+".",
+                gui::MsgType::Error);
   }
 
 }

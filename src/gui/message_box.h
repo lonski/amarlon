@@ -8,21 +8,28 @@
 
 namespace amarlon { namespace gui {
 
-static inline void msgError(const std::string& text)
+enum class MsgType
 {
-  Engine::instance().windowManager()
-                    .getWindow<ResizeableTextWindow>()
-                    .setWindowFrameColor(TCODColor::red)
-                    .setWindowText(text)
-                    .show();
-}
+  Error,
+  Warning,
+  Info
+};
 
-static inline void msgInfo(const std::string& text)
+static inline void msgBox(const std::string& text, MsgType type)
 {
+  TCODColor color;
+  switch (type)
+  {
+    case MsgType::Error: color = TCODColor::red; break;
+    case MsgType::Warning: color = TCODColor::yellow; break;
+    case MsgType::Info: color = TCODColor::darkerOrange; break;
+  }
+
   Engine::instance().windowManager()
                     .getWindow<ResizeableTextWindow>()
-                    .setWindowFrameColor(TCODColor::darkerOrange)
+                    .setWindowFrameColor(color)
                     .setWindowText(text)
+                    .setCenterGameScreen()
                     .show();
 }
 

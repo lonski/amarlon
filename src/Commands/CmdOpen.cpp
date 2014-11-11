@@ -7,6 +7,7 @@
 #include <world/map.h>
 #include <engine.h>
 #include <utils/target_selector/single_neighbour_selector.h>
+#include <gui/message_box.h>
 
 namespace amarlon {
 
@@ -24,14 +25,20 @@ void CmdOpen::execute(Actor *executor)
   Map& map = Engine::instance().currentMap();
 
   Actor* target = SingleNeighbourSelector("Select object to open...")
-                    .selectFirst(executor, &map);
+                    .selectFirst(executor,
+                                 &map,
+                                 [](Actor* a)->bool{ return a->afOpenable();});
 
-  if ( target && target->afOpenable() )
+  if ( target )
   {
     if ( target->afOpenable()->open(executor) )
     {
       map.updateActorCell(target);
     }
+  }
+  else
+  {
+    gui::msgBox("Nothing to open there.", gui::MsgType::Warning);
   }
 }
 

@@ -71,7 +71,7 @@ Actor* CmdUse::acquireItemToUse(Actor* executor)
     auto choosen = mItems.find( itemsMenu.choose(*TCODConsole::root) );
     if ( choosen != mItems.end() ) item = choosen->second;
   }
-  else gui::msgError("You don't have any usable items!");
+  else gui::msgBox("You don't have any usable items!", gui::MsgType::Warning);
 
   if ( item && item->afPickable()->isStackable() ) item = item->afPickable()->spilt(1);
 

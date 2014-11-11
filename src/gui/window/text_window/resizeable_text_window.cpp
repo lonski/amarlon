@@ -23,6 +23,7 @@ Window& ResizeableTextWindow::setDefaults()
 
 void ResizeableTextWindow::displayText()
 {
+  _list->clear();
   int margin = _panel->isFramed() ? 1 : 0;
   _list->setPosition(margin, 0);
 

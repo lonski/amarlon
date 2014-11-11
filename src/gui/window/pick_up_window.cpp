@@ -24,7 +24,7 @@ Window &PickUpWindow::setDefaults()
   _filterFunc = [](Actor*){return true;};
 
   _afterPickUpAction = [](const std::string&, int){};
-  _inventoryFullAction = [](const std::string&){ gui::msgError("Inventory is full!"); };
+  _inventoryFullAction = [](const std::string&){ gui::msgBox("Inventory is full!", gui::MsgType::Error); };
 
   return *this;
 }
