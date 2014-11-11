@@ -1,16 +1,22 @@
 language: cpp
-
-script:
+branches:
+  only:
+    - master
+cache:
+    apt
+before_install:
     - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
     - echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
     - sudo apt-get update -qq
-    - sudo apt-get install -qq gcc-4.8 valgrind
+install:
+    - sudo apt-get install -qq gcc-4.8 valgrind cppcheck
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
     - sudo update-alternatives --config gcc
     - sudo apt-get install -qq mercurial libsdl-dev
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
     - gcc --version
+before_script:
     - sudo mkdir /usr/src/gtest/build
     - cd /usr/src/gtest/build
     - sudo cmake .. -DBUILD_SHARED_LIBS=1
@@ -33,10 +39,10 @@ script:
     - cd -
     - mkdir build
     - cd build
+script:
     - cmake ..
     - make -j`grep -c processor /proc/cpuinfo`
     - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./ut_amarlon
-
 notifications:
   recipients:
     - lgromanowski+travis.ci@gmail.com
