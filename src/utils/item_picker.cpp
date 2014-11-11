@@ -1,15 +1,16 @@
 #include "item_picker.h"
 #include "Actor/Actor.h"
 #include <gui/window/amount_window.h>
-#include <utils/messenger.h>
-#include <iostream>
+#include <utils/amarlon_except.h>
 #include <gui/message_box.h>
+#include <Actor/ActorFeatures/Container.h>
 
 namespace amarlon {
 
-ItemPicker::ItemPicker(Actor* picker, Actor*& toPick)
+ItemPicker::ItemPicker(Actor* picker, Actor*& toPick, Container *pickedFrom)
   : _picker(picker)
   , _toPick(toPick)
+  , _pickedFrom(pickedFrom)
 {
 }
 
@@ -38,15 +39,15 @@ int ItemPicker::pick()
 
   if ( _picker->afContainer()->add(_toPick) )
   {
-    Messenger::message()->actorPicked(_picker->getName(), itemName, amount);
+    if ( _pickedFrom ) _pickedFrom->remove(_toPick);
   }
-  else
+  else //cant pick up!
   {
     //rollback spilting
     if ( stackable && pickableTmp != _toPick ) pickableTmp->afPickable()->incAmount( amount );
     amount = 0;
 
-    gui::msgError("Cannot pick up "+itemName+":\nnot enough space in inventory.");
+    throw inventory_full("", itemName);
   }
 
   return amount;

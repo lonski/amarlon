@@ -11,6 +11,7 @@ public:
   SingleNeighbourSelector();
 
   virtual std::vector<Actor*> select(Actor* executor, Map* map, bool (*filterFun)(Actor*) = nullptr);
+  virtual Actor* selectFirst(Actor* executor, Map* map, bool (*filterFun)(Actor*) = nullptr);
 };
 
 }

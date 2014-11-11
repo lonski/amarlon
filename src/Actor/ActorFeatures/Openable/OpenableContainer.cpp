@@ -2,6 +2,9 @@
 #include <gui/window/pick_up_window.h>
 #include <Actor/Actor.h>
 #include <engine.h>
+#include <utils/messenger.h>
+#include <utils/utils.h>
+#include <gui/message_box.h>
 
 namespace amarlon {
 
@@ -15,11 +18,25 @@ bool OpenableContainer::open(Actor *executor)
 
   if ( _owner->afContainer() )
   {
+    auto afterPickupAction =
+    [&](const std::string& item, int amount)
+    {
+      Messenger::message()->actorPicked(executor->getName(), item, amount, _owner->getName());
+    };
+
+    auto inventoryFullAction =
+    [&](const std::string& item)
+    {
+      gui::msgError("Cannot pickup "+item+" from "+tolowers(_owner->getName())+":\nInventory is full!");
+    };
+
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(executor)
                       .setContainer(_owner->afContainer())
                       .setFilterFunction( [](Actor* a){ return a->afPickable();} )
+                      .setAfterPickupAction( afterPickupAction )
+                      .setInventoryFullAction( inventoryFullAction )
                       .show();
 
     r = true;

@@ -41,10 +41,28 @@ public:
    */
   PickUpWindow& setFilterFunction(std::function<bool(Actor*)> fun);
 
+  /**
+   * @brief given function will be called each time item has been successfully picked
+   *        it can be for example a message in log
+   */
+  PickUpWindow& setAfterPickupAction(std::function<void(const std::string& itemName, int pickedAmount)> fun);
+
+  /**
+   * @brief given function will be called if item cannot be picked up because
+   *        inventory is full. It could be for example error message.
+   */
+  PickUpWindow& setInventoryFullAction(std::function<void(const std::string& itemName)> fun);
+
+  PickUpWindow& setWindowTitle(const std::string& title);
+
 private:
   Actor* _picker;
   Container* _container;
   std::function<bool(Actor*)> _filterFunc;
+
+  //actions
+  std::function<void(const std::string& itemName, int pickedAmount)> _afterPickUpAction;
+  std::function<void(const std::string& itemName)> _inventoryFullAction;
 
   ConsoleFreezer _freezer;
   gui::ItemsMenu _menu;

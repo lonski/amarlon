@@ -6,6 +6,7 @@
 #include "CmdPick.h"
 #include <world/map.h>
 #include <engine.h>
+#include <utils/target_selector/single_neighbour_selector.h>
 
 namespace amarlon {
 
@@ -21,14 +22,9 @@ bool CmdOpen::accept(TCOD_key_t &key)
 void CmdOpen::execute(Actor *executor)
 {
   Map& map = Engine::instance().currentMap();
-  int x = executor->getX();
-  int y = executor->getY();
 
-  int dx(0), dy(0);
-
-  _dSelector.select(dx, dy);
-
-  Actor* target = map.getFirstActor(x+dx, y+dy);
+  Actor* target = SingleNeighbourSelector()
+                    .selectFirst(executor, &map);
 
   if ( target && target->afOpenable() )
   {

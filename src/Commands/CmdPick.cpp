@@ -4,6 +4,8 @@
 #include <Actor/Actor.h>
 #include <gui/window/pick_up_window.h>
 #include <functional>
+#include <utils/messenger.h>
+#include <gui/message_box.h>
 
 namespace amarlon {
 
@@ -23,12 +25,27 @@ void CmdPick::execute(Actor *executor)
 
   Container& container = Engine::instance().currentMap().getActorsContainer(x, y);
 
+  auto afterPickupAction =
+  [&executor](const std::string& item, int amount)
+  {
+    Messenger::message()->actorPicked(executor->getName(), item, amount);
+  };
+
+  auto inventoryFullAction =
+  [](const std::string& item)
+  {
+    gui::msgError("Cannot pickup "+item+":\nInventory is full!");
+  };
+
   Engine::instance().windowManager()
                     .getWindow<gui::PickUpWindow>()
                     .setPicker(executor)
                     .setContainer(&container)
                     .setFilterFunction( [](Actor* a){ return a->afPickable(); } )
+                    .setAfterPickupAction( afterPickupAction )
+                    .setInventoryFullAction( inventoryFullAction )
                     .show();
+
 }
 
 }

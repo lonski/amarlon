@@ -43,7 +43,7 @@
 	<Actor name="Wardrobe" id="7" character="224" color="906030" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Chair" id="8" character="=" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
 	<Actor name="Furnace" id="9" character="&" color="eeeeee" transparent="0" blocks="1" fovOnly="0"/>
-	<Actor name="Table" id="10" character="10" color="906030" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Table" id="10" character="10" color="906030" transparent="1" blocks="1" fovOnly="0"/>
 	<Actor name="Worktop" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Bootle of wine" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="3" category="4"/>

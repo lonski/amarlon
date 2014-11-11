@@ -123,6 +123,7 @@ set(SOURCE_FILES
     utils/configuration.cpp
     utils/configuration.h
     utils/xml_utils.h
+    utils/amarlon_except.h
     world/map.cpp
     world/map.h
     world/map_id.h

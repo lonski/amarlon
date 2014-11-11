@@ -2,7 +2,6 @@
 #define CMDOPEN_H
 
 #include "Command.h"
-#include "utils/direction_selector.h"
 
 namespace amarlon {
 
@@ -12,9 +11,6 @@ public:
   CmdOpen();
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Actor* executor);
-
-private:
-  DirectionSelector _dSelector;
 
 };
 

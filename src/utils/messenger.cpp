@@ -53,16 +53,32 @@ void Messenger::actorDies(Actor *victim)
   _gui->message(msg, TCODColor::darkerRed);
 }
 
-void Messenger::actorPicked(std::string pickerName, std::string itemName, int amount)
+void Messenger::actorPutInto(const std::string& putterName,
+                             const string& container,
+                             const std::string& itemName,
+                             int amount)
+{
+  string msg = putterName + " put " + tolowers(itemName);
+
+  if (amount > 1)
+    msg += " (" + to_string(amount) + ")";
+
+  msg += " into " + tolowers(container);
+
+  _gui->message(msg+".", TCODColor::darkYellow);
+}
+
+void Messenger::actorPicked(std::string pickerName, std::string itemName, int amount, const string &from)
 {
   string msg = pickerName + " picked " + tolowers(itemName);
 
   if (amount > 1)
-    msg += " (" + to_string(amount) + ").";
-  else
-    msg += ".";
+    msg += " (" + to_string(amount) + ")";
 
-  _gui->message(msg, TCODColor::darkYellow);
+  if ( !from.empty() )
+    msg += " from " + tolowers(from);
+
+  _gui->message(msg+".", TCODColor::darkYellow);
 }
 
 void Messenger::actorDropped(Actor *dropper, Actor *dropped, int amount)

@@ -4,11 +4,12 @@
 namespace amarlon {
 
 class Actor;
+class Container;
 
 class ItemPicker
 {
 public:
-  ItemPicker(Actor *picker, Actor*& toPick);
+  ItemPicker(Actor *picker, Actor*& toPick, Container* pickedFrom = nullptr);
 
   /**
    * @brief Invokes the picking. Handles stackable. If item is stackable
@@ -22,6 +23,7 @@ public:
 private:
   Actor* _picker;
   Actor*& _toPick;
+  Container* _pickedFrom;
 
 };
 

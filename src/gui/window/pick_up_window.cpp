@@ -4,6 +4,8 @@
 #include <Actor/ActorFeatures/Container.h>
 #include <gui/window/amount_window.h>
 #include <utils/item_picker.h>
+#include <utils/amarlon_except.h>
+#include <iostream>
 
 namespace amarlon { namespace gui {
 
@@ -22,6 +24,9 @@ Window &PickUpWindow::setDefaults()
   _picker = nullptr;
   _container = nullptr;
   _filterFunc = [](Actor*){return true;};
+
+  _afterPickUpAction = [](const std::string&, int){};
+  _inventoryFullAction = [](const std::string&){ gui::msgError("Inventory is full!"); };
 
   return *this;
 }
@@ -44,6 +49,24 @@ PickUpWindow& PickUpWindow::setFilterFunction(std::function<bool(Actor*)> fun)
   return *this;
 }
 
+PickUpWindow& PickUpWindow::setAfterPickupAction(std::function<void (const std::string &, int)> fun)
+{
+  _afterPickUpAction = fun;
+  return *this;
+}
+
+PickUpWindow &PickUpWindow::setInventoryFullAction(std::function<void (const std::string &)> fun)
+{
+  _inventoryFullAction = fun;
+  return *this;
+}
+
+PickUpWindow &PickUpWindow::setWindowTitle(const std::string &title)
+{
+  _menu.setTitle(title);
+  return *this;
+}
+
 Window& PickUpWindow::show()
 {
   if ( _picker && _container)
@@ -63,14 +86,20 @@ Window& PickUpWindow::show()
       if ( found != mappedItems.end() )
       {
         Actor* toPick = found->second;
-        int pickedAmount = ItemPicker(_picker, toPick).pick();
+        std::string itemName = toPick->getName();
 
-        if ( pickedAmount > 0 )
+        try
         {
-          _container->remove( toPick );
+          int pickedAmount = ItemPicker(_picker, toPick, _container).pick();
 
           mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
           _menu.selectFirst();
+
+          _afterPickUpAction(itemName, pickedAmount);
+        }
+        catch( inventory_full& e )
+        {
+          _inventoryFullAction(e.getItemName());
         }
       }
     }

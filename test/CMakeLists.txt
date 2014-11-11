@@ -92,6 +92,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/world/tile_type.h
     ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/item_picker.h
+    ${PROJECT_SOURCE_DIR}/src/utils/amarlon_except.h
 #    ${PROJECT_SOURCE_DIR}/src/utils/LogEntry.h
     ${PROJECT_SOURCE_DIR}/src/utils/messenger.h
     ${PROJECT_SOURCE_DIR}/src/utils/selector_type.h

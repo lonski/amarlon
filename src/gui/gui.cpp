@@ -76,6 +76,21 @@ void Gui::message(std::string msg, TCODColor color)
   _log->push( ColoredString(msg, color) );
 }
 
+void Gui::setStatusMessage(const std::string &status)
+{
+  TCODConsole::root->print(
+    (Engine::consoleWidth - status.size()) / 2,
+    1,
+    status.c_str()
+  );
+  TCODConsole::root->flush();
+}
+
+void Gui::clearStatusMessage()
+{
+  setStatusMessage("");
+}
+
 void Gui::render()
 {
   std::for_each(_widgets.begin(), _widgets.end(), [](WidgetPtr w){ w->render(*TCODConsole::root);});

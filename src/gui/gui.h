@@ -44,6 +44,8 @@ public:
   void render();
 
   void message(std::string msg, TCODColor color = TCODColor::white);
+  void setStatusMessage(const std::string& status);
+  void clearStatusMessage();
   void setViewList(const std::vector<ColoredString>& items);
   void setHpBar(float value, float maxValue);
   void setPlayerName(std::string name);

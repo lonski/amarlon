@@ -13,9 +13,6 @@ public:
   virtual bool accept(TCOD_key_t &key);
   virtual void execute(Actor* executor);
 
-private:
-  DirectionSelector _dSelector;
-
 };
 
 }
