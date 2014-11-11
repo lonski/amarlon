@@ -94,12 +94,6 @@ void Messenger::actorPicked(Actor *picker, Actor *picked, int amount)
   actorPicked(picker->getName(), picked->getName(), amount);
 }
 
-void Messenger::actorIsLocked(Actor *openableActor)
-{
-  string msg = "The " + tolowers(openableActor->getName()) + " is locked.";
-  _gui->message(msg);
-}
-
 void Messenger::actorHealed(Actor *healed, int amount)
 {
   string msg = healed->getName() + " has been healed for " + to_string(amount) + ".";
@@ -116,12 +110,6 @@ void Messenger::actorHasBeenLocked(Actor *locker, Actor *locked)
 void Messenger::actorHasBeenUnLocked(Actor *unlocker, Actor *unlocked)
 {
   string msg = unlocker->getName() + " has unlocked the " + tolowers(unlocked->getName());
-  _gui->message(msg);
-}
-
-void Messenger::actorNotUsable(Actor *actor)
-{
-  string msg = actor->getName() + " is not usable.";
   _gui->message(msg);
 }
 

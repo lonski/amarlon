@@ -33,9 +33,9 @@ void CmdClose::execute(Actor *executor)
 
   if ( toClose )
   {
-    if ( actorsOnTile.size() == 1 && toClose->afOpenable()->close(executor))
+    if ( actorsOnTile.size() == 1 )
     {
-      map.updateActorCell(toClose);
+      if (toClose->afOpenable()->close(executor)) map.updateActorCell(toClose);
     }
     else
     {

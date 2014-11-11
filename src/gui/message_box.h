@@ -30,6 +30,7 @@ static inline void msgBox(const std::string& text, MsgType type)
                     .setWindowFrameColor(color)
                     .setWindowText(text)
                     .setCenterGameScreen()
+                    .setMargin(1)
                     .show();
 }
 

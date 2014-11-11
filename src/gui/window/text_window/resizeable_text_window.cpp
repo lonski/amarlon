@@ -24,8 +24,7 @@ Window& ResizeableTextWindow::setDefaults()
 void ResizeableTextWindow::displayText()
 {
   _list->clear();
-  int margin = _panel->isFramed() ? 1 : 0;
-  _list->setPosition(margin, 0);
+  _list->setPosition(_margin, _margin -1);
 
   std::vector<std::string> lines = explode(_text, '\n');
 
@@ -36,8 +35,8 @@ void ResizeableTextWindow::displayText()
     if ( line.size() > width ) width = line.size();
   });
 
-  _panel->setHeight( _list->size() + margin*2 );
-  _panel->setWidth( width + margin*2 );
+  _panel->setHeight( _list->size() + _margin*2 );
+  _panel->setWidth( width + _margin*2 );
   _panel->centerPosition(_centerGameWindow);
 }
 

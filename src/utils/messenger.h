@@ -22,11 +22,9 @@ public:
   void actorPicked(Actor* picker, Actor* picked, int amount);
   void actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const std::string& from = "");
   void actorDropped(Actor* dropper, Actor* dropped, int amount);
-  void actorIsLocked(Actor* openableActor);
   void actorHealed(Actor* healed, int amount);
   void actorHasBeenLocked(Actor* locker, Actor* locked);
   void actorHasBeenUnLocked(Actor* unlocker, Actor* unlocked);
-  void actorNotUsable(Actor* actor);
   void actorPutInto(const std::string& putterName, const std::string& container, const std::string& itemName, int amount);
 
 private:

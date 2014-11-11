@@ -22,11 +22,13 @@ public:
   TextWindow& setWindowFrameColor(const TCODColor &getFrameColor);
   TextWindow& setCenterGameScreen();
   TextWindow& setCenterGameWindow();
+  TextWindow& setMargin(int margin);
 
 protected:
   PanelPtr _panel;
   std::string _text;
   bool _centerGameWindow;
+  int _margin;
 
   virtual void displayText() = 0;
   virtual void handleKey(TCOD_key_t& key) = 0;

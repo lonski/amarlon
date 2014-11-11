@@ -49,7 +49,7 @@ void CmdUse::execute(Actor *executor)
   }
   else if ( item )
   {
-    Messenger::message()->actorNotUsable(item);
+    gui::msgBox(item->getName() + " is not usable.", gui::MsgType::Warning);
   }
 
 }

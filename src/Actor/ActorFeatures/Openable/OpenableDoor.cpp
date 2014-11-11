@@ -1,8 +1,7 @@
 #include "OpenableDoor.h"
 #include "Actor/Actor.h"
 #include "gui/gui.h"
-#include <utils/messenger.h>
-#include <iostream>
+#include <gui/message_box.h>
 
 namespace amarlon {
 
@@ -23,7 +22,7 @@ bool OpenableDoor::open(Actor*)
     }
     else
     {
-      Messenger::message()->actorIsLocked(_owner);
+      gui::msgBox("The "+_owner->getName()+" is locked.", gui::MsgType::Warning);
     }
   }
 

@@ -13,6 +13,7 @@ Window& TextWindow::setDefaults()
 {
   _text = "";
   _centerGameWindow = true;
+  setMargin(0);
 
   return *this;
 }
@@ -71,6 +72,13 @@ TextWindow &TextWindow::setCenterGameScreen()
 TextWindow &TextWindow::setCenterGameWindow()
 {
   _centerGameWindow = false;
+  return *this;
+}
+
+TextWindow &TextWindow::setMargin(int margin)
+{
+  int frame = _panel && _panel->isFramed() ? 1 : 0;
+  _margin = margin + frame;
   return *this;
 }
 
