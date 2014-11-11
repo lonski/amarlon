@@ -1,5 +1,5 @@
 #include "CmdHelp.h"
-#include <gui/window/text_window.h>
+#include <gui/window/text_window/resizeable_text_window.h>
 #include <engine.h>
 #include <sstream>
 #include <iomanip>
@@ -17,6 +17,11 @@ bool CmdHelp::accept(TCOD_key_t &key)
 
 void CmdHelp::execute(Actor *)
 {
+  /*
+   * displaying ASCII codes mapped characters
+   * in future here will be in game manual
+   */
+
   std::stringstream ss;
   for(int c=0; c < 255; ++c)
   {
@@ -28,7 +33,7 @@ void CmdHelp::execute(Actor *)
   }
 
   Engine::instance().windowManager()
-                    .getWindow<gui::TextWindow>()
+                    .getWindow<gui::ResizeableTextWindow>()
                     .setCenterGameScreen()
                     .setWindowTitle("Help")
                     .setWindowText( ss.str() )

@@ -9,10 +9,9 @@ namespace amarlon { namespace gui {
 
 class TextWindow : public Window
 {
-  friend class WindowManager;
+public:
   TextWindow();
 
-public:
   virtual Window& show();
   virtual Window& setDefaults();
   static WindowId getId() { return Window::TEXT; }
@@ -24,12 +23,13 @@ public:
   TextWindow& setCenterGameScreen();
   TextWindow& setCenterGameWindow();
 
-private:
+protected:
   PanelPtr _panel;
   std::string _text;
   bool _centerGameWindow;
 
-  void displayText();
+  virtual void displayText() = 0;
+  virtual void handleKey(TCOD_key_t& key) = 0;
 
 };
 

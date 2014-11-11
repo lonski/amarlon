@@ -98,8 +98,10 @@ set(SOURCE_FILES
     gui/message_box.h
     gui/window/pick_up_window.cpp
     gui/window/pick_up_window.h
-    gui/window/text_window.cpp
-    gui/window/text_window.h
+    gui/window/text_window/text_window.cpp
+    gui/window/text_window/text_window.h
+    gui/window/text_window/resizeable_text_window.h
+    gui/window/text_window/resizeable_text_window.cpp
     gui/window/window.cpp
     gui/window/window.h
     utils/target_selector/executor_selector.cpp

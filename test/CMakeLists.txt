@@ -57,7 +57,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/label_menu_item.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/slot_menu_item.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window.cpp
+    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/text_window.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/items_menu.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.cpp
@@ -126,7 +126,9 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/slot_menu_item.h
-    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window.h
+    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/text_window.h
+    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.h
+    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/items_menu.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.h
