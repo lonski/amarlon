@@ -1,7 +1,7 @@
 #ifndef AI_H
 #define AI_H
 
-#include "../ActorFeature.h"
+#include "ActorFeature.h"
 #include "AiType.h"
 #include "DataGateways/ActorDescriptions.h"
 
