@@ -16,9 +16,9 @@ static inline std::vector<std::string> explode(const std::string& str, char ch)
   std::vector<std::string> result;
   std::string line;
 
-  for (auto s = str.begin(); s != str.end(); ++s)
+  for (auto s : str)
   {
-    if (*s == ch)
+    if (s == ch)
     {
       if (!line.empty())
       {
@@ -28,7 +28,7 @@ static inline std::vector<std::string> explode(const std::string& str, char ch)
     }
     else
     {
-      line += *s;
+      line += s;
     }
   }
 
@@ -59,8 +59,6 @@ static inline std::string tolowers(const std::string& str)
 static inline std::string colorToStr(TCODColor color)
 {
   std::stringstream ss;
-  std::string s;
-
   ss << std::setfill('0')
      << std::setw(2) << std::hex << (int)color.r
      << std::setw(2) << std::hex << (int)color.g
