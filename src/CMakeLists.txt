@@ -136,3 +136,5 @@ set(SOURCE_FILES
 
 add_executable(amarlon ${SOURCE_FILES})
 target_link_libraries(amarlon ${TCOD_LIBRARIES})
+
+add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)

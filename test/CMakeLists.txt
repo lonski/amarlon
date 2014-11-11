@@ -142,3 +142,4 @@ set(SOURCE_FILES
 
 add_executable(ut_amarlon ${SOURCE_FILES})
 target_link_libraries(ut_amarlon ${TCOD_LIBRARIES} ${GTEST_LIBRARIES})
+add_custom_command(TARGET ut_amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ut_amarlon>)
