@@ -31,7 +31,6 @@ script:
     - ln -s libtcod.so libtcod.so.1
     - ln -s libtcodxx.so libtcodxx.so.1
     - cd -
-    - pwd
     - mkdir build
     - cd build
     - cmake ..
