@@ -42,6 +42,7 @@ struct ActorDescription
   bool blocks;
   bool fovOnly;
   bool transparent;  
+  int tilePriority;
 };
 
 struct PickableDescription

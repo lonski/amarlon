@@ -46,6 +46,12 @@ ActorDescription *ActorParser::parseActorDsc()
     actorDsc->blocks = getAttribute<bool>(_xml, "blocks");
     actorDsc->fovOnly = getAttribute<bool>(_xml, "fovOnly");
     actorDsc->transparent = getAttribute<bool>(_xml, "transparent");
+
+    if ( attributeExists(_xml, "tilePriority") )
+      actorDsc->tilePriority = getAttribute<int>(_xml, "tilePriority");
+    else
+      actorDsc->tilePriority = -1;
+
   }
 
   return actorDsc;

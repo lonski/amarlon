@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include <iostream>
 #include <algorithm>
+#include <utils/amarlon_except.h>
 
 namespace amarlon {
 
@@ -67,15 +68,10 @@ void Map::addActor(Actor *actor)
 {
   int x( actor->getX() );
   int y( actor->getY() );
+
   Tile& tile = getTile(x, y);
 
-  //keep alive actors on top
-  std::function<bool(Actor*)> addFunBack = [&tile](Actor* a){ return tile.actors->add(a); };
-  std::function<bool(Actor*)> addFunFront = [&tile](Actor* a){ return tile.actors->addFront(a); };
-
-  std::function<bool(Actor*)> addFun = actor->isAlive() ? addFunBack : addFunFront;
-
-  if ( !addFun(actor) ) throw std::logic_error("Failed to add actor to tile!");
+  if ( !tile.actors->add(actor) ) throw amarlon_exeption("Failed to add actor to tile!");
 
   //update transparency
   if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
@@ -157,6 +153,12 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
 void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
 {
     Tile& tile = getTile(x, y);
+
+    tile.actors->sort([](Actor* a1, Actor* a2)
+                      {
+                        return a1->getTileRenderPriority() > a2->getTileRenderPriority();
+                      });
+
     for (auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
     {
       Actor* actor = *aIter;
@@ -256,16 +258,16 @@ Tile&Map::getTile(u32 x, u32 y)
 void Map::validateMapCoords(u32 x, u32 y)
 {
   if (x >= _width || y >= _height)
-    throw std::out_of_range("Requested map coordinates beyond map borders!\n y=" +
-                            std::to_string(y) + ", height="+std::to_string(_height) +
-                            " x="+std::to_string(x) + " width=" + std::to_string(_width)
-                            );
+    throw amarlon_exeption("Requested map coordinates beyond map borders!\n y=" +
+                           std::to_string(y) + ", height="+std::to_string(_height) +
+                           " x="+std::to_string(x) + " width=" + std::to_string(_width)
+                           );
 
   if (y >= _tiles.size())
-    throw std::out_of_range("Tile not initalized!");
+    throw amarlon_exeption("Tile not initalized!");
 
   if (x >= _tiles[y].size())
-    throw std::out_of_range("Tile not initalized!");
+    throw amarlon_exeption("Tile not initalized!");
 }
 //~~~~~
 

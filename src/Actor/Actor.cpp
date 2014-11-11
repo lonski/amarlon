@@ -121,6 +121,20 @@ bool Actor::blocks() const
   return Actor::DB.blocks(_id);;
 }
 
+int Actor::getTileRenderPriority() const
+{
+  int priority = Actor::DB.getTileRenderPriority(_id);
+
+  //not set in xml, neither default value defined in ActorDB
+  if ( priority == -1 )
+  {
+    priority = isAlive() ? Tile::defaultMonsterRenderPriority
+                         : Tile::defaultItemRenderPriority;
+  }
+
+  return priority;
+}
+
 ActorType Actor::getId() const
 {
   return _id;

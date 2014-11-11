@@ -38,5 +38,10 @@ std::string getAttribute<std::string>(rapidxml::xml_node<>* node, const std::str
   return value;
 }
 
+bool attributeExists(rapidxml::xml_node<>* node, const std::string& attribute)
+{
+  return node->first_attribute(attribute.c_str()) != nullptr;
+}
+
 }
 #endif // XMLUTILS_H

@@ -37,6 +37,7 @@ public:
   bool isFovOnly() const;
   bool isTransparent() const;
   bool blocks() const;
+  int getTileRenderPriority() const;
 
   //read only data
   ActorType getId() const;

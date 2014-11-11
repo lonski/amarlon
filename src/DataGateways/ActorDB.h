@@ -21,6 +21,7 @@ public:
   bool blocks(ActorType type);
   bool isFovOnly(ActorType type);
   bool isTransparent(ActorType type);
+  int getTileRenderPriority(ActorType type);
 
   //ActorFeatures
   Container* getContainer(ActorType type);

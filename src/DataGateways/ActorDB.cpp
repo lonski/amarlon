@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 #include "Parsers/ActorParser.h"
+#include <world/map.h>
 
 namespace amarlon {
 
@@ -65,6 +66,34 @@ bool ActorDB::isTransparent(ActorType type)
     a = _actors[type].transparent;
 
   return a;
+}
+
+int ActorDB::getTileRenderPriority(ActorType type)
+{
+  int piority = -1;
+
+  auto found = _actors.find(type);
+  if ( found != _actors.end() )
+  {
+    piority = found->second.tilePriority;
+  }
+
+  //not set in xml, set default prority for particural actor type
+  if ( piority == -1 )
+  {
+    switch( type )
+    {
+      case ActorType::DoorOpen:
+      case ActorType::DoorClosed:
+      {
+        piority = Tile::defaultItemRenderPriority + 1;
+      }
+      break;
+      default:;
+    }
+  }
+
+  return piority;
 }
 
 Container *ActorDB::getContainer(ActorType type)

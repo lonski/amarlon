@@ -18,7 +18,7 @@ Container::~Container()
 }
 
 Container* Container::create(const ContainerDescription &dsc)
-{
+{  
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Container* cont = new Container(dsc.maxSize);
 
@@ -169,6 +169,11 @@ size_t Container::size() const
 void Container::performActionOnActors(std::function<void(Actor *)> fun)
 {
   std::for_each(_inventory.begin(), _inventory.end(), fun);
+}
+
+void Container::sort(std::function<bool(Actor*, Actor*)> pred)
+{
+  _inventory.sort(pred);
 }
 
 size_t Container::slotCount() const

@@ -34,6 +34,7 @@ public:
   std::vector<Actor *> content(std::function<bool(Actor *)>* filterFun = nullptr);
   size_t size() const;
   void performActionOnActors(std::function<void(Actor*)> fun);
+  void sort(std::function<bool(Actor*, Actor*)> pred);
 
   size_t slotCount() const;
   void setSlotCount(const size_t &slotCount);

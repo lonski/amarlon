@@ -22,6 +22,9 @@ typedef std::shared_ptr<Container> ContainerPtr;
 
 struct Tile
 {
+  constexpr static int defaultMonsterRenderPriority = 10;
+  constexpr static int defaultItemRenderPriority = 20;
+
   bool explored;
   TileType type;
   ContainerPtr actors;
