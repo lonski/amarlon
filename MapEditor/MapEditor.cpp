@@ -5,12 +5,13 @@
 #include <iostream>
 #include <fstream>
 #include "xml/rapidxml_print.hpp"
-#include "World/map.h"
+#include "world/map.h"
 #include <QDebug>
-#include "Actor/actor.h"
+#include "Actor/Actor.h"
 #include <QInputDialog>
 
 using namespace rapidxml;
+using namespace amarlon;
 
 MapEditor::MapEditor(QWidget *parent)
   : QMainWindow(parent)
@@ -158,13 +159,17 @@ void MapEditor::on_map_cellClicked(int row, int column)
 
 void MapEditor::on_actionLoad_triggered()
 {
-  //QString fileName = QFileDialog::getOpenFileName(this, "Load", "", "All Files (*)");
+  QFileDialog dialog;
+  dialog.setFileMode(QFileDialog::Directory);
+  dialog.setOption(QFileDialog::ShowDirsOnly);
+
+  QString dir = dialog.getExistingDirectory(this,"Set directory with amarlon xml's");
 
   _actors.clear();
 
-  Map::Tiles.loadTiles("d:/tiles.xml");
-  Map::Gateway.loadMaps("d:/maps.xml");
-  Actor::DB.loadActors("d:/actors.xml");
+  Map::Tiles.loadTiles(dir.toStdString() + "/tiles.xml");
+  Map::Gateway.loadMaps(dir.toStdString() + "/maps.xml");
+  Actor::DB.loadActors(dir.toStdString() + "/actors.xml");
 
   ui->aType->clear();
   for (int aT = (int)ActorType::Null; aT != (int)ActorType::End; ++aT)
@@ -192,8 +197,9 @@ void MapEditor::on_actionLoad_triggered()
     }
   }
 
-  for ( Map::ActorArray::const_iterator a = currentMap->actors().begin();
-        a != currentMap->actors().end();
+  std::vector<Actor*> actors = currentMap->getActors(nullptr);
+  for ( auto a = actors.begin();
+        a != actors.end();
         ++a)
   {
     Actor* cA = *a;
@@ -265,16 +271,11 @@ void MapEditor::on_pushButton_3_clicked()
     }
 }
 
-void MapEditor::on_aList_itemClicked(QListWidgetItem *item)
+void MapEditor::on_aList_itemClicked(QListWidgetItem*)
 {
 //  QString aName = item->text();
 //  int uId = ui->aType->findText(aName);
 
 //  if (uId < ui->aType->count())
   //    ui->aType->setCurrentIndex(uId);
-}
-
-void MapEditor::onKeyPressEvent(QKeyEvent *event)
-{
-  QInputDialog::getText(0,"sdf","sdfdd");
 }

@@ -5,7 +5,6 @@ set(SOURCE_FILES
     CommandExecutorTest.cpp
     main.cpp
     UtilsTest.cpp
-    DataGateway/DataGatewayTest.cpp
     DataGateway/MapGatewayTest.cpp
     World/MapTest.cpp
     ${PROJECT_SOURCE_DIR}/src/Actor/Actor.cpp
@@ -22,7 +21,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/LockEffect.cpp
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/SelfHealEffect.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDB.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/DataGateway.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.cpp
@@ -82,7 +80,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/SelfHealEffect.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDB.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDescriptions.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/DataGateway.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.h

@@ -58,8 +58,6 @@ set(SOURCE_FILES
     DataGateways/ActorDB.cpp
     DataGateways/ActorDB.h
     DataGateways/ActorDescriptions.h
-    DataGateways/DataGateway.cpp
-    DataGateways/DataGateway.h
     DataGateways/MapGateway.cpp
     DataGateways/MapGateway.h
     DataGateways/TileDB.cpp

@@ -10,15 +10,16 @@
 namespace Ui {
 class MapEditor;
 }
+
 class QTableWidgetItem;
 
 struct ActorData
 {
-  ActorType id;
+  amarlon::ActorType id;
   int x;
   int y;
 
-  ActorData(ActorType id = ActorType::Null, int x = 0, int y = 0)
+  ActorData(amarlon::ActorType id = amarlon::ActorType::Null, int x = 0, int y = 0)
     : id(id)
     , x(x)
     , y(y)
@@ -44,10 +45,9 @@ private slots:
   void on_pushButton_2_clicked();
   void on_pushButton_3_clicked();
   void on_aList_itemClicked(QListWidgetItem *item);
-  void onKeyPressEvent(QKeyEvent* event);
 
 private:
-  Map* currentMap;
+  std::shared_ptr<amarlon::Map> currentMap;
   std::vector< ActorData > _actors;
   Ui::MapEditor *ui;
   int cols;
