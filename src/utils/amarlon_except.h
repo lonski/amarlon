@@ -11,6 +11,7 @@ class amarlon_exeption : public std::runtime_error
 {
 public:
   amarlon_exeption(const std::string& msg = "") : std::runtime_error(msg) {}
+  virtual ~amarlon_exeption() {}
 };
 
 // === INVENTORY EXCEPTIONS === //
@@ -19,6 +20,7 @@ class inventory_error : public amarlon_exeption
 {
 public:
   inventory_error(const std::string& msg = "") : amarlon_exeption(msg) {}
+  virtual ~inventory_full() {}
 };
 
 // ===
@@ -30,6 +32,7 @@ public:
     : inventory_error(msg)
     , _itemName(itemName)
   {}
+  virtual ~inventory_full() {}
 
   std::string getItemName() const
   {
