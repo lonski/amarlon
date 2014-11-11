@@ -31,7 +31,7 @@ void CmdClose::execute(Actor *executor)
 
   Actor* toClose = openableIter != actorsOnTile.end() ? *openableIter : nullptr;
 
-  if ( toClose )
+  if ( toClose != nullptr)
   {
     if ( actorsOnTile.size() == 1 )
     {

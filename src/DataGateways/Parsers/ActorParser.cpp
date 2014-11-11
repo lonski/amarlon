@@ -86,7 +86,7 @@ ContainerDescription *ActorParser::parseContainerDsc()
   if ( _xml != nullptr )
   {
     xml_node<>* containerNode = _xml->first_node("Container");
-    if ( containerNode )
+    if ( containerNode != nullptr)
     {
       contDsc = new ContainerDescription;
 
@@ -94,7 +94,7 @@ ContainerDescription *ActorParser::parseContainerDsc()
 
       xml_node<>* contentNode = containerNode->first_node("Content");
 
-      while ( contentNode )
+      while ( contentNode != nullptr)
       {
         parseContainerContentNode(contDsc, contentNode);
         contentNode = contentNode->next_sibling();
@@ -113,7 +113,7 @@ PickableDescription *ActorParser::parsePickableDsc()
   if ( _xml != nullptr )
   {
     xml_node<>* pickableNode = _xml->first_node("Pickable");
-    if (pickableNode)
+    if (pickableNode != nullptr)
     {
       pickDsc = new PickableDescription;
 
@@ -125,7 +125,7 @@ PickableDescription *ActorParser::parsePickableDsc()
 
       // == effects == //
       xml_node<>* effectNode = pickableNode->first_node("Effect");
-      if ( effectNode )
+      if ( effectNode != nullptr)
       {
         pickDsc->effect.type = (EffectType)getAttribute<int>(effectNode, "type");
         pickDsc->effect.lockId = getAttribute<int>(effectNode, "lockId");
@@ -145,7 +145,7 @@ FighterDescription *ActorParser::parseFighterDsc()
   if ( _xml != nullptr )
   {
     xml_node<>* fighterNode = _xml->first_node("Fighter");
-    if (fighterNode)
+    if (fighterNode != nullptr)
     {
       fDsc = new FighterDescription;
 
@@ -164,7 +164,7 @@ AiDescription *ActorParser::parseAiDsc()
   if ( _xml != nullptr )
   {
     xml_node<>* aiNode = _xml->first_node("Ai");
-    if (aiNode)
+    if (aiNode != nullptr)
     {
       aiDsc = new AiDescription;
 
@@ -182,7 +182,7 @@ OpenableDescription *ActorParser::parseOpenableDsc()
   if ( _xml != nullptr )
   {
     xml_node<>* openableNode = _xml->first_node("Openable");
-    if (openableNode)
+    if (openableNode != nullptr)
     {
       opDsc = new OpenableDescription;
 
@@ -199,21 +199,21 @@ WearerDescription *ActorParser::parseWearerDsc()
 {
   WearerDescription* wrDsc = nullptr;
 
-  if ( _xml != nullptr )
+  if (_xml != nullptr)
   {
     xml_node<>* wearerNode = _xml->first_node("Wearer");
-    if (wearerNode)
+    if (wearerNode != nullptr)
     {
       wrDsc = new WearerDescription;
 
       xml_node<>* itemSlotNode = wearerNode->first_node("ItemSlot");
-      while (itemSlotNode)
+      while (itemSlotNode != nullptr)
       {
         ItemSlotType slot = (ItemSlotType)getAttribute<int>(itemSlotNode, "type");
         wrDsc->itemSlots.push_back(slot);
 
         xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");
-        if ( equippedNode )
+        if (equippedNode != nullptr)
         {
           parseContainerContentNode(&wrDsc->eqItems, equippedNode );
         }

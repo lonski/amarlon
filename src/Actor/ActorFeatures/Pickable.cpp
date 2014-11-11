@@ -65,7 +65,7 @@ bool Pickable::isEqual(ActorFeature *rhs)
   bool equal = false;
   Pickable* crhs = dynamic_cast<Pickable*>(rhs);
 
-  if (crhs)
+  if (crhs != nullptr)
   {
     equal = (_stackable == crhs->_stackable);
     //equal &= (_amount == crhs->_amount);  no amount comparing

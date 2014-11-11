@@ -8,21 +8,21 @@ include_directories(${TCOD_INCLUDE_DIRS})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -g -O2 -Wall -Wextra -Wformat-security -pipe")
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/src)
-include_directories(${PROJECT_SOURCE_DIR}/Actor)
-include_directories(${PROJECT_SOURCE_DIR}/Actor/ActorFeatures)
-include_directories(${PROJECT_SOURCE_DIR}/Actor/Effects)
-include_directories(${PROJECT_SOURCE_DIR}/Commands)
-include_directories(${PROJECT_SOURCE_DIR}/DataGateways)
-include_directories(${PROJECT_SOURCE_DIR}/DataGateways/Parsers)
-include_directories(${PROJECT_SOURCE_DIR}/gui)
-include_directories(${PROJECT_SOURCE_DIR}/gui/widget)
-include_directories(${PROJECT_SOURCE_DIR}/gui/widget/window)
-include_directories(${PROJECT_SOURCE_DIR}/gui/widget/window/inventory_window)
-include_directories(${PROJECT_SOURCE_DIR}/utils)
-include_directories(${PROJECT_SOURCE_DIR}/utils/target_selector)
-include_directories(${PROJECT_SOURCE_DIR}/world)
+include_directories(${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/Actor
+    ${PROJECT_SOURCE_DIR}/Actor/ActorFeatures
+    ${PROJECT_SOURCE_DIR}/Actor/Effects
+    ${PROJECT_SOURCE_DIR}/Commands
+    ${PROJECT_SOURCE_DIR}/DataGateways
+    ${PROJECT_SOURCE_DIR}/DataGateways/Parsers
+    ${PROJECT_SOURCE_DIR}/gui
+    ${PROJECT_SOURCE_DIR}/gui/widget
+    ${PROJECT_SOURCE_DIR}/gui/widget/window
+    ${PROJECT_SOURCE_DIR}/gui/widget/window/inventory_window
+    ${PROJECT_SOURCE_DIR}/utils
+    ${PROJECT_SOURCE_DIR}/utils/target_selector
+    ${PROJECT_SOURCE_DIR}/world)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")

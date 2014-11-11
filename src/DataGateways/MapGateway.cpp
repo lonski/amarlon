@@ -108,10 +108,10 @@ void MapGateway::saveMaps(string fn)
   doc.append_node(mapsNode);
 
   //auto m = _maps.begin();
-  for (auto m = _maps.begin(); m != _maps.end(); ++m)
+  for (auto m : _maps)
   {
-    MapId id = m->first;
-    MapPtr map = m->second;
+    MapId id = m.first;
+    MapPtr map = m.second;
 
     xml_node<>* mapNode = doc.allocate_node(node_element, "Map");
     mapsNode->append_node(mapNode);

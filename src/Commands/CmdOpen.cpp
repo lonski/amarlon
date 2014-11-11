@@ -29,7 +29,7 @@ void CmdOpen::execute(Actor *executor)
                                  &map,
                                  [](Actor* a)->bool{ return a->afOpenable();});
 
-  if ( target )
+  if ( target != nullptr)
   {
     if ( target->afOpenable()->open(executor) )
     {

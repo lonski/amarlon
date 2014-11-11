@@ -59,8 +59,7 @@ bool Container::isEqual(ActorFeature *rhs)
 {
   bool equal = false;
   Container* crhs = dynamic_cast<Container*>(rhs);
-
-  if (crhs)
+  if (crhs != nullptr)
   {
     equal = (_slotCount == crhs->_slotCount);
     equal &= std::equal(_inventory.begin(), _inventory.end(), crhs->_inventory.begin(),
@@ -149,12 +148,11 @@ std::vector<Actor *> Container::content(std::function<bool(Actor*)>* filterFun/*
 {
   std::vector<Actor *> items;
 
-  for (auto i = _inventory.begin(); i != _inventory.end(); ++i)
+  for (auto i : _inventory)
   {
-    if ( (filterFun == nullptr) ||
-         (filterFun && (*filterFun)(*i)))
+    if ( (filterFun == nullptr) || (filterFun && (*filterFun)(i)))
     {
-      items.push_back(*i);
+      items.push_back(i);
     }
   }
 

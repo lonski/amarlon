@@ -33,7 +33,7 @@ bool Fighter::isEqual(ActorFeature *rhs)
   bool equal = false;
   Fighter* crhs = dynamic_cast<Fighter*>(rhs);
 
-  if (crhs)
+  if (crhs != nullptr)
   {
     equal = (_power == crhs->_power);
     equal &= (_maxHp == crhs->_maxHp);

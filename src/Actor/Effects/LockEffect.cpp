@@ -25,7 +25,7 @@ bool LockEffect::isEqual(Effect *rhs)
   bool equal = false;
   LockEffect* crhs = dynamic_cast<LockEffect*>(rhs);
 
-  if(crhs)
+  if (crhs != nullptr)
   {
     equal = _lockId == crhs->_lockId;
     equal &= _usesCount == crhs->_usesCount;
@@ -58,7 +58,7 @@ bool LockEffect::apply(Actor* executor, std::vector<Actor *> targets)
     Actor* target = targets.front();
     Openable* toOpen = targets.front()->afOpenable();
 
-    if (toOpen)
+    if (toOpen != nullptr)
     {
       if (toOpen->isLocked() && toOpen->getLockId() == _lockId)
       {
