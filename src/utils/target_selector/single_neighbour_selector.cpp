@@ -7,7 +7,7 @@
 
 namespace amarlon {
 
-SingleNeighbourSelector::SingleNeighbourSelector(const std::string selectionMessage)
+SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMessage)
   : TargetSelector(selectionMessage)
 {
 }
