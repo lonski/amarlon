@@ -33,6 +33,8 @@ Window& AmountWindow::show()
     handlePressedKey(key);
   }
 
+  if ( key.vk == TCODK_ESCAPE ) _amount = 0;
+
   return *this;
 }
 
@@ -114,7 +116,6 @@ void AmountWindow::handlePressedKey(const TCOD_key_t &key)
   }
 
   _amount = std::stol(aStr);
-
 }
 
 }}

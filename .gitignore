@@ -12,4 +12,15 @@ src/Makefile
 lib/
 build/*.exe
 build/*.dll
+build/test
+build/src
+build/CMakeFiles
+build/data/maps_saved.xml
+build/data/tmp
+build/*.cbp
+build/*.cmake
+build/*.txt
+build/*.sav
+build/ut_amarlon
+build/Makefile
 include/gtest

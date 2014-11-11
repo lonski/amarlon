@@ -135,6 +135,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.cpp
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.h
+    ${PROJECT_SOURCE_DIR}/src/Commands/cmd_put_into.h
+    ${PROJECT_SOURCE_DIR}/src/Commands/cmd_put_into.cpp
 )
 
 add_executable(ut_amarlon ${SOURCE_FILES})

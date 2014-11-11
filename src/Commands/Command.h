@@ -18,6 +18,7 @@ enum class CommandId
   Close,
   Use,
   Help,
+  PutInto,
   End
 };
 

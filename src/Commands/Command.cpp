@@ -7,6 +7,7 @@
 #include "CmdClose.h"
 #include "CmdUse.h"
 #include "CmdHelp.h"
+#include "cmd_put_into.h"
 
 namespace amarlon {
 
@@ -24,6 +25,7 @@ Command *Command::create(CommandId cmd)
     case CommandId::Close: c = new CmdClose; break;
     case CommandId::Use: c = new CmdUse; break;
     case CommandId::Help: c = new CmdHelp; break;
+    case CommandId::PutInto: c = new CmdPutInto; break;
     default: break;
   }
 

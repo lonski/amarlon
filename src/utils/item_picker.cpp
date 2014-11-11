@@ -43,7 +43,7 @@ int ItemPicker::pick()
   else
   {
     //rollback spilting
-    if ( stackable ) pickableTmp->afPickable()->incAmount( amount );
+    if ( stackable && pickableTmp != _toPick ) pickableTmp->afPickable()->incAmount( amount );
     amount = 0;
 
     gui::msgError("Cannot pick up "+itemName+":\nnot enough space in inventory.");

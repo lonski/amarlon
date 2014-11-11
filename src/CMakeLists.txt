@@ -51,6 +51,8 @@ set(SOURCE_FILES
     Commands/CmdUse.h
     Commands/Command.cpp
     Commands/Command.h
+    Commands/cmd_put_into.h
+    Commands/cmd_put_into.cpp
     DataGateways/Parsers/ActorParser.cpp
     DataGateways/Parsers/ActorParser.h
     DataGateways/ActorDB.cpp

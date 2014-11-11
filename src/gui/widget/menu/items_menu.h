@@ -4,7 +4,6 @@
 #include <gui/widget/menu/menu.h>
 #include <Actor/Actor.h>
 #include <algorithm>
-//#include <gui/widget/menu/slot_menu_item.h>
 
 namespace amarlon { namespace gui {
 
