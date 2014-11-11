@@ -22,7 +22,7 @@ void CmdPutInto::execute(Actor *executor)
                     .selectFirst(executor,
                                  &Engine::instance().currentMap());
 
-  if ( target && target->afContainer() )
+  if ( target != nullptr && target->afContainer() != nullptr)
   {
     auto afterPutIntoAction =
     [&](const std::string& item, int amount)

@@ -1,138 +1,140 @@
-set(SOURCE_FILES
-    Actor/ActorFeatures/Ai/Ai.cpp
+set(HEADER_FILES
     Actor/ActorFeatures/Ai/Ai.h
     Actor/ActorFeatures/Ai/AiType.h
-    Actor/ActorFeatures/Ai/MonsterAi.cpp
     Actor/ActorFeatures/Ai/MonsterAi.h
-    Actor/ActorFeatures/Openable/Openable.cpp
     Actor/ActorFeatures/Openable/Openable.h
-    Actor/ActorFeatures/Openable/OpenableContainer.cpp
     Actor/ActorFeatures/Openable/OpenableContainer.h
-    Actor/ActorFeatures/Openable/OpenableDoor.cpp
     Actor/ActorFeatures/Openable/OpenableDoor.h
     Actor/ActorFeatures/Openable/OpenableType.h
     Actor/ActorFeatures/Wearer/item_slot_type.h
-    Actor/ActorFeatures/Wearer/wearer.cpp
     Actor/ActorFeatures/Wearer/wearer.h
-    Actor/ActorFeatures/ActorFeature.cpp
     Actor/ActorFeatures/ActorFeature.h
-    Actor/ActorFeatures/Container.cpp
     Actor/ActorFeatures/Container.h
-    Actor/ActorFeatures/Fighter.cpp
     Actor/ActorFeatures/Fighter.h
-    Actor/ActorFeatures/Pickable.cpp
     Actor/ActorFeatures/Pickable.h
     Actor/ActorFeatures/pickable_category.h
-    Actor/Effects/Effect.cpp
     Actor/Effects/Effect.h
     Actor/Effects/EffectType.h
-    Actor/Effects/LockEffect.cpp
     Actor/Effects/LockEffect.h
-    Actor/Effects/SelfHealEffect.cpp
     Actor/Effects/SelfHealEffect.h
-    Actor/Actor.cpp
     Actor/Actor.h
     Actor/ActorType.h
-    Commands/CmdHelp.cpp
     Commands/CmdHelp.h
-    Commands/CmdClose.cpp
     Commands/CmdClose.h
-    Commands/CmdFullscreen.cpp
     Commands/CmdFullscreen.h
-    Commands/CmdInventory.cpp
     Commands/CmdInventory.h
-    Commands/CmdMove.cpp
     Commands/CmdMove.h
-    Commands/CmdOpen.cpp
     Commands/CmdOpen.h
-    Commands/CmdPick.cpp
     Commands/CmdPick.h
-    Commands/CmdUse.cpp
     Commands/CmdUse.h
-    Commands/Command.cpp
     Commands/Command.h
     Commands/cmd_put_into.h
-    Commands/cmd_put_into.cpp
-    DataGateways/Parsers/ActorParser.cpp
     DataGateways/Parsers/ActorParser.h
-    DataGateways/ActorDB.cpp
     DataGateways/ActorDB.h
     DataGateways/ActorDescriptions.h
-    DataGateways/MapGateway.cpp
     DataGateways/MapGateway.h
-    DataGateways/TileDB.cpp
     DataGateways/TileDB.h
-    gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/bag_manager.h
-    gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/body_manager.h
-    gui/window/inventory_window/inventory_window.cpp
     gui/window/inventory_window/inventory_window.h
-    gui/widget/menu/items_menu.cpp
     gui/widget/menu/items_menu.h
-    gui/widget/menu/label_menu_item.cpp
     gui/widget/menu/label_menu_item.h
-    gui/widget/menu/menu.cpp
     gui/widget/menu/menu.h
     gui/widget/menu/menu_item.h
-    gui/widget/menu/slot_menu_item.cpp
     gui/widget/menu/slot_menu_item.h
-    gui/widget/bar.cpp
     gui/widget/bar.h
-    gui/widget/label.cpp
     gui/widget/label.h
-    gui/widget/list.cpp
     gui/widget/list.h
-    gui/widget/panel.cpp
     gui/widget/panel.h
-    gui/widget/widget.cpp
     gui/widget/widget.h
-    gui/window/amount_window.cpp
     gui/window/amount_window.h
-    gui/window/window_manager.cpp
     gui/window/window_manager.h
-    gui/gui.cpp
     gui/gui.h
     gui/message_box.h
-    gui/window/pick_up_window.cpp
     gui/window/pick_up_window.h
-    gui/window/text_window/text_window.cpp
     gui/window/text_window/text_window.h
     gui/window/text_window/resizeable_text_window.h
-    gui/window/text_window/resizeable_text_window.cpp
-    gui/window/window.cpp
     gui/window/window.h
-    utils/target_selector/executor_selector.cpp
     utils/target_selector/executor_selector.h
-    utils/target_selector/single_neighbour_selector.cpp
     utils/target_selector/single_neighbour_selector.h
-    utils/target_selector/target_selector.cpp
     utils/target_selector/target_selector.h
     utils/colored_string.h
-    utils/direction_selector.cpp
     utils/direction_selector.h
-    utils/item_picker.cpp
     utils/item_picker.h
-    utils/messenger.cpp
     utils/messenger.h
     utils/selector_type.h
-    utils/utils.cpp
     utils/utils.h
-    utils/configuration.cpp
     utils/configuration.h
     utils/xml_utils.h
     utils/amarlon_except.h
-    world/map.cpp
     world/map.h
     world/map_id.h
     world/tile_type.h
-    command_executor.cpp
     command_executor.h
+    engine.h)
+
+set(SOURCE_FILES
+    Actor/ActorFeatures/Ai/Ai.cpp
+    Actor/ActorFeatures/Ai/MonsterAi.cpp
+    Actor/ActorFeatures/Openable/Openable.cpp
+    Actor/ActorFeatures/Openable/OpenableContainer.cpp
+    Actor/ActorFeatures/Openable/OpenableDoor.cpp
+    Actor/ActorFeatures/Wearer/wearer.cpp
+    Actor/ActorFeatures/ActorFeature.cpp
+    Actor/ActorFeatures/Container.cpp
+    Actor/ActorFeatures/Fighter.cpp
+    Actor/ActorFeatures/Pickable.cpp
+    Actor/Effects/Effect.cpp
+    Actor/Effects/LockEffect.cpp
+    Actor/Effects/SelfHealEffect.cpp
+    Actor/Actor.cpp
+    Commands/CmdHelp.cpp
+    Commands/CmdClose.cpp
+    Commands/CmdFullscreen.cpp
+    Commands/CmdInventory.cpp
+    Commands/CmdMove.cpp
+    Commands/CmdOpen.cpp
+    Commands/CmdPick.cpp
+    Commands/CmdUse.cpp
+    Commands/Command.cpp
+    Commands/cmd_put_into.cpp
+    DataGateways/Parsers/ActorParser.cpp
+    DataGateways/ActorDB.cpp
+    DataGateways/MapGateway.cpp
+    DataGateways/TileDB.cpp
+    gui/window/inventory_window/bag_manager.cpp
+    gui/window/inventory_window/body_manager.cpp
+    gui/window/inventory_window/inventory_window.cpp
+    gui/widget/menu/items_menu.cpp
+    gui/widget/menu/label_menu_item.cpp
+    gui/widget/menu/menu.cpp
+    gui/widget/menu/slot_menu_item.cpp
+    gui/widget/bar.cpp
+    gui/widget/label.cpp
+    gui/widget/list.cpp
+    gui/widget/panel.cpp
+    gui/widget/widget.cpp
+    gui/window/amount_window.cpp
+    gui/window/window_manager.cpp
+    gui/gui.cpp
+    gui/window/pick_up_window.cpp
+    gui/window/text_window/text_window.cpp
+    gui/window/text_window/resizeable_text_window.cpp
+    gui/window/window.cpp
+    utils/target_selector/executor_selector.cpp
+    utils/target_selector/single_neighbour_selector.cpp
+    utils/target_selector/target_selector.cpp
+    utils/direction_selector.cpp
+    utils/item_picker.cpp
+    utils/messenger.cpp
+    utils/utils.cpp
+    utils/configuration.cpp
+    world/map.cpp
+    command_executor.cpp
     engine.cpp
-    engine.h
     main.cpp)
 
-add_executable(amarlon ${SOURCE_FILES})
+add_executable(amarlon ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(amarlon ${TCOD_LIBRARIES})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)

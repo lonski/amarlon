@@ -14,12 +14,11 @@ bool CommandExecutor::execute(TCOD_key_t &key, Actor *executor)
 {
   bool r = false;
 
-  for (auto c = _commands.begin(); c != _commands.end(); ++c)
+  for (auto c : _commands)
   {
-    Command* cmd = *c;
-    if ( cmd->accept(key) )
+    if (c->accept(key))
     {
-      cmd->execute(executor);
+      c->execute(executor);
       r = true;
       break;
     }

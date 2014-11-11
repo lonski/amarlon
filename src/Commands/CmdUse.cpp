@@ -28,7 +28,7 @@ void CmdUse::execute(Actor *executor)
 
   Engine::instance().render();
 
-  if (item && item->afPickable()->getEffect())
+  if (item != nullptr && item->afPickable()->getEffect() != nullptr)
   {
     SelectorType selectorType = item->afPickable()->getEffect()->getSelectorType();
     TargetSelector* tSelector = TargetSelector::create(selectorType);
@@ -73,7 +73,7 @@ Actor* CmdUse::acquireItemToUse(Actor* executor)
   }
   else gui::msgBox("You don't have any usable items!", gui::MsgType::Warning);
 
-  if ( item && item->afPickable()->isStackable() ) item = item->afPickable()->spilt(1);
+  if ( item != nullptr && item->afPickable()->isStackable() ) item = item->afPickable()->spilt(1);
 
   return item;
 }

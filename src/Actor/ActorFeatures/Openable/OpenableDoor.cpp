@@ -57,7 +57,7 @@ bool OpenableDoor::isEqual(ActorFeature *rhs)
   bool equal = false;
   OpenableDoor* crhs = dynamic_cast<OpenableDoor*>(rhs);
 
-  if (crhs)
+  if (crhs != nullptr)
   {
     equal = (_lockId == crhs->_lockId);
   }

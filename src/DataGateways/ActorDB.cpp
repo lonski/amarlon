@@ -1,11 +1,11 @@
 #include "ActorDB.h"
-#include <utils/utils.h>
 #include <fstream>
 #include <vector>
+#include <memory>
+#include <algorithm>
+#include <utils/utils.h>
 #include "Actor/Actor.h"
 #include "Actor/Effects/Effect.h"
-#include <algorithm>
-#include <memory>
 #include "Parsers/ActorParser.h"
 #include <world/map.h>
 
@@ -21,8 +21,9 @@ ActorDB::ActorDB()
 string ActorDB::getName(ActorType type)
 {
   std::string str = "No name";
-  if (_actors.count(type))
-    str = _actors[type].name;
+  auto it = _actors.find(type);
+  if (it != _actors.end())
+    str = it->second.name;
 
   return str;
 }
@@ -30,8 +31,9 @@ string ActorDB::getName(ActorType type)
 unsigned char ActorDB::getChar(ActorType type)
 {
   unsigned char ch = 'X';
-  if (_actors.count(type))
-    ch = _actors[type].character;
+  auto it = _actors.find(type);
+  if (it != _actors.end())
+    ch = it->second.character;
 
   return ch;
 }
@@ -44,8 +46,9 @@ TCODColor ActorDB::getColor(ActorType type)
 bool ActorDB::blocks(ActorType type)
 {
   bool a = false;
-  if (_actors.count(type))
-    a = _actors[type].blocks;
+  auto it = _actors.find(type);
+  if (it != _actors.end())
+    a = it->second.blocks;
 
   return a;
 }
@@ -53,8 +56,9 @@ bool ActorDB::blocks(ActorType type)
 bool ActorDB::isFovOnly(ActorType type)
 {
   bool a = false;
-  if (_actors.count(type))
-    a = _actors[type].fovOnly;
+  auto it = _actors.find(type);
+  if (it != _actors.end())
+    a = it->second.fovOnly;
 
   return a;
 }
@@ -62,8 +66,9 @@ bool ActorDB::isFovOnly(ActorType type)
 bool ActorDB::isTransparent(ActorType type)
 {
   bool a = false;
-  if (_actors.count(type))
-    a = _actors[type].transparent;
+  auto it = _actors.find(type);
+  if (it != _actors.end())
+    a = it->second.transparent;
 
   return a;
 }
@@ -141,42 +146,44 @@ bool ActorDB::loadActors(std::string fn)
     doc.parse<0>(&buffer[0]);
 
     xml_node<>* root = doc.first_node("Actors");
-    xml_node<>* actorNode = root->first_node("Actor");
-
-    ActorParser actorParser;
-    while( actorNode != nullptr )
+    if (root != nullptr)
     {
-      actorParser.setSource( actorNode );
+      xml_node<>* actorNode = root->first_node("Actor");
 
-      unique_ptr<ActorDescription> actorDsc( actorParser.parseActorDsc() );
-      if ( actorDsc )
+      ActorParser actorParser;
+      while( actorNode != nullptr )
       {
-        ActorType id = actorDsc->id;
-        _actors[id] = *actorDsc;
+        actorParser.setSource( actorNode );
 
-        unique_ptr<ContainerDescription> contDsc( actorParser.parseContainerDsc() );
-        if ( contDsc ) _containers[id] = *contDsc;
+        unique_ptr<ActorDescription> actorDsc( actorParser.parseActorDsc() );
+        if ( actorDsc )
+        {
+          ActorType id = actorDsc->id;
+          _actors[id] = *actorDsc;
 
-        unique_ptr<PickableDescription> pickDsc( actorParser.parsePickableDsc() );
-        if ( pickDsc ) _pickables[id] = *pickDsc;
+          unique_ptr<ContainerDescription> contDsc( actorParser.parseContainerDsc() );
+          if ( contDsc ) _containers[id] = *contDsc;
 
-        unique_ptr<FighterDescription> fDsc( actorParser.parseFighterDsc() );
-        if ( fDsc ) _fighters[id] = *fDsc;
+          unique_ptr<PickableDescription> pickDsc( actorParser.parsePickableDsc() );
+          if ( pickDsc ) _pickables[id] = *pickDsc;
 
-        unique_ptr<AiDescription> aiDsc( actorParser.parseAiDsc() );
-        if ( aiDsc ) _ais[id] = *aiDsc;
+          unique_ptr<FighterDescription> fDsc( actorParser.parseFighterDsc() );
+          if ( fDsc ) _fighters[id] = *fDsc;
 
-        unique_ptr<OpenableDescription> opDsc( actorParser.parseOpenableDsc() );
-        if ( opDsc ) _openables[id] = *opDsc;
+          unique_ptr<AiDescription> aiDsc( actorParser.parseAiDsc() );
+          if ( aiDsc ) _ais[id] = *aiDsc;
 
-        unique_ptr<WearerDescription> wrDsc( actorParser.parseWearerDsc() );
-        if ( wrDsc ) _wearers[id] = *wrDsc;
+          unique_ptr<OpenableDescription> opDsc( actorParser.parseOpenableDsc() );
+          if ( opDsc ) _openables[id] = *opDsc;
+
+          unique_ptr<WearerDescription> wrDsc( actorParser.parseWearerDsc() );
+          if ( wrDsc ) _wearers[id] = *wrDsc;
+        }
+
+        //~~~~~ NEXT
+        actorNode = actorNode->next_sibling();
       }
-
-      //~~~~~ NEXT
-      actorNode = actorNode->next_sibling();
     }
-
     doc.clear();
     success = true;
   }

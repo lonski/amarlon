@@ -37,7 +37,7 @@ void Wearer::assignItemsToSlots(Wearer* wearer)
   std::vector<Actor*> toEquip = wearer->_equippedItems->content();
   std::for_each(toEquip.begin(), toEquip.end(), [&](Actor* a)
   {
-    if ( a && a->afPickable())
+    if ( a != nullptr && a->afPickable() != nullptr)
     {
       wearer->_itemSlots[ a->afPickable()->getItemSlot() ] = a;
     }
@@ -49,9 +49,9 @@ ActorFeature* Wearer::clone()
 {
   Wearer* cloned = new Wearer;
 
-  for(auto i = _itemSlots.begin(); i!= _itemSlots.end(); ++i)
+  for(auto i : _itemSlots)
   {
-    cloned->_itemSlots[ i->first ] = nullptr;
+    cloned->_itemSlots[ i.first ] = nullptr;
   }
 
   cloned->_equippedItems.reset( _equippedItems->clone() );
@@ -85,12 +85,12 @@ bool Wearer::equip(Actor *item)
 {
   bool r = false;
 
-  if ( item && item->afPickable())
+  if ( item != nullptr && item->afPickable())
   {
-    ItemSlotType slot = item->afPickable()->getItemSlot();    
+    ItemSlotType slot = item->afPickable()->getItemSlot();
     if ( _itemSlots.count(slot) && !isEquipped(slot) )
     {    
-      r = _equippedItems->add(item);      
+      r = _equippedItems->add(item);
       if ( r ) _itemSlots[slot] = item;
     }
   }
@@ -100,12 +100,11 @@ bool Wearer::equip(Actor *item)
 
 Actor* Wearer::unequip(ItemSlotType slot)
 {
-  Actor* r = nullptr;
+  Actor* r = equipped(slot);
 
-  if ( _itemSlots.count(slot) && isEquipped(slot) )
+  if (r != nullptr)
   {
-    r = _itemSlots[slot];
-    if ( !_equippedItems->remove(r) )
+    if (!_equippedItems->remove(r))
     {
       throw std::logic_error("Item equipped in slot, but not present in container!");
     }
@@ -117,23 +116,16 @@ Actor* Wearer::unequip(ItemSlotType slot)
 
 bool Wearer::isEquipped(ItemSlotType slot)
 {
-  bool r = false;
-
-  if ( _itemSlots.count(slot) )
-  {
-    r = _itemSlots[slot] != nullptr;
-  }
-
-  return r;
+  return (equipped(slot) != nullptr);
 }
 
 Actor* Wearer::equipped(ItemSlotType slot)
 {
   Actor* r = nullptr;
-
-  if ( _itemSlots.count(slot) )
+  auto it = _itemSlots.find(slot);
+  if (it != _itemSlots.end())
   {
-    r = _itemSlots[slot];
+    r = it->second;
   }
 
   return r;
@@ -141,7 +133,7 @@ Actor* Wearer::equipped(ItemSlotType slot)
 
 bool Wearer::hasSlot(ItemSlotType slot)
 {
-  return _itemSlots.count(slot);
+  return (_itemSlots.find(slot) != _itemSlots.end());
 }
 
 }
