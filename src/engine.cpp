@@ -78,8 +78,6 @@ void Engine::render()
 
   TCODConsole::root->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
   TCODConsole::root->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
-
-  TCODConsole::root->flush();
 }
 
 void Engine::updateAis()

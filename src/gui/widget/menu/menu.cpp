@@ -136,7 +136,7 @@ void Menu::render(TCODConsole &console)
 
 int Menu::selectNext()
 {
-  if ( _items.size() > 0 )
+  if ( !_items.empty() )
   {
     //deselect current item
     if ( cIndexIsValid() ) _items[_currentIndex]->deselect();
@@ -158,7 +158,7 @@ int Menu::selectNext()
 
 int Menu::selectPrevious()
 {
-  if ( _items.size() > 0 )
+  if ( !_items.empty() )
   {
     //deselect current item
     if ( cIndexIsValid() ) _items[_currentIndex]->deselect();

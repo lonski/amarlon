@@ -118,8 +118,6 @@ set(SOURCE_FILES
     utils/messenger.cpp
     utils/messenger.h
     utils/selector_type.h
-    utils/console_freezer.h
-    utils/console_freezer.cpp
     utils/utils.cpp
     utils/utils.h
     utils/configuration.cpp

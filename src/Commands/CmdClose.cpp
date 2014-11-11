@@ -19,7 +19,7 @@ void CmdClose::execute(Actor *executor)
 {
   Map& map = Engine::instance().currentMap();
 
-  Actor* target = SingleNeighbourSelector()
+  Actor* target = SingleNeighbourSelector("Select object to close...")
                     .selectFirst(executor,
                                  &map);
 

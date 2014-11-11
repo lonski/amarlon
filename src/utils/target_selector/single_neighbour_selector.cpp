@@ -7,13 +7,14 @@
 
 namespace amarlon {
 
-SingleNeighbourSelector::SingleNeighbourSelector()
+SingleNeighbourSelector::SingleNeighbourSelector(const std::string selectionMessage)
+  : TargetSelector(selectionMessage)
 {
 }
 
 std::vector<Actor*> SingleNeighbourSelector::select(Actor *executor, Map *map, bool (*filterFun)(Actor *))
 {
-  Engine::instance().gui().setStatusMessage("Select direction...");
+  Engine::instance().gui().setStatusMessage( _selectionMessage );
 
   int dx(0), dy(0);
 

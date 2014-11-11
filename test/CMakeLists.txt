@@ -62,7 +62,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/console_freezer.cpp
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Actor.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorType.h
@@ -133,7 +132,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.h
-    ${PROJECT_SOURCE_DIR}/src/utils/console_freezer.h
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.h
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.cpp

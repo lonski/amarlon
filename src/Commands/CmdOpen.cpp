@@ -23,7 +23,7 @@ void CmdOpen::execute(Actor *executor)
 {
   Map& map = Engine::instance().currentMap();
 
-  Actor* target = SingleNeighbourSelector()
+  Actor* target = SingleNeighbourSelector("Select object to open...")
                     .selectFirst(executor, &map);
 
   if ( target && target->afOpenable() )

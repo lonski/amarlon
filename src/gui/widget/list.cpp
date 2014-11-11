@@ -4,7 +4,8 @@
 namespace amarlon { namespace gui {
 
 List::List()
-  : _fixedSize(true)
+  : _maxSize(0)
+  , _fixedSize(true)
 {
 }
 

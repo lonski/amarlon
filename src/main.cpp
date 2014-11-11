@@ -35,6 +35,7 @@ int main()
       {
         amarlon::Engine::instance().update();
         amarlon::Engine::instance().render();
+        TCODConsole::root->flush();
 
         TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
         amarlon::Engine::instance().processKey(lastKey);

@@ -88,6 +88,7 @@ struct ContainerDescription
     std::shared_ptr<WearerDescription> wearer;
 
     Content()
+      : actorType(ActorType::Null)
     {
     }
   };

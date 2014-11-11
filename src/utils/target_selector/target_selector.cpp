@@ -4,7 +4,8 @@
 
 namespace amarlon {
 
-TargetSelector::TargetSelector()
+TargetSelector::TargetSelector(const std::string &selectionMessage)
+  : _selectionMessage(selectionMessage)
 {
 }
 
@@ -20,6 +21,12 @@ TargetSelector *TargetSelector::create(SelectorType type)
   }
 
   return ts;
+}
+
+TargetSelector &TargetSelector::setSelectionMessage(const std::string &msg)
+{
+  _selectionMessage = msg;
+  return *this;
 }
 
 }

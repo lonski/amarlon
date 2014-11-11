@@ -6,6 +6,7 @@
 namespace amarlon {
 
 SelfHealEffect::SelfHealEffect()
+  : _healAmount(0)
 {
 }
 

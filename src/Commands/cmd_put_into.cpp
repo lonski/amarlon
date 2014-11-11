@@ -18,7 +18,7 @@ bool CmdPutInto::accept(TCOD_key_t &key)
 
 void CmdPutInto::execute(Actor *executor)
 {
-  Actor* target = SingleNeighbourSelector()
+  Actor* target = SingleNeighbourSelector("Select a container to put into...")
                     .selectFirst(executor,
                                  &Engine::instance().currentMap());
 

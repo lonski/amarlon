@@ -5,12 +5,10 @@
 #include <gui/window/amount_window.h>
 #include <utils/item_picker.h>
 #include <utils/amarlon_except.h>
-#include <iostream>
 
 namespace amarlon { namespace gui {
 
 PickUpWindow::PickUpWindow()
-  : _freezer(TCODConsole::root)
 {
   setDefaults();
 }
@@ -27,6 +25,46 @@ Window &PickUpWindow::setDefaults()
 
   _afterPickUpAction = [](const std::string&, int){};
   _inventoryFullAction = [](const std::string&){ gui::msgError("Inventory is full!"); };
+
+  return *this;
+}
+
+Window& PickUpWindow::show()
+{
+  if ( _picker && _container)
+  {
+    std::map<int, Actor*> mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
+    _menu.selectFirst();
+
+    int choosen(-1);
+    do
+    {
+      Engine::instance().render();
+      choosen = _menu.choose( *TCODConsole::root );
+
+      auto found = mappedItems.find( choosen );
+      if ( found != mappedItems.end() )
+      {
+        Actor* toPick = found->second;
+        std::string itemName = toPick->getName();
+
+        try
+        {
+          int pickedAmount = ItemPicker(_picker, toPick, _container).pick();
+
+          mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
+          _menu.selectFirst();
+
+          _afterPickUpAction(itemName, pickedAmount);
+        }
+        catch( inventory_full& e )
+        {
+          _inventoryFullAction(e.getItemName());
+        }
+      }
+    }
+    while ( choosen != -1 && !mappedItems.empty() );
+  }
 
   return *this;
 }
@@ -64,48 +102,6 @@ PickUpWindow &PickUpWindow::setInventoryFullAction(std::function<void (const std
 PickUpWindow &PickUpWindow::setWindowTitle(const std::string &title)
 {
   _menu.setTitle(title);
-  return *this;
-}
-
-Window& PickUpWindow::show()
-{
-  if ( _picker && _container)
-  {
-    _freezer.freeze();
-
-    std::map<int, Actor*> mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
-    _menu.selectFirst();
-
-    int choosen(-1);
-    do
-    {
-      _freezer.restore();
-      choosen = _menu.choose( *TCODConsole::root );
-
-      auto found = mappedItems.find( choosen );
-      if ( found != mappedItems.end() )
-      {
-        Actor* toPick = found->second;
-        std::string itemName = toPick->getName();
-
-        try
-        {
-          int pickedAmount = ItemPicker(_picker, toPick, _container).pick();
-
-          mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
-          _menu.selectFirst();
-
-          _afterPickUpAction(itemName, pickedAmount);
-        }
-        catch( inventory_full& e )
-        {
-          _inventoryFullAction(e.getItemName());
-        }
-      }
-    }
-    while ( choosen != -1 && !mappedItems.empty() );
-  }
-
   return *this;
 }
 

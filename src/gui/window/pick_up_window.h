@@ -6,7 +6,6 @@
 #include <libtcod.hpp>
 #include <gui/widget/menu/items_menu.h>
 #include <gui/window/window.h>
-#include <utils/console_freezer.h>
 
 namespace amarlon {
 
@@ -64,7 +63,6 @@ private:
   std::function<void(const std::string& itemName, int pickedAmount)> _afterPickUpAction;
   std::function<void(const std::string& itemName)> _inventoryFullAction;
 
-  ConsoleFreezer _freezer;
   gui::ItemsMenu _menu;
 
 };

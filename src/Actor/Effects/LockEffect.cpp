@@ -8,6 +8,7 @@
 namespace amarlon {
 
 LockEffect::LockEffect()
+  : _lockId(0)
 {
 }
 
