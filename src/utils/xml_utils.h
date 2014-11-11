@@ -7,12 +7,12 @@
 namespace amarlon {
 
 template<typename T>
-T getAttribute(rapidxml::xml_node<>* node, std::string attribute)
+T getAttribute(rapidxml::xml_node<>* node, const std::string& attribute)
 {
   T result(0);
   rapidxml::xml_attribute<>* nodeAtr = node->first_attribute(attribute.c_str());
 
-  if ( nodeAtr )
+  if (nodeAtr != nullptr)
   {
     std::string value = nodeAtr->value();
 
@@ -25,12 +25,12 @@ T getAttribute(rapidxml::xml_node<>* node, std::string attribute)
 }
 
 template<>
-std::string getAttribute<std::string>(rapidxml::xml_node<>* node, std::string attribute)
+std::string getAttribute<std::string>(rapidxml::xml_node<>* node, const std::string& attribute)
 {
   rapidxml::xml_attribute<>* nodeAtr = node->first_attribute(attribute.c_str());
   std::string value;
 
-  if ( nodeAtr )
+  if (nodeAtr != nullptr)
   {
     value = nodeAtr->value();
   }
