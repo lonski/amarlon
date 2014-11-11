@@ -12,3 +12,7 @@ src/Makefile
 lib/
 build/*
 include/gtest
+*.config
+*.creator
+*.files
+*.includes
