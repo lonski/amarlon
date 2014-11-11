@@ -87,7 +87,9 @@ struct ContainerDescription
     std::shared_ptr<OpenableDescription> openable;
     std::shared_ptr<WearerDescription> wearer;
 
-    Content() { memset(this, 0, sizeof *this); }
+    Content()
+    {
+    }
   };
 
   size_t maxSize;
