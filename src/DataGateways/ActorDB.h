@@ -5,10 +5,11 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <typeinfo>
 #include <libtcod.hpp>
 #include <xml/rapidxml.hpp>
 #include <ActorDescriptions.h>
+#include <ActorFeature.h>
+#include <Parsers/ActorParser.h>
 
 namespace amarlon {
 
@@ -30,13 +31,20 @@ public:
   template<typename T>
   T* getFeature(ActorType type);
 
-  bool loadActors(std::string fn);
+  void loadActors(const std::string& fn);
 
 private:
   typedef std::shared_ptr<Description> DescriptionPtr;
-  typedef std::map<std::string, DescriptionPtr> DescriptionMap;
+  typedef std::map<ActorFeature::FeatureType, DescriptionPtr> FeatureDescriptionMap;
 
-  std::map<ActorType, DescriptionMap> _descriptions;
+  std::map<ActorType, FeatureDescriptionMap> _featureDscs;
+  std::map<ActorType, DescriptionPtr>        _actorDscs;
+
+  ActorParser _actorParser;
+
+  void parseActors(std::vector<char>& dataToParse);
+  void parseActor(rapidxml::xml_node<>* actorNode);
+  void parseActorFeatures(ActorType actorId);
 
   template<typename T>
   T getParam(ActorType type, T ActorDescription::*field, T defValue);
@@ -58,7 +66,9 @@ T* ActorDB::getFeature(ActorType actorType)
 template<typename T>
 T ActorDB::getParam(ActorType type, T ActorDescription::*field, T defValue)
 {
-  ActorDescription* dsc = dynamic_cast<ActorDescription*>(findDescription<Actor>(type));
+  auto it = _actorDscs.find(type);
+  ActorDescription* dsc = it != _actorDscs.end() ? dynamic_cast<ActorDescription*>( it->second.get() ) : nullptr;
+
   return dsc ? dsc->*field : defValue;
 }
 
@@ -67,11 +77,11 @@ Description* ActorDB::findDescription(ActorType actorType)
 {
   Description* dsc = nullptr;
 
-  auto descriptionsIt = _descriptions.find(actorType);
-  if ( descriptionsIt != _descriptions.end() )
+  auto descriptionsIt = _featureDscs.find(actorType);
+  if ( descriptionsIt != _featureDscs.end() )
   {
-    DescriptionMap& actorDescriptions = descriptionsIt->second;
-    auto dscIt = actorDescriptions.find(typeid(T).name());
+    FeatureDescriptionMap& actorDescriptions = descriptionsIt->second;
+    auto dscIt = actorDescriptions.find(T::getType());
 
     if (dscIt != actorDescriptions.end())
     {

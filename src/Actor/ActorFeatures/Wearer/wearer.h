@@ -16,6 +16,8 @@ public:
   virtual ~Wearer() {}
   static Wearer* create(Description* dsc);
 
+  static FeatureType getType() { return ActorFeature::WEARER; }
+
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature* rhs);
 

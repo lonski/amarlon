@@ -16,6 +16,7 @@ public:
   Ai();
   virtual ~Ai() {}
 
+  static FeatureType getType() { return ActorFeature::AI; }
   virtual void update(Map* map);
 
   static Ai* create(AiType type);

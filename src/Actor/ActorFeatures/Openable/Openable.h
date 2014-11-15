@@ -18,6 +18,8 @@ public:
   static Openable* create(OpenableType type);
   static Openable* create(Description* dsc);
 
+  static FeatureType getType() { return ActorFeature::OPENABLE; }
+
   virtual bool open(Actor* executor) = 0;
   virtual bool close(Actor* executor) = 0;
 

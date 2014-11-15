@@ -8,6 +8,18 @@ class Actor;
 class ActorFeature
 {
 public:
+  enum FeatureType
+  {
+    FT_NULL,
+    AI,
+    OPENABLE,
+    WEARER,
+    CONTAINER,
+    FIGHTER,
+    PICKABLE,
+    FT_END
+  };
+
   ActorFeature();
   virtual ~ActorFeature() = 0;
 

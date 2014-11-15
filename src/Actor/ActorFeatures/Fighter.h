@@ -12,6 +12,8 @@ public:
   Fighter(float power, float maxHp);
   static Fighter* create(Description* dsc);
 
+  static FeatureType getType() { return ActorFeature::FIGHTER; }
+
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature *rhs);
 

@@ -8,9 +8,31 @@ namespace amarlon {
 using namespace rapidxml;
 using namespace std;
 
-ActorParser::ActorParser(xml_node<> *xmlNode)
+ActorParser::ActorParser()
+{
+  mapParsers();
+}
+
+  ActorParser::ActorParser(xml_node<> *xmlNode)
  : Parser(xmlNode)
 {
+  mapParsers();
+}
+
+void ActorParser::mapParsers()
+{
+  _featureParsers[ActorFeature::CONTAINER] = [&](){ return parseContainerDsc(); };
+  _featureParsers[ActorFeature::OPENABLE]  = [&](){ return parseOpenableDsc(); };
+  _featureParsers[ActorFeature::PICKABLE]  = [&](){ return parsePickableDsc(); };
+  _featureParsers[ActorFeature::FIGHTER]   = [&](){ return parseFighterDsc(); };
+  _featureParsers[ActorFeature::WEARER]    = [&](){ return parseWearerDsc(); };
+  _featureParsers[ActorFeature::AI]        = [&](){ return parseAiDsc(); };
+}
+
+Description* ActorParser::parseFeatureDsc(ActorFeature::FeatureType featureType)
+{
+  auto it = _featureParsers.find(featureType);
+  return it != _featureParsers.end() ? (it->second)() : nullptr;
 }
 
 ActorDescription *ActorParser::parseActorDsc()
@@ -66,7 +88,7 @@ void ActorParser::parseContainerContentNode(ContainerDescription* contDsc, xml_n
 
     delete aDsc;
     aDsc = nullptr;
-  }
+    }
 }
 
 ContainerDescription *ActorParser::parseContainerDsc()

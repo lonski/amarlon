@@ -25,6 +25,8 @@ public:
   virtual ~Container();
   static Container* create(Description* dsc);
 
+  static FeatureType getType() { return ActorFeature::CONTAINER; }
+
   virtual Container* clone();
   virtual bool isEqual(ActorFeature* rhs);
 

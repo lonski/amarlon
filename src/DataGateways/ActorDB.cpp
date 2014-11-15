@@ -5,7 +5,6 @@
 #include <utils/utils.h>
 #include <Actor/Actor.h>
 #include <Actor/Effects/Effect.h>
-#include <Parsers/ActorParser.h>
 #include <world/map.h>
 
 namespace amarlon {
@@ -69,9 +68,8 @@ int ActorDB::getTileRenderPriority(ActorType type)
   return piority;
 }
 
-bool ActorDB::loadActors(std::string fn)
+void ActorDB::loadActors(const string &fn)
 {
-  bool success = false;
   ifstream ifs(fn);
 
   if (ifs.is_open())
@@ -80,57 +78,56 @@ bool ActorDB::loadActors(std::string fn)
     buffer.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
     buffer.push_back('\0');
 
-    xml_document<> doc;
-    doc.parse<0>(&buffer[0]);
+    parseActors(buffer);
+  }
+}
 
-    xml_node<>* root = doc.first_node("Actors");
-    if (root != nullptr)
+void ActorDB::parseActors(vector<char>& dataToParse)
+{
+  xml_document<> doc;
+  doc.parse<0>(&dataToParse[0]);
+
+  xml_node<>* root = doc.first_node("Actors");
+  if (root != nullptr)
+  {
+    xml_node<>* actorNode = root->first_node("Actor");
+
+    while( actorNode != nullptr )
     {
-      xml_node<>* actorNode = root->first_node("Actor");
-
-      ActorParser actorParser;
-      while( actorNode != nullptr )
-      {
-        actorParser.setSource( actorNode );
-
-        ActorDescription* actorDsc = actorParser.parseActorDsc();
-        if ( actorDsc != nullptr )
-        {
-          ActorType actorId = actorDsc->id;
-          DescriptionMap actorDescriptions;
-
-          actorDescriptions[typeid(Actor).name()] = DescriptionPtr(actorDsc);
-
-          DescriptionPtr contDsc( actorParser.parseContainerDsc() );
-          if ( contDsc ) actorDescriptions[typeid(Container).name()] = contDsc;
-
-          DescriptionPtr pickDsc( actorParser.parsePickableDsc() );
-          if ( pickDsc ) actorDescriptions[typeid(Pickable).name()] = pickDsc;
-
-          DescriptionPtr fDsc( actorParser.parseFighterDsc() );
-          if ( fDsc ) actorDescriptions[typeid(Fighter).name()] = fDsc;
-
-          DescriptionPtr aiDsc( actorParser.parseAiDsc() );
-          if ( aiDsc ) actorDescriptions[typeid(Ai).name()] = aiDsc;
-
-          DescriptionPtr opDsc( actorParser.parseOpenableDsc() );
-          if ( opDsc ) actorDescriptions[typeid(Openable).name()] = opDsc;
-
-          DescriptionPtr wrDsc( actorParser.parseWearerDsc() );
-          if ( wrDsc ) actorDescriptions[typeid(Wearer).name()] = wrDsc;
-
-          _descriptions[actorId] = actorDescriptions;
-        }
-
-        //~~~~~ NEXT
-        actorNode = actorNode->next_sibling();
-      }
+      parseActor(actorNode);
+      actorNode = actorNode->next_sibling();
     }
-    doc.clear();
-    success = true;
+
   }
 
-  return success;
+  doc.clear();
+}
+
+void ActorDB::parseActor(xml_node<>* actorNode)
+{
+  _actorParser.setSource( actorNode );
+
+  ActorDescription* actorDsc = _actorParser.parseActorDsc();
+  if ( actorDsc != nullptr )
+  {
+    _actorDscs[actorDsc->id] = DescriptionPtr(actorDsc);
+    parseActorFeatures(actorDsc->id);
+  }
+}
+
+void ActorDB::parseActorFeatures(ActorType actorId)
+{
+  FeatureDescriptionMap actorDescriptions;
+
+  for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f )
+  {
+    ActorFeature::FeatureType fType = static_cast<ActorFeature::FeatureType>(f);
+
+    DescriptionPtr featureDsc( _actorParser.parseFeatureDsc(fType) );
+    if ( featureDsc ) actorDescriptions[ fType ] = featureDsc;
+  }
+
+  _featureDscs[actorId] = actorDescriptions;
 }
 
 }

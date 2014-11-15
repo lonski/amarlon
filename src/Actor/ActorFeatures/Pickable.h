@@ -20,6 +20,8 @@ public:
 
   static Pickable* create(Description* dsc);
 
+  static FeatureType getType() { return ActorFeature::PICKABLE; }
+
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature *rhs);
 
