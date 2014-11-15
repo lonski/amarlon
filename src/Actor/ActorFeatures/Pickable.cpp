@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include "Actor/Effects/Effect.h"
 #include "gui/gui.h"
+#include <amarlon_except.h>
 #include <iostream>
 
 namespace amarlon {
@@ -18,15 +19,21 @@ Pickable::~Pickable()
   delete _effect;
 }
 
-Pickable *Pickable::create(const PickableDescription &dsc)
+Pickable *Pickable::create(Description *dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Pickable* pickable = new Pickable(dsc.stackable, dsc.amount);
-  pickable->_itemSlot = dsc.itemSlot;
-  pickable->_category = dsc.category;
+  PickableDescription* pDsc = dynamic_cast<PickableDescription*>(dsc);
+  Pickable* pickable = nullptr;
 
-  Effect* effect = Effect::create(dsc.effect);
-  pickable->setEffect(effect);
+  if ( pDsc != nullptr )
+  {
+    pickable = new Pickable(pDsc->stackable, pDsc->amount);
+    pickable->_itemSlot = pDsc->itemSlot;
+    pickable->_category = pDsc->category;
+
+    Effect* effect = Effect::create(pDsc->effect);
+    pickable->setEffect(effect);
+  }else throw creation_error("Wrong pickable description!");
 
   return pickable;
 }

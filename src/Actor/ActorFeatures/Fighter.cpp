@@ -6,6 +6,7 @@
 #include "gui/gui.h"
 #include <utils/utils.h>
 #include <utils/messenger.h>
+#include <amarlon_except.h>
 
 namespace amarlon {
 
@@ -16,10 +17,18 @@ Fighter::Fighter(float power, float maxHp)
 {
 }
 
-Fighter *Fighter::create(const FighterDescription &dsc)
+Fighter *Fighter::create(Description *dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  return new Fighter(dsc.power, dsc.maxHp);
+  Fighter* fighter = nullptr;
+  FighterDescription* fighterDsc = dynamic_cast<FighterDescription*>(dsc);
+
+  if ( fighterDsc != nullptr )
+  {
+    fighter = new Fighter(fighterDsc->power, fighterDsc->maxHp);
+  }else throw creation_error("Wrong fighter description!");
+
+  return fighter;
 }
 
 ActorFeature *Fighter::clone()

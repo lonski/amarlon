@@ -19,7 +19,7 @@ public:
   virtual void update(Map* map);
 
   static Ai* create(AiType type);
-  static Ai* create(const AiDescription& dsc);
+  static Ai* create(Description* dsc);
 
 };
 

@@ -23,7 +23,7 @@ public:
 
   Container(size_t slotCount);
   virtual ~Container();
-  static Container* create(const ContainerDescription& dsc);
+  static Container* create(Description* dsc);
 
   virtual Container* clone();
   virtual bool isEqual(ActorFeature* rhs);

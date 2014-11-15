@@ -1,6 +1,7 @@
 #include "Openable.h"
 #include "OpenableDoor.h"
 #include "OpenableContainer.h"
+#include <amarlon_except.h>
 
 namespace amarlon {
 
@@ -24,16 +25,22 @@ Openable *Openable::create(OpenableType type)
   return o;
 }
 
-Openable *Openable::create(const OpenableDescription &dsc)
+Openable *Openable::create(Description* dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Openable* op = Openable::create((dsc.type));
+  OpenableDescription* oDsc = dynamic_cast<OpenableDescription*>(dsc);
+  Openable* op = nullptr;
 
-  if ( op != nullptr )
+  if ( oDsc != nullptr )
   {
-    op->setLockId(dsc.lockId);
-    op->_locked = dsc.locked;
-  }
+    op = Openable::create((oDsc->type));
+
+    if ( op != nullptr )
+    {
+      op->setLockId(oDsc->lockId);
+      op->_locked = oDsc->locked;
+    }
+  }else throw creation_error("Wrong openable description!");
 
   return op;
 }

@@ -92,12 +92,12 @@ void MapGateway::overwriteActorFeatures(xml_node<>* actorNode, Actor* actor)
   unique_ptr<AiDescription>        dscAi       ( actorParser.parseAiDsc() );
   unique_ptr<WearerDescription>    dscWearer   ( actorParser.parseWearerDsc() );
 
-  if ( dscContainer ) actor->setAfContainer( Container::create(*dscContainer) );
-  if ( dscPickable  ) actor->setAfPickable ( Pickable::create(*dscPickable) );
-  if ( dscOpenable  ) actor->setAfOpenable ( Openable::create(*dscOpenable) );
-  if ( dscFighter   ) actor->setAfFighter  ( Fighter::create(*dscFighter) );
-  if ( dscAi        ) actor->setAfAi       ( Ai::create(*dscAi) );
-  if ( dscWearer    ) actor->setAfWearer   ( Wearer::create(*dscWearer) );
+  if ( dscContainer ) actor->setAfContainer( Container::create(dscContainer.get()) );
+  if ( dscPickable  ) actor->setAfPickable ( Pickable::create(dscPickable.get()) );
+  if ( dscOpenable  ) actor->setAfOpenable ( Openable::create(dscOpenable.get()) );
+  if ( dscFighter   ) actor->setAfFighter  ( Fighter::create(dscFighter.get()) );
+  if ( dscAi        ) actor->setAfAi       ( Ai::create(dscAi.get()) );
+  if ( dscWearer    ) actor->setAfWearer   ( Wearer::create(dscWearer.get()) );
 }
 
 void MapGateway::saveMaps(string fn)

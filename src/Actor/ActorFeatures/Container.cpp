@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Actor/Actor.h"
 #include <memory>
+#include <amarlon_except.h>
 
 namespace amarlon {
 
@@ -17,28 +18,34 @@ Container::~Container()
   std::for_each(_inventory.begin(), _inventory.end(), [](Actor* a){ delete a; });
 }
 
-Container* Container::create(const ContainerDescription &dsc)
+Container* Container::create(Description *dsc)
 {  
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Container* cont = new Container(dsc.maxSize);
+  Container* cont = nullptr;
+  ContainerDescription* contDsc = dynamic_cast<ContainerDescription*>(dsc);
 
-  std::for_each(dsc.content.begin(), dsc.content.end(), [&](ContainerDescription::Content ca)
+  if ( contDsc != nullptr )
   {
-    ActorType aId = ca.actorType;
-    if( aId != ActorType::Null )
+    cont = new Container(contDsc->maxSize);
+
+    std::for_each(contDsc->content.begin(), contDsc->content.end(), [&](ContainerDescription::Content ca)
     {
-      Actor* nActor = new Actor(aId);
+      ActorType aId = ca.actorType;
+      if( aId != ActorType::Null )
+      {
+        Actor* nActor = new Actor(aId);
 
-      if (ca.container) nActor->setAfContainer( Container::create( *ca.container ) );
-      if (ca.openable)  nActor->setAfOpenable ( Openable::create ( *ca.openable  ) );
-      if (ca.pickable)  nActor->setAfPickable ( Pickable::create ( *ca.pickable  ) );
-      if (ca.fighter)   nActor->setAfFighter  ( Fighter::create  ( *ca.fighter   ) );
-      if (ca.ai)        nActor->setAfAi       ( Ai::create       ( *ca.ai        ) );
-      if (ca.wearer)    nActor->setAfWearer   ( Wearer::create   ( *ca.wearer    ) );
+        if (ca.container) nActor->setAfContainer( Container::create( ca.container.get() ) );
+        if (ca.openable)  nActor->setAfOpenable ( Openable::create ( ca.openable.get()  ) );
+        if (ca.pickable)  nActor->setAfPickable ( Pickable::create ( ca.pickable.get()  ) );
+        if (ca.fighter)   nActor->setAfFighter  ( Fighter::create  ( ca.fighter.get()   ) );
+        if (ca.ai)        nActor->setAfAi       ( Ai::create       ( ca.ai.get()        ) );
+        if (ca.wearer)    nActor->setAfWearer   ( Wearer::create   ( ca.wearer.get()    ) );
 
-      cont->add(nActor);
-    }
-  });
+        cont->add(nActor);
+      }
+    });
+  }else throw creation_error("Wrong container description!");
 
   return cont;
 }

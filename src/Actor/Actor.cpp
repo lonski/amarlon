@@ -18,12 +18,12 @@ Actor::Actor(ActorType aId, int x, int y, Map *map)
   , _afOpenable(nullptr)
   , _afWearer(nullptr)  
 {  
-  setAfContainer  ( Actor::DB.getContainer  (aId) );
-  setAfPickable   ( Actor::DB.getPickable   (aId) );  
-  setAfFighter    ( Actor::DB.getFighter    (aId) );
-  setAfAi         ( Actor::DB.getAi         (aId) );
-  setAfOpenable   ( Actor::DB.getOpenable   (aId) );
-  setAfWearer     ( Actor::DB.getWearer     (aId) );
+  setAfContainer  ( Actor::DB.getFeature<Container>  (aId) );
+  setAfPickable   ( Actor::DB.getFeature<Pickable>   (aId) );
+  setAfFighter    ( Actor::DB.getFeature<Fighter>    (aId) );
+  setAfAi         ( Actor::DB.getFeature<Ai>         (aId) );
+  setAfOpenable   ( Actor::DB.getFeature<Openable>   (aId) );
+  setAfWearer     ( Actor::DB.getFeature<Wearer>     (aId) );
 }
 
 Actor::~Actor()
@@ -57,12 +57,12 @@ void Actor::morph(ActorType newType)
 {
   _id = newType;
 
-  setAfContainer( Actor::DB.getContainer(_id) );
-  setAfPickable ( Actor::DB.getPickable (_id) );
-  setAfFighter  ( Actor::DB.getFighter  (_id) );
-  setAfAi       ( Actor::DB.getAi       (_id) );
-  setAfOpenable ( Actor::DB.getOpenable (_id) );
-  setAfWearer   ( Actor::DB.getWearer   (_id) );
+  setAfContainer( Actor::DB.getFeature<Container>(_id) );
+  setAfPickable ( Actor::DB.getFeature<Pickable> (_id) );
+  setAfFighter  ( Actor::DB.getFeature<Fighter>  (_id) );
+  setAfAi       ( Actor::DB.getFeature<Ai>       (_id) );
+  setAfOpenable ( Actor::DB.getFeature<Openable> (_id) );
+  setAfWearer   ( Actor::DB.getFeature<Wearer>   (_id) );
 }
 
 Actor *Actor::clone()

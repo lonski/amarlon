@@ -22,7 +22,12 @@ class Ai;
 class Openable;
 class Wearer;
 
-struct EffectDescription
+struct Description
+{
+  virtual ~Description() {}
+};
+
+struct EffectDescription : Description
 {
   EffectDescription() { memset(this, 0, sizeof *this); }
 
@@ -33,7 +38,7 @@ struct EffectDescription
 };
 
 //===
-struct ActorDescription
+struct ActorDescription : Description
 {
   ActorType id;
   std::string name;
@@ -45,7 +50,7 @@ struct ActorDescription
   int tilePriority;
 };
 
-struct PickableDescription
+struct PickableDescription : Description
 {
   bool stackable;
   int amount;
@@ -54,18 +59,18 @@ struct PickableDescription
   PickableCategory category;
 };
 
-struct FighterDescription
+struct FighterDescription : Description
 {
   float maxHp;
   float power;
 };
 
-struct AiDescription
+struct AiDescription : Description
 {
   AiType type;
 };
 
-struct OpenableDescription
+struct OpenableDescription : Description
 {
   OpenableType type;
   int lockId;
@@ -74,7 +79,7 @@ struct OpenableDescription
 
 struct WearerDescription;
 
-struct ContainerDescription
+struct ContainerDescription : Description
 {
   ContainerDescription() : maxSize(0) {}
 
@@ -98,7 +103,7 @@ struct ContainerDescription
   std::vector<Content> content;
 };
 
-struct WearerDescription
+struct WearerDescription : Description
 {
   std::vector<ItemSlotType> itemSlots;
   ContainerDescription eqItems;

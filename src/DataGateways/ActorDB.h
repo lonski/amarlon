@@ -4,11 +4,15 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <memory>
+#include <typeinfo>
 #include <libtcod.hpp>
-#include "xml/rapidxml.hpp"
-#include "ActorDescriptions.h"
+#include <xml/rapidxml.hpp>
+#include <ActorDescriptions.h>
 
 namespace amarlon {
+
+class Actor;
 
 class ActorDB
 {
@@ -23,26 +27,60 @@ public:
   bool isTransparent(ActorType type);
   int getTileRenderPriority(ActorType type);
 
-  //ActorFeatures
-  Container* getContainer(ActorType type);
-  Pickable* getPickable(ActorType type);
-  Fighter* getFighter(ActorType type);
-  Ai* getAi(ActorType type);
-  Openable* getOpenable(ActorType type);
-  Wearer* getWearer(ActorType type);
+  template<typename T>
+  T* getFeature(ActorType type);
 
   bool loadActors(std::string fn);
 
 private:
-  std::map<ActorType, ActorDescription> _actors;
-  std::map<ActorType, ContainerDescription> _containers;
-  std::map<ActorType, PickableDescription> _pickables;
-  std::map<ActorType, FighterDescription> _fighters;
-  std::map<ActorType, AiDescription> _ais;
-  std::map<ActorType, OpenableDescription> _openables;
-  std::map<ActorType, WearerDescription> _wearers;
+  typedef std::shared_ptr<Description> DescriptionPtr;
+  typedef std::map<std::string, DescriptionPtr> DescriptionMap;
+
+  std::map<ActorType, DescriptionMap> _descriptions;
+
+  template<typename T>
+  T getParam(ActorType type, T ActorDescription::*field, T defValue);
+
+  template<typename T>
+  Description* findDescription(ActorType actorType);
 
 };
+
+// === IMPLEMENTATION === //
+
+template<typename T>
+T* ActorDB::getFeature(ActorType actorType)
+{
+  Description* featureDescription = findDescription<T>(actorType);
+  return featureDescription ? T::create(featureDescription) : nullptr;
+}
+
+template<typename T>
+T ActorDB::getParam(ActorType type, T ActorDescription::*field, T defValue)
+{
+  ActorDescription* dsc = dynamic_cast<ActorDescription*>(findDescription<Actor>(type));
+  return dsc ? dsc->*field : defValue;
+}
+
+template<typename T>
+Description* ActorDB::findDescription(ActorType actorType)
+{
+  Description* dsc = nullptr;
+
+  auto descriptionsIt = _descriptions.find(actorType);
+  if ( descriptionsIt != _descriptions.end() )
+  {
+    DescriptionMap& actorDescriptions = descriptionsIt->second;
+    auto dscIt = actorDescriptions.find(typeid(T).name());
+
+    if (dscIt != actorDescriptions.end())
+    {
+      dsc = dscIt->second.get();
+    }
+  }
+
+  return dsc;
+}
 
 }
 #endif // ACTORDB_H

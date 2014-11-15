@@ -1,7 +1,8 @@
 #include "Ai.h"
 #include "Actor/Actor.h"
-#include <iostream>
 #include "MonsterAi.h"
+#include <amarlon_except.h>
+#include <iostream>
 
 namespace amarlon {
 
@@ -23,9 +24,17 @@ Ai *Ai::create(AiType type)
   return ai;
 }
 
-Ai *Ai::create(const AiDescription &dsc)
+Ai *Ai::create(Description* dsc)
 {
-  return Ai::create(dsc.type);
+  AiDescription* aiDsc = dynamic_cast<AiDescription*>(dsc);
+  Ai* ai = nullptr;
+
+  if ( aiDsc != nullptr )
+  {
+    ai = Ai::create(aiDsc->type);
+  }else throw creation_error("Wrong ai description!");
+
+  return ai;
 }
 
 void Ai::update(Map*)

@@ -2,7 +2,7 @@
 #include "Actor/Actor.h"
 #include <algorithm>
 #include <iostream>
-#include <stdexcept>
+#include <amarlon_except.h>
 
 namespace amarlon {
 
@@ -11,23 +11,29 @@ Wearer::Wearer()
 {
 }
 
-Wearer* Wearer::create(WearerDescription dsc)
+Wearer* Wearer::create(Description *dsc)
 {
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Wearer* w = new Wearer;
+  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */  
+  Wearer* w = nullptr;
+  WearerDescription* wearerDsc = dynamic_cast<WearerDescription*>(dsc);
 
-  dsc.eqItems.maxSize = dsc.itemSlots.size();
-
-  std::for_each(dsc.itemSlots.begin(), dsc.itemSlots.end(), [&](ItemSlotType slot)
+  if ( wearerDsc != nullptr )
   {
-    w->_itemSlots[slot] = nullptr;
-  });
+    w = new Wearer;
+    wearerDsc->eqItems.maxSize = wearerDsc->itemSlots.size();
 
-  w->_equippedItems.reset( Container::create(dsc.eqItems) );
-  if ( w->_equippedItems )
-  {
-    assignItemsToSlots( w );
-  }
+    std::for_each(wearerDsc->itemSlots.begin(), wearerDsc->itemSlots.end(), [&](ItemSlotType slot)
+    {
+      w->_itemSlots[slot] = nullptr;
+    });
+
+    w->_equippedItems.reset( Container::create(&wearerDsc->eqItems) );
+    if ( w->_equippedItems )
+    {
+      assignItemsToSlots( w );
+    }
+
+  }else throw creation_error("Wrong wearer description!");
 
   return w;
 }
@@ -41,7 +47,7 @@ void Wearer::assignItemsToSlots(Wearer* wearer)
     {
       wearer->_itemSlots[ a->afPickable()->getItemSlot() ] = a;
     }
-    else throw std::logic_error("Unequippable item in wearer container!");
+    else throw inventory_error("Unequippable item in wearer container!");
   });
 }
 

@@ -14,6 +14,14 @@ public:
   virtual ~amarlon_exeption() throw() {}
 };
 
+// === CREATION === //
+class creation_error : public amarlon_exeption
+{
+public:
+  creation_error(const std::string& msg = "") : amarlon_exeption("Creation error: " + msg) {}
+  virtual ~creation_error() throw() {}
+};
+
 // === INVENTORY EXCEPTIONS === //
 
 class inventory_error : public amarlon_exeption

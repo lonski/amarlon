@@ -18,7 +18,7 @@ public:
   Pickable(bool stackable = false, int amount = 1);
   virtual ~Pickable();
 
-  static Pickable* create(const PickableDescription& dsc);
+  static Pickable* create(Description* dsc);
 
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature *rhs);

@@ -10,7 +10,7 @@ class Fighter : public ActorFeature
 {
 public:
   Fighter(float power, float maxHp);
-  static Fighter* create(const FighterDescription& dsc);
+  static Fighter* create(Description* dsc);
 
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature *rhs);
