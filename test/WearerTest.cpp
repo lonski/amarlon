@@ -21,7 +21,7 @@ public:
     dsc.itemSlots.push_back(ItemSlotType::Armor);
     dsc.itemSlots.push_back(ItemSlotType::Boots);
 
-    wearer.reset( Wearer::create(dsc) );
+    wearer.reset( Wearer::create(&dsc) );
   }
   virtual void TearDown()
   {
@@ -90,7 +90,7 @@ TEST_F(WearerTest, clone_wearer)
   dsc.itemSlots.push_back(ItemSlotType::LeftRing);
   dsc.itemSlots.push_back(ItemSlotType::Offhand);
 
-  WearerPtr w1 ( Wearer::create(dsc) );
+  WearerPtr w1 ( Wearer::create(&dsc) );
   WearerPtr wcloned( dynamic_cast<Wearer*>(w1->clone()) );
 
   ASSERT_TRUE( wcloned->_equippedItems->isEqual( w1->_equippedItems.get() ) );
@@ -119,8 +119,8 @@ TEST_F(WearerTest, compare_test)
   dsc.itemSlots.push_back(ItemSlotType::Boots);
   dsc.eqItems.maxSize = 2;
 
-  w1.reset( Wearer::create(dsc) );
-  w2.reset( Wearer::create(dsc) );
+  w1.reset( Wearer::create(&dsc) );
+  w2.reset( Wearer::create(&dsc) );
 
   //compare by equip - 1. one equipped, second null
   Actor* w1armor = new Actor( ActorType::LinenClothes );
