@@ -6,7 +6,6 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
-#include <iostream>
 #include <algorithm>
 
 namespace amarlon {

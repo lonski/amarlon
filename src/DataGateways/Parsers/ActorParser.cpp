@@ -8,19 +8,9 @@ namespace amarlon {
 using namespace rapidxml;
 using namespace std;
 
-ActorParser::ActorParser()
- : _xml(nullptr)
-{
-}
-
 ActorParser::ActorParser(xml_node<> *xmlNode)
- : _xml(xmlNode)
+ : Parser(xmlNode)
 {
-}
-
-void ActorParser::setSource(xml_node<> *xmlNode)
-{
-  _xml = xmlNode;
 }
 
 ActorDescription *ActorParser::parseActorDsc()

@@ -25,7 +25,7 @@ T getAttribute(rapidxml::xml_node<>* node, const std::string& attribute)
 }
 
 template<>
-std::string getAttribute<std::string>(rapidxml::xml_node<>* node, const std::string& attribute)
+inline std::string getAttribute<std::string>(rapidxml::xml_node<>* node, const std::string& attribute)
 {
   rapidxml::xml_attribute<>* nodeAtr = node->first_attribute(attribute.c_str());
   std::string value;
@@ -38,7 +38,7 @@ std::string getAttribute<std::string>(rapidxml::xml_node<>* node, const std::str
   return value;
 }
 
-bool attributeExists(rapidxml::xml_node<>* node, const std::string& attribute)
+inline bool attributeExists(rapidxml::xml_node<>* node, const std::string& attribute)
 {
   return node->first_attribute(attribute.c_str()) != nullptr;
 }

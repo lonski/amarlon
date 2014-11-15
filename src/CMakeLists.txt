@@ -29,6 +29,10 @@ set(HEADER_FILES
     Commands/CmdUse.h
     Commands/Command.h
     Commands/cmd_put_into.h
+    DataGateways/descriptions/tile_description.h
+    DataGateways/Parsers/parser.h
+    DataGateways/Parsers/tile_parser.h
+    DataGateways/Parsers/tile_parser.cpp
     DataGateways/Parsers/ActorParser.h
     DataGateways/ActorDB.h
     DataGateways/ActorDescriptions.h

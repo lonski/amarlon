@@ -2,17 +2,15 @@
 #define ACTORPARSER_H
 
 #include "../ActorDescriptions.h"
-#include "xml/rapidxml.hpp"
+#include <Parsers/parser.h>
 
 namespace amarlon {
 
-class ActorParser
+class ActorParser : public Parser
 {
 public:
-  ActorParser();
+  ActorParser() = default;
   ActorParser(rapidxml::xml_node<>* xmlNode);
-
-  void setSource(rapidxml::xml_node<>* xmlNode);
 
   ActorDescription*     parseActorDsc();
   ContainerDescription* parseContainerDsc();
@@ -23,8 +21,6 @@ public:
   WearerDescription*    parseWearerDsc();
 
 private:
-  rapidxml::xml_node<>* _xml;
-
   void parseContainerContentNode(ContainerDescription* contDsc, rapidxml::xml_node<>* contentNode);
 
 };

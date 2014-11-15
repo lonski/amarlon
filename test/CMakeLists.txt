@@ -24,6 +24,8 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.h
+    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/parser.h
+    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/tile_parser.h
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/world/map_id.h
     ${PROJECT_SOURCE_DIR}/src/world/tile_type.h
@@ -73,8 +75,6 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.h
     ${PROJECT_SOURCE_DIR}/src/Commands/cmd_put_into.h
 
-
-
 )
 
 set(SOURCE_FILES
@@ -97,6 +97,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/Effect.cpp
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/LockEffect.cpp
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/SelfHealEffect.cpp
+    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/tile_parser.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDB.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.cpp
