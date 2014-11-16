@@ -22,7 +22,7 @@ void BagManager::fillBag()
   _bagMenu->clear();
   _bagItems.clear();
 
-  std::vector<Actor*> items = Actor::Player->afContainer()->content();
+  std::vector<Actor*> items = Actor::Player->getFeature<Container>()->content();
   _bagItems = _bagMenu->fillWithItems<LabelMenuItem>( items );
 }
 
@@ -62,7 +62,7 @@ BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selecte
   itemMenu->centerPosition();
   itemMenu->setTitle( selected->getName() );
 
-  if ( selected->afPickable()->isEquippable() )
+  if ( selected->getFeature<Pickable>()->isEquippable() )
   {
     LabelMenuItemPtr itemEquip( new LabelMenuItem );
     itemEquip->setValue("Equip");
@@ -84,8 +84,8 @@ BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selecte
 // === EQUIP === //
 void BagManager::equip(Actor* item)
 {
-  ItemSlotType itemSlot = item->afPickable()->getItemSlot();
-  Wearer* playerWearer = Actor::Player->afWearer();
+  ItemSlotType itemSlot = item->getFeature<Pickable>()->getItemSlot();
+  Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
 
   if ( playerWearer->hasSlot( itemSlot ) )
   {
@@ -100,8 +100,8 @@ void BagManager::equip(Actor* item)
 
 bool BagManager::canEquip(ItemSlotType slot)
 {
-  Wearer* playerWearer = Actor::Player->afWearer();
-  Container* playerContainer = Actor::Player->afContainer();
+  Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
+  Container* playerContainer = Actor::Player->getFeature<Container>();
 
   bool slotIsFree = !playerWearer->isEquipped(slot);
 
@@ -127,9 +127,9 @@ bool BagManager::canEquip(ItemSlotType slot)
 
 void BagManager::doTheEquip(Actor* item)
 {
-  ItemSlotType slot = item->afPickable()->getItemSlot();
-  Wearer* wearer = Actor::Player->afWearer();
-  Container* container = Actor::Player->afContainer();
+  ItemSlotType slot = item->getFeature<Pickable>()->getItemSlot();
+  Wearer* wearer = Actor::Player->getFeature<Wearer>();
+  Container* container = Actor::Player->getFeature<Container>();
 
   SlotMenuItemPtr slotItem = std::dynamic_pointer_cast<SlotMenuItem>( _bodyMenu->find((int)slot) );
   assert( slotItem );
@@ -157,17 +157,17 @@ void BagManager::doTheEquip(Actor* item)
 // === DROP === //
 void BagManager::drop(Actor* item)
 {
-  bool stackableHandlingNeeded = item->afPickable()->isStackable() &&
-                                 item->afPickable()->getAmount() > 1;
+  bool stackableHandlingNeeded = item->getFeature<Pickable>()->isStackable() &&
+                                 item->getFeature<Pickable>()->getAmount() > 1;
 
   bool removed = ( stackableHandlingNeeded ? handleStackableDrop(item)
-                                           : Actor::Player->afContainer()->remove( item ) );
+                                           : Actor::Player->getFeature<Container>()->remove( item ) );
 
   if ( removed )
   {
     item->setX( Actor::Player->getX() );
     item->setY( Actor::Player->getY() );
-    Messenger::message()->actorDropped(Actor::Player, item, item->afPickable()->getAmount());
+    Messenger::message()->actorDropped(Actor::Player, item, item->getFeature<Pickable>()->getAmount());
     Engine::instance().currentMap().addActor( item );
   }
   else
@@ -180,7 +180,7 @@ bool BagManager::handleStackableDrop(Actor*& item)
 {
   bool removed = false;
 
-  int maxAmount = item->afPickable()->getAmount();
+  int maxAmount = item->getFeature<Pickable>()->getAmount();
   int amount = Engine::instance().windowManager()
                                  .getWindow<gui::AmountWindow>()
                                  .setMaxAmount(maxAmount)
@@ -190,12 +190,12 @@ bool BagManager::handleStackableDrop(Actor*& item)
 
   if ( amount > 0 && amount < maxAmount )
   {
-    item = item->afPickable()->spilt(amount);
+    item = item->getFeature<Pickable>()->spilt(amount);
     removed = (item != nullptr);
   }
   else if ( amount == maxAmount )
   {
-    removed = Actor::Player->afContainer()->remove( item );
+    removed = Actor::Player->getFeature<Container>()->remove( item );
   }
 
   return removed;

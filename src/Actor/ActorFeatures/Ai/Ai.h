@@ -13,10 +13,12 @@ class Map;
 class Ai : public ActorFeature
 {
 public:
+  const static ActorFeature::Type featureType;
+
   Ai();
   virtual ~Ai() {}
 
-  static FeatureType getType() { return ActorFeature::AI; }
+  virtual ActorFeature::Type getType() { return featureType; }
   virtual void update(Map* map);
 
   static Ai* create(AiType type);

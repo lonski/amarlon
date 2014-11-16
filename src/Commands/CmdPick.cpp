@@ -41,7 +41,7 @@ void CmdPick::execute(Actor *executor)
                     .getWindow<gui::PickUpWindow>()
                     .setPicker(executor)
                     .setContainer(&container)
-                    .setFilterFunction( [](Actor* a){ return a->afPickable(); } )
+                    .setFilterFunction( [](Actor* a){ return a->getFeature<Pickable>(); } )
                     .setAfterPickupAction( afterPickupAction )
                     .setInventoryFullAction( inventoryFullAction )
                     .show();

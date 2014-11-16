@@ -16,7 +16,7 @@ bool OpenableContainer::open(Actor *executor)
 {
   bool r = false;
 
-  if ( _owner->afContainer() )
+  if ( _owner->hasFeature<Container>() )
   {
     auto afterPickupAction =
     [&](const std::string& item, int amount)
@@ -34,8 +34,8 @@ bool OpenableContainer::open(Actor *executor)
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(executor)
-                      .setContainer(_owner->afContainer())
-                      .setFilterFunction( [](Actor* a){ return a->afPickable();} )
+                      .setContainer(_owner->getFeature<Container>())
+                      .setFilterFunction( [](Actor* a){ return a->getFeature<Pickable>();} )
                       .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();

@@ -15,12 +15,14 @@ class Effect;
 class Pickable : public ActorFeature
 {
 public:
+  const static ActorFeature::Type featureType;
+
   Pickable(bool stackable = false, int amount = 1);
   virtual ~Pickable();
 
   static Pickable* create(Description* dsc);
 
-  static FeatureType getType() { return ActorFeature::PICKABLE; }
+  virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature *rhs);

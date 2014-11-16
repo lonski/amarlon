@@ -14,9 +14,9 @@ bool SelfHealEffect::apply(Actor *executor, std::vector<Actor *>)
 {
   bool r = false;
 
-  if ( executor->afFighter() )
+  if ( executor->hasFeature<Fighter>() )
   {
-    int healed = executor->afFighter()->heal(_healAmount);
+    int healed = executor->getFeature<Fighter>()->heal(_healAmount);
     Messenger::message()->actorHealed(executor, healed);
 
     --_usesCount;

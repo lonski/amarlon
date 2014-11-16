@@ -29,7 +29,7 @@ void ActorParser::mapParsers()
   _featureParsers[ActorFeature::AI]        = [&](){ return parseAiDsc(); };
 }
 
-Description* ActorParser::parseFeatureDsc(ActorFeature::FeatureType featureType)
+Description* ActorParser::parseFeatureDsc(const ActorFeature::Type featureType)
 {
   auto it = _featureParsers.find(featureType);
   return it != _featureParsers.end() ? (it->second)() : nullptr;

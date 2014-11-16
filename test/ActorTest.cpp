@@ -48,8 +48,8 @@ TEST_F(ActorTest, actorEqual_different_container)
   Container* c1 = new Container(10);
   Container* c2 = new Container(10);
 
-  a1->setAfContainer(c1);
-  a2->setAfContainer(c2);
+  a1->insertFeature(c1);
+  a2->insertFeature(c2);
 
   //same containers
   ASSERT_TRUE( c1->isEqual(c2) );
@@ -91,7 +91,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   Actor* ca1c = new Actor(ActorType::CookBook);
   Actor* ca2c = ca1c->clone();
 
-  ca1c->setAfAi( Ai::create( AiType::Monster ));
+  ca1c->insertFeature( Ai::create( AiType::Monster ));
   c1->add(ca1c);
   c2->add(ca2c);
 
@@ -106,7 +106,7 @@ TEST_F(ActorTest, actorEqual_different_openable)
 
   ASSERT_TRUE( a1->isEqual(a2.get()) );
 
-  a2->afOpenable()->setLockId(666);
+  a2->getFeature<Openable>()->setLockId(666);
 
   ASSERT_FALSE( a1->isEqual(a2.get()) );
 }
@@ -118,7 +118,7 @@ TEST_F(ActorTest, actorEqual_different_pickable)
 
   ASSERT_TRUE( a1->isEqual(a2.get()) );
 
-  SelfHealEffect* e = dynamic_cast<SelfHealEffect*>(a1->afPickable()->getEffect());
+  SelfHealEffect* e = dynamic_cast<SelfHealEffect*>(a1->getFeature<Pickable>()->getEffect());
   e->_healAmount = 666;
 
   ASSERT_FALSE( a1->isEqual(a2.get()) );
@@ -131,7 +131,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   ASSERT_TRUE( a1->isEqual(a2.get()) );
 
-  a1->afFighter()->_power = 666;
+  a1->getFeature<Fighter>()->_power = 666;
 
   ASSERT_FALSE( a1->isEqual(a2.get()) );
 }

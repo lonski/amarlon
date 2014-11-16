@@ -9,10 +9,12 @@ namespace amarlon {
 class Fighter : public ActorFeature
 {
 public:
+  const static ActorFeature::Type featureType;
+
   Fighter(float power, float maxHp);
   static Fighter* create(Description* dsc);
 
-  static FeatureType getType() { return ActorFeature::FIGHTER; }
+  virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature *rhs);

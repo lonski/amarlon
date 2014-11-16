@@ -33,15 +33,15 @@ void CmdMoveOrAttack::execute(Actor *executor)
   {
     std::vector<Actor*> toAttack = map.getActors(targetX, targetY, [&](Actor* a) -> bool
     {
-      return a->afFighter() && a->afFighter()->isAlive();
+      return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
     });
 
     //attack
-    if (!toAttack.empty() && executor->afFighter() )
+    if (!toAttack.empty() && executor->hasFeature<Fighter>() )
     {
       assert(toAttack.size() == 1);
       Actor* enemy = toAttack[0];
-      executor->afFighter()->attack(enemy);
+      executor->getFeature<Fighter>()->attack(enemy);
     }
   }
 }

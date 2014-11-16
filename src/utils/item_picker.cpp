@@ -16,8 +16,8 @@ ItemPicker::ItemPicker(Actor* picker, Actor*& toPick, Container *pickedFrom)
 
 int ItemPicker::pick()
 {
-  bool stackable = _toPick->afPickable()->isStackable();
-  int amount = _toPick->afPickable()->getAmount();
+  bool stackable = _toPick->getFeature<Pickable>()->isStackable();
+  int amount = _toPick->getFeature<Pickable>()->getAmount();
   std::string itemName = _toPick->getName(); //'cause it is possible that the item does not exists after pickin' up
   Actor* pickableTmp = _toPick; //to rollback spilting amount, when cant pickup (container full)
 
@@ -33,18 +33,18 @@ int ItemPicker::pick()
     if (tmpAmount < amount)
     {
       amount = tmpAmount;
-      _toPick = _toPick->afPickable()->spilt(amount);
+      _toPick = _toPick->getFeature<Pickable>()->spilt(amount);
     }
   }
 
-  if ( _picker->afContainer()->add(_toPick) )
+  if ( _picker->getFeature<Container>()->add(_toPick) )
   {
     if ( _pickedFrom ) _pickedFrom->remove(_toPick);
   }
   else //cant pick up!
   {
     //rollback spilting
-    if ( stackable && pickableTmp != _toPick ) pickableTmp->afPickable()->incAmount( amount );
+    if ( stackable && pickableTmp != _toPick ) pickableTmp->getFeature<Pickable>()->incAmount( amount );
     amount = 0;
 
     throw inventory_full("", itemName);

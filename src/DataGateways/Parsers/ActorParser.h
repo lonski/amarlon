@@ -14,7 +14,7 @@ public:
   ActorParser();
   ActorParser(rapidxml::xml_node<>* xmlNode);
 
-  Description* parseFeatureDsc(ActorFeature::FeatureType featureType);
+  Description* parseFeatureDsc(ActorFeature::Type featureType);
 
   ActorDescription*     parseActorDsc();
   ContainerDescription* parseContainerDsc();
@@ -25,7 +25,7 @@ public:
   WearerDescription*    parseWearerDsc();
 
 private:
-  std::map<ActorFeature::FeatureType, std::function<Description* ()> > _featureParsers;
+  std::map<ActorFeature::Type, std::function<Description* ()> > _featureParsers;
 
   void parseContainerContentNode(ContainerDescription* contDsc, rapidxml::xml_node<>* contentNode);
   void mapParsers();

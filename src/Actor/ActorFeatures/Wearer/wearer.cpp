@@ -6,6 +6,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Wearer::featureType = ActorFeature::WEARER;
+
 Wearer::Wearer()
   : _equippedItems( new Container(0) )
 {
@@ -43,9 +45,9 @@ void Wearer::assignItemsToSlots(Wearer* wearer)
   std::vector<Actor*> toEquip = wearer->_equippedItems->content();
   std::for_each(toEquip.begin(), toEquip.end(), [&](Actor* a)
   {
-    if ( a != nullptr && a->afPickable() != nullptr)
+    if ( a != nullptr && a->hasFeature<Pickable>())
     {
-      wearer->_itemSlots[ a->afPickable()->getItemSlot() ] = a;
+      wearer->_itemSlots[ a->getFeature<Pickable>()->getItemSlot() ] = a;
     }
     else throw inventory_error("Unequippable item in wearer container!");
   });
@@ -91,9 +93,9 @@ bool Wearer::equip(Actor *item)
 {
   bool r = false;
 
-  if ( item != nullptr && item->afPickable())
+  if ( item != nullptr && item->hasFeature<Pickable>())
   {
-    ItemSlotType slot = item->afPickable()->getItemSlot();
+    ItemSlotType slot = item->getFeature<Pickable>()->getItemSlot();
     if ( _itemSlots.count(slot) && !isEquipped(slot) )
     {    
       r = _equippedItems->add(item);

@@ -12,11 +12,13 @@ namespace amarlon {
 class Wearer : public ActorFeature
 {
 public:
+  const static ActorFeature::Type featureType;
+
   Wearer();
   virtual ~Wearer() {}
   static Wearer* create(Description* dsc);
 
-  static FeatureType getType() { return ActorFeature::WEARER; }
+  virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeature* clone();
   virtual bool isEqual(ActorFeature* rhs);

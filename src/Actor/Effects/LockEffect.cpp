@@ -56,7 +56,7 @@ bool LockEffect::apply(Actor* executor, std::vector<Actor *> targets)
   if (targets.size() == 1 && targets[0] != nullptr)
   {
     Actor* target = targets.front();
-    Openable* toOpen = targets.front()->afOpenable();
+    Openable* toOpen = targets.front()->getFeature<Openable>();
 
     if (toOpen != nullptr)
     {

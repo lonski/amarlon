@@ -5,6 +5,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Openable::featureType = ActorFeature::OPENABLE;
+
 Openable::Openable()
   : _locked(false)
   , _lockId(0)

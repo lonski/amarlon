@@ -10,6 +10,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Fighter::featureType = ActorFeature::FIGHTER;
+
 Fighter::Fighter(float power, float maxHp)
   : _power(power)
   , _maxHp(maxHp)
@@ -57,7 +59,7 @@ void Fighter::attack(Actor *enemy)
   {
     Messenger::message()->actorHit(_owner, enemy, _power);
 
-    enemy->afFighter()->takeDamage(_power);
+    enemy->getFeature<Fighter>()->takeDamage(_power);
   }
 }
 

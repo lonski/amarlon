@@ -28,20 +28,20 @@ void CmdUse::execute(Actor *executor)
 
   Engine::instance().render();
 
-  if (item != nullptr && item->afPickable()->getEffect() != nullptr)
+  if (item != nullptr && item->getFeature<Pickable>()->getEffect() != nullptr)
   {
-    SelectorType selectorType = item->afPickable()->getEffect()->getSelectorType();
+    SelectorType selectorType = item->getFeature<Pickable>()->getEffect()->getSelectorType();
     TargetSelector* tSelector = TargetSelector::create(selectorType);
 
     if (tSelector != nullptr)
     {
       std::vector<Actor*> targets = tSelector->select(executor, &Engine::instance().currentMap());
-      Pickable* toUse = item->afPickable();
+      Pickable* toUse = item->getFeature<Pickable>();
 
       if ( toUse->use( executor, targets ) && toUse->getUsesCount() == 0)
       {
-        Actor* toRemove = item->afPickable()->spilt(1);
-        executor->afContainer()->remove( toRemove );
+        Actor* toRemove = item->getFeature<Pickable>()->spilt(1);
+        executor->getFeature<Container>()->remove( toRemove );
       }
 
       delete tSelector;
@@ -62,9 +62,9 @@ Actor* CmdUse::acquireItemToUse(Actor* executor)
   itemsMenu.centerPosition();
   itemsMenu.setTitle("Choose item to use");
 
-  std::function<bool(Actor*)> filter = [](Actor* a){ return a->afPickable() && a->afPickable()->getEffect(); };
+  std::function<bool(Actor*)> filter = [](Actor* a){ return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect(); };
 
-  std::vector<Actor*> usableItems = executor->afContainer()->content(&filter);
+  std::vector<Actor*> usableItems = executor->getFeature<Container>()->content(&filter);
   if ( !usableItems.empty() )
   {
     std::map<int, Actor*> mItems = itemsMenu.fillWithItems<gui::LabelMenuItem>( usableItems );
@@ -73,7 +73,7 @@ Actor* CmdUse::acquireItemToUse(Actor* executor)
   }
   else gui::msgBox("You don't have any usable items!", gui::MsgType::Warning);
 
-  if ( item != nullptr && item->afPickable()->isStackable() ) item = item->afPickable()->spilt(1);
+  if ( item != nullptr && item->getFeature<Pickable>()->isStackable() ) item = item->getFeature<Pickable>()->spilt(1);
 
   return item;
 }

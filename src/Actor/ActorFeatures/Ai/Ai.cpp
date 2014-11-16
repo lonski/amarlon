@@ -6,6 +6,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Ai::featureType = ActorFeature::AI;
+
 Ai::Ai()
 {
 }

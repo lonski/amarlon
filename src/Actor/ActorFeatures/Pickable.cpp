@@ -7,6 +7,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Pickable::featureType = ActorFeature::PICKABLE;
+
 Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
@@ -50,7 +52,7 @@ Actor* Pickable::spilt(int amount)
     assert( amount > 0 );
 
     r = _owner->clone();
-    r->afPickable()->setAmount(amount);    
+    r->getFeature<Pickable>()->setAmount(amount);
   }
 
   return r;

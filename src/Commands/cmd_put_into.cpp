@@ -22,7 +22,7 @@ void CmdPutInto::execute(Actor *executor)
                     .selectFirst(executor,
                                  &Engine::instance().currentMap());
 
-  if ( target != nullptr && target->afContainer() != nullptr)
+  if ( target != nullptr && target->hasFeature<Container>())
   {
     auto afterPutIntoAction =
     [&](const std::string& item, int amount)
@@ -40,7 +40,7 @@ void CmdPutInto::execute(Actor *executor)
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(target)
-                      .setContainer(Actor::Player->afContainer())
+                      .setContainer(Actor::Player->getFeature<Container>())
                       .setAfterPickupAction( afterPutIntoAction )
                       .setInventoryFullAction( containerFullAction )
                       .setWindowTitle("Select item to put")

@@ -12,13 +12,15 @@ class Actor;
 class Openable : public ActorFeature
 {
 public:  
+  const static ActorFeature::Type featureType;
+
   Openable();
   ~Openable() {}
 
   static Openable* create(OpenableType type);
   static Openable* create(Description* dsc);
 
-  static FeatureType getType() { return ActorFeature::OPENABLE; }
+  virtual ActorFeature::Type getType() { return featureType; }
 
   virtual bool open(Actor* executor) = 0;
   virtual bool close(Actor* executor) = 0;

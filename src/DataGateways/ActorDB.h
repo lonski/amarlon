@@ -31,11 +31,17 @@ public:
   template<typename T>
   T* getFeature(ActorType type);
 
+  FeatureMap getAllFeatures(ActorType type);
+
+  /**
+   * @brief loads given file, parses xml and creates actor descriptions
+   * @param path to file to be loaded
+   */
   void loadActors(const std::string& fn);
 
 private:
   typedef std::shared_ptr<Description> DescriptionPtr;
-  typedef std::map<ActorFeature::FeatureType, DescriptionPtr> FeatureDescriptionMap;
+  typedef std::map<ActorFeature::Type, DescriptionPtr> FeatureDescriptionMap;
 
   std::map<ActorType, FeatureDescriptionMap> _featureDscs;
   std::map<ActorType, DescriptionPtr>        _actorDscs;
@@ -81,7 +87,7 @@ Description* ActorDB::findDescription(ActorType actorType)
   if ( descriptionsIt != _featureDscs.end() )
   {
     FeatureDescriptionMap& actorDescriptions = descriptionsIt->second;
-    auto dscIt = actorDescriptions.find(T::getType());
+    auto dscIt = actorDescriptions.find(T::featureType);
 
     if (dscIt != actorDescriptions.end())
     {

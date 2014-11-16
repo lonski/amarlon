@@ -7,6 +7,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Container::featureType = ActorFeature::CONTAINER;
+
 Container::Container(size_t maxSize)
   : _slotCount(maxSize)
   , _pushToFront(false)
@@ -35,12 +37,12 @@ Container* Container::create(Description *dsc)
       {
         Actor* nActor = new Actor(aId);
 
-        if (ca.container) nActor->setAfContainer( Container::create( ca.container.get() ) );
-        if (ca.openable)  nActor->setAfOpenable ( Openable::create ( ca.openable.get()  ) );
-        if (ca.pickable)  nActor->setAfPickable ( Pickable::create ( ca.pickable.get()  ) );
-        if (ca.fighter)   nActor->setAfFighter  ( Fighter::create  ( ca.fighter.get()   ) );
-        if (ca.ai)        nActor->setAfAi       ( Ai::create       ( ca.ai.get()        ) );
-        if (ca.wearer)    nActor->setAfWearer   ( Wearer::create   ( ca.wearer.get()    ) );
+        if (ca.container) nActor->insertFeature ( Container::create( ca.container.get() ) );
+        if (ca.openable)  nActor->insertFeature ( Openable::create ( ca.openable.get()  ) );
+        if (ca.pickable)  nActor->insertFeature ( Pickable::create ( ca.pickable.get()  ) );
+        if (ca.fighter)   nActor->insertFeature ( Fighter::create  ( ca.fighter.get()   ) );
+        if (ca.ai)        nActor->insertFeature ( Ai::create       ( ca.ai.get()        ) );
+        if (ca.wearer)    nActor->insertFeature ( Wearer::create   ( ca.wearer.get()    ) );
 
         cont->add(nActor);
       }
@@ -68,7 +70,7 @@ bool Container::isEqual(ActorFeature *rhs)
   Container* crhs = dynamic_cast<Container*>(rhs);
   if (crhs != nullptr)
   {
-    equal = (_slotCount == crhs->_slotCount);
+    equal = (_slotCount == crhs->_slotCount);    
     equal &= std::equal(_inventory.begin(), _inventory.end(), crhs->_inventory.begin(),
                         std::mem_fun(&Actor::isEqual));
   }
@@ -81,7 +83,7 @@ bool Container::add(Actor *actor)
   bool added = false;
 
   //handle stackable
-  if ( actor->afPickable() && actor->afPickable()->isStackable() )
+  if ( actor->hasFeature<Pickable>() && actor->getFeature<Pickable>()->isStackable() )
   {
     auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](Actor* iItem)
                    {
@@ -92,10 +94,10 @@ bool Container::add(Actor *actor)
     {
       Actor* actorToStackWith = *invIter;
 
-      int invAmount = actorToStackWith->afPickable()->getAmount();
-      int amountToStack = actor->afPickable()->getAmount();
+      int invAmount = actorToStackWith->getFeature<Pickable>()->getAmount();
+      int amountToStack = actor->getFeature<Pickable>()->getAmount();
 
-      actorToStackWith->afPickable()->setAmount( invAmount + amountToStack );
+      actorToStackWith->getFeature<Pickable>()->setAmount( invAmount + amountToStack );
 
       delete actor;
       actor = nullptr;

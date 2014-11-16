@@ -18,6 +18,8 @@ class Container : public ActorFeature
 public:
   typedef std::list<Actor*>::iterator iterator;
 
+  const static ActorFeature::Type featureType;
+
   iterator begin() { return _inventory.begin(); }
   iterator end() { return _inventory.end(); }
 
@@ -25,7 +27,7 @@ public:
   virtual ~Container();
   static Container* create(Description* dsc);
 
-  static FeatureType getType() { return ActorFeature::CONTAINER; }
+  virtual ActorFeature::Type getType() { return featureType; }
 
   virtual Container* clone();
   virtual bool isEqual(ActorFeature* rhs);

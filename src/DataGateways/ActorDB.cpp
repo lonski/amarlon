@@ -68,6 +68,73 @@ int ActorDB::getTileRenderPriority(ActorType type)
   return piority;
 }
 
+// === GET ALL FEATURES === //
+
+class FeatureGetter
+{
+public:
+  FeatureGetter(ActorDB* actorDB)
+    : _actorDB(actorDB)
+  {}
+
+  FeatureMap get(ActorType type)
+  {
+    _features.clear();
+    _aType = type;
+
+    for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f )
+    {
+      ActorFeature::Type fType = static_cast<ActorFeature::Type>(f);
+
+      //TODO: find out more elegant and generic way
+      switch(fType)
+      {
+        case ActorFeature::AI:
+          addFeature<Ai>();
+          break;
+        case ActorFeature::CONTAINER:
+          addFeature<Container>();
+          break;
+        case ActorFeature::FIGHTER:
+          addFeature<Fighter>();
+          break;
+        case ActorFeature::OPENABLE:
+          addFeature<Openable>();
+          break;
+        case ActorFeature::PICKABLE:
+          addFeature<Pickable>();
+          break;
+        case ActorFeature::WEARER:
+          addFeature<Wearer>();
+          break;
+        default:;
+      }
+    }
+
+    return _features;
+  }
+
+private:
+  template<typename T>
+  void addFeature()
+  {
+    T* t = _actorDB->getFeature<T>(_aType);
+    if ( t != nullptr ) _features[T::featureType] = ActorFeaturePtr(t);
+  }
+
+  ActorDB* _actorDB;
+  FeatureMap _features;
+  ActorType _aType;
+
+};
+
+FeatureMap ActorDB::getAllFeatures(ActorType type)
+{
+  return FeatureGetter(this).get(type);
+}
+
+// === LOAD ACTORS === //
+
 void ActorDB::loadActors(const string &fn)
 {
   ifstream ifs(fn);
@@ -121,7 +188,7 @@ void ActorDB::parseActorFeatures(ActorType actorId)
 
   for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f )
   {
-    ActorFeature::FeatureType fType = static_cast<ActorFeature::FeatureType>(f);
+    ActorFeature::Type fType = static_cast<ActorFeature::Type>(f);
 
     DescriptionPtr featureDsc( _actorParser.parseFeatureDsc(fType) );
     if ( featureDsc ) actorDescriptions[ fType ] = featureDsc;

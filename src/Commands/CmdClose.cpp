@@ -27,7 +27,7 @@ void CmdClose::execute(Actor *executor)
 
   auto openableIter = std::find_if(actorsOnTile.begin(), actorsOnTile.end(),
                                    [](Actor* a)
-                                   { return a->afOpenable(); });
+                                   { return a->getFeature<Openable>(); });
 
   Actor* toClose = openableIter != actorsOnTile.end() ? *openableIter : nullptr;
 
@@ -35,7 +35,7 @@ void CmdClose::execute(Actor *executor)
   {
     if ( actorsOnTile.size() == 1 )
     {
-      if (toClose->afOpenable()->close(executor)) map.updateActorCell(toClose);
+      if (toClose->getFeature<Openable>()->close(executor)) map.updateActorCell(toClose);
     }
     else
     {

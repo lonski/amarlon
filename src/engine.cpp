@@ -46,6 +46,7 @@ void Engine::init(Configuration* cfg)
   Map::Gateway.loadMaps( cfg->get("maps_file") );
 
   Actor::Player = new Actor(ActorType::Player, 42, 28);
+
   Messenger::message()->setGui(_gui.get());
 
   setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
@@ -70,7 +71,7 @@ void Engine::render()
     _gui->setPlayerName(Actor::Player->getName());
 
     if ( Actor::Player->isAlive() )
-      _gui->setHpBar(Actor::Player->afFighter()->getHp(), Actor::Player->afFighter()->getMaxHp());
+      _gui->setHpBar(Actor::Player->getFeature<Fighter>()->getHp(), Actor::Player->getFeature<Fighter>()->getMaxHp());
 
     _gui->setViewList(getActorsBenethPlayersFeet());
     _gui->render();
@@ -84,10 +85,10 @@ void Engine::updateAis()
 {
   if (_currentMap != nullptr)
   {
-    std::function<bool(Actor*)> filter = [](Actor* a)->bool{ return a->afAi();};
+    std::function<bool(Actor*)> filter = [](Actor* a)->bool{ return a->hasFeature<Ai>();};
     std::vector<Actor*> ais = currentMap().getActors( &filter );
 
-    std::for_each( ais.begin(), ais.end(), [&](Actor* a){a->afAi()->update( &currentMap() );});
+    std::for_each( ais.begin(), ais.end(), [&](Actor* a){a->getFeature<Ai>()->update( &currentMap() );});
   }
 }
 
@@ -131,9 +132,9 @@ std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
   std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
   {
     int amount = 1;
-    if ( a->afPickable() )
+    if ( a->hasFeature<Pickable>() )
     {
-      amount = a->afPickable()->getAmount();
+      amount = a->getFeature<Pickable>()->getAmount();
     }
 
     std::string entryMsg = a->getName();

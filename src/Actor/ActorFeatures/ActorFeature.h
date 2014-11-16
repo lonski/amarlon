@@ -1,6 +1,9 @@
 #ifndef ACTORFEATURE_H
 #define ACTORFEATURE_H
 
+#include <memory>
+#include <map>
+
 namespace amarlon {
 
 class Actor;
@@ -8,7 +11,7 @@ class Actor;
 class ActorFeature
 {
 public:
-  enum FeatureType
+  enum Type
   {
     FT_NULL,
     AI,
@@ -26,11 +29,15 @@ public:
   void setOwner(Actor* owner);
   virtual ActorFeature* clone() = 0;
   virtual bool isEqual(ActorFeature* rhs) = 0;
+  virtual ActorFeature::Type getType() = 0;
 
 protected:
   Actor* _owner;
 
 };
+
+typedef std::shared_ptr<ActorFeature> ActorFeaturePtr;
+typedef std::map<ActorFeature::Type, ActorFeaturePtr> FeatureMap;
 
 }
 

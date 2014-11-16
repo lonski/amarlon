@@ -22,7 +22,7 @@ public:
 
     std::for_each(items.begin(), items.end(), [&](Actor* i)
     {
-      Pickable* item = i->afPickable();
+      Pickable* item = i->getFeature<Pickable>();
       assert( item );
 
       std::string category = PickableCategory2Str( item->getCategory() );

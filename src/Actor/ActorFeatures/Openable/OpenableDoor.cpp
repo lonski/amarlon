@@ -36,7 +36,7 @@ bool OpenableDoor::close(Actor*)
   if (_owner->getId() == ActorType::DoorOpen)
   {
     _owner->changeType(ActorType::DoorClosed);
-    _owner->afOpenable()->unlock();
+    _owner->getFeature<Openable>()->unlock();
     r = true;
   }
 

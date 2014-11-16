@@ -18,7 +18,7 @@ void BodyManager::fillBodySlots()
   int currentIndex = _bodyMenu->getCurrentIndex();
   _bodyMenu->clear();
 
-  Wearer* wearer = Actor::Player->afWearer();
+  Wearer* wearer = Actor::Player->getFeature<Wearer>();
   assert(wearer);
 
   for( int i = (int)ItemSlotType::Null + 1; i != (int)ItemSlotType::End; ++i)
@@ -48,7 +48,7 @@ void BodyManager::manage()
 {
   ItemSlotType slot = (ItemSlotType)std::stol( _bodyMenu->getSelectedItem()->getTag("id") );
 
-  if ( Actor::Player->afWearer()->isEquipped( slot ) )
+  if ( Actor::Player->getFeature<Wearer>()->isEquipped( slot ) )
   {
     unequipItem(slot);
   }
@@ -63,8 +63,8 @@ void BodyManager::manage()
 // === UNEQUIP === //
 void BodyManager::unequipItem(ItemSlotType slot)
 {
-  Wearer* playerWearer = Actor::Player->afWearer();
-  Container* playerContainer = Actor::Player->afContainer();
+  Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
+  Container* playerContainer = Actor::Player->getFeature<Container>();
 
   if ( Actor* item = playerWearer->unequip( slot ) )
   {
@@ -121,12 +121,12 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
 
 void BodyManager::equipItem(Actor* toEquip)
 {
-  if (Actor::Player->afContainer()->remove( toEquip ))
+  if (Actor::Player->getFeature<Container>()->remove( toEquip ))
   {
-    if ( !Actor::Player->afWearer()->equip( toEquip ) )
+    if ( !Actor::Player->getFeature<Wearer>()->equip( toEquip ) )
     {
       msgBox( "Cannot equip item!", gui::MsgType::Error );
-      Actor::Player->afContainer()->add( toEquip );
+      Actor::Player->getFeature<Container>()->add( toEquip );
     }
   }
   else
@@ -139,10 +139,10 @@ std::vector<Actor *> BodyManager::getEquipableItemsList(ItemSlotType slot)
 {
   std::function<bool(Actor*)> filterFun = [&](Actor* a)-> bool
   {
-    return a->afPickable() && a->afPickable()->getItemSlot() == slot;
+    return a->hasFeature<Pickable>() && a->getFeature<Pickable>()->getItemSlot() == slot;
   };
 
-  return Actor::Player->afContainer()->content( &filterFun );
+  return Actor::Player->getFeature<Container>()->content( &filterFun );
 }
 // ~~~ EQUIP ~~~ //
 

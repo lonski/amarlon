@@ -2,6 +2,7 @@
 #include <cmath>
 #include <world/map.h>
 #include "Actor/Actor.h"
+#include <amarlon_except.h>
 
 namespace amarlon {
 
@@ -41,6 +42,8 @@ bool MonsterAi::isEqual(ActorFeature *rhs)
 
 void MonsterAi::update(Map *map)
 {
+  if ( !_owner ) throw amarlon_exeption("Ai owner not set!");
+
   _map = map;
   if (_owner->isAlive() && _map)
   {
@@ -89,9 +92,9 @@ void MonsterAi::huntPlayer()
       _owner->move(0, stepDy);
     }
   }
-  else if ( _owner->afFighter() )
+  else if ( _owner->hasFeature<Fighter>() )
   {
-    _owner->afFighter()->attack(Actor::Player);
+    _owner->getFeature<Fighter>()->attack(Actor::Player);
   }
 }
 

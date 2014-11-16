@@ -27,11 +27,11 @@ void CmdOpen::execute(Actor *executor)
   Actor* target = SingleNeighbourSelector("Select object to open...")
                     .selectFirst(executor,
                                  &map,
-                                 [](Actor* a)->bool{ return a->afOpenable();});
+                                 [](Actor* a)->bool{ return a->getFeature<Openable>();});
 
   if ( target != nullptr)
   {
-    if ( target->afOpenable()->open(executor) )
+    if ( target->getFeature<Openable>()->open(executor) )
     {
       map.updateActorCell(target);
     }

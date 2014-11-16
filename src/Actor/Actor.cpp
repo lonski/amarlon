@@ -11,36 +11,13 @@ Actor::Actor(ActorType aId, int x, int y, Map *map)
   , _x(x)
   , _y(y)
   , _map(map)
-  , _afContainer(nullptr)
-  , _afPickable(nullptr)
-  , _afFighter(nullptr)
-  , _afAi(nullptr)
-  , _afOpenable(nullptr)
-  , _afWearer(nullptr)  
-{  
-  setAfContainer  ( Actor::DB.getFeature<Container>  (aId) );
-  setAfPickable   ( Actor::DB.getFeature<Pickable>   (aId) );
-  setAfFighter    ( Actor::DB.getFeature<Fighter>    (aId) );
-  setAfAi         ( Actor::DB.getFeature<Ai>         (aId) );
-  setAfOpenable   ( Actor::DB.getFeature<Openable>   (aId) );
-  setAfWearer     ( Actor::DB.getFeature<Wearer>     (aId) );
+{
+  _features = Actor::DB.getAllFeatures(aId);
+  for (auto f : _features) f.second->setOwner(this);
 }
 
 Actor::~Actor()
 {
-  delete _afAi;
-  delete _afContainer;
-  delete _afFighter;
-  delete _afOpenable;
-  delete _afPickable;
-  delete _afWearer;
-
-  _afAi = nullptr;
-  _afContainer = nullptr;
-  _afFighter = nullptr;
-  _afOpenable = nullptr;
-  _afPickable = nullptr;
-  _afWearer = nullptr;
 }
 
 void Actor::move(int dx, int dy)
@@ -57,40 +34,37 @@ void Actor::morph(ActorType newType)
 {
   _id = newType;
 
-  setAfContainer( Actor::DB.getFeature<Container>(_id) );
-  setAfPickable ( Actor::DB.getFeature<Pickable> (_id) );
-  setAfFighter  ( Actor::DB.getFeature<Fighter>  (_id) );
-  setAfAi       ( Actor::DB.getFeature<Ai>       (_id) );
-  setAfOpenable ( Actor::DB.getFeature<Openable> (_id) );
-  setAfWearer   ( Actor::DB.getFeature<Wearer>   (_id) );
+  _features.clear();
+  _features = Actor::DB.getAllFeatures(_id);
+  for (auto f : _features) f.second->setOwner(this);
 }
 
 Actor *Actor::clone()
 {
   Actor* cloned = new Actor( getId(), getX(), getY() );
 
-  cloned->setAfContainer( dynamic_cast<Container*>( _afContainer ? _afContainer->clone() : nullptr ) );
-  cloned->setAfPickable ( dynamic_cast<Pickable*> ( _afPickable  ? _afPickable->clone()  : nullptr ) );
-  cloned->setAfOpenable ( dynamic_cast<Openable*> ( _afOpenable  ? _afOpenable->clone()  : nullptr ) );
-  cloned->setAfFighter  ( dynamic_cast<Fighter*>  ( _afFighter   ? _afFighter->clone()   : nullptr ) );
-  cloned->setAfAi       ( dynamic_cast<Ai*>       ( _afAi        ? _afAi->clone()        : nullptr ) );
-  cloned->setAfWearer   ( dynamic_cast<Wearer*>   ( _afWearer    ? _afWearer->clone()    : nullptr ) );
+  for ( auto af : _features )
+  {
+    cloned->insertFeature( af.second->clone() );
+  }
 
   return cloned;
 }
 
 bool Actor::isEqual(Actor *rhs)
 {
-  bool equal = rhs != nullptr && ( getId() == rhs->getId() );
+  bool equal = rhs != nullptr;
 
-  if (equal)
+  if ( rhs != nullptr )
   {
-    if ( afContainer() ) equal &= afContainer()->isEqual( rhs->afContainer() );
-    if ( afOpenable() ) equal &= afOpenable()->isEqual( rhs->afOpenable() );
-    if ( afPickable() ) equal &= afPickable()->isEqual( rhs->afPickable() );
-    if ( afFighter() ) equal &= afFighter()->isEqual( rhs->afFighter() );
-    if ( afAi() ) equal &= afAi()->isEqual( rhs->afAi() );
-    if ( afWearer() ) equal &= afWearer()->isEqual( rhs->afWearer() );
+    equal &= ( getId() == rhs->getId() );
+    equal &= ( getFeatureCount() == rhs->getFeatureCount() );
+
+    for ( auto af : _features)
+    {
+      ActorFeature* feature = af.second.get();
+      equal &= ( feature->isEqual( rhs->getFeature( feature->getType() ) ) );
+    }
   }
 
   return equal;
@@ -103,7 +77,8 @@ void Actor::changeType(ActorType newType)
 
 bool Actor::isAlive() const
 {
-  return  afFighter() && afFighter()->isAlive();
+  const Fighter* f = getFeature<Fighter>();
+  return  f && f->isAlive();
 }
 
 bool Actor::isFovOnly() const
@@ -167,90 +142,6 @@ void Actor::setY(int y)
   _y = y;
   if ( _map ) _map->addActor( this );
 }
-Container *Actor::afContainer() const
-{
-  return _afContainer;
-}
-
-void Actor::setAfContainer(Container *afContainer)
-{
-  delete _afContainer;
-  _afContainer = afContainer;
-
-  if (_afContainer)
-    _afContainer->setOwner(this);
-}
-Pickable *Actor::afPickable() const
-{
-  return _afPickable;
-}
-
-void Actor::setAfPickable(Pickable *afPickable)
-{
-  delete _afPickable;
-  _afPickable = afPickable;
-
-  if (_afPickable)
-    _afPickable->setOwner(this);
-
-}
-
-Fighter *Actor::afFighter() const
-{
-  return _afFighter;
-}
-
-void Actor::setAfFighter(Fighter *afFighter)
-{
-  delete _afFighter;
-  _afFighter = afFighter;
-
-  if (_afFighter)
-    _afFighter->setOwner(this);
-}
-
-Ai *Actor::afAi() const
-{
-  return _afAi;
-}
-
-Openable *Actor::afOpenable() const
-{
-  return _afOpenable;
-}
-
-Wearer *Actor::afWearer() const
-{
-  return _afWearer;
-}
-
-void Actor::setAfAi(Ai *afAi)
-{
-  delete _afAi;
-  _afAi = afAi;
-
-  if (_afAi)
-    _afAi->setOwner(this);
-}
-
-void Actor::setAfOpenable(Openable *afOpenable)
-{
-  delete _afOpenable;
-  _afOpenable = afOpenable;
-
-  if (_afOpenable)
-    _afOpenable->setOwner(this);
-}
-
-void Actor::setAfWearer(Wearer *afWearer)
-{
-  delete _afWearer;
-  _afWearer = afWearer;
-
-  if (_afWearer)
-    _afWearer->setOwner(this);
-}
-
 
 TCODColor Actor::getColor() const
 {
@@ -260,6 +151,40 @@ TCODColor Actor::getColor() const
 unsigned char Actor::getChar() const
 {
   return Actor::DB.getChar(_id);;
+}
+
+ActorFeature *Actor::getFeature(ActorFeature::Type afType) const
+{
+  auto it = _features.find( afType );
+  ActorFeature* feature = it != _features.end() ? it->second.get() : nullptr;
+
+  return feature;
+}
+
+ActorFeaturePtr Actor::insertFeature(ActorFeature *feature)
+{
+  ActorFeaturePtr overwriten;
+  if ( feature != nullptr )
+  {
+    feature->setOwner(this);
+
+    auto it = _features.find( feature->getType() );
+    if ( it != _features.end() )
+    {
+      overwriten = it->second;
+      it->second.reset( feature );
+    }
+    else
+    {
+      _features[ feature->getType() ] = ActorFeaturePtr(feature);
+    }
+  }
+  return overwriten;
+}
+
+size_t Actor::getFeatureCount() const
+{
+  return _features.size();
 }
 
 }
