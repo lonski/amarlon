@@ -164,7 +164,6 @@ void ActorDB::parseActors(vector<char>& dataToParse)
       parseActor(actorNode);
       actorNode = actorNode->next_sibling();
     }
-
   }
 
   doc.clear();

@@ -90,5 +90,7 @@ private:
 
 };
 
+typedef std::shared_ptr<Map> MapPtr;
+
 }
 #endif // MAP_H

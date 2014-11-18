@@ -7,6 +7,7 @@
 namespace amarlon {
 
 class Actor;
+struct Description;
 
 class ActorFeature
 {
@@ -25,6 +26,7 @@ public:
 
   ActorFeature();
   virtual ~ActorFeature() = 0;
+  static ActorFeature* create(Type featureType, Description* dsc);
 
   void setOwner(Actor* owner);
   virtual ActorFeature* clone() = 0;

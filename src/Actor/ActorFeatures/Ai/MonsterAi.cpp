@@ -42,8 +42,6 @@ bool MonsterAi::isEqual(ActorFeature *rhs)
 
 void MonsterAi::update(Map *map)
 {
-  if ( !_owner ) throw amarlon_exeption("Ai owner not set!");
-
   _map = map;
   if (_owner->isAlive() && _map)
   {

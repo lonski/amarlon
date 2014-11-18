@@ -34,6 +34,9 @@ set(HEADER_FILES
     DataGateways/Parsers/tile_parser.h
     DataGateways/Parsers/tile_parser.cpp
     DataGateways/Parsers/ActorParser.h
+    DataGateways/Parsers/map_parser.h
+    DataGateways/serializers/serializer.h
+    DataGateways/serializers/map_serializer.h
     DataGateways/ActorDB.h
     DataGateways/ActorDescriptions.h
     DataGateways/MapGateway.h
@@ -103,6 +106,8 @@ set(SOURCE_FILES
     Commands/Command.cpp
     Commands/cmd_put_into.cpp
     DataGateways/Parsers/ActorParser.cpp
+    DataGateways/Parsers/map_parser.cpp
+    DataGateways/serializers/map_serializer.cpp
     DataGateways/ActorDB.cpp
     DataGateways/MapGateway.cpp
     DataGateways/TileDB.cpp

@@ -2,9 +2,11 @@
 #define MAPGATEWAY_H
 
 #include <map>
+#include <vector>
 #include <memory>
 #include <world/map_id.h>
 #include <xml/rapidxml_print.hpp>
+#include <DataGateways/Parsers/map_parser.h>
 
 namespace amarlon {
 
@@ -23,9 +25,11 @@ public:
   void saveMaps(std::string fn);
 
 private:
-  std::map<MapId, MapPtr> _maps;
-  void overwriteActorFeatures(rapidxml::xml_node<>* actorNode, Actor* actor);
+  MapParser _mapParser;
+  std::map<MapId, MapPtr> _maps;  
 
+  void parseMaps(std::vector<char> &buf);
+  std::shared_ptr< rapidxml::xml_document<> > serializeMaps();
 };
 
 }
