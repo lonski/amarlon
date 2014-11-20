@@ -1,7 +1,7 @@
 #ifndef CMDMOVE_H
 #define CMDMOVE_H
 
-#include "Command.h"
+#include "command.h"
 
 namespace amarlon {
 
@@ -10,7 +10,7 @@ class CmdMoveOrAttack : public Command
 public:
   CmdMoveOrAttack();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Actor* executor);
+  virtual void execute();
 
   virtual void setDirection(int dx, int dy);
 

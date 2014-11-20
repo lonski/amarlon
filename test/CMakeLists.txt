@@ -40,18 +40,20 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdClose.h
-#    ${PROJECT_SOURCE_DIR}/src/Commands/CmdDrop.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdFullscreen.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdInventory.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdMove.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdOpen.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdPick.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdUse.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/Command.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/gui.h
     ${PROJECT_SOURCE_DIR}/src/command_executor.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_help.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_close.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_fullscreen.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_inventory.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_move.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_open.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_pick.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_use.h
+    ${PROJECT_SOURCE_DIR}/src/commands/command.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_put_into.h
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_look.h
     ${PROJECT_SOURCE_DIR}/src/engine.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/list.h
@@ -72,8 +74,6 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.h
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.h
-    ${PROJECT_SOURCE_DIR}/src/Commands/cmd_put_into.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/map_parser.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/serializers/serializer.h
     ${PROJECT_SOURCE_DIR}/src/DataGateways/serializers/map_serializer.h
@@ -113,17 +113,20 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdClose.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdFullscreen.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdInventory.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdMove.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdOpen.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdPick.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdUse.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/Command.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/gui.cpp
     ${PROJECT_SOURCE_DIR}/src/command_executor.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_help.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_close.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_fullscreen.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_inventory.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_move.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_open.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_pick.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_use.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/command.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_put_into.cpp
+    ${PROJECT_SOURCE_DIR}/src/commands/cmd_look.cpp
     ${PROJECT_SOURCE_DIR}/src/engine.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/widget/list.cpp
@@ -143,8 +146,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/CmdHelp.cpp
-    ${PROJECT_SOURCE_DIR}/src/Commands/cmd_put_into.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/map_parser.cpp
     ${PROJECT_SOURCE_DIR}/src/DataGateways/serializers/map_serializer.cpp
 )

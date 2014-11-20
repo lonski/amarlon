@@ -2,7 +2,7 @@
 #include "Actor/Actor.h"
 #include "gui/gui.h"
 #include "utils/utils.h"
-#include "utils/direction_selector.h"
+#include "utils/target_selector/single_neighbour_selector.h"
 #include "utils/messenger.h"
 
 namespace amarlon {
@@ -10,6 +10,7 @@ namespace amarlon {
 LockEffect::LockEffect()
   : _lockId(0)
 {
+  _targetSelector.reset( new SingleNeighbourSelector );
 }
 
 Effect *LockEffect::clone()

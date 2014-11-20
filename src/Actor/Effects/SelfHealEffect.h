@@ -17,13 +17,9 @@ public:
   virtual void load(const EffectDescription& dsc);
   virtual EffectDescription save();
 
-  virtual SelectorType getSelectorType()
-  {
-    return SelectorType::Executor;
-  }
-
 private:
   int _healAmount;
+
 
 };
 

@@ -19,6 +19,7 @@ enum class CommandId
   Use,
   Help,
   PutInto,
+  Look,
   End
 };
 
@@ -30,7 +31,7 @@ public:
   static Command* create(CommandId cmd);
 
   virtual bool accept(TCOD_key_t &key) = 0;
-  virtual void execute(Actor* executor) = 0;
+  virtual void execute() = 0;
 
 };
 

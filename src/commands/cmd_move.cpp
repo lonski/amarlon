@@ -1,4 +1,4 @@
-#include "CmdMove.h"
+#include "cmd_move.h"
 #include <utils/utils.h>
 #include <world/map.h>
 #include <engine.h>
@@ -18,16 +18,16 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
   return handleDirectionKey(key, _dx, _dy);
 }
 
-void CmdMoveOrAttack::execute(Actor *executor)
+void CmdMoveOrAttack::execute()
 {
   Map& map = Engine::instance().currentMap();
-  int targetX = executor->getX() + _dx;
-  int targetY = executor->getY() + _dy;
+  int targetX = Actor::Player->getX() + _dx;
+  int targetY = Actor::Player->getY() + _dy;
   bool blocked = map.isBlocked(targetX, targetY);
 
   if ( !blocked )
   {
-    executor->move(_dx, _dy);
+    Actor::Player->move(_dx, _dy);
   }
   else
   {
@@ -37,11 +37,11 @@ void CmdMoveOrAttack::execute(Actor *executor)
     });
 
     //attack
-    if (!toAttack.empty() && executor->hasFeature<Fighter>() )
+    if (!toAttack.empty() && Actor::Player->hasFeature<Fighter>() )
     {
       assert(toAttack.size() == 1);
       Actor* enemy = toAttack[0];
-      executor->getFeature<Fighter>()->attack(enemy);
+      Actor::Player->getFeature<Fighter>()->attack(enemy);
     }
   }
 }

@@ -1,11 +1,11 @@
-#include "CmdUse.h"
+#include "cmd_use.h"
 #include <functional>
-#include "utils/selector_type.h"
-#include "utils/target_selector/target_selector.h"
-#include "Actor/Effects/Effect.h"
-#include "utils/direction_selector.h"
-#include "gui/gui.h"
-#include "utils/messenger.h"
+#include <utils/selector_type.h>
+#include <utils/target_selector/target_selector.h>
+#include <Actor/Effects/Effect.h>
+#include <utils/direction_selector.h>
+#include <gui/gui.h>
+#include <utils/messenger.h>
 #include <engine.h>
 #include <gui/widget/menu/items_menu.h>
 #include <gui/widget/menu/label_menu_item.h>
@@ -22,29 +22,23 @@ bool CmdUse::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'u' );
 }
 
-void CmdUse::execute(Actor *executor)
+void CmdUse::execute()
 {  
-  Actor* item = acquireItemToUse(executor);
+  Actor* item = acquireItemToUse();
 
   Engine::instance().render();
 
   if (item != nullptr && item->getFeature<Pickable>()->getEffect() != nullptr)
   {
-    SelectorType selectorType = item->getFeature<Pickable>()->getEffect()->getSelectorType();
-    TargetSelector* tSelector = TargetSelector::create(selectorType);
+    TargetSelector& tSelector = item->getFeature<Pickable>()->getEffect()->getTargetSelector();
 
-    if (tSelector != nullptr)
+    std::vector<Actor*> targets = tSelector.select();
+    Pickable* toUse = item->getFeature<Pickable>();
+
+    if ( toUse->use( Actor::Player, targets ) && toUse->getUsesCount() == 0)
     {
-      std::vector<Actor*> targets = tSelector->select(executor, &Engine::instance().currentMap());
-      Pickable* toUse = item->getFeature<Pickable>();
-
-      if ( toUse->use( executor, targets ) && toUse->getUsesCount() == 0)
-      {
-        Actor* toRemove = item->getFeature<Pickable>()->spilt(1);
-        executor->getFeature<Container>()->remove( toRemove );
-      }
-
-      delete tSelector;
+      Actor* toRemove = item->getFeature<Pickable>()->spilt(1);
+      Actor::Player->getFeature<Container>()->remove( toRemove );
     }
   }
   else if ( item )
@@ -54,7 +48,7 @@ void CmdUse::execute(Actor *executor)
 
 }
 
-Actor* CmdUse::acquireItemToUse(Actor* executor)
+Actor* CmdUse::acquireItemToUse()
 {
   Actor* item = nullptr;
 
@@ -64,7 +58,7 @@ Actor* CmdUse::acquireItemToUse(Actor* executor)
 
   std::function<bool(Actor*)> filter = [](Actor* a){ return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect(); };
 
-  std::vector<Actor*> usableItems = executor->getFeature<Container>()->content(&filter);
+  std::vector<Actor*> usableItems = Actor::Player->getFeature<Container>()->content(&filter);
   if ( !usableItems.empty() )
   {
     std::map<int, Actor*> mItems = itemsMenu.fillWithItems<gui::LabelMenuItem>( usableItems );

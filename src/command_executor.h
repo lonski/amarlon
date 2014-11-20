@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include <libtcod.hpp>
-#include "Commands/Command.h"
+#include <commands/command.h>
 
 namespace amarlon {
 
@@ -16,7 +16,7 @@ class CommandExecutor
 {
 public:
   CommandExecutor();
-  bool execute(TCOD_key_t &key, Actor* executor);
+  bool execute(TCOD_key_t &key);
 
 private:
   std::vector<Command*> _commands;

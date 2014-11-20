@@ -12,9 +12,11 @@ SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMes
 {
 }
 
-std::vector<Actor*> SingleNeighbourSelector::select(Actor *executor, Map *map, bool (*filterFun)(Actor *))
+std::vector<Actor*> SingleNeighbourSelector::select(bool (*filterFun)(Actor *))
 {
   Engine::instance().gui().setStatusMessage( _selectionMessage );
+  Map& map = Engine::instance().currentMap();
+  Actor* player = Actor::Player;
 
   int dx(0), dy(0);
 
@@ -24,12 +26,12 @@ std::vector<Actor*> SingleNeighbourSelector::select(Actor *executor, Map *map, b
   Engine::instance().gui().clearStatusMessage();
   Engine::instance().render();
 
-  return map->getActors(executor->getX()+dx, executor->getY()+dy, filterFun);
+  return map.getActors(player->getX()+dx, player->getY()+dy, filterFun);
 }
 
-Actor *SingleNeighbourSelector::selectFirst(Actor *executor, Map *map, bool (*filterFun)(Actor *))
+Actor *SingleNeighbourSelector::selectFirst(bool (*filterFun)(Actor *))
 {
-  std::vector<Actor*> targets = select(executor, map, filterFun);
+  std::vector<Actor*> targets = select(filterFun);
   return targets.empty() ? nullptr : targets.front();
 }
 

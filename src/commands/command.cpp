@@ -1,13 +1,14 @@
-#include "Command.h"
-#include "CmdMove.h"
-#include "CmdOpen.h"
-#include "CmdFullscreen.h"
-#include "CmdInventory.h"
-#include "CmdPick.h"
-#include "CmdClose.h"
-#include "CmdUse.h"
-#include "CmdHelp.h"
+#include "command.h"
+#include "cmd_move.h"
+#include "cmd_open.h"
+#include "cmd_fullscreen.h"
+#include "cmd_inventory.h"
+#include "cmd_pick.h"
+#include "cmd_close.h"
+#include "cmd_use.h"
+#include "cmd_help.h"
 #include "cmd_put_into.h"
+#include "cmd_look.h"
 
 namespace amarlon {
 
@@ -26,6 +27,7 @@ Command *Command::create(CommandId cmd)
     case CommandId::Use: c = new CmdUse; break;
     case CommandId::Help: c = new CmdHelp; break;
     case CommandId::PutInto: c = new CmdPutInto; break;
+    case CommandId::Look: c = new CmdLook; break;
     default: break;
   }
 

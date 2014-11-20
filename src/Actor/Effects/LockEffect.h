@@ -17,11 +17,6 @@ public:
   virtual void load(const EffectDescription& dsc);
   virtual EffectDescription save();
 
-  virtual SelectorType getSelectorType()
-  {
-    return SelectorType::SingleNeighbour;
-  }
-
 private:
   int _lockId;
 

@@ -94,7 +94,7 @@ void Engine::updateAis()
 
 void Engine::processKey(TCOD_key_t &key)
 {
-  _cmdExecutor->execute(key, Actor::Player);
+  _cmdExecutor->execute(key);
 }
 
 Map &Engine::currentMap() const

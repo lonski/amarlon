@@ -1,11 +1,17 @@
 #include "Effect.h"
 #include "LockEffect.h"
 #include "SelfHealEffect.h"
+#include <amarlon_except.h>
+#include <utils/target_selector/target_selector.h>
 
 namespace amarlon {
 
 Effect::Effect()
   : _usesCount(0)
+{
+}
+
+Effect::~Effect()
 {
 }
 
@@ -34,6 +40,12 @@ Effect *Effect::create(const EffectDescription &dsc)
   }
 
   return e;
+}
+
+TargetSelector& Effect::getTargetSelector()
+{
+  if ( !_targetSelector ) throw amarlon_exeption("Target selector not set in effect!");
+  return *_targetSelector.get();
 }
 
 int Effect::getUsesCount() const

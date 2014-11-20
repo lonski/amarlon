@@ -2,7 +2,7 @@
 #define CMDPICK_H
 
 #include <functional>
-#include "Command.h"
+#include "command.h"
 
 namespace amarlon {
 
@@ -13,7 +13,7 @@ class CmdPick : public Command
 public:
   CmdPick();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Actor* executor);
+  virtual void execute();
 
 };
 

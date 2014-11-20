@@ -1,4 +1,4 @@
-#include "CmdClose.h"
+#include "cmd_close.h"
 #include "Actor/Actor.h"
 #include <world/map.h>
 #include <engine.h>
@@ -18,12 +18,12 @@ bool CmdClose::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'c' );
 }
 
-void CmdClose::execute(Actor *executor)
+void CmdClose::execute()
 {
   Map& map = Engine::instance().currentMap();
 
   std::vector<Actor*> actorsOnTile = SingleNeighbourSelector("Select object to close...")
-                                       .select(executor, &map);
+                                       .select();
 
   auto openableIter = std::find_if(actorsOnTile.begin(), actorsOnTile.end(),
                                    [](Actor* a)
@@ -35,7 +35,7 @@ void CmdClose::execute(Actor *executor)
   {
     if ( actorsOnTile.size() == 1 )
     {
-      if (toClose->getFeature<Openable>()->close(executor)) map.updateActorCell(toClose);
+      if (toClose->getFeature<Openable>()->close(Actor::Player)) map.updateActorCell(toClose);
     }
     else
     {

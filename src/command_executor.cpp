@@ -10,7 +10,7 @@ CommandExecutor::CommandExecutor()
   }
 }
 
-bool CommandExecutor::execute(TCOD_key_t &key, Actor *executor)
+bool CommandExecutor::execute(TCOD_key_t &key)
 {
   bool r = false;
 
@@ -18,7 +18,7 @@ bool CommandExecutor::execute(TCOD_key_t &key, Actor *executor)
   {
     if (c->accept(key))
     {
-      c->execute(executor);
+      c->execute();
       r = true;
       break;
     }

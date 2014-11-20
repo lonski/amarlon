@@ -16,18 +16,17 @@ bool CmdPutInto::accept(TCOD_key_t &key)
   return key.vk == TCODK_CHAR && key.c == 'p';
 }
 
-void CmdPutInto::execute(Actor *executor)
+void CmdPutInto::execute()
 {
   Actor* target = SingleNeighbourSelector("Select a container to put into...")
-                    .selectFirst(executor,
-                                 &Engine::instance().currentMap());
+                    .selectFirst();
 
   if ( target != nullptr && target->hasFeature<Container>())
   {
     auto afterPutIntoAction =
     [&](const std::string& item, int amount)
     {
-      Messenger::message()->actorPutInto(executor->getName(), target->getName(), item, amount);
+      Messenger::message()->actorPutInto(Actor::Player->getName(), target->getName(), item, amount);
     };
 
     auto containerFullAction =

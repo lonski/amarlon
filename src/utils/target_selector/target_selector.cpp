@@ -23,6 +23,12 @@ TargetSelector *TargetSelector::create(SelectorType type)
   return ts;
 }
 
+TargetSelector& TargetSelector::setUpdateFunction(std::function<void ()> fun)
+{
+  _updateFunction = fun;
+  return *this;
+}
+
 TargetSelector &TargetSelector::setSelectionMessage(const std::string &msg)
 {
   _selectionMessage = msg;

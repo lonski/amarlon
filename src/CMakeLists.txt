@@ -19,16 +19,17 @@ set(HEADER_FILES
     Actor/Effects/SelfHealEffect.h
     Actor/Actor.h
     Actor/ActorType.h
-    Commands/CmdHelp.h
-    Commands/CmdClose.h
-    Commands/CmdFullscreen.h
-    Commands/CmdInventory.h
-    Commands/CmdMove.h
-    Commands/CmdOpen.h
-    Commands/CmdPick.h
-    Commands/CmdUse.h
-    Commands/Command.h
-    Commands/cmd_put_into.h
+    commands/cmd_help.h
+    commands/cmd_close.h
+    commands/cmd_fullscreen.h
+    commands/cmd_inventory.h
+    commands/cmd_move.h
+    commands/cmd_open.h
+    commands/cmd_pick.h
+    commands/cmd_use.h
+    commands/command.h
+    commands/cmd_put_into.h
+    commands/cmd_look.h
     DataGateways/descriptions/tile_description.h
     DataGateways/Parsers/parser.h
     DataGateways/Parsers/tile_parser.h
@@ -95,16 +96,17 @@ set(SOURCE_FILES
     Actor/Effects/LockEffect.cpp
     Actor/Effects/SelfHealEffect.cpp
     Actor/Actor.cpp
-    Commands/CmdHelp.cpp
-    Commands/CmdClose.cpp
-    Commands/CmdFullscreen.cpp
-    Commands/CmdInventory.cpp
-    Commands/CmdMove.cpp
-    Commands/CmdOpen.cpp
-    Commands/CmdPick.cpp
-    Commands/CmdUse.cpp
-    Commands/Command.cpp
-    Commands/cmd_put_into.cpp
+    commands/cmd_help.cpp
+    commands/cmd_close.cpp
+    commands/cmd_fullscreen.cpp
+    commands/cmd_inventory.cpp
+    commands/cmd_move.cpp
+    commands/cmd_open.cpp
+    commands/cmd_pick.cpp
+    commands/cmd_use.cpp
+    commands/command.cpp
+    commands/cmd_put_into.cpp
+    commands/cmd_look.cpp
     DataGateways/Parsers/ActorParser.cpp
     DataGateways/Parsers/map_parser.cpp
     DataGateways/serializers/map_serializer.cpp

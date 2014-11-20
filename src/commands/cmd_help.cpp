@@ -1,4 +1,4 @@
-#include "CmdHelp.h"
+#include "cmd_help.h"
 #include <gui/window/text_window/resizeable_text_window.h>
 #include <engine.h>
 #include <sstream>
@@ -15,7 +15,7 @@ bool CmdHelp::accept(TCOD_key_t &key)
   return key.vk == TCODK_CHAR && key.c == '?';
 }
 
-void CmdHelp::execute(Actor *)
+void CmdHelp::execute()
 {
   /*
    * displaying ASCII codes mapped characters

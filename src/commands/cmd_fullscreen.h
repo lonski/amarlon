@@ -1,7 +1,7 @@
 #ifndef CMDFULLSCREEN_H
 #define CMDFULLSCREEN_H
 
-#include "Command.h"
+#include "command.h"
 
 namespace amarlon {
 
@@ -10,7 +10,7 @@ class CmdFullscreen : public Command
 public:
   CmdFullscreen();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Actor* executor);
+  virtual void execute();
 
 };
 

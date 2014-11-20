@@ -1,4 +1,4 @@
-#include "CmdPick.h"
+#include "cmd_pick.h"
 #include <engine.h>
 #include <world/map.h>
 #include <Actor/Actor.h>
@@ -18,17 +18,17 @@ bool CmdPick::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == ',' );
 }
 
-void CmdPick::execute(Actor *executor)
+void CmdPick::execute()
 {
-  int x( executor->getX() );
-  int y( executor->getY() );
+  int x( Actor::Player->getX() );
+  int y( Actor::Player->getY() );
 
   Container& container = Engine::instance().currentMap().getActorsContainer(x, y);
 
   auto afterPickupAction =
-  [&executor](const std::string& item, int amount)
+  [](const std::string& item, int amount)
   {
-    Messenger::message()->actorPicked(executor->getName(), item, amount);
+    Messenger::message()->actorPicked(Actor::Player->getName(), item, amount);
   };
 
   auto inventoryFullAction =
@@ -39,7 +39,7 @@ void CmdPick::execute(Actor *executor)
 
   Engine::instance().windowManager()
                     .getWindow<gui::PickUpWindow>()
-                    .setPicker(executor)
+                    .setPicker(Actor::Player)
                     .setContainer(&container)
                     .setFilterFunction( [](Actor* a){ return a->getFeature<Pickable>(); } )
                     .setAfterPickupAction( afterPickupAction )

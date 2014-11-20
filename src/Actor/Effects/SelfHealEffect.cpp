@@ -1,13 +1,15 @@
 #include "SelfHealEffect.h"
 #include <Actor/Actor.h>
 #include <utils/messenger.h>
-#include "gui/gui.h"
+#include <gui/gui.h>
+#include <utils/target_selector/executor_selector.h>
 
 namespace amarlon {
 
 SelfHealEffect::SelfHealEffect()
   : _healAmount(0)
 {
+  _targetSelector.reset( new ExecutorSelector );
 }
 
 bool SelfHealEffect::apply(Actor *executor, std::vector<Actor *>)

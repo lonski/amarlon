@@ -1,7 +1,7 @@
 #ifndef CMDUSE_H
 #define CMDUSE_H
 
-#include "Command.h"
+#include "command.h"
 
 namespace amarlon {
 
@@ -11,10 +11,10 @@ public:
   CmdUse();
 
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Actor* executor);
+  virtual void execute();
 
 private:
-  Actor * acquireItemToUse(Actor *executor);
+  Actor * acquireItemToUse();
 
 };
 

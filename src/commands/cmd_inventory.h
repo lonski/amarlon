@@ -2,7 +2,7 @@
 #define CMDINVENTORY_H
 
 #include <memory>
-#include "Command.h"
+#include "command.h"
 
 namespace amarlon {
 
@@ -15,7 +15,7 @@ class CmdInventory : public Command
 public:
   CmdInventory();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute(Actor*);
+  virtual void execute();
 
 };
 
