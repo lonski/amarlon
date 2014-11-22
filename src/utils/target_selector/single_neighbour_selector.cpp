@@ -15,6 +15,7 @@ SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMes
 std::vector<Actor*> SingleNeighbourSelector::select(bool (*filterFun)(Actor *))
 {
   Engine::instance().gui().setStatusMessage( _selectionMessage );
+  TCODConsole::root->flush();
   Map& map = Engine::instance().currentMap();
   Actor* player = Actor::Player;
 

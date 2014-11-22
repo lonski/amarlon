@@ -1,13 +1,15 @@
 #ifndef DIRECTIONSELECTOR_H
 #define DIRECTIONSELECTOR_H
 
+#include <libtcod.hpp>
+
 namespace amarlon {
 
 class DirectionSelector
 {
 public:
   DirectionSelector();
-  void select(int& dx, int& dy);
+  TCOD_key_t select(int& dx, int& dy);
 
 };
 

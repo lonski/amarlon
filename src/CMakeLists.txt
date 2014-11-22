@@ -65,6 +65,7 @@ set(HEADER_FILES
     gui/window/window.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
+    utils/target_selector/single_range_selector.h
     utils/target_selector/target_selector.h
     utils/colored_string.h
     utils/direction_selector.h
@@ -135,6 +136,7 @@ set(SOURCE_FILES
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
     utils/target_selector/target_selector.cpp
+    utils/target_selector/single_range_selector.cpp
     utils/direction_selector.cpp
     utils/item_picker.cpp
     utils/messenger.cpp

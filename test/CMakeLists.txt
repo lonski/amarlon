@@ -40,6 +40,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.h
+    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_range_selector.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/gui.h
     ${PROJECT_SOURCE_DIR}/src/command_executor.h
@@ -113,6 +114,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.cpp
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.cpp
+    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_range_selector.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.cpp
     ${PROJECT_SOURCE_DIR}/src/gui/gui.cpp
     ${PROJECT_SOURCE_DIR}/src/command_executor.cpp

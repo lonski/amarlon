@@ -83,7 +83,6 @@ void Gui::setStatusMessage(const std::string &status)
     1,
     status.c_str()
   );
-  TCODConsole::root->flush();
 }
 
 void Gui::clearStatusMessage()
