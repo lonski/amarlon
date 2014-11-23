@@ -30,7 +30,8 @@ std::vector<Actor*> SingleRangeSelector::select(bool (*filterFun)(Actor*))
     TCOD_key_t key;
     while ( key.vk != TCODK_ESCAPE && !accepted )
     {
-        TCODSystem::checkForEvent(TCOD_KEY_PRESSED, &key, NULL);
+        Engine::instance().gui().setStatusMessage( _selectionMessage );
+        TCODSystem::waitForEvent(TCOD_KEY_PRESSED, &key, NULL, true);
 
         int dx_tmp(0), dy_tmp(0);
         handleDirectionKey(key, dx_tmp, dy_tmp);
@@ -44,17 +45,16 @@ std::vector<Actor*> SingleRangeSelector::select(bool (*filterFun)(Actor*))
         }
 
         render();
-
         if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER ) accepted = true;
     }
 
-    return accepted ? Engine::instance().currentMap().getActors(_x+_dx, _x+_dy, filterFun)
+    std::vector<Actor*> vec = Engine::instance().currentMap().getActors(_x+_dx, _y+_dy, filterFun);
+    return accepted ? vec
                     : std::vector<Actor*>();
 }
 
 void SingleRangeSelector::render()
 {
-    Engine::instance().gui().setStatusMessage( _selectionMessage );
     Engine::instance().render();
     highlightCurrentTile();
     TCODConsole::root->flush();
