@@ -1,25 +1,27 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <libtcod.hpp>
 #include <memory>
 #include <string>
 #include <list>
 #include <vector>
 #include <utility>
-#include "widget/list.h"
+#include <libtcod.hpp>
+#include <utils/colored_string.h>
 
 namespace amarlon { namespace gui {
 
+class AList;
+class Widget;
 class Panel;
-class List;
 class Bar;
 class Label;
 
-typedef std::shared_ptr<Panel> PanelPtr;
-typedef std::shared_ptr<List> ListPtr;
-typedef std::shared_ptr<Bar> BarPtr;
-typedef std::shared_ptr<Label> LabelPtr;
+typedef std::shared_ptr<AList>  AListPtr;
+typedef std::shared_ptr<Panel>  PanelPtr;
+typedef std::shared_ptr<Bar>    BarPtr;
+typedef std::shared_ptr<Label>  LabelPtr;
+typedef std::shared_ptr<Widget> WidgetPtr;
 
 class Gui
 {
@@ -43,18 +45,18 @@ public:
 
   void render();
 
+  void setHpBar(float value, float maxValue);
   void message(std::string msg, TCODColor color = TCODColor::white);
+  void setViewList(const std::vector<ColoredString>& items);
+  void setPlayerName(std::string name);
   void setStatusMessage(const std::string& status);
   void clearStatusMessage();
-  void setViewList(const std::vector<ColoredString>& items);
-  void setHpBar(float value, float maxValue);
-  void setPlayerName(std::string name);
 
 private:
   TCODColor _frameColor;
 
-  ListPtr _log;
-  ListPtr _viewList;
+  AListPtr _log;
+  AListPtr _viewList;
   BarPtr _hpBar;
   LabelPtr _playerName;
 

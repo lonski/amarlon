@@ -80,7 +80,12 @@ set(HEADER_FILES
     world/map_id.h
     world/tile_type.h
     command_executor.h
-    engine.h)
+    engine.h
+
+    gui/widgets/awidget.h
+    gui/widgets/alabel.h
+    gui/widgets/alist.h
+)
 
 set(SOURCE_FILES
     Actor/ActorFeatures/Ai/Ai.cpp
@@ -145,7 +150,12 @@ set(SOURCE_FILES
     world/map.cpp
     command_executor.cpp
     engine.cpp
-    main.cpp)
+    main.cpp
+
+    gui/widgets/awidget.cpp
+    gui/widgets/alabel.cpp
+    gui/widgets/alist.cpp
+)
 
 add_executable(amarlon ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(amarlon ${TCOD_LIBRARIES})

@@ -1,8 +1,8 @@
 #include "gui.h"
 #include <algorithm>
 #include <iostream>
+#include <widgets/alist.h>
 #include "widget/panel.h"
-#include "widget/list.h"
 #include "widget/bar.h"
 #include "widget/label.h"
 #include <engine.h>
@@ -47,33 +47,32 @@ void Gui::setupRightPanel()
 
 void Gui::setupLogPanel()
 {
-  _log.reset(new List);
+  _log.reset(new AList);
   _log->setPosition(2,1);
-  _log->setMaxSize(LogSize);
 
   PanelPtr logPanel( new Panel(logConWidth, logConHeight) );
   logPanel->setPosition(0, Engine::screenHeight - logConHeight);
-  logPanel->addWidget(_log);
+  //logPanel->addWidget(_log);
 
   _widgets.push_back( logPanel );
 }
 
 void Gui::setupViewPanel()
 {
-  _viewList.reset( new List );
+  _viewList.reset( new AList );
   _viewList->setPosition(2, 1);
-  _viewList->setMaxSize(LogSize);
 
   PanelPtr viewPanel( new Panel(viewConWidth, viewConHeight) );
   viewPanel->setPosition(logConWidth, Engine::screenHeight - viewConHeight);
-  viewPanel->addWidget(_viewList);
+  //viewPanel->addWidget(_viewList);
 
   _widgets.push_back( viewPanel );
 }
 
 void Gui::message(std::string msg, TCODColor color)
 {
-  _log->push( ColoredString(msg, color) );
+  if ( _log->size() == LogSize ) _log->popFront();
+  _log->pushBack( ColoredString(msg, color) );
 }
 
 void Gui::setStatusMessage(const std::string &status)
@@ -98,14 +97,15 @@ void Gui::render()
 void Gui::setViewList(const std::vector<ColoredString> &items)
 {
   _viewList->clear();
-  for(auto e = items.begin(); e != items.end(); ++e)
+  for(auto e : items)
   {
-    if ( _viewList->size() == _viewList->getMaxSize() -1 )
+    if ( _viewList->size() == LogSize - 1 )
     {
-      _viewList->push( ColoredString("<more>", e->color) );
+      _viewList->pushBack( ColoredString("<more>", e.color) );
       break;
     }
-    _viewList->push(*e);
+
+    _viewList->pushBack(e);
   }
 }
 
