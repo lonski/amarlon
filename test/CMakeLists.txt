@@ -82,76 +82,16 @@ set(HEADER_FILES
 )
 
 set(SOURCE_FILES
+    main.cpp
     ActorTest.cpp
     CommandExecutorTest.cpp
-    main.cpp
     UtilsTest.cpp
     DataGateway/MapGatewayTest.cpp
     World/MapTest.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/Actor.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ActorFeature.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Container.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Fighter.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Pickable.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/Ai.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/MonsterAi.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/Openable.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableContainer.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableDoor.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/Effect.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/LockEffect.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/SelfHealEffect.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/tile_parser.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDB.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.cpp
-    ${PROJECT_SOURCE_DIR}/src/world/map.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/item_picker.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/messenger.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/utils.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_neighbour_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_range_selector.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/gui.cpp
-    ${PROJECT_SOURCE_DIR}/src/command_executor.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_help.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_close.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_fullscreen.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_inventory.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_move.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_open.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_pick.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_use.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/command.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_put_into.cpp
-    ${PROJECT_SOURCE_DIR}/src/commands/cmd_look.cpp
-    ${PROJECT_SOURCE_DIR}/src/engine.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/list.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/panel.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/widget.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/label.cpp
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/wearer.cpp
     WearerTest.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/label_menu_item.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/slot_menu_item.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/text_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/items_menu.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.cpp
-    ${PROJECT_SOURCE_DIR}/src/utils/configuration.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/map_parser.cpp
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/serializers/map_serializer.cpp
 )
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(ut_amarlon ${TCOD_LIBRARIES} ${GTEST_LIBRARIES})
+target_link_libraries(ut_amarlon amarlon_core ${TCOD_LIBRARIES} ${GTEST_LIBRARIES})
+
 add_custom_command(TARGET ut_amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ut_amarlon>)
