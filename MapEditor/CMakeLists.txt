@@ -163,7 +163,6 @@ set(MAP_EDITOR_QT
 
 qt4_wrap_ui(MAP_EDITOR_UI_HDR ${MAP_EDITOR_UI})
 qt4_wrap_cpp(MAP_EDITOR_MOC_SRC ${MAP_EDITOR_QT})
-#qt4_add_resources(OPENCS_RES_SRC ${OPENCS_RES})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
