@@ -1,4 +1,4 @@
-#include "OpenableContainer.h"
+#include "openable_container.h"
 #include <gui/window/pick_up_window.h>
 #include <Actor/Actor.h>
 #include <engine.h>

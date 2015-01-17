@@ -1,4 +1,4 @@
-#include "Pickable.h"
+#include "pickable.h"
 #include "Actor/Actor.h"
 #include "Actor/Effects/Effect.h"
 #include "gui/gui.h"

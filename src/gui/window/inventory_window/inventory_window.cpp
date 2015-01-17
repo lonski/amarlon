@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <Actor/Actor.h>
-#include <Actor/ActorFeatures/Wearer/item_slot_type.h>
+#include <Actor/ActorFeatures/wearer/item_slot_type.h>
 #include <gui/widget/label.h>
 #include <gui/widget/list.h>
 #include <gui/widget/menu/label_menu_item.h>

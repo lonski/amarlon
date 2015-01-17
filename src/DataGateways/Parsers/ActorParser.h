@@ -4,7 +4,7 @@
 #include <map>
 #include "../ActorDescriptions.h"
 #include <Parsers/parser.h>
-#include <ActorFeature.h>
+#include <actor_feature.h>
 
 namespace amarlon {
 

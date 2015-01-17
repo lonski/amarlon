@@ -1,7 +1,7 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 
-#include "ActorFeature.h"
+#include "actor_feature.h"
 #include "DataGateways/ActorDescriptions.h"
 
 namespace amarlon {

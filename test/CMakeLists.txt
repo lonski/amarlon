@@ -4,17 +4,17 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Actor.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorType.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ActorFeature.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Container.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Fighter.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Pickable.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/Ai.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/AiType.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/MonsterAi.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/Openable.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableContainer.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableDoor.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableType.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/actor_feature.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/container.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/fighter.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/pickable.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/ai.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/ai_type.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/monster_ai.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_container.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_door.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_type.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/Effect.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/EffectType.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/LockEffect.h
@@ -61,8 +61,8 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/widget/panel.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/widget.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/label.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/item_slot_type.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/wearer.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/wearer/item_slot_type.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/wearer/wearer.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/label_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu_item.h

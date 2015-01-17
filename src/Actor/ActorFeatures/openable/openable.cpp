@@ -1,6 +1,6 @@
-#include "Openable.h"
-#include "OpenableDoor.h"
-#include "OpenableContainer.h"
+#include "openable.h"
+#include "openable_door.h"
+#include "openable_container.h"
 #include <amarlon_except.h>
 
 namespace amarlon {

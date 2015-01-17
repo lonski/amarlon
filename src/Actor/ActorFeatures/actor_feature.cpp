@@ -1,9 +1,9 @@
-#include "ActorFeature.h"
-#include <Ai.h>
-#include <Openable.h>
+#include "actor_feature.h"
+#include <ai.h>
+#include <openable.h>
 #include <wearer.h>
-#include <Fighter.h>
-#include <Pickable.h>
+#include <fighter.h>
+#include <pickable.h>
 
 namespace amarlon {
 

@@ -1,8 +1,8 @@
 #ifndef AI_H
 #define AI_H
 
-#include "ActorFeature.h"
-#include "AiType.h"
+#include "actor_feature.h"
+#include "ai_type.h"
 #include "DataGateways/ActorDescriptions.h"
 
 namespace amarlon {

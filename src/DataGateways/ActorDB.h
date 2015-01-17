@@ -8,7 +8,7 @@
 #include <libtcod.hpp>
 #include <xml/rapidxml.hpp>
 #include <ActorDescriptions.h>
-#include <ActorFeature.h>
+#include <actor_feature.h>
 #include <Parsers/ActorParser.h>
 
 namespace amarlon {

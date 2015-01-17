@@ -1,18 +1,18 @@
 set(HEADER_FILES
-    MapEditor.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/Ai.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/AiType.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Ai/MonsterAi.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/Openable.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableContainer.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableDoor.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Openable/OpenableType.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/item_slot_type.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Wearer/wearer.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ActorFeature.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Container.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Fighter.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/Pickable.h
+    map_editor.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/ai.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/ai_type.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/monster_ai.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_container.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_door.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_type.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/wearer/item_slot_type.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/wearer/wearer.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/actor_feature.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/container.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/fighter.h
+    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/pickable.h
     ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/pickable_category.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/Effect.h
     ${PROJECT_SOURCE_DIR}/src/Actor/Effects/EffectType.h
@@ -84,18 +84,18 @@ set(HEADER_FILES
 
 set(SOURCE_FILES
     main.cpp
-    MapEditor.cpp
+    map_editor.cpp
     )
 
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 
 set(MAP_EDITOR_UI
-    ${PROJECT_SOURCE_DIR}/MapEditor/MapEditor.ui
+    ${PROJECT_SOURCE_DIR}/map_editor/map_editor.ui
     )
 
 set(MAP_EDITOR_QT
-    ${PROJECT_SOURCE_DIR}/MapEditor/MapEditor.h
+    ${PROJECT_SOURCE_DIR}/map_editor/map_editor.h
     )
 
 qt4_wrap_ui(MAP_EDITOR_UI_HDR ${MAP_EDITOR_UI})
@@ -103,7 +103,7 @@ qt4_wrap_cpp(MAP_EDITOR_MOC_SRC ${MAP_EDITOR_QT})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(map_editor ${SOURCE_FILES} ${HEADER_FILES} ${MAP_EDITOR_UI_HDR} ${MAP_EDITOR_MOC_SRC})
-target_link_libraries(map_editor amarlon_core ${TCOD_LIBRARIES} ${QT_LIBRARIES})
+add_executable(mapeditor ${SOURCE_FILES} ${HEADER_FILES} ${MAP_EDITOR_UI_HDR} ${MAP_EDITOR_MOC_SRC})
+target_link_libraries(mapeditor amarlon_core ${TCOD_LIBRARIES} ${QT_LIBRARIES})
 
-add_custom_command(TARGET map_editor POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:map_editor>)
+add_custom_command(TARGET mapeditor POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:mapeditor>)

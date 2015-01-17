@@ -1,4 +1,4 @@
-#include "MapEditor.h"
+#include "map_editor.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

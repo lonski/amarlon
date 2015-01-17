@@ -2,8 +2,8 @@
 
 #define private public
 #include "Actor/Actor.h"
-#include "Actor/ActorFeatures/Container.h"
-#include "Actor/ActorFeatures/Wearer/wearer.h"
+#include "Actor/ActorFeatures/container.h"
+#include "Actor/ActorFeatures/wearer/wearer.h"
 #undef private
 
 namespace amarlon {

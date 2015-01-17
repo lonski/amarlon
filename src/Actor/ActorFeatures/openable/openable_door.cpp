@@ -1,4 +1,4 @@
-#include "OpenableDoor.h"
+#include "openable_door.h"
 #include "Actor/Actor.h"
 #include "gui/gui.h"
 #include <gui/message_box.h>

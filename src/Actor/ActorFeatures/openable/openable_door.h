@@ -1,7 +1,7 @@
 #ifndef OPENABLEDOOR_H
 #define OPENABLEDOOR_H
 
-#include "Openable.h"
+#include "openable.h"
 
 namespace amarlon {
 

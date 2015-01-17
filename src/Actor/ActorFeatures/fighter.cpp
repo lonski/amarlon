@@ -1,4 +1,4 @@
-#include "Fighter.h"
+#include "fighter.h"
 #include "Actor/Actor.h"
 #include <iostream>
 #include <iomanip>

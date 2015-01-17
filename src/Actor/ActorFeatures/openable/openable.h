@@ -1,8 +1,8 @@
 #ifndef OPENABLE_H
 #define OPENABLE_H
 
-#include "../ActorFeature.h"
-#include "OpenableType.h"
+#include "actor_feature.h"
+#include "openable_type.h"
 #include "DataGateways/ActorDescriptions.h"
 
 namespace amarlon {

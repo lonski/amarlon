@@ -1,6 +1,6 @@
-#include "Ai.h"
+#include "ai.h"
 #include "Actor/Actor.h"
-#include "MonsterAi.h"
+#include "monster_ai.h"
 #include <amarlon_except.h>
 #include <iostream>
 

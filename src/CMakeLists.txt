@@ -1,17 +1,17 @@
 set(HEADER_FILES
-    Actor/ActorFeatures/Ai/Ai.h
-    Actor/ActorFeatures/Ai/AiType.h
-    Actor/ActorFeatures/Ai/MonsterAi.h
-    Actor/ActorFeatures/Openable/Openable.h
-    Actor/ActorFeatures/Openable/OpenableContainer.h
-    Actor/ActorFeatures/Openable/OpenableDoor.h
-    Actor/ActorFeatures/Openable/OpenableType.h
-    Actor/ActorFeatures/Wearer/item_slot_type.h
-    Actor/ActorFeatures/Wearer/wearer.h
-    Actor/ActorFeatures/ActorFeature.h
-    Actor/ActorFeatures/Container.h
-    Actor/ActorFeatures/Fighter.h
-    Actor/ActorFeatures/Pickable.h
+    Actor/ActorFeatures/ai/ai.h
+    Actor/ActorFeatures/ai/ai_type.h
+    Actor/ActorFeatures/ai/monster_ai.h
+    Actor/ActorFeatures/openable/openable.h
+    Actor/ActorFeatures/openable/openable_container.h
+    Actor/ActorFeatures/openable/openable_door.h
+    Actor/ActorFeatures/openable/openable_type.h
+    Actor/ActorFeatures/wearer/item_slot_type.h
+    Actor/ActorFeatures/wearer/wearer.h
+    Actor/ActorFeatures/actor_feature.h
+    Actor/ActorFeatures/container.h
+    Actor/ActorFeatures/fighter.h
+    Actor/ActorFeatures/pickable.h
     Actor/ActorFeatures/pickable_category.h
     Actor/Effects/Effect.h
     Actor/Effects/EffectType.h
@@ -83,16 +83,16 @@ set(HEADER_FILES
     engine.h)
 
 set(SOURCE_FILES
-    Actor/ActorFeatures/Ai/Ai.cpp
-    Actor/ActorFeatures/Ai/MonsterAi.cpp
-    Actor/ActorFeatures/Openable/Openable.cpp
-    Actor/ActorFeatures/Openable/OpenableContainer.cpp
-    Actor/ActorFeatures/Openable/OpenableDoor.cpp
-    Actor/ActorFeatures/Wearer/wearer.cpp
-    Actor/ActorFeatures/ActorFeature.cpp
-    Actor/ActorFeatures/Container.cpp
-    Actor/ActorFeatures/Fighter.cpp
-    Actor/ActorFeatures/Pickable.cpp
+    Actor/ActorFeatures/ai/ai.cpp
+    Actor/ActorFeatures/ai/monster_ai.cpp
+    Actor/ActorFeatures/openable/openable.cpp
+    Actor/ActorFeatures/openable/openable_container.cpp
+    Actor/ActorFeatures/openable/openable_door.cpp
+    Actor/ActorFeatures/wearer/wearer.cpp
+    Actor/ActorFeatures/actor_feature.cpp
+    Actor/ActorFeatures/container.cpp
+    Actor/ActorFeatures/fighter.cpp
+    Actor/ActorFeatures/pickable.cpp
     Actor/Effects/Effect.cpp
     Actor/Effects/LockEffect.cpp
     Actor/Effects/SelfHealEffect.cpp

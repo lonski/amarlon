@@ -1,7 +1,7 @@
 #ifndef MONSTERAI_H
 #define MONSTERAI_H
 
-#include "Ai.h"
+#include "ai.h"
 
 namespace amarlon {
 

@@ -1,5 +1,5 @@
-#include "MapEditor.h"
-#include "ui_MapEditor.h"
+#include "map_editor.h"
+#include "ui_map_editor.h"
 #include "QFile"
 #include "QFileDialog"
 #include <iostream>

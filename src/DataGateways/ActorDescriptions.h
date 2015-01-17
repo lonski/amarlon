@@ -7,10 +7,10 @@
 #include <vector>
 #include <libtcod.hpp>
 #include "Actor/ActorType.h"
-#include "Actor/ActorFeatures/Ai/AiType.h"
-#include "Actor/ActorFeatures/Openable/OpenableType.h"
+#include "Actor/ActorFeatures/ai/ai_type.h"
+#include "Actor/ActorFeatures/openable/openable_type.h"
 #include "Actor/Effects/EffectType.h"
-#include "Actor/ActorFeatures/Wearer/item_slot_type.h"
+#include "Actor/ActorFeatures/wearer/item_slot_type.h"
 #include <Actor/ActorFeatures/pickable_category.h>
 
 namespace amarlon {

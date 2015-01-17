@@ -5,7 +5,7 @@
 #include <vector>
 #include <list>
 #include <string>
-#include "ActorFeature.h"
+#include "actor_feature.h"
 #include "DataGateways/ActorDescriptions.h"
 #include <functional>
 

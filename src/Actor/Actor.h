@@ -6,13 +6,13 @@
 #include <libtcod.hpp>
 #include <ActorType.h>
 #include <DataGateways/ActorDB.h>
-#include <ActorFeatures/ActorFeature.h>
-#include <ActorFeatures/Container.h>
-#include <ActorFeatures/Pickable.h>
-#include <ActorFeatures/Fighter.h>
-#include <ActorFeatures/Ai/Ai.h>
-#include <ActorFeatures/Openable/Openable.h>
-#include <ActorFeatures/Wearer/wearer.h>
+#include <ActorFeatures/actor_feature.h>
+#include <ActorFeatures/container.h>
+#include <ActorFeatures/pickable.h>
+#include <ActorFeatures/fighter.h>
+#include <ActorFeatures/ai/ai.h>
+#include <ActorFeatures/openable/openable.h>
+#include <ActorFeatures/wearer/wearer.h>
 #include <amarlon_except.h>
 
 namespace amarlon {
