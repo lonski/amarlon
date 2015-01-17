@@ -20,3 +20,4 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(MapEditor)
