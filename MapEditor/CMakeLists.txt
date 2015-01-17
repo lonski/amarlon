@@ -157,7 +157,6 @@ set(MAP_EDITOR_UI
     )
 
 set(MAP_EDITOR_QT
-    ${PROJECT_SOURCE_DIR}/MapEditor/MapEditor.cpp
     ${PROJECT_SOURCE_DIR}/MapEditor/MapEditor.h
     )
 
