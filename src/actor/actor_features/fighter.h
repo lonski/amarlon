@@ -27,7 +27,13 @@ public:
   int heal(int hp);
 
   float getHp() const;
+  void setHp(float);
+
   float getMaxHp() const;
+  void setMaxHp(float);
+
+  float getPower() const;
+  void setPower(float);
 
 private:
   float _power;

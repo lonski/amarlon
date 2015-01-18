@@ -55,7 +55,7 @@ ActorFeature *OpenableContainer::clone()
 {
   OpenableContainer* cloned = new OpenableContainer;
   cloned->setLockId( getLockId() );
-  cloned->setLocked( isLocked() );
+  isLocked() ? cloned->lock() : cloned->unlock();
 
   return cloned;
 }

@@ -20,7 +20,7 @@ public:
   static Openable* create(OpenableType type);
   static Openable* create(Description* dsc);
 
-  virtual ActorFeature::Type getType() { return featureType; }
+  virtual ActorFeature::Type getType();
 
   virtual bool open(Actor* executor) = 0;
   virtual bool close(Actor* executor) = 0;
@@ -28,11 +28,9 @@ public:
   virtual bool lock();
   virtual bool unlock();
   bool isLocked() const;
-  void setLocked(bool locked);
 
   int getLockId() const;
   void setLockId(int getLockId);
-
 
 protected:
   friend class ActorDB;

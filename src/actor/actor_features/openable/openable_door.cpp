@@ -47,7 +47,7 @@ ActorFeature *OpenableDoor::clone()
 {
   OpenableDoor* cloned = new OpenableDoor;
   cloned->setLockId( getLockId() );
-  cloned->setLocked( isLocked() );
+  isLocked() ? cloned->lock() : cloned->unlock();
 
   return cloned;
 }

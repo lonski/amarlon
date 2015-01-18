@@ -1,9 +1,7 @@
 #include <gtest/gtest.h>
-#define private public
 #include "actor/actor.h"
 #include "world/map.h"
 #include "actor/effects/self_heal_effect.h"
-#undef private
 
 namespace amarlon {
 
@@ -119,7 +117,7 @@ TEST_F(ActorTest, actorEqual_different_pickable)
   ASSERT_TRUE( a1->isEqual(a2.get()) );
 
   SelfHealEffect* e = dynamic_cast<SelfHealEffect*>(a1->getFeature<Pickable>()->getEffect());
-  e->_healAmount = 666;
+  e->setHealAmount(666);
 
   ASSERT_FALSE( a1->isEqual(a2.get()) );
 }
@@ -131,7 +129,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   ASSERT_TRUE( a1->isEqual(a2.get()) );
 
-  a1->getFeature<Fighter>()->_power = 666;
+  a1->getFeature<Fighter>()->setPower(666);
 
   ASSERT_FALSE( a1->isEqual(a2.get()) );
 }

@@ -44,7 +44,10 @@ int ItemPicker::pick()
   else //cant pick up!
   {
     //rollback spilting
-    if ( stackable && pickableTmp != _toPick ) pickableTmp->getFeature<Pickable>()->incAmount( amount );
+    if ( stackable && pickableTmp != _toPick )
+    {
+      pickableTmp->getFeature<Pickable>()->setAmount( pickableTmp->getFeature<Pickable>()->getAmount() + amount );
+    }
     amount = 0;
 
     throw inventory_full("", itemName);

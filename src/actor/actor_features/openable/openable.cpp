@@ -47,22 +47,28 @@ Openable *Openable::create(Description* dsc)
   return op;
 }
 
+ActorFeature::Type Openable::getType()
+{
+  return featureType;
+}
+
 bool Openable::lock()
 {
   _locked = true;
-  return true;
+  return _locked;
 }
 
 bool Openable::unlock()
 {
   _locked = false;
-  return true;
+  return !_locked;
 }
 
 bool Openable::isLocked() const
 {
   return _locked;
 }
+
 int Openable::getLockId() const
 {
   return _lockId;
@@ -71,11 +77,6 @@ int Openable::getLockId() const
 void Openable::setLockId(int lockId)
 {
   _lockId = lockId;
-}
-
-void Openable::setLocked(bool locked)
-{
-  _locked = locked;
 }
 
 }

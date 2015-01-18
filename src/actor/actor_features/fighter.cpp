@@ -105,9 +105,29 @@ float Fighter::getHp() const
   return _hp;
 }
 
+void Fighter::setHp(float hp)
+{
+  _hp = hp;
+}
+
 float Fighter::getMaxHp() const
 {
   return _maxHp;
+}
+
+void Fighter::setMaxHp(float maxHp)
+{
+  _maxHp = maxHp;
+}
+
+float Fighter::getPower() const
+{
+  return _power;
+}
+
+void Fighter::setPower(float power)
+{
+  _power = power;
 }
 
 }

@@ -152,14 +152,4 @@ void Pickable::setAmount(int amount)
   _amount = amount;
 }
 
-void Pickable::incAmount(int inc)
-{
-  _amount += inc;
-}
-
-void Pickable::decAmount(int dec)
-{
-  _amount -= dec;
-}
-
 }
