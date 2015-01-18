@@ -1,7 +1,7 @@
 #include "messenger.h"
 #include "gui/gui.h"
-#include "Actor/Actor.h"
-#include <utils/utils.h>
+#include "actor/actor.h"
+#include "utils/utils.h"
 
 namespace amarlon {
 

@@ -1,9 +1,9 @@
 #include "item_picker.h"
-#include "Actor/Actor.h"
-#include <gui/window/amount_window.h>
-#include <utils/amarlon_except.h>
-#include <gui/message_box.h>
-#include <Actor/ActorFeatures/Container.h>
+#include "actor/actor.h"
+#include "actor/actor_features/container.h"
+#include "gui/window/amount_window.h"
+#include "gui/message_box.h"
+#include "utils/amarlon_except.h"
 
 namespace amarlon {
 

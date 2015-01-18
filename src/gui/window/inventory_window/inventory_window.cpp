@@ -1,17 +1,17 @@
 #include "inventory_window.h"
 #include <iostream>
 #include <algorithm>
-#include <Actor/Actor.h>
-#include <Actor/ActorFeatures/Wearer/item_slot_type.h>
-#include <gui/widget/label.h>
-#include <gui/widget/list.h>
-#include <gui/widget/menu/label_menu_item.h>
-#include <gui/widget/menu/slot_menu_item.h>
-#include <gui/message_box.h>
-#include <gui/widget/menu/items_menu.h>
-#include <engine.h>
-#include <world/map.h>
-#include <gui/window/amount_window.h>
+#include "actor/actor.h"
+#include "actor/actor_features/wearer/item_slot_type.h"
+#include "gui/widget/label.h"
+#include "gui/widget/list.h"
+#include "gui/widget/menu/label_menu_item.h"
+#include "gui/widget/menu/slot_menu_item.h"
+#include "gui/message_box.h"
+#include "gui/widget/menu/items_menu.h"
+#include "gui/window/amount_window.h"
+#include "engine.h"
+#include "world/map.h"
 
 namespace amarlon { namespace gui {
 

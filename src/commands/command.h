@@ -1,9 +1,9 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include <libtcod.hpp>
 #include <iostream>
-#include "Actor/Actor.h"
+#include <libtcod.hpp>
+#include "actor/actor.h"
 
 namespace amarlon {
 

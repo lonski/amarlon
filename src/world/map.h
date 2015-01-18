@@ -7,10 +7,10 @@
 #include <list>
 #include <stdexcept>
 #include <libtcod.hpp>
-#include <world/map_id.h>
-#include "DataGateways/TileDB.h"
-#include "DataGateways/MapGateway.h"
-#include <Actor/ActorFeatures/Container.h>
+#include "world/map_id.h"
+#include "data_gateways/tile_db.h"
+#include "data_gateways/map_gateway.h"
+#include "actor/actor_features/container.h"
 
 namespace amarlon {
 

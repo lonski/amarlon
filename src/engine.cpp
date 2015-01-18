@@ -1,12 +1,12 @@
 #include <engine.h>
-#include <world/map.h>
-#include "Actor/Actor.h"
-#include "gui/gui.h"
 #include <algorithm>
-#include <utils/messenger.h>
+#include "world/map.h"
+#include "actor/actor.h"
+#include "gui/gui.h"
 #include "gui/widget/panel.h"
 #include "gui/widget/bar.h"
-#include <utils/configuration.h>
+#include "utils/configuration.h"
+#include "utils/messenger.h"
 
 namespace amarlon {
 

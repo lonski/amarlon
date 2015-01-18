@@ -1,11 +1,11 @@
 #include "cmd_pick.h"
-#include <engine.h>
-#include <world/map.h>
-#include <Actor/Actor.h>
-#include <gui/window/pick_up_window.h>
 #include <functional>
-#include <utils/messenger.h>
-#include <gui/message_box.h>
+#include "engine.h"
+#include "world/map.h"
+#include "actor/actor.h"
+#include "gui/window/pick_up_window.h"
+#include "gui/message_box.h"
+#include "utils/messenger.h"
 
 namespace amarlon {
 
