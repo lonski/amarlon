@@ -65,4 +65,9 @@ bool SelfHealEffect::isEqual(Effect *rhs)
   return equal;
 }
 
+void SelfHealEffect::setHealAmount(int amount)
+{
+  _healAmount = amount;
+}
+
 }

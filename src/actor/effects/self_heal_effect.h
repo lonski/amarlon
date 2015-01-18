@@ -17,10 +17,10 @@ public:
   virtual void load(const EffectDescription& dsc);
   virtual EffectDescription save();
 
+  void setHealAmount(int amount);
+
 private:
   int _healAmount;
-
-
 };
 
 }

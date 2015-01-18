@@ -33,8 +33,7 @@ public:
 
   int getAmount() const;
   void setAmount(int getAmount);
-  void incAmount(int inc);
-  void decAmount(int dec);
+
   bool isStackable() const;
   Effect *getEffect() const;
   void setEffect(Effect *getEffect);
