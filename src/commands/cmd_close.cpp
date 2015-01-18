@@ -1,11 +1,11 @@
 #include "cmd_close.h"
-#include "Actor/Actor.h"
-#include <world/map.h>
-#include <engine.h>
-#include <utils/target_selector/single_neighbour_selector.h>
 #include <algorithm>
-#include <gui/message_box.h>
-#include <utils/utils.h>
+#include "actor/actor.h"
+#include "world/map.h"
+#include "engine.h"
+#include "utils/utils.h"
+#include "utils/target_selector/single_neighbour_selector.h"
+#include "gui/message_box.h"
 
 namespace amarlon {
 

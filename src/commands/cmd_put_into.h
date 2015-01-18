@@ -1,8 +1,7 @@
 #ifndef CMD_PUT_INTO_H
 #define CMD_PUT_INTO_H
 
-#include <commands/command.h>
-#include <utils/direction_selector.h>
+#include "commands/command.h"
 
 namespace amarlon {
 

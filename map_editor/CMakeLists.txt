@@ -1,25 +1,25 @@
 set(HEADER_FILES
     map_editor.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/ai.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/ai_type.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/ai/monster_ai.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_container.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_door.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/openable/openable_type.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/wearer/item_slot_type.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/wearer/wearer.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/actor_feature.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/container.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/fighter.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/pickable.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorFeatures/pickable_category.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/Effect.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/EffectType.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/LockEffect.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/Effects/SelfHealEffect.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/Actor.h
-    ${PROJECT_SOURCE_DIR}/src/Actor/ActorType.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai_type.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/monster_ai.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_container.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_door.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_type.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/container.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/fighter.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/pickable.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/pickable_category.h
+    ${PROJECT_SOURCE_DIR}/src/actor/effects/effect.h
+    ${PROJECT_SOURCE_DIR}/src/actor/effects/effect_type.h
+    ${PROJECT_SOURCE_DIR}/src/actor/effects/lock_effect.h
+    ${PROJECT_SOURCE_DIR}/src/actor/effects/self_heal_effect.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_type.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_put_into.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_close.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_fullscreen.h
@@ -31,16 +31,16 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_use.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_look.h
     ${PROJECT_SOURCE_DIR}/src/commands/command.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/ActorParser.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/parser.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/map_parser.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/Parsers/tile_parser.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/serializers/serializer.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/serializers/map_serializer.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDB.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/ActorDescriptions.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/MapGateway.h
-    ${PROJECT_SOURCE_DIR}/src/DataGateways/TileDB.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/map_parser.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/tile_parser.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/serializer.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/map_serializer.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_db.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_descriptions.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/map_gateway.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/items_menu.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/label_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.h

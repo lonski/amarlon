@@ -1,8 +1,8 @@
 #include "map.h"
-#include "Actor/Actor.h"
 #include <iostream>
 #include <algorithm>
-#include <utils/amarlon_except.h>
+#include "actor/actor.h"
+#include "utils/amarlon_except.h"
 
 namespace amarlon {
 

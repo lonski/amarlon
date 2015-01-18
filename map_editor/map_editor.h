@@ -2,10 +2,10 @@
 #define MAPEDITOR_H
 
 #include <QMainWindow>
-#include "Actor/ActorType.h"
-#include "DataGateways/MapGateway.h"
 #include <QListWidgetItem>
 #include <QKeyEvent>
+#include "actor/actor_type.h"
+#include "data_gateways/map_gateway.h"
 
 namespace Ui {
 class MapEditor;

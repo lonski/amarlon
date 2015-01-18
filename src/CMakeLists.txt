@@ -1,24 +1,24 @@
 set(HEADER_FILES
-    Actor/ActorFeatures/ai/ai.h
-    Actor/ActorFeatures/ai/ai_type.h
-    Actor/ActorFeatures/ai/monster_ai.h
-    Actor/ActorFeatures/openable/openable.h
-    Actor/ActorFeatures/openable/openable_container.h
-    Actor/ActorFeatures/openable/openable_door.h
-    Actor/ActorFeatures/openable/openable_type.h
-    Actor/ActorFeatures/wearer/item_slot_type.h
-    Actor/ActorFeatures/wearer/wearer.h
-    Actor/ActorFeatures/actor_feature.h
-    Actor/ActorFeatures/container.h
-    Actor/ActorFeatures/fighter.h
-    Actor/ActorFeatures/pickable.h
-    Actor/ActorFeatures/pickable_category.h
-    Actor/Effects/Effect.h
-    Actor/Effects/EffectType.h
-    Actor/Effects/LockEffect.h
-    Actor/Effects/SelfHealEffect.h
-    Actor/Actor.h
-    Actor/ActorType.h
+    actor/actor_features/ai/ai.h
+    actor/actor_features/ai/ai_type.h
+    actor/actor_features/ai/monster_ai.h
+    actor/actor_features/openable/openable.h
+    actor/actor_features/openable/openable_container.h
+    actor/actor_features/openable/openable_door.h
+    actor/actor_features/openable/openable_type.h
+    actor/actor_features/wearer/item_slot_type.h
+    actor/actor_features/wearer/wearer.h
+    actor/actor_features/actor_feature.h
+    actor/actor_features/container.h
+    actor/actor_features/fighter.h
+    actor/actor_features/pickable.h
+    actor/actor_features/pickable_category.h
+    actor/effects/effect.h
+    actor/effects/effect_type.h
+    actor/effects/lock_effect.h
+    actor/effects/self_heal_effect.h
+    actor/actor.h
+    actor/actor_type.h
     commands/cmd_help.h
     commands/cmd_close.h
     commands/cmd_fullscreen.h
@@ -30,18 +30,18 @@ set(HEADER_FILES
     commands/command.h
     commands/cmd_put_into.h
     commands/cmd_look.h
-    DataGateways/descriptions/tile_description.h
-    DataGateways/Parsers/parser.h
-    DataGateways/Parsers/tile_parser.h
-    DataGateways/Parsers/tile_parser.cpp
-    DataGateways/Parsers/ActorParser.h
-    DataGateways/Parsers/map_parser.h
-    DataGateways/serializers/serializer.h
-    DataGateways/serializers/map_serializer.h
-    DataGateways/ActorDB.h
-    DataGateways/ActorDescriptions.h
-    DataGateways/MapGateway.h
-    DataGateways/TileDB.h
+    data_gateways/descriptions/tile_description.h
+    data_gateways/parsers/parser.h
+    data_gateways/parsers/tile_parser.h
+    data_gateways/parsers/tile_parser.cpp
+    data_gateways/parsers/actor_parser.h
+    data_gateways/parsers/map_parser.h
+    data_gateways/serializers/serializer.h
+    data_gateways/serializers/map_serializer.h
+    data_gateways/actor_db.h
+    data_gateways/actor_descriptions.h
+    data_gateways/map_gateway.h
+    data_gateways/tile_db.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h
@@ -83,20 +83,20 @@ set(HEADER_FILES
     engine.h)
 
 set(SOURCE_FILES
-    Actor/ActorFeatures/ai/ai.cpp
-    Actor/ActorFeatures/ai/monster_ai.cpp
-    Actor/ActorFeatures/openable/openable.cpp
-    Actor/ActorFeatures/openable/openable_container.cpp
-    Actor/ActorFeatures/openable/openable_door.cpp
-    Actor/ActorFeatures/wearer/wearer.cpp
-    Actor/ActorFeatures/actor_feature.cpp
-    Actor/ActorFeatures/container.cpp
-    Actor/ActorFeatures/fighter.cpp
-    Actor/ActorFeatures/pickable.cpp
-    Actor/Effects/Effect.cpp
-    Actor/Effects/LockEffect.cpp
-    Actor/Effects/SelfHealEffect.cpp
-    Actor/Actor.cpp
+    actor/actor_features/ai/ai.cpp
+    actor/actor_features/ai/monster_ai.cpp
+    actor/actor_features/openable/openable.cpp
+    actor/actor_features/openable/openable_container.cpp
+    actor/actor_features/openable/openable_door.cpp
+    actor/actor_features/wearer/wearer.cpp
+    actor/actor_features/actor_feature.cpp
+    actor/actor_features/container.cpp
+    actor/actor_features/fighter.cpp
+    actor/actor_features/pickable.cpp
+    actor/effects/effect.cpp
+    actor/effects/lock_effect.cpp
+    actor/effects/self_heal_effect.cpp
+    actor/actor.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp
     commands/cmd_fullscreen.cpp
@@ -108,12 +108,12 @@ set(SOURCE_FILES
     commands/command.cpp
     commands/cmd_put_into.cpp
     commands/cmd_look.cpp
-    DataGateways/Parsers/ActorParser.cpp
-    DataGateways/Parsers/map_parser.cpp
-    DataGateways/serializers/map_serializer.cpp
-    DataGateways/ActorDB.cpp
-    DataGateways/MapGateway.cpp
-    DataGateways/TileDB.cpp
+    data_gateways/parsers/actor_parser.cpp
+    data_gateways/parsers/map_parser.cpp
+    data_gateways/serializers/map_serializer.cpp
+    data_gateways/actor_db.cpp
+    data_gateways/map_gateway.cpp
+    data_gateways/tile_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp

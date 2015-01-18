@@ -1,7 +1,7 @@
 #include "single_neighbour_selector.h"
 #include <utils/direction_selector.h>
 #include <world/map.h>
-#include <Actor/Actor.h>
+#include "actor/actor.h"
 #include <engine.h>
 #include <gui/gui.h>
 

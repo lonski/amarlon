@@ -2,8 +2,8 @@
 #define BODY_MANAGER_H
 
 #include <memory>
-#include <gui/widget/menu/menu.h>
-#include <Actor/ActorFeatures/wearer/item_slot_type.h>
+#include "gui/widget/menu/menu.h"
+#include "wearer/item_slot_type.h"
 
 namespace amarlon {
   class Actor;

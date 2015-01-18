@@ -1,14 +1,14 @@
 #include "map_editor.h"
-#include "ui_map_editor.h"
-#include "QFile"
-#include "QFileDialog"
 #include <iostream>
 #include <fstream>
+#include <QFile>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QDebug>
+#include "ui_map_editor.h"
 #include "xml/rapidxml_print.hpp"
 #include "world/map.h"
-#include <QDebug>
-#include "Actor/Actor.h"
-#include <QInputDialog>
+#include "actor/actor.h"
 
 using namespace rapidxml;
 using namespace amarlon;

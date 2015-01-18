@@ -1,9 +1,9 @@
 #ifndef ITEMS_MENU_H
 #define ITEMS_MENU_H
 
-#include <gui/widget/menu/menu.h>
-#include <Actor/Actor.h>
 #include <algorithm>
+#include "gui/widget/menu/menu.h"
+#include "actor/actor.h"
 
 namespace amarlon { namespace gui {
 
