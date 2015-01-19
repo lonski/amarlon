@@ -1,7 +1,7 @@
 #ifndef CMD_PUT_INTO_H
 #define CMD_PUT_INTO_H
 
-#include "commands/command.h"
+#include "command.h"
 
 namespace amarlon {
 

@@ -1,4 +1,5 @@
 #include "command_executor.h"
+#include "commands/command.h"
 
 namespace amarlon {
 

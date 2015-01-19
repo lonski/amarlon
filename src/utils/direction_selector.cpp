@@ -1,6 +1,5 @@
 #include "direction_selector.h"
-#include <libtcod.hpp>
-#include <utils/utils.h>
+#include "utils/utils.h"
 
 namespace amarlon {
 

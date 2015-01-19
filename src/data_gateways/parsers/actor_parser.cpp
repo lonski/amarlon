@@ -1,7 +1,7 @@
 #include "actor_parser.h"
+#include <string>
 #include <utils/xml_utils.h>
 #include <utils/utils.h>
-#include <string>
 
 namespace amarlon {
 
@@ -87,8 +87,7 @@ void ActorParser::parseContainerContentNode(ContainerDescription* contDsc, xml_n
     contDsc->content.push_back( cActor );
 
     delete aDsc;
-    aDsc = nullptr;
-    }
+  }
 }
 
 ContainerDescription *ActorParser::parseContainerDsc()

@@ -1,7 +1,6 @@
 #ifndef CMDINVENTORY_H
 #define CMDINVENTORY_H
 
-#include <memory>
 #include "command.h"
 
 namespace amarlon {

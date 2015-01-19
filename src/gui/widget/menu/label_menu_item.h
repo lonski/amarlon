@@ -2,8 +2,8 @@
 #define SELECTABLE_LABEL_H
 
 #include <memory>
-#include <gui/widget/label.h>
-#include <gui/widget/menu/menu_item.h>
+#include "gui/widget/label.h"
+#include "gui/widget/menu/menu_item.h"
 
 namespace amarlon { namespace gui {
 

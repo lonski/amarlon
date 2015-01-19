@@ -4,13 +4,14 @@
 #include <memory>
 #include <vector>
 #include <libtcod.hpp>
-#include <commands/command.h>
+
 
 namespace amarlon {
 
 class Actor;
 class Map;
 class Engine;
+class Command;
 
 class CommandExecutor
 {

@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <libtcod.hpp>
 #include "widget.h"
-#include "libtcod.hpp"
 
 namespace amarlon { namespace gui {
 

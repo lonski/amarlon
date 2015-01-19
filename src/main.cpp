@@ -1,10 +1,10 @@
 #include <iostream>
-#include <engine.h>
-#include <world/map.h>
-#include "gui/gui.h"
-#include <gui/message_box.h>
 #include <stdexcept>
-#include <utils/configuration.h>
+#include "engine.h"
+#include "world/map.h"
+#include "gui/gui.h"
+#include "gui/message_box.h"
+#include "utils/configuration.h"
 
 using namespace std;
 

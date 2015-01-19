@@ -1,9 +1,9 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include "widget.h"
-#include "libtcod.hpp"
 #include <string>
+#include <libtcod.hpp>
+#include "widget.h"
 
 namespace amarlon { namespace gui {
 
