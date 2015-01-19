@@ -29,7 +29,13 @@ struct Description
 
 struct EffectDescription : Description
 {
-  EffectDescription() { memset(this, 0, sizeof *this); }
+  EffectDescription()
+    : type(EffectType::Null)
+    , lockId(0)
+    , uses(0)
+    , heal(0)
+  {
+  }
 
   EffectType type;
   int lockId;

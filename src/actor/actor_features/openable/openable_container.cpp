@@ -1,10 +1,10 @@
 #include "openable_container.h"
-#include <gui/window/pick_up_window.h>
 #include "actor/actor.h"
-#include <engine.h>
-#include <utils/messenger.h>
-#include <utils/utils.h>
-#include <gui/message_box.h>
+#include "engine.h"
+#include "utils/messenger.h"
+#include "utils/utils.h"
+#include "gui/window/pick_up_window.h"
+#include "gui/message_box.h"
 
 namespace amarlon {
 

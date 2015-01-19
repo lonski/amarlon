@@ -2,8 +2,8 @@
 #define BAR_H
 
 #include <string>
+#include <libtcod.hpp>
 #include "widget.h"
-#include "libtcod.hpp"
 
 namespace amarlon { namespace gui {
 

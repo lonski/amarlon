@@ -1,5 +1,4 @@
 #include "cmd_pick.h"
-#include <functional>
 #include "engine.h"
 #include "world/map.h"
 #include "actor/actor.h"

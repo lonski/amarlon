@@ -2,10 +2,10 @@
 #define ENGINE_H
 
 #include <libtcod.hpp>
-#include <utils/singleton.h>
-#include <utils/colored_string.h>
-#include <command_executor.h>
-#include <gui/window/window_manager.h>
+#include "utils/singleton.h"
+#include "utils/colored_string.h"
+#include "command_executor.h"
+#include "gui/window/window_manager.h"
 
 namespace amarlon {
 

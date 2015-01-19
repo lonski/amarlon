@@ -1,12 +1,12 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <libtcod.hpp>
 #include <memory>
 #include <string>
 #include <list>
 #include <vector>
 #include <utility>
+#include <libtcod.hpp>
 #include "widget/list.h"
 
 namespace amarlon { namespace gui {

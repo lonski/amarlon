@@ -1,7 +1,7 @@
 #ifndef CMD_LOOK_H
 #define CMD_LOOK_H
 
-#include <command.h>
+#include "command.h"
 
 namespace amarlon {
 

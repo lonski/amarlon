@@ -1,8 +1,8 @@
 #include "effect.h"
 #include "lock_effect.h"
 #include "self_heal_effect.h"
-#include <amarlon_except.h>
-#include <utils/target_selector/target_selector.h>
+#include "amarlon_except.h"
+#include "target_selector/target_selector.h"
 
 namespace amarlon {
 

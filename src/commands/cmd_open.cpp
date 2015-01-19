@@ -1,13 +1,13 @@
 #include "cmd_open.h"
-#include "cmd_pick.h"
 #include <iostream>
-#include <utils/utils.h>
-#include <utils/item_picker.h>
 #include <algorithm>
-#include <world/map.h>
 #include <engine.h>
-#include <utils/target_selector/single_neighbour_selector.h>
-#include <gui/message_box.h>
+#include "cmd_pick.h"
+#include "utils/utils.h"
+#include "utils/item_picker.h"
+#include "utils/target_selector/single_neighbour_selector.h"
+#include "world/map.h"
+#include "gui/message_box.h"
 
 namespace amarlon {
 

@@ -1,7 +1,7 @@
 #include "self_heal_effect.h"
 #include "actor/actor.h"
-#include "utils/messenger.h"
 #include "gui/gui.h"
+#include "utils/messenger.h"
 #include "utils/target_selector/executor_selector.h"
 
 namespace amarlon {

@@ -1,8 +1,9 @@
 #include "cmd_inventory.h"
 #include <iostream>
 #include <algorithm>
-#include <engine.h>
-#include <gui/window/inventory_window/inventory_window.h>
+#include <memory>
+#include "engine.h"
+#include "gui/window/inventory_window/inventory_window.h"
 
 namespace amarlon {
 
