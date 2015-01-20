@@ -23,7 +23,7 @@ void SingleRangeSelector::initValues()
     _y = Actor::Player->getY();
 }
 
-std::vector<Actor*> SingleRangeSelector::select(bool (*filterFun)(Actor*))
+std::vector<Actor*> SingleRangeSelector::select(std::function<bool (amarlon::Actor*)>* filterFun)
 {
     initValues();
 

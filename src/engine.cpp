@@ -119,12 +119,12 @@ gui::WindowManager& Engine::windowManager() const
 
 std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
 {
+  std::function<bool(amarlon::Actor*)> filterFun = [&](Actor* a) -> bool
+  {
+    return a != Actor::Player;
+  };
   std::vector<Actor*> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
-                                                            Actor::Player->getY(),
-                                                            [&](Actor* a) -> bool
-                                                            {
-                                                              return a != Actor::Player;
-                                                            });
+    Actor::Player->getY(), &filterFun);
 
   TCODColor itemViewColor = TCODColor::darkLime;
   std::vector< ColoredString > items;

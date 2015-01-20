@@ -7,7 +7,7 @@ ExecutorSelector::ExecutorSelector()
 {
 }
 
-std::vector<Actor *> ExecutorSelector::select(bool(*)(Actor *))
+std::vector<Actor *> ExecutorSelector::select(std::function<bool (amarlon::Actor*)>*)
 {
   std::vector<Actor*> targets;
   targets.push_back( Actor::Player );
