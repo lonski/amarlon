@@ -54,7 +54,7 @@ public:
   void addActor(Actor* actor);
   bool removeActor(Actor *toRemove);
   Actor* getFirstActor(int x, int y);
-  std::vector<Actor*> getActors(int x, int y, bool (*filterFun)(Actor *) = nullptr);
+  std::vector<Actor*> getActors(int x, int y, std::function<bool (amarlon::Actor*)>* filterFun = nullptr);
   std::vector<Actor*> getActors(std::function<bool(Actor*)>* filterFun);
   Container& getActorsContainer(u32 x, u32 y);
 

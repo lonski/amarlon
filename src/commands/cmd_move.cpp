@@ -1,4 +1,5 @@
 #include "cmd_move.h"
+#include <cassert>
 #include "utils/utils.h"
 #include "world/map.h"
 #include "engine.h"
@@ -31,10 +32,11 @@ void CmdMoveOrAttack::execute()
   }
   else
   {
-    std::vector<Actor*> toAttack = map.getActors(targetX, targetY, [&](Actor* a) -> bool
+    std::function<bool (amarlon::Actor*)> filterFun = [&](amarlon::Actor* a)->bool
     {
       return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
-    });
+    };
+    std::vector<Actor*> toAttack = map.getActors(targetX, targetY, &filterFun);
 
     //attack
     if (!toAttack.empty() && Actor::Player->hasFeature<Fighter>() )

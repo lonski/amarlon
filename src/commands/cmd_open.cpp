@@ -23,9 +23,9 @@ bool CmdOpen::accept(TCOD_key_t &key)
 void CmdOpen::execute()
 {
   Map& map = Engine::instance().currentMap();
-
+  std::function<bool (amarlon::Actor*)> filterFun = [](Actor* a)->bool{ return a->getFeature<Openable>(); };
   Actor* target = SingleNeighbourSelector("Select object to open...")
-                    .selectFirst([](Actor* a)->bool{ return a->getFeature<Openable>();});
+                    .selectFirst(&filterFun);
 
   if ( target != nullptr)
   {

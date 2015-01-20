@@ -87,14 +87,14 @@ Actor *Map::getFirstActor(int x, int y)
   return tile.actors->size() > 0 ? *tile.actors->begin() : nullptr;
 }
 
-std::vector<Actor *> Map::getActors(int x, int y, bool (*filterFun)(Actor*) )
+std::vector<Actor *> Map::getActors(int x, int y, std::function<bool (amarlon::Actor*)>* filterFun)
 {
   std::vector<Actor*> r;
   Tile& tile = getTile(x, y);
 
   std::for_each(tile.actors->begin(), tile.actors->end(), [&](Actor* a)
   {    
-    if ( filterFun == nullptr || filterFun(a))  r.push_back(a);
+    if ( filterFun == nullptr || (*filterFun)(a))  r.push_back(a);
   });
 
   return r;

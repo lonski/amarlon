@@ -2,15 +2,16 @@
 #define SINGLE_RANGE_SELECTOR_H
 
 #include <target_selector.h>
+#include <functional>
 
 namespace amarlon {
 
 class SingleRangeSelector : public TargetSelector
 {
 public:
-    SingleRangeSelector(int range = 1, const std::string& selectionMessage = "Select a tile..");
+    SingleRangeSelector(int range = 1, const std::string& selectionMessage = "Select a tile...");
 
-    virtual std::vector<Actor*> select(bool (*filterFun)(Actor*) = nullptr);
+    virtual std::vector<Actor*> select(std::function<bool (amarlon::Actor*)>* filterFun = nullptr);
 
     int getRange() const;
     TargetSelector &setRange(int range);

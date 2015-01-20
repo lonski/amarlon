@@ -37,7 +37,7 @@ public:
    *        for example only alive monsters could be selected
    * @return array of selected actors
    */
-  virtual std::vector<Actor*> select(bool (*filterFun)(Actor*) = nullptr) = 0;
+  virtual std::vector<Actor*> select(std::function<bool (amarlon::Actor*)>* filterFun = nullptr) = 0;
 
 protected:
   std::string _selectionMessage;
