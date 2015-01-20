@@ -51,7 +51,7 @@ TEST(MapTest, fillMap)
 
 TEST(MapTest, getChar_Color)
 {
-  Map::Tiles.loadTiles("../tiles.xml");
+  Map::Tiles.loadTiles("data/tiles.xml");
   std::string mapFill =
   "#####\n"
   "#...#\n"
@@ -65,7 +65,7 @@ TEST(MapTest, getChar_Color)
 
 TEST(MapTest, tilesToStr)
 {
-  Map::Tiles.loadTiles("../tiles.xml");
+  Map::Tiles.loadTiles("data/tiles.xml");
   std::string mapFill =
   "#####\n"
   "#...#\n"
@@ -81,7 +81,7 @@ TEST(MapTest, tilesToStr)
 
 TEST(MapTest, tileThatBlocks)
 {
-  Map::Tiles.loadTiles("../tiles.xml");
+  Map::Tiles.loadTiles("data/tiles.xml");
   std::string mapFill =
   "#####\n"
   "#...#\n"
