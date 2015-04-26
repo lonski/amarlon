@@ -64,6 +64,8 @@ else(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
     find_library(TCOD_CXX_LIBRARY
 	NAMES
 	    tcodxx
+		libtcod
+		libtcod-mingw
 	PATHS
 	    /usr/lib
 	    /usr/local/lib
