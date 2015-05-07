@@ -102,7 +102,7 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
     ItemsMenu equipMenu;
     equipMenu.setTitle("Choose item to equip");
     equipMenu.setShowCategories(false);
-    equipMenu.centerPosition();
+    equipMenu.setPosition(gui::AWidget::WINDOW_CENTER);
 
     std::map<int, Actor*> mappedItems = equipMenu.fillWithItems<LabelMenuItem>( equipableItems );
 

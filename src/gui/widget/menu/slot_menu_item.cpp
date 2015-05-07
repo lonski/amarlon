@@ -1,13 +1,15 @@
 #include "slot_menu_item.h"
+#include <alabel.h>
+#include <abar.h>
 
 namespace amarlon { namespace gui {
 
 
 SlotMenuItem::SlotMenuItem(int width, const std::string &name)
   : _panel(width, 5)
-  , _background(new Bar)
-  , _slotName(new Label)
-  , _slotValue(new Label)  
+  , _background(new ABar)
+  , _slotName(new ALabel)
+  , _slotValue(new ALabel)
 {
   setHeight( _panel.getHeight() );
   setWidth( _panel.getWidth() );
@@ -36,7 +38,7 @@ void SlotMenuItem::initalizeValueLabel()
 
 void SlotMenuItem::initalizeSeparator()
 {
-  Label* sep = new Label;
+  ALabel* sep = new ALabel;
   sep->setValue(":");
   sep->setPosition( _panel.getWidth() / 3 - 2, 2 );
   _panel.addWidget(sep);

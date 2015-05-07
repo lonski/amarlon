@@ -50,11 +50,6 @@ set(HEADER_FILES
     gui/widget/menu/menu.h
     gui/widget/menu/menu_item.h
     gui/widget/menu/slot_menu_item.h
-    gui/widget/bar.h
-    gui/widget/label.h
-    gui/widget/list.h
-    gui/widget/panel.h
-    gui/widget/widget.h
     gui/window/amount_window.h
     gui/window/window_manager.h
     gui/gui.h
@@ -80,7 +75,14 @@ set(HEADER_FILES
     world/map_id.h
     world/tile_type.h
     command_executor.h
-    engine.h)
+    engine.h
+
+    gui/widgets/awidget.h
+    gui/widgets/alabel.h
+    gui/widgets/alist.h
+    gui/widgets/apanel.h
+    gui/widgets/abar.h
+)
 
 set(SOURCE_FILES
     actor/actor_features/ai/ai.cpp
@@ -121,11 +123,6 @@ set(SOURCE_FILES
     gui/widget/menu/label_menu_item.cpp
     gui/widget/menu/menu.cpp
     gui/widget/menu/slot_menu_item.cpp
-    gui/widget/bar.cpp
-    gui/widget/label.cpp
-    gui/widget/list.cpp
-    gui/widget/panel.cpp
-    gui/widget/widget.cpp
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
     gui/gui.cpp
@@ -145,6 +142,13 @@ set(SOURCE_FILES
     world/map.cpp
     command_executor.cpp
     engine.cpp
+    main.cpp
+
+    gui/widgets/awidget.cpp
+    gui/widgets/alabel.cpp
+    gui/widgets/alist.cpp
+    gui/widgets/apanel.cpp
+    gui/widgets/abar.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

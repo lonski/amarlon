@@ -2,10 +2,13 @@
 #define SELECTABLE_LABEL_H
 
 #include <memory>
-#include "gui/widget/label.h"
-#include "gui/widget/menu/menu_item.h"
+#include <gui/widget/menu/menu_item.h>
+#include <libtcod.hpp>
 
 namespace amarlon { namespace gui {
+
+class ALabel;
+typedef std::shared_ptr<ALabel> ALabelPtr;
 
 class LabelMenuItem : public MenuItem
 {
@@ -26,7 +29,7 @@ public:
   virtual int getHeight() { return 1; }
 
 private:
-  Label _label;
+  ALabelPtr _label;
 
 };
 

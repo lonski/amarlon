@@ -59,7 +59,7 @@ void BagManager::manage()
 BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selected)
 {
   MenuPtr itemMenu( new Menu(40, 1) );
-  itemMenu->centerPosition();
+  itemMenu->setPosition(gui::AWidget::WINDOW_CENTER);
   itemMenu->setTitle( selected->getName() );
 
   if ( selected->getFeature<Pickable>()->isEquippable() )

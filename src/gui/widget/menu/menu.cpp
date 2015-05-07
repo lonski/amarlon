@@ -1,17 +1,17 @@
 #include "menu.h"
 #include <algorithm>
-#include "gui/widget/label.h"
+#include <alabel.h>
 
 namespace amarlon { namespace gui {
 
 // === HEADER === //
 
-class Header : public Panel
+class Header : public APanel
 {
 public:
   Header(const int& w, const std::string& title)
-    : Panel(w, 3) //frame + label
-    , _lHeader(new Label)
+    : APanel(w, 3) //frame + label
+    , _lHeader(new ALabel)
 
   {
     setFrameColor(TCODColor::darkYellow);
@@ -23,7 +23,7 @@ public:
   }
 
 private:
-  LabelPtr _lHeader;
+  ALabelPtr _lHeader;
 
 };
 
@@ -33,7 +33,7 @@ typedef std::shared_ptr<Header> HeaderPtr;
 // === MENU === //
 
 Menu::Menu(const int &width, const int &height)
-  : Panel(width, height)
+  : APanel(width, height)
   , _currentIndex(-1)
   , _showCategories(true)
 {
@@ -125,13 +125,13 @@ void Menu::render(TCODConsole &console)
     item->setPosition(margin + extraMargin, row);
 
     totalHeight += item->getHeight();
-    addWidget( item );            
+    addWidget( item );
     row += item->getHeight();
   }
 
   if ( totalHeight > getHeight() ) setHeight( totalHeight );
 
-  Panel::render(console);
+  APanel::render(console);
 }
 
 int Menu::selectNext()

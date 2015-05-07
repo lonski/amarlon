@@ -1,8 +1,8 @@
 #ifndef RESIZEABLE_TEXT_WINDOW_H
 #define RESIZEABLE_TEXT_WINDOW_H
 
-#include <gui/window/text_window/text_window.h>
-#include <gui/widget/list.h>
+#include <text_window.h>
+#include <alist.h>
 
 namespace amarlon { namespace gui {
 
@@ -19,7 +19,7 @@ protected:
   virtual void handleKey(TCOD_key_t&) {}
 
 private:
-  ListPtr _list;
+  AListPtr _list;
 
 };
 

@@ -1,26 +1,28 @@
 #include "label_menu_item.h"
+#include <alabel.h>
 
 namespace amarlon { namespace gui {
 
 LabelMenuItem::LabelMenuItem()
+  : _label(new ALabel)
 {
   setColor(TCODColor::lightChartreuse);
 }
 
 void LabelMenuItem::render(TCODConsole &console)
 {
-  _label.setPosition( getX(), getY() );
-  _label.render(console);
+  _label->setPosition( getX(), getY() );
+  _label->render(console);
 }
 
 void LabelMenuItem::select()
 {
   if (!_selected)
   {
-    TCODColor temp = _label.getBgcolor();
+    TCODColor temp = _label->getBgcolor();
 
-    _label.setBgcolor( _label.getColor() );
-    _label.setColor( temp );
+    _label->setBgcolor( _label->getColor() );
+    _label->setColor( temp );
 
     _selected = true;
   }
@@ -30,10 +32,10 @@ void LabelMenuItem::deselect()
 {
   if (_selected)
   {
-    TCODColor temp = _label.getColor();
+    TCODColor temp = _label->getColor();
 
-    _label.setColor( _label.getBgcolor() );
-    _label.setBgcolor( temp );
+    _label->setColor( _label->getBgcolor() );
+    _label->setBgcolor( temp );
 
     _selected = false;
   }
@@ -41,22 +43,22 @@ void LabelMenuItem::deselect()
 
 std::string LabelMenuItem::getValue() const
 {
-  return _label.getValue();
+  return _label->getValue();
 }
 
 void LabelMenuItem::setValue(const std::string &value)
 {
-  _label.setValue(value);
+  _label->setValue(value);
 }
 
 TCODColor LabelMenuItem::getColor() const
 {
-  return _label.getColor();
+  return _label->getColor();
 }
 
 void LabelMenuItem::setColor(const TCODColor &color)
 {
-  _label.setColor(color);
+  _label->setColor(color);
 }
 
 }}

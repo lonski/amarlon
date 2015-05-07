@@ -16,7 +16,7 @@ PickUpWindow::PickUpWindow()
 Window &PickUpWindow::setDefaults()
 {
   _menu.setTitle("Choose items to pick up");
-  _menu.centerPosition(false);
+  _menu.setPosition(gui::AWidget::GAME_SCREEN_CENTER);
   _menu.setShowCategories(false);
 
   _picker = nullptr;

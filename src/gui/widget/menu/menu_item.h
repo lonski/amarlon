@@ -3,11 +3,11 @@
 
 #include <memory>
 #include <iostream>
-#include "gui/widget/widget.h"
+#include <awidget.h>
 
 namespace amarlon { namespace gui {
 
-class MenuItem : public Widget
+class MenuItem : public AWidget
 {
 public:
   MenuItem() : _selected(false) {}
