@@ -1,15 +1,15 @@
 #include "cmd_use.h"
 #include <functional>
-#include <utils/selector_type.h>
-#include <utils/target_selector/target_selector.h>
-#include <Actor/Effects/Effect.h>
-#include <utils/direction_selector.h>
-#include <gui/gui.h>
-#include <utils/messenger.h>
-#include <engine.h>
-#include <gui/widget/menu/items_menu.h>
-#include <gui/widget/menu/label_menu_item.h>
-#include <gui/message_box.h>
+#include "utils/selector_type.h"
+#include "utils/target_selector/target_selector.h"
+#include "utils/direction_selector.h"
+#include "utils/messenger.h"
+#include "actor/effects/effect.h"
+#include "engine.h"
+#include "gui/gui.h"
+#include "gui/widget/menu/items_menu.h"
+#include "gui/widget/menu/label_menu_item.h"
+#include "gui/message_box.h"
 
 namespace amarlon {
 

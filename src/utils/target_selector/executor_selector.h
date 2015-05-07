@@ -10,7 +10,7 @@ class ExecutorSelector : public TargetSelector
 public:
   ExecutorSelector();
 
-  virtual std::vector<Actor*> select(bool (*filterFun)(Actor*) = nullptr);
+  virtual std::vector<Actor*> select(std::function<bool (amarlon::Actor*)>* filterFun = nullptr);
 
 };
 

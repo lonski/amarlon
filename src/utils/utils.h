@@ -1,12 +1,13 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "libtcod.hpp"
 #include <string>
+#include <vector>
 #include <sstream>
 #include <iomanip>
 #include <iostream>
 #include <algorithm>
+#include "libtcod.hpp"
 
 namespace amarlon {
 

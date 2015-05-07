@@ -1,10 +1,10 @@
 #include "pick_up_window.h"
-#include <gui/widget/menu/label_menu_item.h>
-#include <gui/message_box.h>
-#include <Actor/ActorFeatures/Container.h>
-#include <gui/window/amount_window.h>
-#include <utils/item_picker.h>
-#include <utils/amarlon_except.h>
+#include "gui/widget/menu/label_menu_item.h"
+#include "gui/message_box.h"
+#include "gui/window/amount_window.h"
+#include "actor/actor_features/container.h"
+#include "utils/item_picker.h"
+#include "utils/amarlon_except.h"
 
 namespace amarlon { namespace gui {
 

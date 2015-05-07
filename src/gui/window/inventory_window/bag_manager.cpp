@@ -1,5 +1,5 @@
 #include "bag_manager.h"
-#include <Actor/Actor.h>
+#include "actor/actor.h"
 #include <gui/widget/menu/label_menu_item.h>
 #include <gui/widget/menu/slot_menu_item.h>
 #include <gui/message_box.h>

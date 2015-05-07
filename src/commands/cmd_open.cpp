@@ -1,13 +1,13 @@
 #include "cmd_open.h"
-#include "cmd_pick.h"
 #include <iostream>
-#include <utils/utils.h>
-#include <utils/item_picker.h>
 #include <algorithm>
-#include <world/map.h>
 #include <engine.h>
-#include <utils/target_selector/single_neighbour_selector.h>
-#include <gui/message_box.h>
+#include "cmd_pick.h"
+#include "utils/utils.h"
+#include "utils/item_picker.h"
+#include "utils/target_selector/single_neighbour_selector.h"
+#include "world/map.h"
+#include "gui/message_box.h"
 
 namespace amarlon {
 
@@ -23,9 +23,9 @@ bool CmdOpen::accept(TCOD_key_t &key)
 void CmdOpen::execute()
 {
   Map& map = Engine::instance().currentMap();
-
+  std::function<bool (amarlon::Actor*)> filterFun = [](Actor* a)->bool{ return a->getFeature<Openable>(); };
   Actor* target = SingleNeighbourSelector("Select object to open...")
-                    .selectFirst([](Actor* a)->bool{ return a->getFeature<Openable>();});
+                    .selectFirst(&filterFun);
 
   if ( target != nullptr)
   {

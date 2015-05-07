@@ -32,7 +32,6 @@ public:
 
   virtual void render(TCODConsole& console);
 
-  void initalizebackground();
 private:
   APanel _panel;
   ABarPtr _background;
@@ -42,6 +41,7 @@ private:
   void InitalizeNameLabel(const std::string &name);
   void initalizeValueLabel();
   void initalizeSeparator();
+  void initalizebackground();
 
 };
 

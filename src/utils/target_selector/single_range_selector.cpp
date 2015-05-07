@@ -1,9 +1,10 @@
 #include "single_range_selector.h"
 #include <cmath>
-#include <engine.h>
-#include <world/map.h>
-#include <gui/gui.h>
-#include <utils.h>
+#include "engine.h"
+#include "world/map.h"
+#include "gui/gui.h"
+#include "utils.h"
+#include "actor/actor.h"
 
 namespace amarlon {
 
@@ -22,7 +23,7 @@ void SingleRangeSelector::initValues()
     _y = Actor::Player->getY();
 }
 
-std::vector<Actor*> SingleRangeSelector::select(bool (*filterFun)(Actor*))
+std::vector<Actor*> SingleRangeSelector::select(std::function<bool (amarlon::Actor*)>* filterFun)
 {
     initValues();
 
