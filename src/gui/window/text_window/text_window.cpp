@@ -1,6 +1,5 @@
 #include "text_window.h"
 #include <utils/utils.h>
-#include <gui/widget/label.h>
 
 namespace amarlon { namespace gui {
 
@@ -71,7 +70,7 @@ TextWindow &TextWindow::setCenterGameScreen()
 
 TextWindow &TextWindow::setCenterGameWindow()
 {
-  _centerGameWindow = false;
+  _centerGameWindow = true;
   return *this;
 }
 

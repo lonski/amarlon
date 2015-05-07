@@ -48,6 +48,7 @@ protected:
 };
 
 typedef std::shared_ptr<AWidget> AWidgetPtr;
+typedef std::unique_ptr<AWidget> AWidgetUPtr;
 
 }}
 

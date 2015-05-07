@@ -1,17 +1,17 @@
-#ifndef BAR_H
-#define BAR_H
+#ifndef ABAR_H
+#define ABAR_H
 
 #include <string>
-#include "widget.h"
-#include "libtcod.hpp"
+#include <awidget.h>
+#include <libtcod.hpp>
 
 namespace amarlon { namespace gui {
 
-class Bar : public Widget
+class ABar : public AWidget
 {
 public:
-  Bar();
-  virtual ~Bar() {}
+  ABar();
+  virtual ~ABar() {}
 
   virtual void render(TCODConsole& console);
 
@@ -47,7 +47,7 @@ private:
 
 };
 
-typedef std::shared_ptr<Bar> BarPtr;
+typedef std::shared_ptr<ABar> ABarPtr;
 
 }}
 

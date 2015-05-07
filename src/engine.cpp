@@ -4,8 +4,6 @@
 #include "gui/gui.h"
 #include <algorithm>
 #include <utils/messenger.h>
-#include "gui/widget/panel.h"
-#include "gui/widget/bar.h"
 #include <utils/configuration.h>
 
 namespace amarlon {

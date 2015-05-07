@@ -1,5 +1,5 @@
-#ifndef LABEL_H
-#define LABEL_H
+#ifndef ALABEL_H
+#define ALABEL_H
 
 #include <string>
 #include <libtcod.hpp>

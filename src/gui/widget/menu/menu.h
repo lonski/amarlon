@@ -4,12 +4,12 @@
 #include <memory>
 #include <map>
 #include <libtcod.hpp>
-#include <gui/widget/panel.h>
+#include <apanel.h>
 #include <gui/widget/menu/menu_item.h>
 
 namespace amarlon { namespace gui {
 
-class Menu : public Panel
+class Menu : public APanel
 {
 public:
   Menu(const int &width, const int &height);

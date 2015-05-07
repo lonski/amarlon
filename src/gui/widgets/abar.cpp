@@ -1,9 +1,9 @@
-#include "bar.h"
+#include "abar.h"
 
 namespace amarlon { namespace gui {
 
-Bar::Bar()
-  : Widget(10, 3)
+ABar::ABar()
+  : AWidget(10, 3)
   , _value(0)
   , _maxValue(10)
   , _bgColor(TCODColor::darkerRed)
@@ -13,7 +13,7 @@ Bar::Bar()
 {
 }
 
-void Bar::render(TCODConsole &console)
+void ABar::render(TCODConsole &console)
 {
     // fill the background
     console.setDefaultBackground(_bgColor);
@@ -38,66 +38,66 @@ void Bar::render(TCODConsole &console)
 
 }
 
-std::string Bar::getName() const
+std::string ABar::getName() const
 {
   return _name;
 }
 
-void Bar::setName(const std::string &name)
+void ABar::setName(const std::string &name)
 {
   _name = name;
 }
-float Bar::getValue() const
+float ABar::getValue() const
 {
   return _value;
 }
 
-void Bar::setValue(float value)
+void ABar::setValue(float value)
 {
   _value = value;
 }
-float Bar::getMaxValue() const
+float ABar::getMaxValue() const
 {
   return _maxValue;
 }
 
-void Bar::setMaxValue(float maxValue)
+void ABar::setMaxValue(float maxValue)
 {
   _maxValue = maxValue;
 }
-TCODColor Bar::getBgColor() const
+TCODColor ABar::getBgColor() const
 {
   return _bgColor;
 }
 
-void Bar::setBgColor(const TCODColor &bgColor)
+void ABar::setBgColor(const TCODColor &bgColor)
 {
   _bgColor = bgColor;
 }
-TCODColor Bar::getFgColor() const
+TCODColor ABar::getFgColor() const
 {
   return _fgColor;
 }
 
-void Bar::setFgColor(const TCODColor &fgColor)
+void ABar::setFgColor(const TCODColor &fgColor)
 {
   _fgColor = fgColor;
 }
-bool Bar::displayValues() const
+bool ABar::displayValues() const
 {
   return _displayValues;
 }
 
-void Bar::setDisplayValues(bool displayValues)
+void ABar::setDisplayValues(bool displayValues)
 {
   _displayValues = displayValues;
 }
-TCODColor Bar::getTextColor() const
+TCODColor ABar::getTextColor() const
 {
   return _textColor;
 }
 
-void Bar::setTextColor(const TCODColor &textColor)
+void ABar::setTextColor(const TCODColor &textColor)
 {
   _textColor = textColor;
 }

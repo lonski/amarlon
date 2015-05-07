@@ -2,12 +2,16 @@
 #define BODY_SLOT_H
 
 #include <iostream>
-#include <gui/widget/panel.h>
-#include <gui/widget/label.h>
+#include <apanel.h>
 #include <gui/widget/menu/menu_item.h>
-#include <gui/widget/bar.h>
 
 namespace amarlon { namespace gui {
+
+class ALabel;
+class ABar;
+
+typedef std::shared_ptr<ALabel> ALabelPtr;
+typedef std::shared_ptr<ABar>   ABarPtr;
 
 class SlotMenuItem : public MenuItem
 {
@@ -30,10 +34,10 @@ public:
 
   void initalizebackground();
 private:
-  Panel _panel;
-  BarPtr _background;
-  LabelPtr _slotName;
-  LabelPtr _slotValue;
+  APanel _panel;
+  ABarPtr _background;
+  ALabelPtr _slotName;
+  ALabelPtr _slotValue;
 
   void InitalizeNameLabel(const std::string &name);
   void initalizeValueLabel();

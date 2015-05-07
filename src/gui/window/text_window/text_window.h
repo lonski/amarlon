@@ -2,7 +2,7 @@
 #define TEXT_WINDOW_H
 
 #include <string>
-#include <gui/widget/panel.h>
+#include <apanel.h>
 #include <gui/window/window.h>
 
 namespace amarlon { namespace gui {
@@ -25,7 +25,7 @@ public:
   TextWindow& setMargin(int margin);
 
 protected:
-  PanelPtr _panel;
+  APanelUPtr _panel;
   std::string _text;
   bool _centerGameWindow;
   int _margin;

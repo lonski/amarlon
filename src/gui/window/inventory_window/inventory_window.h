@@ -4,7 +4,6 @@
 #include <memory>
 #include <libtcod.hpp>
 #include <gui/widget/menu/menu.h>
-#include <gui/widget/panel.h>
 #include <gui/window/inventory_window/bag_manager.h>
 #include <gui/window/inventory_window/body_manager.h>
 #include <gui/window/window.h>

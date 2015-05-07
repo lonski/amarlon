@@ -1,19 +1,20 @@
 #include "resizeable_text_window.h"
 #include <utils/utils.h>
+#include <alist.h>
 
 namespace amarlon { namespace gui {
 
 ResizeableTextWindow::ResizeableTextWindow()
-  : _list(new List)
+  : _list(new AList)
 {
   setDefaults();
 }
 
 Window& ResizeableTextWindow::setDefaults()
 {
-  _panel.reset( new Panel(1,1) );
-  _list.reset( new List );
-  _list->setFixedSize(false);
+  _panel.reset( new APanel );
+  _panel->setFrame(true);
+  _list.reset( new AList );
   _panel->addWidget(_list);
 
   TextWindow::setDefaults();
@@ -31,13 +32,13 @@ void ResizeableTextWindow::displayText()
   size_t width = 1;
   std::for_each(lines.begin(), lines.end(), [&](const std::string& line)
   {
-    _list->push( ColoredString(line, TCODColor::white) );
+    _list->pushBack( ColoredString(line, TCODColor::white) );
     if ( line.size() > width ) width = line.size();
   });
 
   _panel->setHeight( _list->size() + _margin*2 );
   _panel->setWidth( width + _margin*2 );
-  _panel->centerPosition(_centerGameWindow);
+  _panel->setPosition( _centerGameWindow ? AWidget::WINDOW_CENTER : AWidget::GAME_SCREEN_CENTER);
 }
 
 }}

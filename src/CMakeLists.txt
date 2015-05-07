@@ -50,11 +50,6 @@ set(HEADER_FILES
     gui/widget/menu/menu.h
     gui/widget/menu/menu_item.h
     gui/widget/menu/slot_menu_item.h
-    gui/widget/bar.h
-    gui/widget/label.h
-    gui/widget/list.h
-    gui/widget/panel.h
-    gui/widget/widget.h
     gui/window/amount_window.h
     gui/window/window_manager.h
     gui/gui.h
@@ -85,6 +80,8 @@ set(HEADER_FILES
     gui/widgets/awidget.h
     gui/widgets/alabel.h
     gui/widgets/alist.h
+    gui/widgets/apanel.h
+    gui/widgets/abar.h
 )
 
 set(SOURCE_FILES
@@ -126,11 +123,6 @@ set(SOURCE_FILES
     gui/widget/menu/label_menu_item.cpp
     gui/widget/menu/menu.cpp
     gui/widget/menu/slot_menu_item.cpp
-    gui/widget/bar.cpp
-    gui/widget/label.cpp
-    gui/widget/list.cpp
-    gui/widget/panel.cpp
-    gui/widget/widget.cpp
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
     gui/gui.cpp
@@ -155,6 +147,8 @@ set(SOURCE_FILES
     gui/widgets/awidget.cpp
     gui/widgets/alabel.cpp
     gui/widgets/alist.cpp
+    gui/widgets/apanel.cpp
+    gui/widgets/abar.cpp
 )
 
 add_executable(amarlon ${SOURCE_FILES} ${HEADER_FILES})

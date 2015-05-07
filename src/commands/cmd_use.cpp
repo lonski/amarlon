@@ -53,7 +53,7 @@ Actor* CmdUse::acquireItemToUse()
   Actor* item = nullptr;
 
   gui::ItemsMenu itemsMenu;
-  itemsMenu.centerPosition();
+  itemsMenu.setPosition(gui::AWidget::GAME_SCREEN_CENTER);
   itemsMenu.setTitle("Choose item to use");
 
   std::function<bool(Actor*)> filter = [](Actor* a){ return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect(); };
