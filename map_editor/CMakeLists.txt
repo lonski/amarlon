@@ -87,11 +87,10 @@ set(SOURCE_FILES
     map_editor.cpp
     )
 
-find_package(Qt4 COMPONENTS QTCORE QTGUI)
-find_package(Qt5Widgets)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Declarative)
-  
-include(${QT_USE_FILE})
 
 set(MAP_EDITOR_UI
     ${PROJECT_SOURCE_DIR}/map_editor/map_editor.ui
@@ -110,3 +109,4 @@ add_executable(mapeditor ${SOURCE_FILES} ${HEADER_FILES} ${MAP_EDITOR_UI_HDR} ${
 target_link_libraries(mapeditor amarlon_core ${TCOD_LIBRARIES} ${QT_LIBRARIES})
 
 add_custom_command(TARGET mapeditor POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:mapeditor>)
+qt5_use_modules(mapeditor Widgets Declarative)

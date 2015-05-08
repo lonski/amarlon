@@ -1,4 +1,4 @@
-find_package(GTest HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
+find_package(gtest HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 set(HEADER_FILES

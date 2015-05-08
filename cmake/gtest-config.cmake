@@ -15,7 +15,7 @@ else(GTEST_LIBRARIES AND GTEST_INCLUDE_DIRS)
 
     find_library(GTEST_CXX_LIBRARY
 	NAMES
-	    GTest
+	    gtest
 		libgtest
 		libgtest_main
 	PATHS
