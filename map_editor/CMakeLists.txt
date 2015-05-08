@@ -46,11 +46,11 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/slot_menu_item.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/label.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/list.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/panel.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/widget.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/abar.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alist.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/apanel.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/awidget.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.h
@@ -87,7 +87,10 @@ set(SOURCE_FILES
     map_editor.cpp
     )
 
-find_package(Qt4 REQUIRED)
+find_package(Qt4 COMPONENTS QTCORE QTGUI)
+find_package(Qt5Widgets)
+find_package(Qt5Declarative)
+  
 include(${QT_USE_FILE})
 
 set(MAP_EDITOR_UI
@@ -98,8 +101,8 @@ set(MAP_EDITOR_QT
     ${PROJECT_SOURCE_DIR}/map_editor/map_editor.h
     )
 
-qt4_wrap_ui(MAP_EDITOR_UI_HDR ${MAP_EDITOR_UI})
-qt4_wrap_cpp(MAP_EDITOR_MOC_SRC ${MAP_EDITOR_QT})
+qt5_wrap_ui(MAP_EDITOR_UI_HDR ${MAP_EDITOR_UI})
+qt5_wrap_cpp(MAP_EDITOR_MOC_SRC ${MAP_EDITOR_QT})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 

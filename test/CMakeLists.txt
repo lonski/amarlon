@@ -1,4 +1,5 @@
-find_package(GTest REQUIRED)
+find_package(GTest HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
 set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor.h
@@ -43,11 +44,11 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_put_into.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_look.h
     ${PROJECT_SOURCE_DIR}/src/engine.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/bar.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/list.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/panel.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/widget.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/label.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/abar.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alist.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/apanel.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/awidget.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/label_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu_item.h
