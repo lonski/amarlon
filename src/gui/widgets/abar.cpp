@@ -2,39 +2,40 @@
 
 namespace amarlon { namespace gui {
 
-ABar::ABar()
-  : AWidget(10, 3)
-  , _value(0)
+ABar::ABar()  
+  : _value(0)
   , _maxValue(10)
   , _bgColor(TCODColor::darkerRed)
   , _fgColor(TCODColor::red)
   , _displayValues(true)
   , _textColor(TCODColor::white)
-{
+  , _width(10)
+  , _height(3)
+{  
 }
 
 void ABar::render(TCODConsole &console)
 {
     // fill the background
     console.setDefaultBackground(_bgColor);
-    console.rect(_x,_y, _width, _height,false,TCOD_BKGND_SET);
+    console.rect(getX(),getY(), _width, _height, false, TCOD_BKGND_SET);
 
     // draw the bar
     int barWidth = static_cast<int>(_value / _maxValue * _width);
     if ( barWidth > 0 )
     {
       console.setDefaultBackground(_fgColor);
-      console.rect(_x, _y, barWidth, _height, false, TCOD_BKGND_SET);
+      console.rect(getX(), getY(), barWidth, _height, false, TCOD_BKGND_SET);
     }
 
     // print text on top of the bar
     console.setDefaultForeground(_textColor);
 
     if ( _displayValues )
-      console.printEx(_x+_width/2, _y+1, TCOD_BKGND_NONE,TCOD_CENTER,
+      console.printEx(getX()+_width/2, getY()+1, TCOD_BKGND_NONE,TCOD_CENTER,
                       "%s%g/%g", _name.empty() ? "" : (_name + " : ").c_str(), _value, _maxValue);
     else
-      console.printEx(_x+_width/2, _y+1, TCOD_BKGND_NONE,TCOD_CENTER,	"%s", _name.c_str());
+      console.printEx(getX()+_width/2, getY()+1, TCOD_BKGND_NONE,TCOD_CENTER,	"%s", _name.c_str());
 
 }
 
@@ -100,6 +101,26 @@ TCODColor ABar::getTextColor() const
 void ABar::setTextColor(const TCODColor &textColor)
 {
   _textColor = textColor;
+}
+
+int ABar::getWidth() const
+{
+  return _width;
+}
+
+int ABar::getHeight() const
+{
+  return _height;
+}
+
+void ABar::setWidth(int width)
+{
+  _width = width;
+}
+
+void ABar::setHeight(int height)
+{
+  _height = height;
 }
 
 }}

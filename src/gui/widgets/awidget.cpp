@@ -3,11 +3,9 @@
 
 namespace amarlon { namespace gui {
 
-AWidget::AWidget(const int &w, const int &h)
+AWidget::AWidget()
   : _x(0)
-  , _y(0)
-  , _width(w)
-  , _height(h)
+  , _y(0)  
 {
 }
 
@@ -54,24 +52,6 @@ std::string AWidget::getTag(const std::string &tagName)
 void AWidget::setTag(const std::string &tagName, const std::string &tagValue)
 {
   _tags[tagName] = tagValue;
-}
-int AWidget::getWidth() const
-{
-  return _width;
-}
-
-void AWidget::setWidth(int width)
-{
-  _width = width;
-}
-int AWidget::getHeight() const
-{
-  return _height;
-}
-
-void AWidget::setHeight(int height)
-{
-  _height = height;
 }
 
 }}

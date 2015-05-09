@@ -4,6 +4,7 @@
 #include "utils/utils.h"
 #include "utils/target_selector/single_neighbour_selector.h"
 #include "utils/messenger.h"
+#include "gui/message_box.h"
 
 namespace amarlon {
 

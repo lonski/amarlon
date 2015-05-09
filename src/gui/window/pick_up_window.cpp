@@ -1,5 +1,5 @@
 #include "pick_up_window.h"
-#include "gui/widget/menu/label_menu_item.h"
+#include "alabel_menu_item.h"
 #include "gui/message_box.h"
 #include "gui/window/amount_window.h"
 #include "actor/actor_features/container.h"
@@ -33,7 +33,7 @@ Window& PickUpWindow::show()
 {
   if ( _picker && _container)
   {
-    std::map<int, Actor*> mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
+    std::map<int, Actor*> mappedItems = _menu.fillWithItems<gui::ALabelMenuItem>( _container->content(&_filterFunc) );
     _menu.selectFirst();
 
     int choosen(-1);
@@ -52,7 +52,7 @@ Window& PickUpWindow::show()
         {
           int pickedAmount = ItemPicker(_picker, toPick, _container).pick();
 
-          mappedItems = _menu.fillWithItems<gui::LabelMenuItem>( _container->content(&_filterFunc) );
+          mappedItems = _menu.fillWithItems<gui::ALabelMenuItem>( _container->content(&_filterFunc) );
           _menu.selectFirst();
 
           _afterPickUpAction(itemName, pickedAmount);

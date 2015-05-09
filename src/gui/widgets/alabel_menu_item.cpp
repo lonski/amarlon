@@ -1,21 +1,21 @@
-#include "label_menu_item.h"
+#include "alabel_menu_item.h"
 #include <alabel.h>
 
 namespace amarlon { namespace gui {
 
-LabelMenuItem::LabelMenuItem()
+ALabelMenuItem::ALabelMenuItem()
   : _label(new ALabel)
-{
+{  
   setColor(TCODColor::lightChartreuse);
 }
 
-void LabelMenuItem::render(TCODConsole &console)
+void ALabelMenuItem::render(TCODConsole &console)
 {
   _label->setPosition( getX(), getY() );
   _label->render(console);
 }
 
-void LabelMenuItem::select()
+void ALabelMenuItem::select()
 {
   if (!_selected)
   {
@@ -28,7 +28,7 @@ void LabelMenuItem::select()
   }
 }
 
-void LabelMenuItem::deselect()
+void ALabelMenuItem::deselect()
 {
   if (_selected)
   {
@@ -41,22 +41,42 @@ void LabelMenuItem::deselect()
   }
 }
 
-std::string LabelMenuItem::getValue() const
+std::string ALabelMenuItem::getValue() const
 {
   return _label->getValue();
 }
 
-void LabelMenuItem::setValue(const std::string &value)
+void ALabelMenuItem::setValue(const std::string &value)
 {
   _label->setValue(value);
 }
 
-TCODColor LabelMenuItem::getColor() const
+int ALabelMenuItem::getWidth() const
+{
+  return _label->getWidth();
+}
+
+int ALabelMenuItem::getHeight() const
+{
+  return _label->getHeight();
+}
+
+void ALabelMenuItem::setWidth(int width)
+{
+  _label->setWidth(width);
+}
+
+void ALabelMenuItem::setHeight(int height)
+{
+  _label->setHeight(height);
+}
+
+TCODColor ALabelMenuItem::getColor() const
 {
   return _label->getColor();
 }
 
-void LabelMenuItem::setColor(const TCODColor &color)
+void ALabelMenuItem::setColor(const TCODColor &color)
 {
   _label->setColor(color);
 }

@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <actor.h>
 #include <item_slot_type.h>
-#include <gui/widget/menu/label_menu_item.h>
-#include <gui/widget/menu/slot_menu_item.h>
+#include <alabel_menu_item.h>
+#include <aslot_menu_item.h>
 #include <gui/message_box.h>
 #include <gui/widget/menu/items_menu.h>
 #include <engine.h>

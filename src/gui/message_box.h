@@ -15,7 +15,7 @@ enum class MsgType
   Info
 };
 
-static inline void msgBox(const std::string& text, MsgType type)
+static inline void msgBox(const std::string& text, MsgType type = MsgType::Info)
 {
   TCODColor color;
   switch (type)

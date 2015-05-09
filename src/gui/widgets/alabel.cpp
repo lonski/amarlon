@@ -13,7 +13,7 @@ void ALabel::render(TCODConsole &console)
 {
   console.setDefaultForeground(_color);
   console.setDefaultBackground(_bgcolor);
-  console.printEx(_x, _y,
+  console.printEx(getX(), getY(),
                   TCOD_BKGND_SET,
                   TCOD_LEFT, "%s", _value.c_str());
 
@@ -27,6 +27,10 @@ std::string ALabel::getValue() const
 void ALabel::setValue(const std::string &value)
 {
   _value = value;
+  if ( _autosize )
+  {
+    _width = value.size();
+  }
 }
 TCODColor ALabel::getColor() const
 {
@@ -55,6 +59,26 @@ bool ALabel::isAutosized() const
 void ALabel::setAutosize(bool autosize)
 {
   _autosize = autosize;
+}
+
+int ALabel::getWidth() const
+{
+  return _width;
+}
+
+int ALabel::getHeight() const
+{
+  return _autosize ? 1 : _height;
+}
+
+void ALabel::setWidth(int width)
+{
+  if ( !_autosize ) _width = width;
+}
+
+void ALabel::setHeight(int height)
+{
+  _height = height;
 }
 
 

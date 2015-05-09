@@ -32,6 +32,9 @@ public:
   virtual void setWidth(int width);
   virtual void setHeight(int height);
 
+  virtual int getWidth() const;
+  virtual int getHeight() const;
+
   void removeAllWidgets();
 
 private:

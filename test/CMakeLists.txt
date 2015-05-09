@@ -50,10 +50,11 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/widgets/awidget.h
     ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/label_menu_item.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu_item.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel_menu_item.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/amenu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/slot_menu_item.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/amenu.h
+    ${PROJECT_SOURCE_DIR}/src/gui/widgets/aslot_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/text_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/items_menu.h
@@ -65,7 +66,6 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/item_picker.h
     ${PROJECT_SOURCE_DIR}/src/utils/amarlon_except.h
-#    ${PROJECT_SOURCE_DIR}/src/utils/LogEntry.h
     ${PROJECT_SOURCE_DIR}/src/utils/messenger.h
     ${PROJECT_SOURCE_DIR}/src/utils/selector_type.h
     ${PROJECT_SOURCE_DIR}/src/utils/utils.h
@@ -88,6 +88,7 @@ set(SOURCE_FILES
     data_gateway/map_gateway_test.cpp
     world/map_test.cpp
     wearer_test.cpp
+    amenu_test.cpp
 )
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})

@@ -1,8 +1,8 @@
 #include "body_manager.h"
 #include "actor/actor.h"
-#include <gui/widget/menu/menu_item.h>
-#include <gui/widget/menu/slot_menu_item.h>
-#include <gui/widget/menu/label_menu_item.h>
+#include <amenu_item.h>
+#include <aslot_menu_item.h>
+#include <alabel_menu_item.h>
 #include <gui/message_box.h>
 #include <gui/widget/menu/items_menu.h>
 
@@ -31,8 +31,8 @@ void BodyManager::fillBodySlots()
       std::string slotValue = eq ? eq->getName() : "";
       std::string slotName = ItemSlotType2Str(i);
 
-      SlotMenuItemPtr newSlot( new SlotMenuItem( _bodyMenu->getWidth() - 4 ) );
-      newSlot->setSlotName( slotName );
+      ASlotMenuItemPtr newSlot( new ASlotMenuItem( _bodyMenu->getWidth() - 4 ) );
+      newSlot->setName( slotName );
       newSlot->setValue( slotValue );
       newSlot->setTag( "id", std::to_string(i) );
 
@@ -85,8 +85,8 @@ void BodyManager::unequipItem(ItemSlotType slot)
 
 void BodyManager::clearSelectedItemSlotValue()
 {
-  MenuItemPtr menuItem = _bodyMenu->getSelectedItem();
-  SlotMenuItemPtr slotMenuItem = std::dynamic_pointer_cast<SlotMenuItem>( menuItem );
+  AMenuItemPtr menuItem = _bodyMenu->getSelectedItem();
+  ASlotMenuItemPtr slotMenuItem = std::dynamic_pointer_cast<ASlotMenuItem>( menuItem );
 
   slotMenuItem->setValue("");
 }
@@ -104,7 +104,7 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
     equipMenu.setShowCategories(false);
     equipMenu.setPosition(gui::AWidget::WINDOW_CENTER);
 
-    std::map<int, Actor*> mappedItems = equipMenu.fillWithItems<LabelMenuItem>( equipableItems );
+    std::map<int, Actor*> mappedItems = equipMenu.fillWithItems<ALabelMenuItem>( equipableItems );
 
     equipMenu.selectNext(); //activate first menu option
 

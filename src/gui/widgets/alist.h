@@ -32,9 +32,20 @@ public:
   bool isAutosized() const;
   void setAutosize(bool autosize);
 
+  virtual int getWidth() const ;
+  virtual int getHeight() const;
+
+  virtual void setWidth(int width);
+  virtual void setHeight(int height);
+
 private:
   std::list<ColoredString> _entries;
   bool _autosize;
+  int _width;
+  int _height;
+  int _maxWidth;
+
+  size_t calculateMaxWidth() const;
 
 };
 

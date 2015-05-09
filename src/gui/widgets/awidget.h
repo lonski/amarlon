@@ -18,7 +18,7 @@ public:
     GAME_SCREEN_CENTER
   };
 
-  AWidget(const int& w = 1, const int& h = 1);
+  AWidget();
   virtual ~AWidget() {}
 
   virtual void render(TCODConsole& console) = 0;
@@ -29,21 +29,27 @@ public:
   virtual void setPosition(int x, int y);
   virtual void setPosition(PositionFlag position);
 
-  virtual int getWidth() const;
-  virtual int getHeight() const;
+  virtual int getWidth() const = 0;
+  virtual int getHeight() const = 0;
 
-  virtual void setWidth(int width);
-  virtual void setHeight(int height);
+  /* Some widgets could be autosized: e.g. AList, ALabel, AMenu
+   * At the momment if autosize of those widgets is turned off
+   * then setting width or height will not affect rendering the widget itself.
+   * The widget will render always its whole content. It can be used only by
+   * parent widget to aquire and set the coordinated where other widgets should be
+   * positioned (e.g. getY() + getWidth() )
+   * TODO: think if it is needed to implement such a feature
+   */
+  virtual void setWidth(int width) = 0;
+  virtual void setHeight(int height) = 0;
 
   virtual std::string getTag(const std::string& tagName);
   virtual void setTag(const std::string& tagName, const std::string& tagValue);
 
-protected:
+private:
   std::map<std::string, std::string> _tags;
   int _x;
-  int _y;
-  int _width;
-  int _height;
+  int _y;  
 
 };
 

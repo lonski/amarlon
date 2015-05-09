@@ -52,7 +52,7 @@ void Gui::setupLogPanel()
 
   APanelPtr logPanel( new APanel(logConWidth, logConHeight) );
   logPanel->setPosition(0, Engine::screenHeight - logConHeight);
-  //logPanel->addWidget(_log);
+  logPanel->addWidget(_log);
 
   _widgets.push_back( logPanel );
 }
@@ -64,7 +64,7 @@ void Gui::setupViewPanel()
 
   APanelPtr viewPanel( new APanel(viewConWidth, viewConHeight) );
   viewPanel->setPosition(logConWidth, Engine::screenHeight - viewConHeight);
-  //viewPanel->addWidget(_viewList);
+  viewPanel->addWidget(_viewList);
 
   _widgets.push_back( viewPanel );
 }

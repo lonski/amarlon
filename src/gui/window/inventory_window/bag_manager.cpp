@@ -1,7 +1,7 @@
 #include "bag_manager.h"
 #include "actor/actor.h"
-#include <gui/widget/menu/label_menu_item.h>
-#include <gui/widget/menu/slot_menu_item.h>
+#include <alabel_menu_item.h>
+#include <aslot_menu_item.h>
 #include <gui/message_box.h>
 #include <gui/window/amount_window.h>
 #include <engine.h>
@@ -23,7 +23,7 @@ void BagManager::fillBag()
   _bagItems.clear();
 
   std::vector<Actor*> items = Actor::Player->getFeature<Container>()->content();
-  _bagItems = _bagMenu->fillWithItems<LabelMenuItem>( items );
+  _bagItems = _bagMenu->fillWithItems<ALabelMenuItem>( items );
 }
 
 void BagManager::render()
@@ -35,7 +35,7 @@ void BagManager::render()
 // === OPERATION CHOOSING === //
 void BagManager::manage()
 {
-  MenuItemPtr menuItem = _bagMenu->getSelectedItem();
+  AMenuItemPtr menuItem = _bagMenu->getSelectedItem();
   Actor* selectedItem = _bagItems[ std::stol( menuItem->getTag("id") ) ];
 
   if ( selectedItem )
@@ -64,13 +64,13 @@ BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selecte
 
   if ( selected->getFeature<Pickable>()->isEquippable() )
   {
-    LabelMenuItemPtr itemEquip( new LabelMenuItem );
+    ALabelMenuItemPtr itemEquip( new ALabelMenuItem );
     itemEquip->setValue("Equip");
     itemEquip->setTag("id", std::to_string(EQUIP));
     itemMenu->addItem( itemEquip );
   }
 
-  LabelMenuItemPtr itemDrop( new LabelMenuItem );
+  ALabelMenuItemPtr itemDrop( new ALabelMenuItem );
   itemDrop->setValue("Drop");
   itemDrop->setTag("id", std::to_string(DROP));
   itemMenu->addItem( itemDrop );
@@ -131,7 +131,7 @@ void BagManager::doTheEquip(Actor* item)
   Wearer* wearer = Actor::Player->getFeature<Wearer>();
   Container* container = Actor::Player->getFeature<Container>();
 
-  SlotMenuItemPtr slotItem = std::dynamic_pointer_cast<SlotMenuItem>( _bodyMenu->find((int)slot) );
+  ASlotMenuItemPtr slotItem = std::dynamic_pointer_cast<ASlotMenuItem>( _bodyMenu->find((int)slot) );
   assert( slotItem );
   slotItem->setValue("");
 

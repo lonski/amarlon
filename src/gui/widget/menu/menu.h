@@ -5,7 +5,7 @@
 #include <map>
 #include <libtcod.hpp>
 #include <apanel.h>
-#include <gui/widget/menu/menu_item.h>
+#include <amenu_item.h>
 
 namespace amarlon { namespace gui {
 
@@ -14,10 +14,10 @@ class Menu : public APanel
 public:
   Menu(const int &width, const int &height);
 
-  virtual void addItem(MenuItemPtr item);
+  virtual void addItem(AMenuItemPtr item);
   virtual bool removeItem(int id);
-  virtual MenuItemPtr getSelectedItem();
-  virtual MenuItemPtr find(int id);
+  virtual AMenuItemPtr getSelectedItem();
+  virtual AMenuItemPtr find(int id);
 
   virtual void render(TCODConsole& console);
   virtual int choose(TCODConsole& console);
@@ -37,7 +37,7 @@ public:
 protected:
   int _currentIndex;
   bool _showCategories;
-  std::vector<MenuItemPtr> _items;
+  std::vector<AMenuItemPtr> _items;
 
   bool cIndexIsValid();
 };

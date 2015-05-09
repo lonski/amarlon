@@ -8,7 +8,7 @@
 #include "engine.h"
 #include "gui/gui.h"
 #include "gui/widget/menu/items_menu.h"
-#include "gui/widget/menu/label_menu_item.h"
+#include "gui/widgets/alabel_menu_item.h"
 #include "gui/message_box.h"
 
 namespace amarlon {
@@ -61,7 +61,7 @@ Actor* CmdUse::acquireItemToUse()
   std::vector<Actor*> usableItems = Actor::Player->getFeature<Container>()->content(&filter);
   if ( !usableItems.empty() )
   {
-    std::map<int, Actor*> mItems = itemsMenu.fillWithItems<gui::LabelMenuItem>( usableItems );
+    std::map<int, Actor*> mItems = itemsMenu.fillWithItems<gui::ALabelMenuItem>( usableItems );
     auto choosen = mItems.find( itemsMenu.choose(*TCODConsole::root) );
     if ( choosen != mItems.end() ) item = choosen->second;
   }

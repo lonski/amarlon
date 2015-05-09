@@ -7,16 +7,15 @@ APanel::APanel()
   : _frame(true)
   , _frameColor(TCODColor::darkerOrange)
   , _titleColor(TCODColor::lighterOrange)
-  , _panelConsole( new TCODConsole(_width, _height) )
+  , _panelConsole( new TCODConsole(1, 1) )
 {
 }
 
 APanel::APanel(int w, int h)
-  : AWidget(w, h)
-  , _frame(true)
+  : _frame(true)
   , _frameColor(TCODColor::darkerOrange)
   , _titleColor(TCODColor::lighterOrange)
-  , _panelConsole( new TCODConsole(_width, _height) )
+  , _panelConsole( new TCODConsole(w, h) )
 {
 }
 
@@ -30,13 +29,13 @@ void APanel::render(TCODConsole &console)
   renderFrame();
   renderWidgets();
 
-  TCODConsole::blit(_panelConsole.get(), 0, 0, _width, _height, &console, _x, _y );
+  TCODConsole::blit(_panelConsole.get(), 0, 0, _panelConsole->getWidth(), _panelConsole->getHeight(), &console, getX(), getY() );
 }
 
 void APanel::initPanelConsole()
 {
   _panelConsole->setDefaultBackground(TCODColor::black);
-  _panelConsole->rect( 0 , 0 , _width, _height, false,TCOD_BKGND_SET);
+  _panelConsole->rect( 0 , 0 , _panelConsole->getWidth(), _panelConsole->getHeight(), false,TCOD_BKGND_SET);
 }
 
 void APanel::renderFrame()
@@ -45,7 +44,7 @@ void APanel::renderFrame()
   {
     _panelConsole->setDefaultForeground(_frameColor);
     _panelConsole->setDefaultBackground(_titleColor);
-    _panelConsole->printFrame(0, 0, _width, _height, true, TCOD_BKGND_DEFAULT, _title.empty() ? NULL : _title.c_str() );
+    _panelConsole->printFrame(0, 0, _panelConsole->getWidth(), _panelConsole->getHeight(), true, TCOD_BKGND_DEFAULT, _title.empty() ? NULL : _title.c_str() );
   }
 }
 
@@ -103,14 +102,22 @@ void APanel::setFrameColor(const TCODColor &frameColor)
 
 void APanel::setWidth(int width)
 {
-  AWidget::setWidth(width);
-  _panelConsole.reset( new TCODConsole(_width, _height) );
+  _panelConsole.reset( new TCODConsole(width, _panelConsole->getHeight()) );
 }
 
 void APanel::setHeight(int height)
 {
-  AWidget::setHeight(height);
-  _panelConsole.reset( new TCODConsole(_width, _height) );
+  _panelConsole.reset( new TCODConsole(_panelConsole->getWidth(), height) );
+}
+
+int APanel::getWidth() const
+{
+  return _panelConsole->getWidth();
+}
+
+int APanel::getHeight() const
+{
+  return _panelConsole->getHeight();
 }
 
 void APanel::removeAllWidgets()

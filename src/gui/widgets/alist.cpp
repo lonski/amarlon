@@ -5,26 +5,19 @@ namespace amarlon { namespace gui {
 
 AList::AList()
   : _autosize(true)
+  , _width(0)
+  , _height(0)
+  , _maxWidth(0)
 {
 }
 
 void AList::render(TCODConsole &console)
 {
-  size_t maxWidth = 1;
-
-  int yPos = _y;
+  int yPos = getY();
   for ( auto entry : _entries)
   {
-    maxWidth = std::max( maxWidth, entry.str.size() );
-
     console.setDefaultForeground(entry.color);
-    console.print(_x, ++yPos, entry.str.c_str());
-  }
-
-  if ( _autosize )
-  {
-    setHeight(_entries.size());
-    setWidth(maxWidth);
+    console.print(getX(), ++yPos, entry.str.c_str());
   }
 }
 
@@ -47,6 +40,7 @@ AList::iterator AList::end()
 {
   return _entries.end();
 }
+
 bool AList::isAutosized() const
 {
   return _autosize;
@@ -55,6 +49,36 @@ bool AList::isAutosized() const
 void AList::setAutosize(bool autosize)
 {
   _autosize = autosize;
+}
+
+int AList::getWidth() const
+{
+  return _autosize ? calculateMaxWidth() : _width;
+}
+
+size_t AList::calculateMaxWidth() const
+{
+  size_t maxWidth = 0;
+  for ( auto entry : _entries)
+  {
+    maxWidth = std::max( maxWidth, entry.str.size() );
+  }
+  return maxWidth;
+}
+
+int AList::getHeight() const
+{
+  return _autosize ? _entries.size() : _height;
+}
+
+void AList::setWidth(int width)
+{
+  _width = width;
+}
+
+void AList::setHeight(int height)
+{
+  _height = height;
 }
 
 void AList::pushBack(const ColoredString& entry)

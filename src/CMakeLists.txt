@@ -45,11 +45,8 @@ set(HEADER_FILES
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h
-    gui/widget/menu/items_menu.h
-    gui/widget/menu/label_menu_item.h
-    gui/widget/menu/menu.h
-    gui/widget/menu/menu_item.h
-    gui/widget/menu/slot_menu_item.h
+    gui/widget/menu/items_menu.h    
+    gui/widget/menu/menu.h        
     gui/window/amount_window.h
     gui/window/window_manager.h
     gui/gui.h
@@ -82,6 +79,10 @@ set(HEADER_FILES
     gui/widgets/alist.h
     gui/widgets/apanel.h
     gui/widgets/abar.h
+    gui/widgets/amenu_item.h
+    gui/widgets/alabel_menu_item.h
+    gui/widgets/aslot_menu_item.h
+    gui/widgets/amenu.h
 )
 
 set(SOURCE_FILES
@@ -119,10 +120,8 @@ set(SOURCE_FILES
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
-    gui/widget/menu/items_menu.cpp
-    gui/widget/menu/label_menu_item.cpp
-    gui/widget/menu/menu.cpp
-    gui/widget/menu/slot_menu_item.cpp
+    gui/widget/menu/items_menu.cpp    
+    gui/widget/menu/menu.cpp    
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
     gui/gui.cpp
@@ -149,6 +148,9 @@ set(SOURCE_FILES
     gui/widgets/alist.cpp
     gui/widgets/apanel.cpp
     gui/widgets/abar.cpp
+    gui/widgets/alabel_menu_item.cpp
+    gui/widgets/aslot_menu_item.cpp
+    gui/widgets/amenu.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

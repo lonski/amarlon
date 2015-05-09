@@ -25,11 +25,19 @@ public:
   void setBgcolor (const TCODColor   &bgColor);
   void setAutosize(bool  autosize);
 
-private:
+  virtual int getWidth() const;
+  virtual int getHeight() const;
+
+  virtual void setWidth(int width);
+  virtual void setHeight(int height);
+
+private:  
   std::string _value;
   TCODColor   _color;
   TCODColor   _bgcolor;
   bool        _autosize;
+  int         _width;
+  int         _height;
 
 };
 

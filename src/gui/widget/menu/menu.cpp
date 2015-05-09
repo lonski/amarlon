@@ -39,7 +39,7 @@ Menu::Menu(const int &width, const int &height)
 {
 }
 
-void Menu::addItem(MenuItemPtr item)
+void Menu::addItem(AMenuItemPtr item)
 {
   _items.push_back( item );
 }
@@ -47,7 +47,7 @@ void Menu::addItem(MenuItemPtr item)
 bool Menu::removeItem(int id)
 {
   auto found = std::find_if(_items.begin(), _items.end(),
-  [&id](MenuItemPtr item)
+  [&id](AMenuItemPtr item)
   {
     return item->getTag( "id" ) == std::to_string(id);
   });
@@ -63,9 +63,9 @@ bool Menu::removeItem(int id)
   return r;
 }
 
-MenuItemPtr Menu::getSelectedItem()
+AMenuItemPtr Menu::getSelectedItem()
 {
-  MenuItemPtr r;
+  AMenuItemPtr r;
 
   if ( cIndexIsValid() )
   {
@@ -75,15 +75,15 @@ MenuItemPtr Menu::getSelectedItem()
   return r;
 }
 
-MenuItemPtr Menu::find(int id)
+AMenuItemPtr Menu::find(int id)
 {
   auto found = std::find_if(_items.begin(), _items.end(),
-  [&id](MenuItemPtr item)
+  [&id](AMenuItemPtr item)
   {
     return item->getTag( "id" ) == std::to_string(id);
   });
 
-  return found == _items.end() ? MenuItemPtr() : *found;
+  return found == _items.end() ? AMenuItemPtr() : *found;
 }
 
 void Menu::render(TCODConsole &console)
@@ -95,7 +95,7 @@ void Menu::render(TCODConsole &console)
   int row = margin;
   int totalHeight = margin * 2;
 
-  std::sort(_items.begin(), _items.end(), [](MenuItemPtr l, MenuItemPtr r)
+  std::sort(_items.begin(), _items.end(), [](AMenuItemPtr l, AMenuItemPtr r)
   {
     return l->getTag("category") < r->getTag("category");
   });
@@ -103,7 +103,7 @@ void Menu::render(TCODConsole &console)
   std::string cat;
   for(size_t i = 0; i < _items.size(); ++i)
   {
-    MenuItemPtr item = _items[i];
+    AMenuItemPtr item = _items[i];
     int extraMargin = 0;
 
     if ( _showCategories )
@@ -261,7 +261,7 @@ int Menu::choose(TCODConsole& console)
 
   if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER)
   {
-    MenuItemPtr s = getSelectedItem();
+    AMenuItemPtr s = getSelectedItem();
     if ( s ) id = std::stol( s->getTag("id") );
   }
 
@@ -272,7 +272,7 @@ bool Menu::select(int index)
 {
   bool selected = false;
 
-  std::sort(_items.begin(), _items.end(), [](MenuItemPtr l, MenuItemPtr r)
+  std::sort(_items.begin(), _items.end(), [](AMenuItemPtr l, AMenuItemPtr r)
   {
     return l->getTag("category") < r->getTag("category");
   });

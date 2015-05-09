@@ -1,42 +1,48 @@
-#include "slot_menu_item.h"
+#include "aslot_menu_item.h"
 #include <alabel.h>
 #include <abar.h>
 
 namespace amarlon { namespace gui {
 
+/*
 
-SlotMenuItem::SlotMenuItem(int width, const std::string &name)
+  +-----------------------------------------------+
+  |                                               |
+  | SLOT_NAME : SLOT_VALUE                        |
+  |                                               |
+  +-----------------------------------------------+
+
+*/
+
+ASlotMenuItem::ASlotMenuItem(int width, const std::string &name)
   : _panel(width, 5)
   , _background(new ABar)
   , _slotName(new ALabel)
   , _slotValue(new ALabel)
 {
-  setHeight( _panel.getHeight() );
-  setWidth( _panel.getWidth() );
-
   _panel.setFrameColor(TCODColor::darkYellow);
 
   InitalizeNameLabel(name);
   initalizeValueLabel();
   initalizeSeparator();
-  initalizebackground();
+  initalizeBackground();
 }
 
-void SlotMenuItem::InitalizeNameLabel(const std::string &name)
+void ASlotMenuItem::InitalizeNameLabel(const std::string &name)
 {
   _slotName->setPosition(2,2);
   _slotName->setValue(name);
   _panel.addWidget(_slotName);
 }
 
-void SlotMenuItem::initalizeValueLabel()
+void ASlotMenuItem::initalizeValueLabel()
 {
   _slotValue->setPosition( _panel.getWidth() / 3, 2 );
   _slotValue->setColor(TCODColor::lightChartreuse);
   _panel.addWidget(_slotValue);
 }
 
-void SlotMenuItem::initalizeSeparator()
+void ASlotMenuItem::initalizeSeparator()
 {
   ALabel* sep = new ALabel;
   sep->setValue(":");
@@ -44,7 +50,7 @@ void SlotMenuItem::initalizeSeparator()
   _panel.addWidget(sep);
 }
 
-void SlotMenuItem::initalizebackground()
+void ASlotMenuItem::initalizeBackground()
 {
   _background->setPosition(1,1);
   _background->setDisplayValues(false);
@@ -54,27 +60,47 @@ void SlotMenuItem::initalizebackground()
   _panel.addWidget( _background );
 }
 
-void SlotMenuItem::setSlotName(const std::string &name)
+void ASlotMenuItem::setName(const std::string &name)
 {
   _slotName->setValue(name);
 }
 
-std::string SlotMenuItem::getSlotName()
+std::string ASlotMenuItem::getName()
 {
   return _slotName->getValue();
 }
 
-void SlotMenuItem::setValue(const std::string &value)
+void ASlotMenuItem::setHeight(int height)
+{  
+  _panel.setHeight(height);
+}
+
+void ASlotMenuItem::setWidth(int width)
+{  
+  _panel.setWidth(width);
+}
+
+int ASlotMenuItem::getHeight() const
+{
+  return _panel.getHeight();
+}
+
+int ASlotMenuItem::getWidth() const
+{
+  return _panel.getWidth();
+}
+
+void ASlotMenuItem::setValue(const std::string &value)
 {
   _slotValue->setValue(value);
 }
 
-std::string SlotMenuItem::getValue()
+std::string ASlotMenuItem::getValue() const
 {
   return _slotValue->getValue();
 }
 
-void SlotMenuItem::select()
+void ASlotMenuItem::select()
 {
   if ( !_selected )
   {
@@ -83,7 +109,7 @@ void SlotMenuItem::select()
   }
 }
 
-void SlotMenuItem::deselect()
+void ASlotMenuItem::deselect()
 {
   if ( _selected )
   {
@@ -92,7 +118,17 @@ void SlotMenuItem::deselect()
   }
 }
 
-void SlotMenuItem::render(TCODConsole &console)
+TCODColor ASlotMenuItem::getColor() const
+{
+  return _slotValue->getColor();
+}
+
+void ASlotMenuItem::setColor(const TCODColor& color)
+{
+  _slotValue->setColor(color);
+}
+
+void ASlotMenuItem::render(TCODConsole &console)
 {
   _panel.setPosition( getX(), getY() );
   _panel.render(console);

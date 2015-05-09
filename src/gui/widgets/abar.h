@@ -36,6 +36,12 @@ public:
   TCODColor getTextColor() const;
   void setTextColor(const TCODColor &getTextColor);
 
+  virtual int getWidth() const;
+  virtual int getHeight() const;
+
+  virtual void setWidth(int width);
+  virtual void setHeight(int height);
+
 private:
   std::string _name;
   float _value;
@@ -44,6 +50,8 @@ private:
   TCODColor _fgColor;
   bool _displayValues;
   TCODColor _textColor;
+  int _width;
+  int _height;
 
 };
 
