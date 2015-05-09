@@ -5,6 +5,7 @@ namespace amarlon { namespace gui {
 
 ALabelMenuItem::ALabelMenuItem()
   : _label(new ALabel)
+  , _selected(false)
 {  
   setColor(TCODColor::lightChartreuse);
 }
@@ -39,6 +40,11 @@ void ALabelMenuItem::deselect()
 
     _selected = false;
   }
+}
+
+bool ALabelMenuItem::isSelected() const
+{
+  return _selected;
 }
 
 std::string ALabelMenuItem::getValue() const

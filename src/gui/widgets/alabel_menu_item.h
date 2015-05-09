@@ -19,6 +19,7 @@ public:
 
   virtual void select();
   virtual void deselect();
+  virtual bool isSelected() const;
 
   virtual TCODColor getColor() const;
   virtual void setColor(const TCODColor& color);
@@ -34,6 +35,7 @@ public:
 
 private:
   ALabelPtr _label;
+  bool _selected;
 
 };
 

@@ -22,6 +22,7 @@ public:
 
   virtual void select();
   virtual void deselect();
+  virtual bool isSelected() const;
 
   virtual TCODColor getColor() const;
   virtual void setColor(const TCODColor&);
@@ -43,6 +44,7 @@ private:
   ABarPtr _background;
   ALabelPtr _slotName;
   ALabelPtr _slotValue;
+  bool _selected;
 
   void InitalizeNameLabel(const std::string &name);
   void initalizeValueLabel();

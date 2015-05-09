@@ -19,6 +19,7 @@ ASlotMenuItem::ASlotMenuItem(int width, const std::string &name)
   , _background(new ABar)
   , _slotName(new ALabel)
   , _slotValue(new ALabel)
+  , _selected(false)
 {
   _panel.setFrameColor(TCODColor::darkYellow);
 
@@ -116,6 +117,11 @@ void ASlotMenuItem::deselect()
     _background->setBgColor( TCODColor::black );
     _selected = false;
   }
+}
+
+bool ASlotMenuItem::isSelected() const
+{
+  return _selected;
 }
 
 TCODColor ASlotMenuItem::getColor() const

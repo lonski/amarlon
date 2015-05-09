@@ -10,21 +10,18 @@ namespace amarlon { namespace gui {
 class AMenuItem : public AWidget
 {
 public:
-  AMenuItem() : _selected(false) {}
+  AMenuItem() {}
   virtual ~AMenuItem() {}
 
   virtual void select() = 0;
   virtual void deselect() = 0;
-  virtual bool isSelected() const { return _selected; }
+  virtual bool isSelected() const = 0;
 
   virtual TCODColor getColor() const = 0;
   virtual void setColor(const TCODColor& color) = 0;
 
   virtual std::string getValue() const = 0;
   virtual void setValue(const std::string& value) = 0;
-
-protected:
-  bool _selected;
 
 };
 
