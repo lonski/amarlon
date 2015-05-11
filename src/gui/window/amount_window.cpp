@@ -9,7 +9,7 @@ AmountWindow::AmountWindow()
   setDefaults();
 }
 
-Window &AmountWindow::setDefaults()
+AWindow &AmountWindow::setDefaults()
 {
   _title = "Enter amount";
   _amount = 0;
@@ -18,7 +18,7 @@ Window &AmountWindow::setDefaults()
   return *this;
 }
 
-Window& AmountWindow::show()
+AWindow& AmountWindow::show()
 {
   TCOD_key_t key;
   _firstHit = true;

@@ -13,7 +13,7 @@ PickUpWindow::PickUpWindow()
   setDefaults();
 }
 
-Window &PickUpWindow::setDefaults()
+AWindow &PickUpWindow::setDefaults()
 {
   _menu.setTitle("Choose items to pick up");
   _menu.setPosition(gui::AWidget::GAME_SCREEN_CENTER);
@@ -29,7 +29,7 @@ Window &PickUpWindow::setDefaults()
   return *this;
 }
 
-Window& PickUpWindow::show()
+AWindow& PickUpWindow::show()
 {
   if ( _picker && _container)
   {

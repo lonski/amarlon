@@ -9,25 +9,24 @@ namespace amarlon { namespace gui {
 
 class APanel : public AWidget
 {
-public:
-  APanel();
-  APanel(int w, int h);
+public:  
+  APanel(int w = 1, int h = 1);
   ~APanel();
   virtual void render(TCODConsole& console);
   void addWidget(AWidget* widget);
   void addWidget(const AWidgetPtr& widget);
 
-  std::string setTitle() const;
-  void setTitle(const std::string &setTitle);
+  std::string getTitle() const;
+  void setTitle(const std::string &title);
 
   TCODColor getTitleColor() const;
-  void setTitleColor(const TCODColor &getTitleColor);
+  void setTitleColor(const TCODColor &titleColor);
 
   bool isFramed() const;
   void setFrame(bool frame);
 
   TCODColor getFrameColor() const;
-  void setFrameColor(const TCODColor &getFrameColor);
+  void setFrameColor(const TCODColor &frameColor);
 
   virtual void setWidth(int width);
   virtual void setHeight(int height);
@@ -35,7 +34,7 @@ public:
   virtual int getWidth() const;
   virtual int getHeight() const;
 
-  void removeAllWidgets();
+  virtual void removeAllWidgets();
 
 private:
   bool _frame;

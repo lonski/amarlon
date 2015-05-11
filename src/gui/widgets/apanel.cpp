@@ -3,14 +3,6 @@
 
 namespace amarlon { namespace gui {
 
-APanel::APanel()
-  : _frame(true)
-  , _frameColor(TCODColor::darkerOrange)
-  , _titleColor(TCODColor::lighterOrange)
-  , _panelConsole( new TCODConsole(1, 1) )
-{
-}
-
 APanel::APanel(int w, int h)
   : _frame(true)
   , _frameColor(TCODColor::darkerOrange)
@@ -63,7 +55,7 @@ void APanel::addWidget(const AWidgetPtr& widget)
   _widgets.push_back( widget );
 }
 
-std::string APanel::setTitle() const
+std::string APanel::getTitle() const
 {
   return _title;
 }

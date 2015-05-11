@@ -2,32 +2,39 @@
 #define INVENTORY_MANAGER_H
 
 #include <memory>
-#include <gui/widget/menu/menu.h>
-#include <gui/widget/menu/items_menu.h>
+#include <amenu.h>
+#include <items_menu.h>
+#include <inventory_panel.h>
+#include <body_manager.h>
 
 namespace amarlon {
   class Actor;
   class Engine;
 namespace gui {
 
-class BagManager
+class BagManager : public AInventoryPanel
 {
 public:
-  BagManager(ItemsMenuPtr bagMenu, MenuPtr bodyMenu);
+  BagManager(BodyManager &body, int w, int h);
 
   void manage();
   void fillBag();
+  void selectNext();
+  void selectPrevious();
+  void activate();
+  void deactivate();
 
 private:
   enum ItemOperation
   {
+    INVALID,
     DROP,
     EQUIP
   };
 
   std::map<int, Actor*> _bagItems;
   ItemsMenuPtr _bagMenu;
-  MenuPtr _bodyMenu;
+  BodyManager& _body;
 
   void render();
 

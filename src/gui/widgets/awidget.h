@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <string>
+#include <utils.h>
 
 class TCODConsole;
 
@@ -43,15 +44,34 @@ public:
   virtual void setWidth(int width) = 0;
   virtual void setHeight(int height) = 0;
 
-  virtual std::string getTag(const std::string& tagName);
-  virtual void setTag(const std::string& tagName, const std::string& tagValue);
+  template<typename T> inline T getProperty(const std::string& propertyName);
+  template<typename T> inline void setProperty(const std::string& propertyName, const T& propertyValue);
 
 private:
-  std::map<std::string, std::string> _tags;
+  std::map<std::string, std::string> _properties;
   int _x;
   int _y;  
 
 };
+
+template<typename T>
+inline T AWidget::getProperty(const std::string& propertyName)
+{
+  auto prop = _properties.find(propertyName);
+  return prop != _properties.end() ? fromStr<T>(prop->second) : fromStr<T>("");
+}
+
+template<typename T>
+inline void AWidget::setProperty(const std::string& propertyName, const T& propertyValue)
+{
+  _properties[propertyName] = toStr<T>(propertyValue);
+}
+
+template<>
+inline void AWidget::setProperty(const std::string& propertyName, const std::string& propertyValue)
+{
+  _properties[propertyName] = propertyValue;
+}
 
 typedef std::shared_ptr<AWidget> AWidgetPtr;
 typedef std::unique_ptr<AWidget> AWidgetUPtr;

@@ -8,15 +8,25 @@
 
 namespace amarlon { namespace gui {
 
-BodyManager::BodyManager(MenuPtr bodyMenu)
-  : _bodyMenu(bodyMenu)
+BodyManager::BodyManager(int w, int h)
+  : AInventoryPanel(w, h)
+  , _bodyMenu( new AMenu )
 {
+  setTitle("Equipped items");
+
+  _bodyMenu->setPosition(2,2);
+  addWidget(_bodyMenu);
 }
 
 void BodyManager::fillBodySlots()
-{
-  int currentIndex = _bodyMenu->getCurrentIndex();
-  _bodyMenu->clear();
+{  
+  int selectedSlot = -1;
+  if ( AMenuItemPtr selected = _bodyMenu->getSelectedItem() )
+  {
+    selectedSlot = selected->getProperty<int>("ItemSlotType");
+  }
+
+  _bodyMenu->removeAllItems();
 
   Wearer* wearer = Actor::Player->getFeature<Wearer>();
   assert(wearer);
@@ -31,33 +41,35 @@ void BodyManager::fillBodySlots()
       std::string slotValue = eq ? eq->getName() : "";
       std::string slotName = ItemSlotType2Str(i);
 
-      ASlotMenuItemPtr newSlot( new ASlotMenuItem( _bodyMenu->getWidth() - 4 ) );
+      ASlotMenuItemPtr newSlot( new ASlotMenuItem( getWidth() - 4 ) );
       newSlot->setName( slotName );
       newSlot->setValue( slotValue );
-      newSlot->setTag( "id", std::to_string(i) );
+      newSlot->setProperty<int>( "ItemSlotType", i );
 
       _bodyMenu->addItem( newSlot );
+
+      if ( i == selectedSlot ) _bodyMenu->select(newSlot);
     }
   }
-
-  if ( currentIndex > -1 ) _bodyMenu->select(currentIndex);
-
 }
 
 void BodyManager::manage()
-{
-  ItemSlotType slot = (ItemSlotType)std::stol( _bodyMenu->getSelectedItem()->getTag("id") );
-
-  if ( Actor::Player->getFeature<Wearer>()->isEquipped( slot ) )
+{  
+  if ( AMenuItemPtr item = _bodyMenu->getSelectedItem() )
   {
-    unequipItem(slot);
-  }
-  else
-  {
-    chooseAndEquipItem(slot);
-  }
+    ItemSlotType slot = static_cast<ItemSlotType>( item->getProperty<int>("ItemSlotType") );
 
-  fillBodySlots();
+    if ( Actor::Player->getFeature<Wearer>()->isEquipped( slot ) )
+    {
+      unequipItem(slot);
+    }
+    else
+    {
+      chooseAndEquipItem(slot);
+    }
+
+    fillBodySlots();
+  }
 }
 
 // === UNEQUIP === //
@@ -133,6 +145,52 @@ void BodyManager::equipItem(Actor* toEquip)
   {
     msgBox( "Cannot remove item from inventory!", gui::MsgType::Error );
   }
+}
+
+AMenuItemPtr BodyManager::getSelectedItem()
+{
+  return _bodyMenu->getSelectedItem();
+}
+
+void BodyManager::selectNext()
+{
+  _bodyMenu->selectNext();
+}
+
+void BodyManager::selectPrevious()
+{
+  _bodyMenu->selectPrevious();
+}
+
+void BodyManager::activate()
+{
+  AInventoryPanel::activate();
+  _bodyMenu->selectNext();
+}
+
+void BodyManager::deactivate()
+{
+  AInventoryPanel::deactivate();
+  _bodyMenu->deselect();
+}
+
+bool BodyManager::setSlotValue(ItemSlotType slot, const std::string& value)
+{
+  bool foundSlotAndSetName = false;
+
+  auto itemIter = std::find_if(_bodyMenu->begin(), _bodyMenu->end(),
+                               [&slot](const AMenuItemPtr& item)
+                               {
+                                  return item->getProperty<int>("ItemSlotType") == static_cast<int>(slot);
+                               });
+
+  if ( itemIter != _bodyMenu->end() )
+  {
+    (*itemIter)->setValue(value);
+    foundSlotAndSetName = true;
+  }
+
+  return foundSlotAndSetName;
 }
 
 std::vector<Actor *> BodyManager::getEquipableItemsList(ItemSlotType slot)

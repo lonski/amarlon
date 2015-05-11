@@ -5,7 +5,7 @@
 #include <functional>
 #include <libtcod.hpp>
 #include "gui/widget/menu/items_menu.h"
-#include "gui/window/window.h"
+#include <awindow.h>
 
 namespace amarlon {
 
@@ -14,16 +14,16 @@ class Container;
 
 namespace gui {
 
-class PickUpWindow : public Window
+class PickUpWindow : public AWindow
 {
 private:
   friend class WindowManager;
   PickUpWindow();
 
 public:
-  virtual Window& show();
-  virtual Window& setDefaults();
-  static  WindowId getId() { return Window::PICKUP; }
+  virtual AWindow& show();
+  virtual AWindow& setDefaults();
+  static  WindowId getId() { return AWindow::PICKUP; }
 
   /**
    * @param picker - actor who picks (player)

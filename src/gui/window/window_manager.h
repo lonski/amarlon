@@ -3,7 +3,8 @@
 
 #include <map>
 #include <memory>
-#include "gui/window/window.h"
+#include <awindow.h>
+
 namespace amarlon { namespace gui {
 
 class WindowManager
@@ -20,7 +21,7 @@ public:
   T& getWindow();
 
 private:
-  std::map<Window::WindowId, WindowPtr> _windows;
+  std::map<AWindow::WindowId, WindowPtr> _windows;
 
 };
 

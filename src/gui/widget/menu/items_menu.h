@@ -35,8 +35,8 @@ public:
 
       std::shared_ptr<MenuItem_t> newItem( new MenuItem_t );
       newItem->setValue( name );
-      newItem->setTag("category", category);
-      newItem->setTag("id", std::to_string(++id));
+      newItem->setProperty<std::string>("category", category);
+      newItem->setProperty<int>("id", ++id);
 
       addItem(newItem);
 

@@ -9,7 +9,8 @@
 #include <gui/widget/menu/items_menu.h>
 #include <engine.h>
 #include <world/map.h>
-#include <gui/window/amount_window.h>
+#include <amount_window.h>
+#include <amenu.h>
 
 namespace amarlon { namespace gui {
 
@@ -17,32 +18,26 @@ InventoryWindow::InventoryWindow()
   : windowHeight( Engine::screenHeight )
   , windowWidth( Engine::screenWidth )
   , _activePanel(INVENTORY)
-{
+{  
   initalize();
 }
 
 void InventoryWindow::initalize()
 {
-  ItemsMenuPtr bagMenu( new ItemsMenu(windowWidth / 2, windowHeight) );
-  bagMenu->setPosition(windowWidth / 2, 0);
-  bagMenu->setTitle("Inventory");
+  _bodyMgr.reset( new BodyManager(windowWidth / 2, windowHeight) );
+  _bagMgr.reset( new BagManager( *_bodyMgr, windowWidth / 2, windowHeight ) );
+  _bagMgr->setPosition(windowWidth / 2, 0);
 
-  MenuPtr bodyMenu( new Menu(windowWidth / 2, windowHeight) );
-  bodyMenu->setTitle("Equipped items");
-
-  _panels[INVENTORY] = bagMenu;
-  _panels[BODYSLOTS] = bodyMenu;
-
-  _bagMgr.reset( new BagManager( bagMenu, bodyMenu ) );
-  _bodyMgr.reset( new BodyManager( bodyMenu ) );
+  _panels[BODYSLOTS] = _bodyMgr;
+  _panels[INVENTORY] = _bagMgr;
 }
 
-Window &InventoryWindow::setDefaults()
+AWindow &InventoryWindow::setDefaults()
 {
   return *this;
 }
 
-Window& InventoryWindow::show()
+AWindow& InventoryWindow::show()
 {
   _bodyMgr->fillBodySlots();
   _bagMgr->fillBag();
@@ -75,6 +70,8 @@ void InventoryWindow::render()
 
 void InventoryWindow::handleKey(TCOD_key_t key)
 {
+  render();
+
   switch ( key.vk )
   {
     case TCODK_TAB:
@@ -109,19 +106,17 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     case TCODK_ENTER:
     case TCODK_KPENTER:
     {
-      if ( _panels[_activePanel]->getSelectedItem() )
+      switch( _activePanel)
       {
-        switch( _activePanel)
-        {
-          case INVENTORY: _bagMgr->manage(); break;
-          case BODYSLOTS: _bodyMgr->manage(); _bagMgr->fillBag(); break;
-        }
+        case INVENTORY: _bagMgr->manage(); break;
+        case BODYSLOTS: _bodyMgr->manage(); _bagMgr->fillBag(); break;
       }
       break;
     }
     default:;
   }
 
+  render();
 }
 
 void InventoryWindow::activateNextPanel()

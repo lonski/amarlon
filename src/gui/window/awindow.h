@@ -2,10 +2,11 @@
 #define WINDOW_H
 
 #include <memory>
+#include <apanel.h>
 
 namespace amarlon { namespace gui {
 
-class Window
+class AWindow : public APanel
 {
 public:
   /**
@@ -16,19 +17,20 @@ public:
     INVENTORY,
     AMOUNT,
     PICKUP,
-    TEXT
+    TEXT,
+    MENU
   };
 
   /**
    * @brief executes window and waits for user input
    */
-  virtual Window& show() = 0;
+  virtual AWindow& show() = 0;
 
   /**
    * @brief sets default values of window. Is called everytime when
    *        window is retrieved via WindowManager.
    */
-  virtual Window& setDefaults() { return *this; }
+  virtual AWindow& setDefaults() { return *this; }
 
   /**
    * @brief a dynamic cast wrapper, which is intended to use
@@ -37,17 +39,19 @@ public:
   template<typename T>
   T& downcast();
 
+ virtual ~AWindow() {}
+
 protected:
-  Window() {}
+  AWindow() {}
 
 };
 
-typedef std::shared_ptr<Window> WindowPtr;
+typedef std::shared_ptr<AWindow> WindowPtr;
 
 // === IMPLEMENTATION === //
 
 template<typename T>
-T& Window::downcast()
+T& AWindow::downcast()
 {
   T* t = dynamic_cast<T*>(this);
   assert(t != nullptr);

@@ -3,10 +3,10 @@
 
 #include <memory>
 #include <libtcod.hpp>
-#include <gui/widget/menu/menu.h>
 #include <gui/window/inventory_window/bag_manager.h>
 #include <gui/window/inventory_window/body_manager.h>
-#include <gui/window/window.h>
+#include <inventory_panel.h>
+#include <awindow.h>
 
 namespace amarlon {
 
@@ -15,7 +15,7 @@ class Engine;
 
 namespace gui {
 
-class InventoryWindow : public Window
+class InventoryWindow : public AWindow
 {
   friend class WindowManager;
   InventoryWindow();
@@ -24,10 +24,9 @@ public:
   const int windowHeight;
   const int windowWidth;
 
-  virtual Window& show();
-  virtual Window& setDefaults();
-  static WindowId getId() { return Window::INVENTORY; }
-
+  virtual AWindow& show();
+  virtual AWindow& setDefaults();
+  static WindowId getId() { return AWindow::INVENTORY; }
 
 private:
   enum WindowPanel
@@ -36,7 +35,7 @@ private:
     INVENTORY
   };
 
-  std::map<WindowPanel, MenuPtr> _panels;
+  std::map<WindowPanel, AInventoryPanelPtr> _panels;
   WindowPanel _activePanel;
 
   BagManagerPtr _bagMgr;

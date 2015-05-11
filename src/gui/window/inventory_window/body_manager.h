@@ -2,17 +2,19 @@
 #define BODY_MANAGER_H
 
 #include <memory>
-#include "gui/widget/menu/menu.h"
-#include "wearer/item_slot_type.h"
+#include <string>
+#include <item_slot_type.h>
+#include <inventory_panel.h>
+#include <amenu.h>
 
 namespace amarlon {
   class Actor;
 namespace gui {
 
-class BodyManager
+class BodyManager : public AInventoryPanel
 {
-public:
-  BodyManager(MenuPtr _bodyMenu);
+public:  
+  BodyManager(int w, int h);
 
   void manage();
   void fillBodySlots();
@@ -20,8 +22,15 @@ public:
   void clearSelectedItemSlotValue();
   std::vector<Actor *> getEquipableItemsList(ItemSlotType slot);
   void equipItem(Actor* toEquip);
+  AMenuItemPtr getSelectedItem();
+  void selectNext();
+  void selectPrevious();
+  void activate();
+  void deactivate();
+  bool setSlotValue(ItemSlotType slot, const std::string& value);
+
 private:
-  MenuPtr _bodyMenu;
+  AMenuPtr _bodyMenu;
 
   void unequipItem(ItemSlotType slot);
   void chooseAndEquipItem(ItemSlotType slot);

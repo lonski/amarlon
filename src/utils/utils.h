@@ -42,6 +42,23 @@ static inline std::vector<std::string> explode(const std::string& str, char ch)
 }
 
 template<typename T>
+static T fromStr(const std::string& s)
+{
+  std::istringstream is(s);
+  T t;
+  is >> t;
+  return t;
+}
+
+template<typename T>
+static std::string toStr(const T& t)
+{
+  std::ostringstream os;
+  os << t;
+  return os.str();
+}
+
+template<typename T>
 std::string to_stringp(T t, int prec = 1)
 {
   std::stringstream ss;

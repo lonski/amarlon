@@ -8,7 +8,7 @@ TextWindow::TextWindow()
   setDefaults();
 }
 
-Window& TextWindow::setDefaults()
+AWindow& TextWindow::setDefaults()
 {
   _text = "";
   _centerGameWindow = true;
@@ -17,7 +17,7 @@ Window& TextWindow::setDefaults()
   return *this;
 }
 
-Window& TextWindow::show()
+AWindow& TextWindow::show()
 {
   TCOD_key_t key;
   key.vk = TCODK_NONE;

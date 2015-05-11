@@ -3,19 +3,19 @@
 
 #include <string>
 #include <libtcod.hpp>
-#include <gui/window/window.h>
+#include <awindow.h>
 
 namespace amarlon { namespace gui {
 
-class AmountWindow : public Window
+class AmountWindow : public AWindow
 {
   friend class WindowManager;
   AmountWindow();
 
 public:
-  virtual Window& show();
-  virtual Window& setDefaults();
-  static  WindowId getId() { return Window::AMOUNT; }
+  virtual AWindow& show();
+  virtual AWindow& setDefaults();
+  static  WindowId getId() { return AWindow::AMOUNT; }
 
   /**
    * @brief sets maximum amount that can be picked, also it will be

@@ -12,7 +12,7 @@ class ResizeableTextWindow : public TextWindow
   ResizeableTextWindow();
 
 public:
-  virtual Window& setDefaults();
+  virtual AWindow& setDefaults();
 
 protected:
   virtual void displayText();

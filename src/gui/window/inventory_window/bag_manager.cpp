@@ -7,13 +7,19 @@
 #include <engine.h>
 #include <world/map.h>
 #include <utils/messenger.h>
+#include <menu_window.h>
 
 namespace amarlon { namespace gui {
 
-BagManager::BagManager(ItemsMenuPtr bagMenu, MenuPtr bodyMenu)
-  : _bagMenu(bagMenu)
-  , _bodyMenu(bodyMenu)
+BagManager::BagManager(BodyManager& body, int w, int h)
+  : AInventoryPanel(w, h)
+  , _bagMenu( new ItemsMenu )
+  , _body(body)
 {
+  _bagMenu->setPosition(2,2);
+  _bagMenu->setFrame(false);
+  addWidget(_bagMenu);
+  setTitle("Inventory");
   fillBag();
 }
 
@@ -26,58 +32,75 @@ void BagManager::fillBag()
   _bagItems = _bagMenu->fillWithItems<ALabelMenuItem>( items );
 }
 
-void BagManager::render()
+void BagManager::selectNext()
 {
-  _bagMenu->render( *TCODConsole::root );
-  _bodyMenu->render( *TCODConsole::root );
+  _bagMenu->selectNext();
+}
+
+void BagManager::selectPrevious()
+{
+  _bagMenu->selectPrevious();
+}
+
+void BagManager::activate()
+{
+  AInventoryPanel::activate();
+  _bagMenu->selectNext();
+}
+
+void BagManager::deactivate()
+{
+  AInventoryPanel::deactivate();
+  _bagMenu->deactivate();
 }
 
 // === OPERATION CHOOSING === //
 void BagManager::manage()
 {
   AMenuItemPtr menuItem = _bagMenu->getSelectedItem();
-  Actor* selectedItem = _bagItems[ std::stol( menuItem->getTag("id") ) ];
+  Actor* selectedItem = _bagItems[ menuItem->getProperty<int>("id") ];
 
   if ( selectedItem )
   {
-    menuItem->deselect(); //needed to repaint black background
-    render();
-
     ItemOperation operation = chooseItemOperationFromMenu(selectedItem);
 
     switch(operation)
     {
       case EQUIP: equip( selectedItem ); break;
       case DROP: drop( selectedItem ); break;
+      default:;
     }
 
     fillBag();
-    render();
   }
 }
 
 BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selected)
 {
-  MenuPtr itemMenu( new Menu(40, 1) );
-  itemMenu->setPosition(gui::AWidget::WINDOW_CENTER);
-  itemMenu->setTitle( selected->getName() );
+  MenuWindow& menu = Engine::instance().windowManager().getWindow<MenuWindow>();
+  menu.setTitle( selected->getName() );
+  menu.setPosition( gui::AWidget::WINDOW_CENTER );
 
   if ( selected->getFeature<Pickable>()->isEquippable() )
   {
     ALabelMenuItemPtr itemEquip( new ALabelMenuItem );
     itemEquip->setValue("Equip");
-    itemEquip->setTag("id", std::to_string(EQUIP));
-    itemMenu->addItem( itemEquip );
+    itemEquip->setProperty<int>("operation", EQUIP);
+
+    menu.addMenuItem( itemEquip );
   }
 
   ALabelMenuItemPtr itemDrop( new ALabelMenuItem );
   itemDrop->setValue("Drop");
-  itemDrop->setTag("id", std::to_string(DROP));
-  itemMenu->addItem( itemDrop );
+  itemDrop->setProperty<int>("operation", DROP);
 
-  itemMenu->selectNext();
+  menu.addMenuItem( itemDrop );
 
-  return static_cast<ItemOperation>(itemMenu->choose(*TCODConsole::root));;
+  menu.show();
+  AMenuItemPtr sItem = menu.getSelectedItem();
+
+  return sItem ? static_cast<ItemOperation>(sItem->getProperty<int>("operation"))
+               : INVALID;
 }
 // ~~~ OPERATION CHOOSING ~~~ //
 
@@ -126,31 +149,33 @@ bool BagManager::canEquip(ItemSlotType slot)
 }
 
 void BagManager::doTheEquip(Actor* item)
-{
+{  
   ItemSlotType slot = item->getFeature<Pickable>()->getItemSlot();
   Wearer* wearer = Actor::Player->getFeature<Wearer>();
   Container* container = Actor::Player->getFeature<Container>();
 
-  ASlotMenuItemPtr slotItem = std::dynamic_pointer_cast<ASlotMenuItem>( _bodyMenu->find((int)slot) );
-  assert( slotItem );
-  slotItem->setValue("");
-
-  if ( container->remove( item ) )
+  if ( _body.setSlotValue(slot, "" ) )
   {
-    if ( wearer->equip( item ) )
+    if ( container->remove( item ) )
     {
-      slotItem->setValue( item->getName() );
+      if ( wearer->equip( item ) )
+      {
+        _body.setSlotValue(slot, item->getName() );
+      }
+      else
+      {
+        msgBox( "Cannot equip item!", gui::MsgType::Error );
+      }
     }
     else
     {
-      msgBox( "Cannot equip item!", gui::MsgType::Error );
+      msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
     }
   }
   else
   {
-    msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
+    msgBox( "Proper item slot not available.", gui::MsgType::Error );
   }
-
 }
 // ~~~ EQUIP ~~~ //
 

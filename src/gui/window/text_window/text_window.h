@@ -3,18 +3,18 @@
 
 #include <string>
 #include <apanel.h>
-#include <gui/window/window.h>
+#include <awindow.h>
 
 namespace amarlon { namespace gui {
 
-class TextWindow : public Window
+class TextWindow : public AWindow
 {
 public:
   TextWindow();
 
-  virtual Window& show();
-  virtual Window& setDefaults();
-  static WindowId getId() { return Window::TEXT; }
+  virtual AWindow& show();
+  virtual AWindow& setDefaults();
+  static WindowId getId() { return AWindow::TEXT; }
 
   std::string getWindowText() const;
   TextWindow& setWindowText(const std::string &text);

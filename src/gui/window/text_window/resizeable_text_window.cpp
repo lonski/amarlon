@@ -10,7 +10,7 @@ ResizeableTextWindow::ResizeableTextWindow()
   setDefaults();
 }
 
-Window& ResizeableTextWindow::setDefaults()
+AWindow& ResizeableTextWindow::setDefaults()
 {
   _panel.reset( new APanel );
   _panel->setFrame(true);

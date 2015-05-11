@@ -43,15 +43,4 @@ void AWidget::setPosition(AWidget::PositionFlag position)
   }
 }
 
-std::string AWidget::getTag(const std::string &tagName)
-{
-  auto tag = _tags.find(tagName);
-  return tag == _tags.end() ? "" : tag->second;
-}
-
-void AWidget::setTag(const std::string &tagName, const std::string &tagValue)
-{
-  _tags[tagName] = tagValue;
-}
-
 }}

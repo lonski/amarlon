@@ -49,7 +49,7 @@ bool Menu::removeItem(int id)
   auto found = std::find_if(_items.begin(), _items.end(),
   [&id](AMenuItemPtr item)
   {
-    return item->getTag( "id" ) == std::to_string(id);
+    return item->getProperty<int>( "id" ) == id;
   });
 
   bool r = found != _items.end();
@@ -80,7 +80,7 @@ AMenuItemPtr Menu::find(int id)
   auto found = std::find_if(_items.begin(), _items.end(),
   [&id](AMenuItemPtr item)
   {
-    return item->getTag( "id" ) == std::to_string(id);
+    return item->getProperty<int>( "id" ) == id;
   });
 
   return found == _items.end() ? AMenuItemPtr() : *found;
@@ -97,7 +97,7 @@ void Menu::render(TCODConsole &console)
 
   std::sort(_items.begin(), _items.end(), [](AMenuItemPtr l, AMenuItemPtr r)
   {
-    return l->getTag("category") < r->getTag("category");
+    return l->getProperty<std::string>("category") < r->getProperty<std::string>("category");
   });
 
   std::string cat;
@@ -108,7 +108,7 @@ void Menu::render(TCODConsole &console)
 
     if ( _showCategories )
     {
-      std::string itemCat = item->getTag("category");
+      std::string itemCat = item->getProperty<std::string>("category");
       if ( itemCat != cat )
       {
         cat = itemCat;
@@ -262,7 +262,7 @@ int Menu::choose(TCODConsole& console)
   if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER)
   {
     AMenuItemPtr s = getSelectedItem();
-    if ( s ) id = std::stol( s->getTag("id") );
+    if ( s ) id = s->getProperty<int>("id");
   }
 
   return id;
@@ -274,7 +274,7 @@ bool Menu::select(int index)
 
   std::sort(_items.begin(), _items.end(), [](AMenuItemPtr l, AMenuItemPtr r)
   {
-    return l->getTag("category") < r->getTag("category");
+    return l->getProperty<std::string>("category") < r->getProperty<std::string>("category");
   });
 
   for(auto i = _items.begin(); i != _items.end(); ++i) (*i)->deselect();

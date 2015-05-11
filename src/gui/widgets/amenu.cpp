@@ -37,6 +37,11 @@ AMenuItemPtr AMenu::getSelectedItem()
   return iter != _items.end() ? *iter : AMenuItemPtr();
 }
 
+void AMenu::removeAllItems()
+{
+  _items.clear();
+}
+
 void AMenu::selectNext()
 {
   auto iter = findSelectedItem();
@@ -64,6 +69,28 @@ void AMenu::selectPrevious()
   else
   {
     selectFirst();
+  }
+}
+
+void AMenu::deselect()
+{
+  auto item = getSelectedItem();
+  if ( item )
+  {
+    item->deselect();
+  }
+}
+
+void AMenu::select(AMenuItemPtr item)
+{
+  if ( auto selected = getSelectedItem() )
+  {
+    selected->deselect();
+  }
+
+  if ( std::find(_items.begin(), _items.end(), item) != _items.end() )
+  {
+    item->select();
   }
 }
 

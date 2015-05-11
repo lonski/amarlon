@@ -6,11 +6,9 @@
 #include <algorithm>
 #include <libtcod.hpp>
 #include <awidget.h>
+#include <amenu_item.h>
 
 namespace amarlon { namespace gui {
-
-class AMenuItem;
-typedef std::shared_ptr<AMenuItem> AMenuItemPtr;
 
 class AMenu : public AWidget
 {
@@ -21,9 +19,12 @@ public:
   virtual void addItem(AMenuItemPtr item);
   virtual bool removeItem(AMenuItemPtr item);
   virtual AMenuItemPtr getSelectedItem();
+  virtual void removeAllItems();
 
   virtual void selectNext();
   virtual void selectPrevious();
+  virtual void deselect();
+  virtual void select(AMenuItemPtr item);
 
   virtual void render(TCODConsole& console);
 
@@ -34,6 +35,9 @@ public:
   virtual void setHeight(int height);
 
   virtual size_t getItemCount() const;
+
+  auto begin() const { return _items.begin(); }
+  auto end() const { return _items.end(); }
 
 private:
   std::vector<AMenuItemPtr> _items;
@@ -49,6 +53,8 @@ private:
   }
 
 };
+
+typedef std::shared_ptr<AMenu> AMenuPtr;
 
 }}
 

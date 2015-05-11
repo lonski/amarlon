@@ -42,6 +42,7 @@ set(HEADER_FILES
     data_gateways/actor_descriptions.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
+    gui/window/inventory_window/inventory_panel.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h
@@ -54,7 +55,8 @@ set(HEADER_FILES
     gui/window/pick_up_window.h
     gui/window/text_window/text_window.h
     gui/window/text_window/resizeable_text_window.h
-    gui/window/window.h
+    gui/window/awindow.h
+    gui/window/menu_window.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -124,11 +126,11 @@ set(SOURCE_FILES
     gui/widget/menu/menu.cpp    
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
+    gui/window/menu_window.cpp
     gui/gui.cpp
     gui/window/pick_up_window.cpp
     gui/window/text_window/text_window.cpp
-    gui/window/text_window/resizeable_text_window.cpp
-    gui/window/window.cpp
+    gui/window/text_window/resizeable_text_window.cpp    
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
     utils/target_selector/target_selector.cpp
