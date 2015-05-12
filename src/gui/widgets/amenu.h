@@ -36,10 +36,12 @@ public:
 
   virtual size_t getItemCount() const;
 
-  auto begin() const { return _items.begin(); }
-  auto end() const { return _items.end(); }
+  ConstItemsIterator begin() const { return _items.begin(); }
+  ConstItemsIterator end() const { return _items.end(); }
 
 private:
+  typedef std::vector<AMenuItemPtr>::iterator ItemsIterator;
+  typedef std::vector<AMenuItemPtr>::const_iterator ConstItemsIterator;
   std::vector<AMenuItemPtr> _items;
   bool _autosize;
   int _width;
@@ -47,7 +49,7 @@ private:
 
   int calculateWidth() const;
   void selectFirst();
-  auto findSelectedItem()
+  ItemsIterator findSelectedItem()
   {
     return std::find_if(_items.begin(), _items.end(), [](auto& i){ return i->isSelected(); } );
   }
