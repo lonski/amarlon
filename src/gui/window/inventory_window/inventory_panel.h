@@ -16,7 +16,7 @@ public:
   }
 
   virtual ~AInventoryPanel() {}
-  virtual isActive() const { return _active; }
+  virtual bool isActive() const { return _active; }
   virtual void activate() { _active = true; }
   virtual void deactivate() { _active = false; }
 
