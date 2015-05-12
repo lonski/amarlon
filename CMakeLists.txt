@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
 include(amarlon_macros)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++1y -g -O2 -Wall -Wextra -Wformat-security -pipe")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -g -O2 -Wall -Wextra -Wformat-security -pipe")
 
 find_package(tcod HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${TCOD_INCLUDE_DIRS})
