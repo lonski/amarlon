@@ -47,7 +47,7 @@ private:
 
   int calculateWidth() const;
   void selectFirst();
-  inline auto findSelectedItem()
+  auto findSelectedItem()
   {
     return std::find_if(_items.begin(), _items.end(), [](auto& i){ return i->isSelected(); } );
   }
