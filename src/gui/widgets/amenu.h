@@ -52,7 +52,7 @@ private:
   void selectFirst();
   ItemsIterator findSelectedItem()
   {
-    return std::find_if(_items.begin(), _items.end(), [](auto& i){ return i->isSelected(); } );
+    return std::find_if(_items.begin(), _items.end(), [](AMenuItemPtr& i){ return i->isSelected(); } );
   }
 
 };
