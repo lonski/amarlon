@@ -13,6 +13,9 @@ namespace amarlon { namespace gui {
 class AMenu : public AWidget
 {
 public:
+  typedef std::vector<AMenuItemPtr>::iterator ItemsIterator;
+  typedef std::vector<AMenuItemPtr>::const_iterator ConstItemsIterator;
+  
   AMenu();
   ~AMenu();
 
@@ -40,8 +43,6 @@ public:
   ConstItemsIterator end() const { return _items.end(); }
 
 private:
-  typedef std::vector<AMenuItemPtr>::iterator ItemsIterator;
-  typedef std::vector<AMenuItemPtr>::const_iterator ConstItemsIterator;
   std::vector<AMenuItemPtr> _items;
   bool _autosize;
   int _width;
