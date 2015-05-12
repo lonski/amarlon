@@ -6,6 +6,8 @@ ALabel::ALabel()
   : _color(TCODColor::white)
   , _bgcolor(TCODColor::black)
   , _autosize(true)
+  , _width(0)
+  , _height(0)
 {
 }
 
