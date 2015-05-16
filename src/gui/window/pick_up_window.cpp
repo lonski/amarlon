@@ -1,23 +1,28 @@
 #include "pick_up_window.h"
-#include "alabel_menu_item.h"
-#include "gui/message_box.h"
-#include "gui/window/amount_window.h"
-#include "actor/actor_features/container.h"
-#include "utils/item_picker.h"
-#include "utils/amarlon_except.h"
+#include <alabel_menu_item.h>
+#include <message_box.h>
+#include <amount_window.h>
+#include <container.h>
+#include <item_picker.h>
+#include <amarlon_except.h>
+#include <actor.h>
 
 namespace amarlon { namespace gui {
 
 PickUpWindow::PickUpWindow()
+  : _menu( new AMenu )
 {
-  setDefaults();
+  addWidget(_menu);
+  setDefaults();  
 }
 
 AWindow &PickUpWindow::setDefaults()
 {
-  _menu.setTitle("Choose items to pick up");
-  _menu.setPosition(gui::AWidget::GAME_SCREEN_CENTER);
-  _menu.setShowCategories(false);
+  setTitle("Choose items to pick up");
+  setPosition(gui::AWidget::GAME_SCREEN_CENTER);
+  setFrame(true);
+  setHeight(2);
+  setWidth(40);
 
   _picker = nullptr;
   _container = nullptr;
@@ -29,44 +34,112 @@ AWindow &PickUpWindow::setDefaults()
   return *this;
 }
 
+void PickUpWindow::init()
+{
+  setWidth ( std::max( _menu->getWidth() + 4, getWidth() ) );
+  setHeight( std::max( _menu->getHeight() + 4, getHeight() ) );
+
+  _menu->setPosition( isFramed() ? 2 : 0,
+                      isFramed() ? 2 : 0 );
+}
+
 AWindow& PickUpWindow::show()
 {
   if ( _picker && _container)
   {
-    std::map<int, Actor*> mappedItems = _menu.fillWithItems<gui::ALabelMenuItem>( _container->content(&_filterFunc) );
-    _menu.selectFirst();
 
-    int choosen(-1);
-    do
+    fillMenuWithItems();
+    init();
+    _menu->selectNext();
+
+    TCODConsole& console = *TCODConsole::root;
+    TCOD_key_t key;
+
+    while( !(key.vk == TCODK_ESCAPE) &&
+           !(TCODConsole::isWindowClosed()))
     {
-      Engine::instance().render();
-      choosen = _menu.choose( *TCODConsole::root );
+      render(console);
+      console.flush();
 
-      auto found = mappedItems.find( choosen );
-      if ( found != mappedItems.end() )
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+
+      switch ( key.vk )
       {
-        Actor* toPick = found->second;
-        std::string itemName = toPick->getName();
-
-        try
+        case TCODK_DOWN:
+        case TCODK_KP2:
         {
-          int pickedAmount = ItemPicker(_picker, toPick, _container).pick();
-
-          mappedItems = _menu.fillWithItems<gui::ALabelMenuItem>( _container->content(&_filterFunc) );
-          _menu.selectFirst();
-
-          _afterPickUpAction(itemName, pickedAmount);
+          _menu->selectNext();
+          break;
         }
-        catch( inventory_full& e )
+        case TCODK_UP:
+        case TCODK_KP8:
         {
-          _inventoryFullAction(e.getItemName());
+          _menu->selectPrevious();
+          break;
         }
+        case TCODK_ENTER:
+        case TCODK_KPENTER:
+        {
+          choose();
+          Engine::instance().render();
+          break;
+        }
+
+        default:;
       }
     }
-    while ( choosen != -1 && !mappedItems.empty() );
+
   }
 
   return *this;
+}
+
+void PickUpWindow::choose()
+{
+  if ( Actor* toPick = getSelectedActor() )
+  {
+    try
+    {
+      _afterPickUpAction(toPick->getName(),
+                         ItemPicker(_picker, toPick, _container).pick());
+
+      fillMenuWithItems();
+    }
+    catch( inventory_full& e )
+    {
+      _inventoryFullAction(e.getItemName());
+    }
+  }
+}
+
+Actor* PickUpWindow::getSelectedActor()
+{
+  Actor* toPick = nullptr;
+
+  if ( AMenuItemPtr mItem = _menu->getSelectedItem() )
+  {
+    std::function<bool(Actor*)> filter = [&](Actor* a)
+    {
+      return a->getInstanceId() == mItem->getProperty<unsigned>("item_instance_id");
+    };
+
+    std::vector<Actor*> vectorToPick = _container->content(&filter);
+    toPick =  vectorToPick.empty() ? nullptr : vectorToPick.front();
+  }
+
+  return toPick;
+}
+
+void PickUpWindow::fillMenuWithItems()
+{
+    _menu->removeAllItems();
+    for(Actor* actor : _container->content(&_filterFunc))
+    {
+        AMenuItemPtr mItem( new ALabelMenuItem );
+        mItem->setValue(actor->getName());
+        mItem->setProperty<unsigned>("item_instance_id", actor->getInstanceId());
+        _menu->addItem(mItem);
+    }
 }
 
 PickUpWindow& PickUpWindow::setPicker(Actor *picker)
@@ -101,7 +174,7 @@ PickUpWindow &PickUpWindow::setInventoryFullAction(std::function<void (const std
 
 PickUpWindow &PickUpWindow::setWindowTitle(const std::string &title)
 {
-  _menu.setTitle(title);
+  setTitle(title);
   return *this;
 }
 

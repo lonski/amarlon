@@ -152,7 +152,7 @@ bool Container::remove(Actor *actor)
   return found;
 }
 
-std::vector<Actor *> Container::content(std::function<bool(Actor*)>* filterFun/*bool(*filterFun)(Actor*)*/ )
+std::vector<Actor *> Container::content(std::function<bool(Actor*)>* filterFun)
 {
   std::vector<Actor *> items;
 

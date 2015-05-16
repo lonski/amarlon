@@ -5,12 +5,14 @@ namespace amarlon {
 
 ActorDB Actor::DB;
 Actor* Actor::Player(nullptr);
+unsigned Actor::InstanceCounter = 0;
 
 Actor::Actor(ActorType aId, int x, int y, Map *map)
   : _id(aId)
   , _x(x)
   , _y(y)
   , _map(map)
+  , _instanceId( ++Actor::InstanceCounter )
 {
   _features = Actor::DB.getAllFeatures(aId);
   for (auto f : _features) f.second->setOwner(this);
@@ -185,6 +187,10 @@ ActorFeaturePtr Actor::insertFeature(ActorFeature *feature)
 size_t Actor::getFeatureCount() const
 {
   return _features.size();
+}
+unsigned Actor::getInstanceId() const
+{
+    return _instanceId;
 }
 
 }

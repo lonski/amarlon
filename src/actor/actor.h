@@ -24,6 +24,7 @@ class Actor
 public:
   static ActorDB DB;
   static Actor* Player;
+  static unsigned InstanceCounter;
 
   Actor(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
   ~Actor();
@@ -41,6 +42,9 @@ public:
   bool blocks() const;
   int getTileRenderPriority() const;
 
+  /**
+   * Actor ID is not an unique instance id, but a type id from <actor_type.h>
+   */
   ActorType getId() const;
   unsigned char getChar() const;
   TCODColor getColor() const;
@@ -77,10 +81,13 @@ public:
   template<typename T>
   bool hasFeature();
 
+  unsigned getInstanceId() const;
+
 private:
   ActorType _id;
   int _x, _y;
   Map* _map;
+  unsigned _instanceId;
 
   FeatureMap _features;
 

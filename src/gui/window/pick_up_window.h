@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 #include <libtcod.hpp>
-#include "gui/widget/menu/items_menu.h"
+#include <amenu.h>
 #include <awindow.h>
 
 namespace amarlon {
@@ -63,7 +63,12 @@ private:
   std::function<void(const std::string& itemName, int pickedAmount)> _afterPickUpAction;
   std::function<void(const std::string& itemName)> _inventoryFullAction;
 
-  gui::ItemsMenu _menu;
+  gui::AMenuPtr _menu;
+
+  void fillMenuWithItems();
+  void choose();
+  Actor* getSelectedActor();
+  void init();
 
 };
 
