@@ -1,7 +1,8 @@
 #ifndef CMDUSE_H
 #define CMDUSE_H
 
-#include "command.h"
+#include <vector>
+#include <command.h>
 
 namespace amarlon {
 
@@ -14,7 +15,8 @@ public:
   virtual void execute();
 
 private:
-  Actor * acquireItemToUse();
+  Actor* acquireItemToUse();
+  std::vector<Actor*> getUsableItems();
 
 };
 

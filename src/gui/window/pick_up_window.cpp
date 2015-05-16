@@ -114,32 +114,26 @@ void PickUpWindow::choose()
 
 Actor* PickUpWindow::getSelectedActor()
 {
-  Actor* toPick = nullptr;
-
-  if ( AMenuItemPtr mItem = _menu->getSelectedItem() )
-  {
-    std::function<bool(Actor*)> filter = [&](Actor* a)
-    {
-      return a->getInstanceId() == mItem->getProperty<unsigned>("item_instance_id");
-    };
-
-    std::vector<Actor*> vectorToPick = _container->content(&filter);
-    toPick =  vectorToPick.empty() ? nullptr : vectorToPick.front();
-  }
-
-  return toPick;
+  AMenuItemPtr mItem = _menu->getSelectedItem();
+  return mItem ? mItem->getObject<Actor>() : nullptr;
 }
 
 void PickUpWindow::fillMenuWithItems()
 {
-    _menu->removeAllItems();
-    for(Actor* actor : _container->content(&_filterFunc))
+  auto value_fun = [](Actor* a)
+  {
+    std::string value = a->getName();
+    if ( Pickable* pickable = a->getFeature<Pickable>() )
     {
-        AMenuItemPtr mItem( new ALabelMenuItem );
-        mItem->setValue(actor->getName());
-        mItem->setProperty<unsigned>("item_instance_id", actor->getInstanceId());
-        _menu->addItem(mItem);
+      if ( pickable->getAmount() > 1 )
+      {
+        value += " (" + std::to_string(pickable->getAmount()) + ")";
+      }
     }
+    return value;
+  };
+
+  _menu->fill<Actor>( _container->content(&_filterFunc), value_fun );
 }
 
 PickUpWindow& PickUpWindow::setPicker(Actor *picker)

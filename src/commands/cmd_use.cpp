@@ -10,6 +10,7 @@
 #include "gui/widget/menu/items_menu.h"
 #include "gui/widgets/alabel_menu_item.h"
 #include "gui/message_box.h"
+#include <menu_window.h>
 
 namespace amarlon {
 
@@ -52,24 +53,35 @@ Actor* CmdUse::acquireItemToUse()
 {
   Actor* item = nullptr;
 
-  gui::ItemsMenu itemsMenu;
-  itemsMenu.setPosition(gui::AWidget::GAME_SCREEN_CENTER);
-  itemsMenu.setTitle("Choose item to use");
+  gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
+                   window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
+                   window . setTitle("Choose item to use");
 
-  std::function<bool(Actor*)> filter = [](Actor* a){ return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect(); };
-
-  std::vector<Actor*> usableItems = Actor::Player->getFeature<Container>()->content(&filter);
+  auto usableItems = getUsableItems();
   if ( !usableItems.empty() )
   {
-    std::map<int, Actor*> mItems = itemsMenu.fillWithItems<gui::ALabelMenuItem>( usableItems );
-    auto choosen = mItems.find( itemsMenu.choose(*TCODConsole::root) );
-    if ( choosen != mItems.end() ) item = choosen->second;
+    window.fill<Actor>( usableItems, Actor::getName );
+    window.show();
+    if ( auto selected = window.getSelectedItem() )
+    {
+      item = selected->getObject<Actor>();
+    }
   }
   else gui::msgBox("You don't have any usable items!", gui::MsgType::Warning);
 
   if ( item != nullptr && item->getFeature<Pickable>()->isStackable() ) item = item->getFeature<Pickable>()->spilt(1);
 
   return item;
+}
+
+std::vector<Actor*> CmdUse::getUsableItems()
+{
+  std::function<bool(Actor*)> filter = [](Actor* a)
+                                         {
+                                           return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect();
+                                         };
+
+  return Actor::Player->getFeature<Container>()->content(&filter);
 }
 
 }

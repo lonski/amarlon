@@ -7,6 +7,7 @@
 #include <libtcod.hpp>
 #include <awidget.h>
 #include <amenu_item.h>
+#include <alabel_menu_item.h>
 
 namespace amarlon { namespace gui {
 
@@ -41,6 +42,24 @@ public:
 
   ConstItemsIterator begin() const { return _items.begin(); }
   ConstItemsIterator end() const { return _items.end(); }
+
+  /**
+   * @brief Creates Menu Items for all given objects and fills the menu
+   * @param content: vector of objects to map to menu items
+   * @param value_fun: a function to be called on object to get value to display on menu item
+   */
+  template<typename T, typename MenuItemType = ALabelMenuItem>
+  void fill(std::vector<T*> content, std::function<std::string(T*)> value_fun)
+  {
+    removeAllItems();
+    for(T* t : content)
+    {
+        AMenuItemPtr mItem( new MenuItemType );
+        mItem->setValue( value_fun(t) );
+        mItem->setObject<T>(t);
+        addItem(mItem);
+    }
+  }
 
 private:
   std::vector<AMenuItemPtr> _items;

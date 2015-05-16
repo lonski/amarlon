@@ -70,8 +70,8 @@ AWindow &MenuWindow::setDefaults()
   setFrameColor(TCODColor::darkerOrange);
   setTitleColor(TCODColor::lighterOrange);
 
-  setHeight(1);
-  setWidth(20);
+  setHeight(2);
+  setWidth(40);
   setFrame(true);
 
   return *this;
