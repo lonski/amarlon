@@ -60,7 +60,7 @@ Actor* CmdUse::acquireItemToUse()
   auto usableItems = getUsableItems();
   if ( !usableItems.empty() )
   {
-    window.fill<Actor>( usableItems, Actor::getName );
+    window.fill<Actor>( usableItems, [](Actor* a){ return a->getName(); } );
     window.show();
     if ( auto selected = window.getSelectedItem() )
     {
