@@ -120,20 +120,7 @@ Actor* PickUpWindow::getSelectedActor()
 
 void PickUpWindow::fillMenuWithItems()
 {
-  auto value_fun = [](Actor* a)
-  {
-    std::string value = a->getName();
-    if ( Pickable* pickable = a->getFeature<Pickable>() )
-    {
-      if ( pickable->getAmount() > 1 )
-      {
-        value += " (" + std::to_string(pickable->getAmount()) + ")";
-      }
-    }
-    return value;
-  };
-
-  _menu->fill<Actor>( _container->content(&_filterFunc), value_fun );
+  _menu->fill<Actor>( _container->content(&_filterFunc), getItemNameAndAmount );
 }
 
 PickUpWindow& PickUpWindow::setPicker(Actor *picker)

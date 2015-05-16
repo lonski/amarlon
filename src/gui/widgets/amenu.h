@@ -43,36 +43,44 @@ public:
   ConstItemsIterator begin() const { return _items.begin(); }
   ConstItemsIterator end() const { return _items.end(); }
 
+  bool isAutosized() const;
+  void setAutosize(bool autosize);
+
   /**
    * @brief Creates Menu Items for all given objects and fills the menu
    * @param content: vector of objects to map to menu items
    * @param value_fun: a function to be called on object to get value to display on menu item
+   * @param category_fun: a function to be called on object to get its category, needed if
+   *        user wants to display items under their categories
    */
   template<typename T, typename MenuItemType = ALabelMenuItem>
-  void fill(std::vector<T*> content, std::function<std::string(T*)> value_fun)
-  {
+  void fill(std::vector<T*> content,
+            std::function<std::string(T*)> value_fun,
+            std::function<std::string(T*)> category_fun = [](T*){ return ""; }
+            )
+  {    
     removeAllItems();
     for(T* t : content)
     {
         AMenuItemPtr mItem( new MenuItemType );
         mItem->setValue( value_fun(t) );
         mItem->setObject<T>(t);
+        mItem->setProperty<std::string>( "category", category_fun(t) );
         addItem(mItem);
     }
   }
 
+
 private:
-  std::vector<AMenuItemPtr> _items;
-  bool _autosize;
+std::vector<AMenuItemPtr> _items;
+bool _autosize;
   int _width;
   int _height;
 
   int calculateWidth() const;
   void selectFirst();
-  ItemsIterator findSelectedItem()
-  {
-    return std::find_if(_items.begin(), _items.end(), [](AMenuItemPtr& i){ return i->isSelected(); } );
-  }
+  void sortByCategory();
+  ItemsIterator findSelectedItem();
 
 };
 

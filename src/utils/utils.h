@@ -11,6 +11,8 @@
 
 namespace amarlon {
 
+class Actor;
+
 static inline std::vector<std::string> explode(const std::string& str, char ch)
 {
   std::vector<std::string> result;
@@ -139,6 +141,7 @@ static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
   return handled;
 }
 
+std::string getItemNameAndAmount(Actor* a);
 
 }
 #endif // UTILS_H

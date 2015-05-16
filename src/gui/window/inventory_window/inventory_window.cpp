@@ -5,10 +5,8 @@
 #include <item_slot_type.h>
 #include <alabel_menu_item.h>
 #include <aslot_menu_item.h>
-#include <gui/message_box.h>
-#include <gui/widget/menu/items_menu.h>
+#include <message_box.h>
 #include <engine.h>
-#include <world/map.h>
 #include <amount_window.h>
 #include <amenu.h>
 

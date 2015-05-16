@@ -45,9 +45,7 @@ set(HEADER_FILES
     gui/window/inventory_window/inventory_panel.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
-    gui/window/inventory_window/inventory_window.h
-    gui/widget/menu/items_menu.h    
-    gui/widget/menu/menu.h        
+    gui/window/inventory_window/inventory_window.h     
     gui/window/amount_window.h
     gui/window/window_manager.h
     gui/gui.h
@@ -122,8 +120,6 @@ set(SOURCE_FILES
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
-    gui/widget/menu/items_menu.cpp    
-    gui/widget/menu/menu.cpp    
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
     gui/window/menu_window.cpp

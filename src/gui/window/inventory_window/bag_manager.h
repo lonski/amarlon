@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <amenu.h>
-#include <items_menu.h>
 #include <inventory_panel.h>
 #include <body_manager.h>
 
@@ -32,8 +31,7 @@ private:
     EQUIP
   };
 
-  std::map<int, Actor*> _bagItems;
-  ItemsMenuPtr _bagMenu;
+  AMenuPtr _bagMenu;
   BodyManager& _body;
 
   void render();

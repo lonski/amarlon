@@ -4,7 +4,7 @@
 #include <aslot_menu_item.h>
 #include <alabel_menu_item.h>
 #include <gui/message_box.h>
-#include <gui/widget/menu/items_menu.h>
+#include <menu_window.h>
 
 namespace amarlon { namespace gui {
 
@@ -111,18 +111,17 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
 
   if ( !equipableItems.empty() )
   {
-    ItemsMenu equipMenu;
-    equipMenu.setTitle("Choose item to equip");
-    equipMenu.setShowCategories(false);
-    equipMenu.setPosition(gui::AWidget::WINDOW_CENTER);
+    gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
 
-    std::map<int, Actor*> mappedItems = equipMenu.fillWithItems<ALabelMenuItem>( equipableItems );
+    window.setTitle("Choose item to equip");
+    window.setPosition(gui::AWidget::WINDOW_CENTER);
+    window.fill<Actor>( equipableItems, [](Actor* a){ return a->getName(); } );
+    window.show();
 
-    equipMenu.selectNext(); //activate first menu option
-
-    auto found = mappedItems.find( equipMenu.choose( *TCODConsole::root ) );
-
-    if ( found != mappedItems.end() ) equipItem(found->second);
+    if ( AMenuItemPtr mItem = window.getSelectedItem() )
+    {
+      equipItem(mItem->getObject<Actor>());
+    }
   }
   else
   {

@@ -67,6 +67,7 @@ AWindow &MenuWindow::setDefaults()
 {
   _menu->removeAllItems();
 
+  setTitle("");
   setFrameColor(TCODColor::darkerOrange);
   setTitleColor(TCODColor::lighterOrange);
 

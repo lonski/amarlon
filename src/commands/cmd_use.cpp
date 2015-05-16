@@ -7,7 +7,6 @@
 #include "actor/effects/effect.h"
 #include "engine.h"
 #include "gui/gui.h"
-#include "gui/widget/menu/items_menu.h"
 #include "gui/widgets/alabel_menu_item.h"
 #include "gui/message_box.h"
 #include <menu_window.h>

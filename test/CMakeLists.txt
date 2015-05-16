@@ -52,12 +52,10 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/widgets/amenu_item.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/menu.h
     ${PROJECT_SOURCE_DIR}/src/gui/widgets/amenu.h
     ${PROJECT_SOURCE_DIR}/src/gui/widgets/aslot_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/text_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widget/menu/items_menu.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/body_manager.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/pick_up_window.h

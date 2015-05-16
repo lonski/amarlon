@@ -13,11 +13,14 @@ namespace amarlon { namespace gui {
 
 BagManager::BagManager(BodyManager& body, int w, int h)
   : AInventoryPanel(w, h)
-  , _bagMenu( new ItemsMenu )
+  , _bagMenu( new AMenu )
   , _body(body)
 {
-  _bagMenu->setPosition(2,2);
-  _bagMenu->setFrame(false);
+  _bagMenu->setPosition(2,2);  
+  _bagMenu->setAutosize(false);
+  _bagMenu->setWidth( getWidth() - 2 );
+  _bagMenu->setHeight( getHeight() - 2 );
+
   addWidget(_bagMenu);
   setTitle("Inventory");
   fillBag();
@@ -25,11 +28,13 @@ BagManager::BagManager(BodyManager& body, int w, int h)
 
 void BagManager::fillBag()
 {
-  _bagMenu->clear();
-  _bagItems.clear();
-
-  std::vector<Actor*> items = Actor::Player->getFeature<Container>()->content();
-  _bagItems = _bagMenu->fillWithItems<ALabelMenuItem>( items );
+  _bagMenu->fill<Actor>( Actor::Player->getFeature<Container>()->content(),
+                         getItemNameAndAmount,
+                         [&](Actor* a)
+                         {
+                            Pickable* p = a->getFeature<Pickable>();
+                            return p ? PickableCategory2Str( p->getCategory() ) : "";
+                         });
 }
 
 void BagManager::selectNext()
@@ -51,27 +56,27 @@ void BagManager::activate()
 void BagManager::deactivate()
 {
   AInventoryPanel::deactivate();
-  _bagMenu->deactivate();
+  _bagMenu->deselect();
 }
 
 // === OPERATION CHOOSING === //
 void BagManager::manage()
 {
-  AMenuItemPtr menuItem = _bagMenu->getSelectedItem();
-  Actor* selectedItem = _bagItems[ menuItem->getProperty<int>("id") ];
-
-  if ( selectedItem )
+  if ( AMenuItemPtr mItem = _bagMenu->getSelectedItem() )
   {
-    ItemOperation operation = chooseItemOperationFromMenu(selectedItem);
-
-    switch(operation)
+    if ( Actor* selectedItem = mItem->getObject<Actor>() )
     {
-      case EQUIP: equip( selectedItem ); break;
-      case DROP: drop( selectedItem ); break;
-      default:;
-    }
+      ItemOperation operation = chooseItemOperationFromMenu(selectedItem);
 
-    fillBag();
+      switch(operation)
+      {
+        case EQUIP: equip( selectedItem ); break;
+        case DROP: drop( selectedItem ); break;
+        default:;
+      }
+
+      fillBag();
+    }
   }
 }
 

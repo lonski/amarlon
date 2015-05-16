@@ -1,8 +1,34 @@
 #include "amenu.h"
 #include <amenu_item.h>
 #include <algorithm>
+#include <apanel.h>
+#include <alabel.h>
+#include <message_box.h>
 
 namespace amarlon { namespace gui {
+
+class Header : public APanel
+{
+public:
+  Header(const int& w, const std::string& title)
+    : APanel(w, 3) //frame + label
+    , _lHeader(new ALabel)
+
+  {
+    setFrameColor(TCODColor::darkYellow);
+
+    _lHeader->setPosition(2,1);
+    _lHeader->setValue(title);
+
+    addWidget(_lHeader);
+  }
+
+private:
+  ALabelPtr _lHeader;
+
+};
+
+typedef std::shared_ptr<Header> HeaderPtr;
 
 AMenu::AMenu()
   : _autosize(true)
@@ -107,12 +133,38 @@ void AMenu::render(TCODConsole& console)
   int y = getY();
   int x = getX();
 
+  sortByCategory();
+
+  std::string currentCategory = "";
   for( auto item : _items )
-  {
+  {    
+    std::string category = item->getProperty<std::string>("category");
+    if ( category != currentCategory )
+    {
+      Header categoryHeader( getWidth() , category );
+      categoryHeader.setPosition( x - 1, y );
+      categoryHeader.render(console);
+      y += categoryHeader.getHeight();
+      currentCategory = category;
+    }
+
     item->setPosition(x, y);
     item->render(console);
     y += item->getHeight();
   }
+}
+
+void AMenu::sortByCategory()
+{
+  std::sort(_items.begin(), _items.end(), [](AMenuItemPtr l, AMenuItemPtr r)
+  {
+    return l->getProperty<std::string>("category") < r->getProperty<std::string>("category");
+  });
+}
+
+AMenu::ItemsIterator AMenu::findSelectedItem()
+{
+  return std::find_if(_items.begin(), _items.end(), [](AMenuItemPtr& i){ return i->isSelected(); } );
 }
 
 int AMenu::getWidth() const
@@ -152,5 +204,16 @@ size_t AMenu::getItemCount() const
 {
   return _items.size();
 }
+
+bool AMenu::isAutosized() const
+{
+  return _autosize;
+}
+
+void AMenu::setAutosize(bool autosize)
+{
+  _autosize = autosize;
+}
+
 
 }}
