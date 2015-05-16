@@ -56,7 +56,7 @@ public:
   template<typename T, typename MenuItemType = ALabelMenuItem>
   void fill(std::vector<T*> content,
             std::function<std::string(T*)> value_fun,
-            std::function<std::string(T*)> category_fun = [](T*){ return ""; }
+            std::function<std::string(T*)>* category_fun = nullptr
             )
   {    
     removeAllItems();
@@ -65,7 +65,7 @@ public:
         AMenuItemPtr mItem( new MenuItemType );
         mItem->setValue( value_fun(t) );
         mItem->setObject<T>(t);
-        mItem->setProperty<std::string>( "category", category_fun(t) );
+        mItem->setProperty<std::string>( "category", category_fun ? (*category_fun)(t) : "" );
         addItem(mItem);
     }
   }

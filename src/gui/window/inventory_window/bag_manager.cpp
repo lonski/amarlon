@@ -28,13 +28,15 @@ BagManager::BagManager(BodyManager& body, int w, int h)
 
 void BagManager::fillBag()
 {
+  std::function<std::string(Actor*)> category_function = [&](Actor* a)
+                                     {
+                                       Pickable* p = a->getFeature<Pickable>();
+                                       return p ? PickableCategory2Str( p->getCategory() ) : "";
+                                     };
+
   _bagMenu->fill<Actor>( Actor::Player->getFeature<Container>()->content(),
                          getItemNameAndAmount,
-                         [&](Actor* a)
-                         {
-                            Pickable* p = a->getFeature<Pickable>();
-                            return p ? PickableCategory2Str( p->getCategory() ) : "";
-                         });
+                         &category_function);
 }
 
 void BagManager::selectNext()

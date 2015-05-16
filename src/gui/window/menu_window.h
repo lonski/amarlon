@@ -24,7 +24,7 @@ public:
   template<typename T, typename MenuItemType = ALabelMenuItem>
   void fill(std::vector<T*> content,
             std::function<std::string(T*)> value_fun,
-            std::function<std::string(T*)> category_fun = [](T*){ return ""; })
+            std::function<std::string(T*)>* category_fun = nullptr)
   {
     _menu->fill<T, MenuItemType>(content, value_fun, category_fun);
   }
