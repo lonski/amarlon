@@ -5,7 +5,8 @@ branches:
 cache:
     apt
 before_install:
-    - echo "Ubuntu version: `lsb_release -sc`"
+    - echo -e "Ubuntu version:"
+    - lsb_release -sc
     - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
     - sudo apt-get update -qq
 install:
