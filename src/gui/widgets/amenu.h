@@ -56,8 +56,7 @@ public:
   template<typename T, typename MenuItemType = ALabelMenuItem>
   void fill(std::vector<std::shared_ptr<T>> content,
             std::function<std::string(std::shared_ptr<T>)> value_fun,
-            std::function<std::string(std::shared_ptr<T>)>* category_fun = nullptr
-            )
+            std::function<std::string(std::shared_ptr<T>)> category_fun = [](std::shared_ptr<T>){ return "";})
   {    
     removeAllItems();
     for(auto t : content)
@@ -65,7 +64,7 @@ public:
         AMenuItemPtr mItem( new MenuItemType );
         mItem->setValue( value_fun(t) );
         mItem->setObject<T>(t);
-        mItem->setProperty<std::string>( "category", category_fun ? (*category_fun)(t) : "" );
+        mItem->setProperty<std::string>( "category", category_fun ? category_fun(t) : "" );
         addItem(mItem);
     }
   }

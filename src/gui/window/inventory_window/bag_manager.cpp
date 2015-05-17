@@ -36,7 +36,7 @@ void BagManager::fillBag()
 
   _bagMenu->fill<Actor>( Actor::Player->getFeature<Container>()->content(),
                          getItemNameAndAmount,
-                         &category_function);
+                         category_function);
 }
 
 void BagManager::selectNext()
