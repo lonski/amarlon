@@ -61,7 +61,7 @@ set(HEADER_FILES
     utils/target_selector/target_selector.h
     utils/colored_string.h
     utils/direction_selector.h
-    utils/item_picker.h
+    utils/item_action.h
     utils/messenger.h
     utils/selector_type.h
     utils/utils.h
@@ -132,7 +132,7 @@ set(SOURCE_FILES
     utils/target_selector/target_selector.cpp
     utils/target_selector/single_range_selector.cpp
     utils/direction_selector.cpp
-    utils/item_picker.cpp
+    utils/item_action.cpp
     utils/messenger.cpp
     utils/utils.cpp
     utils/configuration.cpp

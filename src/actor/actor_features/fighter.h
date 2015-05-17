@@ -6,22 +6,25 @@
 
 namespace amarlon {
 
+class Fighter;
+typedef std::shared_ptr<Fighter> FighterPtr;
+
 class Fighter : public ActorFeature
 {
 public:
   const static ActorFeature::Type featureType;
 
   Fighter(float power, float maxHp);
-  static Fighter* create(Description* dsc);
+  static FighterPtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType() { return featureType; }
 
-  virtual ActorFeature* clone();
-  virtual bool isEqual(ActorFeature *rhs);
+  virtual ActorFeaturePtr clone();
+  virtual bool isEqual(ActorFeaturePtr rhs);
 
   bool isAlive() const;
 
-  void attack(Actor* enemy);
+  void attack(ActorPtr enemy);
   void takeDamage(float power);
   void die();
   int heal(int hp);
@@ -41,6 +44,7 @@ private:
   float _hp;
 
 };
+
 
 }
 

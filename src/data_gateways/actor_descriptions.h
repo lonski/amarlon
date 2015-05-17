@@ -22,6 +22,24 @@ class Ai;
 class Openable;
 class Wearer;
 
+struct Description;
+struct ActorDescription;
+struct PickableDescription;
+struct FighterDescription;
+struct AiDescription;
+struct OpenableDescription;
+struct WearerDescription;
+struct ContainerDescription;
+
+typedef std::shared_ptr<Description> DescriptionPtr;
+typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
+typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
+typedef std::shared_ptr<FighterDescription> FighterDescriptionPtr;
+typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
+typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
+typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
+typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
+
 struct Description
 {
   virtual ~Description() {}
@@ -83,8 +101,6 @@ struct OpenableDescription : Description
   bool locked;
 };
 
-struct WearerDescription;
-
 struct ContainerDescription : Description
 {
   ContainerDescription() : maxSize(0) {}
@@ -111,8 +127,13 @@ struct ContainerDescription : Description
 
 struct WearerDescription : Description
 {
+  WearerDescription()
+    :
+    eqItems( new ContainerDescription )
+  {}
+
   std::vector<ItemSlotType> itemSlots;
-  ContainerDescription eqItems;
+  std::shared_ptr<ContainerDescription> eqItems;
 };
 
 //===

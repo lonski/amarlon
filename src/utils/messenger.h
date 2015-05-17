@@ -2,6 +2,7 @@
 #define MESSENGER_H
 
 #include <string>
+#include <memory>
 
 namespace amarlon {
 
@@ -9,6 +10,7 @@ namespace gui {
   class Gui;
 }
 class Actor;
+typedef std::shared_ptr<Actor> ActorPtr;
 
 class Messenger
 {
@@ -17,14 +19,14 @@ public:
 
   void setGui(gui::Gui* gui);
 
-  void actorHit(Actor* atacker, Actor* victim, int amount);
-  void actorDies(Actor* victim);
-  void actorPicked(Actor* picker, Actor* picked, int amount);
+  void actorHit(ActorPtr atacker, ActorPtr victim, int amount);
+  void actorDies(ActorPtr victim);
+  void actorPicked(ActorPtr picker, ActorPtr picked, int amount);
   void actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const std::string& from = "");
-  void actorDropped(Actor* dropper, Actor* dropped, int amount);
-  void actorHealed(Actor* healed, int amount);
-  void actorHasBeenLocked(Actor* locker, Actor* locked);
-  void actorHasBeenUnLocked(Actor* unlocker, Actor* unlocked);
+  void actorDropped(ActorPtr dropper, ActorPtr dropped, int amount);
+  void actorHealed(ActorPtr healed, int amount);
+  void actorHasBeenLocked(ActorPtr locker, ActorPtr locked);
+  void actorHasBeenUnLocked(ActorPtr unlocker, ActorPtr unlocked);
   void actorPutInto(const std::string& putterName, const std::string& container, const std::string& itemName, int amount);
 
 private:

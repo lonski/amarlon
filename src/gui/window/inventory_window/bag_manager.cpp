@@ -8,6 +8,7 @@
 #include <world/map.h>
 #include <utils/messenger.h>
 #include <menu_window.h>
+#include <item_action.h>
 
 namespace amarlon { namespace gui {
 
@@ -27,9 +28,9 @@ BagManager::BagManager(int w, int h)
 
 void BagManager::fillBag()
 {
-  std::function<std::string(Actor*)> category_function = [&](Actor* a)
+  std::function<std::string(ActorPtr)> category_function = [&](ActorPtr a)
                                      {
-                                       Pickable* p = a->getFeature<Pickable>();
+                                       PickablePtr p = a->getFeature<Pickable>();
                                        return p ? PickableCategory2Str( p->getCategory() ) : "";
                                      };
 
@@ -60,19 +61,19 @@ void BagManager::deactivate()
   _bagMenu->deselect();
 }
 
-// === OPERATION CHOOSING === //
 void BagManager::manage()
 {
   if ( AMenuItemPtr mItem = _bagMenu->getSelectedItem() )
   {
-    if ( Actor* selectedItem = mItem->getObject<Actor>() )
+    ActorPtr selectedItem( mItem->getObject<Actor>() );
+    if ( selectedItem )
     {
       ItemOperation operation = chooseItemOperationFromMenu(selectedItem);
 
       switch(operation)
       {
         case EQUIP: equip( selectedItem ); break;
-        case DROP: drop( selectedItem ); break;
+        case DROP: ItemAction(Actor::Player, selectedItem, Actor::Player->getFeature<Container>()).drop() ; break;
         default:;
       }
 
@@ -81,7 +82,7 @@ void BagManager::manage()
   }
 }
 
-BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selected)
+BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(ActorPtr selected)
 {
   MenuWindow& menu = Engine::instance().windowManager().getWindow<MenuWindow>();
   menu.setTitle( selected->getName() );
@@ -108,13 +109,11 @@ BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(Actor* selecte
   return sItem ? static_cast<ItemOperation>(sItem->getProperty<int>("operation"))
                : INVALID;
 }
-// ~~~ OPERATION CHOOSING ~~~ //
 
-// === EQUIP === //
-void BagManager::equip(Actor* item)
+void BagManager::equip(ActorPtr item)
 {
   ItemSlotType itemSlot = item->getFeature<Pickable>()->getItemSlot();
-  Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
+  WearerPtr playerWearer = Actor::Player->getFeature<Wearer>();
 
   if ( playerWearer->hasSlot( itemSlot ) )
   {
@@ -129,14 +128,14 @@ void BagManager::equip(Actor* item)
 
 bool BagManager::canEquip(ItemSlotType slot)
 {
-  Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
-  Container* playerContainer = Actor::Player->getFeature<Container>();
+  WearerPtr playerWearer = Actor::Player->getFeature<Wearer>();
+  ContainerPtr playerContainer = Actor::Player->getFeature<Container>();
 
   bool slotIsFree = !playerWearer->isEquipped(slot);
 
   if ( !slotIsFree )
   {
-    if ( Actor* unequipped = playerWearer->unequip(slot) ) //try to free it
+    if ( ActorPtr unequipped = playerWearer->unequip(slot) ) //try to free it
     {
       slotIsFree = playerContainer->add(unequipped);
       if ( !slotIsFree )
@@ -154,10 +153,10 @@ bool BagManager::canEquip(ItemSlotType slot)
   return slotIsFree;
 }
 
-void BagManager::doTheEquip(Actor* item)
+void BagManager::doTheEquip(ActorPtr item)
 {
-  Wearer* wearer = Actor::Player->getFeature<Wearer>();
-  Container* container = Actor::Player->getFeature<Container>();
+  WearerPtr wearer = Actor::Player->getFeature<Wearer>();
+  ContainerPtr container = Actor::Player->getFeature<Container>();
 
   if ( container->remove( item ) )
   {
@@ -172,55 +171,5 @@ void BagManager::doTheEquip(Actor* item)
   }
 
 }
-// ~~~ EQUIP ~~~ //
-
-// === DROP === //
-void BagManager::drop(Actor* item)
-{
-  bool stackableHandlingNeeded = item->getFeature<Pickable>()->isStackable() &&
-                                 item->getFeature<Pickable>()->getAmount() > 1;
-
-  bool removed = ( stackableHandlingNeeded ? handleStackableDrop(item)
-                                           : Actor::Player->getFeature<Container>()->remove( item ) );
-
-  if ( removed )
-  {
-    item->setX( Actor::Player->getX() );
-    item->setY( Actor::Player->getY() );
-    Messenger::message()->actorDropped(Actor::Player, item, item->getFeature<Pickable>()->getAmount());
-    Engine::instance().currentMap().addActor( item );
-  }
-  else
-  {
-    msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
-  }
-}
-
-bool BagManager::handleStackableDrop(Actor*& item)
-{
-  bool removed = false;
-
-  int maxAmount = item->getFeature<Pickable>()->getAmount();
-  int amount = Engine::instance().windowManager()
-                                 .getWindow<gui::AmountWindow>()
-                                 .setMaxAmount(maxAmount)
-                                 .show()
-                                 .downcast<gui::AmountWindow>()
-                                 .getAmount();
-
-  if ( amount > 0 && amount < maxAmount )
-  {
-    item = item->getFeature<Pickable>()->spilt(amount);
-    removed = (item != nullptr);
-  }
-  else if ( amount == maxAmount )
-  {
-    removed = Actor::Player->getFeature<Container>()->remove( item );
-  }
-
-  return removed;
-}
-
-// ~~~ DROP ~~~ //
 
 }}

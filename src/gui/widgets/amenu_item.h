@@ -27,24 +27,24 @@ public:
    * @brief Functions to manage the object bound to this item.
    *        MenuItem represents this object in menu.
    */
-  template<typename T> void setObject(T* t);
-  template<typename T> T* getObject();
+  template<typename T> void setObject(std::shared_ptr<T> t);
+  template<typename T> std::shared_ptr<T> getObject();
 
 private:
-  void* _object;
+  std::shared_ptr<void> _object;
 
 };
 
 typedef std::shared_ptr<AMenuItem> AMenuItemPtr;
 
-template<typename T> void AMenuItem::setObject(T* t)
+template<typename T> void AMenuItem::setObject(std::shared_ptr<T> t)
 {
-  _object = static_cast<void*>(t);
+  _object = std::static_pointer_cast<void>(t);
 }
 
-template<typename T> T* AMenuItem::getObject()
+template<typename T> std::shared_ptr<T> AMenuItem::getObject()
 {
-  return static_cast<T*>(_object);
+  return std::static_pointer_cast<T>(_object);
 }
 
 }}

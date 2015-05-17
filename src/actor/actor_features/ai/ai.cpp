@@ -12,24 +12,24 @@ Ai::Ai()
 {
 }
 
-Ai *Ai::create(AiType type)
+AiPtr Ai::create(AiType type)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Ai* ai = nullptr;
+  AiPtr ai;
 
   switch (type)
   {
-    case AiType::Monster: ai = new MonsterAi;
+    case AiType::Monster: ai.reset( new MonsterAi );
     default:;
   }
 
   return ai;
 }
 
-Ai *Ai::create(Description* dsc)
+AiPtr Ai::create(DescriptionPtr dsc)
 {
-  AiDescription* aiDsc = dynamic_cast<AiDescription*>(dsc);
-  Ai* ai = nullptr;
+  AiDescriptionPtr aiDsc = std::dynamic_pointer_cast<AiDescription>(dsc);
+  AiPtr ai = nullptr;
 
   if ( aiDsc != nullptr )
   {
@@ -41,9 +41,9 @@ Ai *Ai::create(Description* dsc)
 
 void Ai::update(Map*)
 {
-  if (_owner)
+  if ( getOwner() )
   {
-    std::cout << "\n" << _owner->getName() << " updates";
+    std::cout << "\n" << getOwner()->getName() << " updates";
   }
 }
 

@@ -19,18 +19,20 @@ namespace amarlon {
 
 class Map;
 
-class Actor
+class Actor : public std::enable_shared_from_this<Actor>
 {
 public:
   static ActorDB DB;
-  static Actor* Player;
+  static ActorPtr Player;
   static unsigned InstanceCounter;
 
-  Actor(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
+  static ActorPtr create(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
+
   ~Actor();
 
-  Actor* clone();
-  bool isEqual(Actor* rhs);
+  void init();
+  ActorPtr clone();
+  bool isEqual(ActorPtr rhs);
 
   void move(int dx, int dy);
   void morph(ActorType newType);
@@ -60,13 +62,13 @@ public:
    * @param feature to be inserted
    * @return overwriten feature if any, otherwise empty pointer
    */
-  ActorFeaturePtr insertFeature(ActorFeature* feature);
+  ActorFeaturePtr insertFeature(ActorFeaturePtr feature);
 
   /**
    * @param feature type enum
    * @return actor feature as base class pointer
    */
-  ActorFeature* getFeature(ActorFeature::Type afType) const;
+  ActorFeaturePtr getFeature(ActorFeature::Type afType) const;
 
   /**
    * @brief works similar to above getFeature, with the diference
@@ -74,7 +76,7 @@ public:
    *        example usage: getFeature<Pickable>()
    */
   template<typename T>
-  T* getFeature() const;
+  std::shared_ptr<T> getFeature() const;
 
   size_t getFeatureCount() const;
 
@@ -91,6 +93,8 @@ private:
 
   FeatureMap _features;
 
+  Actor(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
+
 };
 
 typedef std::shared_ptr<Actor> ActorPtr;
@@ -98,10 +102,10 @@ typedef std::shared_ptr<Actor> ActorPtr;
 // === IMPLEMENTATION === //
 
 template<typename T>
-T* Actor::getFeature() const
+std::shared_ptr<T> Actor::getFeature() const
 {
   auto it = _features.find( T::featureType );
-  return it != _features.end() ? dynamic_cast<T*>(it->second.get()) : nullptr;
+  return it != _features.end() ? std::dynamic_pointer_cast<T>(it->second) : nullptr;
 }
 
 template<typename T>

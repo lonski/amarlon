@@ -7,11 +7,13 @@
 #include <iomanip>
 #include <iostream>
 #include <algorithm>
+#include <memory>
 #include "libtcod.hpp"
 
 namespace amarlon {
 
 class Actor;
+typedef std::shared_ptr<Actor> ActorPtr;
 
 static inline std::vector<std::string> explode(const std::string& str, char ch)
 {
@@ -141,7 +143,7 @@ static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
   return handled;
 }
 
-std::string getItemNameAndAmount(Actor* a);
+std::string getItemNameAndAmount(ActorPtr a);
 
 }
 #endif // UTILS_H

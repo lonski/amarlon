@@ -16,9 +16,9 @@ MonsterAi::MonsterAi()
 {
 }
 
-ActorFeature *MonsterAi::clone()
+ActorFeaturePtr MonsterAi::clone()
 {
-  MonsterAi* cloned = new MonsterAi;
+  MonsterAiPtr cloned( new MonsterAi );
   cloned->_map = _map;
   cloned->_trackCount = _trackCount;
   cloned->_cX = _cX;
@@ -27,10 +27,10 @@ ActorFeature *MonsterAi::clone()
   return cloned;
 }
 
-bool MonsterAi::isEqual(ActorFeature *rhs)
+bool MonsterAi::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  MonsterAi* crhs = dynamic_cast<MonsterAi*>(rhs);
+  MonsterAiPtr crhs = std::dynamic_pointer_cast<MonsterAi>(rhs);
 
   if (crhs)
   {
@@ -43,7 +43,7 @@ bool MonsterAi::isEqual(ActorFeature *rhs)
 void MonsterAi::update(Map *map)
 {
   _map = map;
-  if (_owner->isAlive() && _map)
+  if (getOwner()->isAlive() && _map)
   {
     updatePosition();
 
@@ -79,27 +79,27 @@ void MonsterAi::huntPlayer()
 
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
     {
-      _owner->move(dx, dy);
+      getOwner()->move(dx, dy);
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
     {
-      _owner->move(stepDx, 0);
+      getOwner()->move(stepDx, 0);
     }
     else if ( !_map->isBlocked(_cX, _cY+stepDy) )
     {
-      _owner->move(0, stepDy);
+      getOwner()->move(0, stepDy);
     }
   }
-  else if ( _owner->hasFeature<Fighter>() )
+  else if ( getOwner()->hasFeature<Fighter>() )
   {
-    _owner->getFeature<Fighter>()->attack(Actor::Player);
+    getOwner()->getFeature<Fighter>()->attack(Actor::Player);
   }
 }
 
 void MonsterAi::updatePosition()
 {
-  _cX = _owner->getX();
-  _cY = _owner->getY();
+  _cX = getOwner()->getX();
+  _cY = getOwner()->getY();
 }
 
 }

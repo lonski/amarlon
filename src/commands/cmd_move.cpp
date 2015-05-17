@@ -32,17 +32,17 @@ void CmdMoveOrAttack::execute()
   }
   else
   {
-    std::function<bool (amarlon::Actor*)> filterFun = [&](amarlon::Actor* a)->bool
+    std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
     {
       return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
     };
-    std::vector<Actor*> toAttack = map.getActors(targetX, targetY, &filterFun);
+    std::vector<ActorPtr> toAttack = map.getActors(targetX, targetY, &filterFun);
 
     //attack
     if (!toAttack.empty() && Actor::Player->hasFeature<Fighter>() )
     {
       assert(toAttack.size() == 1);
-      Actor* enemy = toAttack[0];
+      ActorPtr enemy = toAttack[0];
       Actor::Player->getFeature<Fighter>()->attack(enemy);
     }
   }

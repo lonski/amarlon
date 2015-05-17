@@ -16,34 +16,34 @@ Container::Container(size_t maxSize)
 
 Container::~Container()
 {
-  std::for_each(_inventory.begin(), _inventory.end(), [](Actor* a){ delete a; });
+  //std::for_each(_inventory.begin(), _inventory.end(), [](ActorPtr a){ delete a; });
 }
 
-Container* Container::create(Description *dsc)
+ContainerPtr Container::create(DescriptionPtr dsc)
 {  
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Container* cont = nullptr;
-  ContainerDescription* contDsc = dynamic_cast<ContainerDescription*>(dsc);
+  ContainerPtr cont;
+  ContainerDescriptionPtr contDsc = std::dynamic_pointer_cast<ContainerDescription>(dsc);
 
   if ( contDsc != nullptr )
   {
-    cont = new Container(contDsc->maxSize);
+    cont.reset( new Container(contDsc->maxSize) );
 
     std::for_each(contDsc->content.begin(), contDsc->content.end(), [&](ContainerDescription::Content ca)
     {
       ActorType aId = ca.actorType;
       if( aId != ActorType::Null )
       {
-        Actor* nActor = new Actor(aId);
+        ActorPtr nActor = Actor::create(aId);
 
-        if (ca.container) nActor->insertFeature ( Container::create( ca.container.get() ) );
-        if (ca.openable)  nActor->insertFeature ( Openable::create ( ca.openable.get()  ) );
-        if (ca.pickable)  nActor->insertFeature ( Pickable::create ( ca.pickable.get()  ) );
-        if (ca.fighter)   nActor->insertFeature ( Fighter::create  ( ca.fighter.get()   ) );
-        if (ca.ai)        nActor->insertFeature ( Ai::create       ( ca.ai.get()        ) );
-        if (ca.wearer)    nActor->insertFeature ( Wearer::create   ( ca.wearer.get()    ) );
+        if (ca.container) nActor->insertFeature ( Container::create( ca.container ) );
+        if (ca.openable)  nActor->insertFeature ( Openable::create ( ca.openable  ) );
+        if (ca.pickable)  nActor->insertFeature ( Pickable::create ( ca.pickable  ) );
+        if (ca.fighter)   nActor->insertFeature ( Fighter::create  ( ca.fighter   ) );
+        if (ca.ai)        nActor->insertFeature ( Ai::create       ( ca.ai        ) );
+        if (ca.wearer)    nActor->insertFeature ( Wearer::create   ( ca.wearer    ) );
 
-        cont->add(nActor);
+        cont->add( nActor );
       }
     });
   }else throw creation_error("Wrong container description!");
@@ -51,11 +51,11 @@ Container* Container::create(Description *dsc)
   return cont;
 }
 
-Container *Container::clone()
+ActorFeaturePtr Container::clone()
 {
-  Container* cloned = new Container( _slotCount );
+  ContainerPtr cloned( new Container( _slotCount ) );
 
-  std::for_each(_inventory.begin(), _inventory.end(), [&](Actor* a)
+  std::for_each(_inventory.begin(), _inventory.end(), [&](ActorPtr a)
   {
     cloned->add( a->clone() );
   });
@@ -63,43 +63,40 @@ Container *Container::clone()
   return cloned;
 }
 
-bool Container::isEqual(ActorFeature *rhs)
+bool Container::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  Container* crhs = dynamic_cast<Container*>(rhs);
+  ContainerPtr crhs = std::dynamic_pointer_cast<Container>(rhs);
   if (crhs != nullptr)
   {
     equal = (_slotCount == crhs->_slotCount);    
     equal &= std::equal(_inventory.begin(), _inventory.end(), crhs->_inventory.begin(),
-                        std::mem_fun(&Actor::isEqual));
+                        [](ActorPtr l, ActorPtr r){ return l->isEqual(r); });
   }
 
   return equal;
 }
 
-bool Container::add(Actor *actor)
+bool Container::add(ActorPtr actor)
 {
   bool added = false;
 
   //handle stackable
   if ( actor->hasFeature<Pickable>() && actor->getFeature<Pickable>()->isStackable() )
   {
-    auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](Actor* iItem)
+    auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](ActorPtr iItem)
                    {
                      return iItem->isEqual( actor);
                    });
 
     if (invIter != _inventory.end()) //merge
     {
-      Actor* actorToStackWith = *invIter;
+      ActorPtr actorToStackWith = *invIter;
 
       int invAmount = actorToStackWith->getFeature<Pickable>()->getAmount();
       int amountToStack = actor->getFeature<Pickable>()->getAmount();
 
       actorToStackWith->getFeature<Pickable>()->setAmount( invAmount + amountToStack );
-
-      delete actor;
-      actor = nullptr;
       added = true;
     }
     else
@@ -117,7 +114,7 @@ bool Container::add(Actor *actor)
   return added;
 }
 
-bool Container::addFront(Actor *actor)
+bool Container::addFront(ActorPtr actor)
 {
   _pushToFront = true;
   bool r = add(actor);
@@ -126,7 +123,7 @@ bool Container::addFront(Actor *actor)
   return r;
 }
 
-bool Container::pushNewItem(Actor *actor)
+bool Container::pushNewItem(ActorPtr actor)
 {
   bool slotsAvail = (_inventory.size() < _slotCount);
 
@@ -138,9 +135,8 @@ bool Container::pushNewItem(Actor *actor)
   return slotsAvail;
 }
 
-bool Container::remove(Actor *actor)
+bool Container::remove(ActorPtr actor)
 {
-
   auto aIter = std::find(_inventory.begin(), _inventory.end(),actor);
   bool found = (aIter != _inventory.end());
 
@@ -152,9 +148,9 @@ bool Container::remove(Actor *actor)
   return found;
 }
 
-std::vector<Actor *> Container::content(std::function<bool(Actor*)>* filterFun)
+std::vector<ActorPtr> Container::content(std::function<bool(ActorPtr)>* filterFun)
 {
-  std::vector<Actor *> items;
+  std::vector<ActorPtr> items;
 
   for (auto i : _inventory)
   {
@@ -172,12 +168,12 @@ size_t Container::size() const
   return _inventory.size();
 }
 
-void Container::performActionOnActors(std::function<void(Actor *)> fun)
+void Container::performActionOnActors(std::function<void(ActorPtr)> fun)
 {
   std::for_each(_inventory.begin(), _inventory.end(), fun);
 }
 
-void Container::sort(std::function<bool(Actor*, Actor*)> pred)
+void Container::sort(std::function<bool(ActorPtr, ActorPtr)> pred)
 {
   _inventory.sort(pred);
 }

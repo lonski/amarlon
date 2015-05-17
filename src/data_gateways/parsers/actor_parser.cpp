@@ -29,19 +29,19 @@ void ActorParser::mapParsers()
   _featureParsers[ActorFeature::AI]        = [&](){ return parseAiDsc(); };
 }
 
-Description* ActorParser::parseFeatureDsc(const ActorFeature::Type featureType)
+DescriptionPtr ActorParser::parseFeatureDsc(const ActorFeature::Type featureType)
 {
   auto it = _featureParsers.find(featureType);
   return it != _featureParsers.end() ? (it->second)() : nullptr;
 }
 
-ActorDescription *ActorParser::parseActorDsc()
+ActorDescriptionPtr ActorParser::parseActorDsc()
 {
-  ActorDescription* actorDsc = nullptr;
+  ActorDescriptionPtr actorDsc;
 
   if ( _xml != nullptr )
   {
-    actorDsc = new ActorDescription;
+    actorDsc.reset( new ActorDescription );
 
     actorDsc->id = (ActorType)getAttribute<int>(_xml, "id");
     actorDsc->name = getAttribute<std::string>(_xml, "name");
@@ -69,37 +69,35 @@ ActorDescription *ActorParser::parseActorDsc()
   return actorDsc;
 }
 
-void ActorParser::parseContainerContentNode(ContainerDescription* contDsc, xml_node<>* contentNode)
+void ActorParser::parseContainerContentNode(ContainerDescriptionPtr contDsc, xml_node<>* contentNode)
 {
   ActorParser aParser(contentNode);
   ContainerDescription::Content cActor;
-  ActorDescription* aDsc = aParser.parseActorDsc();
+  ActorDescriptionPtr aDsc = aParser.parseActorDsc();
   if (aDsc != nullptr)
   {
     cActor.actorType = aDsc->id;
 
-    cActor.container.reset( aParser.parseContainerDsc() );
-    cActor.openable.reset( aParser.parseOpenableDsc() );
-    cActor.pickable.reset( aParser.parsePickableDsc() );
-    cActor.fighter.reset( aParser.parseFighterDsc() );
-    cActor.ai.reset( aParser.parseAiDsc() );
+    cActor.container = aParser.parseContainerDsc() ;
+    cActor.openable = aParser.parseOpenableDsc();
+    cActor.pickable = aParser.parsePickableDsc();
+    cActor.fighter = aParser.parseFighterDsc();
+    cActor.ai = aParser.parseAiDsc();
 
     contDsc->content.push_back( cActor );
-
-    delete aDsc;
   }
 }
 
-ContainerDescription *ActorParser::parseContainerDsc()
+ContainerDescriptionPtr ActorParser::parseContainerDsc()
 {
-  ContainerDescription* contDsc = nullptr;
+  ContainerDescriptionPtr contDsc;
 
   if ( _xml != nullptr )
   {
     xml_node<>* containerNode = _xml->first_node("Container");
     if ( containerNode != nullptr)
     {
-      contDsc = new ContainerDescription;
+      contDsc.reset( new ContainerDescription );
 
       contDsc->maxSize = getAttribute<int>(containerNode, "maxSize");
 
@@ -117,16 +115,16 @@ ContainerDescription *ActorParser::parseContainerDsc()
   return contDsc;
 }
 
-PickableDescription *ActorParser::parsePickableDsc()
+PickableDescriptionPtr ActorParser::parsePickableDsc()
 {
-  PickableDescription* pickDsc = nullptr;
+  PickableDescriptionPtr pickDsc;
 
   if ( _xml != nullptr )
   {
     xml_node<>* pickableNode = _xml->first_node("Pickable");
     if (pickableNode != nullptr)
     {
-      pickDsc = new PickableDescription;
+      pickDsc.reset( new PickableDescription );
 
       pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
@@ -149,16 +147,16 @@ PickableDescription *ActorParser::parsePickableDsc()
   return pickDsc;
 }
 
-FighterDescription *ActorParser::parseFighterDsc()
+FighterDescriptionPtr ActorParser::parseFighterDsc()
 {
-  FighterDescription* fDsc = nullptr;
+  FighterDescriptionPtr fDsc;
 
   if ( _xml != nullptr )
   {
     xml_node<>* fighterNode = _xml->first_node("Fighter");
     if (fighterNode != nullptr)
     {
-      fDsc = new FighterDescription;
+      fDsc.reset( new FighterDescription );
 
       fDsc->power = getAttribute<float>(fighterNode, "power");
       fDsc->maxHp = getAttribute<float>(fighterNode, "maxHp");
@@ -168,16 +166,16 @@ FighterDescription *ActorParser::parseFighterDsc()
   return fDsc;
 }
 
-AiDescription *ActorParser::parseAiDsc()
+AiDescriptionPtr ActorParser::parseAiDsc()
 {
-  AiDescription* aiDsc = nullptr;
+  AiDescriptionPtr aiDsc;
 
   if ( _xml != nullptr )
   {
     xml_node<>* aiNode = _xml->first_node("Ai");
     if (aiNode != nullptr)
     {
-      aiDsc = new AiDescription;
+      aiDsc.reset( new AiDescription );
 
       aiDsc->type = (AiType)getAttribute<int>(aiNode, "type");
     }
@@ -186,16 +184,16 @@ AiDescription *ActorParser::parseAiDsc()
   return aiDsc;
 }
 
-OpenableDescription *ActorParser::parseOpenableDsc()
+OpenableDescriptionPtr ActorParser::parseOpenableDsc()
 {
-  OpenableDescription* opDsc = nullptr;
+  OpenableDescriptionPtr opDsc;
 
   if ( _xml != nullptr )
   {
     xml_node<>* openableNode = _xml->first_node("Openable");
     if (openableNode != nullptr)
     {
-      opDsc = new OpenableDescription;
+      opDsc.reset( new OpenableDescription );
 
       opDsc->type = (OpenableType)getAttribute<int>(openableNode, "type");
       opDsc->lockId = getAttribute<int>(openableNode, "lockId");
@@ -206,16 +204,16 @@ OpenableDescription *ActorParser::parseOpenableDsc()
   return opDsc;
 }
 
-WearerDescription *ActorParser::parseWearerDsc()
+WearerDescriptionPtr ActorParser::parseWearerDsc()
 {
-  WearerDescription* wrDsc = nullptr;
+  WearerDescriptionPtr wrDsc;
 
   if (_xml != nullptr)
   {
     xml_node<>* wearerNode = _xml->first_node("Wearer");
     if (wearerNode != nullptr)
     {
-      wrDsc = new WearerDescription;
+      wrDsc.reset( new WearerDescription );
 
       xml_node<>* itemSlotNode = wearerNode->first_node("ItemSlot");
       while (itemSlotNode != nullptr)
@@ -226,13 +224,13 @@ WearerDescription *ActorParser::parseWearerDsc()
         xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");
         if (equippedNode != nullptr)
         {
-          parseContainerContentNode(&wrDsc->eqItems, equippedNode );
+          parseContainerContentNode(wrDsc->eqItems, equippedNode );
         }
 
         itemSlotNode = itemSlotNode->next_sibling();
       }
 
-      wrDsc->eqItems.maxSize = wrDsc->itemSlots.size();
+      wrDsc->eqItems->maxSize = wrDsc->itemSlots.size();
     }
   }
 

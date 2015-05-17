@@ -164,7 +164,7 @@ void AMenu::sortByCategory()
 
 AMenu::ItemsIterator AMenu::findSelectedItem()
 {
-  return std::find_if(_items.begin(), _items.end(), [](AMenuItemPtr& i){ return i->isSelected(); } );
+  return std::find_if(_items.begin(), _items.end(), [](AMenuItemPtr i){ return i->isSelected(); } );
 }
 
 int AMenu::getWidth() const

@@ -14,20 +14,20 @@ public:
   ActorParser();
   ActorParser(rapidxml::xml_node<>* xmlNode);
 
-  Description* parseFeatureDsc(ActorFeature::Type featureType);
+  DescriptionPtr parseFeatureDsc(ActorFeature::Type featureType);
 
-  ActorDescription*     parseActorDsc();
-  ContainerDescription* parseContainerDsc();
-  PickableDescription*  parsePickableDsc();
-  FighterDescription*   parseFighterDsc();
-  AiDescription*        parseAiDsc();
-  OpenableDescription*  parseOpenableDsc();
-  WearerDescription*    parseWearerDsc();
+  ActorDescriptionPtr     parseActorDsc();
+  ContainerDescriptionPtr parseContainerDsc();
+  PickableDescriptionPtr  parsePickableDsc();
+  FighterDescriptionPtr   parseFighterDsc();
+  AiDescriptionPtr        parseAiDsc();
+  OpenableDescriptionPtr  parseOpenableDsc();
+  WearerDescriptionPtr    parseWearerDsc();
 
 private:
-  std::map<ActorFeature::Type, std::function<Description* ()> > _featureParsers;
+  std::map<ActorFeature::Type, std::function<DescriptionPtr ()> > _featureParsers;
 
-  void parseContainerContentNode(ContainerDescription* contDsc, rapidxml::xml_node<>* contentNode);
+  void parseContainerContentNode(ContainerDescriptionPtr contDsc, rapidxml::xml_node<>* contentNode);
   void mapParsers();
 
 };

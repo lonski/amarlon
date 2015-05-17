@@ -15,8 +15,8 @@ public:
   virtual void execute();
 
 private:
-  Actor* acquireItemToUse();
-  std::vector<Actor*> getUsableItems();
+  ActorPtr acquireItemToUse();
+  std::vector<ActorPtr> getUsableItems();
 
 };
 

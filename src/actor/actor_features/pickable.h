@@ -11,6 +11,9 @@ namespace amarlon {
 
 class Actor;
 class Effect;
+class Pickable;
+typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<Pickable> PickablePtr;
 
 class Pickable : public ActorFeature
 {
@@ -20,16 +23,16 @@ public:
   Pickable(bool stackable = false, int amount = 1);
   virtual ~Pickable();
 
-  static Pickable* create(Description* dsc);
+  static PickablePtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType() { return featureType; }
 
-  virtual ActorFeature* clone();
-  virtual bool isEqual(ActorFeature *rhs);
+  virtual ActorFeaturePtr clone();
+  virtual bool isEqual(ActorFeaturePtr rhs);
 
-  virtual bool use(Actor *executor, std::vector<Actor *> targets);
+  virtual bool use(ActorPtr executor, std::vector<ActorPtr > targets);
   virtual int getUsesCount() const;
-  Actor* spilt(int amount);
+  ActorPtr spilt(int amount);
 
   int getAmount() const;
   void setAmount(int getAmount);
@@ -53,6 +56,8 @@ private:
   PickableCategory _category;
 
 };
+
+typedef std::shared_ptr<Pickable> PickablePtr;
 
 }
 

@@ -3,7 +3,7 @@
 #include <message_box.h>
 #include <amount_window.h>
 #include <container.h>
-#include <item_picker.h>
+#include <item_action.h>
 #include <amarlon_except.h>
 #include <actor.h>
 
@@ -26,7 +26,7 @@ AWindow &PickUpWindow::setDefaults()
 
   _picker = nullptr;
   _container = nullptr;
-  _filterFunc = [](Actor*){return true;};
+  _filterFunc = [](ActorPtr){return true;};
 
   _afterPickUpAction = [](const std::string&, int){};
   _inventoryFullAction = [](const std::string&){ gui::msgBox("Inventory is full!", gui::MsgType::Error); };
@@ -47,8 +47,8 @@ AWindow& PickUpWindow::show()
 {
   if ( _picker && _container)
   {
-
     fillMenuWithItems();
+
     init();
     _menu->selectNext();
 
@@ -56,7 +56,8 @@ AWindow& PickUpWindow::show()
     TCOD_key_t key;
 
     while( !(key.vk == TCODK_ESCAPE) &&
-           !(TCODConsole::isWindowClosed()))
+           !(TCODConsole::isWindowClosed()) &&
+           _menu->getItemCount() > 0)
     {
       render(console);
       console.flush();
@@ -81,6 +82,7 @@ AWindow& PickUpWindow::show()
         case TCODK_KPENTER:
         {
           choose();
+          _menu->selectNext();
           Engine::instance().render();
           break;
         }
@@ -88,7 +90,6 @@ AWindow& PickUpWindow::show()
         default:;
       }
     }
-
   }
 
   return *this;
@@ -96,12 +97,12 @@ AWindow& PickUpWindow::show()
 
 void PickUpWindow::choose()
 {
-  if ( Actor* toPick = getSelectedActor() )
+  if ( ActorPtr toPick = getSelectedActor() )
   {
     try
     {
       _afterPickUpAction(toPick->getName(),
-                         ItemPicker(_picker, toPick, _container).pick());
+                         ItemAction(_picker, toPick, _container).pick());
 
       fillMenuWithItems();
     }
@@ -112,10 +113,10 @@ void PickUpWindow::choose()
   }
 }
 
-Actor* PickUpWindow::getSelectedActor()
+ActorPtr PickUpWindow::getSelectedActor()
 {
   AMenuItemPtr mItem = _menu->getSelectedItem();
-  return mItem ? mItem->getObject<Actor>() : nullptr;
+  return mItem ? mItem->getObject<Actor>() : ActorPtr();
 }
 
 void PickUpWindow::fillMenuWithItems()
@@ -123,19 +124,19 @@ void PickUpWindow::fillMenuWithItems()
   _menu->fill<Actor>( _container->content(&_filterFunc), getItemNameAndAmount );
 }
 
-PickUpWindow& PickUpWindow::setPicker(Actor *picker)
+PickUpWindow& PickUpWindow::setPicker(ActorPtr picker)
 {
   _picker = picker;
   return *this;
 }
 
-PickUpWindow& PickUpWindow::setContainer(Container *container)
+PickUpWindow& PickUpWindow::setContainer(ContainerPtr container)
 {
   _container = container;
   return *this;
 }
 
-PickUpWindow& PickUpWindow::setFilterFunction(std::function<bool(Actor*)> fun)
+PickUpWindow& PickUpWindow::setFilterFunction(std::function<bool(ActorPtr)> fun)
 {
   _filterFunc = fun;
   return *this;

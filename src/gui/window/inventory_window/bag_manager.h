@@ -33,14 +33,14 @@ private:
 
   AMenuPtr _bagMenu;
 
-  void drop(Actor* item);
-  bool handleStackableDrop(Actor*& item);
+  void drop(ActorPtr item);
+  bool handleStackableDrop(ActorPtr item);
 
-  void equip(Actor* item);
+  void equip(ActorPtr item);
   bool canEquip(ItemSlotType slot);
-  void doTheEquip(Actor* item);
+  void doTheEquip(ActorPtr item);
 
-  ItemOperation chooseItemOperationFromMenu(Actor* selected);
+  ItemOperation chooseItemOperationFromMenu(ActorPtr selected);
 
 };
 

@@ -22,14 +22,14 @@ void CmdClose::execute()
 {
   Map& map = Engine::instance().currentMap();
 
-  std::vector<Actor*> actorsOnTile = SingleNeighbourSelector("Select object to close...")
+  std::vector<ActorPtr> actorsOnTile = SingleNeighbourSelector("Select object to close...")
                                        .select();
 
   auto openableIter = std::find_if(actorsOnTile.begin(), actorsOnTile.end(),
-                                   [](Actor* a)
+                                   [](ActorPtr a)
                                    { return a->getFeature<Openable>(); });
 
-  Actor* toClose = openableIter != actorsOnTile.end() ? *openableIter : nullptr;
+  ActorPtr toClose = openableIter != actorsOnTile.end() ? *openableIter : nullptr;
 
   if ( toClose != nullptr)
   {

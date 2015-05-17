@@ -4,12 +4,14 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include <memory>
 #include "utils/selector_type.h"
 
 namespace amarlon {
 
 class Actor;
 class Map;
+typedef std::shared_ptr<Actor> ActorPtr;
 
 class TargetSelector
 {
@@ -37,7 +39,7 @@ public:
    *        for example only alive monsters could be selected
    * @return array of selected actors
    */
-  virtual std::vector<Actor*> select(std::function<bool (amarlon::Actor*)>* filterFun = nullptr) = 0;
+  virtual std::vector<ActorPtr> select(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr) = 0;
 
 protected:
   std::string _selectionMessage;

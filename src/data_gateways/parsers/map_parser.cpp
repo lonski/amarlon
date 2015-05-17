@@ -55,7 +55,7 @@ void MapParser::parseActors()
   }
 }
 
-Actor* MapParser::parseActor(rapidxml::xml_node<>* actorNode)
+ActorPtr MapParser::parseActor(rapidxml::xml_node<>* actorNode)
 {
   _actorParser->setSource( actorNode );
 
@@ -63,20 +63,20 @@ Actor* MapParser::parseActor(rapidxml::xml_node<>* actorNode)
   int aY = getAttribute<int>(actorNode, "y");
   ActorType aId = static_cast<ActorType>(getAttribute<int>(actorNode, "id"));
 
-  Actor* actor = new Actor(aId, aX, aY, _map.get());
+  ActorPtr actor = Actor::create(aId, aX, aY, _map.get());
   overWriteActorFeatures(actor);
 
   return actor;
 }
 
-void MapParser::overWriteActorFeatures(Actor* actor)
+void MapParser::overWriteActorFeatures(ActorPtr actor)
 {
   for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f)
   {
     ActorFeature::Type featureType = static_cast<ActorFeature::Type>( f );
 
-    std::unique_ptr<Description> dsc( _actorParser->parseFeatureDsc(featureType) );
-    if ( dsc ) actor->insertFeature( ActorFeature::create(featureType, dsc.get()) );
+    DescriptionPtr dsc( _actorParser->parseFeatureDsc(featureType) );
+    if ( dsc ) actor->insertFeature( ActorFeature::create(featureType, dsc) );
   }
 }
 

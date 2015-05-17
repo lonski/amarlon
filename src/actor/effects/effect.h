@@ -11,6 +11,7 @@ namespace amarlon {
 class Actor;
 class TargetSelector;
 typedef std::unique_ptr<TargetSelector> TargetSelectorUPtr;
+typedef std::shared_ptr<Actor> ActorPtr;
 
 class Effect
 {
@@ -23,7 +24,7 @@ public:
   virtual Effect* clone() = 0;
   virtual bool isEqual(Effect* rhs) = 0;
 
-  virtual bool apply(Actor* executor, std::vector<Actor*> targets) = 0;
+  virtual bool apply(ActorPtr executor, std::vector<ActorPtr> targets) = 0;
   virtual void load(const EffectDescription& dsc) = 0;
   virtual EffectDescription save() = 0;
 

@@ -22,9 +22,9 @@ public:
    * @brief Delegates to AMenu::fill
    */
   template<typename T, typename MenuItemType = ALabelMenuItem>
-  void fill(std::vector<T*> content,
-            std::function<std::string(T*)> value_fun,
-            std::function<std::string(T*)>* category_fun = nullptr)
+  void fill(std::vector<std::shared_ptr<T> > content,
+            std::function<std::string(std::shared_ptr<T>)> value_fun,
+            std::function<std::string(std::shared_ptr<T>)>* category_fun = nullptr)
   {
     _menu->fill<T, MenuItemType>(content, value_fun, category_fun);
   }

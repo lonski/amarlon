@@ -29,7 +29,7 @@ public:
   int getTileRenderPriority(ActorType type);
 
   template<typename T>
-  T* getFeature(ActorType type);
+  std::shared_ptr<T> getFeature(ActorType type);
 
   FeatureMap getAllFeatures(ActorType type);
 
@@ -56,32 +56,32 @@ private:
   T getParam(ActorType type, T ActorDescription::*field, T defValue);
 
   template<typename T>
-  Description* findDescription(ActorType actorType);
+  DescriptionPtr findDescription(ActorType actorType);
 
 };
 
 // === IMPLEMENTATION === //
 
 template<typename T>
-T* ActorDB::getFeature(ActorType actorType)
+std::shared_ptr<T> ActorDB::getFeature(ActorType actorType)
 {
-  Description* featureDescription = findDescription<T>(actorType);
-  return featureDescription ? T::create(featureDescription) : nullptr;
+  DescriptionPtr featureDescription = findDescription<T>(actorType);
+  return featureDescription ? T::create(featureDescription) : std::shared_ptr<T>();
 }
 
 template<typename T>
 T ActorDB::getParam(ActorType type, T ActorDescription::*field, T defValue)
 {
   auto it = _actorDscs.find(type);
-  ActorDescription* dsc = it != _actorDscs.end() ? dynamic_cast<ActorDescription*>( it->second.get() ) : nullptr;
+  ActorDescriptionPtr dsc = it != _actorDscs.end() ? std::dynamic_pointer_cast<ActorDescription>( it->second ) : nullptr;
 
-  return dsc ? dsc->*field : defValue;
+  return dsc ? (*dsc).*field : defValue;
 }
 
 template<typename T>
-Description* ActorDB::findDescription(ActorType actorType)
+DescriptionPtr ActorDB::findDescription(ActorType actorType)
 {
-  Description* dsc = nullptr;
+  DescriptionPtr dsc;
 
   auto descriptionsIt = _featureDscs.find(actorType);
   if ( descriptionsIt != _featureDscs.end() )
@@ -91,7 +91,7 @@ Description* ActorDB::findDescription(ActorType actorType)
 
     if (dscIt != actorDescriptions.end())
     {
-      dsc = dscIt->second.get();
+      dsc = dscIt->second;
     }
   }
 

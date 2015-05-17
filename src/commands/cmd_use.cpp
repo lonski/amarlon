@@ -24,7 +24,7 @@ bool CmdUse::accept(TCOD_key_t &key)
 
 void CmdUse::execute()
 {  
-  Actor* item = acquireItemToUse();
+  ActorPtr item = acquireItemToUse();
 
   Engine::instance().render();
 
@@ -32,12 +32,12 @@ void CmdUse::execute()
   {
     TargetSelector& tSelector = item->getFeature<Pickable>()->getEffect()->getTargetSelector();
 
-    std::vector<Actor*> targets = tSelector.select();
-    Pickable* toUse = item->getFeature<Pickable>();
+    std::vector<ActorPtr> targets = tSelector.select();
+    PickablePtr toUse = item->getFeature<Pickable>();
 
     if ( toUse->use( Actor::Player, targets ) && toUse->getUsesCount() == 0)
     {
-      Actor* toRemove = item->getFeature<Pickable>()->spilt(1);
+      ActorPtr toRemove = item->getFeature<Pickable>()->spilt(1);
       Actor::Player->getFeature<Container>()->remove( toRemove );
     }
   }
@@ -48,9 +48,9 @@ void CmdUse::execute()
 
 }
 
-Actor* CmdUse::acquireItemToUse()
+ActorPtr CmdUse::acquireItemToUse()
 {
-  Actor* item = nullptr;
+  ActorPtr item ;
 
   gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
                    window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
@@ -59,7 +59,7 @@ Actor* CmdUse::acquireItemToUse()
   auto usableItems = getUsableItems();
   if ( !usableItems.empty() )
   {
-    window.fill<Actor>( usableItems, [](Actor* a){ return a->getName(); } );
+    window.fill<Actor>( usableItems, [](ActorPtr a){ return a->getName(); } );
     window.show();
     if ( auto selected = window.getSelectedItem() )
     {
@@ -73,9 +73,9 @@ Actor* CmdUse::acquireItemToUse()
   return item;
 }
 
-std::vector<Actor*> CmdUse::getUsableItems()
+std::vector<ActorPtr> CmdUse::getUsableItems()
 {
-  std::function<bool(Actor*)> filter = [](Actor* a)
+  std::function<bool(ActorPtr)> filter = [](ActorPtr a)
                                          {
                                            return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect();
                                          };

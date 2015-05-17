@@ -17,11 +17,11 @@ public:
   {
     Actor::DB.loadActors("data/actors.xml");
 
-    WearerDescription dsc;
-    dsc.itemSlots.push_back(ItemSlotType::Armor);
-    dsc.itemSlots.push_back(ItemSlotType::Boots);
+    WearerDescriptionPtr dsc(new WearerDescription);
+    dsc->itemSlots.push_back(ItemSlotType::Armor);
+    dsc->itemSlots.push_back(ItemSlotType::Boots);
 
-    wearer.reset( Wearer::create(&dsc) );
+    wearer = Wearer::create(dsc);
   }
   virtual void TearDown()
   {
@@ -45,24 +45,19 @@ TEST_F(WearerTest, equip_item)
 {
   //not equipped
   ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Armor) );
-
-  Actor* clothArmor = new Actor( ActorType::LinenClothes );
+  ActorPtr clothArmor = Actor::create( ActorType::LinenClothes );
 
   //equip and check if equipped correctly
   EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Armor) );
-
   ASSERT_TRUE( wearer->equip(clothArmor) );
   ASSERT_TRUE( wearer->isEquipped(ItemSlotType::Armor) );
   ASSERT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
   ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Boots) );
 
   //try to over-equip
-  Actor* overeq = new Actor(ActorType::LinenClothes);
+  ActorPtr overeq = Actor::create(ActorType::LinenClothes);
   EXPECT_FALSE( wearer->equip(overeq) );
   EXPECT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
-
-  delete overeq;
-  overeq = nullptr;
 }
 
 TEST_F(WearerTest, unequip_item)
@@ -71,36 +66,34 @@ TEST_F(WearerTest, unequip_item)
   ASSERT_EQ( wearer->unequip(ItemSlotType::Armor ), nullptr );
 
   //equip and then unequip
-  Actor* boots = new Actor( ActorType::LeatherBoots );
+  ActorPtr boots = Actor::create( ActorType::LeatherBoots );
   ASSERT_TRUE( wearer->equip(boots) );
-  Actor* unequipped = wearer->unequip(ItemSlotType::Boots);
+  ActorPtr unequipped = wearer->unequip(ItemSlotType::Boots);
 
   //check if unequipped correctly
   EXPECT_EQ(unequipped, boots);
   EXPECT_FALSE(wearer->isEquipped(ItemSlotType::Boots));
   EXPECT_EQ( wearer->equipped(ItemSlotType::Boots), nullptr);
-
-  delete boots;
 }
 
 TEST_F(WearerTest, clone_wearer)
 {
-  WearerDescription dsc;
-  dsc.eqItems.maxSize = 2;
-  dsc.itemSlots.push_back(ItemSlotType::LeftRing);
-  dsc.itemSlots.push_back(ItemSlotType::Offhand);
+  WearerDescriptionPtr dsc(new WearerDescription);
+  dsc->eqItems->maxSize = 2;
+  dsc->itemSlots.push_back(ItemSlotType::LeftRing);
+  dsc->itemSlots.push_back(ItemSlotType::Offhand);
 
-  WearerPtr w1 ( Wearer::create(&dsc) );
-  WearerPtr wcloned( dynamic_cast<Wearer*>(w1->clone()) );
+  WearerPtr w1 = Wearer::create(dsc);
+  WearerPtr wcloned = std::dynamic_pointer_cast<Wearer>(w1->clone());
 
-  ASSERT_TRUE( wcloned->_equippedItems->isEqual( w1->_equippedItems.get() ) );
+  ASSERT_TRUE( wcloned->_equippedItems->isEqual( w1->_equippedItems ) );
   for(int i = (int)ItemSlotType::Null; i != (int)ItemSlotType::End; ++i)
   {
     ItemSlotType slot = (ItemSlotType)i;
     ASSERT_EQ( wcloned->hasSlot(slot), w1->hasSlot(slot) );
   }
 
-  ASSERT_TRUE( wcloned->isEqual(w1.get()) );
+  ASSERT_TRUE( wcloned->isEqual(w1) );
 }
 
 TEST_F(WearerTest, compare_test)
@@ -108,35 +101,35 @@ TEST_F(WearerTest, compare_test)
   WearerPtr w1 ( new Wearer );
   WearerPtr w2 ( new Wearer );
 
-  ASSERT_TRUE( w1->isEqual(w2.get()) );
+  ASSERT_TRUE( w1->isEqual(w2) );
 
   //compare by slots
   w1->_itemSlots[ ItemSlotType::Armor ] = nullptr;
-  ASSERT_FALSE( w1->isEqual(w2.get()) );
+  ASSERT_FALSE( w1->isEqual(w2) );
 
-  WearerDescription dsc;
-  dsc.itemSlots.push_back(ItemSlotType::Armor);
-  dsc.itemSlots.push_back(ItemSlotType::Boots);
-  dsc.eqItems.maxSize = 2;
+  WearerDescriptionPtr dsc(new WearerDescription);
+  dsc->itemSlots.push_back(ItemSlotType::Armor);
+  dsc->itemSlots.push_back(ItemSlotType::Boots);
+  dsc->eqItems->maxSize = 2;
 
-  w1.reset( Wearer::create(&dsc) );
-  w2.reset( Wearer::create(&dsc) );
+  w1 = Wearer::create(dsc);
+  w2 = Wearer::create(dsc);
 
   //compare by equip - 1. one equipped, second null
-  Actor* w1armor = new Actor( ActorType::LinenClothes );
+  ActorPtr w1armor= Actor::create( ActorType::LinenClothes );
 
   ASSERT_TRUE( w1->equip(w1armor) );
-  ASSERT_FALSE( w1->isEqual( w2.get() ) );
+  ASSERT_FALSE( w1->isEqual( w2 ) );
 
   //compare by equip - 2. both equipped same
-  Actor* w2armor = new Actor( ActorType::LinenClothes );
+  ActorPtr w2armor= Actor::create( ActorType::LinenClothes );
   ASSERT_TRUE( w2->equip(w2armor) );
-  ASSERT_TRUE( w1->isEqual( w2.get() ) );
+  ASSERT_TRUE( w1->isEqual( w2 ) );
 
   //compare by equip - 3. both equipped different
-  Actor* w2boots = new Actor( ActorType::LeatherBoots );
+  ActorPtr w2boots = Actor::create( ActorType::LeatherBoots );
   ASSERT_TRUE( w2->equip(w2boots) );
-  ASSERT_FALSE( w1->isEqual( w2.get() ) );
+  ASSERT_FALSE( w1->isEqual( w2 ) );
 
 }
 

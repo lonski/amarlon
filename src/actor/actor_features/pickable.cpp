@@ -21,15 +21,15 @@ Pickable::~Pickable()
   delete _effect;
 }
 
-Pickable *Pickable::create(Description *dsc)
+PickablePtr Pickable::create(DescriptionPtr dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  PickableDescription* pDsc = dynamic_cast<PickableDescription*>(dsc);
-  Pickable* pickable = nullptr;
+  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
+  PickablePtr pickable = nullptr;
 
   if ( pDsc != nullptr )
   {
-    pickable = new Pickable(pDsc->stackable, pDsc->amount);
+    pickable.reset( new Pickable(pDsc->stackable, pDsc->amount) );
     pickable->_itemSlot = pDsc->itemSlot;
     pickable->_category = pDsc->category;
 
@@ -40,9 +40,9 @@ Pickable *Pickable::create(Description *dsc)
   return pickable;
 }
 
-Actor* Pickable::spilt(int amount)
+ActorPtr Pickable::spilt(int amount)
 {
-  Actor* r = _owner;
+  ActorPtr r = ActorPtr(getOwner());
 
   if ( isStackable() && amount < _amount && amount > 0 )
   {
@@ -58,9 +58,9 @@ Actor* Pickable::spilt(int amount)
   return r;
 }
 
-ActorFeature *Pickable::clone()
+ActorFeaturePtr Pickable::clone()
 {
-  Pickable* cloned = new Pickable(isStackable(), getAmount());
+  PickablePtr cloned( new Pickable(isStackable(), getAmount()) );
   cloned->setEffect( _effect ? _effect->clone() : nullptr );
 
   cloned->_itemSlot = _itemSlot;
@@ -69,10 +69,10 @@ ActorFeature *Pickable::clone()
   return cloned;
 }
 
-bool Pickable::isEqual(ActorFeature *rhs)
+bool Pickable::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  Pickable* crhs = dynamic_cast<Pickable*>(rhs);
+  PickablePtr crhs = std::dynamic_pointer_cast<Pickable>(rhs);
 
   if (crhs != nullptr)
   {
@@ -84,7 +84,7 @@ bool Pickable::isEqual(ActorFeature *rhs)
   return equal;
 }
 
-bool Pickable::use(Actor* executor, std::vector<Actor*> targets)
+bool Pickable::use(ActorPtr executor, std::vector<ActorPtr> targets)
 {
   bool r = false;
 

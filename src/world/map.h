@@ -51,17 +51,17 @@ public:
   bool isInFov(int x, int y);
   bool isBlocked(int x, int y);
 
-  void addActor(Actor* actor);
-  bool removeActor(Actor *toRemove);
-  Actor* getFirstActor(int x, int y);
-  std::vector<Actor*> getActors(int x, int y, std::function<bool (amarlon::Actor*)>* filterFun = nullptr);
-  std::vector<Actor*> getActors(std::function<bool(Actor*)>* filterFun);
-  Container& getActorsContainer(u32 x, u32 y);
+  void addActor(ActorPtr actor);
+  bool removeActor(ActorPtr toRemove);
+  ActorPtr getFirstActor(int x, int y);
+  std::vector<ActorPtr> getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
+  std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun);
+  ContainerPtr getActorsContainer(u32 x, u32 y);
 
-  void performActionOnActors(std::function<void(Actor*)> func);
+  void performActionOnActors(std::function<void(ActorPtr)> func);
 
   void render(TCODConsole* console);
-  void updateActorCell(Actor *actor);
+  void updateActorCell(ActorPtr actor);
 
   void computeFov(int x, int y, int radius);
   void fill(std::string tilesStr);

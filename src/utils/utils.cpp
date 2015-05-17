@@ -4,10 +4,10 @@
 
 namespace amarlon {
 
-std::string getItemNameAndAmount(Actor* a)
+std::string getItemNameAndAmount(ActorPtr a)
 {
   std::string value = a->getName();
-  if ( Pickable* pickable = a->getFeature<Pickable>() )
+  if ( PickablePtr pickable = a->getFeature<Pickable>() )
   {
     if ( pickable->getAmount() > 1 )
     {

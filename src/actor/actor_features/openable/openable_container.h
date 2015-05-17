@@ -1,20 +1,24 @@
 #ifndef OPENABLECONTAINER_H
 #define OPENABLECONTAINER_H
 
+#include <memory>
 #include "openable.h"
 
 namespace amarlon {
+
+class OpenableContainer;
+typedef std::shared_ptr<OpenableContainer> OpenableContainerPtr;
 
 class OpenableContainer : public Openable
 {
 public:
   OpenableContainer();
 
-  virtual ActorFeature* clone();
-  virtual bool isEqual(ActorFeature *rhs);
+  virtual ActorFeaturePtr clone();
+  virtual bool isEqual(ActorFeaturePtr rhs);
 
-  virtual bool open(Actor* executor);
-  virtual bool close(Actor* executor);
+  virtual bool open(ActorPtr executor);
+  virtual bool close(ActorPtr executor);
 
 };
 

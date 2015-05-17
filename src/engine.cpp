@@ -44,7 +44,7 @@ void Engine::init(Configuration* cfg)
   Actor::DB.loadActors( cfg->get("actors_file") );
   Map::Gateway.loadMaps( cfg->get("maps_file") );
 
-  Actor::Player = new Actor(ActorType::Player, 42, 28);
+  Actor::Player = Actor::create(ActorType::Player, 42, 28);
 
   Messenger::message()->setGui(_gui.get());
 
@@ -84,10 +84,10 @@ void Engine::updateAis()
 {
   if (_currentMap != nullptr)
   {
-    std::function<bool(Actor*)> filter = [](Actor* a)->bool{ return a->hasFeature<Ai>();};
-    std::vector<Actor*> ais = currentMap().getActors( &filter );
+    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};
+    std::vector<ActorPtr> ais = currentMap().getActors( &filter );
 
-    std::for_each( ais.begin(), ais.end(), [&](Actor* a){a->getFeature<Ai>()->update( &currentMap() );});
+    std::for_each( ais.begin(), ais.end(), [&](ActorPtr a){a->getFeature<Ai>()->update( &currentMap() );});
   }
 }
 
@@ -118,17 +118,17 @@ gui::WindowManager& Engine::windowManager() const
 
 std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
 {
-  std::function<bool(amarlon::Actor*)> filterFun = [&](Actor* a) -> bool
+  std::function<bool(amarlon::ActorPtr)> filterFun = [&](ActorPtr a) -> bool
   {
     return a != Actor::Player;
   };
-  std::vector<Actor*> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
+  std::vector<ActorPtr> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
     Actor::Player->getY(), &filterFun);
 
   TCODColor itemViewColor = TCODColor::darkLime;
   std::vector< ColoredString > items;
 
-  std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](Actor* a)
+  std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](ActorPtr a)
   {
     int amount = 1;
     if ( a->hasFeature<Pickable>() )

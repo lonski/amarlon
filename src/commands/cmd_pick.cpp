@@ -22,7 +22,7 @@ void CmdPick::execute()
   int x( Actor::Player->getX() );
   int y( Actor::Player->getY() );
 
-  Container& container = Engine::instance().currentMap().getActorsContainer(x, y);
+  ContainerPtr container = Engine::instance().currentMap().getActorsContainer(x, y);
 
   auto afterPickupAction =
   [](const std::string& item, int amount)
@@ -39,8 +39,8 @@ void CmdPick::execute()
   Engine::instance().windowManager()
                     .getWindow<gui::PickUpWindow>()
                     .setPicker(Actor::Player)
-                    .setContainer(&container)
-                    .setFilterFunction( [](Actor* a){ return a->getFeature<Pickable>(); } )
+                    .setContainer(container)
+                    .setFilterFunction( [](ActorPtr a){ return a->getFeature<Pickable>() != nullptr; } )
                     .setAfterPickupAction( afterPickupAction )
                     .setInventoryFullAction( inventoryFullAction )
                     .show();

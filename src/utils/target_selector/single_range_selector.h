@@ -11,7 +11,7 @@ class SingleRangeSelector : public TargetSelector
 public:
     SingleRangeSelector(int range = 1, const std::string& selectionMessage = "Select a tile...");
 
-    virtual std::vector<Actor*> select(std::function<bool (amarlon::Actor*)>* filterFun = nullptr);
+    virtual std::vector<ActorPtr> select(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
 
     int getRange() const;
     TargetSelector &setRange(int range);

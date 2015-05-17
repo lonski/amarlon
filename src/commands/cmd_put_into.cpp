@@ -19,7 +19,7 @@ bool CmdPutInto::accept(TCOD_key_t &key)
 
 void CmdPutInto::execute()
 {
-  Actor* target = SingleNeighbourSelector("Select a container to put into...")
+  ActorPtr target = SingleNeighbourSelector("Select a container to put into...")
                     .selectFirst();
 
   if ( target != nullptr && target->hasFeature<Container>())

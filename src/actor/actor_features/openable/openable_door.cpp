@@ -9,53 +9,53 @@ OpenableDoor::OpenableDoor()
 {
 }
 
-bool OpenableDoor::open(Actor*)
+bool OpenableDoor::open(ActorPtr)
 {
   bool r = false;
 
-  if (_owner->getId() == ActorType::DoorClosed)
+  if (getOwner()->getId() == ActorType::DoorClosed)
   {
     if ( !isLocked() )
     {
-      _owner->changeType(ActorType::DoorOpen);
+      getOwner()->changeType(ActorType::DoorOpen);
       r = true;
     }
     else
     {
-      gui::msgBox("The "+_owner->getName()+" is locked.", gui::MsgType::Warning);
+      gui::msgBox("The "+getOwner()->getName()+" is locked.", gui::MsgType::Warning);
     }
   }
 
   return r;
 }
 
-bool OpenableDoor::close(Actor*)
+bool OpenableDoor::close(ActorPtr)
 {
   bool r = false;
 
-  if (_owner->getId() == ActorType::DoorOpen)
+  if (getOwner()->getId() == ActorType::DoorOpen)
   {
-    _owner->changeType(ActorType::DoorClosed);
-    _owner->getFeature<Openable>()->unlock();
+    getOwner()->changeType(ActorType::DoorClosed);
+    getOwner()->getFeature<Openable>()->unlock();
     r = true;
   }
 
   return r;
 }
 
-ActorFeature *OpenableDoor::clone()
+ActorFeaturePtr OpenableDoor::clone()
 {
-  OpenableDoor* cloned = new OpenableDoor;
+  OpenableDoorPtr cloned( new OpenableDoor );
   cloned->setLockId( getLockId() );
   isLocked() ? cloned->lock() : cloned->unlock();
 
   return cloned;
 }
 
-bool OpenableDoor::isEqual(ActorFeature *rhs)
+bool OpenableDoor::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  OpenableDoor* crhs = dynamic_cast<OpenableDoor*>(rhs);
+  OpenableDoorPtr crhs = std::dynamic_pointer_cast<OpenableDoor>(rhs);
 
   if (crhs != nullptr)
   {
@@ -69,7 +69,7 @@ bool OpenableDoor::lock()
 {
   bool r = false;
 
-  if (_owner->getId() == ActorType::DoorClosed)
+  if (getOwner()->getId() == ActorType::DoorClosed)
   {
     r = Openable::lock();
   }

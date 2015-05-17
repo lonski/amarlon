@@ -27,7 +27,7 @@ void Messenger::setGui(gui::Gui *gui)
   _gui = gui;
 }
 
-void Messenger::actorHit(Actor *atacker, Actor *victim, int amount)
+void Messenger::actorHit(ActorPtr atacker, ActorPtr victim, int amount)
 {
   string msg = atacker->getName() + " hits " + tolowers(victim->getName());
 
@@ -43,7 +43,7 @@ void Messenger::actorHit(Actor *atacker, Actor *victim, int amount)
   _gui->message(msg, TCODColor::darkRed);
 }
 
-void Messenger::actorDies(Actor *victim)
+void Messenger::actorDies(ActorPtr victim)
 {
   string msg = victim->getName() + " dies.";
   _gui->message(msg, TCODColor::darkerRed);
@@ -77,7 +77,7 @@ void Messenger::actorPicked(const std::string& pickerName, const std::string& it
   _gui->message(msg+".", TCODColor::darkYellow);
 }
 
-void Messenger::actorDropped(Actor *dropper, Actor *dropped, int amount)
+void Messenger::actorDropped(ActorPtr dropper, ActorPtr dropped, int amount)
 {
   string msg = dropper->getName() + " dropped " + tolowers(dropped->getName());
 
@@ -89,25 +89,25 @@ void Messenger::actorDropped(Actor *dropper, Actor *dropped, int amount)
   _gui->message(msg, TCODColor::darkYellow);
 }
 
-void Messenger::actorPicked(Actor *picker, Actor *picked, int amount)
+void Messenger::actorPicked(ActorPtr picker, ActorPtr picked, int amount)
 {
   actorPicked(picker->getName(), picked->getName(), amount);
 }
 
-void Messenger::actorHealed(Actor *healed, int amount)
+void Messenger::actorHealed(ActorPtr healed, int amount)
 {
   string msg = healed->getName() + " has been healed for " + to_string(amount) + ".";
 
   _gui->message(msg, TCODColor::lighterBlue);
 }
 
-void Messenger::actorHasBeenLocked(Actor *locker, Actor *locked)
+void Messenger::actorHasBeenLocked(ActorPtr locker, ActorPtr locked)
 {
   string msg = locker->getName() + " has locked the " + tolowers(locked->getName());
   _gui->message(msg);
 }
 
-void Messenger::actorHasBeenUnLocked(Actor *unlocker, Actor *unlocked)
+void Messenger::actorHasBeenUnLocked(ActorPtr unlocker, ActorPtr unlocked)
 {
   string msg = unlocker->getName() + " has unlocked the " + tolowers(unlocked->getName());
   _gui->message(msg);

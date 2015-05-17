@@ -9,6 +9,9 @@
 
 namespace amarlon {
 
+class Wearer;
+typedef std::shared_ptr<Wearer> WearerPtr;
+
 class Wearer : public ActorFeature
 {
 public:
@@ -16,26 +19,27 @@ public:
 
   Wearer();
   virtual ~Wearer() {}
-  static Wearer* create(Description* dsc);
+  static WearerPtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType() { return featureType; }
 
-  virtual ActorFeature* clone();
-  virtual bool isEqual(ActorFeature* rhs);
+  virtual ActorFeaturePtr clone();
+  virtual bool isEqual(ActorFeaturePtr rhs);
 
-  bool equip(Actor* item);
-  Actor* unequip(ItemSlotType slot);
+  bool equip(ActorPtr item);
+  ActorPtr unequip(ItemSlotType slot);
   bool isEquipped(ItemSlotType slot);
-  Actor* equipped(ItemSlotType slot);
+  ActorPtr equipped(ItemSlotType slot);
   bool hasSlot(ItemSlotType slot);
 
 private:
-  std::map<ItemSlotType, Actor*> _itemSlots;
+  std::map<ItemSlotType, ActorPtr> _itemSlots;
   ContainerPtr _equippedItems;
 
-  static void assignItemsToSlots(Wearer* wearer);
+  static void assignItemsToSlots(WearerPtr wearer);
 
 };
+
 
 }
 

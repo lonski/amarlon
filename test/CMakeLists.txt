@@ -62,7 +62,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/gui/window/amount_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/gui.h
     ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.h
-    ${PROJECT_SOURCE_DIR}/src/utils/item_picker.h
+    ${PROJECT_SOURCE_DIR}/src/utils/item_action.h
     ${PROJECT_SOURCE_DIR}/src/utils/amarlon_except.h
     ${PROJECT_SOURCE_DIR}/src/utils/messenger.h
     ${PROJECT_SOURCE_DIR}/src/utils/selector_type.h

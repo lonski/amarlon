@@ -4,6 +4,7 @@
 #include "wearer.h"
 #include "fighter.h"
 #include "pickable.h"
+#include <actor.h>
 
 namespace amarlon {
 
@@ -12,9 +13,9 @@ ActorFeature::ActorFeature()
 {
 }
 
-ActorFeature* ActorFeature::create(Type featureType, Description *dsc)
+ActorFeaturePtr ActorFeature::create(Type featureType, DescriptionPtr dsc)
 {
-  ActorFeature* feature = nullptr;
+  ActorFeaturePtr feature = nullptr;
 
   if ( dsc)
   {
@@ -37,9 +38,14 @@ ActorFeature::~ActorFeature()
 {
 }
 
-void ActorFeature::setOwner(Actor *owner)
+void ActorFeature::setOwner(ActorPtr owner)
 {
   _owner = owner;
+}
+
+ActorPtr ActorFeature::getOwner()
+{
+  return _owner;
 }
 
 }

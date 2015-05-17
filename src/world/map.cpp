@@ -52,9 +52,9 @@ bool Map::isBlocked(int x, int y)
   bool actorBlocks = false;
 
   Tile& tile = getTile(x, y);
-  for(auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
+  for(ActorPtr actor : *tile.actors)
   {
-    if ( (*aIter)->blocks() )
+    if ( actor->blocks() )
     {
       actorBlocks = true;
       break;
@@ -64,7 +64,7 @@ bool Map::isBlocked(int x, int y)
   return terrianBlocks || actorBlocks;
 }
 
-void Map::addActor(Actor *actor)
+void Map::addActor(ActorPtr actor)
 {
   int x( actor->getX() );
   int y( actor->getY() );
@@ -81,18 +81,18 @@ void Map::addActor(Actor *actor)
 
 }
 
-Actor *Map::getFirstActor(int x, int y)
+ActorPtr Map::getFirstActor(int x, int y)
 {
   Tile& tile = getTile(x, y);
   return tile.actors->size() > 0 ? *tile.actors->begin() : nullptr;
 }
 
-std::vector<Actor *> Map::getActors(int x, int y, std::function<bool (amarlon::Actor*)>* filterFun)
+std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun)
 {
-  std::vector<Actor*> r;
+  std::vector<ActorPtr> r;
   Tile& tile = getTile(x, y);
 
-  std::for_each(tile.actors->begin(), tile.actors->end(), [&](Actor* a)
+  std::for_each(tile.actors->begin(), tile.actors->end(), [&](ActorPtr a)
   {    
     if ( filterFun == nullptr || (*filterFun)(a))  r.push_back(a);
   });
@@ -100,15 +100,15 @@ std::vector<Actor *> Map::getActors(int x, int y, std::function<bool (amarlon::A
   return r;
 }
 
-std::vector<Actor *> Map::getActors(std::function<bool(Actor *)>* filterFun)
+std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr )>* filterFun)
 {
-  std::vector<Actor*> r;
+  std::vector<ActorPtr> r;
 
   for(auto tileRow = _tiles.begin(); tileRow != _tiles.end(); ++tileRow)
   {
     for(auto tile = tileRow->begin(); tile != tileRow->end(); ++tile)
     {
-      std::for_each(tile->actors->begin(), tile->actors->end(), [&](Actor* a)
+      std::for_each(tile->actors->begin(), tile->actors->end(), [&](ActorPtr a)
       {
         if ( filterFun == nullptr || (*filterFun)(a)) r.push_back(a);
       });
@@ -118,7 +118,7 @@ std::vector<Actor *> Map::getActors(std::function<bool(Actor *)>* filterFun)
   return r;
 }
 
-bool Map::removeActor(Actor *toRemove)
+bool Map::removeActor(ActorPtr toRemove)
 {  
   Tile& tile = getTile(toRemove->getX(), toRemove->getY());
   bool r = tile.actors->remove( toRemove );
@@ -154,14 +154,14 @@ void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
 {
     Tile& tile = getTile(x, y);
 
-    tile.actors->sort([](Actor* a1, Actor* a2)
+    tile.actors->sort([](ActorPtr a1, ActorPtr a2)
                       {
                         return a1->getTileRenderPriority() > a2->getTileRenderPriority();
                       });
 
     for (auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
     {
-      Actor* actor = *aIter;
+      ActorPtr actor = *aIter;
 
       bool inFov = isInFov(actor->getX(), actor->getY());
       bool onlyInFov = actor->isFovOnly();
@@ -175,7 +175,7 @@ void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
     }
 }
 
-void Map::updateActorCell(Actor* actor)
+void Map::updateActorCell(ActorPtr actor)
 {
   codMap.setProperties(actor->getX(),
                        actor->getY(),
@@ -299,12 +299,12 @@ void Map::setId(const MapId &id)
   _id = id;
 }
 
-Container& Map::getActorsContainer(u32 x, u32 y)
+ContainerPtr Map::getActorsContainer(u32 x, u32 y)
 {
-  return *getTile(x,y).actors;
+  return getTile(x,y).actors;
 }
 
-void Map::performActionOnActors(std::function<void(Actor *)> func)
+void Map::performActionOnActors(std::function<void(ActorPtr )> func)
 {
   std::for_each(_tiles.begin(), _tiles.end(), [&func](TileRow& tr)
   {

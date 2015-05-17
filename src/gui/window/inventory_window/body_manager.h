@@ -26,9 +26,9 @@ public:
 private:
   AMenuPtr _bodyMenu;
 
-  Actor *chooseItemToEquip(ItemSlotType slot);
-  bool equipItem(Actor* toEquip);
-  std::vector<Actor*> getEquipableItemsList(ItemSlotType slot);
+  ActorPtr chooseItemToEquip(ItemSlotType slot);
+  bool equipItem(ActorPtr toEquip);
+  std::vector<ActorPtr> getEquipableItemsList(ItemSlotType slot);
   bool unequipItem(ItemSlotType slot);
 
 };

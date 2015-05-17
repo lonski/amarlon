@@ -12,7 +12,7 @@ SelfHealEffect::SelfHealEffect()
   _targetSelector.reset( new ExecutorSelector );
 }
 
-bool SelfHealEffect::apply(Actor *executor, std::vector<Actor *>)
+bool SelfHealEffect::apply(ActorPtr executor, std::vector<ActorPtr >)
 {
   bool r = false;
 

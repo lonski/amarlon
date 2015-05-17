@@ -13,25 +13,25 @@ Openable::Openable()
 {
 }
 
-Openable *Openable::create(OpenableType type)
+OpenablePtr Openable::create(OpenableType type)
 {
-  Openable* o = nullptr;
+  OpenablePtr o = nullptr;
 
   switch(type)
   {
-    case OpenableType::OpenableDoor: o = new OpenableDoor; break;
-    case OpenableType::OpenableContainer: o = new OpenableContainer; break;
+    case OpenableType::OpenableDoor: o.reset( new OpenableDoor ); break;
+    case OpenableType::OpenableContainer: o.reset( new OpenableContainer ); break;
     default:;
   }
 
   return o;
 }
 
-Openable *Openable::create(Description* dsc)
+OpenablePtr Openable::create(DescriptionPtr dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  OpenableDescription* oDsc = dynamic_cast<OpenableDescription*>(dsc);
-  Openable* op = nullptr;
+  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
+  OpenablePtr op = nullptr;
 
   if ( oDsc != nullptr )
   {

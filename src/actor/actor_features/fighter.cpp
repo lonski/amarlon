@@ -2,11 +2,13 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include "actor/actor.h"
-#include "gui/gui.h"
-#include "utils/utils.h"
-#include "utils/messenger.h"
-#include "amarlon_except.h"
+#include <actor.h>
+#include <gui.h>
+#include <utils.h>
+#include <messenger.h>
+#include <amarlon_except.h>
+#include <engine.h>
+#include <map.h>
 
 namespace amarlon {
 
@@ -19,30 +21,30 @@ Fighter::Fighter(float power, float maxHp)
 {
 }
 
-Fighter *Fighter::create(Description *dsc)
+FighterPtr Fighter::create(DescriptionPtr dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Fighter* fighter = nullptr;
-  FighterDescription* fighterDsc = dynamic_cast<FighterDescription*>(dsc);
+  FighterPtr fighter = nullptr;
+  FighterDescriptionPtr fighterDsc = std::dynamic_pointer_cast<FighterDescription>(dsc);
 
   if ( fighterDsc != nullptr )
   {
-    fighter = new Fighter(fighterDsc->power, fighterDsc->maxHp);
+    fighter.reset( new Fighter(fighterDsc->power, fighterDsc->maxHp) );
   }else throw creation_error("Wrong fighter description!");
 
   return fighter;
 }
 
-ActorFeature *Fighter::clone()
+ActorFeaturePtr Fighter::clone()
 {
-  Fighter* cloned = new Fighter(_power, _maxHp);
+  FighterPtr cloned( new Fighter(_power, _maxHp) );
   return cloned;
 }
 
-bool Fighter::isEqual(ActorFeature *rhs)
+bool Fighter::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  Fighter* crhs = dynamic_cast<Fighter*>(rhs);
+  FighterPtr crhs = std::dynamic_pointer_cast<Fighter>(rhs);
 
   if (crhs != nullptr)
   {
@@ -53,11 +55,11 @@ bool Fighter::isEqual(ActorFeature *rhs)
   return equal;
 }
 
-void Fighter::attack(Actor *enemy)
+void Fighter::attack(ActorPtr enemy)
 {
   if ( enemy->isAlive() )
   {
-    Messenger::message()->actorHit(_owner, enemy, _power);
+    Messenger::message()->actorHit( ActorPtr(getOwner()), enemy, _power);
 
     enemy->getFeature<Fighter>()->takeDamage(_power);
   }
@@ -77,11 +79,11 @@ void Fighter::takeDamage(float power)
 }
 
 void Fighter::die()
-{
-  if (_owner)
+{  
+  if (getOwner())
   {
-    Messenger::message()->actorDies(_owner);
-    _owner->morph(ActorType::Corpse);
+    Messenger::message()->actorDies( ActorPtr(getOwner()) );
+    getOwner()->morph(ActorType::Corpse);
   }
 }
 

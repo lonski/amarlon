@@ -118,8 +118,8 @@ private:
   template<typename T>
   void addFeature()
   {
-    T* t = _actorDB->getFeature<T>(_aType);
-    if ( t != nullptr ) _features[T::featureType] = ActorFeaturePtr(t);
+    std::shared_ptr<T> t = _actorDB->getFeature<T>(_aType);
+    if ( t ) _features[T::featureType] = ActorFeaturePtr(t);
   }
 
   ActorDB* _actorDB;
@@ -173,7 +173,7 @@ void ActorDB::parseActor(xml_node<>* actorNode)
 {
   _actorParser.setSource( actorNode );
 
-  ActorDescription* actorDsc = _actorParser.parseActorDsc();
+  ActorDescriptionPtr actorDsc = _actorParser.parseActorDsc();
   if ( actorDsc != nullptr )
   {
     _actorDscs[actorDsc->id] = DescriptionPtr(actorDsc);

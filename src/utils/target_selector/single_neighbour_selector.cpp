@@ -12,12 +12,12 @@ SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMes
 {
 }
 
-std::vector<Actor*> SingleNeighbourSelector::select(std::function<bool (amarlon::Actor*)>* filterFun)
+std::vector<ActorPtr> SingleNeighbourSelector::select(std::function<bool (amarlon::ActorPtr)>* filterFun)
 {
   Engine::instance().gui().setStatusMessage( _selectionMessage );
   TCODConsole::root->flush();
   Map& map = Engine::instance().currentMap();
-  Actor* player = Actor::Player;
+  ActorPtr player = Actor::Player;
 
   int dx(0), dy(0);
 
@@ -30,9 +30,9 @@ std::vector<Actor*> SingleNeighbourSelector::select(std::function<bool (amarlon:
   return map.getActors(player->getX()+dx, player->getY()+dy, filterFun);
 }
 
-Actor *SingleNeighbourSelector::selectFirst(std::function<bool (amarlon::Actor*)>* filterFun)
+ActorPtr SingleNeighbourSelector::selectFirst(std::function<bool (amarlon::ActorPtr)>* filterFun)
 {
-  std::vector<Actor*> targets = select(filterFun);
+  std::vector<ActorPtr> targets = select(filterFun);
   return targets.empty() ? nullptr : targets.front();
 }
 

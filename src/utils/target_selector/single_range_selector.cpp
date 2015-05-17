@@ -23,7 +23,7 @@ void SingleRangeSelector::initValues()
     _y = Actor::Player->getY();
 }
 
-std::vector<Actor*> SingleRangeSelector::select(std::function<bool (amarlon::Actor*)>* filterFun)
+std::vector<ActorPtr> SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)>* filterFun)
 {
     initValues();
 
@@ -49,9 +49,9 @@ std::vector<Actor*> SingleRangeSelector::select(std::function<bool (amarlon::Act
         if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER ) accepted = true;
     }
 
-    std::vector<Actor*> vec = Engine::instance().currentMap().getActors(_x+_dx, _y+_dy, filterFun);
+    std::vector<ActorPtr> vec = Engine::instance().currentMap().getActors(_x+_dx, _y+_dy, filterFun);
     return accepted ? vec
-                    : std::vector<Actor*>();
+                    : std::vector<ActorPtr>();
 }
 
 void SingleRangeSelector::render()

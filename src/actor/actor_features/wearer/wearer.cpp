@@ -13,23 +13,23 @@ Wearer::Wearer()
 {
 }
 
-Wearer* Wearer::create(Description *dsc)
+WearerPtr Wearer::create(DescriptionPtr dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */  
-  Wearer* w = nullptr;
-  WearerDescription* wearerDsc = dynamic_cast<WearerDescription*>(dsc);
+  WearerPtr w = nullptr;
+  WearerDescriptionPtr wearerDsc = std::dynamic_pointer_cast<WearerDescription>(dsc);
 
   if ( wearerDsc != nullptr )
   {
-    w = new Wearer;
-    wearerDsc->eqItems.maxSize = wearerDsc->itemSlots.size();
+    w.reset( new Wearer );
+    wearerDsc->eqItems->maxSize = wearerDsc->itemSlots.size();
 
     std::for_each(wearerDsc->itemSlots.begin(), wearerDsc->itemSlots.end(), [&](ItemSlotType slot)
     {
       w->_itemSlots[slot] = nullptr;
     });
 
-    w->_equippedItems.reset( Container::create(&wearerDsc->eqItems) );
+    w->_equippedItems = Container::create(wearerDsc->eqItems);
     if ( w->_equippedItems )
     {
       assignItemsToSlots( w );
@@ -40,12 +40,12 @@ Wearer* Wearer::create(Description *dsc)
   return w;
 }
 
-void Wearer::assignItemsToSlots(Wearer* wearer)
+void Wearer::assignItemsToSlots(WearerPtr wearer)
 {
-  std::vector<Actor*> toEquip = wearer->_equippedItems->content();
-  std::for_each(toEquip.begin(), toEquip.end(), [&](Actor* a)
+  std::vector<ActorPtr> toEquip = wearer->_equippedItems->content();
+  std::for_each(toEquip.begin(), toEquip.end(), [&](ActorPtr a)
   {
-    if ( a != nullptr && a->hasFeature<Pickable>())
+    if ( a && a->hasFeature<Pickable>())
     {
       wearer->_itemSlots[ a->getFeature<Pickable>()->getItemSlot() ] = a;
     }
@@ -53,25 +53,25 @@ void Wearer::assignItemsToSlots(Wearer* wearer)
   });
 }
 
-ActorFeature* Wearer::clone()
+ActorFeaturePtr Wearer::clone()
 {
-  Wearer* cloned = new Wearer;
+  WearerPtr cloned( new Wearer );
 
   for(auto i : _itemSlots)
   {
     cloned->_itemSlots[ i.first ] = nullptr;
   }
 
-  cloned->_equippedItems.reset( _equippedItems->clone() );
+  cloned->_equippedItems = std::dynamic_pointer_cast<Container>(_equippedItems->clone());
   assignItemsToSlots(cloned);
 
   return cloned;
 }
 
-bool Wearer::isEqual(ActorFeature *rhs)
+bool Wearer::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  Wearer* crhs = dynamic_cast<Wearer*>(rhs);
+  WearerPtr crhs = std::dynamic_pointer_cast<Wearer>(rhs);
 
   if ( crhs != nullptr )
   {
@@ -82,14 +82,14 @@ bool Wearer::isEqual(ActorFeature *rhs)
       ItemSlotType slot = (ItemSlotType)i;
       equal &= (hasSlot(slot) == crhs->hasSlot(slot));
       equal &= (isEquipped(slot) == crhs->isEquipped(slot));
-      if ( equipped(slot) != nullptr ) equal &=  ( equipped(slot)->isEqual( crhs->equipped(slot) ));
+      if ( equipped(slot) ) equal &=  ( equipped(slot)->isEqual( crhs->equipped(slot) ));
     }
   }
 
   return equal;
 }
 
-bool Wearer::equip(Actor *item)
+bool Wearer::equip(ActorPtr item)
 {
   bool r = false;
 
@@ -106,11 +106,11 @@ bool Wearer::equip(Actor *item)
   return r;
 }
 
-Actor* Wearer::unequip(ItemSlotType slot)
+ActorPtr Wearer::unequip(ItemSlotType slot)
 {
-  Actor* r = equipped(slot);
+  ActorPtr r = equipped(slot);
 
-  if (r != nullptr)
+  if (r)
   {
     if (!_equippedItems->remove(r))
     {
@@ -127,9 +127,9 @@ bool Wearer::isEquipped(ItemSlotType slot)
   return (equipped(slot) != nullptr);
 }
 
-Actor* Wearer::equipped(ItemSlotType slot)
+ActorPtr Wearer::equipped(ItemSlotType slot)
 {
-  Actor* r = nullptr;
+  ActorPtr r;
   auto it = _itemSlots.find(slot);
   if (it != _itemSlots.end())
   {

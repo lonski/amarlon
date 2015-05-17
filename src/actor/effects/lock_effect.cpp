@@ -51,14 +51,14 @@ EffectDescription LockEffect::save()
   return dsc;
 }
 
-bool LockEffect::apply(Actor* executor, std::vector<Actor *> targets)
+bool LockEffect::apply(ActorPtr executor, std::vector<ActorPtr > targets)
 {
   bool r = false;
 
   if (targets.size() == 1 && targets[0] != nullptr)
   {
-    Actor* target = targets.front();
-    Openable* toOpen = targets.front()->getFeature<Openable>();
+    ActorPtr target = targets.front();
+    OpenablePtr toOpen = targets.front()->getFeature<Openable>();
 
     if (toOpen != nullptr)
     {

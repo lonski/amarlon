@@ -76,5 +76,8 @@
 	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
 	</Actor>
+	<Actor name="Bootle of red wine" id="21" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="4"/>
+	</Actor>
 	
 </Actors>

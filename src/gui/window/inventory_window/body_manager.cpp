@@ -35,7 +35,7 @@ void BodyManager::manage()
     }
     else
     {
-      Actor* toEquip = chooseItemToEquip(slot);
+      ActorPtr toEquip = chooseItemToEquip(slot);
       if ( equipItem(toEquip) )
       {
         item->setValue( toEquip->getName() );
@@ -48,7 +48,7 @@ void BodyManager::fillBodySlots()
 {  
   _bodyMenu->removeAllItems();
 
-  Wearer* wearer = Actor::Player->getFeature<Wearer>();
+  WearerPtr wearer = Actor::Player->getFeature<Wearer>();
   assert(wearer);
 
   for( int i = (int)ItemSlotType::Null + 1; i != (int)ItemSlotType::End; ++i)
@@ -56,7 +56,7 @@ void BodyManager::fillBodySlots()
     ItemSlotType slot = static_cast<ItemSlotType>(i);
     if ( wearer->hasSlot(slot) )
     {
-      Actor* eItem = wearer->equipped(slot);
+      ActorPtr eItem = wearer->equipped(slot);
 
       ASlotMenuItemPtr slotMenuItem( new ASlotMenuItem( getWidth() - 2*MARGIN ) );
       slotMenuItem->setProperty<int>( "ItemSlotType", i );
@@ -72,10 +72,10 @@ bool BodyManager::unequipItem(ItemSlotType slot)
 {
   bool success = false;
 
-  Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
-  Container* playerContainer = Actor::Player->getFeature<Container>();
+  WearerPtr playerWearer = Actor::Player->getFeature<Wearer>();
+  ContainerPtr playerContainer = Actor::Player->getFeature<Container>();
 
-  if ( Actor* item = playerWearer->unequip( slot ) )
+  if ( ActorPtr item = playerWearer->unequip( slot ) )
   {
     if ( playerContainer->add(item) )
     {
@@ -96,10 +96,10 @@ bool BodyManager::unequipItem(ItemSlotType slot)
   return success;
 }
 
-Actor* BodyManager::chooseItemToEquip(ItemSlotType slot)
+ActorPtr BodyManager::chooseItemToEquip(ItemSlotType slot)
 {
-  Actor* toEquip = nullptr;
-  std::vector<Actor*> equipableItems = getEquipableItemsList(slot);
+  ActorPtr toEquip;
+  std::vector<ActorPtr> equipableItems = getEquipableItemsList(slot);
 
   if ( !equipableItems.empty() )
   {
@@ -107,7 +107,7 @@ Actor* BodyManager::chooseItemToEquip(ItemSlotType slot)
 
     window.setTitle("Choose item to equip");
     window.setPosition(gui::AWidget::WINDOW_CENTER);
-    window.fill<Actor>( equipableItems, [](Actor* a){ return a->getName(); } );
+    window.fill<Actor>( equipableItems, [](ActorPtr a){ return a->getName(); } );
     window.show();
 
     if ( AMenuItemPtr mItem = window.getSelectedItem() )
@@ -123,9 +123,9 @@ Actor* BodyManager::chooseItemToEquip(ItemSlotType slot)
   return toEquip;
 }
 
-std::vector<Actor *> BodyManager::getEquipableItemsList(ItemSlotType slot)
+std::vector<ActorPtr > BodyManager::getEquipableItemsList(ItemSlotType slot)
 {
-  std::function<bool(Actor*)> filterFun = [&](Actor* a)-> bool
+  std::function<bool(ActorPtr)> filterFun = [&](ActorPtr a)-> bool
   {
     return a->hasFeature<Pickable>() && a->getFeature<Pickable>()->getItemSlot() == slot;
   };
@@ -133,7 +133,7 @@ std::vector<Actor *> BodyManager::getEquipableItemsList(ItemSlotType slot)
   return Actor::Player->getFeature<Container>()->content( &filterFun );
 }
 
-bool BodyManager::equipItem(Actor* toEquip)
+bool BodyManager::equipItem(ActorPtr toEquip)
 {
   bool success = false;
 

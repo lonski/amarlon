@@ -8,6 +8,8 @@
 namespace amarlon {
 
 class Actor;
+class Openable;
+typedef std::shared_ptr<Openable> OpenablePtr;
 
 class Openable : public ActorFeature
 {
@@ -17,13 +19,13 @@ public:
   Openable();
   ~Openable() {}
 
-  static Openable* create(OpenableType type);
-  static Openable* create(Description* dsc);
+  static OpenablePtr create(OpenableType type);
+  static OpenablePtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType();
 
-  virtual bool open(Actor* executor) = 0;
-  virtual bool close(Actor* executor) = 0;
+  virtual bool open(ActorPtr executor) = 0;
+  virtual bool close(ActorPtr executor) = 0;
 
   virtual bool lock();
   virtual bool unlock();
@@ -38,6 +40,7 @@ protected:
   int _lockId;
 
 };
+
 
 }
 
