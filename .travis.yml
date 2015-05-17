@@ -35,7 +35,7 @@ install:
     # Use a recent version of clang++ to build the compiler (with C++11 support);
     # use the previously installed clang version (since installing one tends to remove another).
     - if [[ "${CXX}" == "clang++" ]]; then export CXX="clang++-$CLANG_VERSION"; fi
-    - if [[ "${CC}" == "clang++" ]]; then export CC="clang-$CLANG_VERSION"; fi
+    - if [[ "${CC}" == "clang" ]]; then export CC="clang-$CLANG_VERSION"; fi
     - $CXX --version
 #    - gcc --version
 before_script:
