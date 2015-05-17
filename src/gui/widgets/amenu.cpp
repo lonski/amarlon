@@ -1,6 +1,6 @@
 #include "amenu.h"
 #include <amenu_item.h>
-#include <algorithm>
+#include <numeric>
 #include <apanel.h>
 #include <alabel.h>
 #include <message_box.h>

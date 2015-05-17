@@ -69,7 +69,6 @@ public:
     }
   }
 
-
 private:
 std::vector<AMenuItemPtr> _items;
 bool _autosize;

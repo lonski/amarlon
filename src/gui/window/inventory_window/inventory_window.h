@@ -24,9 +24,11 @@ public:
   const int windowHeight;
   const int windowWidth;
 
+  static WindowId getId() { return AWindow::INVENTORY; }
+
   virtual AWindow& show();
   virtual AWindow& setDefaults();
-  static WindowId getId() { return AWindow::INVENTORY; }
+  virtual void render(TCODConsole& console);
 
 private:
   enum WindowPanel
@@ -42,7 +44,6 @@ private:
   BodyManagerPtr _bodyMgr;
 
   void initalize();
-  void render();
   void handleKey(TCOD_key_t key);
 
   void activateNextPanel();

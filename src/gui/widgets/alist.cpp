@@ -6,8 +6,7 @@ namespace amarlon { namespace gui {
 AList::AList()
   : _autosize(true)
   , _width(0)
-  , _height(0)
-  , _maxWidth(0)
+  , _height(0)  
 {
 }
 

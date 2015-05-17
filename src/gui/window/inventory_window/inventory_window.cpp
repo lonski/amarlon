@@ -35,6 +35,14 @@ AWindow &InventoryWindow::setDefaults()
   return *this;
 }
 
+void InventoryWindow::render(TCODConsole& console)
+{
+  for (auto pIter = _panels.begin(); pIter != _panels.end(); ++pIter)
+  {
+    pIter->second->render(console);
+  }
+}
+
 AWindow& InventoryWindow::show()
 {
   _bodyMgr->fillBodySlots();
@@ -44,7 +52,7 @@ AWindow& InventoryWindow::show()
 
   while( !TCODConsole::isWindowClosed() )
   {
-    render();
+    render(*TCODConsole::root);
     TCODConsole::root->flush();
 
     TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
@@ -58,18 +66,8 @@ AWindow& InventoryWindow::show()
   return *this;
 }
 
-void InventoryWindow::render()
-{
-  for (auto pIter = _panels.begin(); pIter != _panels.end(); ++pIter)
-  {
-    pIter->second->render(*TCODConsole::root);
-  }
-}
-
 void InventoryWindow::handleKey(TCOD_key_t key)
 {
-  render();
-
   switch ( key.vk )
   {
     case TCODK_TAB:

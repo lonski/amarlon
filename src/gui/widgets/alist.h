@@ -43,7 +43,6 @@ private:
   bool _autosize;
   int _width;
   int _height;
-  int _maxWidth;
 
   size_t calculateMaxWidth() const;
 
