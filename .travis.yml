@@ -12,7 +12,7 @@ before_install:
     - sudo apt-get update -qq
 install:
     - sudo apt-get install -qq gcc-5
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5.1 20
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 20
     - sudo apt-get install -qq valgrind cppcheck
     - sudo apt-get install -qq mercurial libsdl-dev
     - sudo apt-get install -qq libgtest-dev google-mock
