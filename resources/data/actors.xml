@@ -1,6 +1,6 @@
 <Actors>
 	<Actor name="Player" id="1" character="@" color="ffffff" transparent="0" blocks="1" fovOnly="1">
-		<Container maxSize="3">
+		<Container maxSize="20">
 			<Content id="12"/>
 			<Content id="17"/>
 		</Container>

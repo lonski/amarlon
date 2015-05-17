@@ -18,22 +18,18 @@ public:
 
   void manage();
   void fillBodySlots();
-
-  void clearSelectedItemSlotValue();
-  std::vector<Actor *> getEquipableItemsList(ItemSlotType slot);
-  void equipItem(Actor* toEquip);
-  AMenuItemPtr getSelectedItem();
   void selectNext();
   void selectPrevious();
   void activate();
   void deactivate();
-  bool setSlotValue(ItemSlotType slot, const std::string& value);
 
 private:
   AMenuPtr _bodyMenu;
 
-  void unequipItem(ItemSlotType slot);
-  void chooseAndEquipItem(ItemSlotType slot);
+  Actor *chooseItemToEquip(ItemSlotType slot);
+  bool equipItem(Actor* toEquip);
+  std::vector<Actor*> getEquipableItemsList(ItemSlotType slot);
+  bool unequipItem(ItemSlotType slot);
 
 };
 

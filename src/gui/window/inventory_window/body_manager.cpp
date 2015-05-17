@@ -6,6 +6,8 @@
 #include <gui/message_box.h>
 #include <menu_window.h>
 
+const unsigned MARGIN = 2;
+
 namespace amarlon { namespace gui {
 
 BodyManager::BodyManager(int w, int h)
@@ -14,18 +16,36 @@ BodyManager::BodyManager(int w, int h)
 {
   setTitle("Equipped items");
 
-  _bodyMenu->setPosition(2,2);
+  _bodyMenu->setPosition(MARGIN,MARGIN);
   addWidget(_bodyMenu);
+}
+
+void BodyManager::manage()
+{
+  if ( AMenuItemPtr item = _bodyMenu->getSelectedItem() )
+  {
+    ItemSlotType slot = static_cast<ItemSlotType>( item->getProperty<int>("ItemSlotType") );
+
+    if ( Actor::Player->getFeature<Wearer>()->isEquipped( slot ) )
+    {
+      if ( unequipItem(slot) )
+      {
+        item->setValue("");
+      }
+    }
+    else
+    {
+      Actor* toEquip = chooseItemToEquip(slot);
+      if ( equipItem(toEquip) )
+      {
+        item->setValue( toEquip->getName() );
+      }
+    }
+  }
 }
 
 void BodyManager::fillBodySlots()
 {  
-  int selectedSlot = -1;
-  if ( AMenuItemPtr selected = _bodyMenu->getSelectedItem() )
-  {
-    selectedSlot = selected->getProperty<int>("ItemSlotType");
-  }
-
   _bodyMenu->removeAllItems();
 
   Wearer* wearer = Actor::Player->getFeature<Wearer>();
@@ -36,53 +56,32 @@ void BodyManager::fillBodySlots()
     ItemSlotType slot = static_cast<ItemSlotType>(i);
     if ( wearer->hasSlot(slot) )
     {
-      Actor* eq = wearer->equipped(slot);
+      Actor* eItem = wearer->equipped(slot);
 
-      std::string slotValue = eq ? eq->getName() : "";
-      std::string slotName = ItemSlotType2Str(i);
+      ASlotMenuItemPtr slotMenuItem( new ASlotMenuItem( getWidth() - 2*MARGIN ) );
+      slotMenuItem->setProperty<int>( "ItemSlotType", i );
+      slotMenuItem->setName( ItemSlotType2Str(i) );
+      slotMenuItem->setValue( eItem ? eItem->getName() : "" );
 
-      ASlotMenuItemPtr newSlot( new ASlotMenuItem( getWidth() - 4 ) );
-      newSlot->setName( slotName );
-      newSlot->setValue( slotValue );
-      newSlot->setProperty<int>( "ItemSlotType", i );
-
-      _bodyMenu->addItem( newSlot );
-
-      if ( i == selectedSlot ) _bodyMenu->select(newSlot);
+      _bodyMenu->addItem( slotMenuItem );
     }
   }
 }
 
-void BodyManager::manage()
-{  
-  if ( AMenuItemPtr item = _bodyMenu->getSelectedItem() )
-  {
-    ItemSlotType slot = static_cast<ItemSlotType>( item->getProperty<int>("ItemSlotType") );
-
-    if ( Actor::Player->getFeature<Wearer>()->isEquipped( slot ) )
-    {
-      unequipItem(slot);
-    }
-    else
-    {
-      chooseAndEquipItem(slot);
-    }
-
-    fillBodySlots();
-  }
-}
-
-// === UNEQUIP === //
-void BodyManager::unequipItem(ItemSlotType slot)
+bool BodyManager::unequipItem(ItemSlotType slot)
 {
+  bool success = false;
+
   Wearer* playerWearer = Actor::Player->getFeature<Wearer>();
   Container* playerContainer = Actor::Player->getFeature<Container>();
 
   if ( Actor* item = playerWearer->unequip( slot ) )
   {
-    clearSelectedItemSlotValue();
-
-    if ( !playerContainer->add(item) )
+    if ( playerContainer->add(item) )
+    {
+      success = true;
+    }
+    else
     {
       msgBox("Item cannot be unequipped:\nNot enough space in inventory",
              gui::MsgType::Error);
@@ -93,20 +92,13 @@ void BodyManager::unequipItem(ItemSlotType slot)
   {
     msgBox("Item cannot be unequipped!", gui::MsgType::Error);
   }
+
+  return success;
 }
 
-void BodyManager::clearSelectedItemSlotValue()
+Actor* BodyManager::chooseItemToEquip(ItemSlotType slot)
 {
-  AMenuItemPtr menuItem = _bodyMenu->getSelectedItem();
-  ASlotMenuItemPtr slotMenuItem = std::dynamic_pointer_cast<ASlotMenuItem>( menuItem );
-
-  slotMenuItem->setValue("");
-}
-// ~~~ UNEQUIP ~~~ //
-
-// === EQUIP === //
-void BodyManager::chooseAndEquipItem(ItemSlotType slot)
-{
+  Actor* toEquip = nullptr;
   std::vector<Actor*> equipableItems = getEquipableItemsList(slot);
 
   if ( !equipableItems.empty() )
@@ -120,7 +112,7 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
 
     if ( AMenuItemPtr mItem = window.getSelectedItem() )
     {
-      equipItem(mItem->getObject<Actor>());
+      toEquip = mItem->getObject<Actor>();
     }
   }
   else
@@ -128,13 +120,30 @@ void BodyManager::chooseAndEquipItem(ItemSlotType slot)
     msgBox("You don't have any item, that fit this slot.", gui::MsgType::Error);
   }
 
+  return toEquip;
 }
 
-void BodyManager::equipItem(Actor* toEquip)
+std::vector<Actor *> BodyManager::getEquipableItemsList(ItemSlotType slot)
 {
+  std::function<bool(Actor*)> filterFun = [&](Actor* a)-> bool
+  {
+    return a->hasFeature<Pickable>() && a->getFeature<Pickable>()->getItemSlot() == slot;
+  };
+
+  return Actor::Player->getFeature<Container>()->content( &filterFun );
+}
+
+bool BodyManager::equipItem(Actor* toEquip)
+{
+  bool success = false;
+
   if (Actor::Player->getFeature<Container>()->remove( toEquip ))
   {
-    if ( !Actor::Player->getFeature<Wearer>()->equip( toEquip ) )
+    if ( Actor::Player->getFeature<Wearer>()->equip( toEquip ) )
+    {
+      success = true;
+    }
+    else
     {
       msgBox( "Cannot equip item!", gui::MsgType::Error );
       Actor::Player->getFeature<Container>()->add( toEquip );
@@ -144,11 +153,8 @@ void BodyManager::equipItem(Actor* toEquip)
   {
     msgBox( "Cannot remove item from inventory!", gui::MsgType::Error );
   }
-}
 
-AMenuItemPtr BodyManager::getSelectedItem()
-{
-  return _bodyMenu->getSelectedItem();
+  return success;
 }
 
 void BodyManager::selectNext()
@@ -172,35 +178,5 @@ void BodyManager::deactivate()
   AInventoryPanel::deactivate();
   _bodyMenu->deselect();
 }
-
-bool BodyManager::setSlotValue(ItemSlotType slot, const std::string& value)
-{
-  bool foundSlotAndSetName = false;
-
-  auto itemIter = std::find_if(_bodyMenu->begin(), _bodyMenu->end(),
-                               [&slot](const AMenuItemPtr& item)
-                               {
-                                  return item->getProperty<int>("ItemSlotType") == static_cast<int>(slot);
-                               });
-
-  if ( itemIter != _bodyMenu->end() )
-  {
-    (*itemIter)->setValue(value);
-    foundSlotAndSetName = true;
-  }
-
-  return foundSlotAndSetName;
-}
-
-std::vector<Actor *> BodyManager::getEquipableItemsList(ItemSlotType slot)
-{
-  std::function<bool(Actor*)> filterFun = [&](Actor* a)-> bool
-  {
-    return a->hasFeature<Pickable>() && a->getFeature<Pickable>()->getItemSlot() == slot;
-  };
-
-  return Actor::Player->getFeature<Container>()->content( &filterFun );
-}
-// ~~~ EQUIP ~~~ //
 
 }}

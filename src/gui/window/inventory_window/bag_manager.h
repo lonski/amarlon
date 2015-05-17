@@ -14,7 +14,7 @@ namespace gui {
 class BagManager : public AInventoryPanel
 {
 public:
-  BagManager(BodyManager &body, int w, int h);
+  BagManager(int w, int h);
 
   void manage();
   void fillBag();
@@ -32,9 +32,6 @@ private:
   };
 
   AMenuPtr _bagMenu;
-  BodyManager& _body;
-
-  void render();
 
   void drop(Actor* item);
   bool handleStackableDrop(Actor*& item);

@@ -11,10 +11,9 @@
 
 namespace amarlon { namespace gui {
 
-BagManager::BagManager(BodyManager& body, int w, int h)
+BagManager::BagManager(int w, int h)
   : AInventoryPanel(w, h)
   , _bagMenu( new AMenu )
-  , _body(body)
 {
   _bagMenu->setPosition(2,2);  
   _bagMenu->setAutosize(false);
@@ -156,33 +155,22 @@ bool BagManager::canEquip(ItemSlotType slot)
 }
 
 void BagManager::doTheEquip(Actor* item)
-{  
-  ItemSlotType slot = item->getFeature<Pickable>()->getItemSlot();
+{
   Wearer* wearer = Actor::Player->getFeature<Wearer>();
   Container* container = Actor::Player->getFeature<Container>();
 
-  if ( _body.setSlotValue(slot, "" ) )
+  if ( container->remove( item ) )
   {
-    if ( container->remove( item ) )
+    if ( !wearer->equip( item ) )
     {
-      if ( wearer->equip( item ) )
-      {
-        _body.setSlotValue(slot, item->getName() );
-      }
-      else
-      {
-        msgBox( "Cannot equip item!", gui::MsgType::Error );
-      }
-    }
-    else
-    {
-      msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
+      msgBox( "Cannot equip item!", gui::MsgType::Error );
     }
   }
   else
   {
-    msgBox( "Proper item slot not available.", gui::MsgType::Error );
+    msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
   }
+
 }
 // ~~~ EQUIP ~~~ //
 

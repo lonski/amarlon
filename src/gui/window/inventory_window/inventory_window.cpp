@@ -23,7 +23,7 @@ InventoryWindow::InventoryWindow()
 void InventoryWindow::initalize()
 {
   _bodyMgr.reset( new BodyManager(windowWidth / 2, windowHeight) );
-  _bagMgr.reset( new BagManager( *_bodyMgr, windowWidth / 2, windowHeight ) );
+  _bagMgr.reset( new BagManager( windowWidth / 2, windowHeight ) );
   _bagMgr->setPosition(windowWidth / 2, 0);
 
   _panels[BODYSLOTS] = _bodyMgr;
@@ -106,7 +106,7 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     {
       switch( _activePanel)
       {
-        case INVENTORY: _bagMgr->manage(); break;
+        case INVENTORY: _bagMgr->manage(); _bodyMgr->fillBodySlots(); break;
         case BODYSLOTS: _bodyMgr->manage(); _bagMgr->fillBag(); break;
       }
       break;
@@ -114,7 +114,6 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     default:;
   }
 
-  render();
 }
 
 void InventoryWindow::activateNextPanel()
