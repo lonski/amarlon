@@ -71,7 +71,7 @@ ActorPtr Actor::clone()
 
 bool Actor::isEqual(ActorPtr rhs)
 {
-  bool equal = rhs != false;
+  bool equal = (rhs != nullptr);
 
   if ( rhs )
   {
