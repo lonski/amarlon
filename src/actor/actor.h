@@ -19,7 +19,7 @@ namespace amarlon {
 
 class Map;
 
-class Actor : public std::enable_shared_from_this<Actor>
+class Actor
 {
 public:
   static ActorDB DB;
