@@ -11,6 +11,7 @@ class ActorFeature;
 struct Description;
 
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::weak_ptr<Actor> ActorWPtr;
 typedef std::shared_ptr<ActorFeature> ActorFeaturePtr;
 typedef std::shared_ptr<Description> DescriptionPtr;
 
@@ -33,14 +34,14 @@ public:
   virtual ~ActorFeature() = 0;
   static ActorFeaturePtr create(Type featureType, DescriptionPtr dsc);
 
-  void setOwner(ActorPtr owner);
-  ActorPtr getOwner();
+  void setOwner(ActorWPtr owner);
+  ActorWPtr getOwner();
   virtual ActorFeaturePtr clone() = 0;
   virtual bool isEqual(ActorFeaturePtr rhs) = 0;
   virtual ActorFeature::Type getType() = 0;
 
 protected:
-  ActorPtr _owner;
+  ActorWPtr _owner;
 
 };
 

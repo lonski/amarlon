@@ -42,7 +42,7 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
 
 ActorPtr Pickable::spilt(int amount)
 {
-  ActorPtr r = ActorPtr(getOwner());
+  ActorPtr r = ActorPtr(getOwner().lock());
 
   if ( isStackable() && amount < _amount && amount > 0 )
   {
@@ -51,7 +51,7 @@ ActorPtr Pickable::spilt(int amount)
     assert( _amount > 0 );
     assert( amount > 0 );
 
-    r = _owner->clone();
+    r = getOwner().lock()->clone();
     r->getFeature<Pickable>()->setAmount(amount);
   }
 

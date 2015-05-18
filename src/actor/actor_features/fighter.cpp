@@ -59,7 +59,7 @@ void Fighter::attack(ActorPtr enemy)
 {
   if ( enemy->isAlive() )
   {
-    Messenger::message()->actorHit( ActorPtr(getOwner()), enemy, _power);
+    Messenger::message()->actorHit( ActorPtr(getOwner().lock()), enemy, _power);
 
     enemy->getFeature<Fighter>()->takeDamage(_power);
   }
@@ -80,10 +80,10 @@ void Fighter::takeDamage(float power)
 
 void Fighter::die()
 {  
-  if (getOwner())
+  if (getOwner().lock())
   {
-    Messenger::message()->actorDies( ActorPtr(getOwner()) );
-    getOwner()->morph(ActorType::Corpse);
+    Messenger::message()->actorDies( ActorPtr(getOwner().lock()) );
+    getOwner().lock()->morph(ActorType::Corpse);
   }
 }
 

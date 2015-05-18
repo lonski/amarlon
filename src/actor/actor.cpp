@@ -30,7 +30,7 @@ void Actor::init()
   _features = Actor::DB.getAllFeatures(_id);
   for (auto f : _features)
   {
-    f.second->setOwner( ActorPtr(this) );
+    f.second->setOwner( shared_from_this() );
   }
 }
 
@@ -40,12 +40,12 @@ Actor::~Actor()
 
 void Actor::move(int dx, int dy)
 {
-  if ( _map ) _map->removeActor( ActorPtr(this) );
+  if ( _map ) _map->removeActor( shared_from_this() );
 
   _x += dx;
   _y += dy;
 
-  if ( _map ) _map->addActor( ActorPtr(this) );
+  if ( _map ) _map->addActor( shared_from_this() );
 }
 
 void Actor::morph(ActorType newType)
@@ -54,7 +54,7 @@ void Actor::morph(ActorType newType)
 
   _features.clear();
   _features = Actor::DB.getAllFeatures(_id);
-  for (auto f : _features) f.second->setOwner( ActorPtr(this) );
+  for (auto f : _features) f.second->setOwner( shared_from_this() );
 }
 
 ActorPtr Actor::clone()
@@ -145,9 +145,9 @@ int Actor::getX() const
 
 void Actor::setX(int x)
 {
-  if ( _map ) _map->removeActor( ActorPtr(this) );
+  if ( _map ) _map->removeActor( shared_from_this() );
   _x = x;
-  if ( _map ) _map->addActor( ActorPtr(this) );
+  if ( _map ) _map->addActor( shared_from_this() );
 }
 int Actor::getY() const
 {
@@ -156,9 +156,9 @@ int Actor::getY() const
 
 void Actor::setY(int y)
 {
-  if ( _map ) _map->removeActor( ActorPtr(this) );
+  if ( _map ) _map->removeActor( shared_from_this() );
   _y = y;
-  if ( _map ) _map->addActor( ActorPtr(this) );
+  if ( _map ) _map->addActor( shared_from_this() );
 }
 
 TCODColor Actor::getColor() const
@@ -184,7 +184,7 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
   ActorFeaturePtr overwriten;
   if ( feature != nullptr )
   {
-    feature->setOwner( ActorPtr(this) );
+    feature->setOwner( shared_from_this() );
 
     auto it = _features.find( feature->getType() );
     if ( it != _features.end() )

@@ -13,16 +13,16 @@ bool OpenableDoor::open(ActorPtr)
 {
   bool r = false;
 
-  if (getOwner()->getId() == ActorType::DoorClosed)
+  if (getOwner().lock()->getId() == ActorType::DoorClosed)
   {
     if ( !isLocked() )
     {
-      getOwner()->changeType(ActorType::DoorOpen);
+      getOwner().lock()->changeType(ActorType::DoorOpen);
       r = true;
     }
     else
     {
-      gui::msgBox("The "+getOwner()->getName()+" is locked.", gui::MsgType::Warning);
+      gui::msgBox("The "+getOwner().lock()->getName()+" is locked.", gui::MsgType::Warning);
     }
   }
 
@@ -33,10 +33,10 @@ bool OpenableDoor::close(ActorPtr)
 {
   bool r = false;
 
-  if (getOwner()->getId() == ActorType::DoorOpen)
+  if (getOwner().lock()->getId() == ActorType::DoorOpen)
   {
-    getOwner()->changeType(ActorType::DoorClosed);
-    getOwner()->getFeature<Openable>()->unlock();
+    getOwner().lock()->changeType(ActorType::DoorClosed);
+    getOwner().lock()->getFeature<Openable>()->unlock();
     r = true;
   }
 
@@ -69,7 +69,7 @@ bool OpenableDoor::lock()
 {
   bool r = false;
 
-  if (getOwner()->getId() == ActorType::DoorClosed)
+  if (getOwner().lock()->getId() == ActorType::DoorClosed)
   {
     r = Openable::lock();
   }

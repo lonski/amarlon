@@ -8,8 +8,7 @@
 
 namespace amarlon {
 
-ActorFeature::ActorFeature()
-  : _owner(nullptr)
+ActorFeature::ActorFeature()  
 {
 }
 
@@ -38,12 +37,12 @@ ActorFeature::~ActorFeature()
 {
 }
 
-void ActorFeature::setOwner(ActorPtr owner)
+void ActorFeature::setOwner(ActorWPtr owner)
 {
   _owner = owner;
 }
 
-ActorPtr ActorFeature::getOwner()
+ActorWPtr ActorFeature::getOwner()
 {
   return _owner;
 }

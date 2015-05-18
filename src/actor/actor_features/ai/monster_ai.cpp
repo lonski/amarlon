@@ -43,7 +43,7 @@ bool MonsterAi::isEqual(ActorFeaturePtr rhs)
 void MonsterAi::update(Map *map)
 {
   _map = map;
-  if (getOwner()->isAlive() && _map)
+  if (getOwner().lock()->isAlive() && _map)
   {
     updatePosition();
 
@@ -79,27 +79,27 @@ void MonsterAi::huntPlayer()
 
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
     {
-      getOwner()->move(dx, dy);
+      getOwner().lock()->move(dx, dy);
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
     {
-      getOwner()->move(stepDx, 0);
+      getOwner().lock()->move(stepDx, 0);
     }
     else if ( !_map->isBlocked(_cX, _cY+stepDy) )
     {
-      getOwner()->move(0, stepDy);
+      getOwner().lock()->move(0, stepDy);
     }
   }
-  else if ( getOwner()->hasFeature<Fighter>() )
+  else if ( getOwner().lock()->hasFeature<Fighter>() )
   {
-    getOwner()->getFeature<Fighter>()->attack(Actor::Player);
+    getOwner().lock()->getFeature<Fighter>()->attack(Actor::Player);
   }
 }
 
 void MonsterAi::updatePosition()
 {
-  _cX = getOwner()->getX();
-  _cY = getOwner()->getY();
+  _cX = getOwner().lock()->getX();
+  _cY = getOwner().lock()->getY();
 }
 
 }

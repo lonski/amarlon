@@ -16,25 +16,25 @@ bool OpenableContainer::open(ActorPtr executor)
 {
   bool r = false;
 
-  if ( getOwner()->hasFeature<Container>() )
+  if ( getOwner().lock()->hasFeature<Container>() )
   {
     auto afterPickupAction =
     [&](const std::string& item, int amount)
     {
-      Messenger::message()->actorPicked(executor->getName(), item, amount, getOwner()->getName());
+      Messenger::message()->actorPicked(executor->getName(), item, amount, getOwner().lock()->getName());
     };
 
     auto inventoryFullAction =
     [&](const std::string& item)
     {
-      gui::msgBox("Cannot pickup "+item+" from "+tolowers(getOwner()->getName())+":\nInventory is full!",
+      gui::msgBox("Cannot pickup "+item+" from "+tolowers(getOwner().lock()->getName())+":\nInventory is full!",
                   gui::MsgType::Error);
     };
 
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(executor)
-                      .setContainer(getOwner()->getFeature<Container>())
+                      .setContainer(getOwner().lock()->getFeature<Container>())
                       .setFilterFunction( [](ActorPtr a){ return a && a->getFeature<Pickable>() != nullptr; } )
                       .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
