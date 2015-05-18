@@ -28,7 +28,7 @@ AWindow& AmountWindow::show()
         key.vk != TCODK_ESCAPE  && //cancel
         !TCODConsole::isWindowClosed())
   {
-    render();
+    render(_console);
     TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
     handlePressedKey(key);
   }
@@ -49,7 +49,7 @@ AmountWindow &AmountWindow::setMaxAmount(const int &amount)
   return *this;
 }
 
-void AmountWindow::render()
+void AmountWindow::render(TCODConsole&)
 {
   renderFrame();
   renderAmount();

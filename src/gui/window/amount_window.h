@@ -29,6 +29,8 @@ public:
    */
   int getAmount();
 
+  virtual void render(TCODConsole&);
+
 private:
   std::string _title;
   TCODConsole _console;
@@ -36,7 +38,6 @@ private:
   int _amount;
   bool _firstHit;
 
-  void render();
   void renderFrame();
   void renderAmount();
   void blitConsole();
