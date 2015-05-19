@@ -75,11 +75,18 @@ void Fighter::takeDamage(float power)
   _hp -= power;
 
   if ( _hp <= 0 )
+  {
     die();
+  }
 }
 
 void Fighter::die()
 {  
+  if ( _hp > 0 )
+  {
+    _hp = 0;
+  }
+
   ActorPtr owner = getOwner().lock();
   if (owner)
   {

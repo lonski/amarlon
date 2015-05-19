@@ -161,6 +161,16 @@ void Actor::setY(int y)
   if ( _map ) _map->addActor( shared_from_this() );
 }
 
+Map *Actor::getMap() const
+{
+  return _map;
+}
+
+void Actor::setMap(Map* map)
+{
+  _map = map;
+}
+
 TCODColor Actor::getColor() const
 {
   return Actor::DB.getColor(_id);;

@@ -57,6 +57,9 @@ public:
   int getY() const;
   void setY(int getY);
 
+  Map* getMap() const;
+  void setMap(Map* map);
+
   /**
    * @brief adds actor feature or overwrites existing one
    * @param feature to be inserted

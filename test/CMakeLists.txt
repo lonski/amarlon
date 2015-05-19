@@ -1,5 +1,7 @@
 find_package(gtest HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
+find_package(gmock HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
+include_directories(${GMOCK_INCLUDE_DIRS})
 
 set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor.h
@@ -76,6 +78,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/map_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/serializer.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/map_serializer.h
+    mock/map_mock.h
 )
 
 set(SOURCE_FILES
@@ -87,9 +90,10 @@ set(SOURCE_FILES
     world/map_test.cpp
     wearer_test.cpp
     amenu_test.cpp
+    fighter_test.cpp
 )
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(ut_amarlon amarlon_core ${TCOD_LIBRARIES} ${GTEST_LIBRARIES})
+target_link_libraries(ut_amarlon amarlon_core ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES})
 
 add_custom_command(TARGET ut_amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ut_amarlon>)
