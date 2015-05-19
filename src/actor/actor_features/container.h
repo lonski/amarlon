@@ -23,9 +23,6 @@ public:
 
   const static ActorFeature::Type featureType;
 
-  iterator begin() { return _inventory.begin(); }
-  iterator end() { return _inventory.end(); }
-
   Container(size_t slotCount);
   virtual ~Container();
   static ContainerPtr create(DescriptionPtr dsc);

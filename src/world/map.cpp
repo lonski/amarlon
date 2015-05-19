@@ -52,7 +52,7 @@ bool Map::isBlocked(int x, int y)
   bool actorBlocks = false;
 
   Tile& tile = getTile(x, y);
-  for(ActorPtr actor : *tile.actors)
+  for(ActorPtr actor : tile.actors->content())
   {
     if ( actor->blocks() )
     {
@@ -84,7 +84,7 @@ void Map::addActor(ActorPtr actor)
 ActorPtr Map::getFirstActor(int x, int y)
 {
   Tile& tile = getTile(x, y);
-  return tile.actors->size() > 0 ? *tile.actors->begin() : nullptr;
+  return tile.actors->size() > 0 ? tile.actors->content().front() : nullptr;
 }
 
 std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun)
@@ -92,10 +92,13 @@ std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool (amarlon:
   std::vector<ActorPtr> r;
   Tile& tile = getTile(x, y);
 
-  std::for_each(tile.actors->begin(), tile.actors->end(), [&](ActorPtr a)
-  {    
-    if ( filterFun == nullptr || (*filterFun)(a))  r.push_back(a);
-  });
+  for ( auto a : tile.actors->content() )
+  {
+    if ( filterFun == nullptr || (*filterFun)(a))
+    {
+      r.push_back(a);
+    }
+  }
 
   return r;
 }
@@ -104,14 +107,17 @@ std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr )>* filterFun)
 {
   std::vector<ActorPtr> r;
 
-  for(auto tileRow = _tiles.begin(); tileRow != _tiles.end(); ++tileRow)
+  for(auto tileRow : _tiles)
   {
-    for(auto tile = tileRow->begin(); tile != tileRow->end(); ++tile)
+    for(auto tile : tileRow)
     {
-      std::for_each(tile->actors->begin(), tile->actors->end(), [&](ActorPtr a)
+      for (auto a : tile.actors->content() )
       {
-        if ( filterFun == nullptr || (*filterFun)(a)) r.push_back(a);
-      });
+        if ( filterFun == nullptr || (*filterFun)(a))
+        {
+          r.push_back(a);
+        }
+      }
     }
   }
 
@@ -159,10 +165,8 @@ void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
                         return a1->getTileRenderPriority() > a2->getTileRenderPriority();
                       });
 
-    for (auto aIter = tile.actors->begin(); aIter != tile.actors->end(); ++aIter)
+    for (auto actor : tile.actors->content())
     {
-      ActorPtr actor = *aIter;
-
       bool inFov = isInFov(actor->getX(), actor->getY());
       bool onlyInFov = actor->isFovOnly();
       bool explored = isExplored(actor->getX(), actor->getY());
