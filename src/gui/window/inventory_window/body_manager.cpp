@@ -49,21 +49,21 @@ void BodyManager::fillBodySlots()
   _bodyMenu->removeAllItems();
 
   WearerPtr wearer = Actor::Player->getFeature<Wearer>();
-  assert(wearer);
-
-  for( int i = (int)ItemSlotType::Null + 1; i != (int)ItemSlotType::End; ++i)
+  if ( wearer )
   {
-    ItemSlotType slot = static_cast<ItemSlotType>(i);
-    if ( wearer->hasSlot(slot) )
+    for (auto slot : ItemSlotType())
     {
-      ActorPtr eItem = wearer->equipped(slot);
+      if ( wearer->hasSlot(slot) )
+      {
+        ActorPtr eItem = wearer->equipped(slot);
 
-      ASlotMenuItemPtr slotMenuItem( new ASlotMenuItem( getWidth() - 2*MARGIN ) );
-      slotMenuItem->setProperty<int>( "ItemSlotType", i );
-      slotMenuItem->setName( ItemSlotType2Str(i) );
-      slotMenuItem->setValue( eItem ? eItem->getName() : "" );
+        ASlotMenuItemPtr slotMenuItem( new ASlotMenuItem( getWidth() - 2*MARGIN ) );
+        slotMenuItem->setProperty<int>( "ItemSlotType", static_cast<int>(slot) );
+        slotMenuItem->setName( ItemSlotType2Str(slot) );
+        slotMenuItem->setValue( eItem ? eItem->getName() : "" );
 
-      _bodyMenu->addItem( slotMenuItem );
+        _bodyMenu->addItem( slotMenuItem );
+      }
     }
   }
 }

@@ -80,10 +80,62 @@ void Fighter::takeDamage(float power)
 
 void Fighter::die()
 {  
-  if (getOwner().lock())
+  ActorPtr owner = getOwner().lock();
+  if (owner)
   {
-    Messenger::message()->actorDies( ActorPtr(getOwner().lock()) );
-    getOwner().lock()->morph(ActorType::Corpse);
+    dropItemsFromBody();
+    dropInventory();
+
+    Messenger::message()->actorDies( owner );
+    owner->morph(ActorType::Corpse);
+  }
+}
+
+void Fighter::dropItemsFromBody()
+{
+  ActorPtr owner = getOwner().lock();
+  if (owner)
+  {
+    WearerPtr wearer = owner->getFeature<Wearer>();
+    if ( wearer )
+    {
+      for ( auto slot : ItemSlotType() )
+      {
+        ActorPtr item = wearer->unequip(slot);
+        if ( item )
+        {
+          dropOnGround( item );
+        }
+      }
+    }
+  }
+}
+
+void Fighter::dropInventory()
+{
+  ActorPtr owner = getOwner().lock();
+  if (owner)
+  {
+    ContainerPtr inventory = owner->getFeature<Container>();
+    if ( inventory )
+    {
+      for ( ActorPtr item : inventory->content() )
+      {
+        inventory->remove(item);
+        dropOnGround(item);
+      }
+    }
+  }
+}
+
+void Fighter::dropOnGround(ActorPtr item)
+{
+  ActorPtr owner = getOwner().lock();
+  if (owner)
+  {
+    item->setX( owner->getX() );
+    item->setY( owner->getY() );
+    Engine::instance().currentMap().addActor(item);
   }
 }
 

@@ -43,6 +43,10 @@ private:
   float _maxHp;
   float _hp;
 
+  void dropOnGround(ActorPtr item);
+  void dropInventory();
+  void dropItemsFromBody();
+
 };
 
 

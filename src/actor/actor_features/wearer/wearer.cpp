@@ -77,9 +77,8 @@ bool Wearer::isEqual(ActorFeaturePtr rhs)
   {
     equal = true;
     //compare item slots and equipped items
-    for (int i = (int)ItemSlotType::Null; i != (int)ItemSlotType::End; ++i)
+    for (auto slot : ItemSlotType())
     {
-      ItemSlotType slot = (ItemSlotType)i;
       equal &= (hasSlot(slot) == crhs->hasSlot(slot));
       equal &= (isEquipped(slot) == crhs->isEquipped(slot));
       if ( equipped(slot) ) equal &=  ( equipped(slot)->isEqual( crhs->equipped(slot) ));

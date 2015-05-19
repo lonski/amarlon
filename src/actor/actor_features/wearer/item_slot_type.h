@@ -1,6 +1,8 @@
 #ifndef ITEM_SLOT_TYPE_H
 #define ITEM_SLOT_TYPE_H
 
+#include <iostream>
+
 namespace amarlon {
 
 enum class ItemSlotType
@@ -24,6 +26,11 @@ enum class ItemSlotType
 
   End = 15
 };
+
+inline ItemSlotType operator++(ItemSlotType& x) { return x = (ItemSlotType)(std::underlying_type<ItemSlotType>::type(x) + 1); }
+inline ItemSlotType operator*(ItemSlotType c) {return c;}
+inline ItemSlotType begin(ItemSlotType) {return ItemSlotType::Null;}
+inline ItemSlotType end(ItemSlotType)   {return ItemSlotType::End;}
 
 static inline const char* ItemSlotType2Str(ItemSlotType slot)
 {

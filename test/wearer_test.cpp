@@ -87,9 +87,8 @@ TEST_F(WearerTest, clone_wearer)
   WearerPtr wcloned = std::dynamic_pointer_cast<Wearer>(w1->clone());
 
   ASSERT_TRUE( wcloned->_equippedItems->isEqual( w1->_equippedItems ) );
-  for(int i = (int)ItemSlotType::Null; i != (int)ItemSlotType::End; ++i)
-  {
-    ItemSlotType slot = (ItemSlotType)i;
+  for (auto slot : ItemSlotType())
+  {    
     ASSERT_EQ( wcloned->hasSlot(slot), w1->hasSlot(slot) );
   }
 
