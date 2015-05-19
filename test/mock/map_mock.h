@@ -17,7 +17,7 @@ public:
   MOCK_METHOD1(addActor, void(ActorPtr));
 
   MapMock()
-   : Map(0,0)
+   : Map(100,100)
   {
   }
 
