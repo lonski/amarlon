@@ -65,7 +65,7 @@ bool Map::isBlocked(int x, int y)
 }
 
 void Map::addActor(ActorPtr actor)
-{
+{  
   int x( actor->getX() );
   int y( actor->getY() );
 

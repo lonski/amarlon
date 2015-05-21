@@ -29,24 +29,30 @@ void Messenger::setGui(gui::Gui *gui)
 
 void Messenger::actorHit(ActorPtr atacker, ActorPtr victim, int amount)
 {
-  string msg = atacker->getName() + " hits " + tolowers(victim->getName());
-
-  if (amount > 0)
+  if ( _gui )
   {
-    msg += " for " + to_string(amount) + "hp.";
-  }
-  else
-  {
-    msg += " but the attack took no effect.";
-  }
+    string msg = atacker->getName() + " hits " + tolowers(victim->getName());
 
-  _gui->message(msg, TCODColor::darkRed);
+    if (amount > 0)
+    {
+      msg += " for " + to_string(amount) + "hp.";
+    }
+    else
+    {
+      msg += " but the attack took no effect.";
+    }
+
+    _gui->message(msg, TCODColor::darkRed);
+  }
 }
 
 void Messenger::actorDies(ActorPtr victim)
 {
-  string msg = victim->getName() + " dies.";
-  _gui->message(msg, TCODColor::darkerRed);
+  if ( _gui )
+  {
+    string msg = victim->getName() + " dies.";
+    _gui->message(msg, TCODColor::darkerRed);
+  }
 }
 
 void Messenger::actorPutInto(const std::string& putterName,
@@ -54,63 +60,84 @@ void Messenger::actorPutInto(const std::string& putterName,
                              const std::string& itemName,
                              int amount)
 {
-  string msg = putterName + " put " + tolowers(itemName);
+  if ( _gui )
+  {
+    string msg = putterName + " put " + tolowers(itemName);
 
-  if (amount > 1)
-    msg += " (" + to_string(amount) + ")";
+    if (amount > 1)
+      msg += " (" + to_string(amount) + ")";
 
-  msg += " into " + tolowers(container);
+    msg += " into " + tolowers(container);
 
-  _gui->message(msg+".", TCODColor::darkYellow);
+    _gui->message(msg+".", TCODColor::darkYellow);
+  }
 }
 
 void Messenger::actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const string &from)
 {
-  string msg = pickerName + " picked " + tolowers(itemName);
+  if ( _gui )
+  {
+    string msg = pickerName + " picked " + tolowers(itemName);
 
-  if (amount > 1)
-    msg += " (" + to_string(amount) + ")";
+    if (amount > 1)
+      msg += " (" + to_string(amount) + ")";
 
-  if (!from.empty())
-    msg += " from " + tolowers(from);
+    if (!from.empty())
+      msg += " from " + tolowers(from);
 
-  _gui->message(msg+".", TCODColor::darkYellow);
+    _gui->message(msg+".", TCODColor::darkYellow);
+  }
 }
 
 void Messenger::actorDropped(ActorPtr dropper, ActorPtr dropped, int amount)
 {
-  string msg = dropper->getName() + " dropped " + tolowers(dropped->getName());
+  if ( _gui )
+  {
+    string msg = dropper->getName() + " dropped " + tolowers(dropped->getName());
 
-  if (amount > 1)
-    msg += " (" + to_string(amount) + ").";
-  else
-    msg += ".";
+    if (amount > 1)
+      msg += " (" + to_string(amount) + ").";
+    else
+      msg += ".";
 
-  _gui->message(msg, TCODColor::darkYellow);
+    _gui->message(msg, TCODColor::darkYellow);
+  }
 }
 
 void Messenger::actorPicked(ActorPtr picker, ActorPtr picked, int amount)
 {
-  actorPicked(picker->getName(), picked->getName(), amount);
+  if ( _gui )
+  {
+    actorPicked(picker->getName(), picked->getName(), amount);
+  }
 }
 
 void Messenger::actorHealed(ActorPtr healed, int amount)
 {
-  string msg = healed->getName() + " has been healed for " + to_string(amount) + ".";
+  if ( _gui )
+  {
+    string msg = healed->getName() + " has been healed for " + to_string(amount) + ".";
 
-  _gui->message(msg, TCODColor::lighterBlue);
+    _gui->message(msg, TCODColor::lighterBlue);
+  }
 }
 
 void Messenger::actorHasBeenLocked(ActorPtr locker, ActorPtr locked)
 {
-  string msg = locker->getName() + " has locked the " + tolowers(locked->getName());
-  _gui->message(msg);
+  if ( _gui )
+  {
+    string msg = locker->getName() + " has locked the " + tolowers(locked->getName());
+    _gui->message(msg);
+  }
 }
 
 void Messenger::actorHasBeenUnLocked(ActorPtr unlocker, ActorPtr unlocked)
 {
-  string msg = unlocker->getName() + " has unlocked the " + tolowers(unlocked->getName());
-  _gui->message(msg);
+  if ( _gui )
+  {
+    string msg = unlocker->getName() + " has unlocked the " + tolowers(unlocked->getName());
+    _gui->message(msg);
+  }
 }
 
 }

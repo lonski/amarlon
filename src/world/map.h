@@ -45,13 +45,13 @@ public:
   static MapGateway Gateway;
 
   Map(u32 width, u32 height, MapId id = MapId::Null);
-  ~Map();
+  virtual ~Map();
 
   bool isExplored(int x, int y);
   bool isInFov(int x, int y);
   bool isBlocked(int x, int y);
 
-  void addActor(ActorPtr actor);
+  virtual void addActor(ActorPtr actor);
   bool removeActor(ActorPtr toRemove);
   ActorPtr getFirstActor(int x, int y);
   std::vector<ActorPtr> getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);

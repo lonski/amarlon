@@ -62,20 +62,57 @@ TEST_F(FighterTest, die)
   EXPECT_EQ(fighter->getHp(), 0);
 }
 
-TEST_F(FighterTest, drpItemsOndie)
+void clearInventory(ActorPtr actor)
+{
+  ContainerPtr inv = actor->getFeature<Container>();
+  EXPECT_TRUE( inv != nullptr );
+  for ( auto i : inv->content() )
+    inv->remove(i);
+}
+
+void clearBody(ActorPtr actor)
+{
+  WearerPtr wearer = actor->getFeature<Wearer>();
+  EXPECT_TRUE( wearer != nullptr );
+  if (wearer)
+    for ( auto s : ItemSlotType() )
+      wearer->unequip(s);
+}
+
+TEST_F(FighterTest, dropInventoryOndie)
 {
   //create an orc
   ActorPtr orc( Actor::create(ActorType::Orc, 0,0, &mapMock) );
 
+  clearInventory(orc);
+  clearBody(orc);
+
   //insert some item to inventory
   ContainerPtr inv = orc->getFeature<Container>();
-  inv->add( Actor::create(ActorType::CookBook) );
+  EXPECT_TRUE( inv != nullptr );
+  EXPECT_TRUE( inv->add( Actor::create(ActorType::CookBook) ) );
 
   //kill actor
   EXPECT_CALL(mapMock, addActor(_));
   orc->getFeature<Fighter>()->die();
+}
 
+TEST_F(FighterTest, dropWearedItemsOndie)
+{
+  //create an orc
+  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, &mapMock) );
 
+  clearInventory(orc);
+  clearBody(orc);
+
+  //wear an item
+  WearerPtr wearer = orc->getFeature<Wearer>();
+  EXPECT_TRUE( wearer != nullptr );
+  EXPECT_TRUE( wearer->equip( Actor::create(ActorType::LinenClothes) ) );
+
+  //kill actor
+  EXPECT_CALL(mapMock, addActor(_));
+  orc->getFeature<Fighter>()->die();
 }
 
 }

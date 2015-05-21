@@ -93,6 +93,8 @@ set(SOURCE_FILES
     fighter_test.cpp
 )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")
+
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(ut_amarlon amarlon_core ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES})
 

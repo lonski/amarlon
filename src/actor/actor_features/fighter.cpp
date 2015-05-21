@@ -137,12 +137,16 @@ void Fighter::dropInventory()
 
 void Fighter::dropOnGround(ActorPtr item)
 {
-  ActorPtr owner = getOwner().lock();
+  ActorPtr owner = getOwner().lock();  
   if (owner)
   {
-    item->setX( owner->getX() );
-    item->setY( owner->getY() );
-    Engine::instance().currentMap().addActor(item);
+    Map* map = owner->getMap();
+    if ( map != nullptr )
+    {
+      item->setX( owner->getX() );
+      item->setY( owner->getY() );
+      map->addActor(item);
+    }
   }
 }
 
