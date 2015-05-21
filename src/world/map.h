@@ -47,35 +47,34 @@ public:
   Map(u32 width, u32 height, MapId id = MapId::Null);
   virtual ~Map();
 
-  bool isExplored(int x, int y);
-  bool isInFov(int x, int y);
-  bool isBlocked(int x, int y);
+  virtual bool isExplored(int x, int y);
+  virtual bool isInFov(int x, int y);
+  virtual bool isBlocked(int x, int y);
 
   virtual void addActor(ActorPtr actor);
-  bool removeActor(ActorPtr toRemove);
-  ActorPtr getFirstActor(int x, int y);
-  std::vector<ActorPtr> getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
-  std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun);
-  ContainerPtr getActorsContainer(u32 x, u32 y);
+  virtual  bool removeActor(ActorPtr toRemove);
+  virtual ActorPtr getFirstActor(int x, int y);
+  virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
+  virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun);
+  virtual ContainerPtr getActorsContainer(u32 x, u32 y);
 
-  void performActionOnActors(std::function<void(ActorPtr)> func);
+  virtual void performActionOnActors(std::function<void(ActorPtr)> func);
 
-  void render(TCODConsole* console);
-  void updateActorCell(ActorPtr actor);
+  virtual void render(TCODConsole* console);
+  virtual void updateActorCell(ActorPtr actor);
 
-  void computeFov(int x, int y, int radius);
-  void fill(std::string tilesStr);
-  std::string tilesToStr();
+  virtual void computeFov(int x, int y, int radius);
+  virtual void fill(std::string tilesStr);
+  virtual std::string tilesToStr();
 
-  //setters and getters
-  TCODColor getColor(u32 x, u32 y);
-  char getChar(u32 x, u32 y);
-  u32 getWidth() const;
-  void setWidth(const u32 &width);
-  u32 getHeight() const;
-  void setHeight(const u32 &height);
-  MapId getId() const;
-  void setId(const MapId &id);
+  virtual TCODColor getColor(u32 x, u32 y);
+  virtual char getChar(u32 x, u32 y);
+  virtual u32 getWidth() const;
+  virtual void setWidth(const u32 &width);
+  virtual u32 getHeight() const;
+  virtual void setHeight(const u32 &height);
+  virtual MapId getId() const;
+  virtual void setId(const MapId &id);
 
 private:
   MapId _id;
