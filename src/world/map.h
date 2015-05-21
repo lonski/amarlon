@@ -90,6 +90,7 @@ private:
 };
 
 typedef std::shared_ptr<Map> MapPtr;
+typedef std::weak_ptr<Map> MapWPtr;
 
 }
 #endif // MAP_H

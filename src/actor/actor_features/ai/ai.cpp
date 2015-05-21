@@ -39,7 +39,7 @@ AiPtr Ai::create(DescriptionPtr dsc)
   return ai;
 }
 
-void Ai::update(Map*)
+void Ai::update(MapPtr)
 {
   if ( getOwner().lock() )
   {

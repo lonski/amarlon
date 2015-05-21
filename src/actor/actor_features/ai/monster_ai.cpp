@@ -40,7 +40,7 @@ bool MonsterAi::isEqual(ActorFeaturePtr rhs)
   return equal;
 }
 
-void MonsterAi::update(Map *map)
+void MonsterAi::update(MapPtr map)
 {
   _map = map;
   if (getOwner().lock()->isAlive() && _map)

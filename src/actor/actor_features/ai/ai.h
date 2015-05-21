@@ -13,6 +13,7 @@ class Map;
 class Ai;
 
 typedef std::shared_ptr<Ai> AiPtr;
+typedef std::shared_ptr<Map> MapPtr;
 
 class Ai : public ActorFeature
 {
@@ -23,7 +24,7 @@ public:
   virtual ~Ai() {}
 
   virtual ActorFeature::Type getType() { return featureType; }
-  virtual void update(Map* map);
+  virtual void update(MapPtr map);
 
   static AiPtr create(AiType type);
   static AiPtr create(DescriptionPtr dsc);

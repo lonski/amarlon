@@ -18,11 +18,11 @@ public:
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs);
 
-  virtual void update(Map* map);
+  virtual void update(MapPtr map);
 
   void updatePosition();
 private:
-  Map* _map;
+  MapPtr _map;
   int _trackCount;
   int _cX, _cY;
 

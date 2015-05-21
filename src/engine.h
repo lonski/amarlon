@@ -45,7 +45,7 @@ public:
   gui::Gui& gui() const;
   gui::WindowManager& windowManager() const;
 
-  Map& currentMap() const;
+  MapPtr currentMap() const;
   void setCurrentMap(MapPtr currentMap);
 
 private:

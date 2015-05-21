@@ -22,7 +22,7 @@ bool CmdOpen::accept(TCOD_key_t &key)
 
 void CmdOpen::execute()
 {
-  Map& map = Engine::instance().currentMap();
+  MapPtr map = Engine::instance().currentMap();
   std::function<bool (amarlon::ActorPtr)> filterFun = [](ActorPtr a)->bool{ return a->getFeature<Openable>() != nullptr; };
   ActorPtr target = SingleNeighbourSelector("Select object to open...")
                     .selectFirst(&filterFun);
@@ -31,7 +31,7 @@ void CmdOpen::execute()
   {
     if ( target->getFeature<Openable>()->open(Actor::Player) )
     {
-      map.updateActorCell(target);
+      map->updateActorCell(target);
     }
   }
   else

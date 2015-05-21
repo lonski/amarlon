@@ -85,9 +85,9 @@ void Engine::updateAis()
   if (_currentMap != nullptr)
   {
     std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};
-    std::vector<ActorPtr> ais = currentMap().getActors( &filter );
+    std::vector<ActorPtr> ais = currentMap()->getActors( &filter );
 
-    std::for_each( ais.begin(), ais.end(), [&](ActorPtr a){a->getFeature<Ai>()->update( &currentMap() );});
+    std::for_each( ais.begin(), ais.end(), [&](ActorPtr a){a->getFeature<Ai>()->update( currentMap() );});
   }
 }
 
@@ -96,9 +96,10 @@ void Engine::processKey(TCOD_key_t &key)
   _cmdExecutor->execute(key);
 }
 
-Map &Engine::currentMap() const
+MapPtr Engine::currentMap() const
 {
-  return *_currentMap;
+  assert(_currentMap != nullptr);
+  return _currentMap;
 }
 
 void Engine::setCurrentMap(MapPtr currentMap)

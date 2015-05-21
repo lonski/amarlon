@@ -21,10 +21,10 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
 
 void CmdMoveOrAttack::execute()
 {
-  Map& map = Engine::instance().currentMap();
+  MapPtr map = Engine::instance().currentMap();
   int targetX = Actor::Player->getX() + _dx;
   int targetY = Actor::Player->getY() + _dy;
-  bool blocked = map.isBlocked(targetX, targetY);
+  bool blocked = map->isBlocked(targetX, targetY);
 
   if ( !blocked )
   {
@@ -36,7 +36,7 @@ void CmdMoveOrAttack::execute()
     {
       return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
     };
-    std::vector<ActorPtr> toAttack = map.getActors(targetX, targetY, &filterFun);
+    std::vector<ActorPtr> toAttack = map->getActors(targetX, targetY, &filterFun);
 
     //attack
     if (!toAttack.empty() && Actor::Player->hasFeature<Fighter>() )

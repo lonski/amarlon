@@ -22,7 +22,7 @@ void CmdPick::execute()
   int x( Actor::Player->getX() );
   int y( Actor::Player->getY() );
 
-  ContainerPtr container = Engine::instance().currentMap().getActorsContainer(x, y);
+  ContainerPtr container = Engine::instance().currentMap()->getActorsContainer(x, y);
 
   auto afterPickupAction =
   [](const std::string& item, int amount)

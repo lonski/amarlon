@@ -20,7 +20,7 @@ bool CmdClose::accept(TCOD_key_t &key)
 
 void CmdClose::execute()
 {
-  Map& map = Engine::instance().currentMap();
+  MapPtr map = Engine::instance().currentMap();
 
   std::vector<ActorPtr> actorsOnTile = SingleNeighbourSelector("Select object to close...")
                                        .select();
@@ -35,7 +35,7 @@ void CmdClose::execute()
   {
     if ( actorsOnTile.size() == 1 )
     {
-      if (toClose->getFeature<Openable>()->close(Actor::Player)) map.updateActorCell(toClose);
+      if (toClose->getFeature<Openable>()->close(Actor::Player)) map->updateActorCell(toClose);
     }
     else
     {

@@ -63,7 +63,7 @@ ActorPtr MapParser::parseActor(rapidxml::xml_node<>* actorNode)
   int aY = getAttribute<int>(actorNode, "y");
   ActorType aId = static_cast<ActorType>(getAttribute<int>(actorNode, "id"));
 
-  ActorPtr actor = Actor::create(aId, aX, aY, _map.get());
+  ActorPtr actor = Actor::create(aId, aX, aY, _map);
   overWriteActorFeatures(actor);
 
   return actor;

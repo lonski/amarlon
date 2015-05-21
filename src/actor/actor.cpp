@@ -8,7 +8,7 @@ ActorDB Actor::DB;
 ActorPtr Actor::Player(nullptr);
 unsigned Actor::InstanceCounter = 0;
 
-ActorPtr Actor::create(ActorType aId, int x, int y, Map *map)
+ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
 {
   ActorPtr actor( new Actor(aId, x, y, map) );
   actor->init();
@@ -16,7 +16,7 @@ ActorPtr Actor::create(ActorType aId, int x, int y, Map *map)
   return actor;
 }
 
-Actor::Actor(ActorType aId, int x, int y, Map *map)
+Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   : _id(aId)
   , _x(x)
   , _y(y)
@@ -161,12 +161,12 @@ void Actor::setY(int y)
   if ( _map ) _map->addActor( shared_from_this() );
 }
 
-Map *Actor::getMap() const
+MapPtr Actor::getMap() const
 {
   return _map;
 }
 
-void Actor::setMap(Map* map)
+void Actor::setMap(MapPtr map)
 {
   _map = map;
 }

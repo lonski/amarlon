@@ -26,7 +26,7 @@ public:
   static ActorPtr Player;
   static unsigned InstanceCounter;
 
-  static ActorPtr create(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
+  static ActorPtr create(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
 
   ~Actor();
 
@@ -57,8 +57,8 @@ public:
   int getY() const;
   void setY(int getY);
 
-  Map* getMap() const;
-  void setMap(Map* map);
+  MapPtr getMap() const;
+  void setMap(MapPtr map);
 
   /**
    * @brief adds actor feature or overwrites existing one
@@ -91,12 +91,12 @@ public:
 private:
   ActorType _id;
   int _x, _y;
-  Map* _map;
+  MapPtr _map;
   unsigned _instanceId;
 
   FeatureMap _features;
 
-  Actor(ActorType aId, int x = 0, int y = 0, Map* map = nullptr);
+  Actor(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
 
 };
 

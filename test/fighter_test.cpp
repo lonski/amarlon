@@ -10,6 +10,7 @@ class FighterTest : public ::testing::Test
 {
 public:
   FighterTest()
+    : mapMock( new MapMock )
   {
   }
 
@@ -29,7 +30,7 @@ public:
 
 protected:
   FighterPtr fighter;
-  MapMock mapMock;
+  std::shared_ptr<MapMock> mapMock;
 
 
 };
@@ -82,7 +83,7 @@ void clearBody(ActorPtr actor)
 TEST_F(FighterTest, dropInventoryOndie)
 {
   //create an orc
-  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, &mapMock) );
+  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, mapMock) );
 
   clearInventory(orc);
   clearBody(orc);
@@ -93,14 +94,14 @@ TEST_F(FighterTest, dropInventoryOndie)
   EXPECT_TRUE( inv->add( Actor::create(ActorType::CookBook) ) );
 
   //kill actor
-  EXPECT_CALL(mapMock, addActor(_));
+  EXPECT_CALL(*mapMock, addActor(_));
   orc->getFeature<Fighter>()->die();
 }
 
 TEST_F(FighterTest, dropWearedItemsOndie)
 {
   //create an orc
-  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, &mapMock) );
+  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, mapMock) );
 
   clearInventory(orc);
   clearBody(orc);
@@ -111,7 +112,7 @@ TEST_F(FighterTest, dropWearedItemsOndie)
   EXPECT_TRUE( wearer->equip( Actor::create(ActorType::LinenClothes) ) );
 
   //kill actor
-  EXPECT_CALL(mapMock, addActor(_));
+  EXPECT_CALL(*mapMock, addActor(_));
   orc->getFeature<Fighter>()->die();
 }
 
