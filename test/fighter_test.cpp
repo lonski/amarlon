@@ -85,6 +85,8 @@ TEST_F(FighterTest, dropInventoryOndie)
   //create an orc
   ActorPtr orc( Actor::create(ActorType::Orc, 0,0, mapMock) );
 
+  EXPECT_TRUE( orc->getFeature<Destroyable>() != nullptr );
+
   clearInventory(orc);
   clearBody(orc);
 

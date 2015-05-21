@@ -13,6 +13,7 @@ set(HEADER_FILES
     actor/actor_features/fighter.h
     actor/actor_features/pickable.h
     actor/actor_features/pickable_category.h
+    actor/actor_features/destroyable.h
     actor/effects/effect.h
     actor/effects/effect_type.h
     actor/effects/lock_effect.h
@@ -96,6 +97,7 @@ set(SOURCE_FILES
     actor/actor_features/container.cpp
     actor/actor_features/fighter.cpp
     actor/actor_features/pickable.cpp
+    actor/actor_features/destroyable.cpp
     actor/effects/effect.cpp
     actor/effects/lock_effect.cpp
     actor/effects/self_heal_effect.cpp

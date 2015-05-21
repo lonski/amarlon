@@ -6,12 +6,12 @@
 #include <string>
 #include <vector>
 #include <libtcod.hpp>
-#include "actor/actor_type.h"
-#include "actor/actor_features/ai/ai_type.h"
-#include "actor/actor_features/openable/openable_type.h"
-#include "actor/actor_features/wearer/item_slot_type.h"
-#include "actor/actor_features/pickable_category.h"
-#include "actor/effects/effect_type.h"
+#include <actor_type.h>
+#include <ai_type.h>
+#include <openable_type.h>
+#include <item_slot_type.h>
+#include <pickable_category.h>
+#include <effect_type.h>
 
 namespace amarlon {
 
@@ -21,6 +21,7 @@ class Fighter;
 class Ai;
 class Openable;
 class Wearer;
+class Destroyable;
 
 struct Description;
 struct ActorDescription;
@@ -30,6 +31,7 @@ struct AiDescription;
 struct OpenableDescription;
 struct WearerDescription;
 struct ContainerDescription;
+struct DestroyableDescription;
 
 typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
@@ -39,6 +41,7 @@ typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
 typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
+typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
 
 struct Description
 {
@@ -61,7 +64,6 @@ struct EffectDescription : Description
   int heal;
 };
 
-//===
 struct ActorDescription : Description
 {
   ActorType id;
@@ -114,6 +116,7 @@ struct ContainerDescription : Description
     std::shared_ptr<AiDescription> ai;
     std::shared_ptr<OpenableDescription> openable;
     std::shared_ptr<WearerDescription> wearer;
+    std::shared_ptr<DestroyableDescription> destroyable;
 
     Content()
       : actorType(ActorType::Null)
@@ -136,7 +139,12 @@ struct WearerDescription : Description
   std::shared_ptr<ContainerDescription> eqItems;
 };
 
-//===
+struct DestroyableDescription : Description
+{
+  DestroyableDescription()
+  {}
+};
+
 }
 
 #endif // ACTORDESCRIPTIONS_H

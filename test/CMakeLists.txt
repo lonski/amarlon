@@ -19,6 +19,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/effect.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/effect_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/lock_effect.h
@@ -91,6 +92,7 @@ set(SOURCE_FILES
     wearer_test.cpp
     amenu_test.cpp
     fighter_test.cpp
+    destroyable_test.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")

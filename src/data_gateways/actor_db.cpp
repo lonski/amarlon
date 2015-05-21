@@ -82,10 +82,8 @@ public:
     _features.clear();
     _aType = type;
 
-    for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f )
+    for (auto fType : ActorFeature::Type() )
     {
-      ActorFeature::Type fType = static_cast<ActorFeature::Type>(f);
-
       //TODO: find out more elegant and generic way
       switch(fType)
       {
@@ -106,6 +104,9 @@ public:
           break;
         case ActorFeature::WEARER:
           addFeature<Wearer>();
+          break;
+        case ActorFeature::DESTROYABLE:
+          addFeature<Destroyable>();
           break;
         default:;
       }
@@ -185,10 +186,8 @@ void ActorDB::parseActorFeatures(ActorType actorId)
 {
   FeatureDescriptionMap actorDescriptions;
 
-  for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f )
+  for (auto fType : ActorFeature::Type() )
   {
-    ActorFeature::Type fType = static_cast<ActorFeature::Type>(f);
-
     DescriptionPtr featureDsc( _actorParser.parseFeatureDsc(fType) );
     if ( featureDsc ) actorDescriptions[ fType ] = featureDsc;
   }

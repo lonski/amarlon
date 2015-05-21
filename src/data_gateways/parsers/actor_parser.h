@@ -16,13 +16,14 @@ public:
 
   DescriptionPtr parseFeatureDsc(ActorFeature::Type featureType);
 
-  ActorDescriptionPtr     parseActorDsc();
-  ContainerDescriptionPtr parseContainerDsc();
-  PickableDescriptionPtr  parsePickableDsc();
-  FighterDescriptionPtr   parseFighterDsc();
-  AiDescriptionPtr        parseAiDsc();
-  OpenableDescriptionPtr  parseOpenableDsc();
-  WearerDescriptionPtr    parseWearerDsc();
+  ActorDescriptionPtr       parseActorDsc();
+  ContainerDescriptionPtr   parseContainerDsc();
+  PickableDescriptionPtr    parsePickableDsc();
+  FighterDescriptionPtr     parseFighterDsc();
+  AiDescriptionPtr          parseAiDsc();
+  OpenableDescriptionPtr    parseOpenableDsc();
+  WearerDescriptionPtr      parseWearerDsc();
+  DestroyableDescriptionPtr parseDestroyableDsc();
 
 private:
   std::map<ActorFeature::Type, std::function<DescriptionPtr ()> > _featureParsers;

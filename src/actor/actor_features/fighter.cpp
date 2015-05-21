@@ -9,6 +9,7 @@
 #include <amarlon_except.h>
 #include <engine.h>
 #include <map.h>
+#include <destroyable.h>
 
 namespace amarlon {
 
@@ -91,7 +92,14 @@ void Fighter::die()
   if (owner)
   {
     dropItemsFromBody();
-    dropInventory();
+
+    DestroyablePtr destroyable = owner->getFeature<Destroyable>();
+    std::cout << "XXXXXXXXXXXXXX";
+    if ( destroyable )
+    {
+      destroyable->destroy();
+      std::cout << "WWWWWWWWWWWWWWWW";
+    }
 
     Messenger::message()->actorDies( owner );
     owner->morph(ActorType::Corpse);
@@ -113,23 +121,6 @@ void Fighter::dropItemsFromBody()
         {
           dropOnGround( item );
         }
-      }
-    }
-  }
-}
-
-void Fighter::dropInventory()
-{
-  ActorPtr owner = getOwner().lock();
-  if (owner)
-  {
-    ContainerPtr inventory = owner->getFeature<Container>();
-    if ( inventory )
-    {
-      for ( ActorPtr item : inventory->content() )
-      {
-        inventory->remove(item);
-        dropOnGround(item);
       }
     }
   }

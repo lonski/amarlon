@@ -21,12 +21,13 @@ ActorParser::ActorParser()
 
 void ActorParser::mapParsers()
 {
-  _featureParsers[ActorFeature::CONTAINER] = [&](){ return parseContainerDsc(); };
-  _featureParsers[ActorFeature::OPENABLE]  = [&](){ return parseOpenableDsc(); };
-  _featureParsers[ActorFeature::PICKABLE]  = [&](){ return parsePickableDsc(); };
-  _featureParsers[ActorFeature::FIGHTER]   = [&](){ return parseFighterDsc(); };
-  _featureParsers[ActorFeature::WEARER]    = [&](){ return parseWearerDsc(); };
-  _featureParsers[ActorFeature::AI]        = [&](){ return parseAiDsc(); };
+  _featureParsers[ActorFeature::CONTAINER]   = [&](){ return parseContainerDsc(); };
+  _featureParsers[ActorFeature::OPENABLE]    = [&](){ return parseOpenableDsc(); };
+  _featureParsers[ActorFeature::PICKABLE]    = [&](){ return parsePickableDsc(); };
+  _featureParsers[ActorFeature::FIGHTER]     = [&](){ return parseFighterDsc(); };
+  _featureParsers[ActorFeature::WEARER]      = [&](){ return parseWearerDsc(); };
+  _featureParsers[ActorFeature::AI]          = [&](){ return parseAiDsc(); };
+  _featureParsers[ActorFeature::DESTROYABLE] = [&](){ return parseDestroyableDsc(); };
 }
 
 DescriptionPtr ActorParser::parseFeatureDsc(const ActorFeature::Type featureType)
@@ -83,6 +84,7 @@ void ActorParser::parseContainerContentNode(ContainerDescriptionPtr contDsc, xml
     cActor.pickable = aParser.parsePickableDsc();
     cActor.fighter = aParser.parseFighterDsc();
     cActor.ai = aParser.parseAiDsc();
+    cActor.destroyable = aParser.parseDestroyableDsc();
 
     contDsc->content.push_back( cActor );
   }
@@ -235,6 +237,22 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
   }
 
   return wrDsc;
+}
+
+DestroyableDescriptionPtr ActorParser::parseDestroyableDsc()
+{
+  DestroyableDescriptionPtr destrDsc;
+
+  if (_xml != nullptr)
+  {
+    xml_node<>* destrNode = _xml->first_node("Destroyable");
+    if (destrNode != nullptr)
+    {
+      destrDsc.reset( new DestroyableDescription );
+    }
+  }
+
+  return destrDsc;
 }
 
 }

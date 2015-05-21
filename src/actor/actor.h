@@ -13,6 +13,7 @@
 #include <ai.h>
 #include <openable.h>
 #include <wearer.h>
+#include <destroyable.h>
 #include <amarlon_except.h>
 
 namespace amarlon {

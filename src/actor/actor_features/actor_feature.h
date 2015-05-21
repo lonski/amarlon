@@ -27,6 +27,7 @@ public:
     CONTAINER,
     FIGHTER,
     PICKABLE,
+    DESTROYABLE,
     FT_END
   };
 
@@ -44,6 +45,11 @@ protected:
   ActorWPtr _owner;
 
 };
+
+inline ActorFeature::Type operator++(ActorFeature::Type& x) { return x = (ActorFeature::Type)(std::underlying_type<ActorFeature::Type>::type(x) + 1); }
+inline ActorFeature::Type operator*(ActorFeature::Type c) {return c;}
+inline ActorFeature::Type begin(ActorFeature::Type) {return ActorFeature::Type::FT_NULL;}
+inline ActorFeature::Type end(ActorFeature::Type)   {return ActorFeature::Type::FT_END;}
 
 typedef std::map<ActorFeature::Type, ActorFeaturePtr> FeatureMap;
 

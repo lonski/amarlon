@@ -1,9 +1,10 @@
 #include "actor_feature.h"
-#include "ai.h"
-#include "openable.h"
-#include "wearer.h"
-#include "fighter.h"
-#include "pickable.h"
+#include <ai.h>
+#include <openable.h>
+#include <wearer.h>
+#include <fighter.h>
+#include <pickable.h>
+#include <destroyable.h>
 #include <actor.h>
 
 namespace amarlon {
@@ -26,6 +27,7 @@ ActorFeaturePtr ActorFeature::create(Type featureType, DescriptionPtr dsc)
       case CONTAINER: feature = Container::create(dsc); break;
       case FIGHTER: feature = Fighter::create(dsc); break;
       case PICKABLE: feature = Pickable::create(dsc); break;
+      case DESTROYABLE: feature = Destroyable::create(dsc); break;
       default:;
     }
   }
