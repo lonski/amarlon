@@ -1,9 +1,24 @@
 #include "gtest/gtest.h"
-#include <world/map.h>
+#include <map.h>
+#include <actor.h>
 
 namespace amarlon {
 
-TEST(MapTest, mapCreation)
+class MapTest : public ::testing::Test
+{
+  virtual void SetUp()
+  {
+    Map::Tiles.loadTiles("data/tiles.xml");
+    Actor::DB.loadActors("data/actors.xml");
+    Map::Gateway.loadMaps("data/maps.xml");
+  }
+
+  virtual void TearDown()
+  {
+  }
+};
+
+TEST_F(MapTest, mapCreation)
 {
   Map map(100, 60);
 
@@ -11,21 +26,21 @@ TEST(MapTest, mapCreation)
   ASSERT_EQ(map.getHeight(), (size_t)60);
 }
 
-TEST(MapTest, mapHasTiles)
+TEST_F(MapTest, mapHasTiles)
 {
   Map map(100, 60);
 
   ASSERT_FALSE(map.isExplored(10, 5));
 }
 
-TEST(MapTest, mapIsInFov_notComputed)
+TEST_F(MapTest, mapIsInFov_notComputed)
 {
   Map map(100, 60);
 
   ASSERT_FALSE(map.isInFov(10, 5));
 }
 
-TEST(MapTest, mapIsInFov_computed)
+TEST_F(MapTest, mapIsInFov_computed)
 {
   Map map(100, 60);
   map.computeFov(10, 10, 5);
@@ -33,7 +48,7 @@ TEST(MapTest, mapIsInFov_computed)
   ASSERT_TRUE(map.isInFov(10, 10));
 }
 
-TEST(MapTest, fillMap)
+TEST_F(MapTest, fillMap)
 {
   std::string mapFill =
   "#####\n"
@@ -49,7 +64,7 @@ TEST(MapTest, fillMap)
   ASSERT_EQ(map.getChar(0,2), Map::Tiles.getChar(TileType::Tree));
 }
 
-TEST(MapTest, getChar_Color)
+TEST_F(MapTest, getChar_Color)
 {
   Map::Tiles.loadTiles("data/tiles.xml");
   std::string mapFill =
@@ -63,7 +78,7 @@ TEST(MapTest, getChar_Color)
   ASSERT_TRUE(map.getColor(0,2) == Map::Tiles.getColor(TileType::Tree));
 }
 
-TEST(MapTest, tilesToStr)
+TEST_F(MapTest, tilesToStr)
 {
   Map::Tiles.loadTiles("data/tiles.xml");
   std::string mapFill =
@@ -79,7 +94,7 @@ TEST(MapTest, tilesToStr)
   ASSERT_EQ(mapFill, dumped);
 }
 
-TEST(MapTest, tileThatBlocks)
+TEST_F(MapTest, tileThatBlocks)
 {
   Map::Tiles.loadTiles("data/tiles.xml");
   std::string mapFill =
@@ -92,6 +107,19 @@ TEST(MapTest, tileThatBlocks)
 
   EXPECT_TRUE(map.isBlocked(0,0));
   EXPECT_FALSE(map.isBlocked(3,2));
+}
+
+TEST_F(MapTest, addActor)
+{
+  MapPtr map = Map::Gateway.fetch(MapId::GameStart);
+  ActorPtr actor = Actor::create(ActorType::HealthPotion,1,1);
+
+  map->addActor(actor);
+
+  auto actors = map->getActors(1,1);
+
+  EXPECT_EQ(actors.size(), (size_t)1);
+  EXPECT_TRUE( actors.front().get() == actor.get() );
 }
 
 }

@@ -140,7 +140,7 @@ void Fighter::dropOnGround(ActorPtr item)
   ActorPtr owner = getOwner().lock();  
   if (owner)
   {
-    MapPtr map = owner->getMap();
+    MapPtr map = owner->getMap().lock();
     if ( map != nullptr )
     {
       item->setX( owner->getX() );

@@ -40,12 +40,13 @@ Actor::~Actor()
 
 void Actor::move(int dx, int dy)
 {
-  if ( _map ) _map->removeActor( shared_from_this() );
+  MapPtr map = _map.lock();
+  if ( map ) map->removeActor( shared_from_this() );
 
   _x += dx;
   _y += dy;
 
-  if ( _map ) _map->addActor( shared_from_this() );
+  if ( map ) map->addActor( shared_from_this() );
 }
 
 void Actor::morph(ActorType newType)
@@ -145,9 +146,10 @@ int Actor::getX() const
 
 void Actor::setX(int x)
 {
-  if ( _map ) _map->removeActor( shared_from_this() );
+  MapPtr map = _map.lock();
+  if ( map ) map->removeActor( shared_from_this() );
   _x = x;
-  if ( _map ) _map->addActor( shared_from_this() );
+  if ( map ) map->addActor( shared_from_this() );
 }
 int Actor::getY() const
 {
@@ -156,14 +158,15 @@ int Actor::getY() const
 
 void Actor::setY(int y)
 {
-  if ( _map ) _map->removeActor( shared_from_this() );
+  MapPtr map = _map.lock();
+  if ( map ) map->removeActor( shared_from_this() );
   _y = y;
-  if ( _map ) _map->addActor( shared_from_this() );
+  if ( map ) map->addActor( shared_from_this() );
 }
 
 MapPtr Actor::getMap() const
 {
-  return _map;
+  return _map.lock();
 }
 
 void Actor::setMap(MapPtr map)

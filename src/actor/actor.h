@@ -4,20 +4,22 @@
 #include <string>
 #include <memory>
 #include <libtcod.hpp>
-#include "actor_type.h"
-#include "data_gateways/actor_db.h"
-#include "actor_features/actor_feature.h"
-#include "actor_features/container.h"
-#include "actor_features/pickable.h"
-#include "actor_features/fighter.h"
-#include "actor_features/ai/ai.h"
-#include "actor_features/openable/openable.h"
-#include "actor_features/wearer/wearer.h"
-#include "amarlon_except.h"
+#include <actor_type.h>
+#include <actor_db.h>
+#include <actor_feature.h>
+#include <container.h>
+#include <pickable.h>
+#include <fighter.h>
+#include <ai.h>
+#include <openable.h>
+#include <wearer.h>
+#include <amarlon_except.h>
 
 namespace amarlon {
 
 class Map;
+typedef std::shared_ptr<Map> MapPtr;
+typedef std::weak_ptr<Map> MapWPtr;
 
 class Actor : public std::enable_shared_from_this<Actor>
 {
@@ -91,7 +93,7 @@ public:
 private:
   ActorType _id;
   int _x, _y;
-  MapPtr _map;
+  MapWPtr _map;
   unsigned _instanceId;
 
   FeatureMap _features;
