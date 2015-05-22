@@ -249,6 +249,22 @@ DestroyableDescriptionPtr ActorParser::parseDestroyableDsc()
     if (destrNode != nullptr)
     {
       destrDsc.reset( new DestroyableDescription );
+
+      xml_node<>* dropRuleNode = destrNode->first_node("DropRule");
+      while (dropRuleNode != nullptr)
+      {
+        DropRule rule;
+
+        rule.dropActorId = static_cast<ActorType>( getAttribute<int>(dropRuleNode, "dropActorId") );
+        rule.amountMin = getAttribute<uint32_t>(dropRuleNode, "amountMin");
+        rule.amountMax = getAttribute<uint32_t>(dropRuleNode, "amountMax");
+        rule.chance = getAttribute<float>(dropRuleNode, "chance");
+
+        destrDsc->dropRules.push_back( rule );
+
+        dropRuleNode = dropRuleNode->next_sibling();
+      }
+
     }
   }
 

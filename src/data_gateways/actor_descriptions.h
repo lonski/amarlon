@@ -12,6 +12,7 @@
 #include <item_slot_type.h>
 #include <pickable_category.h>
 #include <effect_type.h>
+#include <drop_rule.h>
 
 namespace amarlon {
 
@@ -143,6 +144,8 @@ struct DestroyableDescription : Description
 {
   DestroyableDescription()
   {}
+
+  std::vector<DropRule> dropRules;
 };
 
 }

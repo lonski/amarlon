@@ -48,7 +48,9 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Container maxSize="20">
 			<Content id="23"/>			
 		</Container>
-		<Destroyable/>
+		<Destroyable>
+			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
+		</Destroyable>
 	</Actor>
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
 		<Openable type="0" lockId="0" locked="0"/>

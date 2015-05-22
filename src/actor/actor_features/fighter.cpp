@@ -94,11 +94,9 @@ void Fighter::die()
     dropItemsFromBody();
 
     DestroyablePtr destroyable = owner->getFeature<Destroyable>();
-    std::cout << "XXXXXXXXXXXXXX";
     if ( destroyable )
     {
       destroyable->destroy();
-      std::cout << "WWWWWWWWWWWWWWWW";
     }
 
     Messenger::message()->actorDies( owner );

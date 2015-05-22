@@ -1,4 +1,6 @@
 #include "destroyable.h"
+#include <stdlib.h>
+#include <time.h>
 #include <container.h>
 #include <map.h>
 #include <actor.h>
@@ -15,19 +17,39 @@ Destroyable::~Destroyable()
 {
 }
 
-DestroyablePtr Destroyable::create(DescriptionPtr)
+DestroyablePtr Destroyable::create(DescriptionPtr dsc)
 {
-  return DestroyablePtr(new Destroyable);
+  DestroyablePtr destroyable(new Destroyable);
+
+  DestroyableDescriptionPtr destrDsc = std::dynamic_pointer_cast<DestroyableDescription>( dsc );
+  if ( destrDsc )
+  {
+    destroyable->_dropRules = destrDsc->dropRules;
+  }
+
+  return destroyable;
 }
 
 ActorFeaturePtr Destroyable::clone()
 {
-  return DestroyablePtr(new Destroyable);
+  DestroyablePtr cloned(new Destroyable);
+  cloned->_dropRules = _dropRules;
+
+  return cloned;
 }
 
-bool Destroyable::isEqual(ActorFeaturePtr)
+bool Destroyable::isEqual(ActorFeaturePtr rhs)
 {
-  return true;
+  bool equal = true;
+
+  DestroyablePtr dRhs = std::dynamic_pointer_cast<Destroyable>(rhs);
+  if ( dRhs )
+  {
+    equal = _dropRules.size() == dRhs->_dropRules.size() &&
+            std::equal(_dropRules.begin(), _dropRules.end(), dRhs->_dropRules.begin());
+  }
+
+  return equal;
 }
 
 ActorFeature::Type Destroyable::getType()
@@ -41,6 +63,43 @@ void Destroyable::destroy()
   if ( owner )
   {
     dropInventory();
+    processDropRules();
+  }
+}
+
+float roll()
+{
+  srand( time(nullptr) );
+  return ((rand() % 100) + 1) / 100.0f;
+}
+
+int roll(int from, int to)
+{
+  srand( time(nullptr) );
+  return from + ( rand() % (to-from)+1 );
+}
+
+ActorPtr createActor(const DropRule& rule)
+{
+  ActorPtr toDrop = Actor::create(rule.dropActorId);
+  PickablePtr pickable = toDrop->getFeature<Pickable>();
+  if ( pickable )
+  {
+    pickable->setAmount( roll( rule.amountMin, rule.amountMax ) );
+  }
+
+  return toDrop;
+}
+
+void Destroyable::processDropRules()
+{
+  for( DropRule& rule : _dropRules )
+  {
+    if ( rule.chance > roll() )
+    {
+      ActorPtr toDrop = createActor(rule);
+      dropOnGround( toDrop );
+    }
   }
 }
 

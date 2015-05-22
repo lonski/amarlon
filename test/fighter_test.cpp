@@ -66,7 +66,7 @@ TEST_F(FighterTest, die)
 void clearInventory(ActorPtr actor)
 {
   ContainerPtr inv = actor->getFeature<Container>();
-  EXPECT_TRUE( inv != nullptr );
+  ASSERT_TRUE( inv != nullptr );
   for ( auto i : inv->content() )
     inv->remove(i);
 }
@@ -74,10 +74,15 @@ void clearInventory(ActorPtr actor)
 void clearBody(ActorPtr actor)
 {
   WearerPtr wearer = actor->getFeature<Wearer>();
-  EXPECT_TRUE( wearer != nullptr );
-  if (wearer)
-    for ( auto s : ItemSlotType() )
-      wearer->unequip(s);
+  ASSERT_TRUE( wearer != nullptr );
+  for ( auto s : ItemSlotType() )
+    wearer->unequip(s);
+}
+
+void clearDropRules(ActorPtr actor)
+{
+  DestroyablePtr destr( new Destroyable );
+  actor->insertFeature(destr);
 }
 
 TEST_F(FighterTest, dropInventoryOndie)
@@ -85,10 +90,9 @@ TEST_F(FighterTest, dropInventoryOndie)
   //create an orc
   ActorPtr orc( Actor::create(ActorType::Orc, 0,0, mapMock) );
 
-  EXPECT_TRUE( orc->getFeature<Destroyable>() != nullptr );
-
   clearInventory(orc);
   clearBody(orc);
+  clearDropRules(orc);
 
   //insert some item to inventory
   ContainerPtr inv = orc->getFeature<Container>();
@@ -107,6 +111,7 @@ TEST_F(FighterTest, dropWearedItemsOndie)
 
   clearInventory(orc);
   clearBody(orc);
+  clearDropRules(orc);
 
   //wear an item
   WearerPtr wearer = orc->getFeature<Wearer>();

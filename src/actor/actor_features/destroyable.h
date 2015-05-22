@@ -2,7 +2,9 @@
 #define DESTROYABLE_H
 
 #include <memory>
+#include <vector>
 #include <actor_feature.h>
+#include <drop_rule.h>
 
 namespace amarlon {
 
@@ -25,7 +27,10 @@ public:
   Destroyable();
   ~Destroyable();
 
+  void processDropRules();
 private:
+  std::vector<DropRule> _dropRules;
+
   void dropInventory();
   void dropOnGround(ActorPtr item);
 

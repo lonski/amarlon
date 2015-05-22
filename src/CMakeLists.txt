@@ -14,6 +14,7 @@ set(HEADER_FILES
     actor/actor_features/pickable.h
     actor/actor_features/pickable_category.h
     actor/actor_features/destroyable.h
+    actor/actor_features/drop_rule.h
     actor/effects/effect.h
     actor/effects/effect_type.h
     actor/effects/lock_effect.h
