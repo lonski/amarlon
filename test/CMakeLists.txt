@@ -47,16 +47,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_put_into.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_look.h
     ${PROJECT_SOURCE_DIR}/src/engine.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/abar.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alist.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/apanel.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/awidget.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/inventory_window.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/alabel_menu_item.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/amenu_item.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/amenu.h
-    ${PROJECT_SOURCE_DIR}/src/gui/widgets/aslot_menu_item.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/text_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/text_window/resizeable_text_window.h
     ${PROJECT_SOURCE_DIR}/src/gui/window/inventory_window/bag_manager.h
@@ -98,6 +89,6 @@ set(SOURCE_FILES
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(ut_amarlon amarlon_core ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES})
+target_link_libraries(ut_amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES})
 
 add_custom_command(TARGET ut_amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ut_amarlon>)

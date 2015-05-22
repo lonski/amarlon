@@ -74,16 +74,6 @@ set(HEADER_FILES
     world/tile_type.h
     command_executor.h
     engine.h
-
-    gui/widgets/awidget.h
-    gui/widgets/alabel.h
-    gui/widgets/alist.h
-    gui/widgets/apanel.h
-    gui/widgets/abar.h
-    gui/widgets/amenu_item.h
-    gui/widgets/alabel_menu_item.h
-    gui/widgets/aslot_menu_item.h
-    gui/widgets/amenu.h
 )
 
 set(SOURCE_FILES
@@ -142,21 +132,12 @@ set(SOURCE_FILES
     command_executor.cpp
     engine.cpp
     main.cpp
-
-    gui/widgets/awidget.cpp
-    gui/widgets/alabel.cpp
-    gui/widgets/alist.cpp
-    gui/widgets/apanel.cpp
-    gui/widgets/abar.cpp
-    gui/widgets/alabel_menu_item.cpp
-    gui/widgets/aslot_menu_item.cpp
-    gui/widgets/amenu.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(amarlon_core ${TCOD_LIBRARIES})
 
 add_executable(amarlon main.cpp)
-target_link_libraries(amarlon amarlon_core ${TCOD_LIBRARIES})
+target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)
