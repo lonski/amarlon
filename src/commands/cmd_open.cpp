@@ -2,12 +2,11 @@
 #include <iostream>
 #include <algorithm>
 #include <engine.h>
-#include "cmd_pick.h"
-#include "utils/utils.h"
-#include "utils/item_action.h"
-#include "utils/target_selector/single_neighbour_selector.h"
-#include "world/map.h"
-#include "gui/message_box.h"
+#include <cmd_pick.h>
+#include <utils.h>
+#include <single_neighbour_selector.h>
+#include <map.h>
+#include <gui/message_box.h>
 
 namespace amarlon {
 

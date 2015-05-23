@@ -3,7 +3,6 @@
 #include <message_box.h>
 #include <amount_window.h>
 #include <container.h>
-#include <item_action.h>
 #include <amarlon_except.h>
 #include <actor.h>
 #include <pickup_action.h>
@@ -17,7 +16,7 @@ PickUpWindow::PickUpWindow()
   setDefaults();  
 }
 
-AWindow &PickUpWindow::setDefaults()
+AWindow& PickUpWindow::setDefaults()
 {
   setTitle("Choose items to pick up");
   setPosition(gui::AWidget::GAME_SCREEN_CENTER);

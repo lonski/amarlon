@@ -39,8 +39,8 @@ private:
   void equip(ActorPtr item);
   bool canEquip(ItemSlotType slot);
   void doTheEquip(ActorPtr item);
-
   ItemOperation chooseItemOperationFromMenu(ActorPtr selected);
+  int getAmountToDrop(ActorPtr toDrop);
 
 };
 

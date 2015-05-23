@@ -63,7 +63,6 @@ set(HEADER_FILES
     utils/target_selector/target_selector.h
     utils/colored_string.h
     utils/direction_selector.h
-    utils/item_action.h
     utils/messenger.h
     utils/selector_type.h
     utils/utils.h
@@ -79,6 +78,7 @@ set(HEADER_FILES
     actor/actor_actions/move_action.h
     actor/actor_actions/attack_action.h
     actor/actor_actions/pickup_action.h
+    actor/actor_actions/drop_action.h
 )
 
 set(SOURCE_FILES
@@ -129,7 +129,6 @@ set(SOURCE_FILES
     utils/target_selector/target_selector.cpp
     utils/target_selector/single_range_selector.cpp
     utils/direction_selector.cpp
-    utils/item_action.cpp
     utils/messenger.cpp
     utils/utils.cpp
     utils/configuration.cpp
@@ -140,6 +139,7 @@ set(SOURCE_FILES
     actor/actor_actions/move_action.cpp
     actor/actor_actions/attack_action.cpp
     actor/actor_actions/pickup_action.cpp
+    actor/actor_actions/drop_action.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

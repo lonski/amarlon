@@ -8,7 +8,7 @@
 #include <world/map.h>
 #include <utils/messenger.h>
 #include <menu_window.h>
-#include <item_action.h>
+#include <drop_action.h>
 
 namespace amarlon { namespace gui {
 
@@ -75,13 +75,32 @@ void BagManager::manage()
       switch(operation)
       {
         case EQUIP: equip( selectedItem ); break;
-        case DROP: ItemAction(Actor::Player, selectedItem, Actor::Player->getFeature<Container>()).drop() ; break;
+        case DROP: Actor::Player->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ) ; break;
         default:;
       }
 
       fillBag();
     }
   }
+}
+
+
+int BagManager::getAmountToDrop(ActorPtr toDrop)
+{
+  int amount = 1;
+
+  PickablePtr pickable = toDrop->getFeature<Pickable>();
+  if ( pickable && pickable->isStackable() )
+  {
+    amount = Engine::instance().windowManager()
+                               .getWindow<gui::AmountWindow>()
+                               .setMaxAmount( pickable->getAmount() )
+                               .show()
+                               .downcast<gui::AmountWindow>()
+                               .getAmount();
+  }
+
+  return amount;
 }
 
 BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(ActorPtr selected)
