@@ -70,6 +70,8 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/map_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/serializer.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/map_serializer.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_actions/actor_action.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_actions/move_action.h
     mock/map_mock.h
 )
 

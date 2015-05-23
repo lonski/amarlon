@@ -3,6 +3,7 @@
 #include <map.h>
 #include <engine.h>
 #include <move_action.h>
+#include <attack_action.h>
 
 namespace amarlon {
 
@@ -24,16 +25,11 @@ void CmdMoveOrAttack::execute()
   //if MoveAction failed then path is blocked
   if ( !Actor::Player->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
   {
-    std::vector<ActorPtr> toAttack = getActorsToAttack();
-
-    if (!toAttack.empty() && Actor::Player->hasFeature<Fighter>() )
-    {
-      Actor::Player->getFeature<Fighter>()->attack( toAttack.front() );
-    }
+    Actor::Player->performAction( std::make_shared<AttackAction>( getActorToAttack() ));
   }
 }
 
-std::vector<ActorPtr> CmdMoveOrAttack::getActorsToAttack()
+ActorPtr CmdMoveOrAttack::getActorToAttack()
 {
   int targetX = Actor::Player->getX() + _dx;
   int targetY = Actor::Player->getY() + _dy;
@@ -45,7 +41,7 @@ std::vector<ActorPtr> CmdMoveOrAttack::getActorsToAttack()
   };
   std::vector<ActorPtr> toAttack = map->getActors(targetX, targetY, &filterFun);
 
-  return toAttack;
+  return toAttack.empty() ? ActorPtr() : toAttack.front();
 }
 
 void CmdMoveOrAttack::setDirection(int dx, int dy)

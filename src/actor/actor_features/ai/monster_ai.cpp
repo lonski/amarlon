@@ -4,6 +4,7 @@
 #include <actor.h>
 #include <amarlon_except.h>
 #include <move_action.h>
+#include <attack_action.h>
 
 namespace amarlon {
 
@@ -71,6 +72,7 @@ void MonsterAi::huntPlayer()
   int stepDx = (dx > 0 ? 1:-1);
   int stepDy = (dy > 0 ? 1:-1);
 
+  ActorPtr monster = getOwner().lock();
   float distance = sqrtf(dx*dx + dy*dy);
 
   if ( distance >= 2 )
@@ -78,7 +80,6 @@ void MonsterAi::huntPlayer()
     dx = (int)(round(dx/distance));
     dy = (int)(round(dy/distance));
 
-    ActorPtr monster = getOwner().lock();
 
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
     {      
@@ -95,7 +96,7 @@ void MonsterAi::huntPlayer()
   }
   else if ( getOwner().lock()->hasFeature<Fighter>() )
   {
-    getOwner().lock()->getFeature<Fighter>()->attack(Actor::Player);
+    monster->performAction( std::make_shared<AttackAction>(Actor::Player) );
   }
 }
 

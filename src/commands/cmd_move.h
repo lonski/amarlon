@@ -18,7 +18,7 @@ private:
   int _dx;
   int _dy;
 
-  std::vector<ActorPtr> getActorsToAttack();
+  ActorPtr getActorToAttack();
 };
 
 }

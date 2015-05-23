@@ -18,12 +18,12 @@ public:
    * @brief Moves actor for given coordinate difference. Check if path is blocked.
    * @return True if path was not blocked, false otherwise
    */
-  virtual bool perform(ActorPtr actor);
+  virtual bool perform(ActorPtr performer);
 
 private:
   int _dx;
   int _dy;
-  ActorPtr _actor;
+  ActorPtr _performer;
 
   bool patchIsBlocked();
 

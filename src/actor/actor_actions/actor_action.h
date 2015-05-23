@@ -17,7 +17,7 @@ public:
   ActorAction() = default;
   virtual ~ActorAction() {}
 
-  virtual bool perform(ActorPtr actor) = 0;
+  virtual bool perform(ActorPtr performer) = 0;
 };
 
 typedef std::shared_ptr<ActorAction> ActorActionPtr;

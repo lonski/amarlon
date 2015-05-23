@@ -14,14 +14,14 @@ MoveAction::~MoveAction()
 {
 }
 
-bool MoveAction::perform(ActorPtr actor)
+bool MoveAction::perform(ActorPtr performer)
 {
   bool moved = false;
-  _actor = actor;
+  _performer = performer;
 
-  if ( _actor && !patchIsBlocked() )
+  if ( _performer && !patchIsBlocked() )
   {
-    actor->setPosition( actor->getX() + _dx, actor->getY() + _dy );
+    performer->setPosition( performer->getX() + _dx, performer->getY() + _dy );
     moved = true;
   }
 
@@ -31,11 +31,11 @@ bool MoveAction::perform(ActorPtr actor)
 bool MoveAction::patchIsBlocked()
 {
   bool blocked = false;  
-  MapPtr map = _actor->getMap();
+  MapPtr map = _performer->getMap();
   if ( map )
   {    
-    int targetX = _actor->getX() + _dx;
-    int targetY = _actor->getY() + _dy;
+    int targetX = _performer->getX() + _dx;
+    int targetY = _performer->getY() + _dy;
     blocked = map->isBlocked(targetX, targetY);
   }
 
