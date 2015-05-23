@@ -23,6 +23,9 @@ enum class CommandId
   End
 };
 
+/**
+ * @brief Command represent an user's input.
+ */
 class Command
 {
 public:
@@ -30,6 +33,9 @@ public:
   virtual ~Command() {}
   static Command* create(CommandId cmd);
 
+  /**
+   * @return True if given key is matching the command
+   */
   virtual bool accept(TCOD_key_t &key) = 0;
   virtual void execute() = 0;
 

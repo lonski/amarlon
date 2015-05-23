@@ -1,6 +1,7 @@
 #include "actor.h"
-#include "world/map.h"
+#include <map.h>
 #include <iostream>
+#include <actor_action.h>
 
 namespace amarlon {
 
@@ -38,16 +39,16 @@ Actor::~Actor()
 {
 }
 
-void Actor::move(int dx, int dy)
-{
-  MapPtr map = _map.lock();
-  if ( map ) map->removeActor( shared_from_this() );
+//void Actor::move(int dx, int dy)
+//{
+//  MapPtr map = _map.lock();
+//  if ( map ) map->removeActor( shared_from_this() );
 
-  _x += dx;
-  _y += dy;
+//  _x += dx;
+//  _y += dy;
 
-  if ( map ) map->addActor( shared_from_this() );
-}
+//  if ( map ) map->addActor( shared_from_this() );
+//}
 
 void Actor::morph(ActorType newType)
 {
@@ -144,23 +145,19 @@ int Actor::getX() const
   return _x;
 }
 
-void Actor::setX(int x)
-{
-  MapPtr map = _map.lock();
-  if ( map ) map->removeActor( shared_from_this() );
-  _x = x;
-  if ( map ) map->addActor( shared_from_this() );
-}
 int Actor::getY() const
 {
   return _y;
 }
 
-void Actor::setY(int y)
+void Actor::setPosition(int x, int y)
 {
   MapPtr map = _map.lock();
   if ( map ) map->removeActor( shared_from_this() );
+
+  _x = x;
   _y = y;
+
   if ( map ) map->addActor( shared_from_this() );
 }
 
@@ -219,7 +216,12 @@ size_t Actor::getFeatureCount() const
 }
 unsigned Actor::getInstanceId() const
 {
-    return _instanceId;
+  return _instanceId;
+}
+
+bool Actor::performAction(ActorActionPtr action)
+{
+  return action ? action->perform( shared_from_this() ) : false;
 }
 
 }

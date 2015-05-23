@@ -19,6 +19,8 @@
 namespace amarlon {
 
 class Map;
+class ActorAction;
+typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::weak_ptr<Map> MapWPtr;
 
@@ -37,7 +39,7 @@ public:
   ActorPtr clone();
   bool isEqual(ActorPtr rhs);
 
-  void move(int dx, int dy);
+  //void move(int dx, int dy);
   void morph(ActorType newType);
   void changeType(ActorType newType);
 
@@ -56,9 +58,8 @@ public:
   std::string getName() const;
 
   int getX() const;
-  void setX(int getX);
   int getY() const;
-  void setY(int getY);
+  void setPosition(int x, int y);
 
   MapPtr getMap() const;
   void setMap(MapPtr map);
@@ -90,6 +91,8 @@ public:
   bool hasFeature();
 
   unsigned getInstanceId() const;
+
+  bool performAction(ActorActionPtr action);
 
 private:
   ActorType _id;

@@ -7,10 +7,10 @@
 #include <list>
 #include <stdexcept>
 #include <libtcod.hpp>
-#include "world/map_id.h"
-#include "data_gateways/tile_db.h"
-#include "data_gateways/map_gateway.h"
-#include "actor/actor_features/container.h"
+#include <map_id.h>
+#include <tile_db.h>
+#include <map_gateway.h>
+#include <container.h>
 
 namespace amarlon {
 
@@ -35,7 +35,7 @@ struct Tile
   {}
 };
 
-class Map
+class Map : public std::enable_shared_from_this<Map>
 {
 public:
   typedef std::vector< std::vector<Tile> > TileMatrix;

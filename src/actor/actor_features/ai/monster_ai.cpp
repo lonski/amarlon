@@ -1,8 +1,9 @@
 #include "monster_ai.h"
 #include <cmath>
-#include "world/map.h"
-#include "actor/actor.h"
-#include "amarlon_except.h"
+#include <map.h>
+#include <actor.h>
+#include <amarlon_except.h>
+#include <move_action.h>
 
 namespace amarlon {
 
@@ -77,17 +78,19 @@ void MonsterAi::huntPlayer()
     dx = (int)(round(dx/distance));
     dy = (int)(round(dy/distance));
 
+    ActorPtr monster = getOwner().lock();
+
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
-    {
-      getOwner().lock()->move(dx, dy);
+    {      
+      monster->performAction( std::make_shared<MoveAction>(dx, dy) );
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
     {
-      getOwner().lock()->move(stepDx, 0);
+      monster->performAction( std::make_shared<MoveAction>(stepDx, 0) );
     }
     else if ( !_map->isBlocked(_cX, _cY+stepDy) )
     {
-      getOwner().lock()->move(0, stepDy);
+      monster->performAction( std::make_shared<MoveAction>(0, stepDy) );
     }
   }
   else if ( getOwner().lock()->hasFeature<Fighter>() )

@@ -1,8 +1,8 @@
 #include "cmd_move.h"
-#include <cassert>
-#include "utils/utils.h"
-#include "world/map.h"
-#include "engine.h"
+#include <utils.h>
+#include <map.h>
+#include <engine.h>
+#include <move_action.h>
 
 namespace amarlon {
 
@@ -21,31 +21,31 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
 
 void CmdMoveOrAttack::execute()
 {
-  MapPtr map = Engine::instance().currentMap();
-  int targetX = Actor::Player->getX() + _dx;
-  int targetY = Actor::Player->getY() + _dy;
-  bool blocked = map->isBlocked(targetX, targetY);
-
-  if ( !blocked )
+  //if MoveAction failed then path is blocked
+  if ( !Actor::Player->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
   {
-    Actor::Player->move(_dx, _dy);
-  }
-  else
-  {
-    std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
-    {
-      return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
-    };
-    std::vector<ActorPtr> toAttack = map->getActors(targetX, targetY, &filterFun);
+    std::vector<ActorPtr> toAttack = getActorsToAttack();
 
-    //attack
     if (!toAttack.empty() && Actor::Player->hasFeature<Fighter>() )
     {
-      assert(toAttack.size() == 1);
-      ActorPtr enemy = toAttack[0];
-      Actor::Player->getFeature<Fighter>()->attack(enemy);
+      Actor::Player->getFeature<Fighter>()->attack( toAttack.front() );
     }
   }
+}
+
+std::vector<ActorPtr> CmdMoveOrAttack::getActorsToAttack()
+{
+  int targetX = Actor::Player->getX() + _dx;
+  int targetY = Actor::Player->getY() + _dy;
+  MapPtr map = Engine::instance().currentMap();
+
+  std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
+  {
+    return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
+  };
+  std::vector<ActorPtr> toAttack = map->getActors(targetX, targetY, &filterFun);
+
+  return toAttack;
 }
 
 void CmdMoveOrAttack::setDirection(int dx, int dy)

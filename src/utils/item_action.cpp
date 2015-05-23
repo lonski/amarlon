@@ -105,8 +105,7 @@ int ItemAction::drop()
 
 void ItemAction::dropOnMap(ActorPtr item)
 {
-  item->setX( _executor->getX() );
-  item->setY( _executor->getY() );
+  item->setPosition( _executor->getX(), _executor->getY() );
   Messenger::message()->actorDropped(_executor, item, item->getFeature<Pickable>()->getAmount());
   Engine::instance().currentMap()->addActor( item );
 }

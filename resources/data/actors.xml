@@ -5,7 +5,7 @@ Here are defined default parameters which can be overloaded.
 When new actor is created with given ID as parameter, then the template will be loaded.
 -->
 <Actors>
-	<Actor name="Player" id="1" character="@" color="ffffff" transparent="0" blocks="1" fovOnly="1">
+	<Actor name="Player" id="1" character="@" color="ffffff" transparent="1" blocks="1" fovOnly="1">
 		<Container maxSize="20">
 			<Content id="12">
 				<Pickable stackable="1" amount="4" category="4"/>

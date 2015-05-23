@@ -44,11 +44,12 @@ void Engine::init(Configuration* cfg)
   Actor::DB.loadActors( cfg->get("actors_file") );
   Map::Gateway.loadMaps( cfg->get("maps_file") );
 
-  Actor::Player = Actor::create(ActorType::Player, 42, 28);
-
   Messenger::message()->setGui(_gui.get());
 
   setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
+
+  Actor::Player = Actor::create(ActorType::Player, 42, 28);
+  currentMap()->addActor( Actor::Player );
 }
 
 void Engine::update()

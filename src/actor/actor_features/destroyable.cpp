@@ -129,8 +129,7 @@ void Destroyable::dropOnGround(ActorPtr item)
     MapPtr map = owner->getMap();
     if ( map != nullptr )
     {
-      item->setX( owner->getX() );
-      item->setY( owner->getY() );
+      item->setPosition( owner->getX(), owner->getY() );
       map->addActor(item);
     }
   }

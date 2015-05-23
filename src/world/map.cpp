@@ -66,9 +66,8 @@ bool Map::isBlocked(int x, int y)
 
 void Map::addActor(ActorPtr actor)
 {  
-  int x( actor->getX() );
-  int y( actor->getY() );
-
+  u32 x( actor->getX() );
+  u32 y( actor->getY() );
   Tile& tile = getTile(x, y);
 
   if ( !tile.actors->add(actor) ) throw amarlon_exeption("Failed to add actor to tile!");
@@ -79,6 +78,7 @@ void Map::addActor(ActorPtr actor)
     codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
   }
 
+  actor->setMap( shared_from_this() );
 }
 
 ActorPtr Map::getFirstActor(int x, int y)
@@ -251,8 +251,8 @@ char Map::getChar(u32 x, u32 y)
 }
 
 //===== Map getTile
-Tile&Map::getTile(u32 x, u32 y)
-{
+Tile& Map::getTile(u32 x, u32 y)
+{  
   validateMapCoords(x, y);
 
   TileRow& tRow = _tiles[y];

@@ -75,6 +75,8 @@ set(HEADER_FILES
     world/tile_type.h
     command_executor.h
     engine.h
+    actor/actor_actions/actor_action.h
+    actor/actor_actions/move_action.h
 )
 
 set(SOURCE_FILES
@@ -133,6 +135,7 @@ set(SOURCE_FILES
     command_executor.cpp
     engine.cpp
     main.cpp
+    actor/actor_actions/move_action.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

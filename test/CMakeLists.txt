@@ -84,6 +84,7 @@ set(SOURCE_FILES
     amenu_test.cpp
     fighter_test.cpp
     destroyable_test.cpp
+    move_action_test.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")
