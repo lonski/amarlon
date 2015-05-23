@@ -9,6 +9,8 @@
 #include <utils/messenger.h>
 #include <menu_window.h>
 #include <drop_action.h>
+#include <equip_action.h>
+#include <unequip_action.h>
 
 namespace amarlon { namespace gui {
 
@@ -84,6 +86,37 @@ void BagManager::manage()
   }
 }
 
+void BagManager::equip(ActorPtr item)
+{
+  EquipActionPtr equipAction = std::make_shared<EquipAction>(item);
+  Actor::Player->performAction( equipAction );
+
+  switch( equipAction->getResult() )
+  {
+    case EquipResult::AlreadyEquiped:
+      { //try to unequip, and then equip again
+        if ( Actor::Player->performAction( std::make_shared<UnEquipAction>( item->getFeature<Pickable>()->getItemSlot() )))
+        {
+          equip( item );
+        }
+        else
+        {
+          msgBox( "Cannot unequip currently equipped item!", gui::MsgType::Error );
+        }
+      }
+      break;
+
+    case EquipResult::NoProperSlot:
+      msgBox( "You haven't got appropriate slot to equip this item.", gui::MsgType::Error);
+      break;
+
+    case EquipResult::Nok:
+      msgBox( "Cannot equip item!", gui::MsgType::Error );
+      break;
+
+    default:;
+  }
+}
 
 int BagManager::getAmountToDrop(ActorPtr toDrop)
 {
@@ -129,68 +162,6 @@ BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(ActorPtr selec
 
   return sItem ? static_cast<ItemOperation>(sItem->getProperty<int>("operation"))
                : INVALID;
-}
-
-void BagManager::equip(ActorPtr item)
-{
-  ItemSlotType itemSlot = item->getFeature<Pickable>()->getItemSlot();
-  WearerPtr playerWearer = Actor::Player->getFeature<Wearer>();
-
-  if ( playerWearer->hasSlot( itemSlot ) )
-  {
-    if ( canEquip(itemSlot) ) doTheEquip(item);
-  }
-  else
-  {
-    msgBox( "You haven't got appropriate slot to equip this item.", gui::MsgType::Error);
-  }
-
-}
-
-bool BagManager::canEquip(ItemSlotType slot)
-{
-  WearerPtr playerWearer = Actor::Player->getFeature<Wearer>();
-  ContainerPtr playerContainer = Actor::Player->getFeature<Container>();
-
-  bool slotIsFree = !playerWearer->isEquipped(slot);
-
-  if ( !slotIsFree )
-  {
-    if ( ActorPtr unequipped = playerWearer->unequip(slot) ) //try to free it
-    {
-      slotIsFree = playerContainer->add(unequipped);
-      if ( !slotIsFree )
-      {
-        msgBox("You have no free space in inventory for "+unequipped->getName()+"!",
-               gui::MsgType::Error);
-        playerWearer->equip( unequipped );
-        assert( playerWearer->isEquipped(slot) );
-      }
-    }
-    else msgBox("Cannot unequip " + playerWearer->equipped(slot)->getName() + "!",
-                gui::MsgType::Error);
-  }
-
-  return slotIsFree;
-}
-
-void BagManager::doTheEquip(ActorPtr item)
-{
-  WearerPtr wearer = Actor::Player->getFeature<Wearer>();
-  ContainerPtr container = Actor::Player->getFeature<Container>();
-
-  if ( container->remove( item ) )
-  {
-    if ( !wearer->equip( item ) )
-    {
-      msgBox( "Cannot equip item!", gui::MsgType::Error );
-    }
-  }
-  else
-  {
-    msgBox( "Cannot remove "+item->getName()+" from inventory.", gui::MsgType::Error );
-  }
-
 }
 
 }}

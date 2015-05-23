@@ -81,6 +81,8 @@ set(HEADER_FILES
     actor/actor_actions/drop_action.h
     actor/actor_actions/close_action.h
     actor/actor_actions/open_action.h
+    actor/actor_actions/equip_action.h
+    actor/actor_actions/unequip_action.h
 )
 
 set(SOURCE_FILES
@@ -144,6 +146,8 @@ set(SOURCE_FILES
     actor/actor_actions/drop_action.cpp
     actor/actor_actions/close_action.cpp
     actor/actor_actions/open_action.cpp
+    actor/actor_actions/equip_action.cpp
+    actor/actor_actions/unequip_action.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

@@ -5,6 +5,8 @@
 #include <alabel_menu_item.h>
 #include <gui/message_box.h>
 #include <menu_window.h>
+#include <unequip_action.h>
+#include <equip_action.h>
 
 const unsigned MARGIN = 2;
 
@@ -22,7 +24,8 @@ BodyManager::BodyManager(int w, int h)
 
 void BodyManager::manage()
 {
-  if ( AMenuItemPtr item = _bodyMenu->getSelectedItem() )
+  AMenuItemPtr item = _bodyMenu->getSelectedItem();
+  if ( item )
   {
     ItemSlotType slot = static_cast<ItemSlotType>( item->getProperty<int>("ItemSlotType") );
 
@@ -36,7 +39,7 @@ void BodyManager::manage()
     else
     {
       ActorPtr toEquip = chooseItemToEquip(slot);
-      if ( equipItem(toEquip) )
+      if ( toEquip && equipItem(toEquip) )
       {
         item->setValue( toEquip->getName() );
       }
@@ -70,30 +73,23 @@ void BodyManager::fillBodySlots()
 
 bool BodyManager::unequipItem(ItemSlotType slot)
 {
-  bool success = false;
+  UnEquipActionPtr action = std::make_shared<UnEquipAction>(slot);
+  Actor::Player->performAction( action );
 
-  WearerPtr playerWearer = Actor::Player->getFeature<Wearer>();
-  ContainerPtr playerContainer = Actor::Player->getFeature<Container>();
+  UnEquipResult status = action->getResult();
+  switch ( status )
+  {
+    case UnEquipResult::InventoryFull:
+      msgBox("Item cannot be unequipped:\nNot enough space in inventory", gui::MsgType::Error);
+      break;
 
-  if ( ActorPtr item = playerWearer->unequip( slot ) )
-  {
-    if ( playerContainer->add(item) )
-    {
-      success = true;
-    }
-    else
-    {
-      msgBox("Item cannot be unequipped:\nNot enough space in inventory",
-             gui::MsgType::Error);
-      playerWearer->equip(item);
-    }
-  }
-  else
-  {
-    msgBox("Item cannot be unequipped!", gui::MsgType::Error);
+    case UnEquipResult::Nok:
+      msgBox("Item cannot be unequipped!", gui::MsgType::Error);
+      break;
+    default:;
   }
 
-  return success;
+  return status == UnEquipResult::Ok;
 }
 
 ActorPtr BodyManager::chooseItemToEquip(ItemSlotType slot)
@@ -135,26 +131,25 @@ std::vector<ActorPtr > BodyManager::getEquipableItemsList(ItemSlotType slot)
 
 bool BodyManager::equipItem(ActorPtr toEquip)
 {
-  bool success = false;
+  EquipActionPtr action = std::make_shared<EquipAction>(toEquip);
+  Actor::Player->performAction( action );
+  EquipResult result = action->getResult();
 
-  if (Actor::Player->getFeature<Container>()->remove( toEquip ))
+  switch(result)
   {
-    if ( Actor::Player->getFeature<Wearer>()->equip( toEquip ) )
-    {
-      success = true;
-    }
-    else
-    {
+    case EquipResult::Nok:
       msgBox( "Cannot equip item!", gui::MsgType::Error );
-      Actor::Player->getFeature<Container>()->add( toEquip );
-    }
-  }
-  else
-  {
-    msgBox( "Cannot remove item from inventory!", gui::MsgType::Error );
+      break;
+    case EquipResult::AlreadyEquiped:
+      msgBox( "Another item is already equipped on this slot!", gui::MsgType::Error );
+      break;
+    case EquipResult::NoProperSlot:
+      msgBox( "There is no proper slot to equip this item!", gui::MsgType::Error );
+      break;
+    default:;
   }
 
-  return success;
+  return result == EquipResult::Ok;
 }
 
 void BodyManager::selectNext()
