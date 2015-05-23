@@ -19,6 +19,8 @@ private:
 
 };
 
+typedef std::shared_ptr<CloseAction> CloseActionPtr;
+
 }
 
 #endif // CLOSE_ACTION_H

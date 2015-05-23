@@ -5,8 +5,8 @@
 #include <cmd_pick.h>
 #include <utils.h>
 #include <single_neighbour_selector.h>
-#include <map.h>
 #include <gui/message_box.h>
+#include <open_action.h>
 
 namespace amarlon {
 
@@ -21,17 +21,14 @@ bool CmdOpen::accept(TCOD_key_t &key)
 
 void CmdOpen::execute()
 {
-  MapPtr map = Engine::instance().currentMap();
   std::function<bool (amarlon::ActorPtr)> filterFun = [](ActorPtr a)->bool{ return a->getFeature<Openable>() != nullptr; };
-  ActorPtr target = SingleNeighbourSelector("Select object to open...")
+
+  ActorPtr toOpen = SingleNeighbourSelector("Select object to open...")
                     .selectFirst(&filterFun);
 
-  if ( target != nullptr)
+  if ( toOpen != nullptr)
   {
-    if ( target->getFeature<Openable>()->open(Actor::Player) )
-    {
-      map->updateActorCell(target);
-    }
+    Actor::Player->performAction( std::make_shared<OpenAction>(toOpen) );
   }
   else
   {
