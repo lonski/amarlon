@@ -70,6 +70,7 @@ private:
   void choose();
   ActorPtr getSelectedActor();
   void init();
+  int getAmountToPickUp(ActorPtr toPick);
 
 };
 

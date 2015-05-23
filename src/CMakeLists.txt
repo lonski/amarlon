@@ -78,6 +78,7 @@ set(HEADER_FILES
     actor/actor_actions/actor_action.h
     actor/actor_actions/move_action.h
     actor/actor_actions/attack_action.h
+    actor/actor_actions/pickup_action.h
 )
 
 set(SOURCE_FILES
@@ -138,6 +139,7 @@ set(SOURCE_FILES
     main.cpp
     actor/actor_actions/move_action.cpp
     actor/actor_actions/attack_action.cpp
+    actor/actor_actions/pickup_action.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

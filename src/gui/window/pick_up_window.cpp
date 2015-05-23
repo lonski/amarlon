@@ -6,6 +6,7 @@
 #include <item_action.h>
 #include <amarlon_except.h>
 #include <actor.h>
+#include <pickup_action.h>
 
 namespace amarlon { namespace gui {
 
@@ -99,18 +100,35 @@ void PickUpWindow::choose()
 {
   if ( ActorPtr toPick = getSelectedActor() )
   {
-    try
+    int amount = getAmountToPickUp(toPick);
+    if ( _picker->performAction( std::make_shared<PickUpAction>(toPick, amount, _container) ) )
     {
-      _afterPickUpAction(toPick->getName(),
-                         ItemAction(_picker, toPick, _container).pick());
-
+      _afterPickUpAction( toPick->getName(), amount );
       fillMenuWithItems();
     }
-    catch( inventory_full& e )
+    else
     {
-      _inventoryFullAction(e.getItemName());
+      _inventoryFullAction( toPick->getName() );
     }
   }
+}
+
+int PickUpWindow::getAmountToPickUp(ActorPtr toPick)
+{
+  int amount = 1;
+
+  PickablePtr pickable = toPick->getFeature<Pickable>();
+  if ( pickable && pickable->isStackable() )
+  {
+    amount = Engine::instance().windowManager()
+                               .getWindow<gui::AmountWindow>()
+                               .setMaxAmount( pickable->getAmount() )
+                               .show()
+                               .downcast<gui::AmountWindow>()
+                               .getAmount();
+  }
+
+  return amount;
 }
 
 ActorPtr PickUpWindow::getSelectedActor()

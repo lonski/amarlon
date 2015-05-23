@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <apanel.h>
+#include <cassert>
 
 namespace amarlon { namespace gui {
 
