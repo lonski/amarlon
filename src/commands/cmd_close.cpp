@@ -1,11 +1,12 @@
 #include "cmd_close.h"
 #include <algorithm>
-#include "actor/actor.h"
-#include "world/map.h"
-#include "engine.h"
-#include "utils/utils.h"
-#include "utils/target_selector/single_neighbour_selector.h"
-#include "gui/message_box.h"
+#include <actor.h>
+#include <map.h>
+#include <engine.h>
+#include <utils.h>
+#include <single_neighbour_selector.h>
+#include <message_box.h>
+#include <close_action.h>
 
 namespace amarlon {
 
@@ -20,8 +21,6 @@ bool CmdClose::accept(TCOD_key_t &key)
 
 void CmdClose::execute()
 {
-  MapPtr map = Engine::instance().currentMap();
-
   std::vector<ActorPtr> actorsOnTile = SingleNeighbourSelector("Select object to close...")
                                        .select();
 
@@ -35,7 +34,7 @@ void CmdClose::execute()
   {
     if ( actorsOnTile.size() == 1 )
     {
-      if (toClose->getFeature<Openable>()->close(Actor::Player)) map->updateActorCell(toClose);
+      Actor::Player->performAction( std::make_shared<CloseAction>(toClose) );
     }
     else
     {

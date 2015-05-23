@@ -75,7 +75,7 @@ void BagManager::manage()
       switch(operation)
       {
         case EQUIP: equip( selectedItem ); break;
-        case DROP: Actor::Player->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ) ; break;
+        case DROP: Actor::Player->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ); break;
         default:;
       }
 
