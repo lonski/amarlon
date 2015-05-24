@@ -12,6 +12,7 @@
 #include <map_gateway.h>
 #include <container.h>
 #include <directions.h>
+#include <tile.h>
 
 namespace amarlon {
 
@@ -26,37 +27,6 @@ typedef std::shared_ptr<Container> ContainerPtr;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::weak_ptr<Map> MapWPtr;
 typedef std::unique_ptr<Map> MapUPtr;
-
-struct Tile
-{
-  constexpr static int defaultMonsterRenderPriority = 10;
-  constexpr static int defaultItemRenderPriority = 20;
-
-  bool explored;
-  TileType type;
-  ContainerPtr actors;
-
-  Tile()
-    : explored(false)
-    , actors( new Container(999) )
-  {}
-
-  Tile(const Tile& tile)
-  {
-    *this = tile;
-  }
-
-  Tile& operator=(const Tile& rhs)
-  {
-    if ( this != &rhs )
-    {
-      explored = rhs.explored;
-      type = rhs.type;
-      actors = std::dynamic_pointer_cast<Container>( rhs.actors->clone() );
-    }
-    return *this;
-  }
-};
 
 class Map : public std::enable_shared_from_this<Map>
 {

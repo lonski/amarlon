@@ -72,6 +72,7 @@ set(HEADER_FILES
     world/map.h
     world/map_id.h
     world/tile_type.h
+    world/tile.h
     command_executor.h
     engine.h
     actor/actor_actions/actor_action.h
@@ -139,6 +140,7 @@ set(SOURCE_FILES
     utils/utils.cpp
     utils/configuration.cpp
     world/map.cpp
+    world/tile.cpp
     command_executor.cpp
     engine.cpp
     main.cpp

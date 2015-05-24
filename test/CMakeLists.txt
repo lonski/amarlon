@@ -34,6 +34,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/world/map_id.h
     ${PROJECT_SOURCE_DIR}/src/world/tile_type.h
+    ${PROJECT_SOURCE_DIR}/src/world/tile.h
     ${PROJECT_SOURCE_DIR}/src/command_executor.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_help.h
     ${PROJECT_SOURCE_DIR}/src/commands/cmd_close.h
