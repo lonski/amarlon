@@ -28,6 +28,7 @@ private:
   void parseActors();
   ActorPtr parseActor(rapidxml::xml_node<>* actorNode);
   void overWriteActorFeatures(ActorPtr actor);
+  void parseActions();
 
 };
 

@@ -19,10 +19,44 @@ bool MoveAction::perform(ActorPtr performer)
   bool moved = false;
   _performer = performer;
 
-  if ( _performer && !patchIsBlocked() )
+  if ( _performer )
   {
-    performer->setPosition( performer->getX() + _dx, performer->getY() + _dy );
-    moved = true;
+    int newX = performer->getX() + _dx;
+    int newY = performer->getY() + _dy;
+
+    MapPtr map = performer->getMap();
+    if ( map )
+    {
+      moved = true;
+      if ( newX < 0 )
+      {
+        map->onExit(Direction::West, performer);
+      }
+      else if ( newX >= static_cast<int>(map->getWidth()) )
+      {
+        map->onExit(Direction::East, performer);
+      }
+      else if ( newY < 0 )
+      {
+        map->onExit(Direction::North, performer);
+      }
+      else if ( newY >= static_cast<int>(map->getHeight()) )
+      {
+        map->onExit(Direction::South, performer);
+      }
+      else
+      {
+        if ( !patchIsBlocked() )
+        {
+          performer->setPosition( newX, newY );
+        }
+        else
+        {
+          moved = false;
+        }
+      }
+
+    }
   }
 
   return moved;

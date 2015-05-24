@@ -197,12 +197,12 @@ void MapEditor::on_actionLoad_triggered()
     }
   }
 
-  std::vector<Actor*> actors = currentMap->getActors(nullptr);
+  std::vector<ActorPtr> actors = currentMap->getActors(nullptr);
   for ( auto a = actors.begin();
         a != actors.end();
         ++a)
   {
-    Actor* cA = *a;
+    ActorPtr cA = *a;
     _actors.push_back( ActorData(cA->getId(), cA->getX(), cA->getY()) );
 
     QTableWidgetItem* cMapGridItem = ui->map->item(cA->getY(), cA->getX());

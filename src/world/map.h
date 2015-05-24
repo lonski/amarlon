@@ -11,14 +11,16 @@
 #include <tile_db.h>
 #include <map_gateway.h>
 #include <container.h>
+#include <directions.h>
 
 namespace amarlon {
 
 typedef unsigned int u32;
 
 class Actor;
-
+class ActorAction;
 typedef std::shared_ptr<Container> ContainerPtr;
+typedef std::shared_ptr<ActorAction> ActorActionPtr;
 
 struct Tile
 {
@@ -76,11 +78,16 @@ public:
   virtual MapId getId() const;
   virtual void setId(const MapId &id);
 
+  virtual void onExit(Direction direction, ActorPtr exiter);
+
+  friend class MapParser;
+
 private:
   MapId _id;
   u32 _width, _height;
   TileMatrix _tiles;
   TCODMap codMap;
+  std::map<Direction, ActorActionPtr> _exitActions;
 
   Tile& getTile(u32 x, u32 y);
   void validateMapCoords(u32 x, u32 y);

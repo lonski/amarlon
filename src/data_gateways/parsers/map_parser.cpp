@@ -1,9 +1,10 @@
 #include "map_parser.h"
 #include <string>
-#include "utils/xml_utils.h"
-#include "world/map.h"
-#include "parsers/actor_parser.h"
-#include "actor/actor.h"
+#include <xml_utils.h>
+#include <map.h>
+#include <actor_parser.h>
+#include <actor.h>
+#include <teleport_action.h>
 
 namespace amarlon {
 
@@ -36,9 +37,34 @@ MapPtr MapParser::parse()
 
       parseActors();
     }
+
+    parseActions();
   }
 
   return _map;
+}
+
+void MapParser::parseActions()
+{
+  rapidxml::xml_node<>* onExitNode = _xml->first_node("OnExit");
+  if ( onExitNode != nullptr )
+  {
+    rapidxml::xml_node<>* directionNode = onExitNode->first_node("Direction");
+    while ( directionNode != nullptr )
+    {
+      Direction dir = static_cast<Direction>( getAttribute<int>(directionNode, "id") );
+      rapidxml::xml_node<>* teleportNode = directionNode->first_node("Teleport");
+      if ( teleportNode != nullptr )
+      {
+        MapId mapId = static_cast<MapId>( getAttribute<int>(teleportNode, "mapId") );
+        int x = getAttribute<int>(teleportNode, "x");
+        int y = getAttribute<int>(teleportNode, "y");
+        _map->_exitActions[dir] = std::make_shared<TeleportAction>(mapId, x, y);
+      }
+
+      directionNode = directionNode->next_sibling();
+    }
+  }
 }
 
 void MapParser::parseActors()

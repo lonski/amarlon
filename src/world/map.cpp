@@ -1,8 +1,8 @@
 #include "map.h"
 #include <iostream>
 #include <algorithm>
-#include "actor/actor.h"
-#include "utils/amarlon_except.h"
+#include <actor.h>
+#include <amarlon_except.h>
 
 namespace amarlon {
 
@@ -264,7 +264,7 @@ void Map::validateMapCoords(u32 x, u32 y)
   if (x >= _width || y >= _height)
     throw amarlon_exeption("Requested map coordinates beyond map borders!\n y=" +
                            std::to_string(y) + ", height="+std::to_string(_height) +
-                           " x="+std::to_string(x) + " width=" + std::to_string(_width)
+                           " x="+std::to_string(x) + " width=" + std::to_string(_width) + " mapId=" + std::to_string((int)_id)
                            );
 
   if (y >= _tiles.size())
@@ -273,7 +273,6 @@ void Map::validateMapCoords(u32 x, u32 y)
   if (x >= _tiles[y].size())
     throw amarlon_exeption("Tile not initalized!");
 }
-//~~~~~
 
 u32 Map::getWidth() const
 {
@@ -301,6 +300,15 @@ MapId Map::getId() const
 void Map::setId(const MapId &id)
 {
   _id = id;
+}
+
+void Map::onExit(Direction direction, ActorPtr exiter)
+{
+  auto dIter = _exitActions.find(direction);
+  if ( dIter != _exitActions.end() )
+  {
+    exiter->performAction( dIter->second );
+  }
 }
 
 ContainerPtr Map::getActorsContainer(u32 x, u32 y)

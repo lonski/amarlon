@@ -16,6 +16,7 @@ public:
 
   /**
    * @brief Moves actor for given coordinate difference. Check if path is blocked.
+   *        If move outside map borders, then Map::onExit is called with proper direction
    * @return True if path was not blocked, false otherwise
    */
   virtual bool perform(ActorPtr performer);
