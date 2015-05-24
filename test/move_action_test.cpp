@@ -26,15 +26,7 @@ public:
 TEST_F(MoveActionTest, actorWithoutMap)
 {
   ActorPtr orc = Actor::create(ActorType::Orc);
-  int x = orc->getX();
-  int y = orc->getY();
-
-  int dx(1);
-  int dy(-2);
-
-  EXPECT_TRUE(orc->performAction( std::make_shared<MoveAction>(dx, dy)));
-  EXPECT_EQ(orc->getX(), x+dx);
-  EXPECT_EQ(orc->getY(), y+dy);
+  EXPECT_FALSE(orc->performAction( std::make_shared<MoveAction>(1, 1)));
 }
 
 TEST_F(MoveActionTest, actorOnMap_notBlocked)
