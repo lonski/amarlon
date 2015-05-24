@@ -29,4 +29,12 @@ bool AttackAction::perform(ActorPtr performer)
   return attacked;
 }
 
+ActorActionUPtr AttackAction::clone()
+{
+  AttackActionUPtr cloned = std::make_unique<AttackAction>(_target);
+  cloned->_performer = _performer;
+
+  return std::move(cloned);
+}
+
 }

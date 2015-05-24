@@ -14,6 +14,7 @@ public:
   virtual ~TeleportAction();
 
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
 
 private:
   MapId _map;
@@ -24,7 +25,8 @@ private:
 
 };
 
-typedef std::shared_ptr<TeleportAction> TeleportActionPtr;
+typedef std::shared_ptr<TeleportAction> TeleportActionPtr;\
+typedef std::unique_ptr<TeleportAction> TeleportActionUPtr;
 
 }
 

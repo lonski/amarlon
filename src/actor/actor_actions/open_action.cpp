@@ -37,4 +37,10 @@ bool OpenAction::perform(ActorPtr performer)
   return opened;
 }
 
+ActorActionUPtr OpenAction::clone()
+{
+  OpenActionUPtr cloned = std::make_unique<OpenAction>(_toOpen);
+  return std::move(cloned);
+}
+
 }

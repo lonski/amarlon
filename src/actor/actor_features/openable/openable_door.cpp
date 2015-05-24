@@ -47,7 +47,7 @@ ActorFeaturePtr OpenableDoor::clone()
 {
   OpenableDoorPtr cloned( new OpenableDoor );
   cloned->setLockId( getLockId() );
-  isLocked() ? cloned->lock() : cloned->unlock();
+  cloned->_locked = isLocked();
 
   return cloned;
 }
@@ -69,7 +69,8 @@ bool OpenableDoor::lock()
 {
   bool r = false;
 
-  if (getOwner().lock()->getId() == ActorType::DoorClosed)
+  ActorPtr owner = getOwner().lock();
+  if (owner && owner->getId() == ActorType::DoorClosed)
   {
     r = Openable::lock();
   }

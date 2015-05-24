@@ -33,6 +33,12 @@ bool TeleportAction::perform(ActorPtr performer)
   return true;
 }
 
+ActorActionUPtr TeleportAction::clone()
+{
+  TeleportActionUPtr cloned = std::make_unique<TeleportAction>(_map, _x, _y);
+  return std::move(cloned);
+}
+
 void TeleportAction::removeFromCurrentMap(ActorPtr performer)
 {
   MapPtr currentMap = performer->getMap();

@@ -13,10 +13,14 @@ public:
   virtual ~OpenAction();
 
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
 
 private:
   ActorPtr _toOpen;
 };
+
+typedef std::shared_ptr<OpenAction> OpenActionPtr;
+typedef std::unique_ptr<OpenAction> OpenActionUPtr;
 
 }
 

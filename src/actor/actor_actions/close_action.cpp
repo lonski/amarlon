@@ -38,4 +38,10 @@ bool CloseAction::perform(ActorPtr performer)
   return closed;
 }
 
+ActorActionUPtr CloseAction::clone()
+{
+  CloseActionUPtr cloned = std::make_unique<CloseAction>(_toClose);
+  return std::move(cloned);
+}
+
 }

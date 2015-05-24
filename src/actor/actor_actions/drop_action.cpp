@@ -40,6 +40,14 @@ bool DropAction::perform(ActorPtr performer)
   return dropped;
 }
 
+ActorActionUPtr DropAction::clone()
+{
+  DropActionUPtr cloned = std::make_unique<DropAction>(_toDrop, _amount);
+  cloned->_performer = _performer;
+
+  return std::move(cloned);
+}
+
 void DropAction::dropOnMap(ActorPtr item)
 {
   MapPtr map = _performer->getMap();

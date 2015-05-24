@@ -62,6 +62,14 @@ bool MoveAction::perform(ActorPtr performer)
   return moved;
 }
 
+ActorActionUPtr MoveAction::clone()
+{
+  MoveActionUPtr cloned = std::make_unique<MoveAction>(_dx,_dy);
+  cloned->_performer = _performer;
+
+  return std::move(cloned);
+}
+
 bool MoveAction::patchIsBlocked()
 {
   bool blocked = false;  

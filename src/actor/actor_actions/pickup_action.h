@@ -26,6 +26,7 @@ public:
    *         no space left, then false.
    */
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
 
 private:
   ActorPtr _toPick;
@@ -37,6 +38,9 @@ private:
   bool pickUpAmount();
 
 };
+
+typedef std::shared_ptr<PickUpAction> PickUpActionPtr;
+typedef std::unique_ptr<PickUpAction> PickUpActionUPtr;
 
 }
 

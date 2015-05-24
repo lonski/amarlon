@@ -22,6 +22,7 @@ public:
   virtual ~EquipAction();
 
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
   EquipResult getResult() const;
 
 private:
@@ -35,6 +36,7 @@ private:
 };
 
 typedef std::shared_ptr<EquipAction> EquipActionPtr;
+typedef std::unique_ptr<EquipAction> EquipActionUPtr;
 
 }
 

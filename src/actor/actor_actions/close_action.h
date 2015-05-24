@@ -13,6 +13,7 @@ public:
   virtual ~CloseAction();
 
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
 
 private:
   ActorPtr _toClose;
@@ -20,6 +21,7 @@ private:
 };
 
 typedef std::shared_ptr<CloseAction> CloseActionPtr;
+typedef std::unique_ptr<CloseAction> CloseActionUPtr;
 
 }
 

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <actor.h>
 #include <amarlon_except.h>
+#include <actor_action.h>
 
 namespace amarlon {
 
@@ -15,7 +16,7 @@ Map::Map(u32 width, u32 height, MapId id)
   : _id(id)
   , _width(width)
   , _height(height)
-  , codMap(width, height)
+  , _codMap(width, height)
 {
   for (u32 y = 0; y < height; ++y)
   {
@@ -39,7 +40,7 @@ bool Map::isExplored(int x, int y)
 
 bool Map::isInFov(int x, int y)
 {
-  bool inFov = codMap.isInFov(x,y);
+  bool inFov = _codMap.isInFov(x,y);
 
   if (inFov) getTile(x,y).explored = true;
 
@@ -48,7 +49,7 @@ bool Map::isInFov(int x, int y)
 
 bool Map::isBlocked(int x, int y)
 {
-  bool terrianBlocks = !codMap.isWalkable(x,y);
+  bool terrianBlocks = !_codMap.isWalkable(x,y);
   bool actorBlocks = false;
 
   Tile& tile = getTile(x, y);
@@ -73,9 +74,9 @@ void Map::addActor(ActorPtr actor)
   if ( !tile.actors->add(actor) ) throw amarlon_exeption("Failed to add actor to tile!");
 
   //update transparency
-  if ( codMap.isTransparent(x,y) && !actor->isTransparent() )
+  if ( _codMap.isTransparent(x,y) && !actor->isTransparent() )
   {
-    codMap.setProperties(x,y, false, codMap.isWalkable(x,y));
+    _codMap.setProperties(x,y, false, _codMap.isWalkable(x,y));
   }
 
   actor->setMap( shared_from_this() );
@@ -103,13 +104,13 @@ std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool (amarlon:
   return r;
 }
 
-std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr )>* filterFun)
+std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)>* filterFun)
 {
   std::vector<ActorPtr> r;
 
-  for(auto tileRow : _tiles)
+  for(auto& tileRow : _tiles)
   {
-    for(auto tile : tileRow)
+    for(auto& tile : tileRow)
     {
       for (auto a : tile.actors->content() )
       {
@@ -181,15 +182,15 @@ void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
 
 void Map::updateActorCell(ActorPtr actor)
 {
-  codMap.setProperties(actor->getX(),
+  _codMap.setProperties(actor->getX(),
                        actor->getY(),
                        actor->isTransparent(),
-                       codMap.isWalkable(actor->getX(), actor->getY()));
+                       _codMap.isWalkable(actor->getX(), actor->getY()));
 }
 
 void Map::computeFov(int x, int y, int radius)
 {
-  codMap.computeFov(x,y,radius);
+  _codMap.computeFov(x,y,radius);
 }
 
 void Map::fill(std::string tilesStr)
@@ -212,7 +213,7 @@ void Map::fill(std::string tilesStr)
       bool walkable = Map::Tiles.isWalkable(tile.type);
       bool transparent = Map::Tiles.isTransparent(tile.type);
 
-      codMap.setProperties(x,y,transparent, walkable);
+      _codMap.setProperties(x,y,transparent, walkable);
 
       ++x;
     }
@@ -309,6 +310,21 @@ void Map::onExit(Direction direction, ActorPtr exiter)
   {
     exiter->performAction( dIter->second );
   }
+}
+
+MapUPtr Map::clone()
+{
+  MapUPtr cloned = std::make_unique<Map>(_width, _height);
+  cloned->_id = _id;
+  cloned->_codMap = _codMap;
+  cloned->_tiles = _tiles;
+
+  for ( auto pair : _exitActions )
+  {
+    cloned->_exitActions[ pair.first ] = ActorActionPtr{ std::move(pair.second->clone()) };
+  }
+
+  return std::move(cloned);
 }
 
 ContainerPtr Map::getActorsContainer(u32 x, u32 y)

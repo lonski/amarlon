@@ -21,6 +21,7 @@ public:
    * @return True if dropped successfully.
    */
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
 
 private:
   ActorPtr _toDrop;
@@ -32,6 +33,7 @@ private:
 };
 
 typedef std::shared_ptr<DropAction> DropActionPtr;
+typedef std::unique_ptr<DropAction> DropActionUPtr;
 
 }
 

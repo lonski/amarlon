@@ -1,6 +1,7 @@
 #ifndef ATTACK_ACTION_H
 #define ATTACK_ACTION_H
 
+#include <memory>
 #include <actor_action.h>
 
 namespace amarlon {
@@ -12,11 +13,15 @@ public:
     virtual ~AttackAction();
 
     virtual bool perform(ActorPtr performer);
+    virtual ActorActionUPtr clone();
 
 private:
     ActorPtr _target;
     ActorPtr _performer;
 };
+
+typedef std::shared_ptr<AttackAction> AttackActionPtr;
+typedef std::unique_ptr<AttackAction> AttackActionUPtr;
 
 }
 

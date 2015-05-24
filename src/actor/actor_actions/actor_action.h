@@ -6,7 +6,10 @@
 namespace amarlon{
 
 class Actor;
+class ActorAction;
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<ActorAction> ActorActionPtr;
+typedef std::unique_ptr<ActorAction> ActorActionUPtr;
 
 /**
  * @brief Generic operation that can be performed on any Actor (Player, Mob or Item)
@@ -18,9 +21,9 @@ public:
   virtual ~ActorAction() {}
 
   virtual bool perform(ActorPtr performer) = 0;
-};
+  virtual ActorActionUPtr clone() = 0;
 
-typedef std::shared_ptr<ActorAction> ActorActionPtr;
+};
 
 }
 

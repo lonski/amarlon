@@ -35,6 +35,14 @@ bool PickUpAction::perform(ActorPtr performer)
   return picked;
 }
 
+ActorActionUPtr PickUpAction::clone()
+{
+  PickUpActionUPtr cloned = std::make_unique<PickUpAction>(_toPick, _amount, _sourceContainer);
+  cloned->_performer = _performer;
+
+  return std::move(cloned);
+}
+
 bool PickUpAction::pickUpAmount()
 {
   bool picked = false;

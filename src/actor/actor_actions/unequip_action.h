@@ -23,6 +23,7 @@ public:
   virtual ~UnEquipAction();
 
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
   UnEquipResult getResult() const;
 
 private:
@@ -36,6 +37,7 @@ private:
 };
 
 typedef std::shared_ptr<UnEquipAction> UnEquipActionPtr;
+typedef std::unique_ptr<UnEquipAction> UnEquipActionUPtr;
 
 }
 

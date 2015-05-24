@@ -47,6 +47,15 @@ bool EquipAction::perform(ActorPtr performer)
   return _result == EquipResult::Ok;
 }
 
+ActorActionUPtr EquipAction::clone()
+{
+  EquipActionUPtr cloned = std::make_unique<EquipAction>(_toEquip);
+  cloned->_performer = _performer;
+  cloned->_result = _result;
+
+  return std::move(cloned);
+}
+
 ItemSlotType EquipAction::aquireItemSlotType()
 {
   ItemSlotType slot = ItemSlotType::Null;

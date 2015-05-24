@@ -51,6 +51,16 @@ bool UnEquipAction::perform(ActorPtr performer)
   return _result == UnEquipResult::Ok;
 }
 
+ActorActionUPtr UnEquipAction::clone()
+{
+  UnEquipActionUPtr cloned = std::make_unique<UnEquipAction>(_toUnEquip);
+  cloned->_slot = _slot;
+  cloned->_performer = _performer;
+  cloned->_result = _result;
+
+  return std::move(cloned);
+}
+
 void UnEquipAction::aquireItemSlotType()
 {
   if ( _toUnEquip )

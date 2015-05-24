@@ -19,8 +19,13 @@ typedef unsigned int u32;
 
 class Actor;
 class ActorAction;
-typedef std::shared_ptr<Container> ContainerPtr;
+class Map;
+
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
+typedef std::shared_ptr<Container> ContainerPtr;
+typedef std::shared_ptr<Map> MapPtr;
+typedef std::weak_ptr<Map> MapWPtr;
+typedef std::unique_ptr<Map> MapUPtr;
 
 struct Tile
 {
@@ -35,6 +40,22 @@ struct Tile
     : explored(false)
     , actors( new Container(999) )
   {}
+
+  Tile(const Tile& tile)
+  {
+    *this = tile;
+  }
+
+  Tile& operator=(const Tile& rhs)
+  {
+    if ( this != &rhs )
+    {
+      explored = rhs.explored;
+      type = rhs.type;
+      actors = std::dynamic_pointer_cast<Container>( rhs.actors->clone() );
+    }
+    return *this;
+  }
 };
 
 class Map : public std::enable_shared_from_this<Map>
@@ -49,6 +70,8 @@ public:
   Map(u32 width, u32 height, MapId id = MapId::Null);
   virtual ~Map();
 
+  virtual MapUPtr clone();
+
   virtual bool isExplored(int x, int y);
   virtual bool isInFov(int x, int y);
   virtual bool isBlocked(int x, int y);
@@ -59,7 +82,6 @@ public:
   virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
   virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun);
   virtual ContainerPtr getActorsContainer(u32 x, u32 y);
-
   virtual void performActionOnActors(std::function<void(ActorPtr)> func);
 
   virtual void render(TCODConsole* console);
@@ -86,18 +108,16 @@ private:
   MapId _id;
   u32 _width, _height;
   TileMatrix _tiles;
-  TCODMap codMap;
+  TCODMap _codMap;
   std::map<Direction, ActorActionPtr> _exitActions;
 
   Tile& getTile(u32 x, u32 y);
-  void validateMapCoords(u32 x, u32 y);
+  void dateMapCoords(u32 x, u32 y);
   void renderTile(u32 x, u32 y, TCODConsole *console);
   void renderActorsOnTile(u32 x, u32 y, TCODConsole *console);
+  void validateMapCoords(u32 x, u32 y);
 
 };
-
-typedef std::shared_ptr<Map> MapPtr;
-typedef std::weak_ptr<Map> MapWPtr;
 
 }
 #endif // MAP_H

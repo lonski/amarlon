@@ -1,6 +1,7 @@
 #ifndef MOVE_ACTION_H
 #define MOVE_ACTION_H
 
+#include <memory>
 #include <actor_action.h>
 
 namespace amarlon{
@@ -20,6 +21,7 @@ public:
    * @return True if path was not blocked, false otherwise
    */
   virtual bool perform(ActorPtr performer);
+  virtual ActorActionUPtr clone();
 
 private:
   int _dx;
@@ -31,6 +33,7 @@ private:
 };
 
 typedef std::shared_ptr<MoveAction> MoveActionPtr;
+typedef std::unique_ptr<MoveAction> MoveActionUPtr;
 
 }
 
