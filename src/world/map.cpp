@@ -1,5 +1,4 @@
 #include "map.h"
-#include <iostream>
 #include <algorithm>
 #include <actor.h>
 #include <amarlon_except.h>
@@ -26,7 +25,7 @@ Map::Map(u32 width, u32 height, MapId id)
       row.push_back(Tile());
     }
     _tiles.push_back(row);
-    }
+  }
 }
 
 Map::~Map()
@@ -221,6 +220,26 @@ void Map::fill(std::string tilesStr)
 
 }
 
+void Map::updateTiles()
+{
+  for ( u32 y = 0; y < _height; ++y )
+  {
+    for ( u32 x = 0; x < _width; ++x )
+    {
+      Tile& tile = getTile(x,y);
+      _codMap.setProperties(x,
+                            y,
+                            Map::Tiles.isTransparent(tile.type),
+                            Map::Tiles.isWalkable(tile.type));
+
+      for ( ActorPtr actor : tile.actors->content() )
+      {
+        updateActorCell(actor);
+      }
+    }
+  }
+}
+
 std::string Map::tilesToStr()
 {
   std::string str;
@@ -251,7 +270,6 @@ char Map::getChar(u32 x, u32 y)
   return Map::Tiles.getChar(getTile(x,y).type);
 }
 
-//===== Map getTile
 Tile& Map::getTile(u32 x, u32 y)
 {  
   validateMapCoords(x, y);
@@ -316,8 +334,8 @@ MapPtr Map::clone()
 {
   MapPtr cloned = std::make_unique<Map>(_width, _height);
   cloned->_id = _id;
-  cloned->_codMap = _codMap;
   cloned->_tiles = _tiles;
+  cloned->updateTiles();
 
   cloned->performActionOnActors( [cloned](ActorPtr a)
   {

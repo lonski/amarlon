@@ -86,6 +86,7 @@ private:
   void renderTile(u32 x, u32 y, TCODConsole *console);
   void renderActorsOnTile(u32 x, u32 y, TCODConsole *console);
   void validateMapCoords(u32 x, u32 y);
+  void updateTiles();
 
 };
 

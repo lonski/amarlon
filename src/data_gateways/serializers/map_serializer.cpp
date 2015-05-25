@@ -13,6 +13,7 @@ bool MapSerializer::serialize(MapPtr map)
    * TODO: at the momment theres is only tiles serialization
    * -> refactor the tile serializtion
    * -> implement actors serialization
+   * -> onExit actions serialization
    */
   bool serialized = false;
 
