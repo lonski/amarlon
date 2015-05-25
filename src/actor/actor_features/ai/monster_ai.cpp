@@ -43,7 +43,7 @@ bool MonsterAi::isEqual(ActorFeaturePtr rhs)
 }
 
 void MonsterAi::update(MapPtr map)
-{
+{  
   _map = map;
   if (getOwner().lock()->isAlive() && _map)
   {
@@ -80,10 +80,9 @@ void MonsterAi::huntPlayer()
     dx = (int)(round(dx/distance));
     dy = (int)(round(dy/distance));
 
-
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
     {      
-      monster->performAction( std::make_shared<MoveAction>(dx, dy) );
+      monster->performAction( std::make_shared<MoveAction>(dx, dy) );      
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
     {

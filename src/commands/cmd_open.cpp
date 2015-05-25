@@ -1,7 +1,6 @@
 #include "cmd_open.h"
 #include <iostream>
 #include <algorithm>
-#include <engine.h>
 #include <cmd_pick.h>
 #include <utils.h>
 #include <single_neighbour_selector.h>

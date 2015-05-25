@@ -312,12 +312,17 @@ void Map::onExit(Direction direction, ActorPtr exiter)
   }
 }
 
-MapUPtr Map::clone()
+MapPtr Map::clone()
 {
-  MapUPtr cloned = std::make_unique<Map>(_width, _height);
+  MapPtr cloned = std::make_unique<Map>(_width, _height);
   cloned->_id = _id;
   cloned->_codMap = _codMap;
   cloned->_tiles = _tiles;
+
+  cloned->performActionOnActors( [cloned](ActorPtr a)
+  {
+    a->setMap(cloned);
+  });
 
   for ( auto pair : _exitActions )
   {
@@ -334,13 +339,14 @@ ContainerPtr Map::getActorsContainer(u32 x, u32 y)
 
 void Map::performActionOnActors(std::function<void(ActorPtr )> func)
 {
-  std::for_each(_tiles.begin(), _tiles.end(), [&func](TileRow& tr)
+  for(auto& tileRow : _tiles)
   {
-    std::for_each(tr.begin(), tr.end(), [&func](Tile& tile)
+    for(auto& tile : tileRow)
     {
       tile.actors->performActionOnActors( func );
-    });
-  });
+    }
+  }
+
 }
 
 }

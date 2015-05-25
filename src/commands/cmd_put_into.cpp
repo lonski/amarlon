@@ -1,14 +1,13 @@
 #include "cmd_put_into.h"
-#include <iostream>
-#include "engine.h"
-#include "world/map.h"
-#include "actor/actor.h"
-#include "utils/messenger.h"
-#include "utils/utils.h"
-#include "utils/direction_selector.h"
-#include "utils/target_selector/single_neighbour_selector.h"
-#include "gui/window/pick_up_window.h"
-#include "gui/message_box.h"
+#include <engine.h>
+#include <map.h>
+#include <actor.h>
+#include <messenger.h>
+#include <utils.h>
+#include <direction_selector.h>
+#include <single_neighbour_selector.h>
+#include <pick_up_window.h>
+#include <message_box.h>
 
 namespace amarlon {
 

@@ -40,7 +40,7 @@ public:
   Map(u32 width, u32 height, MapId id = MapId::Null);
   virtual ~Map();
 
-  virtual MapUPtr clone();
+  virtual MapPtr clone();
 
   virtual bool isExplored(int x, int y);
   virtual bool isInFov(int x, int y);

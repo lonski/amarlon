@@ -1,5 +1,4 @@
 #include "cmd_fullscreen.h"
-#include "engine.h"
 
 namespace amarlon {
 

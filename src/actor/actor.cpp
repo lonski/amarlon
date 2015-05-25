@@ -39,17 +39,6 @@ Actor::~Actor()
 {
 }
 
-//void Actor::move(int dx, int dy)
-//{
-//  MapPtr map = _map.lock();
-//  if ( map ) map->removeActor( shared_from_this() );
-
-//  _x += dx;
-//  _y += dy;
-
-//  if ( map ) map->addActor( shared_from_this() );
-//}
-
 void Actor::morph(ActorType newType)
 {
   _id = newType;

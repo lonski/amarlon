@@ -16,7 +16,7 @@ std::vector<ActorPtr> SingleNeighbourSelector::select(std::function<bool (amarlo
 {
   Engine::instance().gui().setStatusMessage( _selectionMessage );
   TCODConsole::root->flush();
-  MapPtr map = Engine::instance().currentMap();
+  MapPtr map = Actor::Player->getMap();
   ActorPtr player = Actor::Player;
 
   int dx(0), dy(0);
@@ -27,6 +27,7 @@ std::vector<ActorPtr> SingleNeighbourSelector::select(std::function<bool (amarlo
   Engine::instance().gui().clearStatusMessage();
   Engine::instance().render();
 
+  assert( map != nullptr );
   return map->getActors(player->getX()+dx, player->getY()+dy, filterFun);
 }
 

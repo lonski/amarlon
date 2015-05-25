@@ -2,10 +2,11 @@
 #define ENGINE_H
 
 #include <libtcod.hpp>
-#include "utils/singleton.h"
-#include "utils/colored_string.h"
-#include "command_executor.h"
-#include "gui/window/window_manager.h"
+#include <singleton.h>
+#include <colored_string.h>
+#include <command_executor.h>
+#include <window_manager.h>
+#include <world.h>
 
 namespace amarlon {
 
@@ -45,15 +46,14 @@ public:
   gui::Gui& gui() const;
   gui::WindowManager& windowManager() const;
 
-  MapPtr currentMap() const;
-  void setCurrentMap(MapPtr currentMap);
+  World& getWorld();
 
-private:
-  MapPtr _currentMap;
+private:  
   gui::GuiPtr _gui;
   CommandExecutorPtr _cmdExecutor;
   gui::WindowManagerPtr _windowManager;
   Configuration* _config;
+  World _world;
 
   void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();

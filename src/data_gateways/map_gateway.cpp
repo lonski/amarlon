@@ -21,11 +21,12 @@ MapGateway::MapGateway()
 
 MapPtr MapGateway::fetch(MapId id)
 {
-  MapPtr map(nullptr);
+  MapPtr map;
 
-  if (_maps.count(id))
+  auto mIter = _maps.find(id);
+  if ( mIter != _maps.end() )
   {
-    map = _maps[id];
+    map = mIter->second->clone();
   }
 
   return map;

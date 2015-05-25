@@ -49,7 +49,10 @@ std::vector<ActorPtr> SingleRangeSelector::select(std::function<bool (amarlon::A
         if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER ) accepted = true;
     }
 
-    std::vector<ActorPtr> vec = Engine::instance().currentMap()->getActors(_x+_dx, _y+_dy, filterFun);
+    MapPtr map = Actor::Player->getMap();
+    assert(map != nullptr);
+    std::vector<ActorPtr> vec = map->getActors(_x+_dx, _y+_dy, filterFun);
+
     return accepted ? vec
                     : std::vector<ActorPtr>();
 }

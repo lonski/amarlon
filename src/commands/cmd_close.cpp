@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <actor.h>
 #include <map.h>
-#include <engine.h>
 #include <utils.h>
 #include <single_neighbour_selector.h>
 #include <message_box.h>

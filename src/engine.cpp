@@ -46,10 +46,10 @@ void Engine::init(Configuration* cfg)
 
   Messenger::message()->setGui(_gui.get());
 
-  setCurrentMap( Map::Gateway.fetch(MapId::GameStart) );
-
   Actor::Player = Actor::create(ActorType::Player, 42, 28);
-  currentMap()->addActor( Actor::Player );
+
+  getWorld().changeMap( MapId::GameStart );
+  getWorld().getCurrentMap()->addActor( Actor::Player );
 }
 
 void Engine::update()
@@ -60,10 +60,12 @@ void Engine::update()
 void Engine::render()
 {
   TCODConsole::root->clear();
-  if (_currentMap != nullptr)
+  MapPtr map = getWorld().getCurrentMap();
+
+  if ( map )
   {
-    _currentMap->computeFov(Actor::Player->getX(), Actor::Player->getY(), FovRadius);
-    _currentMap->render(TCODConsole::root);
+    map->computeFov(Actor::Player->getX(), Actor::Player->getY(), FovRadius);
+    map->render(TCODConsole::root);
   }
 
   if (_gui)
@@ -83,29 +85,21 @@ void Engine::render()
 
 void Engine::updateAis()
 {
-  if (_currentMap != nullptr)
-  {
-    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};
-    std::vector<ActorPtr> ais = currentMap()->getActors( &filter );
-
-    std::for_each( ais.begin(), ais.end(), [&](ActorPtr a){a->getFeature<Ai>()->update( currentMap() );});
+  MapPtr map = getWorld().getCurrentMap();
+  if ( map )
+  {    
+    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};    
+    auto ais = map->getActors( &filter );
+    for ( ActorPtr actor : ais )
+    {
+      actor->getFeature<Ai>()->update( map );
+    }
   }
 }
 
 void Engine::processKey(TCOD_key_t &key)
 {
   _cmdExecutor->execute(key);
-}
-
-MapPtr Engine::currentMap() const
-{
-  assert(_currentMap != nullptr);
-  return _currentMap;
-}
-
-void Engine::setCurrentMap(MapPtr currentMap)
-{
-  _currentMap = currentMap;
 }
 
 gui::Gui& Engine::gui() const
@@ -118,33 +112,38 @@ gui::WindowManager& Engine::windowManager() const
   return *_windowManager;
 }
 
+World& Engine::getWorld()
+{
+  return _world;
+}
+
 std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
 {
-  std::function<bool(amarlon::ActorPtr)> filterFun = [&](ActorPtr a) -> bool
-  {
-    return a != Actor::Player;
-  };
-  std::vector<ActorPtr> actorsOnTile = _currentMap->getActors(Actor::Player->getX(),
-    Actor::Player->getY(), &filterFun);
-
-  TCODColor itemViewColor = TCODColor::darkLime;
   std::vector< ColoredString > items;
+  MapPtr map = getWorld().getCurrentMap();
 
-  std::for_each(actorsOnTile.begin(), actorsOnTile.end(), [&](ActorPtr a)
+  if ( map )
   {
-    int amount = 1;
-    if ( a->hasFeature<Pickable>() )
+    std::function<bool(amarlon::ActorPtr)> filterFun = [&](ActorPtr a) -> bool
     {
-      amount = a->getFeature<Pickable>()->getAmount();
+      return a != Actor::Player;
+    };
+
+    std::vector<ActorPtr> actorsOnTile = map->getActors(Actor::Player->getX(), Actor::Player->getY(), &filterFun);
+
+    for ( ActorPtr actor : actorsOnTile )
+    {
+      std::string msg = actor->getName();
+
+      PickablePtr pickable = actor->getFeature<Pickable>();
+      if ( pickable && pickable->getAmount() > 1 )
+      {
+        msg = msg + " (" + std::to_string(pickable->getAmount()) + ")";
+      }
+
+      items.push_back( ColoredString( msg, TCODColor::darkLime ) );
     }
-
-    std::string entryMsg = a->getName();
-
-    if (amount > 1)
-      entryMsg = entryMsg + " (" + std::to_string(amount) + ")";
-
-    items.push_back( ColoredString( entryMsg, itemViewColor ) );
-  });
+  }
 
   return items;
 }

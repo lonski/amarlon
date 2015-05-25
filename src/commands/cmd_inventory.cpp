@@ -2,8 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <memory>
-#include "engine.h"
-#include "gui/window/inventory_window/inventory_window.h"
+#include <engine.h>
+#include <inventory_window.h>
 
 namespace amarlon {
 

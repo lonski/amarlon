@@ -7,7 +7,6 @@
 #include <utils.h>
 #include <messenger.h>
 #include <amarlon_except.h>
-#include <engine.h>
 #include <map.h>
 #include <destroyable.h>
 

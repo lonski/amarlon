@@ -19,14 +19,14 @@ TeleportAction::~TeleportAction()
 bool TeleportAction::perform(ActorPtr performer)
 {
   removeFromCurrentMap(performer);
-
-  MapPtr newMap = Map::Gateway.fetch( _map );
   performer->setPosition(_x, _y);
+
+  MapPtr newMap = Engine::instance().getWorld().getMap( _map );
   newMap->addActor( performer );
 
   if ( performer == Actor::Player )
   {
-    Engine::instance().setCurrentMap( newMap );
+    Engine::instance().getWorld().changeMap( _map );
     Engine::instance().render();
   }
 

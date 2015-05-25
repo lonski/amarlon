@@ -1,7 +1,6 @@
 #include "cmd_move.h"
 #include <utils.h>
 #include <map.h>
-#include <engine.h>
 #include <move_action.h>
 #include <attack_action.h>
 
@@ -31,17 +30,27 @@ void CmdMoveOrAttack::execute()
 
 ActorPtr CmdMoveOrAttack::getActorToAttack()
 {
-  int targetX = Actor::Player->getX() + _dx;
-  int targetY = Actor::Player->getY() + _dy;
-  MapPtr map = Engine::instance().currentMap();
+  ActorPtr toAttack;
+  MapPtr map = Actor::Player->getMap();
 
-  std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
+  if ( map )
   {
-    return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
-  };
-  std::vector<ActorPtr> toAttack = map->getActors(targetX, targetY, &filterFun);
+    int targetX = Actor::Player->getX() + _dx;
+    int targetY = Actor::Player->getY() + _dy;
 
-  return toAttack.empty() ? ActorPtr() : toAttack.front();
+    std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
+    {
+      return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
+    };
+
+    auto targets = map->getActors(targetX, targetY, &filterFun);
+    if ( !targets.empty() )
+    {
+      toAttack = targets.front();
+    }
+  }
+
+  return toAttack;
 }
 
 void CmdMoveOrAttack::setDirection(int dx, int dy)
