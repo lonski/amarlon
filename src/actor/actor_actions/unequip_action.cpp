@@ -5,6 +5,7 @@ namespace amarlon {
 
 UnEquipAction::UnEquipAction(ActorPtr toUnEquip)
   : _toUnEquip(toUnEquip)
+  , _result(UnEquipResult::Nok)
   , _slot(ItemSlotType::Null)
 {
 }
