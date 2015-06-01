@@ -85,6 +85,7 @@ set(HEADER_FILES
     actor/actor_actions/equip_action.h
     actor/actor_actions/unequip_action.h
     actor/actor_actions/teleport_action.h
+    actor/actor_actions/use_action.h
     world/directions.h
     world/world.h
 )
@@ -154,6 +155,7 @@ set(SOURCE_FILES
     actor/actor_actions/equip_action.cpp
     actor/actor_actions/unequip_action.cpp
     actor/actor_actions/teleport_action.cpp
+    actor/actor_actions/use_action.cpp
     world/world.cpp
 )
 

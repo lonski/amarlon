@@ -5,6 +5,7 @@
 #include <engine.h>
 #include <message_box.h>
 #include <menu_window.h>
+#include <use_action.h>
 
 namespace amarlon {
 
@@ -23,20 +24,13 @@ void CmdUse::execute()
   Engine::instance().render();
 
   if (item != nullptr)
-  {
-    PickablePtr toUse = item->getFeature<Pickable>();
-    Effect* effect = toUse->getEffect();
-
+  {    
+    Effect* effect = item->getFeature<Pickable>()->getEffect();
     TargetSelector* tSelector = TargetSelector::create(effect->getTargetType());
+
     if ( tSelector != nullptr )
     {
-      std::vector<ActorPtr> targets = tSelector->select();
-
-      if ( toUse->use( Actor::Player, targets ) && toUse->getUsesCount() == 0)
-      {
-        ActorPtr toRemove = item->getFeature<Pickable>()->spilt(1);
-        Actor::Player->getFeature<Container>()->remove( toRemove );
-      }
+      Actor::Player->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
     }
   }
   else if ( item )
