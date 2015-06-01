@@ -59,7 +59,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/direction_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/amarlon_except.h
     ${PROJECT_SOURCE_DIR}/src/utils/messenger.h
-    ${PROJECT_SOURCE_DIR}/src/utils/selector_type.h
+    ${PROJECT_SOURCE_DIR}/src/utils/target_type.h
     ${PROJECT_SOURCE_DIR}/src/utils/utils.h
     ${PROJECT_SOURCE_DIR}/src/utils/xml_utils.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/executor_selector.h

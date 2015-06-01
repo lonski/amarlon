@@ -19,6 +19,8 @@ public:
 
   void setHealAmount(int amount);
 
+  virtual TargetType getTargetType() const;
+
 private:
   int _healAmount;
 };

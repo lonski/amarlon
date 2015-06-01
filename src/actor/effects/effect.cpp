@@ -1,8 +1,8 @@
 #include "effect.h"
-#include "lock_effect.h"
-#include "self_heal_effect.h"
-#include "amarlon_except.h"
-#include "target_selector/target_selector.h"
+#include <lock_effect.h>
+#include <self_heal_effect.h>
+#include <target_selector.h>
+#include <cassert>
 
 namespace amarlon {
 
@@ -29,7 +29,7 @@ Effect *Effect::create(EffectType type)
   return e;
 }
 
-Effect *Effect::create(const EffectDescription &dsc)
+Effect* Effect::create(const EffectDescription &dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   Effect* e = Effect::create(dsc.type);
@@ -40,12 +40,6 @@ Effect *Effect::create(const EffectDescription &dsc)
   }
 
   return e;
-}
-
-TargetSelector& Effect::getTargetSelector()
-{
-  if ( !_targetSelector ) throw amarlon_exeption("Target selector not set in effect!");
-  return *_targetSelector.get();
 }
 
 int Effect::getUsesCount() const

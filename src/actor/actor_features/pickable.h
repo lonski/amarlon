@@ -38,7 +38,7 @@ public:
   void setAmount(int getAmount);
 
   bool isStackable() const;
-  Effect *getEffect() const;
+  Effect* getEffect() const;
   void setEffect(Effect *getEffect);
 
   ItemSlotType getItemSlot() const;

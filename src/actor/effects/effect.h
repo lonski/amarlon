@@ -3,14 +3,13 @@
 
 #include <memory>
 #include <vector>
-#include "effect_type.h"
-#include "data_gateways/actor_descriptions.h"
+#include <effect_type.h>
+#include <actor_descriptions.h>
+#include <target_type.h>
 
 namespace amarlon {
 
 class Actor;
-class TargetSelector;
-typedef std::unique_ptr<TargetSelector> TargetSelectorUPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 
 class Effect
@@ -28,12 +27,11 @@ public:
   virtual void load(const EffectDescription& dsc) = 0;
   virtual EffectDescription save() = 0;
 
-  virtual TargetSelector& getTargetSelector();
+  virtual TargetType getTargetType() const = 0;
   virtual int getUsesCount() const;
 
 protected:
   int _usesCount;
-  TargetSelectorUPtr _targetSelector;
 
 };
 

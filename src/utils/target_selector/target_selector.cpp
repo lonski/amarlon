@@ -9,14 +9,14 @@ TargetSelector::TargetSelector(const std::string &selectionMessage)
 {
 }
 
-TargetSelector *TargetSelector::create(SelectorType type)
+TargetSelector* TargetSelector::create(TargetType type)
 {
   TargetSelector* ts = nullptr;
 
   switch(type)
   {
-    case SelectorType::Executor: ts = new ExecutorSelector; break;
-    case SelectorType::SingleNeighbour: ts = new SingleNeighbourSelector; break;
+    case TargetType::SELF: ts = new ExecutorSelector; break;
+    case TargetType::SINGLE_NEIGHBOUR: ts = new SingleNeighbourSelector; break;
     default:;
   }
 

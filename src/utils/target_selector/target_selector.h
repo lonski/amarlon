@@ -5,7 +5,7 @@
 #include <string>
 #include <functional>
 #include <memory>
-#include "utils/selector_type.h"
+#include <target_type.h>
 
 namespace amarlon {
 
@@ -19,7 +19,7 @@ public:
   TargetSelector(const std::string& selectionMessage = "");
   virtual ~TargetSelector() {}
 
-  static TargetSelector* create(SelectorType type);
+  static TargetSelector* create(TargetType type);
 
   /**
    * @brief set the function wchih will be called each time, target selector updates

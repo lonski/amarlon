@@ -64,7 +64,7 @@ set(HEADER_FILES
     utils/colored_string.h
     utils/direction_selector.h
     utils/messenger.h
-    utils/selector_type.h
+    utils/target_type.h
     utils/utils.h
     utils/configuration.h
     utils/xml_utils.h

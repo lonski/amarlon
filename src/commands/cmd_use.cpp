@@ -1,14 +1,9 @@
 #include "cmd_use.h"
-#include <functional>
-#include "utils/selector_type.h"
-#include "utils/target_selector/target_selector.h"
-#include "utils/direction_selector.h"
-#include "utils/messenger.h"
-#include "actor/effects/effect.h"
-#include "engine.h"
-#include "gui/gui.h"
-#include "gui/widgets/alabel_menu_item.h"
-#include "gui/message_box.h"
+#include <target_type.h>
+#include <target_selector.h>
+#include <effect.h>
+#include <engine.h>
+#include <message_box.h>
 #include <menu_window.h>
 
 namespace amarlon {
@@ -25,20 +20,23 @@ bool CmdUse::accept(TCOD_key_t &key)
 void CmdUse::execute()
 {  
   ActorPtr item = acquireItemToUse();
-
   Engine::instance().render();
 
-  if (item != nullptr && item->getFeature<Pickable>()->getEffect() != nullptr)
+  if (item != nullptr)
   {
-    TargetSelector& tSelector = item->getFeature<Pickable>()->getEffect()->getTargetSelector();
-
-    std::vector<ActorPtr> targets = tSelector.select();
     PickablePtr toUse = item->getFeature<Pickable>();
+    Effect* effect = toUse->getEffect();
 
-    if ( toUse->use( Actor::Player, targets ) && toUse->getUsesCount() == 0)
+    TargetSelector* tSelector = TargetSelector::create(effect->getTargetType());
+    if ( tSelector != nullptr )
     {
-      ActorPtr toRemove = item->getFeature<Pickable>()->spilt(1);
-      Actor::Player->getFeature<Container>()->remove( toRemove );
+      std::vector<ActorPtr> targets = tSelector->select();
+
+      if ( toUse->use( Actor::Player, targets ) && toUse->getUsesCount() == 0)
+      {
+        ActorPtr toRemove = item->getFeature<Pickable>()->spilt(1);
+        Actor::Player->getFeature<Container>()->remove( toRemove );
+      }
     }
   }
   else if ( item )
@@ -50,7 +48,7 @@ void CmdUse::execute()
 
 ActorPtr CmdUse::acquireItemToUse()
 {
-  ActorPtr item ;
+  ActorPtr item;
 
   gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
                    window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);

@@ -1,17 +1,14 @@
 #include "lock_effect.h"
-#include "actor/actor.h"
-#include "gui/gui.h"
-#include "utils/utils.h"
-#include "utils/target_selector/single_neighbour_selector.h"
-#include "utils/messenger.h"
-#include "gui/message_box.h"
+#include <actor.h>
+#include <gui.h>
+#include <utils.h>
+#include <messenger.h>
 
 namespace amarlon {
 
 LockEffect::LockEffect()
   : _lockId(0)
 {
-  _targetSelector.reset( new SingleNeighbourSelector );
 }
 
 Effect *LockEffect::clone()
@@ -49,6 +46,11 @@ EffectDescription LockEffect::save()
   dsc.uses = _usesCount;
 
   return dsc;
+}
+
+TargetType LockEffect::getTargetType() const
+{
+  return TargetType::SINGLE_NEIGHBOUR;
 }
 
 bool LockEffect::apply(ActorPtr executor, std::vector<ActorPtr > targets)

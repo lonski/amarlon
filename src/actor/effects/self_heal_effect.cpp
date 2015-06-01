@@ -9,7 +9,6 @@ namespace amarlon {
 SelfHealEffect::SelfHealEffect()
   : _healAmount(0)
 {
-  _targetSelector.reset( new ExecutorSelector );
 }
 
 bool SelfHealEffect::apply(ActorPtr executor, std::vector<ActorPtr >)
@@ -68,6 +67,11 @@ bool SelfHealEffect::isEqual(Effect *rhs)
 void SelfHealEffect::setHealAmount(int amount)
 {
   _healAmount = amount;
+}
+
+TargetType SelfHealEffect::getTargetType() const
+{
+  return TargetType::SELF;
 }
 
 }
