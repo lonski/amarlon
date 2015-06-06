@@ -19,7 +19,7 @@ bool CmdUse::accept(TCOD_key_t &key)
 }
 
 void CmdUse::execute()
-{  
+{
   ActorPtr item = acquireItemToUse();
   Engine::instance().render();
 

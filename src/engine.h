@@ -13,6 +13,7 @@ namespace amarlon {
 class Configuration;
 class Map;
 class Actor;
+class GameTimer;
 
 typedef std::shared_ptr<Map> MapPtr;
 
@@ -45,6 +46,7 @@ public:
 
   gui::Gui& gui() const;
   gui::WindowManager& windowManager() const;
+  GameTimer& timer();
 
   World& getWorld();
 
@@ -54,8 +56,8 @@ private:
   gui::WindowManagerPtr _windowManager;
   Configuration* _config;
   World _world;
+  GameTimer* _timer;
 
-  void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();
 
 };

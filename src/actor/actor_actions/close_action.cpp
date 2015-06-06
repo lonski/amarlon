@@ -14,7 +14,7 @@ CloseAction::~CloseAction()
 {
 }
 
-bool CloseAction::perform(ActorPtr performer)
+bool CloseAction::run(ActorPtr performer)
 {
   bool closed = false;
 

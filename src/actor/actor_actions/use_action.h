@@ -13,7 +13,7 @@ public:
     UseAction(std::vector<ActorPtr> targets, ActorPtr toUse);
     virtual ~UseAction();
 
-    virtual bool perform(ActorPtr performer);
+    virtual bool run(ActorPtr performer);
     virtual ActorActionUPtr clone();
 
 private:

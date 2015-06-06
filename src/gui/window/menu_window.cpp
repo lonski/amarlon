@@ -1,4 +1,5 @@
 #include "menu_window.h"
+#include <game_timer.h>
 
 namespace amarlon { namespace gui {
 
@@ -10,6 +11,7 @@ MenuWindow::MenuWindow()
 
 AWindow& MenuWindow::show()
 {
+  _visible = true;
   TCODConsole& console = *TCODConsole::root;
   TCOD_key_t key;
 
@@ -51,6 +53,7 @@ AWindow& MenuWindow::show()
     _menu->deselect();
   }
 
+  _visible = false;
   return *this;
 }
 

@@ -75,6 +75,7 @@ set(HEADER_FILES
     world/tile.h
     command_executor.h
     engine.h
+    game_timer.h
     actor/actor_actions/actor_action.h
     actor/actor_actions/move_action.h
     actor/actor_actions/attack_action.h
@@ -145,6 +146,7 @@ set(SOURCE_FILES
     world/tile.cpp
     command_executor.cpp
     engine.cpp
+    game_timer.cpp
     main.cpp
     actor/actor_actions/move_action.cpp
     actor/actor_actions/attack_action.cpp

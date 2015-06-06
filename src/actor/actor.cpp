@@ -22,8 +22,9 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _x(x)
   , _y(y)
   , _map(map)
-  , _instanceId( ++Actor::InstanceCounter )
+  , _instanceId( ++Actor::InstanceCounter )  
 {
+  _symbol = Actor::DB.getChar(_id);
 }
 
 void Actor::init()
@@ -42,7 +43,7 @@ Actor::~Actor()
 void Actor::morph(ActorType newType)
 {
   _id = newType;
-
+  _symbol = Actor::DB.getChar(_id);
   _features.clear();
   _features = Actor::DB.getAllFeatures(_id);
   for (auto f : _features) f.second->setOwner( shared_from_this() );
@@ -167,7 +168,12 @@ TCODColor Actor::getColor() const
 
 unsigned char Actor::getChar() const
 {
-  return Actor::DB.getChar(_id);;
+  return _symbol;
+}
+
+void Actor::setChar(unsigned char symbol)
+{
+  _symbol = symbol;
 }
 
 ActorFeaturePtr Actor::getFeature(ActorFeature::Type afType) const
@@ -210,7 +216,38 @@ unsigned Actor::getInstanceId() const
 
 bool Actor::performAction(ActorActionPtr action)
 {
-  return action ? action->perform( shared_from_this() ) : false;
+  return action ? action->run( shared_from_this() ) : false;
+}
+
+bool Actor::runAction(ActorActionPtr action)
+{
+  if ( !_currentAction && action )
+  {
+    if ( action->run(shared_from_this()) )
+    {
+      _currentAction = action;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+void Actor::tick()
+{
+  if ( _currentAction )
+  {
+    _currentAction->tick();
+    if ( !_currentAction->isRunning() )
+    {
+      _currentAction = nullptr;
+    }
+  }
+  else if ( hasFeature<Ai>() )
+  {
+    AiPtr ai = getFeature<Ai>();
+    ai->update( getMap() );
+  }
 }
 
 }

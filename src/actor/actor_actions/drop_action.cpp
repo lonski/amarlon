@@ -15,7 +15,7 @@ DropAction::~DropAction()
 {
 }
 
-bool DropAction::perform(ActorPtr performer)
+bool DropAction::run(ActorPtr performer)
 {
   bool dropped = false;
 

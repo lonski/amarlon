@@ -19,6 +19,7 @@ AWindow& TextWindow::setDefaults()
 
 AWindow& TextWindow::show()
 {
+  _visible = true;
   TCOD_key_t key;
   key.vk = TCODK_NONE;
 
@@ -36,6 +37,7 @@ AWindow& TextWindow::show()
     handleKey(key);
   }
 
+  _visible = false;
   return *this;
 }
 

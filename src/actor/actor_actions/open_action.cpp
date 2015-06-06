@@ -13,7 +13,7 @@ OpenAction::~OpenAction()
 {
 }
 
-bool OpenAction::perform(ActorPtr performer)
+bool OpenAction::run(ActorPtr performer)
 {
   bool opened = false;
 

@@ -45,6 +45,7 @@ void PickUpWindow::init()
 
 AWindow& PickUpWindow::show()
 {
+  _visible = true;
   if ( _picker && _container)
   {
     fillMenuWithItems();
@@ -91,7 +92,7 @@ AWindow& PickUpWindow::show()
       }
     }
   }
-
+  _visible = false;
   return *this;
 }
 

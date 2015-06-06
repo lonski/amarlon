@@ -25,6 +25,8 @@ enum class ActorType
   LinenClothes = 17,
   LeatherBoots = 18,
   GoldCoin = 22,
+  BlackAle = 23,
+  Animation = 24,
   End
 };
 

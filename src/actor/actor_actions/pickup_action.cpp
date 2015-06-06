@@ -14,7 +14,7 @@ PickUpAction::~PickUpAction()
 {
 }
 
-bool PickUpAction::perform(ActorPtr performer)
+bool PickUpAction::run(ActorPtr performer)
 {
   bool picked = false;
   _performer = performer;

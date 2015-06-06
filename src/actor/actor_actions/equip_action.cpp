@@ -14,7 +14,7 @@ EquipAction::~EquipAction()
 {
 }
 
-bool EquipAction::perform(ActorPtr performer)
+bool EquipAction::run(ActorPtr performer)
 {
   _performer = performer;
   _result = EquipResult::Nok;

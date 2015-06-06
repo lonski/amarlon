@@ -21,7 +21,7 @@ public:
   EquipAction(ActorPtr toEquip);
   virtual ~EquipAction();
 
-  virtual bool perform(ActorPtr performer);
+  virtual bool run(ActorPtr performer);
   virtual ActorActionUPtr clone();
   EquipResult getResult() const;
 

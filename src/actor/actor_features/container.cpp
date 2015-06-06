@@ -170,7 +170,10 @@ size_t Container::size() const
 
 void Container::performActionOnActors(std::function<void(ActorPtr)> fun)
 {
-  std::for_each(_inventory.begin(), _inventory.end(), fun);
+  for ( auto a : _inventory )
+  {
+    if ( a ) fun(a);
+  }
 }
 
 void Container::sort(std::function<bool(ActorPtr, ActorPtr)> pred)

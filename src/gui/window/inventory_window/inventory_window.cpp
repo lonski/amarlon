@@ -45,6 +45,7 @@ void InventoryWindow::render(TCODConsole& console)
 
 AWindow& InventoryWindow::show()
 {
+  _visible = true;
   _bodyMgr->fillBodySlots();
   _bagMgr->fillBag();
 
@@ -63,6 +64,7 @@ AWindow& InventoryWindow::show()
       break;
   }
 
+  _visible = false;
   return *this;
 }
 

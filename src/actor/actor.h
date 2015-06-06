@@ -54,6 +54,8 @@ public:
    */
   ActorType getId() const;
   unsigned char getChar() const;
+  void setChar(unsigned char symbol);
+
   TCODColor getColor() const;
   std::string getName() const;
 
@@ -93,14 +95,18 @@ public:
   unsigned getInstanceId() const;
 
   bool performAction(ActorActionPtr action);
+  bool runAction(ActorActionPtr action);
+  void tick();
 
 private:
   ActorType _id;
   int _x, _y;
   MapWPtr _map;
   unsigned _instanceId;
+  unsigned char _symbol;
 
   FeatureMap _features;
+  ActorActionPtr _currentAction;
 
   Actor(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
 

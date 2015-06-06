@@ -82,20 +82,20 @@ void MonsterAi::huntPlayer()
 
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
     {      
-      monster->performAction( std::make_shared<MoveAction>(dx, dy) );      
+      monster->runAction( std::make_shared<MoveAction>(dx, dy) );
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
     {
-      monster->performAction( std::make_shared<MoveAction>(stepDx, 0) );
+      monster->runAction( std::make_shared<MoveAction>(stepDx, 0) );
     }
     else if ( !_map->isBlocked(_cX, _cY+stepDy) )
     {
-      monster->performAction( std::make_shared<MoveAction>(0, stepDy) );
+      monster->runAction( std::make_shared<MoveAction>(0, stepDy) );
     }
   }
   else if ( getOwner().lock()->hasFeature<Fighter>() )
   {
-    monster->performAction( std::make_shared<AttackAction>(Actor::Player) );
+    monster->runAction( std::make_shared<AttackAction>(Actor::Player) );
   }
 }
 

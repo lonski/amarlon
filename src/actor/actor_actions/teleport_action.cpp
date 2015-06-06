@@ -16,7 +16,7 @@ TeleportAction::~TeleportAction()
 {
 }
 
-bool TeleportAction::perform(ActorPtr performer)
+bool TeleportAction::run(ActorPtr performer)
 {
   removeFromCurrentMap(performer);
   performer->setPosition(_x, _y);

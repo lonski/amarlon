@@ -20,7 +20,7 @@ UnEquipAction::~UnEquipAction()
 {
 }
 
-bool UnEquipAction::perform(ActorPtr performer)
+bool UnEquipAction::run(ActorPtr performer)
 {
   _result = UnEquipResult::Nok;
   _performer = performer;

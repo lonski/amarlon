@@ -5,6 +5,8 @@
 #include <gui.h>
 #include <utils/configuration.h>
 #include <utils/messenger.h>
+#include <game_timer.h>
+#include <window_manager.h>
 
 
 namespace amarlon {
@@ -28,6 +30,7 @@ Engine::~Engine()
 
 void Engine::init(Configuration* cfg)
 {
+  _timer = new GameTimer;
   _config = cfg;
   _cmdExecutor.reset( new CommandExecutor );
   _windowManager.reset( new gui::WindowManager );
@@ -54,7 +57,14 @@ void Engine::init(Configuration* cfg)
 
 void Engine::update()
 {
-  updateAis();
+  MapPtr map = getWorld().getCurrentMap();
+  if ( map )
+  {
+    for ( ActorPtr a : map->getActors() )
+    {
+      a->tick();
+    }
+  }
 }
 
 void Engine::render()
@@ -79,22 +89,14 @@ void Engine::render()
     _gui->render();
   }
 
-  TCODConsole::root->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
-  TCODConsole::root->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
-}
+  //TCODConsole::root->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
+  //TCODConsole::root->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
 
-void Engine::updateAis()
-{
-  MapPtr map = getWorld().getCurrentMap();
-  if ( map )
-  {    
-    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};    
-    auto ais = map->getActors( &filter );
-    for ( ActorPtr actor : ais )
-    {
-      actor->getFeature<Ai>()->update( map );
-    }
-  }
+//  auto visibleWindows = windowManager().getWindows( [](gui::WindowPtr w){ return w->isVisible(); } );
+//  for ( gui::WindowPtr w : visibleWindows )
+//  {
+//    w->render(*TCODConsole::root);
+//  }  
 }
 
 void Engine::processKey(TCOD_key_t &key)
@@ -110,6 +112,11 @@ gui::Gui& Engine::gui() const
 gui::WindowManager& Engine::windowManager() const
 {
   return *_windowManager;
+}
+
+GameTimer& Engine::timer()
+{
+  return *_timer;
 }
 
 World& Engine::getWorld()

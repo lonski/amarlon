@@ -13,7 +13,7 @@ UseAction::~UseAction()
 {
 }
 
-bool UseAction::perform(ActorPtr performer)
+bool UseAction::run(ActorPtr performer)
 {
   bool used = false;
   _performer = performer;

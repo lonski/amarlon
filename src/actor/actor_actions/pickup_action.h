@@ -25,7 +25,7 @@ public:
    * @return True if picked up successfully. If performer has no container, or there is
    *         no space left, then false.
    */
-  virtual bool perform(ActorPtr performer);
+  virtual bool run(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 private:

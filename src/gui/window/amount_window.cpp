@@ -19,7 +19,8 @@ AWindow &AmountWindow::setDefaults()
 }
 
 AWindow& AmountWindow::show()
-{
+{  
+  _visible = true;
   TCOD_key_t key;
   _firstHit = true;
 
@@ -35,6 +36,7 @@ AWindow& AmountWindow::show()
 
   if ( key.vk == TCODK_ESCAPE ) _amount = 0;
 
+  _visible = false;
   return *this;
 }
 

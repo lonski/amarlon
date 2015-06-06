@@ -13,7 +13,7 @@ public:
   TeleportAction(MapId map, int x, int y);
   virtual ~TeleportAction();
 
-  virtual bool perform(ActorPtr performer);
+  virtual bool run(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 private:

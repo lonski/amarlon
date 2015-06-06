@@ -1,10 +1,11 @@
 #include <iostream>
 #include <stdexcept>
-#include "engine.h"
-#include "world/map.h"
-#include "gui/gui.h"
-#include "gui/message_box.h"
-#include "utils/configuration.h"
+#include <engine.h>
+#include <map.h>
+#include <gui.h>
+#include <message_box.h>
+#include <configuration.h>
+#include <game_timer.h>
 
 using namespace std;
 
@@ -28,17 +29,28 @@ int main()
     TCODMouse::showCursor(false);
     amarlon::Engine::instance().gui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
 
+    amarlon::Engine::instance().timer().start();
+
     TCOD_key_t lastKey;
     while ( !TCODConsole::isWindowClosed() )
     {
       try
       {
-        amarlon::Engine::instance().update();
-        amarlon::Engine::instance().render();
-        TCODConsole::root->flush();
+        TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);        
+        if ( lastKey.vk == TCODK_SPACE )
+        {
+          if ( amarlon::Engine::instance().timer().isRunning() )
+          {
+            amarlon::Engine::instance().timer().pause();
+          }
+          else
+          {
+            amarlon::Engine::instance().timer().resume();
+          }
+        }
 
-        TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
         amarlon::Engine::instance().processKey(lastKey);
+
       }
       catch(std::exception& e)
       {

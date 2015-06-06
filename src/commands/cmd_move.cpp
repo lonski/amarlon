@@ -3,6 +3,8 @@
 #include <map.h>
 #include <move_action.h>
 #include <attack_action.h>
+#include <engine.h>
+#include <game_timer.h>
 
 namespace amarlon {
 
@@ -20,12 +22,14 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
 }
 
 void CmdMoveOrAttack::execute()
-{
+{  
   //if MoveAction failed then path is blocked
-  if ( !Actor::Player->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
+  if ( !Actor::Player->runAction( std::make_shared<MoveAction>(_dx, _dy) ) )
   {
-    Actor::Player->performAction( std::make_shared<AttackAction>( getActorToAttack() ));
+    Actor::Player->runAction( std::make_shared<AttackAction>( getActorToAttack() ));
   }
+
+  amarlon::Engine::instance().timer().speedUpTick();
 }
 
 ActorPtr CmdMoveOrAttack::getActorToAttack()

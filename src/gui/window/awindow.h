@@ -40,10 +40,16 @@ public:
   template<typename T>
   T& downcast();
 
+  bool isVisible() const
+  {
+    return _visible;
+  }
+
  virtual ~AWindow() {}
 
 protected:
-  AWindow() {}
+  bool _visible;
+  AWindow(): _visible(false) {}
 
 };
 

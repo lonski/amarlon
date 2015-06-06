@@ -3,6 +3,7 @@
 
 #include <map>
 #include <memory>
+#include <functional>
 #include <awindow.h>
 
 namespace amarlon { namespace gui {
@@ -19,6 +20,8 @@ public:
    */
   template<typename T>
   T& getWindow();
+
+  std::vector<WindowPtr> getWindows(std::function<bool(WindowPtr)> filter);
 
 private:
   std::map<AWindow::WindowId, WindowPtr> _windows;
