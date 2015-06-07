@@ -9,6 +9,7 @@
 #include <amarlon_except.h>
 #include <map.h>
 #include <destroyable.h>
+#include <die_action.h>
 
 namespace amarlon {
 
@@ -88,52 +89,10 @@ void Fighter::die()
   }
 
   ActorPtr owner = getOwner().lock();
-  if (owner)
+  if ( owner )
   {
-    dropItemsFromBody();
-
-    DestroyablePtr destroyable = owner->getFeature<Destroyable>();
-    if ( destroyable )
-    {
-      destroyable->destroy();
-    }
-
+    owner->performAction( std::make_shared<DieAction>() );
     Messenger::message()->actorDies( owner );
-    owner->morph(ActorType::Corpse);
-  }
-}
-
-void Fighter::dropItemsFromBody()
-{
-  ActorPtr owner = getOwner().lock();
-  if (owner)
-  {
-    WearerPtr wearer = owner->getFeature<Wearer>();
-    if ( wearer )
-    {
-      for ( auto slot : ItemSlotType() )
-      {
-        ActorPtr item = wearer->unequip(slot);
-        if ( item )
-        {
-          dropOnGround( item );
-        }
-      }
-    }
-  }
-}
-
-void Fighter::dropOnGround(ActorPtr item)
-{
-  ActorPtr owner = getOwner().lock();  
-  if (owner)
-  {
-    MapPtr map = owner->getMap();
-    if ( map != nullptr )
-    {
-      item->setPosition( owner->getX(), owner->getY() );
-      map->addActor(item);
-    }
   }
 }
 
