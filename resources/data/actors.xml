@@ -10,9 +10,12 @@ When new actor is created with given ID as parameter, then the template will be 
 			<Content id="12">
 				<Pickable stackable="1" amount="4" category="4"/>
 			</Content>
+			<Content id="24"/>
 			<Content id="17"/>
 		</Container>
-		<Fighter power="5" maxHp="20"/>
+		<Character hitPoints="8" maxHitPoints="8" attackBonus="1" level="1" experience="0" class="0">
+			<AbilityScores STR="9" INT="9" WIS="9" DEX="9" CON="9" CHA="9"/>
+		</Character>
 		<Wearer>
 			<ItemSlot type="1"/>
 			<ItemSlot type="2"/>
@@ -38,7 +41,10 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Destroyable/>
 	</Actor>
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Fighter  power="2" maxHp="10"/>
+		<!-- <Monster armorClass="11" hitDiceCount="1" hitPointsBonus="0" damageDice="1d8" morale="8" experience="25" /> -->
+		<Character hitPoints="5" maxHitPoints="5" attackBonus="1" level="1" experience="0" class="0">
+			<AbilityScores STR="9" INT="9" WIS="9" DEX="9" CON="9" CHA="9"/>
+		</Character>
 		<Ai type="1"/>
 		<Wearer>
 			<ItemSlot type="3">
@@ -76,7 +82,7 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" category="0"/>
 	</Actor>
-	<Actor name="Orc corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" category="0"/>
 	</Actor>
 	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
@@ -94,13 +100,16 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="0" amount="1" itemSlot="4" category="2"/>
 	</Actor>
 	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
+		<Pickable stackable="0" amount="1" itemSlot="3" category="2" damageDie="0" armorClass="13" weight="15" price="20"/>
 	</Actor>	
 	<Actor name="Gold coin" id="22" character="$" color="E2B227" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="1" category="7"/>
 	</Actor>
 	<Actor name="Black Ale" id="23" character="!" color="808080" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="1" category="4"/>
+	</Actor>
+	<Actor name="Dagger" id="24" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damageDie="4" armorClass="0" weight="1" price="2"/>
 	</Actor>
 	
 </Actors>

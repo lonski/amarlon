@@ -73,7 +73,7 @@ void Engine::render()
     _gui->setPlayerName(Actor::Player->getName());
 
     if ( Actor::Player->isAlive() )
-      _gui->setHpBar(Actor::Player->getFeature<Fighter>()->getHp(), Actor::Player->getFeature<Fighter>()->getMaxHp());
+      _gui->setHpBar(Actor::Player->getFeature<Character>()->getHitPoints(), Actor::Player->getFeature<Character>()->getMaxHitPoints());
 
     _gui->setViewList(getActorsBenethPlayersFeet());
     _gui->render();

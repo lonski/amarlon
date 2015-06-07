@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include "utils/utils.h"
 #include "data_gateways/tile_db.h"
+#include <dices.h>
+#include <set>
+#include <thread>
 
 namespace amarlon {
 
@@ -33,6 +36,22 @@ TEST(UtilsTest, tolowers)
 {
   std::string str = "Cycki";
   ASSERT_EQ(tolowers(str), "cycki");
+}
+
+TEST(UtilsTest, diceTest)
+{
+  std::set<int> rolls;
+  for(int i=0; i<100; ++i)
+  {
+    int r = dices::roll(dices::D4);
+    rolls.insert( r );
+    std::cout << r << " ";
+  }
+
+  for ( int i=1; i<=4; ++i)
+  {
+    EXPECT_TRUE( rolls.find(i) != rolls.end() ) << i;
+  }
 }
 
 }

@@ -1,6 +1,5 @@
 #include "destroyable.h"
-#include <stdlib.h>
-#include <time.h>
+#include <dices.h>
 #include <container.h>
 #include <map.h>
 #include <actor.h>
@@ -67,25 +66,13 @@ void Destroyable::destroy()
   }
 }
 
-float roll()
-{
-  srand( time(nullptr) );
-  return ((rand() % 100) + 1) / 100.0f;
-}
-
-int roll(int from, int to)
-{
-  srand( time(nullptr) );
-  return from + ( rand() % (to-from)+1 );
-}
-
 ActorPtr createActor(const DropRule& rule)
 {
   ActorPtr toDrop = Actor::create(rule.dropActorId);
   PickablePtr pickable = toDrop->getFeature<Pickable>();
   if ( pickable )
   {
-    pickable->setAmount( roll( rule.amountMin, rule.amountMax ) );
+    pickable->setAmount( dices::roll( rule.amountMin, rule.amountMax ) );
   }
 
   return toDrop;
@@ -95,7 +82,7 @@ void Destroyable::processDropRules()
 {
   for( DropRule& rule : _dropRules )
   {
-    if ( rule.chance > roll() )
+    if ( rule.chance > (dices::roll(dices::D100) / 100.0f) )
     {
       ActorPtr toDrop = createActor(rule);
       dropOnGround( toDrop );

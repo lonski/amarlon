@@ -1,6 +1,7 @@
 #include "die_action.h"
 #include <actor.h>
 #include <map.h>
+#include <messenger.h>
 
 namespace amarlon
 {
@@ -35,6 +36,7 @@ bool DieAction::perform(ActorPtr performer)
       destroyable->destroy();
     }
 
+    Messenger::message()->actorDies( _performer );
     _performer->morph(ActorType::Corpse);
   }
 

@@ -9,7 +9,7 @@
 #include <actor_feature.h>
 #include <container.h>
 #include <pickable.h>
-#include <fighter.h>
+#include <character.h>
 #include <ai.h>
 #include <openable.h>
 #include <wearer.h>

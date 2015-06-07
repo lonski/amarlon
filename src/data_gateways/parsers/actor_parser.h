@@ -19,7 +19,7 @@ public:
   ActorDescriptionPtr       parseActorDsc();
   ContainerDescriptionPtr   parseContainerDsc();
   PickableDescriptionPtr    parsePickableDsc();
-  FighterDescriptionPtr     parseFighterDsc();
+  CharacterDescriptionPtr   parseCharacterDsc();
   AiDescriptionPtr          parseAiDsc();
   OpenableDescriptionPtr    parseOpenableDsc();
   WearerDescriptionPtr      parseWearerDsc();

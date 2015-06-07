@@ -13,12 +13,16 @@
 #include <pickable_category.h>
 #include <effect_type.h>
 #include <drop_rule.h>
+#include <dices.h>
+#include <character_classes.h>
+#include <ability_scores.h>
+#include <map>
 
 namespace amarlon {
 
 class Container;
 class Pickable;
-class Fighter;
+class Character;
 class Ai;
 class Openable;
 class Wearer;
@@ -27,22 +31,24 @@ class Destroyable;
 struct Description;
 struct ActorDescription;
 struct PickableDescription;
-struct FighterDescription;
+struct CharacterDescription;
 struct AiDescription;
 struct OpenableDescription;
 struct WearerDescription;
 struct ContainerDescription;
 struct DestroyableDescription;
+//struct MonsterDescription;
 
 typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
-typedef std::shared_ptr<FighterDescription> FighterDescriptionPtr;
+typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
 typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
+//typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
 
 struct Description
 {
@@ -81,16 +87,36 @@ struct PickableDescription : Description
 {
   bool stackable;
   int amount;
+
   EffectDescription effect;
   ItemSlotType itemSlot;
   PickableCategory category;
+  dices::Die damageDie;
+  int armorClass;
+  int weight;
+  int price;
 };
 
-struct FighterDescription : Description
+struct CharacterDescription : Description
 {
-  float maxHp;
-  float power;
+  int hitPoints;
+  int maxHitPoints;
+  int level;
+  int experience;
+  std::map<AbilityScore::Type, int> abilityScores;
+  CharacterClass cClass;
 };
+
+//struct MonsterDescription : Description
+//{
+//  int armorClass;
+//  int hitDiceCount;
+//  int hitPointsCount;
+//  dices::Die damageDice;
+//  int damageDiceCount;
+//  int morale;
+//  int experience;
+//};
 
 struct AiDescription : Description
 {
@@ -113,7 +139,7 @@ struct ContainerDescription : Description
     ActorType actorType;
     std::shared_ptr<ContainerDescription> container;
     std::shared_ptr<PickableDescription> pickable;
-    std::shared_ptr<FighterDescription> fighter;
+    std::shared_ptr<CharacterDescription> character;
     std::shared_ptr<AiDescription> ai;
     std::shared_ptr<OpenableDescription> openable;
     std::shared_ptr<WearerDescription> wearer;

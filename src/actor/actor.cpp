@@ -86,7 +86,7 @@ void Actor::changeType(ActorType newType)
 
 bool Actor::isAlive() const
 {
-  const FighterPtr f = getFeature<Fighter>();
+  const CharacterPtr f = getFeature<Character>();
   return  f && f->isAlive();
 }
 

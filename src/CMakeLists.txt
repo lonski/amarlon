@@ -10,7 +10,7 @@ set(HEADER_FILES
     actor/actor_features/wearer/wearer.h
     actor/actor_features/actor_feature.h
     actor/actor_features/container.h
-    actor/actor_features/fighter.h
+    actor/actor_features/character.h
     actor/actor_features/pickable.h
     actor/actor_features/pickable_category.h
     actor/actor_features/destroyable.h
@@ -69,6 +69,7 @@ set(HEADER_FILES
     utils/configuration.h
     utils/xml_utils.h
     utils/amarlon_except.h
+    utils/dices.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -89,6 +90,9 @@ set(HEADER_FILES
     actor/actor_actions/die_action.h
     world/directions.h
     world/world.h
+    rpg_system/ability_scores.h
+    rpg_system/character_classes.h
+    rpg_system/attack_bonus_table.h
 )
 
 set(SOURCE_FILES
@@ -100,7 +104,7 @@ set(SOURCE_FILES
     actor/actor_features/wearer/wearer.cpp
     actor/actor_features/actor_feature.cpp
     actor/actor_features/container.cpp
-    actor/actor_features/fighter.cpp
+    actor/actor_features/character.cpp
     actor/actor_features/pickable.cpp
     actor/actor_features/destroyable.cpp
     actor/effects/effect.cpp
@@ -142,6 +146,7 @@ set(SOURCE_FILES
     utils/messenger.cpp
     utils/utils.cpp
     utils/configuration.cpp
+    utils/dices.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp
@@ -159,6 +164,8 @@ set(SOURCE_FILES
     actor/actor_actions/use_action.cpp
     actor/actor_actions/die_action.cpp
     world/world.cpp
+    rpg_system/ability_scores.cpp
+    rpg_system/attack_bonus_table.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

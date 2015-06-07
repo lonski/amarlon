@@ -93,8 +93,8 @@ public:
         case ActorFeature::CONTAINER:
           addFeature<Container>();
           break;
-        case ActorFeature::FIGHTER:
-          addFeature<Fighter>();
+        case ActorFeature::CHARACTER:
+          addFeature<Character>();
           break;
         case ActorFeature::OPENABLE:
           addFeature<Openable>();

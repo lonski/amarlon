@@ -13,6 +13,10 @@ Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
   , _effect(nullptr)
+  , _damageDie(dices::NoDie)
+  , _armorClass(0)
+  , _weight(0)
+  , _price(0)
 {
 }
 
@@ -32,6 +36,10 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable.reset( new Pickable(pDsc->stackable, pDsc->amount) );
     pickable->_itemSlot = pDsc->itemSlot;
     pickable->_category = pDsc->category;
+    pickable->_damageDie = pDsc->damageDie;
+    pickable->_armorClass = pDsc->armorClass;
+    pickable->_weight = pDsc->weight;
+    pickable->_price = pDsc->price;
 
     Effect* effect = Effect::create(pDsc->effect);
     pickable->setEffect(effect);
@@ -65,6 +73,10 @@ ActorFeaturePtr Pickable::clone()
 
   cloned->_itemSlot = _itemSlot;
   cloned->_category = _category;
+  cloned->_damageDie = _damageDie;
+  cloned->_armorClass = _armorClass;
+  cloned->_weight = _weight;
+  cloned->_price = _price;
 
   return cloned;
 }
@@ -77,6 +89,10 @@ bool Pickable::isEqual(ActorFeaturePtr rhs)
   if (crhs != nullptr)
   {
     equal = (_stackable == crhs->_stackable);
+    equal &= (_damageDie == crhs->_damageDie);
+    equal &= (_armorClass == crhs->_armorClass);
+    equal &= (_weight == crhs->_weight);
+    equal &= (_price == crhs->_price);
     //equal &= (_amount == crhs->_amount);  no amount comparing
     if ( getEffect() ) equal &= (getEffect()->isEqual( crhs->getEffect() ));
   }
@@ -140,6 +156,26 @@ PickableCategory Pickable::getCategory() const
 void Pickable::setCategory(const PickableCategory &category)
 {
   _category = category;
+}
+
+dices::Die Pickable::getDamageDie() const
+{
+  return _damageDie;
+}
+
+int Pickable::getArmorClass() const
+{
+  return _armorClass;
+}
+
+int Pickable::getWeight() const
+{
+  return _weight;
+}
+
+int Pickable::getPrice() const
+{
+  return _price;
 }
 
 int Pickable::getAmount() const

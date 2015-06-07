@@ -25,7 +25,7 @@ public:
     OPENABLE,
     WEARER,
     CONTAINER,
-    FIGHTER,
+    CHARACTER,
     PICKABLE,
     DESTROYABLE,
     FT_END

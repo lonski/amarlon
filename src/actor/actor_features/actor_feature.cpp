@@ -2,7 +2,7 @@
 #include <ai.h>
 #include <openable.h>
 #include <wearer.h>
-#include <fighter.h>
+#include <character.h>
 #include <pickable.h>
 #include <destroyable.h>
 #include <actor.h>
@@ -25,7 +25,7 @@ ActorFeaturePtr ActorFeature::create(Type featureType, DescriptionPtr dsc)
       case OPENABLE: feature = Openable::create(dsc); break;
       case WEARER: feature = Wearer::create(dsc); break;
       case CONTAINER: feature = Container::create(dsc); break;
-      case FIGHTER: feature = Fighter::create(dsc); break;
+      case CHARACTER: feature = Character::create(dsc); break;
       case PICKABLE: feature = Pickable::create(dsc); break;
       case DESTROYABLE: feature = Destroyable::create(dsc); break;
       default:;

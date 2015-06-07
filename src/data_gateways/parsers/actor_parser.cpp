@@ -24,7 +24,7 @@ void ActorParser::mapParsers()
   _featureParsers[ActorFeature::CONTAINER]   = [&](){ return parseContainerDsc(); };
   _featureParsers[ActorFeature::OPENABLE]    = [&](){ return parseOpenableDsc(); };
   _featureParsers[ActorFeature::PICKABLE]    = [&](){ return parsePickableDsc(); };
-  _featureParsers[ActorFeature::FIGHTER]     = [&](){ return parseFighterDsc(); };
+  _featureParsers[ActorFeature::CHARACTER]     = [&](){ return parseCharacterDsc(); };
   _featureParsers[ActorFeature::WEARER]      = [&](){ return parseWearerDsc(); };
   _featureParsers[ActorFeature::AI]          = [&](){ return parseAiDsc(); };
   _featureParsers[ActorFeature::DESTROYABLE] = [&](){ return parseDestroyableDsc(); };
@@ -82,7 +82,7 @@ void ActorParser::parseContainerContentNode(ContainerDescriptionPtr contDsc, xml
     cActor.container = aParser.parseContainerDsc() ;
     cActor.openable = aParser.parseOpenableDsc();
     cActor.pickable = aParser.parsePickableDsc();
-    cActor.fighter = aParser.parseFighterDsc();
+    cActor.character = aParser.parseCharacterDsc();
     cActor.ai = aParser.parseAiDsc();
     cActor.destroyable = aParser.parseDestroyableDsc();
 
@@ -133,6 +133,10 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
       pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
       pickDsc->category = (PickableCategory)getAttribute<int>(pickableNode, "category");
+      pickDsc->damageDie = (dices::Die)getAttribute<int>(pickableNode, "damageDie");
+      pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
+      pickDsc->weight = getAttribute<int>(pickableNode, "weight");
+      pickDsc->price = getAttribute<int>(pickableNode, "price");
 
       // == effects == //
       xml_node<>* effectNode = pickableNode->first_node("Effect");
@@ -149,23 +153,37 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
   return pickDsc;
 }
 
-FighterDescriptionPtr ActorParser::parseFighterDsc()
+CharacterDescriptionPtr ActorParser::parseCharacterDsc()
 {
-  FighterDescriptionPtr fDsc;
+  CharacterDescriptionPtr cDsc;
 
   if ( _xml != nullptr )
   {
-    xml_node<>* fighterNode = _xml->first_node("Fighter");
-    if (fighterNode != nullptr)
+    xml_node<>* characterNode = _xml->first_node("Character");
+    if (characterNode != nullptr)
     {
-      fDsc.reset( new FighterDescription );
+      cDsc.reset( new CharacterDescription );
 
-      fDsc->power = getAttribute<float>(fighterNode, "power");
-      fDsc->maxHp = getAttribute<float>(fighterNode, "maxHp");
+      cDsc->hitPoints = getAttribute<float>(characterNode, "hitPoints");
+      cDsc->maxHitPoints = getAttribute<float>(characterNode, "maxHitPoints");
+      cDsc->level = getAttribute<float>(characterNode, "level");
+      cDsc->experience = getAttribute<float>(characterNode, "experience");
+      cDsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
+
+      xml_node<>* attrNode = characterNode->first_node("AbilityScores");
+      if ( attrNode != nullptr)
+      {
+        cDsc->abilityScores[AbilityScore::STR] = getAttribute<float>(attrNode, "STR");
+        cDsc->abilityScores[AbilityScore::INT] = getAttribute<float>(attrNode, "INT");
+        cDsc->abilityScores[AbilityScore::WIS] = getAttribute<float>(attrNode, "WIS");
+        cDsc->abilityScores[AbilityScore::DEX] = getAttribute<float>(attrNode, "DEX");
+        cDsc->abilityScores[AbilityScore::CON] = getAttribute<float>(attrNode, "CON");
+        cDsc->abilityScores[AbilityScore::CHA] = getAttribute<float>(attrNode, "CHA");
+      }
     }
   }
 
-  return fDsc;
+  return cDsc;
 }
 
 AiDescriptionPtr ActorParser::parseAiDsc()

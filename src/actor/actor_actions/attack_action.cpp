@@ -1,5 +1,7 @@
 #include "attack_action.h"
 #include <actor.h>
+#include <dices.h>
+#include <messenger.h>
 
 namespace amarlon {
 
@@ -15,18 +17,39 @@ AttackAction::~AttackAction()
 bool AttackAction::perform(ActorPtr performer)
 {
   _performer = performer;
-  bool attacked = false;
+  bool success = false;
 
   if ( _performer && _target )
   {
-    FighterPtr fighter = performer->getFeature<Fighter>();
-    if ( fighter )
+    CharacterPtr attacker = _performer->getFeature<Character>();
+    CharacterPtr attacked = _target->getFeature<Character>();
+
+    if ( attacker && attacked )
     {
-      fighter->attack(_target);
+      success = true;
+      bool hit = false;
+      int dieRoll = dices::roll( dices::D20 );
+
+      if ( dieRoll != dices::NATURAL_ONE ) //natural one is always a failure
+      {
+        if ( ( dieRoll == dices::NATURAL_TWENTY ) || //natural 20 is always a hit
+             ( dieRoll + attacker->getMeleeAttackBonus() >= attacked->getArmorClass()) ) //hit success
+        {
+          hit = true;
+          int damage = attacker->rollMeleeDamage();
+          Messenger::message()->actorHit(_performer, _target, damage);
+          attacked->modifyHitPoints( -1 * damage );
+        }
+      }
+
+      if ( !hit )
+      {
+        Messenger::message()->actorMissed(_performer, _target);
+      }
     }
   }
 
-  return attacked;
+  return success;
 }
 
 ActorActionUPtr AttackAction::clone()

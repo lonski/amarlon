@@ -93,7 +93,7 @@ void MonsterAi::huntPlayer()
       monster->performAction( std::make_shared<MoveAction>(0, stepDy) );
     }
   }
-  else if ( getOwner().lock()->hasFeature<Fighter>() )
+  else if ( getOwner().lock()->hasFeature<Character>() )
   {
     monster->performAction( std::make_shared<AttackAction>(Actor::Player) );
   }

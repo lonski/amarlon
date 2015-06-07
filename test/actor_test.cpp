@@ -127,7 +127,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   ASSERT_TRUE( a1->isEqual(a2) );
 
-  a1->getFeature<Fighter>()->setPower(666);
+  a1->getFeature<Character>()->setHitPoints(666);
 
   ASSERT_FALSE( a1->isEqual(a2) );
 }

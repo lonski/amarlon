@@ -8,7 +8,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/container.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/fighter.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/character.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/pickable.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai_type.h
@@ -84,7 +84,7 @@ set(SOURCE_FILES
     world/map_test.cpp
     wearer_test.cpp
     amenu_test.cpp
-    fighter_test.cpp
+    character_test.cpp
     destroyable_test.cpp
     move_action_test.cpp
 )

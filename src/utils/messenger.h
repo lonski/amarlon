@@ -20,6 +20,7 @@ public:
   void setGui(gui::Gui* gui);
 
   void actorHit(ActorPtr atacker, ActorPtr victim, int amount);
+  void actorMissed(ActorPtr atacker, ActorPtr victim);
   void actorDies(ActorPtr victim);
   void actorPicked(ActorPtr picker, ActorPtr picked, int amount);
   void actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const std::string& from = "");

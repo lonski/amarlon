@@ -40,7 +40,7 @@ ActorPtr CmdMoveOrAttack::getActorToAttack()
 
     std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
     {
-      return a->hasFeature<Fighter>() && a->getFeature<Fighter>()->isAlive();
+      return a->hasFeature<Character>() && a->getFeature<Character>()->isAlive();
     };
 
     auto targets = map->getActors(targetX, targetY, &filterFun);

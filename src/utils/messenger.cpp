@@ -46,6 +46,15 @@ void Messenger::actorHit(ActorPtr atacker, ActorPtr victim, int amount)
   }
 }
 
+void Messenger::actorMissed(ActorPtr atacker, ActorPtr victim)
+{
+  if ( _gui )
+  {
+    string msg = atacker->getName() + " missed " + tolowers(victim->getName() + ".");
+    _gui->message(msg, TCODColor::darkerYellow);
+  }
+}
+
 void Messenger::actorDies(ActorPtr victim)
 {
   if ( _gui )

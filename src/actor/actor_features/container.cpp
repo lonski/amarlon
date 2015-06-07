@@ -39,7 +39,7 @@ ContainerPtr Container::create(DescriptionPtr dsc)
         if (ca.container) nActor->insertFeature ( Container::create( ca.container ) );
         if (ca.openable)  nActor->insertFeature ( Openable::create ( ca.openable  ) );
         if (ca.pickable)  nActor->insertFeature ( Pickable::create ( ca.pickable  ) );
-        if (ca.fighter)   nActor->insertFeature ( Fighter::create  ( ca.fighter   ) );
+        if (ca.character) nActor->insertFeature ( Character::create  ( ca.character   ) );
         if (ca.ai)        nActor->insertFeature ( Ai::create       ( ca.ai        ) );
         if (ca.wearer)    nActor->insertFeature ( Wearer::create   ( ca.wearer    ) );
 

@@ -48,12 +48,21 @@ public:
   PickableCategory getCategory() const;
   void setCategory(const PickableCategory &getCategory);
 
+  dices::Die getDamageDie() const;
+  int getArmorClass() const;
+  int getWeight() const;
+  int getPrice() const;
+
 private:
   bool _stackable;
   int _amount;
   Effect* _effect;
   ItemSlotType _itemSlot;
   PickableCategory _category;
+  dices::Die _damageDie;
+  int _armorClass;
+  int _weight;
+  int _price;
 
 };
 

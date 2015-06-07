@@ -15,10 +15,13 @@ bool SelfHealEffect::apply(ActorPtr executor, std::vector<ActorPtr >)
 {
   bool r = false;
 
-  if ( executor->hasFeature<Fighter>() )
-  {
-    int healed = executor->getFeature<Fighter>()->heal(_healAmount);
-    Messenger::message()->actorHealed(executor, healed);
+  CharacterPtr character = executor->getFeature<Character>();
+  if ( character )
+  {    
+    int hpBeforeHeal = character->getHitPoints();
+    character->modifyHitPoints(_healAmount);
+
+    Messenger::message()->actorHealed(executor, character->getHitPoints() - hpBeforeHeal );
 
     --_usesCount;
     r = true;
