@@ -8,8 +8,8 @@ namespace amarlon {
 
 Monster::Monster(int level, int hitPointsBonus)
   : _damageDice(dices::D4)
-  , _morale(0)  
   , _damageDiceCount(1)
+  , _morale(0)  
 {
   setLevel(level);
   setMaxHitPoints( dices::roll(dices::D8, getLevel() ) + hitPointsBonus );

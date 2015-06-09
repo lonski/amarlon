@@ -344,10 +344,10 @@ MapPtr Map::clone()
 
   for ( auto pair : _exitActions )
   {
-    cloned->_exitActions[ pair.first ] = ActorActionPtr{ std::move(pair.second->clone()) };
+    cloned->_exitActions[ pair.first ] = ActorActionPtr{ pair.second->clone() };
   }
 
-  return std::move(cloned);
+  return cloned;
 }
 
 ContainerPtr Map::getActorsContainer(u32 x, u32 y)

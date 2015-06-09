@@ -11,7 +11,8 @@ UnEquipAction::UnEquipAction(ActorPtr toUnEquip)
 }
 
 UnEquipAction::UnEquipAction(ItemSlotType slot)
-  : _slot(slot)
+  : _result(UnEquipResult::Nok)
+  , _slot(slot)
 {
 }
 
