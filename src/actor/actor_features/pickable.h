@@ -48,7 +48,7 @@ public:
   PickableCategory getCategory() const;
   void setCategory(const PickableCategory &getCategory);
 
-  dices::Die getDamageDie() const;
+  dices::Dice getDamageDie() const;
   int getArmorClass() const;
   int getWeight() const;
   int getPrice() const;
@@ -59,7 +59,7 @@ private:
   Effect* _effect;
   ItemSlotType _itemSlot;
   PickableCategory _category;
-  dices::Die _damageDie;
+  dices::Dice _damageDie;
   int _armorClass;
   int _weight;
   int _price;

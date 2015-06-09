@@ -13,7 +13,7 @@ Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
   , _effect(nullptr)
-  , _damageDie(dices::NoDie)
+  , _damageDie(dices::NoDice)
   , _armorClass(0)
   , _weight(0)
   , _price(0)
@@ -158,7 +158,7 @@ void Pickable::setCategory(const PickableCategory &category)
   _category = category;
 }
 
-dices::Die Pickable::getDamageDie() const
+dices::Dice Pickable::getDamageDie() const
 {
   return _damageDie;
 }

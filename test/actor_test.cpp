@@ -127,7 +127,11 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   ASSERT_TRUE( a1->isEqual(a2) );
 
-  a1->getFeature<Character>()->setHitPoints(666);
+  MonsterDescriptionPtr mobDsc(new MonsterDescription );
+  mobDsc->level = 123;
+  mobDsc->experience = 666;
+
+  a1->insertFeature( Character::create(mobDsc) );
 
   ASSERT_FALSE( a1->isEqual(a2) );
 }

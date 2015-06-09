@@ -8,7 +8,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/container.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/character.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/character/character.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/pickable.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai_type.h

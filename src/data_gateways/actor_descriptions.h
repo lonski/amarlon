@@ -31,24 +31,26 @@ class Destroyable;
 struct Description;
 struct ActorDescription;
 struct PickableDescription;
-struct CharacterDescription;
+struct PlayableCharacterDescription;
 struct AiDescription;
 struct OpenableDescription;
 struct WearerDescription;
 struct ContainerDescription;
 struct DestroyableDescription;
-//struct MonsterDescription;
+struct MonsterDescription;
+struct CharacterDescription;
 
 typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
-typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
+typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescriptionPtr;
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
 typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
-//typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
+typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
+typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 
 struct Description
 {
@@ -91,32 +93,35 @@ struct PickableDescription : Description
   EffectDescription effect;
   ItemSlotType itemSlot;
   PickableCategory category;
-  dices::Die damageDie;
+  dices::Dice damageDie;
   int armorClass;
   int weight;
   int price;
 };
 
+
 struct CharacterDescription : Description
 {
+  int level;
   int hitPoints;
   int maxHitPoints;
-  int level;
+  int defaultArmorClass;
   int experience;
-  std::map<AbilityScore::Type, int> abilityScores;
   CharacterClass cClass;
 };
 
-//struct MonsterDescription : Description
-//{
-//  int armorClass;
-//  int hitDiceCount;
-//  int hitPointsCount;
-//  dices::Die damageDice;
-//  int damageDiceCount;
-//  int morale;
-//  int experience;
-//};
+struct PlayableCharacterDescription : CharacterDescription
+{  
+  std::map<AbilityScore::Type, int> abilityScores;  
+};
+
+struct MonsterDescription : CharacterDescription
+{
+  int hitPointsBonus;
+  dices::Dice damageDice;
+  int damageDiceCount;
+  int morale;  
+};
 
 struct AiDescription : Description
 {
@@ -139,7 +144,7 @@ struct ContainerDescription : Description
     ActorType actorType;
     std::shared_ptr<ContainerDescription> container;
     std::shared_ptr<PickableDescription> pickable;
-    std::shared_ptr<CharacterDescription> character;
+    std::shared_ptr<Description> character;
     std::shared_ptr<AiDescription> ai;
     std::shared_ptr<OpenableDescription> openable;
     std::shared_ptr<WearerDescription> wearer;

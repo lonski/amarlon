@@ -6,9 +6,9 @@ namespace amarlon { namespace dices {
 const int NATURAL_ONE = 1;
 const int NATURAL_TWENTY = 20;
 
-enum Die
+enum Dice
 {
-  NoDie = 0,
+  NoDice = 0,
   D4    = 4,
   D6    = 6,
   D8    = 8,
@@ -18,8 +18,9 @@ enum Die
   D100  = 100
 };
 
-int roll(Die dieType);
+int roll(Dice diceType);
 int roll(int from, int to);
+int roll(Dice diceType, int n);
 
 }}
 

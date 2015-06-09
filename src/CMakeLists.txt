@@ -10,7 +10,9 @@ set(HEADER_FILES
     actor/actor_features/wearer/wearer.h
     actor/actor_features/actor_feature.h
     actor/actor_features/container.h
-    actor/actor_features/character.h
+    actor/actor_features/character/character.h
+    actor/actor_features/character/monster.h
+    actor/actor_features/character/playable_character.h
     actor/actor_features/pickable.h
     actor/actor_features/pickable_category.h
     actor/actor_features/destroyable.h
@@ -104,7 +106,9 @@ set(SOURCE_FILES
     actor/actor_features/wearer/wearer.cpp
     actor/actor_features/actor_feature.cpp
     actor/actor_features/container.cpp
-    actor/actor_features/character.cpp
+    actor/actor_features/character/character.cpp
+    actor/actor_features/character/monster.cpp
+    actor/actor_features/character/playable_character.cpp
     actor/actor_features/pickable.cpp
     actor/actor_features/destroyable.cpp
     actor/effects/effect.cpp

@@ -24,7 +24,7 @@ void ActorParser::mapParsers()
   _featureParsers[ActorFeature::CONTAINER]   = [&](){ return parseContainerDsc(); };
   _featureParsers[ActorFeature::OPENABLE]    = [&](){ return parseOpenableDsc(); };
   _featureParsers[ActorFeature::PICKABLE]    = [&](){ return parsePickableDsc(); };
-  _featureParsers[ActorFeature::CHARACTER]     = [&](){ return parseCharacterDsc(); };
+  _featureParsers[ActorFeature::CHARACTER]   = [&](){ return parseCharacterDsc(); };
   _featureParsers[ActorFeature::WEARER]      = [&](){ return parseWearerDsc(); };
   _featureParsers[ActorFeature::AI]          = [&](){ return parseAiDsc(); };
   _featureParsers[ActorFeature::DESTROYABLE] = [&](){ return parseDestroyableDsc(); };
@@ -133,7 +133,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
       pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
       pickDsc->category = (PickableCategory)getAttribute<int>(pickableNode, "category");
-      pickDsc->damageDie = (dices::Die)getAttribute<int>(pickableNode, "damageDie");
+      pickDsc->damageDie = (dices::Dice)getAttribute<int>(pickableNode, "damageDie");
       pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
       pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       pickDsc->price = getAttribute<int>(pickableNode, "price");
@@ -155,35 +155,65 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
 
 CharacterDescriptionPtr ActorParser::parseCharacterDsc()
 {
-  CharacterDescriptionPtr cDsc;
+  CharacterDescriptionPtr dsc;
 
   if ( _xml != nullptr )
   {
-    xml_node<>* characterNode = _xml->first_node("Character");
+    //playable character parsing
+    xml_node<>* characterNode = _xml->first_node("PlayableCharacter");
     if (characterNode != nullptr)
     {
-      cDsc.reset( new CharacterDescription );
-
-      cDsc->hitPoints = getAttribute<float>(characterNode, "hitPoints");
-      cDsc->maxHitPoints = getAttribute<float>(characterNode, "maxHitPoints");
-      cDsc->level = getAttribute<float>(characterNode, "level");
-      cDsc->experience = getAttribute<float>(characterNode, "experience");
-      cDsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
+      PlayableCharacterDescriptionPtr pdsc( new PlayableCharacterDescription );
 
       xml_node<>* attrNode = characterNode->first_node("AbilityScores");
       if ( attrNode != nullptr)
       {
-        cDsc->abilityScores[AbilityScore::STR] = getAttribute<float>(attrNode, "STR");
-        cDsc->abilityScores[AbilityScore::INT] = getAttribute<float>(attrNode, "INT");
-        cDsc->abilityScores[AbilityScore::WIS] = getAttribute<float>(attrNode, "WIS");
-        cDsc->abilityScores[AbilityScore::DEX] = getAttribute<float>(attrNode, "DEX");
-        cDsc->abilityScores[AbilityScore::CON] = getAttribute<float>(attrNode, "CON");
-        cDsc->abilityScores[AbilityScore::CHA] = getAttribute<float>(attrNode, "CHA");
+        pdsc->abilityScores[AbilityScore::STR] = getAttribute<int>(attrNode, "STR");
+        pdsc->abilityScores[AbilityScore::INT] = getAttribute<int>(attrNode, "INT");
+        pdsc->abilityScores[AbilityScore::WIS] = getAttribute<int>(attrNode, "WIS");
+        pdsc->abilityScores[AbilityScore::DEX] = getAttribute<int>(attrNode, "DEX");
+        pdsc->abilityScores[AbilityScore::CON] = getAttribute<int>(attrNode, "CON");
+        pdsc->abilityScores[AbilityScore::CHA] = getAttribute<int>(attrNode, "CHA");
+      }
+
+      dsc = pdsc;
+    }
+    else
+    {
+      //monster character parsing
+      characterNode = _xml->first_node("Monster");
+      if ( characterNode != nullptr )
+      {
+        MonsterDescriptionPtr mdsc( new MonsterDescription );
+
+        mdsc->hitPointsBonus = getAttribute<int>(characterNode, "hitPointsBonus");
+        mdsc->morale = getAttribute<int>(characterNode, "morale");
+
+        std::string dDice = getAttribute<std::string>(characterNode, "damageDice");
+        auto dmgDiceParams = explode(dDice, 'd');
+        if ( dmgDiceParams.size() == 2 )
+        {
+          mdsc->damageDiceCount = fromStr<int>(dmgDiceParams[0]);
+          mdsc->damageDice = static_cast<dices::Dice>( fromStr<int>(dmgDiceParams[1]) );
+        }
+
+        dsc = mdsc;
       }
     }
+
+    if ( dsc && characterNode )
+    {
+      dsc->level = getAttribute<int>(characterNode, "level");
+      dsc->hitPoints = getAttribute<int>(characterNode, "hitPoints");
+      dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
+      dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
+      dsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
+      dsc->experience = getAttribute<int>(characterNode, "experience");
+    }
+
   }
 
-  return cDsc;
+  return dsc;
 }
 
 AiDescriptionPtr ActorParser::parseAiDsc()
