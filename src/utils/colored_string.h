@@ -8,7 +8,7 @@ namespace amarlon {
 
 struct ColoredString
 {
-  ColoredString(std::string s, TCODColor c)
+  ColoredString(std::string s, TCODColor c = TCODColor::white)
     : str(s)
     , color(c)
   {}

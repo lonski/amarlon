@@ -19,6 +19,7 @@ public:
   virtual bool isActive() const { return _active; }
   virtual void activate() { _active = true; }
   virtual void deactivate() { _active = false; }
+  virtual bool isActivable() const { return true; }
 
   virtual void selectNext() = 0;
   virtual void selectPrevious() = 0;

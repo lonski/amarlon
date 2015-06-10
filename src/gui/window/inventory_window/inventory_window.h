@@ -3,10 +3,11 @@
 
 #include <memory>
 #include <libtcod.hpp>
-#include <gui/window/inventory_window/bag_manager.h>
-#include <gui/window/inventory_window/body_manager.h>
-#include <inventory_panel.h>
 #include <awindow.h>
+#include <inventory_panel.h>
+#include <bag_manager.h>
+#include <body_manager.h>
+#include <character_info_panel.h>
 
 namespace amarlon {
 
@@ -34,7 +35,8 @@ private:
   enum WindowPanel
   {
     BODYSLOTS,
-    INVENTORY
+    INVENTORY,
+    CHARACTER_INFO
   };
 
   std::map<WindowPanel, AInventoryPanelPtr> _panels;
@@ -42,6 +44,7 @@ private:
 
   BagManagerPtr _bagMgr;
   BodyManagerPtr _bodyMgr;
+  CharacterInfoPtr _charInfo;
 
   void initalize();
   void handleKey(TCOD_key_t key);

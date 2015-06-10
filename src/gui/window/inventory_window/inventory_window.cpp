@@ -22,12 +22,20 @@ InventoryWindow::InventoryWindow()
 
 void InventoryWindow::initalize()
 {
+  const int CHAR_INFO_HEIGHT = 16;
+
   _bodyMgr.reset( new BodyManager(windowWidth / 2, windowHeight) );
-  _bagMgr.reset( new BagManager( windowWidth / 2, windowHeight ) );
+  _bagMgr.reset( new BagManager( windowWidth / 2, windowHeight - CHAR_INFO_HEIGHT ) );
   _bagMgr->setPosition(windowWidth / 2, 0);
+
+  _charInfo.reset( new CharacterInfo( windowWidth / 2, CHAR_INFO_HEIGHT ) );
+  _charInfo->setPosition(windowWidth / 2, windowHeight - CHAR_INFO_HEIGHT );
+  _charInfo->update();
 
   _panels[BODYSLOTS] = _bodyMgr;
   _panels[INVENTORY] = _bagMgr;
+  _panels[CHARACTER_INFO] = _charInfo;
+
 }
 
 AWindow &InventoryWindow::setDefaults()
@@ -90,13 +98,21 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     case TCODK_LEFT:
     case TCODK_KP4:
     {
-      activatePreviousPanel();
+      do
+      {
+        activatePreviousPanel();
+      }
+      while ( !_panels[ _activePanel ]->isActivable() );
       break;
     }
     case TCODK_RIGHT:
     case TCODK_KP6:
     {
-      activateNextPanel();
+      do
+      {
+        activateNextPanel();
+      }
+      while ( !_panels[ _activePanel ]->isActivable() );
       break;
     }
     case TCODK_ENTER:
@@ -104,8 +120,9 @@ void InventoryWindow::handleKey(TCOD_key_t key)
     {
       switch( _activePanel)
       {
-        case INVENTORY: _bagMgr->manage(); _bodyMgr->fillBodySlots(); break;
-        case BODYSLOTS: _bodyMgr->manage(); _bagMgr->fillBag(); break;
+        case INVENTORY: _bagMgr->manage(); _bodyMgr->fillBodySlots(); _charInfo->update(); break;
+        case BODYSLOTS: _bodyMgr->manage(); _bagMgr->fillBag(); _charInfo->update(); break;
+        default:;
       }
       break;
     }

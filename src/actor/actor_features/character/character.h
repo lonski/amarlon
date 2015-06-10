@@ -6,6 +6,7 @@
 #include <map>
 #include <ability_scores.h>
 #include <character_classes.h>
+#include <saving_throws_table.h>
 
 namespace amarlon {
 
@@ -33,6 +34,7 @@ public:
   virtual int getExperience() const;
   virtual int getLevel() const;
   virtual CharacterClass getClass() const;
+  virtual int getSavingThrow(SavingThrows::Type type);
 
   virtual int getMeleeAttackBonus() = 0;
   virtual int rollMeleeDamage() = 0;

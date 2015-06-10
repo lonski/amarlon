@@ -50,6 +50,7 @@ set(HEADER_FILES
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h     
+    gui/window/inventory_window/character_info_panel.h
     gui/window/amount_window.h
     gui/window/window_manager.h
     gui/gui.h
@@ -95,6 +96,7 @@ set(HEADER_FILES
     rpg_system/ability_scores.h
     rpg_system/character_classes.h
     rpg_system/attack_bonus_table.h
+    rpg_system/saving_throws_table.h
 )
 
 set(SOURCE_FILES
@@ -135,6 +137,7 @@ set(SOURCE_FILES
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
+    gui/window/inventory_window/character_info_panel.cpp
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
     gui/window/menu_window.cpp
@@ -170,6 +173,7 @@ set(SOURCE_FILES
     world/world.cpp
     rpg_system/ability_scores.cpp
     rpg_system/attack_bonus_table.cpp
+    rpg_system/saving_throws_table.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

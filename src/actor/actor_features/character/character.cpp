@@ -49,7 +49,7 @@ CharacterPtr Character::create(DescriptionPtr dsc)
       MonsterPtr monster( new Monster(monsterDsc->level, monsterDsc->hitPointsBonus) );
 
       monster->_experience = monsterDsc->experience;
-      monster->_class = CharacterClass::MONSTER;
+      monster->_class = monsterDsc->cClass;
       monster->_defaultArmorClass = monsterDsc->defaultArmorClass;
 
       monster->_damageDice = monsterDsc->damageDice;
@@ -137,6 +137,11 @@ int Character::getLevel() const
 CharacterClass Character::getClass() const
 {
   return _class;
+}
+
+int Character::getSavingThrow(SavingThrows::Type type)
+{
+  return SavingThrows::getSavingThrow( type, getClass(), getLevel() );
 }
 
 int Character::getArmorClass()
