@@ -29,6 +29,8 @@ public:
   void actorHasBeenLocked(ActorPtr locker, ActorPtr locked);
   void actorHasBeenUnLocked(ActorPtr unlocker, ActorPtr unlocked);
   void actorPutInto(const std::string& putterName, const std::string& container, const std::string& itemName, int amount);
+  void actorGainedExp(ActorPtr gainer, int exp);
+  void actorLeveledUp(ActorPtr leveler, int level);
 
 private:
   Messenger();

@@ -2,7 +2,8 @@
 #include <actor.h>
 #include <die_action.h>
 #include <attack_bonus_table.h>
-
+#include <experience_table.h>
+#include <messenger.h>
 namespace amarlon {
 
 PlayableCharacter::PlayableCharacter()
@@ -47,7 +48,37 @@ int PlayableCharacter::rollMeleeDamage()
     dmg += dices::roll( weapon->getDamageDie() );
   }
 
-  return dmg < 1 ? 1 : dmg; //always minimum 1 dmg inflicted
+  return std::max(dmg, 1); //always minimum 1 dmg inflicted
+}
+
+void PlayableCharacter::modifyExperience(int modifier)
+{
+  Character::modifyExperience(modifier);
+
+  if ( getLevel() < experience_table::MAX_LEVEL )
+  {
+    LevelData data = experience_table::getLevelData(getClass(), getLevel() + 1);
+    if ( data.expNeeded != 0 && getExperience() >= data.expNeeded)
+    {
+      advanceLevel(data);
+    }
+  }
+}
+
+void PlayableCharacter::advanceLevel(LevelData data)
+{
+  setLevel( getLevel() + 1 );
+
+  int hpBonus =  dices::roll( data.hitDice );
+      hpBonus += data.hpBonus;
+      hpBonus += data.applyConModifier ? getModifier(AbilityScore::CON) : 0;
+
+  setMaxHitPoints( getMaxHitPoints() + std::max(hpBonus, 1) );
+  modifyHitPoints( hpBonus );
+
+  Messenger::message()->actorLeveledUp(getOwner().lock(), getLevel());
+  //TODO: maybe popup some window or advance te level manually like BG/NWN?
+  //Apply the spell levels
 }
 
 int PlayableCharacter::getAbilityScore(AbilityScore::Type as)

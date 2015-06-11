@@ -5,6 +5,8 @@
 
 namespace amarlon {
 
+struct LevelData;
+
 class PlayableCharacter : public Character
 {
 public:
@@ -17,6 +19,7 @@ public:
   /* overriden functions */
   virtual int getMeleeAttackBonus();
   virtual int rollMeleeDamage();
+  virtual void modifyExperience(int modifier);
 
   /* class specific functions */
   virtual int getAbilityScore(AbilityScore::Type as);
@@ -25,6 +28,7 @@ private:
   std::map<AbilityScore::Type, int> _abilityScores;
 
   int getModifier(AbilityScore::Type as);
+  void advanceLevel(LevelData data);
 
   friend class Character;
 };

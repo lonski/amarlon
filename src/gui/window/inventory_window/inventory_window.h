@@ -29,6 +29,7 @@ public:
 
   virtual AWindow& show();
   virtual AWindow& setDefaults();
+  virtual AWindow& refreshData();
   virtual void render(TCODConsole& console);
 
 private:

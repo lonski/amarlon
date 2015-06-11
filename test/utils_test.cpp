@@ -4,8 +4,14 @@
 #include <dices.h>
 #include <set>
 #include <thread>
+#include <experience_table.h>
 
 namespace amarlon {
+
+TEST(ExpDataTable, get)
+{
+  experience_table::getLevelData(CharacterClass::FIGHTER, 1);
+}
 
 TEST(UtilsTest, color2str)
 {

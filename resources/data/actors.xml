@@ -40,8 +40,9 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Wearer>
 		<Destroyable/>
 	</Actor>
+	
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" armorClass="11" experience="25" hitPointsBonus="0" damageDice="1d8" morale="8"/>
+		<Monster level="1" armorClass="11" experience="2500" hitPointsBonus="0" damageDice="1d8" morale="8"/>
 		<Ai type="1"/>
 		<Wearer>
 			<ItemSlot type="3">
@@ -55,6 +56,14 @@ When new actor is created with given ID as parameter, then the template will be 
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
 		</Destroyable>
 	</Actor>
+	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+		<Monster level="1" armorClass="11" experience="1000" hitPointsBonus="-1" damageDice="1d6" morale="7"/>
+		<Ai type="1"/>
+		<Destroyable>
+			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
+		</Destroyable>
+	</Actor>
+	
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
 		<Openable type="0" lockId="0" locked="0"/>
 	</Actor>

@@ -25,7 +25,7 @@ int main()
                           TCOD_RENDERER_SDL);
 
     TCODConsole::root->setFullscreen( std::stol(cfg.get("fullscreen")) );
-    TCODMouse::showCursor(false);
+    TCODMouse::showCursor(true);
     amarlon::Engine::instance().gui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
 
     TCOD_key_t lastKey;

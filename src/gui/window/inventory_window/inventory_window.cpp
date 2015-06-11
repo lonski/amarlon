@@ -51,10 +51,18 @@ void InventoryWindow::render(TCODConsole& console)
   }
 }
 
-AWindow& InventoryWindow::show()
+AWindow& InventoryWindow::refreshData()
 {
   _bodyMgr->fillBodySlots();
   _bagMgr->fillBag();
+  _charInfo->update();
+
+  return *this;
+}
+
+AWindow& InventoryWindow::show()
+{
+  refreshData();
 
   TCOD_key_t key;
 

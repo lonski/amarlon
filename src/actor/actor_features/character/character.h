@@ -32,6 +32,7 @@ public:
   virtual void setHitPoints(int newHp);
   virtual void modifyHitPoints(int modifier);
   virtual int getExperience() const;
+  virtual void modifyExperience(int modifier);
   virtual int getLevel() const;
   virtual CharacterClass getClass() const;
   virtual int getSavingThrow(SavingThrows::Type type);

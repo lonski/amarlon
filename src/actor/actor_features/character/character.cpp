@@ -129,6 +129,11 @@ int Character::getExperience() const
   return _experience;
 }
 
+void Character::modifyExperience(int modifier)
+{
+  _experience += modifier;
+}
+
 int Character::getLevel() const
 {
   return _level;

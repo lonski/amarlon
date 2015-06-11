@@ -82,6 +82,22 @@ void Messenger::actorPutInto(const std::string& putterName,
   }
 }
 
+void Messenger::actorGainedExp(ActorPtr gainer, int exp)
+{
+  if ( _gui )
+  {
+    _gui->message(gainer->getName() + " gained " + toStr(exp) + "xp.", TCODColor::sky);
+  }
+}
+
+void Messenger::actorLeveledUp(ActorPtr leveler, int level)
+{
+  if ( _gui )
+  {
+    _gui->message(leveler->getName() + " advanced to level " + toStr(level) + "!", TCODColor::green);
+  }
+}
+
 void Messenger::actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const string &from)
 {
   if ( _gui )

@@ -36,9 +36,16 @@ bool AttackAction::perform(ActorPtr performer)
              ( dieRoll + attacker->getMeleeAttackBonus() >= attacked->getArmorClass()) ) //hit success
         {
           hit = true;
+          int exp = attacked->getExperience();
           int damage = attacker->rollMeleeDamage();
           Messenger::message()->actorHit(_performer, _target, damage);
           attacked->modifyHitPoints( -1 * damage );
+
+          if ( !_target->isAlive() )
+          {
+            Messenger::message()->actorGainedExp(_performer, exp);
+            attacker->modifyExperience( exp );
+          }
         }
       }
 
