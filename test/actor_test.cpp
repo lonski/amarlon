@@ -127,7 +127,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   ASSERT_TRUE( a1->isEqual(a2) );
 
-  MonsterDescriptionPtr mobDsc(new MonsterDescription );
+  MonsterDescriptionPtr mobDsc(new MonsterDescription );  
   mobDsc->level = 123;
   mobDsc->experience = 666;
 

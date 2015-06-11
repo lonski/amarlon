@@ -75,6 +75,16 @@ struct EffectDescription : Description
 
 struct ActorDescription : Description
 {
+  ActorDescription()
+    : id(ActorType::Null)
+    , character('X')
+    , color(TCODColor::white)
+    , blocks(false)
+    , fovOnly(false)
+    , transparent(false)
+    , tilePriority(666)
+  {}
+
   ActorType id;
   std::string name;
   unsigned char character;
@@ -87,6 +97,14 @@ struct ActorDescription : Description
 
 struct PickableDescription : Description
 {
+  PickableDescription()
+    : stackable(false)
+    , amount(1)
+    , armorClass(0)
+    , weight(0)
+    , price(0)
+  {}
+
   bool stackable;
   int amount;
 
@@ -102,6 +120,15 @@ struct PickableDescription : Description
 
 struct CharacterDescription : Description
 {
+  CharacterDescription()
+    : level(0)
+    , hitPoints(0)
+    , maxHitPoints(0)
+    , defaultArmorClass(0)
+    , experience(0)
+    , cClass(CharacterClass::FIGHTER)
+  {}
+
   int level;
   int hitPoints;
   int maxHitPoints;
@@ -117,6 +144,13 @@ struct PlayableCharacterDescription : CharacterDescription
 
 struct MonsterDescription : CharacterDescription
 {
+  MonsterDescription()
+    : hitPointsBonus(0)
+    , damageDice(dices::NoDice)
+    , damageDiceCount(0)
+    , morale(0)
+  {}
+
   int hitPointsBonus;
   dices::Dice damageDice;
   int damageDiceCount;
@@ -125,11 +159,21 @@ struct MonsterDescription : CharacterDescription
 
 struct AiDescription : Description
 {
+  AiDescription()
+    : type(AiType::Null)
+  {}
+
   AiType type;
 };
 
 struct OpenableDescription : Description
 {
+  OpenableDescription()
+    : type(OpenableType::Null)
+    , lockId(0)
+    , locked(false)
+  {}
+
   OpenableType type;
   int lockId;
   bool locked;
