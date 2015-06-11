@@ -169,7 +169,7 @@ struct AiDescription : Description
 struct OpenableDescription : Description
 {
   OpenableDescription()
-    : type(OpenableType::Null)
+    : type(OpenableType::OpenableDoor)
     , lockId(0)
     , locked(false)
   {}

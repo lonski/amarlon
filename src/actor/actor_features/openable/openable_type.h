@@ -4,8 +4,7 @@
 namespace amarlon {
 
 enum class OpenableType
-{
-  Null,
+{  
   OpenableDoor,
   OpenableContainer
 };
