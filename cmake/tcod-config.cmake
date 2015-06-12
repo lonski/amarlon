@@ -51,6 +51,18 @@ else(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
     )
     set(TCOD_INCLUDE_DIRS ${TCOD_INCLUDE_DIR} "${TCOD_INCLUDE_DIR}/libtcod")
 
+    find_library(TCOD_C_LIBRARY
+	NAMES
+	    tcod
+		libtcod
+		libtcod-debug
+	PATHS
+	    /usr/lib
+	    /usr/local/lib
+	    /opt/local/lib
+	    "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+	    "${PROJECT_SOURCE_DIR}/lib"
+    )
     find_library(TCOD_CXX_LIBRARY
 	NAMES
 	    tcodxx
@@ -65,7 +77,7 @@ else(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
 	    "${PROJECT_SOURCE_DIR}/lib"
     )
 
-    set(TCOD_LIBRARIES ${TCOD_LIBRARIES} ${TCOD_CXX_LIBRARY})
+    set(TCOD_LIBRARIES ${TCOD_LIBRARIES} ${TCOD_C_LIBRARY} ${TCOD_CXX_LIBRARY})
 
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(libtcod DEFAULT_MSG TCOD_LIBRARIES TCOD_INCLUDE_DIRS)
