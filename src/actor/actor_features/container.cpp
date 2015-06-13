@@ -71,7 +71,7 @@ bool Container::isEqual(ActorFeaturePtr rhs)
   {
     equal = (_slotCount == crhs->_slotCount);    
     equal &= std::equal(_inventory.begin(), _inventory.end(), crhs->_inventory.begin(),
-                        [](ActorPtr l, ActorPtr r){ return l->isEqual(r); });
+                        [](ActorPtr l, ActorPtr r){ return *l == *r; });
   }
 
   return equal;
@@ -86,7 +86,7 @@ bool Container::add(ActorPtr actor)
   {
     auto invIter = find_if(_inventory.begin(), _inventory.end(), [&](ActorPtr iItem)
                    {
-                     return iItem->isEqual( actor);
+                     return *iItem == *actor;
                    });
 
     if (invIter != _inventory.end()) //merge

@@ -29,32 +29,36 @@ std::vector<ActorPtr> SingleRangeSelector::select(std::function<bool (amarlon::A
 
     bool accepted = false;
     TCOD_key_t key;
-    while ( key.vk != TCODK_ESCAPE && !accepted )
+    std::vector<ActorPtr> vec;
+    MapPtr map = Actor::Player->getMap();
+    if ( map )
     {
-        Engine::instance().gui().setStatusMessage( _selectionMessage );
-        TCODSystem::waitForEvent(TCOD_KEY_PRESSED, &key, NULL, true);
+      while ( key.vk != TCODK_ESCAPE && !accepted )
+      {
+          Engine::instance().gui().setStatusMessage( _selectionMessage );
+          TCODSystem::waitForEvent(TCOD_KEY_PRESSED, &key, NULL, true);
 
-        int dx_tmp(0), dy_tmp(0);
-        handleDirectionKey(key, dx_tmp, dy_tmp);
+          int dx_tmp(0), dy_tmp(0);
+          handleDirectionKey(key, dx_tmp, dy_tmp);
 
-        int calculatedRange = round( sqrt( pow(_dx+dx_tmp,2) + pow(_dy+dy_tmp,2)) );
-        if ( calculatedRange <= _range )
-        {
-            _dx += dx_tmp;
-            _dy += dy_tmp;
-            if ( _updateFunction != nullptr) _updateFunction();
-        }
+          int calculatedRange = round( sqrt( pow(_dx+dx_tmp,2) + pow(_dy+dy_tmp,2)) );
+          if ( calculatedRange <= _range && map->isInFov(_x + _dx + dx_tmp, _y + _dy + dy_tmp) )
+          {
+              _dx += dx_tmp;
+              _dy += dy_tmp;
+              if ( _updateFunction != nullptr) _updateFunction();
+          }
 
-        render();
-        if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER ) accepted = true;
+          render();
+          if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER )
+          {
+            vec = map->getActors(_x+_dx, _y+_dy, filterFun);
+            accepted = true;
+          }
+      }
     }
 
-    MapPtr map = Actor::Player->getMap();
-    assert(map != nullptr);
-    std::vector<ActorPtr> vec = map->getActors(_x+_dx, _y+_dy, filterFun);
-
-    return accepted ? vec
-                    : std::vector<ActorPtr>();
+    return vec;
 }
 
 void SingleRangeSelector::render()

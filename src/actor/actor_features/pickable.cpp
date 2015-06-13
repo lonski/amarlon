@@ -77,6 +77,7 @@ ActorFeaturePtr Pickable::clone()
   cloned->_itemSlot = _itemSlot;
   cloned->_category = _category;
   cloned->_damageDice = _damageDice;
+  cloned->_diceCount = _diceCount;
   cloned->_armorClass = _armorClass;
   cloned->_weight = _weight;
   cloned->_price = _price;
@@ -96,6 +97,7 @@ bool Pickable::isEqual(ActorFeaturePtr rhs)
     equal &= (_armorClass == crhs->_armorClass);
     equal &= (_weight == crhs->_weight);
     equal &= (_price == crhs->_price);
+    equal &= (_diceCount == crhs->_diceCount);
     //equal &= (_amount == crhs->_amount);  no amount comparing
     if ( getEffect() ) equal &= (getEffect()->isEqual( crhs->getEffect() ));
   }

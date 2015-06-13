@@ -53,10 +53,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Container>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
-		</Destroyable>
-		<Description>
-		Goblins   are   small,   wicked   humanoids   that   favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise.  An adult goblin stands 3 to 3½ feet tall and weigh 40 to 45 pounds.  Its eyes are usually bright and crafty-looking, varying in color from red to yellow.  A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color.  Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range
-		</Description>
+		</Destroyable>		
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
 		<Monster level="1" armorClass="11" experience="1000" hitPointsBonus="-1" damageDice="1d6" morale="7"/>
@@ -64,6 +61,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
 		</Destroyable>
+		<Description>Goblins   are   small,   wicked   humanoids   that   favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise.  An adult goblin stands 3 to 3½ feet tall and weigh 40 to 45 pounds.  Its eyes are usually bright and crafty-looking, varying in color from red to yellow.  A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color.  Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
 	</Actor>
 	
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">

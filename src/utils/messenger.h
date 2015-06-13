@@ -31,6 +31,8 @@ public:
   void actorPutInto(const std::string& putterName, const std::string& container, const std::string& itemName, int amount);
   void actorGainedExp(ActorPtr gainer, int exp);
   void actorLeveledUp(ActorPtr leveler, int level);
+  void lookAtObject(ActorPtr object);
+  void lookAtSomeItems(bool plural = false);
 
 private:
   Messenger();

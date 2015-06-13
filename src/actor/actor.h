@@ -36,8 +36,8 @@ public:
   ~Actor();
 
   void init();
-  ActorPtr clone();
-  bool isEqual(ActorPtr rhs);
+  ActorPtr clone();  
+  bool operator==(const Actor& rhs);
 
   //void move(int dx, int dy);
   void morph(ActorType newType);

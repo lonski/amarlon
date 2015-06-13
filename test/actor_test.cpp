@@ -25,7 +25,7 @@ TEST_F(ActorTest, actorEqual)
   std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
   std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
 
-  ASSERT_TRUE( a1->isEqual(a2) );
+  ASSERT_TRUE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_diferrent_id)
@@ -35,7 +35,7 @@ TEST_F(ActorTest, actorEqual_diferrent_id)
 
   a2->changeType( ActorType::Bed );
 
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_different_container)
@@ -56,7 +56,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   c2->setSlotCount(12);
 
   ASSERT_FALSE( c1->isEqual(c2) );
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 
   //existing, same content
   c2->setSlotCount( c1->slotCount() );
@@ -68,7 +68,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   c2->add(ca2);
 
   ASSERT_TRUE( c1->isEqual(c2) );
-  ASSERT_TRUE( a1->isEqual(a2) );
+  ASSERT_TRUE( *a1 == *a2 );
 
   //existing, different content
   ActorPtr ca1b = Actor::create(ActorType::CookBook);
@@ -78,7 +78,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   c2->add(ca2b);
 
   ASSERT_FALSE( c1->isEqual(c2) );
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 
   c1->remove( ca1b );
   c2->remove( ca2b );
@@ -92,7 +92,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   c2->add(ca2c);
 
   ASSERT_FALSE( c1->isEqual(c2) );
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_different_openable)
@@ -100,11 +100,11 @@ TEST_F(ActorTest, actorEqual_different_openable)
   std::shared_ptr<Actor> a1 = Actor::create(ActorType::DoorOpen);
   std::shared_ptr<Actor> a2 ( a1->clone() );
 
-  ASSERT_TRUE( a1->isEqual(a2) );
+  ASSERT_TRUE( *a1 == *a2 );
 
   a2->getFeature<Openable>()->setLockId(666);
 
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_different_pickable)
@@ -112,12 +112,12 @@ TEST_F(ActorTest, actorEqual_different_pickable)
   std::shared_ptr<Actor> a1 = Actor::create(ActorType::HealthPotion);
   std::shared_ptr<Actor> a2 ( a1->clone() );
 
-  ASSERT_TRUE( a1->isEqual(a2) );
+  ASSERT_TRUE( *a1 == *a2 );
 
   SelfHealEffect* e = dynamic_cast<SelfHealEffect*>(a1->getFeature<Pickable>()->getEffect());
   e->setHealAmount(666);
 
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_different_fighter)
@@ -125,7 +125,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
   std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
   std::shared_ptr<Actor> a2 ( a1->clone() );
 
-  ASSERT_TRUE( a1->isEqual(a2) );
+  ASSERT_TRUE( *a1 == *a2 );
 
   MonsterDescriptionPtr mobDsc(new MonsterDescription );  
   mobDsc->level = 123;
@@ -133,7 +133,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   a1->insertFeature( Character::create(mobDsc) );
 
-  ASSERT_FALSE( a1->isEqual(a2) );
+  ASSERT_FALSE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, spilt)

@@ -45,7 +45,7 @@ TEST_F(WearerTest, equip_item)
 {
   //not equipped
   ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Armor) );
-  ActorPtr clothArmor = Actor::create( ActorType::LinenClothes );
+  ActorPtr clothArmor = Actor::create( ActorType::LeatherArmor );
 
   //equip and check if equipped correctly
   EXPECT_TRUE( wearer->hasSlot(ItemSlotType::Armor) );
@@ -55,7 +55,7 @@ TEST_F(WearerTest, equip_item)
   ASSERT_FALSE( wearer->isEquipped(ItemSlotType::Boots) );
 
   //try to over-equip
-  ActorPtr overeq = Actor::create(ActorType::LinenClothes);
+  ActorPtr overeq = Actor::create(ActorType::LeatherArmor);
   EXPECT_FALSE( wearer->equip(overeq) );
   EXPECT_EQ( wearer->equipped(ItemSlotType::Armor), clothArmor );
 }
@@ -115,13 +115,13 @@ TEST_F(WearerTest, compare_test)
   w2 = Wearer::create(dsc);
 
   //compare by equip - 1. one equipped, second null
-  ActorPtr w1armor= Actor::create( ActorType::LinenClothes );
+  ActorPtr w1armor= Actor::create( ActorType::LeatherArmor );
 
   ASSERT_TRUE( w1->equip(w1armor) );
   ASSERT_FALSE( w1->isEqual( w2 ) );
 
   //compare by equip - 2. both equipped same
-  ActorPtr w2armor= Actor::create( ActorType::LinenClothes );
+  ActorPtr w2armor= Actor::create( ActorType::LeatherArmor);
   ASSERT_TRUE( w2->equip(w2armor) );
   ASSERT_TRUE( w1->isEqual( w2 ) );
 

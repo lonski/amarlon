@@ -60,21 +60,17 @@ ActorPtr Actor::clone()
 
   return cloned;
 }
-
-bool Actor::isEqual(ActorPtr rhs)
+bool Actor::operator==(const Actor &rhs)
 {
-  bool equal = (rhs != nullptr);
+  bool equal = true;
 
-  if ( rhs )
+  equal &= ( getId() == rhs.getId() );
+  equal &= ( getFeatureCount() == rhs.getFeatureCount() );
+
+  for ( auto af : _features)
   {
-    equal &= ( getId() == rhs->getId() );
-    equal &= ( getFeatureCount() == rhs->getFeatureCount() );
-
-    for ( auto af : _features)
-    {
-      ActorFeaturePtr feature = af.second;
-      equal &= ( feature->isEqual( rhs->getFeature( feature->getType() ) ) );
-    }
+    ActorFeaturePtr feature = af.second;
+    equal &= ( feature->isEqual( rhs.getFeature( feature->getType() ) ) );
   }
 
   return equal;

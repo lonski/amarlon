@@ -4,6 +4,7 @@
 namespace amarlon {
 
 TextFormater::TextFormater()
+  : _lineWidth(0)
 {
 }
 
@@ -40,15 +41,15 @@ void TextFormater::pushTextAsLines(std::string text, TCODColor color)
 {
   std::string line;
   for ( std::string word : explode(text, ' ') )
-  {
+  {    
     if ( line.size() + word.size() < _lineWidth )
     {
       line += word + " ";
     }
     else
-    {
+    {      
       _lines.push_back( ColoredString(line, color) );
-      line = word;
+      line = word + " ";
     }
   }
   _lines.push_back( ColoredString(line, color) );
