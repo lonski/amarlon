@@ -12,6 +12,8 @@ AList::AList()
 
 void AList::render(TCODConsole &console)
 {
+  //TODO: disabled autosize - print only fixed aount of entries
+  //at the momment disabled autosize is usable to keep the fixed area repainted every time
   int yPos = getY();
   for ( auto entry : _entries)
   {
@@ -41,12 +43,12 @@ AList::iterator AList::end()
 }
 
 bool AList::isAutosized() const
-{
+{  
   return _autosize;
 }
 
 void AList::setAutosize(bool autosize)
-{
+{  
   _autosize = autosize;
 }
 

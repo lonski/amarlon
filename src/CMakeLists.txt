@@ -57,6 +57,7 @@ set(HEADER_FILES
     gui/message_box.h
     gui/window/pick_up_window.h
     gui/window/text_window/text_window.h
+    gui/window/text_window/fixed_size_text_window.h
     gui/window/text_window/resizeable_text_window.h
     gui/window/awindow.h
     gui/window/menu_window.h
@@ -73,6 +74,7 @@ set(HEADER_FILES
     utils/xml_utils.h
     utils/amarlon_except.h
     utils/dices.h
+    utils/text_formater.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -146,6 +148,7 @@ set(SOURCE_FILES
     gui/window/pick_up_window.cpp
     gui/window/text_window/text_window.cpp
     gui/window/text_window/resizeable_text_window.cpp    
+    gui/window/text_window/fixed_size_text_window.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
     utils/target_selector/target_selector.cpp
@@ -155,6 +158,7 @@ set(SOURCE_FILES
     utils/utils.cpp
     utils/configuration.cpp
     utils/dices.cpp
+    utils/text_formater.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp

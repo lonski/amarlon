@@ -29,7 +29,7 @@ AWindow& TextWindow::show()
   {  
     displayText();
 
-    _panel->render(*TCODConsole::root);
+    render(*TCODConsole::root);
     TCODConsole::root->flush();
 
     TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
@@ -52,13 +52,13 @@ TextWindow& TextWindow::setWindowText(const std::string &text)
 
 TextWindow& TextWindow::setWindowTitle(const std::string &title)
 {
-  _panel->setTitle(title);
+  setTitle(title);
   return *this;
 }
 
 TextWindow& TextWindow::setWindowFrameColor(const TCODColor &frameColor)
 {
-  _panel->setFrameColor(frameColor);
+  setFrameColor(frameColor);
   return *this;
 }
 
@@ -76,7 +76,7 @@ TextWindow &TextWindow::setCenterGameWindow()
 
 TextWindow &TextWindow::setMargin(int margin)
 {
-  int frame = _panel && _panel->isFramed() ? 1 : 0;
+  int frame = isFramed() ? 1 : 0;
   _margin = margin + frame;
   return *this;
 }

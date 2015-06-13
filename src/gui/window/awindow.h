@@ -19,7 +19,9 @@ public:
     AMOUNT,
     PICKUP,
     TEXT,
-    MENU
+    MENU,
+    RESIZABLE_TEXT,
+    FIXED_SIZE_TEXT
   };
 
   /**

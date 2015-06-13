@@ -25,7 +25,6 @@ public:
   TextWindow& setMargin(int margin);
 
 protected:
-  APanelUPtr _panel;
   std::string _text;
   bool _centerGameWindow;
   int _margin;

@@ -28,7 +28,8 @@ private:
   {
     INVALID,
     DROP,
-    EQUIP
+    EQUIP,
+    INSPECT
   };
 
   AMenuPtr _bagMenu;

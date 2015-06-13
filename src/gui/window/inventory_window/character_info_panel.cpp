@@ -2,6 +2,7 @@
 #include <character.h>
 #include <actor.h>
 #include <playable_character.h>
+#include <attack_bonus_table.h>
 
 const unsigned MARGIN = 2;
 
@@ -42,7 +43,7 @@ void CharacterInfo::update()
   {
     _col1->pushBack(ColoredString("HP : " + toStr(character->getHitPoints()) + "/" + toStr(character->getMaxHitPoints()) ));
     _col1->pushBack(ColoredString("AC : " + toStr(character->getArmorClass()) ));
-    _col1->pushBack(ColoredString("AB : " + toStr(character->getMeleeAttackBonus()) ));
+    _col1->pushBack(ColoredString("AB : +" + toStr( AttackBonusTable::getBonus(character->getClass(), character->getLevel())) ));
     _col1->pushBack(ColoredString(""));
     _col1->pushBack(ColoredString("Ability Scores", TCODColor::darkerAzure));
     _col1->pushBack(ColoredString(""));

@@ -12,6 +12,7 @@ class ResizeableTextWindow : public TextWindow
   ResizeableTextWindow();
 
 public:
+  static WindowId getId() { return AWindow::RESIZABLE_TEXT; }
   virtual AWindow& setDefaults();
 
 protected:

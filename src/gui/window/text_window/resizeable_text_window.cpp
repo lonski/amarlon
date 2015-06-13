@@ -12,10 +12,10 @@ ResizeableTextWindow::ResizeableTextWindow()
 
 AWindow& ResizeableTextWindow::setDefaults()
 {
-  _panel.reset( new APanel );
-  _panel->setFrame(true);
+  removeAllWidgets();
+  setFrame(true);
   _list.reset( new AList );
-  _panel->addWidget(_list);
+  addWidget(_list);
 
   TextWindow::setDefaults();
 
@@ -36,9 +36,9 @@ void ResizeableTextWindow::displayText()
     if ( line.size() > width ) width = line.size();
   });
 
-  _panel->setHeight( _list->size() + _margin*2 );
-  _panel->setWidth( width + _margin*2 );
-  _panel->setPosition( _centerGameWindow ? AWidget::WINDOW_CENTER : AWidget::GAME_SCREEN_CENTER);
+  setHeight( _list->size() + _margin*2 );
+  setWidth( width + _margin*2 );
+  setPosition( _centerGameWindow ? AWidget::WINDOW_CENTER : AWidget::GAME_SCREEN_CENTER);
 }
 
 }}
