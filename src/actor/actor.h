@@ -56,6 +56,7 @@ public:
   unsigned char getChar() const;
   TCODColor getColor() const;
   std::string getName() const;
+  std::string getDescription();
 
   int getX() const;
   int getY() const;

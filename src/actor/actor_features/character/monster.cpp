@@ -51,7 +51,7 @@ int Monster::rollMeleeDamage()
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    return dices::roll( weapon->getDamageDie() );
+    return dices::roll( weapon->getDamageDice(), weapon->getDiceCount() );
   }
 
   return dices::roll(_damageDice, _damageDiceCount);

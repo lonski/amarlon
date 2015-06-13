@@ -14,6 +14,7 @@ TextFormater::~TextFormater()
 std::vector<ColoredString> TextFormater::format(std::string text, unsigned lineWidth)
 {
   _lineWidth = lineWidth;
+  _lines.clear();
 
   for( std::string line : explode(text,'\n') )
   {

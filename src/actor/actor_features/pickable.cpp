@@ -1,9 +1,10 @@
 #include "pickable.h"
 #include <iostream>
-#include "actor/actor.h"
-#include "actor/effects/effect.h"
-#include "gui/gui.h"
-#include "amarlon_except.h"
+#include <actor.h>
+#include <effect.h>
+#include <gui.h>
+#include <amarlon_except.h>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -13,7 +14,8 @@ Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
   , _effect(nullptr)
-  , _damageDie(dices::NoDice)
+  , _damageDice(dices::NoDice)
+  , _diceCount(0)
   , _armorClass(0)
   , _weight(0)
   , _price(0)
@@ -36,10 +38,11 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable.reset( new Pickable(pDsc->stackable, pDsc->amount) );
     pickable->_itemSlot = pDsc->itemSlot;
     pickable->_category = pDsc->category;
-    pickable->_damageDie = pDsc->damageDie;
+    pickable->_damageDice = pDsc->damageDice;
     pickable->_armorClass = pDsc->armorClass;
     pickable->_weight = pDsc->weight;
     pickable->_price = pDsc->price;
+    pickable->_diceCount = pDsc->damageDiceCount;
 
     Effect* effect = Effect::create(pDsc->effect);
     pickable->setEffect(effect);
@@ -73,7 +76,7 @@ ActorFeaturePtr Pickable::clone()
 
   cloned->_itemSlot = _itemSlot;
   cloned->_category = _category;
-  cloned->_damageDie = _damageDie;
+  cloned->_damageDice = _damageDice;
   cloned->_armorClass = _armorClass;
   cloned->_weight = _weight;
   cloned->_price = _price;
@@ -89,7 +92,7 @@ bool Pickable::isEqual(ActorFeaturePtr rhs)
   if (crhs != nullptr)
   {
     equal = (_stackable == crhs->_stackable);
-    equal &= (_damageDie == crhs->_damageDie);
+    equal &= (_damageDice == crhs->_damageDice);
     equal &= (_armorClass == crhs->_armorClass);
     equal &= (_weight == crhs->_weight);
     equal &= (_price == crhs->_price);
@@ -158,9 +161,14 @@ void Pickable::setCategory(const PickableCategory &category)
   _category = category;
 }
 
-dices::Dice Pickable::getDamageDie() const
+dices::Dice Pickable::getDamageDice() const
 {
-  return _damageDie;
+  return _damageDice;
+}
+
+int Pickable::getDiceCount() const
+{
+  return _diceCount;
 }
 
 int Pickable::getArmorClass() const
@@ -176,6 +184,31 @@ int Pickable::getWeight() const
 int Pickable::getPrice() const
 {
   return _price;
+}
+
+std::string Pickable::getDescription()
+{
+  std::string str = colorToStr(TCODColor::darkerTurquoise, true) + "Category: " + PickableCategory2Str( getCategory() );
+
+  if ( getItemSlot() != ItemSlotType::Null )
+  {
+    str += " (";
+    str += ItemSlotType2Str( getItemSlot() ) ;
+    str += ")";
+  }
+  str += "\n";
+  str += colorToStr(TCODColor::darkerTurquoise, true) + "Weight: " + toStr( getWeight() ) + " lbs\n \n";
+
+  if ( getDamageDice() != dices::NoDice )
+  {
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Damage: " + toStr(getDiceCount()) + "d" + toStr(getDamageDice()) + "\n";
+  }
+  if ( getArmorClass() != 0 )
+  {
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Armor class: " + toStr(getArmorClass()) + "\n";
+  }
+
+  return str;
 }
 
 int Pickable::getAmount() const

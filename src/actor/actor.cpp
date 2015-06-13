@@ -2,6 +2,7 @@
 #include <map.h>
 #include <iostream>
 #include <actor_action.h>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -127,6 +128,20 @@ ActorType Actor::getId() const
 std::string Actor::getName() const
 {
   return Actor::DB.getName(_id);;
+}
+
+std::string Actor::getDescription()
+{
+  std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "\n \n";
+
+  str += Actor::DB.getDescription(_id) + "\n \n";
+
+  for ( auto& fPair : _features )
+  {
+    str += fPair.second->getDescription();
+  }
+
+  return str;
 }
 
 int Actor::getX() const

@@ -27,6 +27,7 @@ public:
   bool isFovOnly(ActorType type);
   bool isTransparent(ActorType type);
   int getTileRenderPriority(ActorType type);
+  std::string getDescription(ActorType type);
 
   template<typename T>
   std::shared_ptr<T> getFeature(ActorType type);
