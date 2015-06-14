@@ -102,7 +102,7 @@ void Messenger::lookAtObject(ActorPtr object)
 {
   if ( _gui )
   {
-    _gui->message("You see a/an " + object->getName(), TCODColor::lightViolet);
+    _gui->message("You see a(n) " + object->getName(), TCODColor::lightViolet);
   }
 }
 

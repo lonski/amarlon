@@ -33,6 +33,11 @@ bool PlayableCharacter::isEqual(ActorFeaturePtr rhs)
   return equal;
 }
 
+int PlayableCharacter::getBaseAttackBonus()
+{
+  return AttackBonusTable::getBonus(getClass(), getLevel());
+}
+
 int PlayableCharacter::getMeleeAttackBonus()
 {
   return AttackBonusTable::getBonus(getClass(), getLevel()) + getModifier(AbilityScore::STR);

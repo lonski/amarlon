@@ -17,6 +17,7 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs);
 
   /* overriden functions */
+  virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
   virtual int rollMeleeDamage();
   virtual void modifyExperience(int modifier);

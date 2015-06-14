@@ -43,7 +43,7 @@ void CharacterInfo::update()
   {
     _col1->pushBack(ColoredString("HP : " + toStr(character->getHitPoints()) + "/" + toStr(character->getMaxHitPoints()) ));
     _col1->pushBack(ColoredString("AC : " + toStr(character->getArmorClass()) ));
-    _col1->pushBack(ColoredString("AB : +" + toStr( AttackBonusTable::getBonus(character->getClass(), character->getLevel())) ));
+    _col1->pushBack(ColoredString("AB : +" + toStr( character->getBaseAttackBonus()) ));
     _col1->pushBack(ColoredString(""));
     _col1->pushBack(ColoredString("Ability Scores", TCODColor::darkerAzure));
     _col1->pushBack(ColoredString(""));
