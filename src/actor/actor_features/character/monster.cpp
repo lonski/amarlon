@@ -14,7 +14,7 @@ Monster::Monster(int level, int hitPointsBonus)
   , _hpMod(hitPointsBonus)
 {
   setLevel(level);
-  setMaxHitPoints( dices::roll(dices::D8, getLevel() ) + _hpMod );
+  setMaxHitPoints( std::max( dices::roll(dices::D8, getLevel() ) + _hpMod, 1 ) );
   setHitPoints( getMaxHitPoints() );
 }
 

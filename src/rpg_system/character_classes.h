@@ -26,6 +26,7 @@ static inline std::string CharacterClass2Str(CharacterClass c)
     case CharacterClass::MagicUser: str = "Magic User"; break;
     case CharacterClass::Thief: str = "Thief"; break;
     case CharacterClass::Monster: str = "Monster"; break;
+    default:;
   }
   return str;
 }

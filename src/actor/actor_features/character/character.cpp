@@ -79,7 +79,7 @@ bool Character::isEqual(ActorFeaturePtr rhs)
     //equal &= _maxHitPoints       == crhs->_maxHitPoints; this is random
     equal &= _experience         == crhs->_experience;
     equal &= _class              == crhs->_class;
-    equal &= _race              == crhs->_race;
+    equal &= _race               == crhs->_race;
   }
 
   return equal;
@@ -167,10 +167,11 @@ int Character::getArmorClass()
 
 std::string Character::getDescription()
 {
-  std::string str = colorToStr(TCODColor::darkerTurquoise, true) + "Class: " + CharacterClass2Str( getClass() ) +"\n \n";
-
-  str += colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "\n";
-  str += colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "\n";
+  std::string str = colorToStr(TCODColor::darkerTurquoise, true)
+      + "Class: " + (getRace() == Race::NoRace ? "" : Race2Str(getRace()) + " ")
+      + CharacterClass2Str( getClass() ) +"\n \n"
+      + colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "\n"
+      + colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "\n";
 
   return str;
 }

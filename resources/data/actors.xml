@@ -12,7 +12,7 @@ When new actor is created with given ID as parameter, then the template will be 
 			</Content>
 			<Content id="24"/>			
 		</Container>
-		<PlayableCharacter level="1" hitPoints="7" maxHitPoints="8" armorClass="11" class="0" experience="0">
+		<PlayableCharacter level="1" experience="0" hitPoints="7" maxHitPoints="8" armorClass="11" class="1" race="1">
 			<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14" CHA="10"/>
 		</PlayableCharacter>
 		<Wearer>
@@ -41,7 +41,7 @@ When new actor is created with given ID as parameter, then the template will be 
 	</Actor>
 	
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" armorClass="11" experience="2500" hitPointsBonus="0" damageDice="1d8" morale="8"/>
+		<Monster level="1" experience="25" armorClass="11" hitPointsBonus="0" damageDice="1d8" morale="8"  class="1" race="5"/>
 		<Ai type="1"/>
 		<Wearer>
 			<ItemSlot type="3">
@@ -56,7 +56,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Destroyable>		
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" armorClass="11" experience="1000" hitPointsBonus="-1" damageDice="1d6" morale="7"/>
+		<Monster level="1" experience="10" armorClass="11" hitPointsBonus="-1" damageDice="1d6" morale="7" class="1" race="6"/>
 		<Ai type="1"/>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
