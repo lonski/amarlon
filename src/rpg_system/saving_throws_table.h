@@ -7,7 +7,7 @@
 namespace amarlon
 {
 
-namespace SavingThrows
+namespace saving_throws_table
 {
   enum Type
   {

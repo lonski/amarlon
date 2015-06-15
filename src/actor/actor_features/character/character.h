@@ -37,7 +37,7 @@ public:
   virtual int getLevel() const;
   virtual CharacterClass getClass() const;
   virtual Race getRace() const;
-  virtual int getSavingThrow(SavingThrows::Type type);
+  virtual int getSavingThrow(saving_throws_table::Type type);
 
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;

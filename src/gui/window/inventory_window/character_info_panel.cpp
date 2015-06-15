@@ -60,11 +60,11 @@ void CharacterInfo::update()
     _col2->pushBack(ColoredString(""));
     _col2->pushBack(ColoredString("Saving Throws", TCODColor::darkerAzure));
     _col2->pushBack(ColoredString(""));
-    _col2->pushBack(ColoredString("Death Ray            : " + toStr(character->getSavingThrow(SavingThrows::DeathRayOrPoison)) ));
-    _col2->pushBack(ColoredString("Magic Wands          : " + toStr(character->getSavingThrow(SavingThrows::MagicWands)) ));
-    _col2->pushBack(ColoredString("Paralysis or Petrify : " + toStr(character->getSavingThrow(SavingThrows::ParalysisOrPertrify)) ));
-    _col2->pushBack(ColoredString("Dragon Breath        : " + toStr(character->getSavingThrow(SavingThrows::DragonBreath)) ));
-    _col2->pushBack(ColoredString("Spells               : " + toStr(character->getSavingThrow(SavingThrows::Spells)) ));
+    _col2->pushBack(ColoredString("Death Ray            : " + toStr(character->getSavingThrow(saving_throws_table::DeathRayOrPoison)) ));
+    _col2->pushBack(ColoredString("Magic Wands          : " + toStr(character->getSavingThrow(saving_throws_table::MagicWands)) ));
+    _col2->pushBack(ColoredString("Paralysis or Petrify : " + toStr(character->getSavingThrow(saving_throws_table::ParalysisOrPertrify)) ));
+    _col2->pushBack(ColoredString("Dragon Breath        : " + toStr(character->getSavingThrow(saving_throws_table::DragonBreath)) ));
+    _col2->pushBack(ColoredString("Spells               : " + toStr(character->getSavingThrow(saving_throws_table::Spells)) ));
   }
 }
 
