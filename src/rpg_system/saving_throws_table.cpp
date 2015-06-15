@@ -3,7 +3,7 @@
 namespace amarlon
 {
 
-namespace saving_throws_table
+namespace SavingThrows
 {
 
 int getSavingThrow(Type type, CharacterClass charClass, int level)

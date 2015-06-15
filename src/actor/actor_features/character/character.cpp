@@ -154,9 +154,9 @@ Race Character::getRace() const
   return _race;
 }
 
-int Character::getSavingThrow(saving_throws_table::Type type)
+int Character::getSavingThrow(SavingThrows::Type type)
 {
-  return saving_throws_table::getSavingThrow( type, getClass(), getLevel() );
+  return SavingThrows::getSavingThrow( type, getClass(), getLevel() );
 }
 
 int Character::getArmorClass()
