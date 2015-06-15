@@ -2,7 +2,7 @@
 
 namespace amarlon {
 
-namespace AttackBonusTable
+namespace attack_bonus_table
 {
 
   int getBonus(CharacterClass charClass, int level)
