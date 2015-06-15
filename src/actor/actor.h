@@ -36,8 +36,8 @@ public:
   ~Actor();
 
   void init();
-  ActorPtr clone();
-  bool isEqual(ActorPtr rhs);
+  ActorPtr clone();  
+  bool operator==(const Actor& rhs);
 
   //void move(int dx, int dy);
   void morph(ActorType newType);
@@ -56,6 +56,7 @@ public:
   unsigned char getChar() const;
   TCODColor getColor() const;
   std::string getName() const;
+  std::string getDescription();
 
   int getX() const;
   int getY() const;

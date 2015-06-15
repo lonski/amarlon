@@ -2,6 +2,7 @@
 #include <map.h>
 #include <iostream>
 #include <actor_action.h>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -59,21 +60,17 @@ ActorPtr Actor::clone()
 
   return cloned;
 }
-
-bool Actor::isEqual(ActorPtr rhs)
+bool Actor::operator==(const Actor &rhs)
 {
-  bool equal = (rhs != nullptr);
+  bool equal = true;
 
-  if ( rhs )
+  equal &= ( getId() == rhs.getId() );
+  equal &= ( getFeatureCount() == rhs.getFeatureCount() );
+
+  for ( auto af : _features)
   {
-    equal &= ( getId() == rhs->getId() );
-    equal &= ( getFeatureCount() == rhs->getFeatureCount() );
-
-    for ( auto af : _features)
-    {
-      ActorFeaturePtr feature = af.second;
-      equal &= ( feature->isEqual( rhs->getFeature( feature->getType() ) ) );
-    }
+    ActorFeaturePtr feature = af.second;
+    equal &= ( feature->isEqual( rhs.getFeature( feature->getType() ) ) );
   }
 
   return equal;
@@ -127,6 +124,20 @@ ActorType Actor::getId() const
 std::string Actor::getName() const
 {
   return Actor::DB.getName(_id);;
+}
+
+std::string Actor::getDescription()
+{
+  std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "\n \n";
+
+  str += Actor::DB.getDescription(_id) + "\n \n";
+
+  for ( auto& fPair : _features )
+  {
+    str += fPair.second->getDescription();
+  }
+
+  return str;
 }
 
 int Actor::getX() const

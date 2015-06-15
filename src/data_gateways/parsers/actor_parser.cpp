@@ -66,6 +66,12 @@ ActorDescriptionPtr ActorParser::parseActorDsc()
     else
       actorDsc->tilePriority = -1;
 
+    xml_node<>* dNode = _xml->first_node("Description");
+    if ( dNode != nullptr )
+    {
+      actorDsc->description = getNodeValue<std::string>(dNode);
+    }
+
   }
 
   return actorDsc;
@@ -134,10 +140,17 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
       pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
       pickDsc->category = (PickableCategory)getAttribute<int>(pickableNode, "category");
-      pickDsc->damageDie = (dices::Dice)getAttribute<int>(pickableNode, "damageDie");
       pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
       pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       pickDsc->price = getAttribute<int>(pickableNode, "price");
+
+      std::string dDice = getAttribute<std::string>(pickableNode, "damageDice");
+      auto dmgDiceParams = explode(dDice, 'd');
+      if ( dmgDiceParams.size() == 2 )
+      {
+        pickDsc->damageDiceCount = fromStr<int>(dmgDiceParams[0]);
+        pickDsc->damageDice = static_cast<dices::Dice>( fromStr<int>(dmgDiceParams[1]) );
+      }
 
       // == effects == //
       xml_node<>* effectNode = pickableNode->first_node("Effect");

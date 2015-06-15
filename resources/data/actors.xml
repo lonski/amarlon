@@ -10,8 +10,7 @@ When new actor is created with given ID as parameter, then the template will be 
 			<Content id="12">
 				<Pickable stackable="1" amount="4" category="4"/>
 			</Content>
-			<Content id="24"/>
-			<Content id="17"/>
+			<Content id="24"/>			
 		</Container>
 		<PlayableCharacter level="1" hitPoints="7" maxHitPoints="8" armorClass="11" class="0" experience="0">
 			<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14" CHA="10"/>
@@ -54,7 +53,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Container>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
-		</Destroyable>
+		</Destroyable>		
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
 		<Monster level="1" armorClass="11" experience="1000" hitPointsBonus="-1" damageDice="1d6" morale="7"/>
@@ -62,6 +61,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
 		</Destroyable>
+		<Description>Goblins   are   small,   wicked   humanoids   that   favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise.  An adult goblin stands 3 to 3½ feet tall and weigh 40 to 45 pounds.  Its eyes are usually bright and crafty-looking, varying in color from red to yellow.  A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color.  Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
 	</Actor>
 	
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
@@ -96,9 +96,6 @@ When new actor is created with given ID as parameter, then the template will be 
 			<Effect type="1" lockId="5" uses="-1" category="0"/>
 		</Pickable>
 	</Actor>
-	<Actor name="Linen clothes" id="17" character="[" color="FFFF99" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="3" category="2"/>
-	</Actor>
 	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" itemSlot="6" category="2"/>
 	</Actor>
@@ -106,7 +103,8 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="0" amount="1" itemSlot="4" category="2"/>
 	</Actor>
 	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="3" category="2" damageDie="0" armorClass="13" weight="15" price="20"/>
+		<Pickable stackable="0" amount="1" itemSlot="3" category="2" armorClass="13" weight="15" price="20"/>
+		<Description>Leather armor is made up of multiple overlapping pieces of leather, boiled to increase their natural toughness and then deliberately stitched together. Although not as sturdy as metal armor, the flexibility it allows wearers makes it among the most widely used types of armor.</Description>
 	</Actor>	
 	<Actor name="Gold coin" id="22" character="$" color="E2B227" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="1" category="7"/>
@@ -115,7 +113,8 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="1" amount="1" category="4"/>
 	</Actor>
 	<Actor name="Dagger" id="24" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damageDie="4" armorClass="0" weight="1" price="2"/>
+		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damageDice="1d4" armorClass="0" weight="1" price="2"/>
+		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
 	</Actor>
 	
 </Actors>

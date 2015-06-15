@@ -77,7 +77,7 @@ static inline std::string tolowers(const std::string& str)
   return r;
 }
 
-static inline std::string colorToStr(TCODColor color)
+static inline std::string colorToStr(TCODColor color, bool braces = false)
 {
   std::stringstream ss;
   ss << std::setfill('0')
@@ -85,7 +85,7 @@ static inline std::string colorToStr(TCODColor color)
      << std::setw(2) << std::hex << (int)color.g
      << std::setw(2) << std::hex << (int)color.b;
 
-  return ss.str();
+  return braces ? "{"+ss.str()+"}" : ss.str();
 }
 
 static inline TCODColor strToColor(const std::string& str)

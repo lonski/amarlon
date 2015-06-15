@@ -68,6 +68,11 @@ int ActorDB::getTileRenderPriority(ActorType type)
   return piority;
 }
 
+string ActorDB::getDescription(ActorType type)
+{
+  return getParam<std::string>(type, &ActorDescription::description, "");
+}
+
 // === GET ALL FEATURES === //
 
 class FeatureGetter

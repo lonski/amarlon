@@ -94,6 +94,7 @@ struct ActorDescription : Description
   bool fovOnly;
   bool transparent;  
   int tilePriority;
+  std::string description;
 };
 
 struct PickableDescription : Description
@@ -101,9 +102,13 @@ struct PickableDescription : Description
   PickableDescription()
     : stackable(false)
     , amount(1)
+    , itemSlot(ItemSlotType::Null)
+    , category(PickableCategory::Miscellaneous)
+    , damageDice(dices::NoDice)
     , armorClass(0)
     , weight(0)
     , price(0)
+    , damageDiceCount(0)
   {}
 
   bool stackable;
@@ -112,10 +117,11 @@ struct PickableDescription : Description
   EffectDescription effect;
   ItemSlotType itemSlot;
   PickableCategory category;
-  dices::Dice damageDie;
+  dices::Dice damageDice;
   int armorClass;
   int weight;
   int price;
+  int damageDiceCount;
 };
 
 

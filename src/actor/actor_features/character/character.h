@@ -39,9 +39,12 @@ public:
   virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
 
+  virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
   virtual int rollMeleeDamage() = 0;
   virtual int getArmorClass();
+
+  virtual std::string getDescription();
 
 protected:
   virtual void setLevel(int level);

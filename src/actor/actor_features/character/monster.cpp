@@ -3,6 +3,7 @@
 #include <die_action.h>
 #include <attack_bonus_table.h>
 #include <iostream>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -10,9 +11,10 @@ Monster::Monster(int level, int hitPointsBonus)
   : _damageDice(dices::D4)
   , _damageDiceCount(1)
   , _morale(0)  
+  , _hpMod(hitPointsBonus)
 {
   setLevel(level);
-  setMaxHitPoints( dices::roll(dices::D8, getLevel() ) + hitPointsBonus );
+  setMaxHitPoints( dices::roll(dices::D8, getLevel() ) + _hpMod );
   setHitPoints( getMaxHitPoints() );
 }
 
@@ -34,11 +36,16 @@ bool Monster::isEqual(ActorFeaturePtr rhs)
   {
     equal = Character::isEqual( rhs );
     equal &= _damageDice      == crhs->_damageDice;
-    equal &= _damageDiceCount      == crhs->_damageDiceCount;
+    equal &= _damageDiceCount == crhs->_damageDiceCount;
     equal &= _morale          == crhs->_morale;
   }
 
   return equal;
+}
+
+int Monster::getBaseAttackBonus()
+{
+  return getMeleeAttackBonus();
 }
 
 int Monster::getMeleeAttackBonus()
@@ -51,10 +58,19 @@ int Monster::rollMeleeDamage()
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    return dices::roll( weapon->getDamageDie() );
+    return dices::roll( weapon->getDamageDice(), weapon->getDiceCount() );
   }
 
   return dices::roll(_damageDice, _damageDiceCount);
+}
+
+std::string Monster::getDescription()
+{
+  std::string str = Character::getDescription();
+
+  str += colorToStr(TCODColor::darkTurquoise, true) + "Hit points dice: " + toStr( getLevel() ) + "d8" + ( _hpMod >= 0 ? "+" : "") + toStr(_hpMod);
+
+  return str;
 }
 
 int Monster::getMorale()

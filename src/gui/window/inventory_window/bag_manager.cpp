@@ -80,8 +80,13 @@ void BagManager::manage()
         case EQUIP: equip( selectedItem ); break;
         case DROP: Actor::Player->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ); break;
         //TODO display actor info text instead of test string
-        case INSPECT: Engine::instance().windowManager().getWindow<FixedSizeTextWindow>().setText( "{ff0000}Lorem ipsum dolor sit amet,\n \n{00ff00}consectetur adipiscing elit.\nInteger sed neque vitae ex accumsan eleifend. Cras id ante ut nisi faucibus auctor. Maecenas blandit sem non pharetra vestibulum. Ut et sem in nunc dictum dignissim in nec metus. Nunc dolor neque, mattis maximus quam eu, feugiat egestas enim. Curabitur vel porta diam, non viverra tellus. Vestibulum ligula orci, congue quis tristique in, ultrices eget ex. Integer et mauris iaculis, porttitor magna vel, posuere magna. Sed ultrices nulla sapien, sed ornare ipsum imperdiet sed. Praesent maximus ipsum purus, a maximus lorem venenatis quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed neque vitae ex accumsan eleifend. Cras id ante ut nisi faucibus auctor. Maecenas blandit sem non pharetra vestibulum. Ut et sem in nunc dictum dignissim in nec metus. Nunc dolor neque, mattis maximus quam eu, feugiat egestas enim. Curabitur vel porta diam, non viverra tellus. Vestibulum ligula orci, congue quis tristique in, ultrices eget ex. Integer et mauris iaculis, porttitor magna vel, posuere magna. Sed ultrices nulla sapien, sed ornare ipsum imperdiet sed. Praesent maximus ipsum purus, a maximus lorem venenatis quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed neque vitae ex accumsan eleifend. Cras id ante ut nisi faucibus auctor. Maecenas blandit sem non pharetra vestibulum. Ut et sem in nunc dictum dignissim in nec metus. Nunc dolor neque, mattis maximus quam eu, feugiat egestas enim. Curabitur vel porta diam, non viverra tellus. Vestibulum ligula orci, congue quis tristique in, ultrices eget ex. Integer et mauris iaculis, porttitor magna vel, posuere magna. Sed ultrices nulla sapien, sed ornare ipsum imperdiet sed. Praesent maximus ipsum purus, a maximus lorem venenatis quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed neque vitae ex accumsan eleifend. Cras id ante ut nisi faucibus auctor. Maecenas blandit sem non pharetra vestibulum. Ut et sem in nunc dictum dignissim in nec metus. Nunc dolor neque, mattis maximus quam eu, feugiat egestas enim. Curabitur vel porta diam, non viverra tellus. Vestibulum ligula orci, congue quis tristique in, ultrices eget ex. Integer et mauris iaculis, porttitor magna vel, posuere magna. Sed ultrices nulla sapien, sed ornare ipsum imperdiet sed. Praesent maximus ipsum purus, a maximus lorem venenatis quis."
-                                                                                                   ).show(); break;
+        case INSPECT:
+          Engine::instance()
+              .windowManager()
+              .getWindow<FixedSizeTextWindow>()
+              .setText( selectedItem->getDescription() )
+              .show();
+          break;
         default:;
       }
 

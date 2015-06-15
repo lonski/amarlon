@@ -3,6 +3,7 @@
 #include <monster.h>
 #include <actor.h>
 #include <die_action.h>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -162,6 +163,16 @@ int Character::getArmorClass()
 {
   PickablePtr armor = getEquippedItem(ItemSlotType::Armor);
   return armor ? armor->getArmorClass() : _defaultArmorClass;
+}
+
+std::string Character::getDescription()
+{
+  std::string str = colorToStr(TCODColor::darkerTurquoise, true) + "Class: " + CharacterClass2Str( getClass() ) +"\n \n";
+
+  str += colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "\n";
+  str += colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "\n";
+
+  return str;
 }
 
 void Character::setLevel(int level)

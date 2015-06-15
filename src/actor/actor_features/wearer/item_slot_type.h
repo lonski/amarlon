@@ -39,7 +39,7 @@ static inline const char* ItemSlotType2Str(ItemSlotType slot)
 
           "Helmet",
           "Amulet",
-          "Armor",
+          "Body",
           "Belt",
           "Hands",
           "Boots",

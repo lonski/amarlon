@@ -98,6 +98,26 @@ void Messenger::actorLeveledUp(ActorPtr leveler, int level)
   }
 }
 
+void Messenger::lookAtObject(ActorPtr object)
+{
+  if ( _gui )
+  {
+    _gui->message("You see a(n) " + object->getName(), TCODColor::lightViolet);
+  }
+}
+
+void Messenger::lookAtSomeItems(bool plural)
+{
+  if ( _gui )
+  {
+    std::string msg = "You see some ";
+    msg.append(plural ? "items" : "item");
+    msg.append(" laying here.");
+
+    _gui->message(msg , TCODColor::lightViolet);
+  }
+}
+
 void Messenger::actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const string &from)
 {
   if ( _gui )

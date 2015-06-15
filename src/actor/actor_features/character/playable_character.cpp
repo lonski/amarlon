@@ -33,6 +33,11 @@ bool PlayableCharacter::isEqual(ActorFeaturePtr rhs)
   return equal;
 }
 
+int PlayableCharacter::getBaseAttackBonus()
+{
+  return AttackBonusTable::getBonus(getClass(), getLevel());
+}
+
 int PlayableCharacter::getMeleeAttackBonus()
 {
   return AttackBonusTable::getBonus(getClass(), getLevel()) + getModifier(AbilityScore::STR);
@@ -45,7 +50,7 @@ int PlayableCharacter::rollMeleeDamage()
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    dmg += dices::roll( weapon->getDamageDie() );
+    dmg += dices::roll( weapon->getDamageDice(), weapon->getDiceCount() );
   }
 
   return std::max(dmg, 1); //always minimum 1 dmg inflicted

@@ -49,4 +49,9 @@ ActorWPtr ActorFeature::getOwner()
   return _owner;
 }
 
+std::string ActorFeature::getDescription()
+{
+  return "";
+}
+
 }

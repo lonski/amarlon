@@ -15,8 +15,11 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs);
 
   /* overriden functions */
+  virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
   virtual int rollMeleeDamage();
+
+  virtual std::string getDescription();
 
   /* class specific functions */
   virtual int getMorale();
@@ -25,6 +28,7 @@ private:
   dices::Dice _damageDice;  
   int _damageDiceCount;
   int _morale;
+  int _hpMod;
 
   friend class Character;
 

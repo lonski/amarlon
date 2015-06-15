@@ -16,6 +16,8 @@ FixedSizeTextWindow::FixedSizeTextWindow(int w, int h)
 
 AWindow& FixedSizeTextWindow::setDefaults()
 {
+  removeAllWidgets();
+
   _lineCount = getHeight() - 2*MARGIN;
   _lineWidth = getWidth() - 2*MARGIN;
   _lineStart = 0;
