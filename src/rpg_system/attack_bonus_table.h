@@ -10,7 +10,7 @@ namespace amarlon
 namespace AttackBonus
 {
 
-  int getBonus(CharacterClass charClass, int level);
+  int get(CharacterClass charClass, int level);
 
   static std::map< CharacterClass, std::map<int, int> > abTable =
   {

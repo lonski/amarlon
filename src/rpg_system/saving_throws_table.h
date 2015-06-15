@@ -18,7 +18,7 @@ namespace SavingThrows
     Spells
   };
 
-  int getSavingThrow(Type type, CharacterClass charClass, int level);
+  int get(Type type, CharacterClass charClass, int level);
 
   static std::map< CharacterClass, std::map< Type, std::map<int, int> > > stTable =
   {

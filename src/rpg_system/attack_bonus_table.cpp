@@ -5,7 +5,7 @@ namespace amarlon {
 namespace AttackBonus
 {
 
-  int getBonus(CharacterClass charClass, int level)
+  int get(CharacterClass charClass, int level)
   {
     return abTable[charClass][level];
   }

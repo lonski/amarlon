@@ -156,7 +156,7 @@ Race Character::getRace() const
 
 int Character::getSavingThrow(SavingThrows::Type type)
 {
-  return SavingThrows::getSavingThrow( type, getClass(), getLevel() );
+  return SavingThrows::get( type, getClass(), getLevel() );
 }
 
 int Character::getArmorClass()

@@ -35,12 +35,12 @@ bool PlayableCharacter::isEqual(ActorFeaturePtr rhs)
 
 int PlayableCharacter::getBaseAttackBonus()
 {
-  return AttackBonus::getBonus(getClass(), getLevel());
+  return AttackBonus::get(getClass(), getLevel());
 }
 
 int PlayableCharacter::getMeleeAttackBonus()
 {
-  return AttackBonus::getBonus(getClass(), getLevel()) + getModifier(AbilityScore::STR);
+  return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR);
 }
 
 int PlayableCharacter::rollMeleeDamage()

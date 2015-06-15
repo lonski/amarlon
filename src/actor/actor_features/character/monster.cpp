@@ -50,7 +50,7 @@ int Monster::getBaseAttackBonus()
 
 int Monster::getMeleeAttackBonus()
 {
-  return AttackBonus::getBonus(CharacterClass::Monster, getLevel() );
+  return AttackBonus::get(CharacterClass::Monster, getLevel() );
 }
 
 int Monster::rollMeleeDamage()

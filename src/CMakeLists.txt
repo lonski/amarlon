@@ -101,6 +101,7 @@ set(HEADER_FILES
     rpg_system/saving_throws_table.h
     rpg_system/experience_table.h
     rpg_system/races.h
+    rpg_system/carrying_capacity.h
 )
 
 set(SOURCE_FILES
@@ -181,6 +182,7 @@ set(SOURCE_FILES
     rpg_system/attack_bonus_table.cpp
     rpg_system/saving_throws_table.cpp
     rpg_system/experience_table.cpp
+    rpg_system/carrying_capacity.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
