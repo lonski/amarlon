@@ -3,7 +3,7 @@
 namespace amarlon
 {
 
-namespace experience_table
+namespace Experience
 {
 
   LevelData getLevelData(CharacterClass charClass, int level)

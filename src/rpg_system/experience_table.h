@@ -42,7 +42,7 @@ struct LevelData
   std::map<SpellLevel, SpellCount> spellSlotCount;
 };
 
-namespace experience_table
+namespace Experience
 {
   const int MAX_LEVEL = 20;
 

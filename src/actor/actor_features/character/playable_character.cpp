@@ -60,9 +60,9 @@ void PlayableCharacter::modifyExperience(int modifier)
 {
   Character::modifyExperience(modifier);
 
-  if ( getLevel() < experience_table::MAX_LEVEL )
+  if ( getLevel() < Experience::MAX_LEVEL )
   {
-    LevelData data = experience_table::getLevelData(getClass(), getLevel() + 1);
+    LevelData data = Experience::getLevelData(getClass(), getLevel() + 1);
     if ( data.expNeeded != 0 && getExperience() >= data.expNeeded)
     {
       advanceLevel(data);

@@ -10,7 +10,7 @@ namespace amarlon {
 
 TEST(ExpDataTable, get)
 {
-  experience_table::getLevelData(CharacterClass::Fighter, 1);
+  Experience::getLevelData(CharacterClass::Fighter, 1);
 }
 
 TEST(UtilsTest, color2str)
