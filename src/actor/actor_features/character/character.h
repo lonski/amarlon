@@ -7,6 +7,7 @@
 #include <ability_scores.h>
 #include <character_classes.h>
 #include <saving_throws_table.h>
+#include <races.h>
 
 namespace amarlon {
 
@@ -35,6 +36,7 @@ public:
   virtual void modifyExperience(int modifier);
   virtual int getLevel() const;
   virtual CharacterClass getClass() const;
+  virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
 
   virtual int getMeleeAttackBonus() = 0;
@@ -54,6 +56,7 @@ private:
   int _defaultArmorClass;
   int _experience;
   CharacterClass _class;
+  Race _race;
 
 
 };

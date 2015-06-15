@@ -5,6 +5,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <map>
 #include <libtcod.hpp>
 #include <actor_type.h>
 #include <ai_type.h>
@@ -16,7 +17,7 @@
 #include <dices.h>
 #include <character_classes.h>
 #include <ability_scores.h>
-#include <map>
+#include <races.h>
 
 namespace amarlon {
 
@@ -126,7 +127,8 @@ struct CharacterDescription : Description
     , maxHitPoints(0)
     , defaultArmorClass(0)
     , experience(0)
-    , cClass(CharacterClass::FIGHTER)
+    , cClass(CharacterClass::Fighter)
+    , race(Race::NoRace)
   {}
 
   int level;
@@ -135,6 +137,7 @@ struct CharacterDescription : Description
   int defaultArmorClass;
   int experience;
   CharacterClass cClass;
+  Race race;
 };
 
 struct PlayableCharacterDescription : CharacterDescription

@@ -23,7 +23,7 @@ namespace SavingThrows
   static std::map< CharacterClass, std::map< Type, std::map<int, int> > > stTable =
   {
     {
-      CharacterClass::FIGHTER,
+      CharacterClass::Fighter,
       {
         {
           DeathRayOrPoison,
@@ -159,7 +159,7 @@ namespace SavingThrows
     },
 
     {
-      CharacterClass::THIEF,
+      CharacterClass::Thief,
       {
         {
           DeathRayOrPoison,
@@ -295,7 +295,7 @@ namespace SavingThrows
     },
 
     {
-      CharacterClass::MAGIC_USER,
+      CharacterClass::MagicUser,
       {
         {
           DeathRayOrPoison,
@@ -431,7 +431,7 @@ namespace SavingThrows
     },
 
     {
-      CharacterClass::CLERIC,
+      CharacterClass::Cleric,
       {
         {
           DeathRayOrPoison,

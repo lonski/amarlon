@@ -100,6 +100,7 @@ set(HEADER_FILES
     rpg_system/attack_bonus_table.h
     rpg_system/saving_throws_table.h
     rpg_system/experience_table.h
+    rpg_system/races.h
 )
 
 set(SOURCE_FILES

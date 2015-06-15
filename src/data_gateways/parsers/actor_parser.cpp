@@ -2,6 +2,7 @@
 #include <string>
 #include <utils/xml_utils.h>
 #include <utils/utils.h>
+#include <races.h>
 
 namespace amarlon {
 
@@ -208,6 +209,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
       dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
       dsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
+      dsc->race = (Race)getAttribute<int>(characterNode, "race");
       dsc->experience = getAttribute<int>(characterNode, "experience");
     }
 

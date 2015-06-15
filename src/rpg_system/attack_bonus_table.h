@@ -15,7 +15,7 @@ namespace AttackBonusTable
   static std::map< CharacterClass, std::map<int, int> > abTable =
   {
     {
-      CharacterClass::FIGHTER,
+      CharacterClass::Fighter,
       {
       /* Level, AB */
         {0,     0},
@@ -43,7 +43,7 @@ namespace AttackBonusTable
     },
 
     {
-      CharacterClass::CLERIC,
+      CharacterClass::Cleric,
       {
       /* Level, AB */
         {0,     0},
@@ -71,7 +71,7 @@ namespace AttackBonusTable
     },
 
     {
-      CharacterClass::THIEF,
+      CharacterClass::Thief,
       {
       /* Level, AB */
         {0,     0},
@@ -99,7 +99,7 @@ namespace AttackBonusTable
     },
 
     {
-      CharacterClass::MAGIC_USER,
+      CharacterClass::MagicUser,
       {
       /* Level, AB */
         {0,     0},
@@ -127,7 +127,7 @@ namespace AttackBonusTable
     },
 
     {
-      CharacterClass::MONSTER,
+      CharacterClass::Monster,
       {
       /* Level, AB */
         {0,      0},

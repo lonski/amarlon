@@ -8,11 +8,12 @@ namespace amarlon
 
 enum class CharacterClass
 {
-  FIGHTER = 0,
-  CLERIC = 1,
-  MAGIC_USER = 2,
-  THIEF = 3,
-  MONSTER = 4
+  NoClass    = 0,
+  Fighter    = 1,
+  Cleric     = 2,
+  MagicUser  = 3,
+  Thief      = 4,
+  Monster    = 5
 };
 
 static inline std::string CharacterClass2Str(CharacterClass c)
@@ -20,11 +21,11 @@ static inline std::string CharacterClass2Str(CharacterClass c)
   std::string str = "";
   switch ( c )
   {
-    case CharacterClass::FIGHTER: str = "Fighter"; break;
-    case CharacterClass::CLERIC: str = "Cleric"; break;
-    case CharacterClass::MAGIC_USER: str = "Magic User"; break;
-    case CharacterClass::THIEF: str = "Thief"; break;
-    case CharacterClass::MONSTER: str = "Monster"; break;
+    case CharacterClass::Fighter: str = "Fighter"; break;
+    case CharacterClass::Cleric: str = "Cleric"; break;
+    case CharacterClass::MagicUser: str = "Magic User"; break;
+    case CharacterClass::Thief: str = "Thief"; break;
+    case CharacterClass::Monster: str = "Monster"; break;
   }
   return str;
 }

@@ -14,7 +14,8 @@ Character::Character()
   , _maxHitPoints(0)
   , _defaultArmorClass(11) //no-armor AC
   , _experience(0)
-  , _class(CharacterClass::MONSTER)
+  , _class(CharacterClass::Monster)
+  , _race(Race::NoRace)
 {
 }
 
@@ -23,7 +24,7 @@ CharacterPtr Character::create(DescriptionPtr dsc)
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   CharacterPtr c = nullptr;
 
-  //playable character
+  //playable character part
   PlayableCharacterDescriptionPtr characterDsc = std::dynamic_pointer_cast<PlayableCharacterDescription>(dsc);
   if ( characterDsc != nullptr )
   {
@@ -32,15 +33,11 @@ CharacterPtr Character::create(DescriptionPtr dsc)
     character->_hitPoints = characterDsc->hitPoints;
     character->_maxHitPoints = characterDsc->maxHitPoints;
     character->_level = characterDsc->level;
-    character->_experience = characterDsc->experience;
-    character->_class = characterDsc->cClass;
-    character->_defaultArmorClass = characterDsc->defaultArmorClass;
-
     character->_abilityScores = characterDsc->abilityScores;
 
     c = character;
   }
-  //monster
+  //monster part
   else
   {
     MonsterDescriptionPtr monsterDsc = std::dynamic_pointer_cast<MonsterDescription>(dsc);
@@ -48,16 +45,22 @@ CharacterPtr Character::create(DescriptionPtr dsc)
     {
       MonsterPtr monster( new Monster(monsterDsc->level, monsterDsc->hitPointsBonus) );
 
-      monster->_experience = monsterDsc->experience;
-      monster->_class = monsterDsc->cClass;
-      monster->_defaultArmorClass = monsterDsc->defaultArmorClass;
-
       monster->_damageDice = monsterDsc->damageDice;
       monster->_damageDiceCount = monsterDsc->damageDiceCount;
       monster->_morale = monsterDsc->morale;
 
       c = monster;
     }
+  }
+
+  //common part
+  CharacterDescriptionPtr commonDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
+  if ( commonDsc != nullptr )
+  {
+    c->_experience = commonDsc->experience;
+    c->_class = commonDsc->cClass;
+    c->_race = commonDsc->race;
+    c->_defaultArmorClass = commonDsc->defaultArmorClass;
   }
 
   return c;
@@ -75,6 +78,7 @@ bool Character::isEqual(ActorFeaturePtr rhs)
     //equal &= _maxHitPoints       == crhs->_maxHitPoints; this is random
     equal &= _experience         == crhs->_experience;
     equal &= _class              == crhs->_class;
+    equal &= _race              == crhs->_race;
   }
 
   return equal;
@@ -142,6 +146,11 @@ int Character::getLevel() const
 CharacterClass Character::getClass() const
 {
   return _class;
+}
+
+Race Character::getRace() const
+{
+  return _race;
 }
 
 int Character::getSavingThrow(SavingThrows::Type type)

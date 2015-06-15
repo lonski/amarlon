@@ -43,7 +43,7 @@ bool Monster::isEqual(ActorFeaturePtr rhs)
 
 int Monster::getMeleeAttackBonus()
 {
-  return AttackBonusTable::getBonus(CharacterClass::MONSTER, getLevel() );
+  return AttackBonusTable::getBonus(CharacterClass::Monster, getLevel() );
 }
 
 int Monster::rollMeleeDamage()

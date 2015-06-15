@@ -51,7 +51,7 @@ namespace experience_table
   static std::map<CharacterClass, std::map<int, LevelData> > expData = {
     {
       {
-        CharacterClass::FIGHTER,
+        CharacterClass::Fighter,
         {
         /*LV             EXP     HitDice       HP  */
           {1,  LevelData{0      ,dices::D8,    0, true} },
@@ -78,7 +78,7 @@ namespace experience_table
       },
 
       {
-        CharacterClass::THIEF,
+        CharacterClass::Thief,
         {
         /*LV             EXP     HitDice       HP  */
           {1,  LevelData{0      ,dices::D4,    0, true} },
@@ -105,7 +105,7 @@ namespace experience_table
       },
 
       {
-        CharacterClass::CLERIC,
+        CharacterClass::Cleric,
         {
         /*LV             EXP     HitDice       HP        SPELL1 SPELL2 SPELL3 SPELL4 SPELL5 SPELL6   */
           {1,  LevelData{0      ,dices::D6,    0, true, {{1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}} } },
@@ -132,7 +132,7 @@ namespace experience_table
       },
 
       {
-        CharacterClass::MAGIC_USER,
+        CharacterClass::MagicUser,
         {
         /*LV             EXP     HitDice       HP        SPELL1 SPELL2 SPELL3 SPELL4 SPELL5 SPELL6   */
           {1,  LevelData{0      ,dices::D4,    0, true, {{1,1}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}} } },
