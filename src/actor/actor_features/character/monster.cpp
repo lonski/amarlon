@@ -43,6 +43,11 @@ bool Monster::isEqual(ActorFeaturePtr rhs)
   return equal;
 }
 
+CarryingCapacity::LoadLevel Monster::getLoadLevel()
+{
+  return CarryingCapacity::LoadLevel::Light;
+}
+
 int Monster::getBaseAttackBonus()
 {
   return getMeleeAttackBonus();

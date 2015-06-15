@@ -8,6 +8,7 @@
 #include <character_classes.h>
 #include <saving_throws_table.h>
 #include <races.h>
+#include <carrying_capacity.h>
 
 namespace amarlon {
 
@@ -39,6 +40,7 @@ public:
   virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
 
+  virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
   virtual int rollMeleeDamage() = 0;

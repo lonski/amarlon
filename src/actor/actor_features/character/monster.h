@@ -15,6 +15,7 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs);
 
   /* overriden functions */
+  virtual CarryingCapacity::LoadLevel getLoadLevel();
   virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
   virtual int rollMeleeDamage();

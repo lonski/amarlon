@@ -4,6 +4,7 @@
 #include <attack_bonus_table.h>
 #include <experience_table.h>
 #include <messenger.h>
+
 namespace amarlon {
 
 PlayableCharacter::PlayableCharacter()
@@ -31,6 +32,12 @@ bool PlayableCharacter::isEqual(ActorFeaturePtr rhs)
   }
 
   return equal;
+}
+
+CarryingCapacity::LoadLevel PlayableCharacter::getLoadLevel()
+{
+  CarryingCapacity::Data cData = CarryingCapacity::get(getAbilityScore(AbilityScore::STR), getRace());
+  return getEquipmentWeight() >= cData.heavy ? CarryingCapacity::LoadLevel::Heavy : CarryingCapacity::LoadLevel::Light;
 }
 
 int PlayableCharacter::getBaseAttackBonus()
@@ -84,6 +91,56 @@ void PlayableCharacter::advanceLevel(LevelData data)
   Messenger::message()->actorLeveledUp(getOwner().lock(), getLevel());
   //TODO: maybe popup some window or advance te level manually like BG/NWN?
   //Apply the spell levels
+}
+
+int PlayableCharacter::getEquipmentWeight()
+{
+  int weight = 0;
+
+  ActorPtr owner = getOwner().lock();
+  if ( owner )
+  {
+    weight += calculateInventoryItemsWeight(owner);
+    calculateWearedItemsWeight(owner);
+  }
+
+  return weight;
+}
+
+int PlayableCharacter::calculateInventoryItemsWeight(ActorPtr owner)
+{
+  int weight = 0;
+
+  ContainerPtr inventory = owner->getFeature<Container>();
+  if ( inventory )
+  {
+    for ( ActorPtr i : inventory->content() )
+    {
+      weight += i->getFeature<Pickable>()->getWeight();
+    }
+  }
+
+  return weight;
+}
+
+int PlayableCharacter::calculateWearedItemsWeight(ActorPtr owner)
+{
+  int weight = 0;
+
+  WearerPtr wearer = owner->getFeature<Wearer>();
+  if ( wearer )
+  {
+    for ( auto slot : ItemSlotType() )
+    {
+      ActorPtr item = wearer->equipped(slot);
+      if ( item )
+      {
+        weight = item->getFeature<Pickable>()->getWeight();
+      }
+    }
+  }
+
+  return weight;
 }
 
 int PlayableCharacter::getAbilityScore(AbilityScore::Type as)

@@ -17,6 +17,7 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs);
 
   /* overriden functions */
+  virtual CarryingCapacity::LoadLevel getLoadLevel();
   virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
   virtual int rollMeleeDamage();
@@ -30,6 +31,10 @@ private:
 
   int getModifier(AbilityScore::Type as);
   void advanceLevel(LevelData data);
+
+  int getEquipmentWeight();
+  int calculateInventoryItemsWeight(ActorPtr owner);
+  int calculateWearedItemsWeight(ActorPtr owner);
 
   friend class Character;
 };

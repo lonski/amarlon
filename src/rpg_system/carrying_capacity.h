@@ -9,9 +9,15 @@ namespace amarlon {
 namespace CarryingCapacity
 {
 
-  struct CarryingCapacityData
+  enum class LoadLevel
   {
-    CarryingCapacityData(int i_light = 0, int i_heavy = 0)
+    Light,
+    Heavy
+  };
+
+  struct Data
+  {
+    Data(int i_light = 0, int i_heavy = 0)
       : light(i_light)
       , heavy(i_heavy)
     {}
@@ -20,9 +26,9 @@ namespace CarryingCapacity
     int heavy;
   };
 
-  CarryingCapacityData get(int str, Race race);
+  Data get(int str, Race race);
 
-  static std::map<Race, std::map<int, CarryingCapacityData> > capacityTable =
+  static std::map<Race, std::map<int, Data> > capacityTable =
   {
     {
       Race::Human,

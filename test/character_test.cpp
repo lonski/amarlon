@@ -1,126 +1,83 @@
 #include <gtest/gtest.h>
 #include <actor.h>
-#include "mock/map_mock.h"
+#include <character.h>
+#include <playable_character.h>
 
 namespace amarlon {
 
-//using ::testing::_;
+class CharacterTest : public ::testing::Test
+{
+public:
+  CharacterTest()
+  {
+  }
 
-//class CharacterTest : public ::testing::Test
-//{
-//public:
-//  CharacterTest()
-//    : mapMock( new MapMock )
-//  {
-//  }
+  virtual void SetUp()
+  {
+    Actor::DB.loadActors("data/actors.xml");
+  }
 
-//  virtual void SetUp()
-//  {
-//    Actor::DB.loadActors("data/actors.xml");
+  virtual void TearDown()
+  {
+  }
 
-//    CharacterDescriptionPtr dsc( new CharacterDescription );
-//    dsc->maxHp = 10;
-//    dsc->power = 2;
+};
 
-//    fighter = Character::create(dsc);
-//  }
-//  virtual void TearDown()
-//  {
-//  }
+void clearInventory(ActorPtr actor)
+{
+  ContainerPtr inv = actor->getFeature<Container>();
+  ASSERT_TRUE( inv != nullptr );
+  for ( auto i : inv->content() )
+    inv->remove(i);
+}
 
-//protected:
-//  CharacterPtr fighter;
-//  std::shared_ptr<MapMock> mapMock;
+void clearBody(ActorPtr actor)
+{
+  WearerPtr wearer = actor->getFeature<Wearer>();
+  ASSERT_TRUE( wearer != nullptr );
+  for ( auto s : ItemSlotType() )
+    wearer->unequip(s);
+}
 
+TEST_F(CharacterTest, carryingLoad)
+{
+  ActorPtr ziomek = Actor::create(ActorType::Player);
 
-//};
+  //clear all items carried by ziomek
+  clearBody(ziomek);
+  clearInventory(ziomek);
 
-//TEST_F(CharacterTest, statsCheck)
-//{
-//  EXPECT_EQ(fighter->getHp(), 10);
-//  EXPECT_EQ(fighter->getPower(), 2);
-//}
+  //replace Character feature
+  PlayableCharacterDescriptionPtr dsc(new PlayableCharacterDescription);
+  dsc->race = Race::Human;
+  dsc->abilityScores[AbilityScore::STR] = 10;
 
-//TEST_F(CharacterTest, heal)
-//{
-//  fighter->setHp(2);
-//  EXPECT_EQ(fighter->getHp(), 2);
+  PlayableCharacterPtr pc_ch = std::dynamic_pointer_cast<PlayableCharacter>( Character::create(dsc) );
+  ziomek->insertFeature( pc_ch );
 
-//  //heal less than 100%
-//  EXPECT_EQ(fighter->heal(5), 5);
-//  EXPECT_EQ(fighter->getHp(), 7);
+  //ziomek should have light load
+  ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Light );
 
-//  //overheal
-//  EXPECT_EQ(fighter->heal(5), 3);
-//  EXPECT_EQ(fighter->getHp(), 10);
-//}
+  //add some light item
+  ActorPtr potka = Actor::create(ActorType::Dagger);
+  ASSERT_TRUE(ziomek->getFeature<Container>()->add(potka));
 
-//TEST_F(CharacterTest, die)
-//{
-//  EXPECT_TRUE(fighter->isAlive());
-//  fighter->die();
-//  EXPECT_FALSE(fighter->isAlive());
-//  EXPECT_EQ(fighter->getHp(), 0);
-//}
+  //ziomek should have light load
+  ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Light );
 
-//void clearInventory(ActorPtr actor)
-//{
-//  ContainerPtr inv = actor->getFeature<Container>();
-//  ASSERT_TRUE( inv != nullptr );
-//  for ( auto i : inv->content() )
-//    inv->remove(i);
-//}
+  //create heavy item
+  ActorPtr armor = Actor::create(ActorType::LeatherArmor);
 
-//void clearBody(ActorPtr actor)
-//{
-//  WearerPtr wearer = actor->getFeature<Wearer>();
-//  ASSERT_TRUE( wearer != nullptr );
-//  for ( auto s : ItemSlotType() )
-//    wearer->unequip(s);
-//}
+  CarryingCapacity::Data cData = CarryingCapacity::get(pc_ch->getAbilityScore(AbilityScore::STR), pc_ch->getRace() );
+  int count = (cData.heavy / armor->getFeature<Pickable>()->getWeight()) + 1;
 
-//void clearDropRules(ActorPtr actor)
-//{
-//  DestroyablePtr destr( new Destroyable );
-//  actor->insertFeature(destr);
-//}
+  while ( count-- )
+    ASSERT_TRUE(ziomek->getFeature<Container>()->add(armor->clone()));
 
-//TEST_F(CharacterTest, dropInventoryOndie)
-//{
-//  //create an orc
-//  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, mapMock) );
+  //ziomek should have heavy load
+  ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Heavy );
 
-//  clearInventory(orc);
-//  clearBody(orc);
-//  clearDropRules(orc);
+}
 
-//  //insert some item to inventory
-//  ContainerPtr inv = orc->getFeature<Container>();
-//  EXPECT_TRUE( inv != nullptr );
-//  EXPECT_TRUE( inv->add( Actor::create(ActorType::CookBook) ) );
-
-//  //kill actor
-//  EXPECT_CALL(*mapMock, addActor(_));
-//  orc->getFeature<Character>()->die();
-//}
-
-//TEST_F(CharacterTest, dropWearedItemsOndie)
-//{
-//  //create an orc
-//  ActorPtr orc( Actor::create(ActorType::Orc, 0,0, mapMock) );
-
-//  clearInventory(orc);
-//  clearBody(orc);
-//  clearDropRules(orc);
-
-//  //wear an item
-//  WearerPtr wearer = orc->getFeature<Wearer>();
-//  EXPECT_TRUE( wearer != nullptr );
-//  EXPECT_TRUE( wearer->equip( Actor::create(ActorType::LinenClothes) ) );
-
-//  //kill actor
-//  EXPECT_CALL(*mapMock, addActor(_));
-//  orc->getFeature<Character>()->die();
-//}
 
 }
