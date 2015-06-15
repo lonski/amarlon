@@ -22,6 +22,7 @@ public:
   virtual int getMeleeAttackBonus();
   virtual int rollMeleeDamage();
   virtual void modifyExperience(int modifier);
+  virtual int getSpeed();
 
   /* class specific functions */
   virtual int getAbilityScore(AbilityScore::Type as);
@@ -33,8 +34,10 @@ private:
   void advanceLevel(LevelData data);
 
   int getEquipmentWeight();
-  int calculateInventoryItemsWeight(ActorPtr owner);
-  int calculateWearedItemsWeight(ActorPtr owner);
+  int calculateInventoryItemsWeight();
+  int calculateWearedItemsWeight();
+
+  int calculateLoadPenalty();
 
   friend class Character;
 };

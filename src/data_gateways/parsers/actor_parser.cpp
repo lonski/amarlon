@@ -224,6 +224,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
       dsc->race = (Race)getAttribute<int>(characterNode, "race");
       dsc->experience = getAttribute<int>(characterNode, "experience");
+      dsc->speed = getAttribute<int>(characterNode, "speed");
     }
 
   }

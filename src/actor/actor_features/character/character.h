@@ -40,6 +40,7 @@ public:
   virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
 
+  virtual int getSpeed();
   virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
@@ -51,7 +52,6 @@ public:
 protected:
   virtual void setLevel(int level);
   virtual void setMaxHitPoints(int maxHp);
-
   PickablePtr getEquippedItem(ItemSlotType slot);
 
 private:
@@ -62,6 +62,7 @@ private:
   int _experience;
   CharacterClass _class;
   Race _race;
+  int _speed;
 
 
 };

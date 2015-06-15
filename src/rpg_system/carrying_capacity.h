@@ -9,6 +9,8 @@ namespace amarlon {
 namespace CarryingCapacity
 {
 
+  static const int HEAVY_LOAD_SPEED_PENALTY = 10;
+
   enum class LoadLevel
   {
     Light,

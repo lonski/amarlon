@@ -135,6 +135,7 @@ struct CharacterDescription : Description
     , experience(0)
     , cClass(CharacterClass::Fighter)
     , race(Race::NoRace)
+    , speed(0)
   {}
 
   int level;
@@ -144,6 +145,7 @@ struct CharacterDescription : Description
   int experience;
   CharacterClass cClass;
   Race race;
+  int speed;
 };
 
 struct PlayableCharacterDescription : CharacterDescription

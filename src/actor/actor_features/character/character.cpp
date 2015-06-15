@@ -17,6 +17,7 @@ Character::Character()
   , _experience(0)
   , _class(CharacterClass::Monster)
   , _race(Race::NoRace)
+  , _speed(0)
 {
 }
 
@@ -62,6 +63,7 @@ CharacterPtr Character::create(DescriptionPtr dsc)
     c->_class = commonDsc->cClass;
     c->_race = commonDsc->race;
     c->_defaultArmorClass = commonDsc->defaultArmorClass;
+    c->_speed = commonDsc->speed;
   }
 
   return c;
@@ -157,6 +159,11 @@ Race Character::getRace() const
 int Character::getSavingThrow(SavingThrows::Type type)
 {
   return SavingThrows::get( type, getClass(), getLevel() );
+}
+
+int Character::getSpeed()
+{
+  return _speed;
 }
 
 int Character::getArmorClass()

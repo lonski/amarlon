@@ -40,6 +40,11 @@ CarryingCapacity::LoadLevel PlayableCharacter::getLoadLevel()
   return getEquipmentWeight() >= cData.heavy ? CarryingCapacity::LoadLevel::Heavy : CarryingCapacity::LoadLevel::Light;
 }
 
+int PlayableCharacter::calculateLoadPenalty()
+{
+  return getLoadLevel() == CarryingCapacity::LoadLevel::Heavy ? CarryingCapacity::HEAVY_LOAD_SPEED_PENALTY : 0;
+}
+
 int PlayableCharacter::getBaseAttackBonus()
 {
   return AttackBonus::get(getClass(), getLevel());
@@ -77,6 +82,11 @@ void PlayableCharacter::modifyExperience(int modifier)
   }
 }
 
+int PlayableCharacter::getSpeed()
+{
+  return std::max( Character::getSpeed() - calculateLoadPenalty(), 0 );
+}
+
 void PlayableCharacter::advanceLevel(LevelData data)
 {
   setLevel( getLevel() + 1 );
@@ -100,18 +110,18 @@ int PlayableCharacter::getEquipmentWeight()
   ActorPtr owner = getOwner().lock();
   if ( owner )
   {
-    weight += calculateInventoryItemsWeight(owner);
-    calculateWearedItemsWeight(owner);
+    weight += calculateInventoryItemsWeight();
+    weight += calculateWearedItemsWeight();
   }
 
   return weight;
 }
 
-int PlayableCharacter::calculateInventoryItemsWeight(ActorPtr owner)
+int PlayableCharacter::calculateInventoryItemsWeight()
 {
   int weight = 0;
 
-  ContainerPtr inventory = owner->getFeature<Container>();
+  ContainerPtr inventory = getOwner().lock()->getFeature<Container>();
   if ( inventory )
   {
     for ( ActorPtr i : inventory->content() )
@@ -123,11 +133,11 @@ int PlayableCharacter::calculateInventoryItemsWeight(ActorPtr owner)
   return weight;
 }
 
-int PlayableCharacter::calculateWearedItemsWeight(ActorPtr owner)
+int PlayableCharacter::calculateWearedItemsWeight()
 {
   int weight = 0;
 
-  WearerPtr wearer = owner->getFeature<Wearer>();
+  WearerPtr wearer = getOwner().lock()->getFeature<Wearer>();
   if ( wearer )
   {
     for ( auto slot : ItemSlotType() )
