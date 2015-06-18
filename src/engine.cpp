@@ -92,7 +92,7 @@ void Engine::updateAis()
     auto ais = map->getActors( &filter );
     for ( ActorPtr actor : ais )
     {
-      actor->getFeature<Ai>()->update( map );
+      actor->getFeature<Ai>()->update();
     }
   }
 }

@@ -83,6 +83,7 @@ set(HEADER_FILES
     engine.h
     actor/actor_actions/actor_action.h
     actor/actor_actions/move_action.h
+    actor/actor_actions/monster_move_action.h
     actor/actor_actions/attack_action.h
     actor/actor_actions/pickup_action.h
     actor/actor_actions/drop_action.h
@@ -167,6 +168,7 @@ set(SOURCE_FILES
     engine.cpp
     main.cpp
     actor/actor_actions/move_action.cpp
+    actor/actor_actions/monster_move_action.cpp
     actor/actor_actions/attack_action.cpp
     actor/actor_actions/pickup_action.cpp
     actor/actor_actions/drop_action.cpp

@@ -24,7 +24,7 @@ public:
   virtual ~Ai() {}
 
   virtual ActorFeature::Type getType() { return featureType; }
-  virtual void update(MapPtr map);
+  virtual void update() = 0;
 
   static AiPtr create(AiType type);
   static AiPtr create(DescriptionPtr dsc);

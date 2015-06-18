@@ -18,6 +18,7 @@ Character::Character()
   , _class(CharacterClass::Monster)
   , _race(Race::NoRace)
   , _speed(0)
+  , _movePoints(0)
 {
 }
 
@@ -164,6 +165,16 @@ int Character::getSavingThrow(SavingThrows::Type type)
 int Character::getSpeed()
 {
   return _speed;
+}
+
+int Character::getMovePoints()
+{
+  return _movePoints;
+}
+
+void Character::setMovePoints(int points)
+{
+  _movePoints = points;
 }
 
 int Character::getArmorClass()

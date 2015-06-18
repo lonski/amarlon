@@ -18,7 +18,7 @@ public:
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs);
 
-  virtual void update(MapPtr map);
+  virtual void update();
 
   void updatePosition();
 private:

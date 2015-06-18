@@ -39,12 +39,4 @@ AiPtr Ai::create(DescriptionPtr dsc)
   return ai;
 }
 
-void Ai::update(MapPtr)
-{
-  if ( getOwner().lock() )
-  {
-    std::cout << "\n" << getOwner().lock()->getName() << " updates";
-  }
-}
-
 }

@@ -3,7 +3,7 @@
 #include <map.h>
 #include <actor.h>
 #include <amarlon_except.h>
-#include <move_action.h>
+#include <monster_move_action.h>
 #include <attack_action.h>
 
 namespace amarlon {
@@ -42,25 +42,33 @@ bool MonsterAi::isEqual(ActorFeaturePtr rhs)
   return equal;
 }
 
-void MonsterAi::update(MapPtr map)
+void MonsterAi::update()
 {  
-  _map = map;
-  if (getOwner().lock()->isAlive() && _map)
+  ActorPtr owner = getOwner().lock();
+  if ( owner )
   {
-    updatePosition();
+    MapPtr map = owner->getMap();
+    if ( map )
+    {
+      _map = map;
+      if (getOwner().lock()->isAlive() && _map)
+      {
+        updatePosition();
 
-    if (_map->isInFov(_cX, _cY))
-    {
-      _trackCount = TrackingTurns;
-    }
-    else
-    {
-      --_trackCount;
-    }
+        if (_map->isInFov(_cX, _cY))
+        {
+          _trackCount = TrackingTurns;
+        }
+        else
+        {
+          --_trackCount;
+        }
 
-    if ( _trackCount > 0)
-    {
-      huntPlayer();
+        if ( _trackCount > 0)
+        {
+          huntPlayer();
+        }
+      }
     }
   }
 }
@@ -82,15 +90,15 @@ void MonsterAi::huntPlayer()
 
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
     {      
-      monster->performAction( std::make_shared<MoveAction>(dx, dy) );      
+      monster->performAction( std::make_shared<MonsterMoveAction>(dx, dy) );
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
     {
-      monster->performAction( std::make_shared<MoveAction>(stepDx, 0) );
+      monster->performAction( std::make_shared<MonsterMoveAction>(stepDx, 0) );
     }
     else if ( !_map->isBlocked(_cX, _cY+stepDy) )
     {
-      monster->performAction( std::make_shared<MoveAction>(0, stepDy) );
+      monster->performAction( std::make_shared<MonsterMoveAction>(0, stepDy) );
     }
   }
   else if ( getOwner().lock()->hasFeature<Character>() )

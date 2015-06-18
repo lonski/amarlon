@@ -41,6 +41,9 @@ public:
   virtual int getSavingThrow(SavingThrows::Type type);
 
   virtual int getSpeed();
+  virtual int getMovePoints();
+  virtual void setMovePoints(int points);
+
   virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
@@ -63,6 +66,7 @@ private:
   CharacterClass _class;
   Race _race;
   int _speed;
+  int _movePoints;
 
 
 };

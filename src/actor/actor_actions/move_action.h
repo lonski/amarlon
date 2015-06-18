@@ -23,7 +23,7 @@ public:
   virtual bool perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
-private:
+protected:
   int _dx;
   int _dy;
   ActorPtr _performer;
