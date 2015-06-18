@@ -47,7 +47,7 @@ before_script:
     - mkdir ./lib
     - sudo ln -s /usr/src/gtest/build/libgtest.so /usr/local/lib/libgtest.so
     - sudo ln -s /usr/src/gtest/build/libgtest_main.so /usr/local/lib/libgtest_main.so
-    - hg clone https://bitbucket.org/jice/libtcod
+    - hg clone https://bitbucket.org/libtcod/libtcod
     - cd libtcod
     - make -f makefiles/makefile-linux debug
     - cp ./libtcod_debug.so ../lib/libtcod_debug.so
