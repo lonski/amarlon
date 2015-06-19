@@ -50,7 +50,7 @@ public:
   virtual  bool removeActor(ActorPtr toRemove);
   virtual ActorPtr getFirstActor(int x, int y);
   virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
-  virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun);
+  virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun = nullptr);
   virtual ContainerPtr getActorsContainer(u32 x, u32 y);
   virtual void performActionOnActors(std::function<void(ActorPtr)> func);
 

@@ -3,6 +3,7 @@
 
 #include <serializer.h>
 #include <action_serializer.h>
+#include <actor_serializer.h>
 #include <memory>
 
 namespace amarlon {
@@ -21,6 +22,7 @@ public:
 
 private:
   ActionSerializer _actionSerializer;
+  ActorSerializer _actorSerializer;
   rapidxml::xml_node<>* _mapNode;
   MapPtr _map;
 

@@ -42,11 +42,16 @@ bool MapSerializer::serialize(MapPtr map)
 
     serializeExitActions();
 
+    _actorSerializer.setDestination(_document, _mapNode);
+    for ( ActorPtr actor : _map->getActors() )
+    {
+      _actorSerializer.serialize(actor);
+    }
+
     serialized = true;
   }
 
   return serialized;
-
 }
 
 void MapSerializer::serializeExitActions()
