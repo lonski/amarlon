@@ -71,6 +71,7 @@ public:
   virtual void setId(const MapId &id);
 
   virtual void onExit(Direction direction, ActorPtr exiter);
+  virtual const std::map<Direction, ActorActionPtr> getExitActions() const;
 
   friend class MapParser;
 

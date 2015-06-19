@@ -56,6 +56,8 @@ int main()
     std::cout << "\nUnknown error has occured.";
   }
 
+  amarlon::Map::Gateway.saveMaps("d:/asd.xml");
+
   return 0;
 }
 

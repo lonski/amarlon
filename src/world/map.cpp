@@ -330,6 +330,11 @@ void Map::onExit(Direction direction, ActorPtr exiter)
   }
 }
 
+const std::map<Direction, ActorActionPtr> Map::getExitActions() const
+{
+  return _exitActions;
+}
+
 MapPtr Map::clone()
 {
   MapPtr cloned = std::make_unique<Map>(_width, _height);

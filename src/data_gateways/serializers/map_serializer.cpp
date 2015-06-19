@@ -1,49 +1,68 @@
 #include "map_serializer.h"
 #include <string>
 #include <world/map.h>
+#include <utils.h>
+#include <xml_utils.h>
 
 using namespace rapidxml;
 using namespace std;
 
 namespace amarlon {
 
+MapSerializer::MapSerializer()
+{
+}
+
+MapSerializer::MapSerializer(rapidxml::xml_document<> *document, rapidxml::xml_node<> *xmlNode)
+  : Serializer(document, xmlNode)
+{
+}
+
+MapSerializer::~MapSerializer()
+{
+}
+
 bool MapSerializer::serialize(MapPtr map)
 {
-  /*
-   * TODO: at the momment theres is only tiles serialization
-   * -> refactor the tile serializtion
-   * -> implement actors serialization
-   * -> onExit actions serialization
+  /* TODO
+   * -> implement actors serialization   
    */
   bool serialized = false;
 
   if ( _xml != nullptr && _document != nullptr )
-  {
-    xml_node<>* mapNode = _document->allocate_node(node_element, "Map");
-    _xml->append_node(mapNode);
+  {    
+    _map = map;
+    _mapNode = _document->allocate_node(node_element, "Map");
+    _xml->append_node(_mapNode);
 
-    string widthS = to_string(map->getWidth());
-    string heightS = to_string(map->getHeight());
-    string idS = to_string( static_cast<int>(map->getId()) );
+    _mapNode->append_attribute( _document->allocate_attribute(    "height",_document->allocate_string( toStr(map->getHeight()).c_str()) ) );
+    _mapNode->append_attribute( _document->allocate_attribute(    "width",_document->allocate_string( toStr(map->getWidth()).c_str()) ) );
+    _mapNode->append_attribute( _document->allocate_attribute(    "id", _document->allocate_string( toStr(static_cast<int>(map->getId())).c_str()) ) );
+    _mapNode->append_node( _document->allocate_node(node_element, "Tiles", _document->allocate_string( map->tilesToStr().c_str()) ) );
 
-    xml_attribute<>* aWidth = _document->allocate_attribute("width", _document->allocate_string(widthS.c_str()) );
-    xml_attribute<>* aHeight = _document->allocate_attribute("height", _document->allocate_string(heightS.c_str()) );
-    xml_attribute<>* aId = _document->allocate_attribute("id", _document->allocate_string(idS.c_str()) );
-
-    mapNode->append_attribute( aWidth );
-    mapNode->append_attribute( aHeight );
-    mapNode->append_attribute( aId );
-
-    string strTiles = map->tilesToStr();
-
-    xml_node<>* tiles = _document->allocate_node(node_element, "Tiles", _document->allocate_string(strTiles.c_str()) );
-    mapNode->append_node(tiles);
+    serializeExitActions();
 
     serialized = true;
   }
 
   return serialized;
 
+}
+
+void MapSerializer::serializeExitActions()
+{
+  xml_node<>* exitActionsNode = _document->allocate_node(node_element, "OnExit");
+  _mapNode->append_node( exitActionsNode );
+
+  for ( const auto& pair : _map->getExitActions() )
+  {
+    xml_node<>* directionNode = _document->allocate_node(node_element, "Direction");
+    exitActionsNode->append_node(directionNode);
+    directionNode->append_attribute( _document->allocate_attribute( "id", _document->allocate_string( toStr(static_cast<int>(pair.first)).c_str() )));
+
+    _actionSerializer.setDestination(_document, directionNode);
+    _actionSerializer.serialize(pair.second);
+  }
 }
 
 }

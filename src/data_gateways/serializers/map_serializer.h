@@ -2,6 +2,7 @@
 #define MAP_SERIALIZER_H
 
 #include <serializer.h>
+#include <action_serializer.h>
 #include <memory>
 
 namespace amarlon {
@@ -12,12 +13,18 @@ typedef std::shared_ptr<Map> MapPtr;
 class MapSerializer : public Serializer
 {
 public:
-  MapSerializer() {}
-  MapSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode)
-    : Serializer(document, xmlNode)
-  {}
+  MapSerializer();
+  MapSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
+  virtual ~MapSerializer();
 
-  bool serialize(MapPtr map);
+  virtual bool serialize(MapPtr map);
+
+private:
+  ActionSerializer _actionSerializer;
+  rapidxml::xml_node<>* _mapNode;
+  MapPtr _map;
+
+  void serializeExitActions();
 
 };
 

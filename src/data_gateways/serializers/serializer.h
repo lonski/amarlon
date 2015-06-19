@@ -22,7 +22,7 @@ public:
 
   /**
    * @brief set the document to which data will be serializes
-   *        set the node under wihich the maps will be serialized
+   *        set the node under wihich the contet will be serialized
    *        it is required in order to do any successfull serialization
    */
   virtual void setDestination(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode)

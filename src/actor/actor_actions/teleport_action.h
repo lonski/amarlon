@@ -16,6 +16,10 @@ public:
   virtual bool perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
+  virtual MapId getMapId() const;
+  virtual int getX() const;
+  virtual int getY() const;
+
 private:
   MapId _map;
   int _x;

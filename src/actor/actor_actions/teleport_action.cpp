@@ -39,6 +39,21 @@ ActorActionUPtr TeleportAction::clone()
   return std::move(cloned);
 }
 
+MapId TeleportAction::getMapId() const
+{
+  return _map;
+}
+
+int TeleportAction::getX() const
+{
+  return _x;
+}
+
+int TeleportAction::getY() const
+{
+  return _y;
+}
+
 void TeleportAction::removeFromCurrentMap(ActorPtr performer)
 {
   MapPtr currentMap = performer->getMap();
