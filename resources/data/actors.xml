@@ -41,7 +41,7 @@ When new actor is created with given ID as parameter, then the template will be 
 	</Actor>
 	
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" experience="25" class="1" race="5" armorClass="11" hitPointsBonus="0" damageDice="1d8" morale="8" speed="60"/>
+		<Monster level="1" experience="25" class="1" race="5" armorClass="11" hitPointsBonus="0" damageDice="1d8" morale="8" speed="100"/>
 		<Ai type="1"/>
 		<Wearer>
 			<ItemSlot type="3">

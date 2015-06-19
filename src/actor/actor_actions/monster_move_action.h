@@ -19,10 +19,8 @@ public:
 
 private:
   int _moveCost;
-  int _currentMovePoints;
 
   bool doMove(CharacterPtr mob);
-  void calculateMovePoints(CharacterPtr mob);
 
 };
 

@@ -8,7 +8,6 @@ namespace amarlon {
 MonsterMoveAction::MonsterMoveAction(int dx, int dy)
   : MoveAction(dx, dy)
   , _moveCost(0)
-  , _currentMovePoints(0)
 {
   CharacterPtr player = Actor::Player->getFeature<Character>();
   _moveCost = player ? player->getSpeed() : 40;
@@ -20,54 +19,40 @@ MonsterMoveAction::~MonsterMoveAction()
 
 bool MonsterMoveAction::perform(ActorPtr performer)
 {
+  _performer = performer;
   bool result = false;
 
-  if ( performer )
+  if ( _performer )
   {
-    _performer = performer;
-
-    CharacterPtr mob = performer->getFeature<Character>();
+    CharacterPtr mob = _performer->getFeature<Character>();
     if ( mob )
     {
-      calculateMovePoints(mob);
-      result = doMove(mob);
+      if ( mob->getMovePoints() < _moveCost ) //normal move, otherwise it is 'extra' move
+      {
+        mob->setMovePoints( mob->getMovePoints() + mob->getSpeed() );
+      }
+
+      while ( mob->getMovePoints() >= _moveCost )
+      {
+        result = doMove(mob);
+      }
+
     }
   }
 
   return result;
 }
 
-void MonsterMoveAction::calculateMovePoints(CharacterPtr mob)
-{
-  _currentMovePoints = mob->getMovePoints();
-
-  if ( _currentMovePoints > 0 ) //last time actor did not moved, continue moving
-  {
-    _currentMovePoints -= mob->getSpeed();
-  }
-  else //last time actor did move, and eventually some extra move points left
-  {
-    _currentMovePoints = _moveCost - ( mob->getSpeed() + std::abs(_currentMovePoints) );
-  }
-
-  mob->setMovePoints(_currentMovePoints);
-}
-
 bool MonsterMoveAction::doMove(CharacterPtr mob)
 {
-  bool result = false;
+  mob->setMovePoints( mob->getMovePoints() - _moveCost );
 
-  if ( _currentMovePoints <= 0 ) //ok, we can move
+  bool result = MoveAction::perform(_performer);
+
+  AiPtr ai = _performer->getFeature<Ai>();
+  if ( ai && mob->getMovePoints() >= _moveCost ) //check if extra move
   {
-    result = MoveAction::perform(_performer);
-
-    //check if extra move
-    AiPtr ai = _performer->getFeature<Ai>();
-    if ( -1*_currentMovePoints >= _moveCost && ai)
-    {
-      mob->setMovePoints( _currentMovePoints + _moveCost + mob->getSpeed()  );
-      ai->update();
-    }
+    ai->update();
   }
 
   return result;
