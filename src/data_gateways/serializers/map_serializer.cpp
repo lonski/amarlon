@@ -10,11 +10,13 @@ using namespace std;
 namespace amarlon {
 
 MapSerializer::MapSerializer()
+  : _mapNode(nullptr)
 {
 }
 
 MapSerializer::MapSerializer(rapidxml::xml_document<> *document, rapidxml::xml_node<> *xmlNode)
   : Serializer(document, xmlNode)
+  , _mapNode(nullptr)
 {
 }
 
