@@ -18,6 +18,8 @@ public:
   virtual EffectDescription save();
 
   virtual TargetType getTargetType() const;
+  virtual EffectType getType() const;
+  virtual int getLockId() const;
 
 private:
   int _lockId;

@@ -214,6 +214,11 @@ size_t Actor::getFeatureCount() const
 {
   return _features.size();
 }
+
+const FeatureMap Actor::getFeatures() const
+{
+  return _features;
+}
 unsigned Actor::getInstanceId() const
 {
   return _instanceId;

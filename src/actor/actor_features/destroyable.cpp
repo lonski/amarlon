@@ -66,6 +66,11 @@ void Destroyable::destroy()
   }
 }
 
+const std::vector<DropRule> Destroyable::getDropRules() const
+{
+  return _dropRules;
+}
+
 ActorPtr createActor(const DropRule& rule)
 {
   ActorPtr toDrop = Actor::create(rule.dropActorId);

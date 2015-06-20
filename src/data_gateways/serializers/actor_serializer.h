@@ -2,7 +2,9 @@
 #define ACTOR_SERIALIZER_H
 
 #include <memory>
+#include <vector>
 #include <serializer.h>
+#include <actor_feature_serializer.h>
 
 namespace amarlon {
 
@@ -20,6 +22,9 @@ public:
 
 private:
   rapidxml::xml_node<>* _actorNode;
+  std::vector<ActorFeatureSerializerPtr> _afSerializers;
+
+  void createAfSerializers();
 
 };
 

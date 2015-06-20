@@ -29,6 +29,7 @@ public:
 
   virtual TargetType getTargetType() const = 0;
   virtual int getUsesCount() const;
+  virtual EffectType getType() const = 0;
 
 protected:
   int _usesCount;

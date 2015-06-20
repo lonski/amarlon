@@ -87,6 +87,7 @@ public:
   std::shared_ptr<T> getFeature() const;
 
   size_t getFeatureCount() const;
+  const FeatureMap getFeatures() const;
 
   template<typename T>
   bool hasFeature();

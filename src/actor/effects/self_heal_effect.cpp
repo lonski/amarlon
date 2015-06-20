@@ -77,4 +77,14 @@ TargetType SelfHealEffect::getTargetType() const
   return TargetType::SELF;
 }
 
+EffectType SelfHealEffect::getType() const
+{
+  return EffectType::SelfHeal;
+}
+
+int SelfHealEffect::getHealAmount() const
+{
+  return _healAmount;
+}
+
 }

@@ -53,6 +53,16 @@ TargetType LockEffect::getTargetType() const
   return TargetType::SINGLE_NEIGHBOUR;
 }
 
+EffectType LockEffect::getType() const
+{
+  return EffectType::Lock;
+}
+
+int LockEffect::getLockId() const
+{
+  return _lockId;
+}
+
 bool LockEffect::apply(ActorPtr executor, std::vector<ActorPtr > targets)
 {
   bool r = false;

@@ -23,16 +23,17 @@ public:
   virtual ActorFeature::Type getType();
 
   void destroy();
+  const std::vector<DropRule> getDropRules() const;
 
   Destroyable();
   ~Destroyable();
 
-  void processDropRules();
 private:
   std::vector<DropRule> _dropRules;
 
   void dropInventory();
   void dropOnGround(ActorPtr item);
+  void processDropRules();
 
 };
 
