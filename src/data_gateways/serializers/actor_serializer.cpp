@@ -4,6 +4,7 @@
 #include <pickable_serializer.h>
 #include <destroyable_serializer.h>
 #include <container_serializer.h>
+#include <wearer_serializer.h>
 
 using namespace rapidxml;
 
@@ -20,6 +21,7 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   _afSerializers.push_back( std::make_shared<PickableSerializer>() );
   _afSerializers.push_back( std::make_shared<DestroyableSerializer>() );
   _afSerializers.push_back( std::make_shared<ContainerSerializer>() );
+  _afSerializers.push_back( std::make_shared<WearerSerializer>() );
 }
 
 ActorSerializer::~ActorSerializer()
