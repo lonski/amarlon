@@ -12,6 +12,13 @@ typedef std::shared_ptr<OpenableContainer> OpenableContainerPtr;
 class OpenableContainer : public Openable
 {
 public:
+
+  class Creator : public Openable::Creator
+  {
+  public:
+    virtual OpenablePtr create(OpenableDescriptionPtr dsc);
+  };
+
   OpenableContainer();
 
   virtual ActorFeaturePtr clone();

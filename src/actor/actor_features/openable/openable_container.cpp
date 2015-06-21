@@ -73,4 +73,18 @@ bool OpenableContainer::isEqual(ActorFeaturePtr rhs)
   return equal;
 }
 
+OpenablePtr OpenableContainer::Creator::create(OpenableDescriptionPtr dsc)
+{
+  OpenablePtr op = nullptr;
+
+  OpenableContainerDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableContainerDescription>(dsc);
+  if ( contDsc != nullptr )
+  {
+    op = std::make_unique<OpenableContainer>();
+    Openable::Creator::fillCommonOpenablePart(op, dsc);
+  }
+
+  return op;
+}
+
 }

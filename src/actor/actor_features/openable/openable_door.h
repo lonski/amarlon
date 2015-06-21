@@ -12,6 +12,13 @@ typedef std::shared_ptr<OpenableDoor> OpenableDoorPtr;
 class OpenableDoor : public Openable
 {
 public:
+
+  class Creator : public Openable::Creator
+  {
+  public:
+    virtual OpenablePtr create(OpenableDescriptionPtr dsc);
+  };
+
   OpenableDoor();
 
   virtual ActorFeaturePtr clone();

@@ -2,6 +2,7 @@
 #include "openable_door.h"
 #include "openable_container.h"
 #include "amarlon_except.h"
+#include <openable_factory.h>
 
 namespace amarlon {
 
@@ -15,37 +16,8 @@ Openable::Openable()
 
 OpenablePtr Openable::create(DescriptionPtr dsc)
 {
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-
-  OpenablePtr op = nullptr;
-  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
-  if ( oDsc )
-  {
-    //door?
-    OpenableDoorDescriptionPtr doorDsc = std::dynamic_pointer_cast<OpenableDoorDescription>(dsc);
-    if ( doorDsc != nullptr )
-    {
-      op = std::make_shared<OpenableDoor>();
-    }
-    //container?
-    else
-    {
-      OpenableContainerDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableContainerDescription>(dsc);
-      if ( contDsc )
-      {
-        op = std::make_shared<OpenableContainer>();
-      }
-    }
-
-    //common part
-    if ( op != nullptr )
-    {
-      op->setLockId(oDsc->lockId);
-      op->_locked = oDsc->locked;
-    }
-  }
-
-  return op;
+  static OpenableFactory factory;
+  return factory.produce( std::dynamic_pointer_cast<OpenableDescription>(dsc) );
 }
 
 ActorFeature::Type Openable::getType()
@@ -70,6 +42,11 @@ bool Openable::isLocked() const
   return _locked;
 }
 
+void Openable::setLocked(bool locked)
+{
+  _locked = locked;
+}
+
 int Openable::getLockId() const
 {
   return _lockId;
@@ -78,6 +55,15 @@ int Openable::getLockId() const
 void Openable::setLockId(int lockId)
 {
   _lockId = lockId;
+}
+
+void Openable::Creator::fillCommonOpenablePart(OpenablePtr openable, OpenableDescriptionPtr dsc)
+{
+  if ( openable != nullptr && dsc != nullptr )
+  {
+    openable->setLockId(dsc->lockId);
+    openable->setLocked(dsc->locked);
+  }
 }
 
 }

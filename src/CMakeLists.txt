@@ -6,6 +6,7 @@ set(HEADER_FILES
     actor/actor_features/openable/openable_container.h
     actor/actor_features/openable/openable_door.h
     actor/actor_features/openable/openable_type.h
+    actor/actor_features/openable/openable_factory.h
     actor/actor_features/wearer/item_slot_type.h
     actor/actor_features/wearer/wearer.h
     actor/actor_features/actor_feature.h
@@ -119,6 +120,7 @@ set(SOURCE_FILES
     actor/actor_features/openable/openable.cpp
     actor/actor_features/openable/openable_container.cpp
     actor/actor_features/openable/openable_door.cpp
+    actor/actor_features/openable/openable_factory.cpp
     actor/actor_features/wearer/wearer.cpp
     actor/actor_features/actor_feature.cpp
     actor/actor_features/container.cpp

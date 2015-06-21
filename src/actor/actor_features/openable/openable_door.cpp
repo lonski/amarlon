@@ -78,4 +78,18 @@ bool OpenableDoor::lock()
   return r;
 }
 
+OpenablePtr OpenableDoor::Creator::create(OpenableDescriptionPtr dsc)
+{
+  OpenablePtr op = nullptr;
+
+  OpenableDoorDescriptionPtr doorDsc = std::dynamic_pointer_cast<OpenableDoorDescription>(dsc);
+  if ( doorDsc != nullptr )
+  {
+    op = std::make_unique<OpenableDoor>();
+    Openable::Creator::fillCommonOpenablePart(op, dsc);
+  }
+
+  return op;
+}
+
 }

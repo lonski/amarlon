@@ -10,11 +10,24 @@ namespace amarlon {
 class Actor;
 class Openable;
 typedef std::shared_ptr<Openable> OpenablePtr;
+typedef std::unique_ptr<Openable> OpenableUPtr;
 
 class Openable : public ActorFeature
 {
 public:  
-  const static ActorFeature::Type featureType;
+
+  class Creator
+  {
+  public:
+    virtual ~Creator() {}
+    virtual OpenablePtr create(OpenableDescriptionPtr dsc) = 0;
+
+  protected:
+    void fillCommonOpenablePart(OpenablePtr openable, OpenableDescriptionPtr dsc);
+
+  };
+
+  const static ActorFeature::Type featureType;  
 
   Openable();
   ~Openable() {}
@@ -29,13 +42,13 @@ public:
 
   virtual bool lock();
   virtual bool unlock();
-  bool isLocked() const;
+  virtual bool isLocked() const;
+  virtual void setLocked(bool locked);
 
   int getLockId() const;
   void setLockId(int getLockId);
 
 protected:
-  friend class ActorDB;
   bool _locked;
   int _lockId;
 
