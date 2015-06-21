@@ -13,36 +13,37 @@ Openable::Openable()
 {
 }
 
-OpenablePtr Openable::create(OpenableType type)
-{
-  OpenablePtr o = nullptr;
-
-  switch(type)
-  {
-    case OpenableType::OpenableDoor: o.reset( new OpenableDoor ); break;
-    case OpenableType::OpenableContainer: o.reset( new OpenableContainer ); break;
-    default:;
-  }
-
-  return o;
-}
-
 OpenablePtr Openable::create(DescriptionPtr dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
+
   OpenablePtr op = nullptr;
-
-  if ( oDsc != nullptr )
+  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
+  if ( oDsc )
   {
-    op = Openable::create((oDsc->type));
+    //door?
+    OpenableDoorDescriptionPtr doorDsc = std::dynamic_pointer_cast<OpenableDoorDescription>(dsc);
+    if ( doorDsc != nullptr )
+    {
+      op = std::make_shared<OpenableDoor>();
+    }
+    //container?
+    else
+    {
+      OpenableContainerDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableContainerDescription>(dsc);
+      if ( contDsc )
+      {
+        op = std::make_shared<OpenableContainer>();
+      }
+    }
 
+    //common part
     if ( op != nullptr )
     {
       op->setLockId(oDsc->lockId);
       op->_locked = oDsc->locked;
     }
-  }else throw creation_error("Wrong openable description!");
+  }
 
   return op;
 }

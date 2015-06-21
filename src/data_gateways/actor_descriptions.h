@@ -35,6 +35,8 @@ struct PickableDescription;
 struct PlayableCharacterDescription;
 struct AiDescription;
 struct OpenableDescription;
+struct OpenableContainerDescription;
+struct OpenableDoorDescription;
 struct WearerDescription;
 struct ContainerDescription;
 struct DestroyableDescription;
@@ -47,6 +49,8 @@ typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
 typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescriptionPtr;
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
+typedef std::shared_ptr<OpenableContainerDescription> OpenableContainerDescriptionPtr;
+typedef std::shared_ptr<OpenableDoorDescription> OpenableDoorDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
 typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
@@ -180,14 +184,20 @@ struct AiDescription : Description
 struct OpenableDescription : Description
 {
   OpenableDescription()
-    : type(OpenableType::OpenableDoor)
-    , lockId(0)
+    : lockId(0)
     , locked(false)
   {}
 
-  OpenableType type;
   int lockId;
   bool locked;
+};
+
+struct OpenableDoorDescription : OpenableDescription
+{
+};
+
+struct OpenableContainerDescription : OpenableDescription
+{
 };
 
 struct ContainerDescription : Description

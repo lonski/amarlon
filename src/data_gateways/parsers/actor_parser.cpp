@@ -256,12 +256,25 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
 
   if ( _xml != nullptr )
   {
-    xml_node<>* openableNode = _xml->first_node("Openable");
+    //door
+    xml_node<>* openableNode = _xml->first_node("OpenableDoor");
     if (openableNode != nullptr)
     {
-      opDsc.reset( new OpenableDescription );
+      opDsc = std::make_shared<OpenableDoorDescription>();
+    }
+    else
+    //container
+    {
+      openableNode = _xml->first_node("OpenableContainer");
+      if ( openableNode != nullptr )
+      {
+        opDsc = std::make_shared<OpenableContainerDescription>();
+      }
+    }
 
-      opDsc->type = (OpenableType)getAttribute<int>(openableNode, "type");
+    //create common dsc
+    if ( opDsc != nullptr )
+    {
       opDsc->lockId = getAttribute<int>(openableNode, "lockId");
       opDsc->locked = getAttribute<bool>(openableNode, "locked");
     }

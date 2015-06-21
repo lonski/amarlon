@@ -64,10 +64,10 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Description>Goblins are small, wicked humanoids that favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise. An adult goblin stands 3 to 3.5 feet tall and weigh 40 to 45 pounds. Its eyes are usually bright and crafty-looking, varying in color from red to yellow. A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color. Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
 	</Actor>	
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
-		<Openable type="0" lockId="0" locked="0"/>
+		<OpenableDoor lockId="0" locked="0"/>
 	</Actor>
 	<Actor name="Door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
-		<Openable type="0" lockId="0" locked="0"/>
+		<OpenableDoor lockId="0" locked="0"/>
 	</Actor>
 	<Actor name="Bed" id="5" character="177" color="efefef" transparent="1" blocks="0" fovOnly="0"/>
 	<Actor name="Locker" id="6" character="226" color="906030" transparent="1" blocks="1" fovOnly="0"/>
