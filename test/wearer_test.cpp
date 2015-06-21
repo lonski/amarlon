@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
 #define private public
-#include "actor/actor.h"
-#include "actor_features/container.h"
-#include "wearer/wearer.h"
+#include <actor.h>
+#include <container.h>
+#include <wearer.h>
 #undef private
 
 namespace amarlon {

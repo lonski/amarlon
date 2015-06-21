@@ -10,14 +10,14 @@ set(HEADER_FILES
     actor/actor_features/wearer/item_slot_type.h
     actor/actor_features/wearer/wearer.h
     actor/actor_features/actor_feature.h
-    actor/actor_features/container.h
+    actor/actor_features/container/container.h
     actor/actor_features/character/character.h
     actor/actor_features/character/monster.h
     actor/actor_features/character/playable_character.h
-    actor/actor_features/pickable.h
-    actor/actor_features/pickable_category.h
-    actor/actor_features/destroyable.h
-    actor/actor_features/drop_rule.h
+    actor/actor_features/pickable/pickable.h
+    actor/actor_features/pickable/pickable_category.h
+    actor/actor_features/destroyable/destroyable.h
+    actor/actor_features/destroyable/drop_rule.h
     actor/effects/effect.h
     actor/effects/effect_type.h
     actor/effects/lock_effect.h
@@ -126,12 +126,12 @@ set(SOURCE_FILES
     actor/actor_features/openable/openable_factory.cpp
     actor/actor_features/wearer/wearer.cpp
     actor/actor_features/actor_feature.cpp
-    actor/actor_features/container.cpp
+    actor/actor_features/container/container.cpp
     actor/actor_features/character/character.cpp
     actor/actor_features/character/monster.cpp
     actor/actor_features/character/playable_character.cpp
-    actor/actor_features/pickable.cpp
-    actor/actor_features/destroyable.cpp
+    actor/actor_features/pickable/pickable.cpp
+    actor/actor_features/destroyable/destroyable.cpp
     actor/effects/effect.cpp
     actor/effects/lock_effect.cpp
     actor/effects/self_heal_effect.cpp

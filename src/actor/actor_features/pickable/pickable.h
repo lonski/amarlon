@@ -2,10 +2,10 @@
 #define PICKABLE_H
 
 #include <vector>
-#include "data_gateways/actor_descriptions.h"
-#include "actor/actor_features/actor_feature.h"
-#include "actor/actor_features/wearer/item_slot_type.h"
-#include "actor/actor_features/pickable_category.h"
+#include <actor_descriptions.h>
+#include <actor_feature.h>
+#include <item_slot_type.h>
+#include <pickable_category.h>
 
 namespace amarlon {
 

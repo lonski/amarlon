@@ -7,9 +7,9 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/container.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/container/container.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/character/character.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/pickable.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/pickable/pickable.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/monster_ai.h
@@ -19,7 +19,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable.h
+    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable/destroyable.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/effect.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/effect_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/lock_effect.h
