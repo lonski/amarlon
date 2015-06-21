@@ -83,4 +83,23 @@ int Monster::getMorale()
   return _morale;
 }
 
+CharacterPtr Monster::Creator::create(CharacterDescriptionPtr dsc)
+{
+  MonsterPtr mob = nullptr;
+
+  MonsterDescriptionPtr mobDsc = std::dynamic_pointer_cast<MonsterDescription>(dsc);
+  if ( mobDsc != nullptr )
+  {
+    mob = std::make_shared<Monster>(mobDsc->level, mobDsc->hitPointsBonus);
+
+    mob->_damageDice = mobDsc->damageDice;
+    mob->_damageDiceCount = mobDsc->damageDiceCount;
+    mob->_morale = mobDsc->morale;
+
+    Character::Creator::fillCommonCharacterPart(mob, dsc);
+  }
+
+  return mob;
+}
+
 }

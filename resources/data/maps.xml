@@ -170,6 +170,9 @@ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 				<Teleport mapId="1" x="0" y="9"/>
 			</Direction>
 		</OnExit>
+		<Actors>
+			<Actor id="1" x="98" y="9"/>
+		</Actors>
 	</Map>	
 </Maps>
 

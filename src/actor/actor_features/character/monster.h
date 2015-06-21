@@ -8,6 +8,14 @@ namespace amarlon {
 class Monster : public Character
 {
 public:
+
+  class Creator : public Character::Creator
+  {
+  public:
+    virtual ~Creator() {}
+    virtual CharacterPtr create(CharacterDescriptionPtr dsc);
+  };
+
   Monster(int level, int hitPointsBonus = 0);
   ~Monster();
 
@@ -31,7 +39,8 @@ private:
   int _morale;
   int _hpMod;
 
-  friend class Character;
+  friend class Monster::Creator;
+  friend class MonsterSerializer;
 
 };
 

@@ -85,7 +85,7 @@ OpenablePtr OpenableDoor::Creator::create(OpenableDescriptionPtr dsc)
   OpenableDoorDescriptionPtr doorDsc = std::dynamic_pointer_cast<OpenableDoorDescription>(dsc);
   if ( doorDsc != nullptr )
   {
-    op = std::make_unique<OpenableDoor>();
+    op = std::make_shared<OpenableDoor>();
     Openable::Creator::fillCommonOpenablePart(op, dsc);
   }
 

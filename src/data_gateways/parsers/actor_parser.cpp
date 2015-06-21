@@ -182,12 +182,10 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       xml_node<>* attrNode = characterNode->first_node("AbilityScores");
       if ( attrNode != nullptr)
       {
-        pdsc->abilityScores[AbilityScore::STR] = getAttribute<int>(attrNode, "STR");
-        pdsc->abilityScores[AbilityScore::INT] = getAttribute<int>(attrNode, "INT");
-        pdsc->abilityScores[AbilityScore::WIS] = getAttribute<int>(attrNode, "WIS");
-        pdsc->abilityScores[AbilityScore::DEX] = getAttribute<int>(attrNode, "DEX");
-        pdsc->abilityScores[AbilityScore::CON] = getAttribute<int>(attrNode, "CON");
-        pdsc->abilityScores[AbilityScore::CHA] = getAttribute<int>(attrNode, "CHA");
+        for ( AbilityScore::Type as : AbilityScore::Type() )
+        {
+          pdsc->abilityScores[as] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
+        }
       }
 
       dsc = pdsc;

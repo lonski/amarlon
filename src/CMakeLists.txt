@@ -14,6 +14,7 @@ set(HEADER_FILES
     actor/actor_features/character/character.h
     actor/actor_features/character/monster.h
     actor/actor_features/character/playable_character.h
+    actor/actor_features/character/character_factory.h
     actor/actor_features/pickable/pickable.h
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
@@ -54,6 +55,9 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/openable_serializer.h
     data_gateways/serializers/actor_feature_serializers/openable_door_serializer.h
     data_gateways/serializers/actor_feature_serializers/openable_container_serializer.h
+    data_gateways/serializers/actor_feature_serializers/character_serializer.h
+    data_gateways/serializers/actor_feature_serializers/monster_serializer.h
+    data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
     data_gateways/actor_db.h
     data_gateways/actor_descriptions.h
     data_gateways/map_gateway.h
@@ -130,6 +134,7 @@ set(SOURCE_FILES
     actor/actor_features/character/character.cpp
     actor/actor_features/character/monster.cpp
     actor/actor_features/character/playable_character.cpp
+    actor/actor_features/character/character_factory.cpp
     actor/actor_features/pickable/pickable.cpp
     actor/actor_features/destroyable/destroyable.cpp
     actor/effects/effect.cpp
@@ -160,6 +165,9 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/openable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/openable_door_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/openable_container_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/character_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/monster_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp

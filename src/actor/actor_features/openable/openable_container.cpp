@@ -80,7 +80,7 @@ OpenablePtr OpenableContainer::Creator::create(OpenableDescriptionPtr dsc)
   OpenableContainerDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableContainerDescription>(dsc);
   if ( contDsc != nullptr )
   {
-    op = std::make_unique<OpenableContainer>();
+    op = std::make_shared<OpenableContainer>();
     Openable::Creator::fillCommonOpenablePart(op, dsc);
   }
 

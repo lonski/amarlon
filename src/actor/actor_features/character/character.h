@@ -20,6 +20,18 @@ typedef std::shared_ptr<Pickable> PickablePtr;
 class Character : public ActorFeature
 {
 public:
+
+  class Creator
+  {
+  public:
+    virtual ~Creator() {}
+    virtual CharacterPtr create(CharacterDescriptionPtr dsc) = 0;
+
+  protected:
+    void fillCommonCharacterPart(CharacterPtr character, CharacterDescriptionPtr dsc);
+
+  };
+
   const static ActorFeature::Type featureType;
   virtual ActorFeature::Type getType() { return featureType; }
 
@@ -68,6 +80,8 @@ private:
   int _speed;
   int _movePoints;
 
+  friend class Character::Creator;
+  friend class CharacterSerializer;
 
 };
 

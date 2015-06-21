@@ -1,9 +1,8 @@
 #include "character.h"
-#include <playable_character.h>
-#include <monster.h>
 #include <actor.h>
 #include <die_action.h>
 #include <utils.h>
+#include <character_factory.h>
 
 namespace amarlon {
 
@@ -24,50 +23,8 @@ Character::Character()
 
 CharacterPtr Character::create(DescriptionPtr dsc)
 {
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  CharacterPtr c = nullptr;
-
-  //playable character part
-  PlayableCharacterDescriptionPtr characterDsc = std::dynamic_pointer_cast<PlayableCharacterDescription>(dsc);
-  if ( characterDsc != nullptr )
-  {
-    PlayableCharacterPtr character( new PlayableCharacter );
-
-    character->_hitPoints = characterDsc->hitPoints;
-    character->_maxHitPoints = characterDsc->maxHitPoints;
-    character->_level = characterDsc->level;
-    character->_abilityScores = characterDsc->abilityScores;
-
-    c = character;
-  }
-  //monster part
-  else
-  {
-    MonsterDescriptionPtr monsterDsc = std::dynamic_pointer_cast<MonsterDescription>(dsc);
-    if ( monsterDsc != nullptr )
-    {
-      MonsterPtr monster( new Monster(monsterDsc->level, monsterDsc->hitPointsBonus) );
-
-      monster->_damageDice = monsterDsc->damageDice;
-      monster->_damageDiceCount = monsterDsc->damageDiceCount;
-      monster->_morale = monsterDsc->morale;
-
-      c = monster;
-    }
-  }
-
-  //common part
-  CharacterDescriptionPtr commonDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
-  if ( commonDsc != nullptr )
-  {
-    c->_experience = commonDsc->experience;
-    c->_class = commonDsc->cClass;
-    c->_race = commonDsc->race;
-    c->_defaultArmorClass = commonDsc->defaultArmorClass;
-    c->_speed = commonDsc->speed;
-  }
-
-  return c;
+  static CharacterFactory factory;
+  return factory.produce( std::dynamic_pointer_cast<CharacterDescription>(dsc) );
 }
 
 bool Character::isEqual(ActorFeaturePtr rhs)
@@ -219,6 +176,18 @@ PickablePtr Character::getEquippedItem(ItemSlotType slot)
   }
 
   return item;
+}
+
+void Character::Creator::fillCommonCharacterPart(CharacterPtr character, CharacterDescriptionPtr dsc)
+{
+  if ( character != nullptr && dsc != nullptr )
+  {
+    character->_experience = dsc->experience;
+    character->_class = dsc->cClass;
+    character->_race = dsc->race;
+    character->_defaultArmorClass = dsc->defaultArmorClass;
+    character->_speed = dsc->speed;
+  }
 }
 
 }

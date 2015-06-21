@@ -10,6 +10,14 @@ struct LevelData;
 class PlayableCharacter : public Character
 {
 public:
+
+  class Creator : public Character::Creator
+  {
+  public:
+    virtual ~Creator() {}
+    virtual CharacterPtr create(CharacterDescriptionPtr dsc);
+  };
+
   PlayableCharacter();
   ~PlayableCharacter();
 
@@ -39,7 +47,7 @@ private:
 
   int calculateLoadPenalty();
 
-  friend class Character;
+  friend class PlayableCharacter::Creator;
 };
 
 typedef std::shared_ptr<PlayableCharacter> PlayableCharacterPtr;

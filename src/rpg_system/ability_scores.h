@@ -41,6 +41,26 @@ namespace AbilityScore
 
   int getModifier( int abilityScoreValue );
 
+  inline Type operator++(Type& x) { return x = (Type)(std::underlying_type<Type>::type(x) + 1); }
+  inline Type operator*(Type c) {return c;}
+  inline Type begin(Type) {return Type::STR;}
+  inline Type end(Type)   {return Type::CHA;}
+
+  static std::map< Type, std::string > asString
+  {
+    { STR, "STR" },
+    { INT, "INT" },
+    { WIS, "WIS" },
+    { DEX, "DEX" },
+    { CON, "CON" },
+    { CHA, "CHA" }
+  };
+
+  static inline std::string toStr(Type as)
+  {
+    return asString[as];
+  }
+
 }
 
 }
