@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <actor_feature_serializer.h>
-#include <effect_serializer.h>
 
 namespace amarlon {
 
