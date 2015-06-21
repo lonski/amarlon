@@ -20,6 +20,8 @@ public:
 
   virtual bool serialize(MapPtr map);
 
+  void serializeActors();
+  void serializeAttributes();
 private:
   ActionSerializer _actionSerializer;
   ActorSerializer _actorSerializer;

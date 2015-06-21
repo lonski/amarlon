@@ -48,6 +48,7 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/actor_feature_serializer.h
     data_gateways/serializers/actor_feature_serializers/pickable_serializer.h
     data_gateways/serializers/actor_feature_serializers/destroyable_serializer.h
+    data_gateways/serializers/actor_feature_serializers/container_serializer.h
     data_gateways/actor_db.h
     data_gateways/actor_descriptions.h
     data_gateways/map_gateway.h
@@ -148,6 +149,7 @@ set(SOURCE_FILES
     data_gateways/serializers/effect_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/pickable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/destroyable_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/container_serializer.cpp
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp

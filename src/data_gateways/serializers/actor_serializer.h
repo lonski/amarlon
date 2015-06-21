@@ -18,13 +18,11 @@ public:
   ActorSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~ActorSerializer();
 
-  virtual bool serialize(ActorPtr actor);
+  virtual bool serialize(ActorPtr actor, const char* nodeName = "Actor" );
 
 private:
   rapidxml::xml_node<>* _actorNode;
   std::vector<ActorFeatureSerializerPtr> _afSerializers;
-
-  void createAfSerializers();
 
 };
 

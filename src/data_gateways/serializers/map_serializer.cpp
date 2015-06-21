@@ -26,34 +26,30 @@ MapSerializer::~MapSerializer()
 
 bool MapSerializer::serialize(MapPtr map)
 {
-  /* TODO
-   * -> implement actors serialization   
-   */
   bool serialized = false;
+  _map = map;
 
-  if ( _xml != nullptr && _document != nullptr )
-  {    
-    _map = map;
+  if ( _xml && _document && _map )
+  {
     _mapNode = _document->allocate_node(node_element, "Map");
     _xml->append_node(_mapNode);
 
-    _mapNode->append_attribute( _document->allocate_attribute(    "height",_document->allocate_string( toStr(map->getHeight()).c_str()) ) );
-    _mapNode->append_attribute( _document->allocate_attribute(    "width",_document->allocate_string( toStr(map->getWidth()).c_str()) ) );
-    _mapNode->append_attribute( _document->allocate_attribute(    "id", _document->allocate_string( toStr(static_cast<int>(map->getId())).c_str()) ) );
-    _mapNode->append_node( _document->allocate_node(node_element, "Tiles", _document->allocate_string( map->tilesToStr().c_str()) ) );
-
+    serializeAttributes();
     serializeExitActions();
-
-    _actorSerializer.setDestination(_document, _mapNode);
-    for ( ActorPtr actor : _map->getActors() )
-    {
-      _actorSerializer.serialize(actor);
-    }
+    serializeActors();
 
     serialized = true;
   }
 
   return serialized;
+}
+
+void MapSerializer::serializeAttributes()
+{
+  _mapNode->append_attribute( _document->allocate_attribute(    "height",_document->allocate_string( toStr(_map->getHeight()).c_str()) ) );
+  _mapNode->append_attribute( _document->allocate_attribute(    "width",_document->allocate_string( toStr(_map->getWidth()).c_str()) ) );
+  _mapNode->append_attribute( _document->allocate_attribute(    "id", _document->allocate_string( toStr(static_cast<int>(_map->getId())).c_str()) ) );
+  _mapNode->append_node( _document->allocate_node(node_element, "Tiles", _document->allocate_string( _map->tilesToStr().c_str()) ) );
 }
 
 void MapSerializer::serializeExitActions()
@@ -69,6 +65,15 @@ void MapSerializer::serializeExitActions()
 
     _actionSerializer.setDestination(_document, directionNode);
     _actionSerializer.serialize(pair.second);
+  }
+}
+
+void MapSerializer::serializeActors()
+{
+  _actorSerializer.setDestination(_document, _mapNode);
+  for ( ActorPtr actor : _map->getActors() )
+  {
+    _actorSerializer.serialize(actor);
   }
 }
 

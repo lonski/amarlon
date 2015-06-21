@@ -3,33 +3,36 @@
 #include <actor.h>
 #include <pickable_serializer.h>
 #include <destroyable_serializer.h>
+#include <container_serializer.h>
 
 using namespace rapidxml;
 
 namespace amarlon {
 
 ActorSerializer::ActorSerializer()
+  : ActorSerializer(nullptr, nullptr)
 {
-  createAfSerializers();
 }
 
 ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   : Serializer(document, xmlNode)
 {
-  createAfSerializers();
+  _afSerializers.push_back( std::make_shared<PickableSerializer>() );
+  _afSerializers.push_back( std::make_shared<DestroyableSerializer>() );
+  _afSerializers.push_back( std::make_shared<ContainerSerializer>() );
 }
 
 ActorSerializer::~ActorSerializer()
 {
 }
 
-bool ActorSerializer::serialize(ActorPtr actor)
+bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
 {
   bool serialized = false;
 
   if ( _document && _xml )
   {
-    _actorNode = _document->allocate_node(node_element, "Actor");
+    _actorNode = _document->allocate_node(node_element, nodeName);
     _xml->append_node( _actorNode );
 
     _actorNode->append_attribute( _document->allocate_attribute( "id",_document->allocate_string( toStr( static_cast<int>(actor->getId()) ).c_str()) ) );
@@ -47,12 +50,6 @@ bool ActorSerializer::serialize(ActorPtr actor)
   }
 
   return serialized;
-}
-
-void ActorSerializer::createAfSerializers()
-{
-  _afSerializers.push_back( std::make_shared<PickableSerializer>() );
-  _afSerializers.push_back( std::make_shared<DestroyableSerializer>() );
 }
 
 }
