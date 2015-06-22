@@ -2,16 +2,26 @@
 #define MONSTERAI_H
 
 #include <memory>
-#include "ai.h"
+#include <ai.h>
 
 namespace amarlon {
 
 class MonsterAi;
+class Map;
 typedef std::shared_ptr<MonsterAi> MonsterAiPtr;
+typedef std::shared_ptr<Map> MapPtr;
 
 class MonsterAi : public Ai
 {
 public:
+
+  class Creator : public Ai::Creator
+  {
+  public:
+    virtual ~Creator() {}
+    virtual AiPtr create(AiDescriptionPtr dsc);
+  };
+
   static int TrackingTurns;
   MonsterAi();
 

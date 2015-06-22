@@ -8,8 +8,6 @@
 #include <map>
 #include <libtcod.hpp>
 #include <actor_type.h>
-#include <ai_type.h>
-#include <openable_type.h>
 #include <item_slot_type.h>
 #include <pickable_category.h>
 #include <effect_type.h>
@@ -34,6 +32,7 @@ struct ActorDescription;
 struct PickableDescription;
 struct PlayableCharacterDescription;
 struct AiDescription;
+struct MonsterAiDescription;
 struct OpenableDescription;
 struct OpenableContainerDescription;
 struct OpenableDoorDescription;
@@ -48,6 +47,7 @@ typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
 typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescriptionPtr;
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
+typedef std::shared_ptr<MonsterAiDescription> MonsterAiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
 typedef std::shared_ptr<OpenableContainerDescription> OpenableContainerDescriptionPtr;
 typedef std::shared_ptr<OpenableDoorDescription> OpenableDoorDescriptionPtr;
@@ -174,11 +174,10 @@ struct MonsterDescription : CharacterDescription
 
 struct AiDescription : Description
 {
-  AiDescription()
-    : type(AiType::Null)
-  {}
+};
 
-  AiType type;
+struct MonsterAiDescription : AiDescription
+{
 };
 
 struct OpenableDescription : Description

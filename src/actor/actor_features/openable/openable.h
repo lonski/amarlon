@@ -1,9 +1,8 @@
 #ifndef OPENABLE_H
 #define OPENABLE_H
 
-#include "actor_feature.h"
-#include "openable_type.h"
-#include "data_gateways/actor_descriptions.h"
+#include <actor_feature.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 
@@ -32,7 +31,6 @@ public:
   Openable();
   ~Openable() {}
 
-  static OpenablePtr create(OpenableType type);
   static OpenablePtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType();

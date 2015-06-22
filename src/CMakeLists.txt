@@ -1,11 +1,10 @@
 set(HEADER_FILES
-    actor/actor_features/ai/ai.h
-    actor/actor_features/ai/ai_type.h
+    actor/actor_features/ai/ai.h    
+    actor/actor_features/ai/ai_factory.h
     actor/actor_features/ai/monster_ai.h
     actor/actor_features/openable/openable.h
     actor/actor_features/openable/openable_container.h
-    actor/actor_features/openable/openable_door.h
-    actor/actor_features/openable/openable_type.h
+    actor/actor_features/openable/openable_door.h    
     actor/actor_features/openable/openable_factory.h
     actor/actor_features/wearer/item_slot_type.h
     actor/actor_features/wearer/wearer.h
@@ -58,6 +57,8 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/character_serializer.h
     data_gateways/serializers/actor_feature_serializers/monster_serializer.h
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
+    data_gateways/serializers/actor_feature_serializers/ai_serializer.h
+    data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
     data_gateways/actor_db.h
     data_gateways/actor_descriptions.h
     data_gateways/map_gateway.h
@@ -123,6 +124,7 @@ set(HEADER_FILES
 
 set(SOURCE_FILES
     actor/actor_features/ai/ai.cpp
+    actor/actor_features/ai/ai_factory.cpp
     actor/actor_features/ai/monster_ai.cpp
     actor/actor_features/openable/openable.cpp
     actor/actor_features/openable/openable_container.cpp
@@ -168,6 +170,8 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/character_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/monster_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/ai_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.cpp
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp

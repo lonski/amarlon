@@ -236,12 +236,11 @@ AiDescriptionPtr ActorParser::parseAiDsc()
 
   if ( _xml != nullptr )
   {
-    xml_node<>* aiNode = _xml->first_node("Ai");
-    if (aiNode != nullptr)
+    xml_node<>* mobAiNode = _xml->first_node("MonsterAi");
+    if (mobAiNode != nullptr)
     {
-      aiDsc.reset( new AiDescription );
-
-      aiDsc->type = (AiType)getAttribute<int>(aiNode, "type");
+      MonsterAiDescriptionPtr mobAiDsc = std::make_shared<MonsterAiDescription>();
+      aiDsc = mobAiDsc;
     }
   }
 

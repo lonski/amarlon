@@ -2,22 +2,25 @@
 #define AI_H
 
 #include <memory>
-#include "actor_feature.h"
-#include "ai_type.h"
-#include "data_gateways/actor_descriptions.h"
+#include <actor_feature.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 
-class Actor;
-class Map;
 class Ai;
-
 typedef std::shared_ptr<Ai> AiPtr;
-typedef std::shared_ptr<Map> MapPtr;
 
 class Ai : public ActorFeature
 {
 public:
+
+  class Creator
+  {
+  public:
+    virtual ~Creator() {}
+    virtual AiPtr create(AiDescriptionPtr dsc) = 0;
+  };
+
   const static ActorFeature::Type featureType;
 
   Ai();
@@ -26,7 +29,6 @@ public:
   virtual ActorFeature::Type getType() { return featureType; }
   virtual void update() = 0;
 
-  static AiPtr create(AiType type);
   static AiPtr create(DescriptionPtr dsc);
 
 };

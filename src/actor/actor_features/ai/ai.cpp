@@ -1,8 +1,6 @@
 #include "ai.h"
 #include <iostream>
-#include "actor/actor.h"
-#include "monster_ai.h"
-#include "amarlon_except.h"
+#include <ai_factory.h>
 
 namespace amarlon {
 
@@ -12,31 +10,10 @@ Ai::Ai()
 {
 }
 
-AiPtr Ai::create(AiType type)
-{
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  AiPtr ai;
-
-  switch (type)
-  {
-    case AiType::Monster: ai.reset( new MonsterAi );
-    default:;
-  }
-
-  return ai;
-}
-
 AiPtr Ai::create(DescriptionPtr dsc)
 {
-  AiDescriptionPtr aiDsc = std::dynamic_pointer_cast<AiDescription>(dsc);
-  AiPtr ai = nullptr;
-
-  if ( aiDsc != nullptr )
-  {
-    ai = Ai::create(aiDsc->type);
-  }else throw creation_error("Wrong ai description!");
-
-  return ai;
+  static AiFactory factory;
+  return factory.produce( std::dynamic_pointer_cast<AiDescription>(dsc) );
 }
 
 }

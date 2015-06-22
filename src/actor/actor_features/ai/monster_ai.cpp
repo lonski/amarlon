@@ -113,4 +113,17 @@ void MonsterAi::updatePosition()
   _cY = getOwner().lock()->getY();
 }
 
+AiPtr MonsterAi::Creator::create(AiDescriptionPtr dsc)
+{
+  AiPtr ai = nullptr;
+
+  MonsterAiDescriptionPtr aiDsc = std::dynamic_pointer_cast<MonsterAiDescription>(dsc);
+  if ( aiDsc != nullptr )
+  {
+    ai = std::make_shared<MonsterAi>();
+  }
+
+  return ai;
+}
+
 }
