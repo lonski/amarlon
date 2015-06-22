@@ -18,7 +18,7 @@ TEST(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
 TEST(MapGatewayTest, fetchExistingMap_givesMap)
 {
   MapGateway gateway;
-  gateway.loadMaps("data/maps.xml");
+  gateway.load("data/maps.xml");
   MapPtr map (gateway.fetch(MapId::GameStart));
 
   ASSERT_TRUE(map != nullptr);
@@ -29,7 +29,7 @@ TEST(MapGatewayTest, mapHasValidTiles)
 {
   Map::Tiles.loadTiles("data/tiles.xml");
   MapGateway gateway;
-  gateway.loadMaps("data/maps.xml");
+  gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
   ASSERT_EQ(map->getChar(39,27), Map::Tiles.getChar(TileType::PlainFloor));
@@ -39,7 +39,7 @@ TEST(MapGatewayTest, mapHasValidTiles2)
 {
   Map::Tiles.loadTiles("data/tiles.xml");
   MapGateway gateway;
-  gateway.loadMaps("data/maps.xml");
+  gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
   ASSERT_EQ(map->getChar(1,1), Map::Tiles.getChar(TileType::Tree));
@@ -48,8 +48,8 @@ TEST(MapGatewayTest, mapHasValidTiles2)
 TEST(MapGatewayTest, saveMaps)
 {
   MapGateway gateway;
-  gateway.loadMaps("data/maps.xml");
-  gateway.saveMaps("data/maps_saved.xml");
+  gateway.load("data/maps.xml");
+  gateway.store("data/maps_saved.xml");
 }
 
 }

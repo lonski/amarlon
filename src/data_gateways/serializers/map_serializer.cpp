@@ -3,6 +3,8 @@
 #include <world/map.h>
 #include <utils.h>
 #include <xml_utils.h>
+#include <actor.h>
+#include <iostream>
 
 using namespace rapidxml;
 using namespace std;
@@ -70,7 +72,10 @@ void MapSerializer::serializeExitActions()
 
 void MapSerializer::serializeActors()
 {
-  _actorSerializer.setDestination(_document, _mapNode);
+  xml_node<>* actorsNode = _document->allocate_node(node_element, "Actors");
+  _mapNode->append_node( actorsNode );
+
+  _actorSerializer.setDestination(_document, actorsNode);
   for ( ActorPtr actor : _map->getActors() )
   {
     _actorSerializer.serialize(actor);

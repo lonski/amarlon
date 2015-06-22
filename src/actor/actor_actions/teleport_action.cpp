@@ -21,7 +21,7 @@ bool TeleportAction::perform(ActorPtr performer)
   removeFromCurrentMap(performer);
   performer->setPosition(_x, _y);
 
-  MapPtr newMap = Engine::instance().getWorld().getMap( _map );
+  MapPtr newMap = Engine::instance().getWorld().fetch( _map );
   newMap->addActor( performer );
 
   if ( performer == Actor::Player )

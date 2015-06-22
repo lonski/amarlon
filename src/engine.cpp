@@ -23,10 +23,10 @@ Engine::Engine()
 }
 
 Engine::~Engine()
-{
+{  
 }
 
-void Engine::init(Configuration* cfg)
+void Engine::prologue(Configuration* cfg)
 {
   _config = cfg;
   _cmdExecutor.reset( new CommandExecutor );
@@ -42,14 +42,24 @@ void Engine::init(Configuration* cfg)
 
   Map::Tiles.loadTiles( cfg->get("tiles_file") );
   Actor::DB.loadActors( cfg->get("actors_file") );
-  Map::Gateway.loadMaps( cfg->get("maps_file") );
+  Map::Gateway.load( cfg->get("maps_file") );
 
   Messenger::message()->setGui(_gui.get());
 
-  Actor::Player = Actor::create(ActorType::Player, 42, 28);
 
+  getWorld().load( cfg->get("save_file") );
   getWorld().changeMap( MapId::GameStart );
-  getWorld().getCurrentMap()->addActor( Actor::Player );
+
+  if ( Actor::Player == nullptr )
+  {
+    Actor::Player = Actor::create(ActorType::Player, 42, 28);
+    getWorld().getCurrentMap()->addActor( Actor::Player );
+  }
+}
+
+void Engine::epilogue()
+{
+  getWorld().store( _config->get("save_file") );
 }
 
 void Engine::update()

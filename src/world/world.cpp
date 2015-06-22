@@ -7,12 +7,16 @@ World::World()
 {
 }
 
-MapPtr World::getCurrentMap()
+World::~World()
 {
-  return getMap(_currentMap);
 }
 
-MapPtr World::getMap(MapId id)
+MapPtr World::getCurrentMap()
+{
+  return fetch(_currentMap);
+}
+
+MapPtr World::fetch(MapId id)
 {
   MapPtr map;
 

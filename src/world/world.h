@@ -4,28 +4,24 @@
 #include <memory>
 #include <map>
 #include <map_id.h>
+#include <map_gateway.h>
 
 namespace amarlon {
 
 class Map;
 typedef std::shared_ptr<Map> MapPtr;
 
-class World
+class World : public MapGateway
 {
 public:
   World();
+  virtual ~World();
 
-  MapPtr getCurrentMap();
-  MapPtr getMap(MapId id);
-  void changeMap(MapId id);
+  virtual MapPtr fetch(MapId id);
+  virtual MapPtr getCurrentMap();
+  virtual void changeMap(MapId id);
 
-  /* TODO:
-   * saving to file
-   * loading from file
-   */
-
-private:
-  std::map<MapId, MapPtr> _maps;
+private:  
   MapId _currentMap;
 
 };

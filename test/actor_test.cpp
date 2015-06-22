@@ -11,7 +11,7 @@ class ActorTest : public ::testing::Test
   {
     Map::Tiles.loadTiles("data/tiles.xml");
     Actor::DB.loadActors("data/actors.xml");
-    Map::Gateway.loadMaps("data/maps.xml");
+    Map::Gateway.load("data/maps.xml");
   }
 
   virtual void TearDown()

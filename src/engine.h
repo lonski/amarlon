@@ -38,7 +38,8 @@ public:
 
   ~Engine();
 
-  void init(Configuration *cfg);
+  void prologue(Configuration *cfg);
+  void epilogue();
   void render();
   void update();
   void processKey(TCOD_key_t& key);

@@ -4,11 +4,11 @@
 #include <algorithm>
 #include <memory>
 #include <xml/rapidxml_print.hpp>
-#include "world/map.h"
-#include "actor/actor_type.h"
-#include "actor/actor.h"
-#include "parsers/actor_parser.h"
-#include "serializers/map_serializer.h"
+#include <map.h>
+#include <actor_type.h>
+#include <actor.h>
+#include <actor_parser.h>
+#include <map_serializer.h>
 
 namespace amarlon {
 
@@ -16,6 +16,10 @@ using namespace rapidxml;
 using namespace std;
 
 MapGateway::MapGateway()
+{
+}
+
+MapGateway::~MapGateway()
 {
 }
 
@@ -32,7 +36,7 @@ MapPtr MapGateway::fetch(MapId id)
   return map;
 }
 
-void MapGateway::loadMaps(string fn)
+bool MapGateway::load(const string& fn)
 {
   ifstream ifs(fn);
 
@@ -43,7 +47,9 @@ void MapGateway::loadMaps(string fn)
     buf.push_back('\0');
 
     parseMaps(buf);
+    return true;
   }
+  return false;
 }
 
 void MapGateway::parseMaps(vector<char>& buf)
@@ -77,10 +83,15 @@ std::shared_ptr<xml_document<> > MapGateway::serializeMaps()
   return doc;
 }
 
-void MapGateway::saveMaps(string fn)
+bool MapGateway::store(const string& fn)
 {
   ofstream ofs(fn);
-  if ( ofs.is_open() ) ofs << *serializeMaps();
+  if ( ofs.is_open() )
+  {
+    ofs << *serializeMaps();
+    return true;
+  }
+  return false;
 }
 
 }

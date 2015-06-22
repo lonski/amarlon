@@ -15,7 +15,7 @@ int main()
     amarlon::Configuration cfg;
     if (!cfg.load("config.cfg")) throw std::runtime_error("Missing configuration file [config.cfg]!");
 
-    amarlon::Engine::instance().init(&cfg);
+    amarlon::Engine::instance().prologue(&cfg);
 
     TCODConsole::root->setCustomFont(cfg.getFont(),TCOD_FONT_LAYOUT_TCOD | TCOD_FONT_TYPE_GREYSCALE);
     TCODConsole::initRoot(amarlon::Engine::screenWidth,
@@ -46,6 +46,9 @@ int main()
                              amarlon::gui::MsgType::Error);
       }
     }
+
+    amarlon::Engine::instance().epilogue();
+
   }
   catch(std::exception &e)
   {
@@ -55,8 +58,6 @@ int main()
   {
     std::cout << "\nUnknown error has occured.";
   }
-
-  amarlon::Map::Gateway.saveMaps("d:/asd.xml");
 
   return 0;
 }

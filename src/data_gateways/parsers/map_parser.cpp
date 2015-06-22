@@ -92,6 +92,11 @@ ActorPtr MapParser::parseActor(rapidxml::xml_node<>* actorNode)
   ActorPtr actor = Actor::create(aId, aX, aY, _map);
   overWriteActorFeatures(actor);
 
+  if ( actor->getId() == ActorType::Player )
+  {
+    Actor::Player = actor;
+  }
+
   return actor;
 }
 
