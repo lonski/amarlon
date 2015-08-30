@@ -5,6 +5,8 @@
 #include <actor_parser.h>
 #include <actor.h>
 #include <teleport_action.h>
+#include <base64.h>
+#include <fstream>
 
 namespace amarlon {
 
@@ -33,14 +35,14 @@ MapPtr MapParser::parse()
     if ( !tilesInStr.empty())
     {
       _map.reset( new Map(x, y, id) );
-      _map->fill( tilesInStr );
+      std::string decoded_tiles = base64_decode( tilesInStr );
+      _map->deserializeTiles( std::vector<unsigned char>{decoded_tiles.begin(), decoded_tiles.end()} );
 
       parseActors();
     }
 
     parseActions();
   }
-
   return _map;
 }
 

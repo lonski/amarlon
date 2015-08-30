@@ -92,6 +92,7 @@ set(HEADER_FILES
     utils/amarlon_except.h
     utils/dices.h
     utils/text_formater.h
+    utils/base64.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -197,6 +198,7 @@ set(SOURCE_FILES
     utils/configuration.cpp
     utils/dices.cpp
     utils/text_formater.cpp
+    utils/base64.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp

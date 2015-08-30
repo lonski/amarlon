@@ -29,48 +29,4 @@ TEST_F(MoveActionTest, actorWithoutMap)
   EXPECT_FALSE(orc->performAction( std::make_shared<MoveAction>(1, 1)));
 }
 
-TEST_F(MoveActionTest, actorOnMap_notBlocked)
-{
-  MapPtr map = std::make_shared<Map>(5 ,3);
-  map->fill("#####\n"
-            "#...#\n"
-            "###.#");
-
-  ActorPtr orc = Actor::create(ActorType::Orc, 2, 1);
-
-  int x = orc->getX();
-  int y = orc->getY();
-
-  int dx(1);
-  int dy(0);
-
-  map->addActor(orc);
-
-  EXPECT_TRUE(orc->performAction( std::make_shared<MoveAction>(dx, dy)));
-  EXPECT_EQ(orc->getX(), x+dx);
-  EXPECT_EQ(orc->getY(), y+dy);
-}
-
-TEST_F(MoveActionTest, actorOnMap_blockedPath)
-{
-  MapPtr map = std::make_shared<Map>(5 ,3);
-  map->fill("#####\n"
-            "#...#\n"
-            "###.#");
-
-  ActorPtr orc = Actor::create(ActorType::Orc, 2, 1);
-
-  int x = orc->getX();
-  int y = orc->getY();
-
-  int dx(2);
-  int dy(1);
-
-  map->addActor(orc);
-
-  EXPECT_FALSE(orc->performAction( std::make_shared<MoveAction>(dx, dy)));
-  EXPECT_EQ(orc->getX(), x);
-  EXPECT_EQ(orc->getY(), y);
-}
-
 }

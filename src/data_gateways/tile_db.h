@@ -19,7 +19,6 @@ public:
 
   TileType getType(char ch);
   char getChar(TileType type);
-  char getCode(TileType type);
   TCODColor getColor(TileType type);
   bool isWalkable(TileType type);
   bool isTransparent(TileType type);

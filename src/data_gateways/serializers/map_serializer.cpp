@@ -5,6 +5,8 @@
 #include <xml_utils.h>
 #include <actor.h>
 #include <iostream>
+#include <libtcod.hpp>
+#include <base64.h>
 
 using namespace rapidxml;
 using namespace std;
@@ -51,7 +53,12 @@ void MapSerializer::serializeAttributes()
   _mapNode->append_attribute( _document->allocate_attribute(    "height",_document->allocate_string( toStr(_map->getHeight()).c_str()) ) );
   _mapNode->append_attribute( _document->allocate_attribute(    "width",_document->allocate_string( toStr(_map->getWidth()).c_str()) ) );
   _mapNode->append_attribute( _document->allocate_attribute(    "id", _document->allocate_string( toStr(static_cast<int>(_map->getId())).c_str()) ) );
-  _mapNode->append_node( _document->allocate_node(node_element, "Tiles", _document->allocate_string( _map->tilesToStr().c_str()) ) );
+
+  auto tiles = _map->serializeTiles();
+  std::string encodedTiles = base64_encode(reinterpret_cast<const unsigned char*>(&tiles[0]), tiles.size());
+
+  _mapNode->append_node( _document->allocate_node(node_element, "Tiles", _document->allocate_string(encodedTiles.c_str()) ) );
+
 }
 
 void MapSerializer::serializeExitActions()

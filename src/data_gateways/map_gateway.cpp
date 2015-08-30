@@ -45,8 +45,8 @@ bool MapGateway::load(const string& fn)
     vector<char> buf;
     buf.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
     buf.push_back('\0');
-
     parseMaps(buf);
+
     return true;
   }
   return false;
@@ -68,6 +68,7 @@ void MapGateway::parseMaps(vector<char>& buf)
 
     mapNode = mapNode->next_sibling();
   }
+
 }
 
 std::shared_ptr<xml_document<> > MapGateway::serializeMaps()

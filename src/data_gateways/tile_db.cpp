@@ -41,11 +41,6 @@ char TileDB::getChar(TileType type)
   return get<char>(type, &TileDescription::character, '#');
 }
 
-char TileDB::getCode(TileType type)
-{
-  return get<char>(type, &TileDescription::code, '#');
-}
-
 TCODColor TileDB::getColor(TileType type)
 {
   return get<TCODColor>(type, &TileDescription::color, TCODColor::white);

@@ -3,6 +3,8 @@
 #include <actor.h>
 #include <amarlon_except.h>
 #include <actor_action.h>
+#include <utils.h>
+#include <libtcod.hpp>
 
 namespace amarlon {
 
@@ -22,7 +24,7 @@ Map::Map(u32 width, u32 height, MapId id)
     TileRow row;
     for(u32 x = 0; x < width; ++x)
     {
-      row.push_back(Tile());
+      row.push_back(Tile(x, y));
     }
     _tiles.push_back(row);
   }
@@ -65,7 +67,7 @@ bool Map::isBlocked(int x, int y)
 }
 
 void Map::addActor(ActorPtr actor)
-{  
+{
   u32 x( actor->getX() );
   u32 y( actor->getY() );
   Tile& tile = getTile(x, y);
@@ -127,8 +129,7 @@ std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)>* filterFun)
 bool Map::removeActor(ActorPtr toRemove)
 {  
   Tile& tile = getTile(toRemove->getX(), toRemove->getY());
-  bool r = tile.actors->remove( toRemove );
-  return r;
+  return tile.actors->remove( toRemove );
 }
 
 void Map::render(TCODConsole *console)
@@ -192,45 +193,25 @@ void Map::computeFov(int x, int y, int radius)
   _codMap.computeFov(x,y,radius);
 }
 
-void Map::fill(std::string tilesStr)
+void Map::deserializeTiles(std::vector<unsigned char> tiles)
 {
-  int y = 0;
-  int x = 0;
-  for (auto it = tilesStr.begin(); it != tilesStr.end(); ++it)
+  for (int pos = 0; pos + sizeof(SerializedTile) <= tiles.size(); pos += sizeof(SerializedTile) )
   {
-    if (*it == '\n')
-    {
-      ++y;
-      x = 0;
-    }
-    else
-    {
-      Tile& tile = getTile(x,y);
+    SerializedTile* serialized = reinterpret_cast<SerializedTile*>(&tiles[pos]);
 
-      tile.type = Map::Tiles.getType(*it);
-
-      bool walkable = Map::Tiles.isWalkable(tile.type);
-      bool transparent = Map::Tiles.isTransparent(tile.type);
-
-      _codMap.setProperties(x,y,transparent, walkable);
-
-      ++x;
-    }
+    Tile& tile = getTile(serialized->x, serialized->y);
+    tile.deserialize( *serialized );
+    tile.update(this);
   }
-
 }
 
 void Map::updateTiles()
 {
-  for ( u32 y = 0; y < _height; ++y )
+  for ( auto row : _tiles )
   {
-    for ( u32 x = 0; x < _width; ++x )
+    for ( auto tile : row )
     {
-      Tile& tile = getTile(x,y);
-      _codMap.setProperties(x,
-                            y,
-                            Map::Tiles.isTransparent(tile.type),
-                            Map::Tiles.isWalkable(tile.type));
+      tile.update(this);
 
       for ( ActorPtr actor : tile.actors->content() )
       {
@@ -240,24 +221,28 @@ void Map::updateTiles()
   }
 }
 
-std::string Map::tilesToStr()
+std::vector<unsigned char> Map::serializeTiles()
 {
-  std::string str;
+  std::vector<unsigned char> v;
+
   for (auto t = _tiles.begin(); t != _tiles.end(); ++t)
   {
     TileRow& trow = *t;
     for (auto ct = trow.begin(); ct != trow.end(); ++ct)
     {
       Tile& tile = *ct;
-      str = str + Tiles.getCode(tile.type);
+
+      auto serialized = tile.serialize();
+      v.insert( v.end(), serialized.begin(), serialized.end() );
     }
-    str += "\n";
   }
 
-  if (!str.empty())
-    str.erase(str.end()-1, str.end());
+  return v;
+}
 
-  return str;
+TCODMap &Map::getCODMap()
+{
+  return _codMap;
 }
 
 TCODColor Map::getColor(u32 x, u32 y)

@@ -46,7 +46,6 @@ void Engine::prologue(Configuration* cfg)
 
   Messenger::message()->setGui(_gui.get());
 
-
   getWorld().load( cfg->get("save_file") );
   getWorld().changeMap( MapId::GameStart );
 

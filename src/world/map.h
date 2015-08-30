@@ -58,8 +58,9 @@ public:
   virtual void updateActorCell(ActorPtr actor);
 
   virtual void computeFov(int x, int y, int radius);
-  virtual void fill(std::string tilesStr);
-  virtual std::string tilesToStr();
+  virtual void deserializeTiles(std::vector<unsigned char> tiles);
+  std::vector<unsigned char> serializeTiles();
+  TCODMap& getCODMap();
 
   virtual TCODColor getColor(u32 x, u32 y);
   virtual char getChar(u32 x, u32 y);
