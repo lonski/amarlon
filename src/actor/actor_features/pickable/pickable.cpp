@@ -112,8 +112,8 @@ bool Pickable::use(ActorPtr executor, std::vector<ActorPtr> targets)
 {
   bool r = false;
 
-  if ( (_usesCount > 0 || _usesCount == -1) && _effect != nullptr)
-  {    
+  if ( _effect != nullptr && _usesCount != 0 )
+  {
     if ( _effect->apply(executor, targets) )
     {
       --_usesCount;
