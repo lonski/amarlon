@@ -7,7 +7,6 @@
 namespace amarlon {
 
 Effect::Effect()
-  : _usesCount(0)
 {
 }
 
@@ -40,11 +39,6 @@ Effect* Effect::create(const EffectDescription &dsc)
   }
 
   return e;
-}
-
-int Effect::getUsesCount() const
-{
-  return _usesCount;
 }
 
 }

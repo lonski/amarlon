@@ -27,12 +27,8 @@ public:
   virtual void load(const EffectDescription& dsc) = 0;
   virtual EffectDescription save() = 0;
 
-  virtual TargetType getTargetType() const = 0;
-  virtual int getUsesCount() const;
+  virtual TargetType getTargetType() const = 0;  
   virtual EffectType getType() const = 0;
-
-protected:
-  int _usesCount;
 
 };
 

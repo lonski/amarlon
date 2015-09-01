@@ -67,6 +67,7 @@ private:
   int _armorClass;
   int _weight;
   int _price;
+  int _usesCount;
 
 };
 

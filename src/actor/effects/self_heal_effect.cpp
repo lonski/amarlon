@@ -23,7 +23,6 @@ bool SelfHealEffect::apply(ActorPtr executor, std::vector<ActorPtr >)
 
     Messenger::message()->actorHealed(executor, character->getHitPoints() - hpBeforeHeal );
 
-    --_usesCount;
     r = true;
   }
 
@@ -33,14 +32,12 @@ bool SelfHealEffect::apply(ActorPtr executor, std::vector<ActorPtr >)
 void SelfHealEffect::load(const EffectDescription &dsc)
 {
   _healAmount = dsc.heal;
-  _usesCount = dsc.uses;
 }
 
 EffectDescription SelfHealEffect::save()
 {
   EffectDescription dsc;
   dsc.heal = _healAmount;
-  dsc.uses = _usesCount;
 
   return dsc;
 }
@@ -61,7 +58,6 @@ bool SelfHealEffect::isEqual(Effect *rhs)
   if (crhs != nullptr)
   {
     equal = _healAmount == crhs->_healAmount;
-    equal &= _usesCount == crhs->_usesCount;
   }
 
   return equal;

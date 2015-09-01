@@ -26,8 +26,7 @@ bool LockEffect::isEqual(Effect *rhs)
 
   if (crhs != nullptr)
   {
-    equal = _lockId == crhs->_lockId;
-    equal &= _usesCount == crhs->_usesCount;
+    equal = _lockId == crhs->_lockId;    
   }
 
   return equal;
@@ -36,14 +35,12 @@ bool LockEffect::isEqual(Effect *rhs)
 void LockEffect::load(const EffectDescription &dsc)
 {
   _lockId = dsc.lockId;
-  _usesCount = dsc.uses;
 }
 
 EffectDescription LockEffect::save()
 {
   EffectDescription dsc;
   dsc.lockId = _lockId;
-  dsc.uses = _usesCount;
 
   return dsc;
 }

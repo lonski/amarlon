@@ -69,6 +69,10 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
                                           + toStr(static_cast<int>(pickable->getDamageDice()))
                                           ).c_str()) ) );
 
+    _pickableNode->append_attribute( _document->allocate_attribute(
+                                       "uses",
+                                       _document->allocate_string( toStr( pickable->getUsesCount()  ).c_str()) ) );
+
     _effectSerializer.setDestination(_document, _pickableNode);
     _effectSerializer.serialize( pickable->getEffect() );
   }

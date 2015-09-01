@@ -43,6 +43,7 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_weight = pDsc->weight;
     pickable->_price = pDsc->price;
     pickable->_diceCount = pDsc->damageDiceCount;
+    pickable->_usesCount = pDsc->uses;
 
     Effect* effect = Effect::create(pDsc->effect);
     pickable->setEffect(effect);
@@ -81,6 +82,7 @@ ActorFeaturePtr Pickable::clone()
   cloned->_armorClass = _armorClass;
   cloned->_weight = _weight;
   cloned->_price = _price;
+  cloned->_usesCount = _usesCount;
 
   return cloned;
 }
@@ -98,6 +100,7 @@ bool Pickable::isEqual(ActorFeaturePtr rhs)
     equal &= (_weight == crhs->_weight);
     equal &= (_price == crhs->_price);
     equal &= (_diceCount == crhs->_diceCount);
+    equal &= _usesCount == crhs->_usesCount;
     //equal &= (_amount == crhs->_amount);  no amount comparing
     if ( getEffect() ) equal &= (getEffect()->isEqual( crhs->getEffect() ));
   }
@@ -109,9 +112,13 @@ bool Pickable::use(ActorPtr executor, std::vector<ActorPtr> targets)
 {
   bool r = false;
 
-  if (_effect != nullptr)
+  if ( (_usesCount > 0 || _usesCount == -1) && _effect != nullptr)
   {    
-    r = _effect->apply(executor, targets);
+    if ( _effect->apply(executor, targets) )
+    {
+      --_usesCount;
+      r = true;
+    }
   }
 
   return r;
@@ -119,10 +126,7 @@ bool Pickable::use(ActorPtr executor, std::vector<ActorPtr> targets)
 
 int Pickable::getUsesCount() const
 {
-  if (_effect)
-    return _effect->getUsesCount();
-
-  return 0;
+  return _usesCount;
 }
 
 bool Pickable::isStackable() const

@@ -36,10 +36,6 @@ bool EffectSerializer::serialize(Effect* effect)
                                                                      static_cast<int>(effect->getType())
                                                                      ).c_str()) ) );
 
-    _effectNode->append_attribute( _document->allocate_attribute(
-                                       "uses",
-                                       _document->allocate_string( toStr( effect->getUsesCount()  ).c_str()) ) );
-
     //TODO: the effect will be reworked in the right way. at the momment a workaround serialization
     LockEffect* lock = dynamic_cast<LockEffect*>(effect);
     if ( lock )

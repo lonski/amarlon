@@ -143,6 +143,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
       pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       pickDsc->price = getAttribute<int>(pickableNode, "price");
+      pickDsc->uses = getAttribute<int>(pickableNode, "uses");
 
       std::string dDice = getAttribute<std::string>(pickableNode, "damageDice");
       auto dmgDiceParams = explode(dDice, 'd');
@@ -157,8 +158,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( effectNode != nullptr)
       {
         pickDsc->effect.type = (EffectType)getAttribute<int>(effectNode, "type");
-        pickDsc->effect.lockId = getAttribute<int>(effectNode, "lockId");
-        pickDsc->effect.uses = getAttribute<int>(effectNode, "uses");
+        pickDsc->effect.lockId = getAttribute<int>(effectNode, "lockId");        
         pickDsc->effect.heal = getAttribute<int>(effectNode, "heal");
       }
     }

@@ -66,15 +66,13 @@ struct EffectDescription : Description
 {
   EffectDescription()
     : type(EffectType::Null)
-    , lockId(0)
-    , uses(0)
+    , lockId(0)    
     , heal(0)
   {
   }
 
   EffectType type;
   int lockId;
-  int uses;
   int heal;
 };
 
@@ -106,17 +104,19 @@ struct PickableDescription : Description
   PickableDescription()
     : stackable(false)
     , amount(1)
+    , uses(0)
     , itemSlot(ItemSlotType::Null)
     , category(PickableCategory::Miscellaneous)
     , damageDice(dices::NoDice)
     , armorClass(0)
     , weight(0)
     , price(0)
-    , damageDiceCount(0)
+    , damageDiceCount(0)    
   {}
 
   bool stackable;
   int amount;
+  int uses;
 
   EffectDescription effect;
   ItemSlotType itemSlot;

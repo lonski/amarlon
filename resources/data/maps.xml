@@ -37,16 +37,16 @@
 				<OpenableContainer lockId="0" locked="0"/>
 				<Container maxSize="5">
 					<Content id="13" x="0" y="0">
-						<Pickable stackable="1" amount="9" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0">
-							<Effect type="2" uses="1" heal="5"/>
+						<Pickable stackable="1" amount="9" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1">
+							<Effect type="2" heal="5"/>
 						</Pickable>
 					</Content>
 					<Content id="14" x="0" y="0">
 						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
 					</Content>
 					<Content id="16" x="0" y="0">
-						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0">
-							<Effect type="1" uses="-1" lockId="5"/>
+						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="-1">
+							<Effect type="1" lockId="5"/>
 						</Pickable>
 					</Content>
 				</Container>
@@ -61,8 +61,8 @@
 			<Actor id="7" x="41" y="30"/>
 			<Actor id="7" x="42" y="30"/>
 			<Actor id="13" x="41" y="32">
-				<Pickable stackable="1" amount="8" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0">
-					<Effect type="2" uses="1" heal="3"/>
+				<Pickable stackable="1" amount="8" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1">
+					<Effect type="2" heal="3"/>
 				</Pickable>
 			</Actor>
 			<Actor id="8" x="46" y="32"/>

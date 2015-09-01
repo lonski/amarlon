@@ -80,8 +80,8 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="1" amount="1" category="4"/>
 	</Actor>
 	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="4">
-			<Effect type="2" uses="1" heal="2"/>
+		<Pickable stackable="1" amount="1" category="4" uses="1">
+			<Effect type="2" heal="2"/>
 		</Pickable>
 	</Actor>
 	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
@@ -91,8 +91,8 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="0" amount="1" category="0"/>
 	</Actor>
 	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1">
-			<Effect type="1" lockId="5" uses="-1" category="0"/>
+		<Pickable stackable="0" amount="1" uses="-1">
+			<Effect type="1" lockId="5" category="0"/>
 		</Pickable>
 	</Actor>
 	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">

@@ -23,6 +23,8 @@ void CmdUse::execute()
   ActorPtr item = acquireItemToUse();
   Engine::instance().render();
 
+  bool used = false;
+
   if (item != nullptr)
   {    
     Effect* effect = item->getFeature<Pickable>()->getEffect();
@@ -30,12 +32,13 @@ void CmdUse::execute()
 
     if ( tSelector != nullptr )
     {
-      Actor::Player->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
+      used = Actor::Player->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
     }
   }
-  else if ( item )
+
+  if ( !used )
   {
-    gui::msgBox(item->getName() + " is not usable.", gui::MsgType::Warning);
+    gui::msgBox("Cannot use " + item->getName(), gui::MsgType::Warning);
   }
 
 }
