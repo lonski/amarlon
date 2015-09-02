@@ -20,6 +20,7 @@ Pickable::Pickable(bool stackable, int amount)
   , _weight(0)
   , _price(0)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
+  , _usesCount(0)
 {
 }
 

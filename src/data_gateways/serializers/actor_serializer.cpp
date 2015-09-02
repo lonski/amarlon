@@ -17,6 +17,7 @@ namespace amarlon {
 
 ActorSerializer::ActorSerializer()
   : ActorSerializer(nullptr, nullptr)
+  , _actorNode(nullptr)
 {
 }
 
