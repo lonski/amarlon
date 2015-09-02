@@ -49,7 +49,7 @@ before_script:
     - sudo ln -s /usr/src/gtest/build/libgtest_main.so /usr/local/lib/libgtest_main.so
     - hg clone https://bitbucket.org/libtcod/libtcod
     - cd libtcod
-    - make -f makefiles/makefile-linux debug
+    - make -f build/makefile-linux debug
     - cp ./libtcod_debug.so ../lib/libtcod_debug.so
     - cp ./libtcodxx_debug.so ../lib/libtcodxx_debug.so
     - cp ./libtcod_debug.so ../lib/libtcod.so
@@ -71,7 +71,7 @@ script:
 env:
     # Build with LLVM 3.7
     # - BUILD_TYPE=Debug LLVM_PACKAGE="llvm-3.7 llvm-3.7-dev" CLANG_VERSION="3.7"
-    - BUILD_TYPE=Release LLVM_PACKAGE="llvm-3.7 llvm-3.7-dev" CLANG_VERSION="3.7"
+    - BUILD_TYPE=Release LLVM_PACKAGE="llvm-3.6 llvm-3.6-dev" CLANG_VERSION="3.6"
 
 matrix:
   #allow_failures:
