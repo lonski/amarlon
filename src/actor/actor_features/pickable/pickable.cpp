@@ -19,8 +19,8 @@ Pickable::Pickable(bool stackable, int amount)
   , _armorClass(0)
   , _weight(0)
   , _price(0)
-  , _targetType(TargetType::SINGLE_NEIGHBOUR)
   , _usesCount(0)
+  , _targetType(TargetType::SINGLE_NEIGHBOUR)
 {
 }
 

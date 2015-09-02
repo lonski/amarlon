@@ -17,12 +17,12 @@ namespace amarlon {
 
 ActorSerializer::ActorSerializer()
   : ActorSerializer(nullptr, nullptr)
-  , _actorNode(nullptr)
 {
 }
 
 ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   : Serializer(document, xmlNode)
+  , _actorNode(nullptr)
 {
   _afSerializers.push_back( std::make_shared<PickableSerializer>() );
   _afSerializers.push_back( std::make_shared<DestroyableSerializer>() );

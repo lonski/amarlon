@@ -8,8 +8,7 @@ using namespace rapidxml;
 namespace amarlon {
 
 WearerSerializer::WearerSerializer()
-  : WearerSerializer(nullptr, nullptr)
-  , _wearerNode(nullptr)
+  : WearerSerializer(nullptr, nullptr)  
 {
 }
 
