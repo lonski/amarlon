@@ -15,10 +15,17 @@ typedef std::shared_ptr<Container> ContainerPtr;
 
 struct SerializedTile
 {
-    bool explored;
-    int type;
-    uint32_t x;
-    uint32_t y;
+  SerializedTile()
+    : explored(false)
+    , type(0)
+    , x(0)
+    , y(0)
+  {}
+
+  bool explored;
+  int type;
+  uint32_t x;
+  uint32_t y;
 };
 
 struct Tile
