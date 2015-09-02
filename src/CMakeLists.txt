@@ -21,7 +21,7 @@ set(HEADER_FILES
     actor/effects/effect.h
     actor/effects/effect_type.h
     actor/effects/lock_effect.h
-    actor/effects/self_heal_effect.h
+    actor/effects/heal_effect.h
     actor/actor.h
     actor/actor_type.h
     commands/cmd_help.h
@@ -143,7 +143,7 @@ set(SOURCE_FILES
     actor/actor_features/destroyable/destroyable.cpp
     actor/effects/effect.cpp
     actor/effects/lock_effect.cpp
-    actor/effects/self_heal_effect.cpp
+    actor/effects/heal_effect.cpp
     actor/actor.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp

@@ -1,7 +1,7 @@
 #include "effect_serializer.h"
 #include <effect.h>
 #include <lock_effect.h>
-#include <self_heal_effect.h>
+#include <heal_effect.h>
 #include <utils.h>
 
 using namespace rapidxml;
@@ -45,7 +45,7 @@ bool EffectSerializer::serialize(Effect* effect)
                                          _document->allocate_string( toStr( lock->getLockId()  ).c_str()) ) );
     }
 
-    SelfHealEffect* heal = dynamic_cast<SelfHealEffect*>(effect);
+    HealEffect* heal = dynamic_cast<HealEffect*>(effect);
     if ( heal )
     {
       _effectNode->append_attribute( _document->allocate_attribute(

@@ -5,10 +5,10 @@
 
 namespace amarlon {
 
-class SelfHealEffect : public Effect
+class HealEffect : public Effect
 {
 public:
-  SelfHealEffect();
+  HealEffect();
 
   virtual Effect* clone();
   virtual bool isEqual(Effect *rhs);

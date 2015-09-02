@@ -1,6 +1,6 @@
 #include "effect.h"
 #include <lock_effect.h>
-#include <self_heal_effect.h>
+#include <heal_effect.h>
 #include <target_selector.h>
 #include <cassert>
 
@@ -21,7 +21,7 @@ Effect *Effect::create(EffectType type)
   switch(type)
   {
     case EffectType::Lock: e = new LockEffect; break;
-    case EffectType::SelfHeal: e = new SelfHealEffect; break;
+    case EffectType::SelfHeal: e = new HealEffect; break;
     default:;
   }
 

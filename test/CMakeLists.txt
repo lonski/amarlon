@@ -21,7 +21,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/effects/effect.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/effect_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/effects/lock_effect.h
-    ${PROJECT_SOURCE_DIR}/src/actor/effects/self_heal_effect.h
+    ${PROJECT_SOURCE_DIR}/src/actor/effects/heal_effect.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_descriptions.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/map_gateway.h
