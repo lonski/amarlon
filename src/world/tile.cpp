@@ -8,6 +8,7 @@ namespace amarlon {
 
 Tile::Tile(uint32_t x, uint32_t y)
   : explored(false)
+  , type(TileType::Null)
   , actors( new Container(999) )
   , x(x)
   , y(y)
