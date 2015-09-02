@@ -71,7 +71,7 @@ script:
 env:
     # Build with LLVM 3.7
     # - BUILD_TYPE=Debug LLVM_PACKAGE="llvm-3.7 llvm-3.7-dev" CLANG_VERSION="3.7"
-    - BUILD_TYPE=Release LLVM_PACKAGE="llvm-3.7 llvm-3.7-dev" CLANG_VERSION="3.7"
+    - BUILD_TYPE=Release LLVM_PACKAGE="llvm-3.6 llvm-3.6-dev" CLANG_VERSION="3.6"
 
 matrix:
   #allow_failures:
