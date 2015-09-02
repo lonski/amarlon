@@ -117,13 +117,13 @@ TargetType Pickable::getTargetType() const
   return _targetType;
 }
 
-bool Pickable::use(ActorPtr executor, std::vector<ActorPtr> targets)
+bool Pickable::use(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
   if ( _effect != nullptr && _usesCount != 0 )
   {
-    if ( _effect->apply(executor, targets) )
+    if ( _effect->apply(executor, target) )
     {
       --_usesCount;
       r = true;

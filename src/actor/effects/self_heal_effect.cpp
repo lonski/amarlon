@@ -1,8 +1,8 @@
 #include "self_heal_effect.h"
-#include "actor/actor.h"
-#include "gui/gui.h"
-#include "utils/messenger.h"
-#include "utils/target_selector/executor_selector.h"
+#include <actor.h>
+#include <gui.h>
+#include <messenger.h>
+#include <executor_selector.h>
 
 namespace amarlon {
 
@@ -11,7 +11,7 @@ SelfHealEffect::SelfHealEffect()
 {
 }
 
-bool SelfHealEffect::apply(ActorPtr executor, std::vector<ActorPtr >)
+bool SelfHealEffect::apply(ActorPtr executor, const Target&)
 {
   bool r = false;
 

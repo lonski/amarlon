@@ -13,7 +13,7 @@ public:
   virtual Effect* clone();
   virtual bool isEqual(Effect *rhs);
 
-  virtual bool apply(ActorPtr executor, std::vector<ActorPtr> targets);
+  virtual bool apply(ActorPtr executor, const Target& target);
   virtual void load(const EffectDescription& dsc);
   virtual EffectDescription save();
 

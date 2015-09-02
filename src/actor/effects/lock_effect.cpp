@@ -55,14 +55,14 @@ int LockEffect::getLockId() const
   return _lockId;
 }
 
-bool LockEffect::apply(ActorPtr executor, std::vector<ActorPtr > targets)
+bool LockEffect::apply(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
-  if (targets.size() == 1 && targets[0] != nullptr)
+  ActorPtr targetActor = target.firstActor();
+  if (targetActor != nullptr)
   {
-    ActorPtr target = targets.front();
-    OpenablePtr toOpen = targets.front()->getFeature<Openable>();
+    OpenablePtr toOpen = targetActor->getFeature<Openable>();
 
     if (toOpen != nullptr)
     {
@@ -70,7 +70,7 @@ bool LockEffect::apply(ActorPtr executor, std::vector<ActorPtr > targets)
       {
         if ( toOpen->unlock() )
         {
-          Messenger::message()->actorHasBeenUnLocked(executor, target);
+          Messenger::message()->actorHasBeenUnLocked(executor, targetActor);
         }
         r = true;
       }
@@ -78,7 +78,7 @@ bool LockEffect::apply(ActorPtr executor, std::vector<ActorPtr > targets)
       {
         if ( toOpen->lock() )
         {
-          Messenger::message()->actorHasBeenLocked(executor, target);
+          Messenger::message()->actorHasBeenLocked(executor, targetActor);
         }
         r = true;
       }

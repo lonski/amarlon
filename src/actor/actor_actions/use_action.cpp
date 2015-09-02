@@ -3,8 +3,8 @@
 
 namespace amarlon {
 
-UseAction::UseAction(std::vector<ActorPtr> targets, ActorPtr toUse)
-  : _targets(targets)
+UseAction::UseAction(const Target& target, ActorPtr toUse)
+  : _target(target)
   , _toUse(toUse)
 {
 }
@@ -19,7 +19,7 @@ bool UseAction::perform(ActorPtr performer)
   _performer = performer;
 
   PickablePtr pickable = _toUse->getFeature<Pickable>();
-  if ( pickable != nullptr && pickable->use( _performer, _targets ) )
+  if ( pickable != nullptr && pickable->use( _performer, _target ) )
   {
     if ( pickable->getUsesCount() == 0 )
     {
@@ -46,7 +46,7 @@ void UseAction::removeUsedItemFromInventory()
 
 ActorActionUPtr UseAction::clone()
 {
-  UseActionUPtr cloned = std::make_unique<UseAction>(_targets, _toUse);
+  UseActionUPtr cloned = std::make_unique<UseAction>(_target, _toUse);
   cloned->_performer = _performer;
 
   return std::move(cloned);

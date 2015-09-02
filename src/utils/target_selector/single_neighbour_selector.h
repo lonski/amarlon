@@ -10,8 +10,7 @@ class SingleNeighbourSelector : public TargetSelector
 public:
   SingleNeighbourSelector(const std::string& selectionMessage = "Select a tile..");
 
-  virtual std::vector<ActorPtr> select(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
-  virtual ActorPtr selectFirst(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
+  virtual Target select(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr);
 };
 
 }

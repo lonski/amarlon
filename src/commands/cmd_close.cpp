@@ -20,18 +20,18 @@ bool CmdClose::accept(TCOD_key_t &key)
 
 void CmdClose::execute()
 {
-  std::vector<ActorPtr> actorsOnTile = SingleNeighbourSelector("Select object to close...")
-                                       .select();
+  Target target = SingleNeighbourSelector("Select object to close...")
+                                         .select();
 
-  auto openableIter = std::find_if(actorsOnTile.begin(), actorsOnTile.end(),
+  auto openableIter = std::find_if(target.actors.begin(), target.actors.end(),
                                    [](ActorPtr a)
                                    { return a->getFeature<Openable>(); });
 
-  ActorPtr toClose = openableIter != actorsOnTile.end() ? *openableIter : nullptr;
+  ActorPtr toClose = openableIter != target.actors.end() ? *openableIter : nullptr;
 
   if ( toClose != nullptr)
   {
-    if ( actorsOnTile.size() == 1 )
+    if ( target.actors.size() == 1 )
     {
       Actor::Player->performAction( std::make_shared<CloseAction>(toClose) );
     }

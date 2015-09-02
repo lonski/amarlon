@@ -23,14 +23,15 @@ void SingleRangeSelector::initValues()
     _y = Actor::Player->getY();
 }
 
-std::vector<ActorPtr> SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)>* filterFun)
+Target SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)>* filterFun)
 {
     initValues();
 
     bool accepted = false;
     TCOD_key_t key;
-    std::vector<ActorPtr> vec;
+    Target target;
     MapPtr map = Actor::Player->getMap();
+
     if ( map )
     {
       while ( key.vk != TCODK_ESCAPE && !accepted )
@@ -52,13 +53,15 @@ std::vector<ActorPtr> SingleRangeSelector::select(std::function<bool (amarlon::A
           render();
           if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER )
           {
-            vec = map->getActors(_x+_dx, _y+_dy, filterFun);
+            target.x = _x+_dx;
+            target.y = _y+_dy;
+            target.actors = map->getActors(target.x, target.y, filterFun);
             accepted = true;
           }
       }
     }
 
-    return vec;
+    return target;
 }
 
 void SingleRangeSelector::render()

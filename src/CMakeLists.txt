@@ -93,6 +93,7 @@ set(HEADER_FILES
     utils/dices.h
     utils/text_formater.h
     utils/base64.h
+    utils/target.h
     world/map.h
     world/map_id.h
     world/tile_type.h

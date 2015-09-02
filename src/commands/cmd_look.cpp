@@ -16,13 +16,13 @@ bool CmdLook::accept(TCOD_key_t &key)
 void CmdLook::execute()
 {
   SingleRangeSelector selector(50,"Select a tile to inspect...");
-  std::vector<ActorPtr> actors = selector.select();
+  Target target = selector.select();
 
-  if (!actors.empty())
+  if (!target.actors.empty())
   {
 
-    auto characterIter = std::find_if(actors.begin(), actors.end(), [](ActorPtr a){ return a->hasFeature<Character>();});
-    if ( characterIter != actors.end() )
+    auto characterIter = std::find_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){ return a->hasFeature<Character>();});
+    if ( characterIter != target.actors.end() )
     {
       Engine::instance()
           .windowManager()
@@ -32,17 +32,17 @@ void CmdLook::execute()
     }
     else
     {
-      auto objectIter = std::find_if(actors.begin(), actors.end(), [](ActorPtr a){ return !a->hasFeature<Character>() && !a->hasFeature<Pickable>();});
-      if ( objectIter != actors.end() )
+      auto objectIter = std::find_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){ return !a->hasFeature<Character>() && !a->hasFeature<Pickable>();});
+      if ( objectIter != target.actors.end() )
       {
         Messenger::message()->lookAtObject(*objectIter);
       }
       else
       {
-        actors.erase(std::remove_if(actors.begin(), actors.end(), [](ActorPtr a){return !a->hasFeature<Pickable>();}), actors.end());
-        if ( !actors.empty() )
+        target.actors.erase(std::remove_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){return !a->hasFeature<Pickable>();}), target.actors.end());
+        if ( !target.actors.empty() )
         {
-          Messenger::message()->lookAtSomeItems( actors.size() > 1 );
+          Messenger::message()->lookAtSomeItems( target.actors.size() > 1 );
         }
       }
     }

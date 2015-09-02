@@ -7,12 +7,9 @@ ExecutorSelector::ExecutorSelector()
 {
 }
 
-std::vector<ActorPtr > ExecutorSelector::select(std::function<bool (amarlon::ActorPtr)>*)
+Target ExecutorSelector::select(std::function<bool (amarlon::ActorPtr)>*)
 {
-  std::vector<ActorPtr> targets;
-  targets.push_back( Actor::Player );
-
-  return targets;
+  return Target( std::vector<ActorPtr>{ Actor::Player }, Actor::Player->getX(), Actor::Player->getY() );
 }
 
 }

@@ -4,13 +4,14 @@
 #include <memory>
 #include <vector>
 #include <actor_action.h>
+#include <target.h>
 
 namespace amarlon {
 
 class UseAction : public ActorAction
 {
 public:
-    UseAction(std::vector<ActorPtr> targets, ActorPtr toUse);
+    UseAction(const Target& target, ActorPtr toUse);
     virtual ~UseAction();
 
     virtual bool perform(ActorPtr performer);
@@ -18,7 +19,7 @@ public:
 
 private:
     ActorPtr _performer;
-    std::vector<ActorPtr> _targets;
+    Target _target;
     ActorPtr _toUse;
 
     void removeUsedItemFromInventory();

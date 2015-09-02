@@ -7,6 +7,7 @@
 #include <item_slot_type.h>
 #include <pickable_category.h>
 #include <target_type.h>
+#include <target.h>
 
 namespace amarlon {
 
@@ -32,7 +33,7 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs);
 
   virtual TargetType getTargetType() const;
-  virtual bool use(ActorPtr executor, std::vector<ActorPtr > targets);
+  virtual bool use(ActorPtr executor, const Target& target);
   virtual int getUsesCount() const;
   ActorPtr spilt(int amount);
 
