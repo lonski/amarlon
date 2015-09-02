@@ -16,6 +16,7 @@
 #include <character_classes.h>
 #include <ability_scores.h>
 #include <races.h>
+#include <target_type.h>
 
 namespace amarlon {
 
@@ -111,7 +112,8 @@ struct PickableDescription : Description
     , armorClass(0)
     , weight(0)
     , price(0)
-    , damageDiceCount(0)    
+    , damageDiceCount(0)
+    , targetType(TargetType::SINGLE_NEIGHBOUR)
   {}
 
   bool stackable;
@@ -126,6 +128,7 @@ struct PickableDescription : Description
   int weight;
   int price;
   int damageDiceCount;
+  TargetType targetType;
 };
 
 

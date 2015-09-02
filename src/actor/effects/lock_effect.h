@@ -17,7 +17,6 @@ public:
   virtual void load(const EffectDescription& dsc);
   virtual EffectDescription save();
 
-  virtual TargetType getTargetType() const;
   virtual EffectType getType() const;
   virtual int getLockId() const;
 

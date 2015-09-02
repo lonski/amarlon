@@ -19,7 +19,6 @@ public:
 
   void setHealAmount(int amount);
 
-  virtual TargetType getTargetType() const;
   virtual EffectType getType() const;
   virtual int getHealAmount() const;
 

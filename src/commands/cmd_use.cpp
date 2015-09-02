@@ -23,24 +23,16 @@ void CmdUse::execute()
   ActorPtr item = acquireItemToUse();
   Engine::instance().render();
 
-  bool used = false;
-
   if (item != nullptr)
   {    
-    Effect* effect = item->getFeature<Pickable>()->getEffect();
-    TargetSelector* tSelector = TargetSelector::create(effect->getTargetType());
+    PickablePtr pickable = item->getFeature<Pickable>();
+    TargetSelector* tSelector = TargetSelector::create(pickable->getTargetType());
 
     if ( tSelector != nullptr )
     {
-      used = Actor::Player->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
+      Actor::Player->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
     }
   }
-
-  if ( !used )
-  {
-    gui::msgBox("Cannot use " + item->getName(), gui::MsgType::Warning);
-  }
-
 }
 
 ActorPtr CmdUse::acquireItemToUse()

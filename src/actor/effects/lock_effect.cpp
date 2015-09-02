@@ -45,11 +45,6 @@ EffectDescription LockEffect::save()
   return dsc;
 }
 
-TargetType LockEffect::getTargetType() const
-{
-  return TargetType::SINGLE_NEIGHBOUR;
-}
-
 EffectType LockEffect::getType() const
 {
   return EffectType::Lock;

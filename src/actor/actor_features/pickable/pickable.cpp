@@ -19,6 +19,7 @@ Pickable::Pickable(bool stackable, int amount)
   , _armorClass(0)
   , _weight(0)
   , _price(0)
+  , _targetType(TargetType::SINGLE_NEIGHBOUR)
 {
 }
 
@@ -44,6 +45,7 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_price = pDsc->price;
     pickable->_diceCount = pDsc->damageDiceCount;
     pickable->_usesCount = pDsc->uses;
+    pickable->_targetType = pDsc->targetType;
 
     Effect* effect = Effect::create(pDsc->effect);
     pickable->setEffect(effect);
@@ -83,6 +85,7 @@ ActorFeaturePtr Pickable::clone()
   cloned->_weight = _weight;
   cloned->_price = _price;
   cloned->_usesCount = _usesCount;
+  cloned->_targetType = _targetType;
 
   return cloned;
 }
@@ -100,12 +103,18 @@ bool Pickable::isEqual(ActorFeaturePtr rhs)
     equal &= (_weight == crhs->_weight);
     equal &= (_price == crhs->_price);
     equal &= (_diceCount == crhs->_diceCount);
-    equal &= _usesCount == crhs->_usesCount;
+    equal &= (_targetType == crhs->_targetType);
+    //equal &= _usesCount == crhs->_usesCount;
     //equal &= (_amount == crhs->_amount);  no amount comparing
     if ( getEffect() ) equal &= (getEffect()->isEqual( crhs->getEffect() ));
   }
 
   return equal;
+}
+
+TargetType Pickable::getTargetType() const
+{
+  return _targetType;
 }
 
 bool Pickable::use(ActorPtr executor, std::vector<ActorPtr> targets)

@@ -144,6 +144,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       pickDsc->price = getAttribute<int>(pickableNode, "price");
       pickDsc->uses = getAttribute<int>(pickableNode, "uses");
+      pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
 
       std::string dDice = getAttribute<std::string>(pickableNode, "damageDice");
       auto dmgDiceParams = explode(dDice, 'd');
