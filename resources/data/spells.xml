@@ -1,0 +1,7 @@
+<Spells>
+	<Spell id="1" name="Cure Light Wounds" level="1" class="2" targetType="0">
+		<Effects>
+			<Effect type="2" heal="5"/>
+		</Effects>
+	</Spell>
+</Spells>

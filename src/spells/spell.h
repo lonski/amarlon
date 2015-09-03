@@ -6,6 +6,8 @@
 #include <character_classes.h>
 #include <target_type.h>
 #include <spell_description.h>
+#include <spell_id.h>
+#include <spell_gateway.h>
 
 namespace amarlon {
 
@@ -20,13 +22,17 @@ class Spell
 {
 public:
 
+  static SpellGateway Gateway;
+
   Spell();
   virtual ~Spell();
 
   static SpellPtr create(SpellDescriptionPtr dsc);
+  virtual SpellPtr clone();
 
   virtual bool cast(ActorPtr caster, Target target);
 
+  virtual SpellId getId() const;
   virtual std::string getName() const;
   virtual CharacterClass getClass() const;
   virtual int getLevel() const;
@@ -37,9 +43,11 @@ private:
   CharacterClass _class;
   int _level;
   TargetType _targetType;
+  SpellId _id;
 
   std::vector<EffectPtr> _effects;
 
+  friend class SpellSerializer;
 };
 
 }

@@ -28,6 +28,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/effect_description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/spell_description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/map_gateway.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/spell_gateway.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h

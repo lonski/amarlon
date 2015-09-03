@@ -47,6 +47,7 @@ set(HEADER_FILES
     data_gateways/serializers/action_serializer.h
     data_gateways/serializers/actor_serializer.h
     data_gateways/serializers/effect_serializer.h
+    data_gateways/serializers/spell_serializer.h
     data_gateways/serializers/actor_feature_serializers/actor_feature_serializer.h
     data_gateways/serializers/actor_feature_serializers/pickable_serializer.h
     data_gateways/serializers/actor_feature_serializers/destroyable_serializer.h
@@ -67,6 +68,7 @@ set(HEADER_FILES
     data_gateways/descriptions/description.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
+    data_gateways/spell_gateway.h
     gui/window/inventory_window/inventory_panel.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
@@ -127,6 +129,7 @@ set(HEADER_FILES
     rpg_system/races.h
     rpg_system/carrying_capacity.h
     spells/spell.h
+    spells/spell_id.h
 )
 
 set(SOURCE_FILES
@@ -170,6 +173,7 @@ set(SOURCE_FILES
     data_gateways/serializers/action_serializer.cpp
     data_gateways/serializers/actor_serializer.cpp
     data_gateways/serializers/effect_serializer.cpp
+    data_gateways/serializers/spell_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/pickable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/destroyable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/container_serializer.cpp
@@ -185,6 +189,7 @@ set(SOURCE_FILES
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp
+    data_gateways/spell_gateway.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp

@@ -13,7 +13,25 @@ class SpellTest : public ::testing::Test
 public:
   SpellTest()
   {}
+
+  virtual void SetUp()
+  {
+    Spell::Gateway.load("data/spells.xml");
+  }
+
 };
+
+TEST_F(SpellTest, gatewayFetch)
+{
+  SpellPtr spell = Spell::Gateway.fetch(SpellId::CureLightWounds);
+  ASSERT_FALSE( spell == nullptr );
+  EXPECT_EQ( spell->getLevel(), 1 );
+}
+
+TEST_F(SpellTest, gatewayStore)
+{
+  Spell::Gateway.store("test_spells.xml");
+}
 
 TEST_F(SpellTest, spell_from_empty_description)
 {
@@ -28,6 +46,7 @@ TEST_F(SpellTest, spell_from_description)
   dsc->name = "Super spell";
   dsc->spellClass = static_cast<int>(CharacterClass::MagicUser);
   dsc->targetType = static_cast<int>(TargetType::AREA_RANGE);
+  dsc->id = static_cast<int>(SpellId::CureLightWounds);
 
   SpellPtr spell = Spell::create( dsc );
   ASSERT_FALSE( spell == nullptr );
@@ -35,6 +54,7 @@ TEST_F(SpellTest, spell_from_description)
   EXPECT_EQ( spell->getLevel(), dsc->level );
   EXPECT_EQ( static_cast<int>(spell->getTargetType()), dsc->targetType );
   EXPECT_EQ( static_cast<int>(spell->getClass()), dsc->spellClass );
+  EXPECT_EQ( static_cast<int>(spell->getId()), dsc->id );
 }
 
 TEST_F(SpellTest, parseTest)
@@ -42,7 +62,7 @@ TEST_F(SpellTest, parseTest)
   SpellParser parser;
   xml_document<> xmlDoc;
 
-  std::string xml = "<Spell name=\"MySpell\" level=\"2\" class=\"1\" targetType=\"3\">"
+  std::string xml = "<Spell id=\"1\" name=\"MySpell\" level=\"2\" class=\"1\" targetType=\"3\">"
                     "  <Effects>"
                     "    <Effect type=\"2\" heal=\"2\"/>"
                     "    <Effect type=\"1\" lockId=\"666\"/>"
@@ -58,6 +78,7 @@ TEST_F(SpellTest, parseTest)
   EXPECT_EQ(dsc->level, 2);
   EXPECT_EQ(dsc->spellClass, 1);
   EXPECT_EQ(dsc->targetType, 3);
+  EXPECT_EQ(dsc->id, 1);
   EXPECT_EQ(dsc->effects.size(), (size_t)2);
 
 }

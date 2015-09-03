@@ -3,6 +3,8 @@
 
 namespace amarlon {
 
+SpellGateway Spell::Gateway;
+
 Spell::Spell()
   : _name("No name")
   , _class(CharacterClass::NoClass)
@@ -27,6 +29,7 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
     spell->_level = dsc->level;
     spell->_class = static_cast<CharacterClass>(dsc->spellClass);
     spell->_targetType = static_cast<TargetType>(dsc->targetType);
+    spell->_id = static_cast<SpellId>(dsc->id);
 
     for ( auto& effectDsc : dsc->effects )
     {
@@ -35,6 +38,24 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
   }
 
   return spell;
+}
+
+SpellPtr Spell::clone()
+{
+  SpellPtr cloned = std::make_shared<Spell>();
+
+  cloned->_name       = _name;
+  cloned->_class      = _class;
+  cloned->_level      = _level;
+  cloned->_targetType = _targetType;
+  cloned->_id         = _id;
+
+  for ( auto e : _effects )
+  {
+    cloned->_effects.push_back( e->clone() );
+  }
+
+  return cloned;
 }
 
 bool Spell::cast(ActorPtr caster, Target target)
@@ -48,6 +69,11 @@ bool Spell::cast(ActorPtr caster, Target target)
   }
 
   return success;
+}
+
+SpellId Spell::getId() const
+{
+  return _id;
 }
 
 std::string Spell::getName() const
