@@ -18,10 +18,10 @@ set(HEADER_FILES
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/destroyable/drop_rule.h
-    actor/effects/effect.h
-    actor/effects/effect_type.h
-    actor/effects/lock_effect.h
-    actor/effects/heal_effect.h
+    effects/effect.h
+    effects/effect_type.h
+    effects/lock_effect.h
+    effects/heal_effect.h
     actor/actor.h
     actor/actor_type.h
     commands/cmd_help.h
@@ -141,9 +141,9 @@ set(SOURCE_FILES
     actor/actor_features/character/character_factory.cpp
     actor/actor_features/pickable/pickable.cpp
     actor/actor_features/destroyable/destroyable.cpp
-    actor/effects/effect.cpp
-    actor/effects/lock_effect.cpp
-    actor/effects/heal_effect.cpp
+    effects/effect.cpp
+    effects/lock_effect.cpp
+    effects/heal_effect.cpp
     actor/actor.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp

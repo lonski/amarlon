@@ -2,10 +2,10 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include "utils/utils.h"
-#include "actor/actor.h"
-#include "actor/effects/effect.h"
-#include "world/map.h"
+#include <utils.h>
+#include <actor.h>
+#include <effect.h>
+#include <map.h>
 
 namespace amarlon {
 
