@@ -32,15 +32,15 @@ bool LockEffect::isEqual(EffectPtr rhs)
   return equal;
 }
 
-void LockEffect::load(const EffectDescription &dsc)
+void LockEffect::load(EffectDescriptionPtr dsc)
 {
-  _lockId = dsc.lockId;
+  _lockId = dsc->lockId;
 }
 
-EffectDescription LockEffect::save()
+EffectDescriptionPtr LockEffect::save()
 {
-  EffectDescription dsc;
-  dsc.lockId = _lockId;
+  EffectDescriptionPtr dsc( new EffectDescription );
+  dsc->lockId = _lockId;
 
   return dsc;
 }

@@ -18,7 +18,7 @@ struct SpellDescription : Description
   int level;
   int targetType;
 
-  std::vector<EffectDescription> effects;
+  std::vector<EffectDescriptionPtr> effects;
 };
 
 }

@@ -158,9 +158,8 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       xml_node<>* effectNode = pickableNode->first_node("Effect");
       if ( effectNode != nullptr)
       {
-        pickDsc->effect.type = (EffectType)getAttribute<int>(effectNode, "type");
-        pickDsc->effect.lockId = getAttribute<int>(effectNode, "lockId");        
-        pickDsc->effect.heal = getAttribute<int>(effectNode, "heal");
+        _effectParser.setSource( effectNode );
+        pickDsc->effect = _effectParser.parseEffectDsc();
       }
     }
   }

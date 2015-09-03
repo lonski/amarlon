@@ -32,15 +32,15 @@ bool HealEffect::apply(ActorPtr, const Target& target)
   return r;
 }
 
-void HealEffect::load(const EffectDescription &dsc)
+void HealEffect::load(EffectDescriptionPtr dsc)
 {
-  _healAmount = dsc.heal;
+  _healAmount = dsc->heal;
 }
 
-EffectDescription HealEffect::save()
+EffectDescriptionPtr HealEffect::save()
 {
-  EffectDescription dsc;
-  dsc.heal = _healAmount;
+  EffectDescriptionPtr dsc(new EffectDescription );
+  dsc->heal = _healAmount;
 
   return dsc;
 }

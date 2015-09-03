@@ -28,14 +28,17 @@ EffectPtr Effect::create(EffectType type)
   return e;
 }
 
-EffectPtr Effect::create(const EffectDescription &dsc)
+EffectPtr Effect::create(EffectDescriptionPtr dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  EffectPtr e = Effect::create(dsc.type);
+  EffectPtr e;
 
-  if ( e != nullptr )
+  if ( dsc != nullptr)
   {
-    e->load(dsc);
+    if ( e = Effect::create(dsc->type) )
+    {
+      e->load(dsc);
+    }
   }
 
   return e;

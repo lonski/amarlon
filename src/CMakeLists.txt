@@ -38,7 +38,8 @@ set(HEADER_FILES
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
-    data_gateways/parsers/tile_parser.cpp
+    data_gateways/parsers/spell_parser.h
+    data_gateways/parsers/effect_parser.h
     data_gateways/parsers/actor_parser.h
     data_gateways/parsers/map_parser.h
     data_gateways/serializers/serializer.h
@@ -161,7 +162,10 @@ set(SOURCE_FILES
     commands/cmd_put_into.cpp
     commands/cmd_look.cpp
     data_gateways/parsers/actor_parser.cpp
+    data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
+    data_gateways/parsers/effect_parser.cpp
+    data_gateways/parsers/spell_parser.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
     data_gateways/serializers/actor_serializer.cpp

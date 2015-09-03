@@ -100,7 +100,7 @@ struct PickableDescription : Description
   int amount;
   int uses;
 
-  EffectDescription effect;
+  EffectDescriptionPtr effect;
   ItemSlotType itemSlot;
   PickableCategory category;
   dices::Dice damageDice;

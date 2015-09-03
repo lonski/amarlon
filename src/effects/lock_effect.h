@@ -18,8 +18,8 @@ public:
   virtual bool isEqual(EffectPtr rhs);
 
   virtual bool apply(ActorPtr executor, const Target& target);
-  virtual void load(const EffectDescription& dsc);
-  virtual EffectDescription save();
+  virtual void load(EffectDescriptionPtr dsc);
+  virtual EffectDescriptionPtr save();
 
   virtual EffectType getType() const;
   virtual int getLockId() const;

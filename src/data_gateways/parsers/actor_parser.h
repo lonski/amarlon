@@ -5,6 +5,7 @@
 #include "actor_descriptions.h"
 #include "parsers/parser.h"
 #include "actor_feature.h"
+#include <effect_parser.h>
 
 namespace amarlon {
 
@@ -27,6 +28,7 @@ public:
 
 private:
   std::map<ActorFeature::Type, std::function<DescriptionPtr ()> > _featureParsers;
+  EffectParser _effectParser;
 
   void parseContainerContentNode(ContainerDescriptionPtr contDsc, rapidxml::xml_node<>* contentNode);
   void mapParsers();
