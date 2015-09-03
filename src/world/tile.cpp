@@ -51,7 +51,7 @@ std::vector<unsigned char> Tile::serialize()
   t.y = y;
 
   unsigned char* arr = reinterpret_cast<unsigned char*>(&t);
-  return std::vector<unsigned char>{ arr, arr + sizeof(t) / sizeof(arr[0]) };
+  return std::vector<unsigned char>{ arr, arr + sizeof(t) };
 }
 
 void Tile::deserialize(const SerializedTile &t)

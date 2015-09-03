@@ -26,7 +26,7 @@ struct SerializedTile
   int type;
   uint32_t x;
   uint32_t y;
-};
+} __attribute__((packed));
 
 struct Tile
 {
