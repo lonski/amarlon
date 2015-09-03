@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <map.h>
+#include <cstring>
 
 namespace amarlon {
 
@@ -45,6 +46,7 @@ void Tile::update(Map* map)
 std::vector<unsigned char> Tile::serialize()
 {
   SerializedTile t;
+  memset(&t, 0, sizeof(t));
   t.explored = explored;
   t.type = static_cast<int>(type);
   t.x = x;
