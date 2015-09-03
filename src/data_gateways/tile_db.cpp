@@ -13,22 +13,6 @@ TileDB::TileDB()
 {
 }
 
-TileType TileDB::getType(char ch)
-{
-  TileType tType = TileType::Null;
-
-  for( auto t : _tiles)
-  {
-    if ( t.second.code == ch)
-    {
-      tType = t.first;
-      break;
-    }
-  }
-
-  return tType;
-}
-
 template<typename T>
 T TileDB::get(TileType type, T TileDescription::*field, T defValue)
 {

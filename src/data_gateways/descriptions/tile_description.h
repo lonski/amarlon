@@ -11,7 +11,6 @@ struct TileDescription : Description
 {
   TileType type;
   char character;
-  char code;
   TCODColor color;
   bool walkable;
   bool transparent;

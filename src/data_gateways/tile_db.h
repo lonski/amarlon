@@ -17,7 +17,6 @@ class TileDB
 public:
   TileDB();
 
-  TileType getType(char ch);
   char getChar(TileType type);
   TCODColor getColor(TileType type);
   bool isWalkable(TileType type);
