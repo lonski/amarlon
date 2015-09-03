@@ -10,13 +10,14 @@
 #include <actor_type.h>
 #include <item_slot_type.h>
 #include <pickable_category.h>
-#include <effect_type.h>
 #include <drop_rule.h>
 #include <dices.h>
 #include <character_classes.h>
 #include <ability_scores.h>
 #include <races.h>
 #include <target_type.h>
+#include <description.h>
+#include <effect_description.h>
 
 namespace amarlon {
 
@@ -28,7 +29,6 @@ class Openable;
 class Wearer;
 class Destroyable;
 
-struct Description;
 struct ActorDescription;
 struct PickableDescription;
 struct PlayableCharacterDescription;
@@ -43,7 +43,6 @@ struct DestroyableDescription;
 struct MonsterDescription;
 struct CharacterDescription;
 
-typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
 typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescriptionPtr;
@@ -57,25 +56,6 @@ typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
 typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
-
-struct Description
-{
-  virtual ~Description() {}
-};
-
-struct EffectDescription : Description
-{
-  EffectDescription()
-    : type(EffectType::Null)
-    , lockId(0)    
-    , heal(0)
-  {
-  }
-
-  EffectType type;
-  int lockId;
-  int heal;
-};
 
 struct ActorDescription : Description
 {

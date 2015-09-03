@@ -14,8 +14,10 @@ namespace amarlon {
 class Actor;
 class Effect;
 class Pickable;
-typedef std::shared_ptr<Actor> ActorPtr;
+class Effect;
+typedef std::shared_ptr<Actor>    ActorPtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
+typedef std::shared_ptr<Effect>   EffectPtr;
 
 class Pickable : public ActorFeature
 {
@@ -41,8 +43,8 @@ public:
   void setAmount(int getAmount);
 
   bool isStackable() const;
-  Effect* getEffect() const;
-  void setEffect(Effect *getEffect);
+  EffectPtr getEffect() const;
+  void setEffect(EffectPtr getEffect);
 
   ItemSlotType getItemSlot() const;
   void setItemSlot(const ItemSlotType &getItemSlot);
@@ -62,7 +64,7 @@ public:
 private:
   bool _stackable;
   int _amount;
-  Effect* _effect;
+  EffectPtr _effect;
   ItemSlotType _itemSlot;
   PickableCategory _category;
   dices::Dice _damageDice;

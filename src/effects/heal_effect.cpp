@@ -45,18 +45,18 @@ EffectDescription HealEffect::save()
   return dsc;
 }
 
-Effect *HealEffect::clone()
+EffectPtr HealEffect::clone()
 {
-  HealEffect* cloned = new HealEffect;
+  EffectPtr cloned( new HealEffect );
   cloned->load( save() );
 
   return cloned;
 }
 
-bool HealEffect::isEqual(Effect *rhs)
+bool HealEffect::isEqual(EffectPtr rhs)
 {
   bool equal = false;
-  HealEffect* crhs = dynamic_cast<HealEffect*>(rhs);
+  HealEffectPtr crhs = std::dynamic_pointer_cast<HealEffect>(rhs);
 
   if (crhs != nullptr)
   {

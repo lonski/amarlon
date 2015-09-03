@@ -17,3 +17,5 @@ include/gtest
 *.files
 *.includes
 *.autosave
+doc/
+include/gmock

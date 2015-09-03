@@ -6,8 +6,8 @@
 #include <list>
 #include <string>
 #include <functional>
-#include "actor_feature.h"
-#include "data_gateways/actor_descriptions.h"
+#include <actor_feature.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

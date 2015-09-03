@@ -16,7 +16,7 @@ public:
   EffectSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~EffectSerializer();
 
-  virtual bool serialize(Effect* effect);
+  virtual bool serialize(EffectPtr effect);
 
 };
 

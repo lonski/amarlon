@@ -115,7 +115,7 @@ TEST_F(ActorTest, actorEqual_different_pickable)
 
   ASSERT_TRUE( *a1 == *a2 );
 
-  HealEffect* e = dynamic_cast<HealEffect*>(a1->getFeature<Pickable>()->getEffect());
+  HealEffectPtr e = std::dynamic_pointer_cast<HealEffect>(a1->getFeature<Pickable>()->getEffect());
   e->setHealAmount(666);
 
   ASSERT_FALSE( *a1 == *a2 );

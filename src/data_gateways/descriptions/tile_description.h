@@ -2,11 +2,12 @@
 #define TILE_DESCRIPTION_H
 
 #include <libtcod.hpp>
-#include <world/tile_type.h>
+#include <description.h>
+#include <tile_type.h>
 
 namespace amarlon {
 
-struct TileDescription
+struct TileDescription : Description
 {
   TileType type;
   char character;

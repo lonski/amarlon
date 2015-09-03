@@ -21,7 +21,7 @@ EffectSerializer::~EffectSerializer()
 {
 }
 
-bool EffectSerializer::serialize(Effect* effect)
+bool EffectSerializer::serialize(EffectPtr effect)
 {
   bool serialized = false;
 
@@ -37,7 +37,7 @@ bool EffectSerializer::serialize(Effect* effect)
                                                                      ).c_str()) ) );
 
     //TODO: the effect will be reworked in the right way. at the momment a workaround serialization
-    LockEffect* lock = dynamic_cast<LockEffect*>(effect);
+    LockEffectPtr lock = std::dynamic_pointer_cast<LockEffect>(effect);
     if ( lock )
     {
       _effectNode->append_attribute( _document->allocate_attribute(
@@ -45,7 +45,7 @@ bool EffectSerializer::serialize(Effect* effect)
                                          _document->allocate_string( toStr( lock->getLockId()  ).c_str()) ) );
     }
 
-    HealEffect* heal = dynamic_cast<HealEffect*>(effect);
+    HealEffectPtr heal = std::dynamic_pointer_cast<HealEffect>(effect);
     if ( heal )
     {
       _effectNode->append_attribute( _document->allocate_attribute(

@@ -60,7 +60,10 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
     data_gateways/actor_db.h
-    data_gateways/actor_descriptions.h
+    data_gateways/descriptions/actor_descriptions.h
+    data_gateways/descriptions/effect_description.h
+    data_gateways/descriptions/spell_description.h
+    data_gateways/descriptions/description.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
     gui/window/inventory_window/inventory_panel.h
@@ -122,6 +125,7 @@ set(HEADER_FILES
     rpg_system/experience_table.h
     rpg_system/races.h
     rpg_system/carrying_capacity.h
+    spells/spell.h
 )
 
 set(SOURCE_FILES
@@ -223,6 +227,7 @@ set(SOURCE_FILES
     rpg_system/saving_throws_table.cpp
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
+    spells/spell.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

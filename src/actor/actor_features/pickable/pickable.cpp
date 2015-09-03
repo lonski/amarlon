@@ -13,7 +13,6 @@ const ActorFeature::Type Pickable::featureType = ActorFeature::PICKABLE;
 Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
-  , _effect(nullptr)
   , _damageDice(dices::NoDice)
   , _diceCount(0)
   , _armorClass(0)
@@ -26,7 +25,6 @@ Pickable::Pickable(bool stackable, int amount)
 
 Pickable::~Pickable()
 {
-  delete _effect;
 }
 
 PickablePtr Pickable::create(DescriptionPtr dsc)
@@ -47,10 +45,8 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_diceCount = pDsc->damageDiceCount;
     pickable->_usesCount = pDsc->uses;
     pickable->_targetType = pDsc->targetType;
-
-    Effect* effect = Effect::create(pDsc->effect);
-    pickable->setEffect(effect);
-  }else throw creation_error("Wrong pickable description!");
+    pickable->setEffect( Effect::create(pDsc->effect) );
+  }
 
   return pickable;
 }
@@ -143,12 +139,12 @@ bool Pickable::isStackable() const
 {
   return _stackable;
 }
-Effect *Pickable::getEffect() const
+EffectPtr Pickable::getEffect() const
 {
   return _effect;
 }
 
-void Pickable::setEffect(Effect *effect)
+void Pickable::setEffect(EffectPtr effect)
 {
   _effect = effect;
 }

@@ -2,10 +2,10 @@
 #define WEARER_H
 
 #include <map>
-#include "actor_feature.h"
-#include "data_gateways/actor_descriptions.h"
-#include "container.h"
-#include "item_slot_type.h"
+#include <actor_feature.h>
+#include <actor_descriptions.h>
+#include <container.h>
+#include <item_slot_type.h>
 
 namespace amarlon {
 

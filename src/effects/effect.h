@@ -10,7 +10,9 @@
 namespace amarlon {
 
 class Actor;
+class Effect;
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<Effect> EffectPtr;
 
 class Effect
 {
@@ -18,10 +20,10 @@ public:
   Effect();
   virtual ~Effect();
 
-  static Effect* create(EffectType type);
-  static Effect* create(const EffectDescription& dsc);
-  virtual Effect* clone() = 0;
-  virtual bool isEqual(Effect* rhs) = 0;
+  static EffectPtr create(EffectType type);
+  static EffectPtr create(const EffectDescription& dsc);
+  virtual EffectPtr clone() = 0;
+  virtual bool isEqual(EffectPtr rhs) = 0;
 
   virtual bool apply(ActorPtr executor, const Target& target) = 0;
   virtual void load(const EffectDescription& dsc) = 0;

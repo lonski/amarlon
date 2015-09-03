@@ -14,24 +14,24 @@ Effect::~Effect()
 {
 }
 
-Effect *Effect::create(EffectType type)
+EffectPtr Effect::create(EffectType type)
 {
-  Effect* e = nullptr;
+  EffectPtr e;
 
   switch(type)
   {
-    case EffectType::Lock: e = new LockEffect; break;
-    case EffectType::SelfHeal: e = new HealEffect; break;
+    case EffectType::Lock:     e.reset( new LockEffect ); break;
+    case EffectType::SelfHeal: e.reset( new HealEffect ); break;
     default:;
   }
 
   return e;
 }
 
-Effect* Effect::create(const EffectDescription &dsc)
+EffectPtr Effect::create(const EffectDescription &dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  Effect* e = Effect::create(dsc.type);
+  EffectPtr e = Effect::create(dsc.type);
 
   if ( e != nullptr )
   {

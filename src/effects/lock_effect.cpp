@@ -11,18 +11,18 @@ LockEffect::LockEffect()
 {
 }
 
-Effect *LockEffect::clone()
+EffectPtr LockEffect::clone()
 {
-  LockEffect* cloned = new LockEffect;
+  EffectPtr cloned( new LockEffect );
   cloned->load( save() );
 
   return cloned;
 }
 
-bool LockEffect::isEqual(Effect *rhs)
+bool LockEffect::isEqual(EffectPtr rhs)
 {
   bool equal = false;
-  LockEffect* crhs = dynamic_cast<LockEffect*>(rhs);
+  LockEffectPtr crhs = std::dynamic_pointer_cast<LockEffect>(rhs);
 
   if (crhs != nullptr)
   {
