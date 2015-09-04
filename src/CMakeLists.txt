@@ -35,6 +35,7 @@ set(HEADER_FILES
     commands/command.h
     commands/cmd_put_into.h
     commands/cmd_look.h
+    commands/cmd_cast.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -119,6 +120,7 @@ set(HEADER_FILES
     actor/actor_actions/teleport_action.h
     actor/actor_actions/use_action.h
     actor/actor_actions/die_action.h
+    actor/actor_actions/cast_action.h
     world/directions.h
     world/world.h
     rpg_system/ability_scores.h
@@ -164,6 +166,7 @@ set(SOURCE_FILES
     commands/command.cpp
     commands/cmd_put_into.cpp
     commands/cmd_look.cpp
+    commands/cmd_cast.cpp
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
@@ -230,6 +233,7 @@ set(SOURCE_FILES
     actor/actor_actions/teleport_action.cpp
     actor/actor_actions/use_action.cpp
     actor/actor_actions/die_action.cpp
+    actor/actor_actions/cast_action.cpp
     world/world.cpp
     rpg_system/ability_scores.cpp
     rpg_system/attack_bonus_table.cpp

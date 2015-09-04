@@ -9,6 +9,7 @@
 #include "cmd_help.h"
 #include "cmd_put_into.h"
 #include "cmd_look.h"
+#include "cmd_cast.h"
 
 namespace amarlon {
 
@@ -28,6 +29,7 @@ Command *Command::create(CommandId cmd)
     case CommandId::Help: c = new CmdHelp; break;
     case CommandId::PutInto: c = new CmdPutInto; break;
     case CommandId::Look: c = new CmdLook; break;
+    case CommandId::Cast: c = new CmdCast; break;
     default: break;
   }
 

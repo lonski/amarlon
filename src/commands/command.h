@@ -20,6 +20,7 @@ enum class CommandId
   Help,
   PutInto,
   Look,
+  Cast,
   End
 };
 

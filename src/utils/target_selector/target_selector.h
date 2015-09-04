@@ -12,7 +12,9 @@ namespace amarlon {
 
 class Actor;
 class Map;
+class TargetSelector;
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<TargetSelector> TargetSelectorPtr;
 
 class TargetSelector
 {

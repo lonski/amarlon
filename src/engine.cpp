@@ -3,6 +3,7 @@
 #include <map.h>
 #include <actor.h>
 #include <gui.h>
+#include <spell.h>
 #include <utils/configuration.h>
 #include <utils/messenger.h>
 
@@ -43,6 +44,7 @@ void Engine::prologue(Configuration* cfg)
   Map::Tiles.loadTiles( cfg->get("tiles_file") );
   Actor::DB.loadActors( cfg->get("actors_file") );
   Map::Gateway.load( cfg->get("maps_file") );
+  Spell::Gateway.load( cfg->get("spells_file") );
 
   Messenger::message()->setGui(_gui.get());
 
