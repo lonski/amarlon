@@ -1,6 +1,7 @@
 #include "character_serializer.h"
 #include <character.h>
 #include <utils.h>
+#include <spell.h>
 
 using namespace rapidxml;
 
@@ -61,7 +62,7 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
       spellNode->append_attribute( _document->allocate_attribute(
                                          "id",
                                          _document->allocate_string( toStr(
-                                                                       static_cast<int>(spell)
+                                                                       static_cast<int>(spell->getId())
                                                                        ).c_str()) ) );
       spellsNode->append_node(spellNode);
     }

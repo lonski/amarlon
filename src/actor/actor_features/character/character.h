@@ -16,8 +16,10 @@ namespace amarlon {
 
 class Character;
 class Pickable;
+class Spell;
 typedef std::shared_ptr<Character> CharacterPtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
+typedef std::shared_ptr<Spell> SpellPtr;
 
 class Character : public ActorFeature
 {
@@ -63,7 +65,7 @@ public:
   virtual int getMeleeAttackBonus() = 0;
   virtual int rollMeleeDamage() = 0;
   virtual int getArmorClass();
-  virtual std::set<SpellId> getSpells() const;
+  virtual std::vector<SpellPtr> getSpells() const;
 
   virtual std::string getDescription();
 
@@ -82,7 +84,7 @@ private:
   Race _race;
   int _speed;
   int _movePoints;
-  std::set<SpellId> _spells;
+  std::set<SpellPtr> _spells;
 
   friend class Character::Creator;
   friend class CharacterSerializer;

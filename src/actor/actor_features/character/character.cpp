@@ -3,6 +3,7 @@
 #include <die_action.h>
 #include <utils.h>
 #include <character_factory.h>
+#include <spell.h>
 
 namespace amarlon {
 
@@ -141,9 +142,9 @@ int Character::getArmorClass()
   return armor ? armor->getArmorClass() : _defaultArmorClass;
 }
 
-std::set<SpellId> Character::getSpells() const
+std::vector<SpellPtr> Character::getSpells() const
 {
-  return _spells;
+  return std::vector<SpellPtr>{_spells.begin(), _spells.end()};
 }
 
 std::string Character::getDescription()
@@ -193,7 +194,10 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_race = dsc->race;
     character->_defaultArmorClass = dsc->defaultArmorClass;
     character->_speed = dsc->speed;
-    character->_spells = dsc->spells;
+    for(auto id : dsc->spells )
+    {
+      character->_spells.insert( Spell::Gateway.fetch(id) );
+    }
   }
 }
 
