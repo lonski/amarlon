@@ -40,6 +40,7 @@ bool Character::isEqual(ActorFeaturePtr rhs)
     equal &= _experience         == crhs->_experience;
     equal &= _class              == crhs->_class;
     equal &= _race               == crhs->_race;
+    equal &= _spells             == crhs->_spells;
   }
 
   return equal;
@@ -140,6 +141,11 @@ int Character::getArmorClass()
   return armor ? armor->getArmorClass() : _defaultArmorClass;
 }
 
+std::set<SpellId> Character::getSpells() const
+{
+  return _spells;
+}
+
 std::string Character::getDescription()
 {
   std::string str = colorToStr(TCODColor::darkerTurquoise, true)
@@ -187,6 +193,7 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_race = dsc->race;
     character->_defaultArmorClass = dsc->defaultArmorClass;
     character->_speed = dsc->speed;
+    character->_spells = dsc->spells;
   }
 }
 

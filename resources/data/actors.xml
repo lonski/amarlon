@@ -14,6 +14,9 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Container>
 		<PlayableCharacter level="1" experience="0" class="1" race="1" hitPoints="7" maxHitPoints="8" armorClass="11" speed="40">
 			<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14" CHA="10"/>
+			<Spells>
+				<Spell id="1"/>
+			</Spells>
 		</PlayableCharacter>
 		<Wearer>
 			<ItemSlot type="1"/>

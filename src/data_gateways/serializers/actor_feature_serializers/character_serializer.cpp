@@ -52,6 +52,19 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
                                        _document->allocate_string( toStr(
                                                                      static_cast<int>(character->getRace())
                                                                      ).c_str()) ) );
+
+    xml_node<>* spellsNode = _document->allocate_node(node_element, "Spells");
+    characterNode->append_node(spellsNode);
+    for ( auto spell : character->getSpells() )
+    {
+      xml_node<>* spellNode = _document->allocate_node(node_element, "Spell");
+      spellNode->append_attribute( _document->allocate_attribute(
+                                         "id",
+                                         _document->allocate_string( toStr(
+                                                                       static_cast<int>(spell)
+                                                                       ).c_str()) ) );
+      spellsNode->append_node(spellNode);
+    }
   }
 }
 

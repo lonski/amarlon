@@ -5,6 +5,9 @@
 #include <cast_action.h>
 #include <target_selector.h>
 
+#include <engine.h>
+#include <gui.h>
+
 namespace amarlon {
 
 CmdCast::CmdCast()
@@ -35,7 +38,6 @@ void CmdCast::execute()
 
 SpellPtr CmdCast::getSpell()
 {
-  //show a window to choose spell
   return Spell::Gateway.fetch( SpellId::CureLightWounds );
 }
 

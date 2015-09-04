@@ -9,6 +9,8 @@
 #include <saving_throws_table.h>
 #include <races.h>
 #include <carrying_capacity.h>
+#include <set>
+#include <spell_id.h>
 
 namespace amarlon {
 
@@ -61,6 +63,7 @@ public:
   virtual int getMeleeAttackBonus() = 0;
   virtual int rollMeleeDamage() = 0;
   virtual int getArmorClass();
+  virtual std::set<SpellId> getSpells() const;
 
   virtual std::string getDescription();
 
@@ -79,6 +82,7 @@ private:
   Race _race;
   int _speed;
   int _movePoints;
+  std::set<SpellId> _spells;
 
   friend class Character::Creator;
   friend class CharacterSerializer;

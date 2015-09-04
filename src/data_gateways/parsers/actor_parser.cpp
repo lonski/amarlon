@@ -223,6 +223,17 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->race = (Race)getAttribute<int>(characterNode, "race");
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");
+
+      xml_node<>* spellsNode = characterNode->first_node("Spells");
+      if ( spellsNode )
+      {
+        xml_node<>* spellNode = spellsNode->first_node("Spell");
+        while ( spellNode )
+        {
+          dsc->spells.insert(static_cast<SpellId>(getAttribute<int>(spellNode, "id")));
+          spellNode = spellNode->next_sibling();
+        }
+      }
     }
 
   }

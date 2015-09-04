@@ -18,6 +18,8 @@
 #include <target_type.h>
 #include <description.h>
 #include <effect_description.h>
+#include <spell_id.h>
+#include <set>
 
 namespace amarlon {
 
@@ -133,6 +135,7 @@ struct CharacterDescription : Description
   CharacterClass cClass;
   Race race;
   int speed;
+  std::set<SpellId> spells;
 };
 
 struct PlayableCharacterDescription : CharacterDescription
