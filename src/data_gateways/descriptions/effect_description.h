@@ -2,6 +2,8 @@
 #define EFFECT_DESCRIPTION
 
 #include <memory>
+#include <map>
+#include <string>
 #include <effect_type.h>
 #include <description.h>
 
@@ -14,14 +16,11 @@ struct EffectDescription : Description
 {
   EffectDescription()
     : type(EffectType::Null)
-    , lockId(0)
-    , heal(0)
   {
   }
 
   EffectType type;
-  int lockId;
-  int heal;
+  std::map<std::string, std::string> params;
 };
 
 }

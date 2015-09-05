@@ -3,6 +3,7 @@
 #include <gui.h>
 #include <messenger.h>
 #include <executor_selector.h>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -15,7 +16,8 @@ bool HealEffect::apply(ActorPtr, const Target& target)
 {
   bool r = false;
 
-  ActorPtr targetActor = target.firstActor();
+  std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->isAlive(); };
+  ActorPtr targetActor = target.firstActor(&filter);
   if ( targetActor )
   {
     CharacterPtr character = targetActor->getFeature<Character>();
@@ -32,23 +34,16 @@ bool HealEffect::apply(ActorPtr, const Target& target)
   return r;
 }
 
-void HealEffect::load(EffectDescriptionPtr dsc)
+void HealEffect::load(const Params& params)
 {
-  _healAmount = dsc->heal;
-}
-
-EffectDescriptionPtr HealEffect::save()
-{
-  EffectDescriptionPtr dsc(new EffectDescription );
-  dsc->heal = _healAmount;
-
-  return dsc;
+  auto it = params.find("heal");
+  _healAmount = it != params.end() ? fromStr<int>( it->second ) : 0;
 }
 
 EffectPtr HealEffect::clone()
 {
   EffectPtr cloned( new HealEffect );
-  cloned->load( save() );
+  cloned->load( toParams() );
 
   return cloned;
 }
@@ -79,6 +74,13 @@ EffectType HealEffect::getType() const
 int HealEffect::getHealAmount() const
 {
   return _healAmount;
+}
+
+Params HealEffect::toParams() const
+{
+  return {
+    { {"heal", std::to_string(_healAmount)} }
+  };
 }
 
 }

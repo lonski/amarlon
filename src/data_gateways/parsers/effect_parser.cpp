@@ -17,8 +17,14 @@ EffectDescriptionPtr EffectParser::parseEffectDsc()
     effectDsc.reset( new EffectDescription );
 
     effectDsc->type = (EffectType)getAttribute<int>(_xml, "type");
-    effectDsc->lockId = getAttribute<int>(_xml, "lockId");
-    effectDsc->heal = getAttribute<int>(_xml, "heal");
+
+    rapidxml::xml_node<>* pNode = _xml->first_node("P");
+    while( pNode )
+    {
+      effectDsc->params[ getAttribute<std::string>(pNode, "name") ] = pNode->value();
+      pNode = pNode->next_sibling();
+    }
+
   }
 
   return effectDsc;

@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 namespace amarlon {
 
@@ -23,8 +24,13 @@ struct Target
     , y(0)
   {}
 
-  ActorPtr firstActor() const
+  ActorPtr firstActor(std::function<bool(ActorPtr)>* filter = nullptr) const
   {
+    if ( filter )
+    {
+      auto it = std::find_if(actors.begin(), actors.end(), *filter);
+      return it != actors.end() ? *it : nullptr;
+    }
     return actors.empty() ? nullptr : actors.front();
   }
 

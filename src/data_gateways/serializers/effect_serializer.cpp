@@ -36,22 +36,14 @@ bool EffectSerializer::serialize(EffectPtr effect)
                                                                      static_cast<int>(effect->getType())
                                                                      ).c_str()) ) );
 
-    //TODO: the effect will be reworked in the right way. at the momment a workaround serialization
-    LockEffectPtr lock = std::dynamic_pointer_cast<LockEffect>(effect);
-    if ( lock )
+    Params params = effect->toParams();
+    for ( auto& pair : params )
     {
-      _effectNode->append_attribute( _document->allocate_attribute(
-                                         "lockId",
-                                         _document->allocate_string( toStr( lock->getLockId()  ).c_str()) ) );
+      xml_node<>* pNode = _document->allocate_node(node_element, "P", _document->allocate_string(pair.second.c_str()) );
+      pNode->append_attribute( _document->allocate_attribute("name", _document->allocate_string(pair.first.c_str())));
+      _effectNode->append_node( pNode );
     }
 
-    HealEffectPtr heal = std::dynamic_pointer_cast<HealEffect>(effect);
-    if ( heal )
-    {
-      _effectNode->append_attribute( _document->allocate_attribute(
-                                         "heal",
-                                         _document->allocate_string( toStr( heal->getHealAmount()  ).c_str()) ) );
-    }
   }
 
   return serialized;

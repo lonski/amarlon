@@ -14,7 +14,7 @@ LockEffect::LockEffect()
 EffectPtr LockEffect::clone()
 {
   EffectPtr cloned( new LockEffect );
-  cloned->load( save() );
+  cloned->load( toParams() );
 
   return cloned;
 }
@@ -32,17 +32,10 @@ bool LockEffect::isEqual(EffectPtr rhs)
   return equal;
 }
 
-void LockEffect::load(EffectDescriptionPtr dsc)
+void LockEffect::load(const Params &params)
 {
-  _lockId = dsc->lockId;
-}
-
-EffectDescriptionPtr LockEffect::save()
-{
-  EffectDescriptionPtr dsc( new EffectDescription );
-  dsc->lockId = _lockId;
-
-  return dsc;
+  auto it = params.find("lock");
+  _lockId = it != params.end() ? fromStr<int>( it->second ) : 0;
 }
 
 EffectType LockEffect::getType() const
@@ -53,6 +46,13 @@ EffectType LockEffect::getType() const
 int LockEffect::getLockId() const
 {
   return _lockId;
+}
+
+Params LockEffect::toParams() const
+{
+  return {
+    { {"lock", std::to_string(_lockId)} }
+  };
 }
 
 bool LockEffect::apply(ActorPtr executor, const Target& target)

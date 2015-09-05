@@ -37,7 +37,7 @@ EffectPtr Effect::create(EffectDescriptionPtr dsc)
   {
     if ( e = Effect::create(dsc->type) )
     {
-      e->load(dsc);
+      e->load(dsc->params);
     }
   }
 

@@ -18,13 +18,14 @@ public:
   virtual bool isEqual(EffectPtr rhs);
 
   virtual bool apply(ActorPtr executor, const Target& target);
-  virtual void load(EffectDescriptionPtr dsc);
-  virtual EffectDescriptionPtr save();
 
   void setHealAmount(int amount);
 
   virtual EffectType getType() const;
   virtual int getHealAmount() const;
+
+  virtual void load(const Params& params);
+  virtual Params toParams() const;
 
 private:
   int _healAmount;

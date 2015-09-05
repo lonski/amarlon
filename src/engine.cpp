@@ -41,14 +41,20 @@ void Engine::prologue(Configuration* cfg)
   Engine::screenWidth       = Engine::consoleWidth + Engine::rightPanelWidth;
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
 
+  printf("Loading tiles..\n");
   Map::Tiles.loadTiles( cfg->get("tiles_file") );
+  printf("Loading actors..\n");
   Actor::DB.loadActors( cfg->get("actors_file") );
+  printf("Loading maps..\n");
   Map::Gateway.load( cfg->get("maps_file") );
+  printf("Loading spells..\n");
   Spell::Gateway.load( cfg->get("spells_file") );
 
   Messenger::message()->setGui(_gui.get());
 
+  printf("Loading save game..\n");
   getWorld().load( cfg->get("save_file") );
+  printf("Loading xml done.\n");
   getWorld().changeMap( MapId::GameStart );
 
   if ( Actor::Player == nullptr )
