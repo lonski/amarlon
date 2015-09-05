@@ -139,6 +139,7 @@ set(HEADER_FILES
     animations/animation.h
     animations/animation_type.h
     animations/blink.h
+    animations/throw.h
 )
 
 set(SOURCE_FILES
@@ -253,6 +254,7 @@ set(SOURCE_FILES
     spells/spell.cpp
     animations/animation.cpp
     animations/blink.cpp
+    animations/throw.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

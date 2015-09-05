@@ -6,7 +6,8 @@ namespace amarlon { namespace animation {
 enum class Type
 {
   Null  = 0,
-  Blink = 1
+  Blink = 1,
+  Throw = 2
 };
 
 }}

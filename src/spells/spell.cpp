@@ -71,15 +71,16 @@ bool Spell::cast(ActorPtr caster, Target target)
 {
   bool success = true;
 
-  for ( auto effect : _effects )
-  {
-    success &= effect->apply(caster, target);
-    //TODO : revoke applied effect if any failed
-  }
   if ( _animation )
   {
     _animation->setLocation( Target({caster}, caster->getX(), caster->getY() ), target );
     _animation->run(*TCODConsole::root);
+  }
+
+  for ( auto effect : _effects )
+  {
+    success &= effect->apply(caster, target);
+    //TODO : revoke applied effect if any failed
   }
 
   return success;

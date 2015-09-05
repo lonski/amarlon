@@ -1,5 +1,6 @@
 #include "animation.h"
 #include <blink.h>
+#include <throw.h>
 
 namespace amarlon { namespace animation {
 
@@ -19,6 +20,7 @@ AnimationPtr Animation::create(AnimationDescriptionPtr dsc)
     switch(dsc->type)
     {
       case Type::Blink: a.reset( new Blink ); break;
+      case Type::Throw: a.reset( new Throw ); break;
       default:;
     }    
   }

@@ -18,10 +18,10 @@
 				<P name="type">2</P>
 			</Effect>
 		</Effects>
-		<Animation type="1">
-			<P name="color">ff0000</P>
-			<P name="frames">20</P>
-			<P name="delay">10</P>
+		<Animation type="2">
+			<P name="color">ee0000</P>
+			<P name="char">*</P>
+			<P name="delay">50</P>
 		</Animation>
 	</Spell>
 </Spells>
