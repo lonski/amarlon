@@ -35,13 +35,13 @@ bool AnimationSerializer::serialize(animation::AnimationPtr anim)
                                                                      static_cast<int>(anim->getType())
                                                                      ).c_str()) ) );
 
-    //TODO: the effect will be reworked in the right way. at the momment a workaround serialization
-    animation::BlinkPtr blink = std::dynamic_pointer_cast<animation::Blink>(anim);
-    if ( blink )
+
+    Params params = anim->toParams();
+    for ( auto& pair : params )
     {
-      _animNode->append_attribute( _document->allocate_attribute(
-                                         "color",
-                                         _document->allocate_string( colorToStr( blink->getTargetColor() ).c_str()  ) ) );
+      xml_node<>* pNode = _document->allocate_node(node_element, "P", _document->allocate_string(pair.second.c_str()) );
+      pNode->append_attribute( _document->allocate_attribute("name", _document->allocate_string(pair.first.c_str())));
+      _animNode->append_node( pNode );
     }
 
   }

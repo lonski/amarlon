@@ -19,6 +19,9 @@ public:
 
   TCODColor getTargetColor() const;
 
+  virtual void load(const Params& params);
+  virtual Params toParams() const;
+
 private:
   TCODColor _targetColor;
   int _frames;

@@ -2,6 +2,7 @@
 #include <engine.h>
 #include <chrono>
 #include <thread>
+#include <utils.h>
 
 namespace amarlon { namespace animation {
 
@@ -63,6 +64,27 @@ Type Blink::getType() const
 TCODColor Blink::getTargetColor() const
 {
   return _targetColor;
+}
+
+void Blink::load(const Params &params)
+{
+  auto it = params.find("color");
+  _targetColor = it != params.end() ? strToColor( it->second ) : TCODColor::blue;
+
+  it = params.find("frames");
+  _frames = it != params.end() ? fromStr<int>( it->second ) : 20;
+
+  it = params.find("delay");
+  _frameDelay = it != params.end() ? fromStr<int>( it->second ) : 15;
+}
+
+Params Blink::toParams() const
+{
+  return {
+    {"color",  colorToStr(_targetColor) },
+    {"frames", toStr<int>(_frames)      },
+    {"delay",  toStr<int>(_frameDelay)  }
+  };
 }
 
 }}

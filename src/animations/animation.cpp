@@ -18,10 +18,13 @@ AnimationPtr Animation::create(AnimationDescriptionPtr dsc)
   {
     switch(dsc->type)
     {
-      case Type::Blink: a.reset( new Blink( dsc->color ) ); break;
+      case Type::Blink: a.reset( new Blink ); break;
       default:;
-    }
+    }    
   }
+
+  if ( a ) a->load( dsc->params );
+
   return a;
 }
 

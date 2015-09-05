@@ -5,6 +5,8 @@
 #include <animation_type.h>
 #include <description.h>
 #include <libtcod.hpp>
+#include <map>
+#include <string>
 
 namespace amarlon {
 
@@ -15,12 +17,11 @@ struct AnimationDescription : Description
 {
   AnimationDescription()
     : type(animation::Type::Null)
-    , color(TCODColor::white)
   {
   }
 
   animation::Type type;
-  TCODColor color;
+  std::map<std::string, std::string> params;
 };
 
 }

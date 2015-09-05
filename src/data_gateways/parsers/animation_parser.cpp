@@ -18,7 +18,13 @@ AnimationDescriptionPtr AnimationParser::parseAnimationDsc()
     animDsc.reset( new AnimationDescription );
 
     animDsc->type = (animation::Type)getAttribute<int>(_xml, "type");
-    animDsc->color = strToColor( getAttribute<std::string>(_xml, "color") );
+
+    rapidxml::xml_node<>* pNode = _xml->first_node("P");
+    while( pNode )
+    {
+      animDsc->params[ getAttribute<std::string>(pNode, "name") ] = pNode->value();
+      pNode = pNode->next_sibling();
+    }
   }
 
   return animDsc;

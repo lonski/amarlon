@@ -5,6 +5,10 @@
 				<P name="heal">5</P>
 			</Effect>
 		</Effects>
-		<Animation type="1" color="0000ff" />
+		<Animation type="1">
+			<P name="color">0000ff</P>
+			<P name="frames">20</P>
+			<P name="delay">10</P>
+		</Animation>
 	</Spell>
 </Spells>

@@ -7,7 +7,11 @@
 #include <animation_description.h>
 #include <animation_type.h>
 
-namespace amarlon { namespace animation {
+namespace amarlon {
+
+typedef std::map<std::string, std::string> Params;
+
+namespace animation {
 
 class Animation;
 typedef std::shared_ptr<Animation> AnimationPtr;
@@ -22,6 +26,18 @@ public:
   virtual AnimationPtr clone() = 0;
   virtual void run(TCODConsole& console) = 0;
   virtual Type getType() const = 0;
+
+  /**
+   * @brief Serialize all effect fields to key-value params.
+   *        Used to serialize effect into XML file.
+   * @return A map with field name and its value
+   */
+  virtual Params toParams() const = 0;
+
+  /**
+   * @brief Opposite to toParams
+   */
+  virtual void load(const Params& params) = 0;
 
   virtual void setLocation(const Target& startLoc, const Target& endLoc);
   virtual Target getStartLocation() const;
