@@ -4,6 +4,7 @@
 #include <parsers/parser.h>
 #include <spell_description.h>
 #include <effect_parser.h>
+#include <animation_parser.h>
 
 namespace amarlon {
 
@@ -17,6 +18,7 @@ public:
 
 private:
   EffectParser _effectParser;
+  AnimationParser _animationParser;
 
 };
 

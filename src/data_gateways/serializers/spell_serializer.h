@@ -4,6 +4,7 @@
 #include <memory>
 #include <serializer.h>
 #include <effect_serializer.h>
+#include <animation_serializer.h>
 
 namespace amarlon {
 
@@ -21,6 +22,7 @@ public:
 
 private:
   EffectSerializer _effectSerializer;
+  AnimationSerializer _animationSerializer;
 
 };
 

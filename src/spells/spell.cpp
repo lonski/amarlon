@@ -1,5 +1,8 @@
 #include "spell.h"
+#include <libtcod.h>
+#include <actor.h>
 #include <effect.h>
+#include <animation.h>
 
 namespace amarlon {
 
@@ -35,6 +38,8 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
     {
       spell->_effects.push_back( Effect::create(effectDsc) );
     }
+
+    spell->_animation = animation::Animation::create( dsc->animation  );
   }
 
   return spell;
@@ -49,6 +54,7 @@ SpellPtr Spell::clone()
   cloned->_level      = _level;
   cloned->_targetType = _targetType;
   cloned->_id         = _id;
+  cloned->_animation  = _animation->clone();
 
   for ( auto e : _effects )
   {
@@ -66,6 +72,11 @@ bool Spell::cast(ActorPtr caster, Target target)
   {
     success &= effect->apply(caster, target);
     //TODO : revoke applied effect if any failed
+  }
+  if ( _animation )
+  {
+    _animation->setLocation( Target({caster}, caster->getX(), caster->getY() ), target );
+    _animation->run(*TCODConsole::root);
   }
 
   return success;

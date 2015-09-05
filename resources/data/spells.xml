@@ -3,5 +3,6 @@
 		<Effects>
 			<Effect type="2" heal="5"/>
 		</Effects>
+		<Animation type="1" color="0000ff" />
 	</Spell>
 </Spells>

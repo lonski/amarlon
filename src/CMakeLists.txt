@@ -43,7 +43,9 @@ set(HEADER_FILES
     data_gateways/parsers/effect_parser.h
     data_gateways/parsers/actor_parser.h
     data_gateways/parsers/map_parser.h
+    data_gateways/parsers/animation_parser.h
     data_gateways/serializers/serializer.h
+    data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
     data_gateways/serializers/action_serializer.h
     data_gateways/serializers/actor_serializer.h
@@ -63,6 +65,7 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
     data_gateways/actor_db.h
+    data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
     data_gateways/descriptions/effect_description.h
     data_gateways/descriptions/spell_description.h
@@ -132,6 +135,9 @@ set(HEADER_FILES
     rpg_system/carrying_capacity.h
     spells/spell.h
     spells/spell_id.h
+    animations/animation.h
+    animations/animation_type.h
+    animations/blink.h
 )
 
 set(SOURCE_FILES
@@ -167,11 +173,13 @@ set(SOURCE_FILES
     commands/cmd_put_into.cpp
     commands/cmd_look.cpp
     commands/cmd_cast.cpp
+    data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
     data_gateways/parsers/effect_parser.cpp
     data_gateways/parsers/spell_parser.cpp
+    data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
     data_gateways/serializers/actor_serializer.cpp
@@ -241,6 +249,8 @@ set(SOURCE_FILES
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
     spells/spell.cpp
+    animations/animation.cpp
+    animations/blink.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

@@ -5,6 +5,7 @@
 #include <vector>
 #include <description.h>
 #include <effect_description.h>
+#include <animation_description.h>
 
 namespace amarlon {
 
@@ -20,6 +21,7 @@ struct SpellDescription : Description
   int id;
 
   std::vector<EffectDescriptionPtr> effects;
+  AnimationDescriptionPtr animation;
 };
 
 }

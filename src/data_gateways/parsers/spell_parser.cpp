@@ -34,6 +34,14 @@ SpellDescriptionPtr SpellParser::parseSpellDsc()
       }
     }
 
+    rapidxml::xml_node<>* animationNode = _xml->first_node("Animation");
+    while( animationNode != nullptr )
+    {
+      _animationParser.setSource( animationNode );
+      spellDsc->animation =  _animationParser.parseAnimationDsc();
+      animationNode = animationNode->next_sibling();
+    }
+
   }
 
   return spellDsc;

@@ -56,6 +56,7 @@ bool SpellSerializer::serialize(SpellPtr spell)
                                                                      static_cast<int>(spell->getTargetType())
                                                                      ).c_str()) ) );
 
+    //Serialize Effects
     xml_node<>* _effectsNode = _document->allocate_node(node_element, "Effects");
     _spellNode->append_node( _effectsNode );
     _effectSerializer.setDestination( _document, _effectsNode );
@@ -64,6 +65,10 @@ bool SpellSerializer::serialize(SpellPtr spell)
     {
       _effectSerializer.serialize( e );
     }
+
+    //Serialize Animation
+    _effectSerializer.setDestination( _document, _spellNode );
+    _animationSerializer.serialize( spell->_animation );
   }
 
   return serialized;

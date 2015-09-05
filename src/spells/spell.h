@@ -18,6 +18,11 @@ typedef std::shared_ptr<Actor>  ActorPtr;
 typedef std::shared_ptr<Effect> EffectPtr;
 typedef std::shared_ptr<Spell>  SpellPtr;
 
+namespace animation {
+  class Animation;
+  typedef std::shared_ptr<Animation> AnimationPtr;
+}
+
 class Spell
 {
 public:
@@ -46,6 +51,8 @@ private:
   SpellId _id;
 
   std::vector<EffectPtr> _effects;
+  animation::AnimationPtr _animation;
+
 
   friend class SpellSerializer;
 };
