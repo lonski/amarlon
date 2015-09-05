@@ -6,7 +6,8 @@ namespace amarlon {
 enum class SpellId
 {
   Null            = 0,
-  CureLightWounds = 1
+  CureLightWounds = 1,
+  MagicMissile    = 2
 };
 
 }

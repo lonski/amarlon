@@ -1,6 +1,7 @@
 #include "effect.h"
 #include <lock_effect.h>
 #include <heal_effect.h>
+#include <damage_effect.h>
 #include <target_selector.h>
 #include <cassert>
 
@@ -20,8 +21,9 @@ EffectPtr Effect::create(EffectType type)
 
   switch(type)
   {
-    case EffectType::Lock:     e.reset( new LockEffect ); break;
-    case EffectType::SelfHeal: e.reset( new HealEffect ); break;
+    case EffectType::Lock:   e.reset( new LockEffect   ); break;
+    case EffectType::Heal:   e.reset( new HealEffect   ); break;
+    case EffectType::Damage: e.reset( new DamageEffect ); break;
     default:;
   }
 

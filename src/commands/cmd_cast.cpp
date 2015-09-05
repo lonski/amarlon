@@ -27,6 +27,7 @@ void CmdCast::execute()
      TargetSelectorPtr selector( TargetSelector::create( spell->getTargetType() ) );
      if ( selector )
      {
+       selector->setRange( spell->getRange() );
        ActorActionPtr action( new CastAction(spell, selector->select()) );
        if ( !Actor::Player->performAction( action ) )
        {

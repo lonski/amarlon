@@ -5,11 +5,12 @@ namespace amarlon {
 
 enum class DamageType
 {
-  Null,
-  Physical,
-  Fire,
-  Cold,
-  Lighting
+  Null     = 0,
+  Physical = 1,
+  Magic    = 2,
+  Fire     = 3,
+  Cold     = 4,
+  Lighting = 5
 };
 
 }

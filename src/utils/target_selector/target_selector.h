@@ -44,9 +44,13 @@ public:
    */
   virtual Target select(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr) = 0;
 
+  virtual void setRange(int range);
+  virtual int getRange() const;
+
 protected:
   std::string _selectionMessage;
   std::function<void()> _updateFunction;
+  int _range;
 
 };
 

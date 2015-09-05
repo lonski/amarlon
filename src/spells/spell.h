@@ -42,6 +42,7 @@ public:
   virtual CharacterClass getClass() const;
   virtual int getLevel() const;
   virtual TargetType getTargetType() const;
+  virtual int getRange() const;
 
 private:
   std::string _name;
@@ -49,6 +50,7 @@ private:
   int _level;
   TargetType _targetType;
   SpellId _id;
+  int _range;
 
   std::vector<EffectPtr> _effects;
   animation::AnimationPtr _animation;

@@ -16,6 +16,7 @@ When new actor is created with given ID as parameter, then the template will be 
 			<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14" CHA="10"/>
 			<Spells>
 				<Spell id="1"/>
+				<Spell id="2"/>
 			</Spells>
 		</PlayableCharacter>
 		<Wearer>

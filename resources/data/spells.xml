@@ -11,4 +11,17 @@
 			<P name="delay">10</P>
 		</Animation>
 	</Spell>
+	<Spell id="2" name="Magic Missile" level="1" class="1" targetType="1" range="10">
+		<Effects>
+			<Effect type="3">
+				<P name="damage">4</P>
+				<P name="type">2</P>
+			</Effect>
+		</Effects>
+		<Animation type="1">
+			<P name="color">ff0000</P>
+			<P name="frames">20</P>
+			<P name="delay">10</P>
+		</Animation>
+	</Spell>
 </Spells>

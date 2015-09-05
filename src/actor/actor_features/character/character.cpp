@@ -91,7 +91,7 @@ void Character::modifyHitPoints(int modifier)
   setHitPoints( toSet );
 }
 
-void Character::takeDamage(int damage, DamageType type)
+void Character::takeDamage(int damage, DamageType /*type*/)
 {
   //TODO: handle damage resists
   modifyHitPoints(-1 * damage);

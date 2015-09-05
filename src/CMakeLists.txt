@@ -22,6 +22,7 @@ set(HEADER_FILES
     effects/effect_type.h
     effects/lock_effect.h
     effects/heal_effect.h
+    effects/damage_effect.h
     actor/actor.h
     actor/actor_type.h
     commands/cmd_help.h
@@ -160,6 +161,7 @@ set(SOURCE_FILES
     effects/effect.cpp
     effects/lock_effect.cpp
     effects/heal_effect.cpp
+    effects/damage_effect.cpp
     actor/actor.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp

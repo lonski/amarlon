@@ -8,9 +8,8 @@
 
 namespace amarlon {
 
-SingleRangeSelector::SingleRangeSelector(int range, const std::string &selectionMessage)
+SingleRangeSelector::SingleRangeSelector(const std::string &selectionMessage)
     : TargetSelector(selectionMessage)
-    , _range(range)
 {
     initValues();
 }
@@ -31,6 +30,7 @@ Target SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)>* filt
     TCOD_key_t key;
     Target target;
     MapPtr map = Actor::Player->getMap();
+    render();
 
     if ( map )
     {
@@ -43,7 +43,7 @@ Target SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)>* filt
           handleDirectionKey(key, dx_tmp, dy_tmp);
 
           int calculatedRange = round( sqrt( pow(_dx+dx_tmp,2) + pow(_dy+dy_tmp,2)) );
-          if ( calculatedRange <= _range && map->isInFov(_x + _dx + dx_tmp, _y + _dy + dy_tmp) )
+          if ( calculatedRange <= getRange() && map->isInFov(_x + _dx + dx_tmp, _y + _dy + dy_tmp) )
           {
               _dx += dx_tmp;
               _dy += dy_tmp;
@@ -77,17 +77,6 @@ void SingleRangeSelector::highlightCurrentTile()
     TCODColor bgcol = TCODConsole::root->getCharBackground(_x+_dx, _y+_dy);
     TCODConsole::root->setCharForeground(_x+_dx, _y+_dy, TCODColor::lerp(fgcol, TCODColor::yellow, 0.6));
     TCODConsole::root->setCharBackground(_x+_dx, _y+_dy, TCODColor::lerp(bgcol, TCODColor::yellow, 0.1));
-}
-
-int SingleRangeSelector::getRange() const
-{
-    return _range;
-}
-
-TargetSelector& SingleRangeSelector::setRange(int range)
-{
-    _range = range;
-    return *this;
 }
 
 }

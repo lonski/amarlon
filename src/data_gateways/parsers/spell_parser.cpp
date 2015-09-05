@@ -20,6 +20,7 @@ SpellDescriptionPtr SpellParser::parseSpellDsc()
     spellDsc->level = getAttribute<int>(_xml, "level");
     spellDsc->spellClass = getAttribute<int>(_xml, "class");
     spellDsc->targetType = getAttribute<int>(_xml, "targetType");
+    spellDsc->range = getAttribute<int>(_xml, "range");
     spellDsc->id = getAttribute<int>(_xml, "id");
 
     rapidxml::xml_node<>* effectsNode = _xml->first_node("Effects");

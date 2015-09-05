@@ -15,7 +15,8 @@ bool CmdLook::accept(TCOD_key_t &key)
 
 void CmdLook::execute()
 {
-  SingleRangeSelector selector(50,"Select a tile to inspect...");
+  SingleRangeSelector selector("Select a tile to inspect...");
+  selector.setRange(50);
   Target target = selector.select();
 
   if (!target.actors.empty())

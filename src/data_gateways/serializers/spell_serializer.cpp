@@ -56,6 +56,13 @@ bool SpellSerializer::serialize(SpellPtr spell)
                                                                      static_cast<int>(spell->getTargetType())
                                                                      ).c_str()) ) );
 
+    _spellNode->append_attribute( _document->allocate_attribute(
+                                       "range",
+                                       _document->allocate_string( toStr(
+                                                                     spell->getRange()
+                                                                     ).c_str()) ) );
+
+
     //Serialize Effects
     xml_node<>* _effectsNode = _document->allocate_node(node_element, "Effects");
     _spellNode->append_node( _effectsNode );

@@ -5,9 +5,10 @@ namespace amarlon {
 
 enum class EffectType
 {
-  Null,
-  Lock,
-  SelfHeal
+  Null   = 0,
+  Lock   = 1,
+  Heal   = 2,
+  Damage = 3
 };
 
 }

@@ -68,7 +68,7 @@ void HealEffect::setHealAmount(int amount)
 
 EffectType HealEffect::getType() const
 {
-  return EffectType::SelfHeal;
+  return EffectType::Heal;
 }
 
 int HealEffect::getHealAmount() const

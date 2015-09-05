@@ -13,6 +13,7 @@ Spell::Spell()
   , _class(CharacterClass::NoClass)
   , _level(0)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
+  , _range(0)
 {
 }
 
@@ -33,6 +34,7 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
     spell->_class = static_cast<CharacterClass>(dsc->spellClass);
     spell->_targetType = static_cast<TargetType>(dsc->targetType);
     spell->_id = static_cast<SpellId>(dsc->id);
+    spell->_range = dsc->range;
 
     for ( auto& effectDsc : dsc->effects )
     {
@@ -55,6 +57,7 @@ SpellPtr Spell::clone()
   cloned->_targetType = _targetType;
   cloned->_id         = _id;
   cloned->_animation  = _animation->clone();
+  cloned->_range      = _range;
 
   for ( auto e : _effects )
   {
@@ -104,6 +107,11 @@ int Spell::getLevel() const
 TargetType Spell::getTargetType() const
 {
   return _targetType;
+}
+
+int Spell::getRange() const
+{
+  return _range;
 }
 
 }
