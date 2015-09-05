@@ -39,7 +39,7 @@ bool AttackAction::perform(ActorPtr performer)
           int exp = attacked->getExperience();
           int damage = attacker->rollMeleeDamage();
           Messenger::message()->actorHit(_performer, _target, damage);
-          attacked->modifyHitPoints( -1 * damage );
+          attacked->takeDamage(damage, DamageType::Physical);
 
           if ( !_target->isAlive() )
           {

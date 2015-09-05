@@ -11,6 +11,7 @@
 #include <carrying_capacity.h>
 #include <set>
 #include <spell_id.h>
+#include <damage_type.h>
 
 namespace amarlon {
 
@@ -49,6 +50,7 @@ public:
   virtual int getMaxHitPoints() const;
   virtual void setHitPoints(int newHp);
   virtual void modifyHitPoints(int modifier);
+  virtual void takeDamage(int damage, DamageType type = DamageType::Physical);
   virtual int getExperience() const;
   virtual void modifyExperience(int modifier);
   virtual int getLevel() const;
