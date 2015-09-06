@@ -37,7 +37,8 @@ EffectPtr Effect::create(EffectDescriptionPtr dsc)
 
   if ( dsc != nullptr)
   {
-    if ( e = Effect::create(dsc->type) )
+    e = Effect::create(dsc->type);
+    if ( e )
     {
       e->load(dsc->params);
     }

@@ -25,14 +25,14 @@ void Throw::run(TCODConsole& console)
 
   while( loc.x != stop.x || loc.y != stop.y)
   {
+    if (loc.x != stop.x ) loc.x < stop.x ? ++loc.x : --loc.x;
+    if (loc.y != stop.y ) loc.y < stop.y ? ++loc.y : --loc.y;
+
     Engine::instance().render();
     console.putChar(loc.x, loc.y, _ch);
     console.setCharForeground(loc.x, loc.y, _color);
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
-
-    if (loc.x != stop.x ) loc.x < stop.x ? ++loc.x : --loc.x;
-    if (loc.y != stop.y ) loc.y < stop.y ? ++loc.y : --loc.y;
   }
 
 }
