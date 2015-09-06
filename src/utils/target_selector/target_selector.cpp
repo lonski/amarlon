@@ -7,6 +7,7 @@ namespace amarlon {
 
 TargetSelector::TargetSelector(const std::string &selectionMessage)
   : _selectionMessage(selectionMessage)
+  , _range(0)
 {
 }
 
