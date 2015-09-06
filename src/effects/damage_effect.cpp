@@ -7,8 +7,6 @@
 namespace amarlon {
 
 DamageEffect::DamageEffect()
-  : _damage(0)
-  , _type(DamageType::Physical)
 {
 }
 
@@ -24,7 +22,7 @@ bool DamageEffect::apply(ActorPtr executor, const Target& target)
     if ( character )
     {
       int hpBefore = character->getHitPoints();
-      character->takeDamage(_damage, _type);
+      character->takeDamage(_damage);
 
       Messenger::message()->actorHit(executor, targetActor, hpBefore - character->getHitPoints() );
 
@@ -38,10 +36,8 @@ bool DamageEffect::apply(ActorPtr executor, const Target& target)
 void DamageEffect::load(const Params& params)
 {
   auto it = params.find("damage");
-  _damage = it != params.end() ? fromStr<int>( it->second ) : 0;
+  _damage = it != params.end() ? Damage( it->second ) : Damage();
 
-  it = params.find("damageType");
-  _type = it != params.end() ? static_cast<DamageType>(fromStr<int>( it->second )) : DamageType::Physical;
 }
 
 EffectPtr DamageEffect::clone()
@@ -60,7 +56,6 @@ bool DamageEffect::isEqual(EffectPtr rhs)
   if (crhs != nullptr)
   {
     equal  = _damage == crhs->_damage;
-    equal &= _type   == crhs->_type;
   }
 
   return equal;
@@ -74,8 +69,7 @@ EffectType DamageEffect::getType() const
 Params DamageEffect::toParams() const
 {
   return {
-    {"damage", std::to_string(_damage)},
-    {"damageType", std::to_string(static_cast<int>(_type))}
+    {"damage", _damage}
   };
 }
 

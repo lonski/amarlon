@@ -37,9 +37,9 @@ bool AttackAction::perform(ActorPtr performer)
         {
           hit = true;
           int exp = attacked->getExperience();
-          int damage = attacker->rollMeleeDamage();
-          Messenger::message()->actorHit(_performer, _target, damage);
-          attacked->takeDamage(damage, DamageType::Physical);
+
+          Messenger::message()->actorHit( _performer, _target,
+                                          attacked->takeDamage(attacker->getDamage()) );
 
           if ( !_target->isAlive() )
           {

@@ -26,7 +26,7 @@ public:
   virtual CarryingCapacity::LoadLevel getLoadLevel();
   virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
-  virtual int rollMeleeDamage();
+  virtual Damage getDamage();
 
   virtual std::string getDescription();
 
@@ -34,10 +34,9 @@ public:
   virtual int getMorale();
 
 private:
-  dices::Dice _damageDice;  
-  int _damageDiceCount;
   int _morale;
   int _hpMod;
+  Damage _damage;
 
   friend class Monster::Creator;
   friend class MonsterSerializer;

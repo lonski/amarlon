@@ -35,11 +35,9 @@ bool MonsterSerializer::serialize(ActorFeaturePtr af)
                                        "morale",
                                        _document->allocate_string( toStr( mob->getMorale() ).c_str()) ) );
     _mobNode->append_attribute( _document->allocate_attribute(
-                                       "damageDice",
+                                       "damage",
                                        _document->allocate_string(
-                                          ( toStr(mob->_damageDiceCount)
-                                            +"d"
-                                            +toStr(static_cast<int>(mob->_damageDice))
+                                          ( std::string(mob->_damage)
                                           ).c_str()) ) );
 
     CharacterSerializer::serializeCharacterCommonPart(_mobNode, mob);

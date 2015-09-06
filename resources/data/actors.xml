@@ -44,7 +44,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Destroyable/>
 	</Actor>	
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" experience="25" class="1" race="5" armorClass="11" hitPointsBonus="0" damageDice="1d8" morale="8" speed="40"/>
+		<Monster level="1" experience="25" class="1" race="5" armorClass="11" hitPointsBonus="0" damage="1d8+0#1" morale="8" speed="40"/>
 		<MonsterAi/>
 		<Wearer>
 			<ItemSlot type="3">
@@ -60,7 +60,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Description>Orcs are grotesque humanoids bent on war and domination. They have lupine ears, reddish eyes, truncated, upturned noses, and black hair (but very little body hair). An adult male orc is a little over 6 feet tall and weighs about 210 pounds; females are slightly smaller. Orcs prefer wearing vivid colors that many humans would consider unpleasant, such as blood red, mustard yellow, yellow-green, and deep purple. They utilize all manner of weapons and armor scavenged from battlefields.</Description>
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" experience="10" class="1" race="6" armorClass="11" hitPointsBonus="-1" damageDice="1d6" morale="7" speed="30"/>
+		<Monster level="1" experience="10" class="1" race="6" armorClass="11" hitPointsBonus="-1" damage="1d6+0#1" morale="7" speed="30"/>
 		<MonsterAi/>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
@@ -120,7 +120,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="1" amount="1" category="4"/>
 	</Actor>
 	<Actor name="Dagger" id="24" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damageDice="1d4" armorClass="0" weight="1" price="2"/>
+		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2"/>
 		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
 	</Actor>
 	

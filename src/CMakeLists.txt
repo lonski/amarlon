@@ -105,6 +105,7 @@ set(HEADER_FILES
     utils/text_formater.h
     utils/base64.h
     utils/target.h
+    utils/damage.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -227,6 +228,7 @@ set(SOURCE_FILES
     utils/dices.cpp
     utils/text_formater.cpp
     utils/base64.cpp
+    utils/damage.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp

@@ -11,7 +11,7 @@
 #include <carrying_capacity.h>
 #include <set>
 #include <spell_id.h>
-#include <damage_type.h>
+#include <damage.h>
 
 namespace amarlon {
 
@@ -50,7 +50,7 @@ public:
   virtual int getMaxHitPoints() const;
   virtual void setHitPoints(int newHp);
   virtual void modifyHitPoints(int modifier);
-  virtual void takeDamage(int damage, DamageType type = DamageType::Physical);
+  virtual int takeDamage(Damage dmg);
   virtual int getExperience() const;
   virtual void modifyExperience(int modifier);
   virtual int getLevel() const;
@@ -65,7 +65,7 @@ public:
   virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
-  virtual int rollMeleeDamage() = 0;
+  virtual Damage getDamage() = 0;
   virtual int getArmorClass();
   virtual std::vector<SpellPtr> getSpells() const;
 

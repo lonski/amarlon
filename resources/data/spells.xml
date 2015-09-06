@@ -2,7 +2,7 @@
 	<Spell id="1" name="Cure Light Wounds" level="1" class="1" targetType="0">
 		<Effects>
 			<Effect type="2">
-				<P name="heal">5</P>
+				<P name="heal">1d6+1#0</P>
 			</Effect>
 		</Effects>
 		<Animation type="1">
@@ -14,8 +14,7 @@
 	<Spell id="2" name="Magic Missile" level="1" class="1" targetType="1" range="10">
 		<Effects>
 			<Effect type="3">
-				<P name="damage">4</P>
-				<P name="type">2</P>
+				<P name="damage">1d6+1#2</P>
 			</Effect>
 		</Effects>
 		<Animation type="2">

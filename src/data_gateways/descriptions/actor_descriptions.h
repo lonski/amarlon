@@ -20,6 +20,7 @@
 #include <effect_description.h>
 #include <spell_id.h>
 #include <set>
+#include <damage.h>
 
 namespace amarlon {
 
@@ -90,11 +91,9 @@ struct PickableDescription : Description
     , uses(0)
     , itemSlot(ItemSlotType::Null)
     , category(PickableCategory::Miscellaneous)
-    , damageDice(dices::NoDice)
     , armorClass(0)
     , weight(0)
     , price(0)
-    , damageDiceCount(0)
     , targetType(TargetType::SINGLE_NEIGHBOUR)
   {}
 
@@ -105,12 +104,11 @@ struct PickableDescription : Description
   EffectDescriptionPtr effect;
   ItemSlotType itemSlot;
   PickableCategory category;
-  dices::Dice damageDice;
   int armorClass;
   int weight;
   int price;
-  int damageDiceCount;
   TargetType targetType;
+  Damage damage;
 };
 
 
@@ -147,15 +145,12 @@ struct MonsterDescription : CharacterDescription
 {
   MonsterDescription()
     : hitPointsBonus(0)
-    , damageDice(dices::NoDice)
-    , damageDiceCount(0)
     , morale(0)
   {}
 
   int hitPointsBonus;
-  dices::Dice damageDice;
-  int damageDiceCount;
-  int morale;  
+  int morale;
+  Damage damage;
 };
 
 struct AiDescription : Description

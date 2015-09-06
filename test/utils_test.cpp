@@ -5,8 +5,35 @@
 #include <set>
 #include <thread>
 #include <experience_table.h>
+#include <damage.h>
 
 namespace amarlon {
+
+
+TEST(DamageTest, parseValid)
+{
+  std::string str("3d4+2#3");
+  Damage dmg(str);
+
+  ASSERT_EQ(dmg.value, 2);
+  ASSERT_EQ(dmg.dice, dices::D4);
+  ASSERT_EQ(dmg.diceCount, 3);
+  ASSERT_EQ(dmg.type, DamageType::Fire );
+}
+
+TEST(DamageTest, parseInvalid)
+{
+  std::string str("3d4#3");
+  Damage dmg(str);
+
+  ASSERT_EQ(dmg, Damage());
+}
+
+TEST(DamageTest, serialize)
+{
+  Damage d(4, 2, dices::D6, DamageType::Lighting);
+  ASSERT_EQ( "2d6+4#5", std::string(d) );
+}
 
 TEST(ExpDataTable, get)
 {

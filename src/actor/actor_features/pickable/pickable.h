@@ -8,6 +8,7 @@
 #include <pickable_category.h>
 #include <target_type.h>
 #include <target.h>
+#include <damage.h>
 
 namespace amarlon {
 
@@ -53,8 +54,7 @@ public:
   PickableCategory getCategory() const;
   void setCategory(const PickableCategory &getCategory);
 
-  dices::Dice getDamageDice() const;
-  int getDiceCount() const;
+  Damage getDamage() const;
   int getArmorClass() const;
   int getWeight() const;
   int getPrice() const;
@@ -66,14 +66,13 @@ private:
   int _amount;
   EffectPtr _effect;
   ItemSlotType _itemSlot;
-  PickableCategory _category;
-  dices::Dice _damageDice;
-  int _diceCount;
+  PickableCategory _category;  
   int _armorClass;
   int _weight;
   int _price;
   int _usesCount;
   TargetType _targetType;
+  Damage _damage;
 
 };
 

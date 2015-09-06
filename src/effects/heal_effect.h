@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <effect.h>
+#include <damage.h>
 
 namespace amarlon {
 
@@ -19,16 +20,13 @@ public:
 
   virtual bool apply(ActorPtr executor, const Target& target);
 
-  void setHealAmount(int amount);
-
   virtual EffectType getType() const;
-  virtual int getHealAmount() const;
 
   virtual void load(const Params& params);
   virtual Params toParams() const;
 
 private:
-  int _healAmount;
+  Damage _heal;
 };
 
 }

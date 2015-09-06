@@ -8,9 +8,7 @@
 namespace amarlon {
 
 Monster::Monster(int level, int hitPointsBonus)
-  : _damageDice(dices::D4)
-  , _damageDiceCount(1)
-  , _morale(0)  
+  : _morale(0)
   , _hpMod(hitPointsBonus)
 {
   setLevel(level);
@@ -35,9 +33,8 @@ bool Monster::isEqual(ActorFeaturePtr rhs)
   if (crhs != nullptr)
   {
     equal = Character::isEqual( rhs );
-    equal &= _damageDice      == crhs->_damageDice;
-    equal &= _damageDiceCount == crhs->_damageDiceCount;
-    equal &= _morale          == crhs->_morale;
+    equal &= _damage      == crhs->_damage;
+    equal &= _morale      == crhs->_morale;
   }
 
   return equal;
@@ -58,15 +55,15 @@ int Monster::getMeleeAttackBonus()
   return AttackBonus::get(CharacterClass::Monster, getLevel() );
 }
 
-int Monster::rollMeleeDamage()
+Damage Monster::getDamage()
 {  
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    return dices::roll( weapon->getDamageDice(), weapon->getDiceCount() );
+    return weapon->getDamage();
   }
 
-  return dices::roll(_damageDice, _damageDiceCount);
+  return _damage;
 }
 
 std::string Monster::getDescription()
@@ -92,8 +89,7 @@ CharacterPtr Monster::Creator::create(CharacterDescriptionPtr dsc)
   {
     mob = std::make_shared<Monster>(mobDsc->level, mobDsc->hitPointsBonus);
 
-    mob->_damageDice = mobDsc->damageDice;
-    mob->_damageDiceCount = mobDsc->damageDiceCount;
+    mob->_damage = mobDsc->damage;
     mob->_morale = mobDsc->morale;
 
     Character::Creator::fillCommonCharacterPart(mob, dsc);

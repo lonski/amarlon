@@ -62,11 +62,9 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
                                        _document->allocate_string( toStr( pickable->getPrice() ).c_str()) ) );
 
     _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "damageDice",
+                                       "damage",
                                        _document->allocate_string(
-                                         (toStr( pickable->getDiceCount() )
-                                          + "d"
-                                          + toStr(static_cast<int>(pickable->getDamageDice()))
+                                         (std::string(pickable->getDamage())
                                           ).c_str()) ) );
 
     _pickableNode->append_attribute( _document->allocate_attribute(

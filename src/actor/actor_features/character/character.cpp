@@ -91,10 +91,12 @@ void Character::modifyHitPoints(int modifier)
   setHitPoints( toSet );
 }
 
-void Character::takeDamage(int damage, DamageType /*type*/)
+int Character::takeDamage(Damage dmg)
 {
   //TODO: handle damage resists
-  modifyHitPoints(-1 * damage);
+  int roll = dmg.roll();
+  modifyHitPoints(-1 * roll);
+  return roll;
 }
 
 int Character::getExperience() const

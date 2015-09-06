@@ -13,8 +13,6 @@ const ActorFeature::Type Pickable::featureType = ActorFeature::PICKABLE;
 Pickable::Pickable(bool stackable, int amount)
   : _stackable(stackable)
   , _amount(amount)
-  , _damageDice(dices::NoDice)
-  , _diceCount(0)
   , _armorClass(0)
   , _weight(0)
   , _price(0)
@@ -38,11 +36,10 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable.reset( new Pickable(pDsc->stackable, pDsc->amount) );
     pickable->_itemSlot = pDsc->itemSlot;
     pickable->_category = pDsc->category;
-    pickable->_damageDice = pDsc->damageDice;
     pickable->_armorClass = pDsc->armorClass;
     pickable->_weight = pDsc->weight;
     pickable->_price = pDsc->price;
-    pickable->_diceCount = pDsc->damageDiceCount;
+    pickable->_damage = pDsc->damage;
     pickable->_usesCount = pDsc->uses;
     pickable->_targetType = pDsc->targetType;
     pickable->setEffect( Effect::create(pDsc->effect) );
@@ -76,8 +73,7 @@ ActorFeaturePtr Pickable::clone()
 
   cloned->_itemSlot = _itemSlot;
   cloned->_category = _category;
-  cloned->_damageDice = _damageDice;
-  cloned->_diceCount = _diceCount;
+  cloned->_damage = _damage;
   cloned->_armorClass = _armorClass;
   cloned->_weight = _weight;
   cloned->_price = _price;
@@ -95,11 +91,10 @@ bool Pickable::isEqual(ActorFeaturePtr rhs)
   if (crhs != nullptr)
   {
     equal = (_stackable == crhs->_stackable);
-    equal &= (_damageDice == crhs->_damageDice);
     equal &= (_armorClass == crhs->_armorClass);
     equal &= (_weight == crhs->_weight);
     equal &= (_price == crhs->_price);
-    equal &= (_diceCount == crhs->_diceCount);
+    equal &= (_damage == crhs->_damage);
     equal &= (_targetType == crhs->_targetType);
     //equal &= _usesCount == crhs->_usesCount;
     //equal &= (_amount == crhs->_amount);  no amount comparing
@@ -173,14 +168,9 @@ void Pickable::setCategory(const PickableCategory &category)
   _category = category;
 }
 
-dices::Dice Pickable::getDamageDice() const
+Damage Pickable::getDamage() const
 {
-  return _damageDice;
-}
-
-int Pickable::getDiceCount() const
-{
-  return _diceCount;
+  return _damage;
 }
 
 int Pickable::getArmorClass() const
@@ -211,9 +201,17 @@ std::string Pickable::getDescription()
   str += "\n";
   str += colorToStr(TCODColor::darkerTurquoise, true) + "Weight: " + toStr( getWeight() ) + " lbs\n \n";
 
-  if ( getDamageDice() != dices::NoDice )
+  if ( getDamage() != Damage() )
   {
-    str += colorToStr(TCODColor::darkTurquoise, true) + "Damage: " + toStr(getDiceCount()) + "d" + toStr(getDamageDice()) + "\n";
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Damage: " +
+                                                        toStr(_damage.diceCount) + "d" +
+                                                        toStr(static_cast<int>(_damage.dice) );
+    if ( _damage.value != 0 )
+    {
+      str += ( _damage.value >0 ? "+" : "-" ) + toStr(_damage.value);
+    }
+
+    str += "\n";
   }
   if ( getArmorClass() != 0 )
   {

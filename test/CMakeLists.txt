@@ -69,6 +69,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/target_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_range_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.h
+    ${PROJECT_SOURCE_DIR}/src/utils/damage.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/map_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/serializer.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/map_serializer.h

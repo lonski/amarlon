@@ -146,13 +146,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->uses = getAttribute<int>(pickableNode, "uses");
       pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
 
-      std::string dDice = getAttribute<std::string>(pickableNode, "damageDice");
-      auto dmgDiceParams = explode(dDice, 'd');
-      if ( dmgDiceParams.size() == 2 )
-      {
-        pickDsc->damageDiceCount = fromStr<int>(dmgDiceParams[0]);
-        pickDsc->damageDice = static_cast<dices::Dice>( fromStr<int>(dmgDiceParams[1]) );
-      }
+      pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
 
       // == effects == //
       xml_node<>* effectNode = pickableNode->first_node("Effect");
@@ -200,14 +194,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
 
         mdsc->hitPointsBonus = getAttribute<int>(characterNode, "hitPointsBonus");
         mdsc->morale = getAttribute<int>(characterNode, "morale");
-
-        std::string dDice = getAttribute<std::string>(characterNode, "damageDice");
-        auto dmgDiceParams = explode(dDice, 'd');
-        if ( dmgDiceParams.size() == 2 )
-        {
-          mdsc->damageDiceCount = fromStr<int>(dmgDiceParams[0]);
-          mdsc->damageDice = static_cast<dices::Dice>( fromStr<int>(dmgDiceParams[1]) );
-        }
+        mdsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );
 
         dsc = mdsc;
       }

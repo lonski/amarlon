@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include <actor.h>
 #include <map.h>
+#define private public
 #include <heal_effect.h>
+#undef private
 
 namespace amarlon {
 
@@ -116,7 +118,7 @@ TEST_F(ActorTest, actorEqual_different_pickable)
   ASSERT_TRUE( *a1 == *a2 );
 
   HealEffectPtr e = std::dynamic_pointer_cast<HealEffect>(a1->getFeature<Pickable>()->getEffect());
-  e->setHealAmount(666);
+  e->_heal.value = 666;
 
   ASSERT_FALSE( *a1 == *a2 );
 }

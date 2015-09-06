@@ -55,17 +55,18 @@ int PlayableCharacter::getMeleeAttackBonus()
   return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR);
 }
 
-int PlayableCharacter::rollMeleeDamage()
+Damage PlayableCharacter::getDamage()
 {
-  int dmg = getModifier( AbilityScore::STR );
+  Damage damage;
 
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    dmg += dices::roll( weapon->getDamageDice(), weapon->getDiceCount() );
+    damage = weapon->getDamage();
   }
+  damage.value += getModifier( AbilityScore::STR );
 
-  return std::max(dmg, 1); //always minimum 1 dmg inflicted
+  return damage;
 }
 
 void PlayableCharacter::modifyExperience(int modifier)

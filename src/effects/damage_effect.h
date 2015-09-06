@@ -4,6 +4,7 @@
 #include <memory>
 #include <effect.h>
 #include <damage_type.h>
+#include <damage.h>
 
 namespace amarlon {
 
@@ -26,8 +27,7 @@ public:
   virtual Params toParams() const;
 
 private:
-  int _damage;
-  DamageType _type;
+  Damage _damage;
 
 };
 

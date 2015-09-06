@@ -8,7 +8,6 @@
 namespace amarlon {
 
 HealEffect::HealEffect()
-  : _healAmount(0)
 {
 }
 
@@ -24,7 +23,7 @@ bool HealEffect::apply(ActorPtr, const Target& target)
     if ( character )
     {
       int hpBeforeHeal = character->getHitPoints();
-      character->modifyHitPoints(_healAmount);
+      character->modifyHitPoints( _heal.roll() );
 
       Messenger::message()->actorHealed(targetActor, character->getHitPoints() - hpBeforeHeal );
 
@@ -37,7 +36,7 @@ bool HealEffect::apply(ActorPtr, const Target& target)
 void HealEffect::load(const Params& params)
 {
   auto it = params.find("heal");
-  _healAmount = it != params.end() ? fromStr<int>( it->second ) : 0;
+  _heal = it != params.end() ? Damage( it->second ) : Damage();
 }
 
 EffectPtr HealEffect::clone()
@@ -55,15 +54,10 @@ bool HealEffect::isEqual(EffectPtr rhs)
 
   if (crhs != nullptr)
   {
-    equal = _healAmount == crhs->_healAmount;
+    equal = _heal == crhs->_heal;
   }
 
   return equal;
-}
-
-void HealEffect::setHealAmount(int amount)
-{
-  _healAmount = amount;
 }
 
 EffectType HealEffect::getType() const
@@ -71,15 +65,10 @@ EffectType HealEffect::getType() const
   return EffectType::Heal;
 }
 
-int HealEffect::getHealAmount() const
-{
-  return _healAmount;
-}
-
 Params HealEffect::toParams() const
 {
   return {
-    { {"heal", std::to_string(_healAmount)} }
+    { {"heal", _heal} }
   };
 }
 
