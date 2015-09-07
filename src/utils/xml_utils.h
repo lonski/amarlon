@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include "xml/rapidxml.hpp"
+#include <utils.h>
 
 namespace amarlon {
 
@@ -62,6 +63,66 @@ inline bool attributeExists(rapidxml::xml_node<>* node, const std::string& attri
 {
   return node->first_attribute(attribute.c_str()) != nullptr;
 }
+
+template<typename T>
+inline void addAttribute(rapidxml::xml_node<>* node, const std::string& name,  const T& value)
+{
+  auto doc = node->document();
+  assert(doc);
+  auto attrVal = doc->allocate_string( toStr<T>(value).c_str() );
+  auto attrName = doc->allocate_string( name.c_str() );
+  auto attr = doc->allocate_attribute( attrName, attrVal );
+  node->append_attribute( attr );
+
+}
+
+template<>
+inline void addAttribute<std::string>(rapidxml::xml_node<>* node,
+                                      const std::string& name,
+                                      const std::string& value)
+{
+  auto doc = node->document();
+  assert(doc);
+  auto attrVal = doc->allocate_string( value.c_str() );
+  auto attrName = doc->allocate_string( name.c_str() );
+  auto attr = doc->allocate_attribute( attrName, attrVal );
+  node->append_attribute( attr );
+}
+
+template<typename T>
+inline void addAttributeEnum(rapidxml::xml_node<>* node,
+                             const std::string& name,
+                             const T& value)
+{
+  auto doc = node->document();
+  if ( doc == nullptr ) throw std::runtime_error("XML::addAttribute: Document cant be null");
+  auto attrVal = doc->allocate_string( toStr<int>(static_cast<int>(value)).c_str() );
+  auto attrName = doc->allocate_string( name.c_str() );
+  auto attr = doc->allocate_attribute( attrName, attrVal );
+  node->append_attribute( attr );
+
+}
+
+template<typename T>
+inline rapidxml::xml_node<>* createNode(rapidxml::xml_document<>* doc,
+                                        const std::string& name,
+                                        const T& value)
+{
+  auto allocatedName = doc->allocate_string( name.c_str() );
+  auto allocatedValue = doc->allocate_string( toStr<T>(value).c_str() );
+  return doc->allocate_node(rapidxml::node_element, allocatedName, allocatedValue );
+}
+
+template<>
+inline rapidxml::xml_node<>* createNode<std::string>(rapidxml::xml_document<>* doc,
+                                                     const std::string& name,
+                                                     const std::string& value)
+{
+  auto allocatedName = doc->allocate_string( name.c_str() );
+  auto allocatedValue = doc->allocate_string( value.c_str() );
+  return doc->allocate_node(rapidxml::node_element, allocatedName, allocatedValue );
+}
+
 
 }
 #endif // XMLUTILS_H

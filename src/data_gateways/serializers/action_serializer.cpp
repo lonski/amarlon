@@ -1,6 +1,7 @@
 #include "action_serializer.h"
 #include <teleport_action.h>
 #include <utils.h>
+#include <xml_utils.h>
 #include <amarlon_except.h>
 
 using namespace rapidxml;
@@ -32,9 +33,9 @@ bool ActionSerializer::serialize(ActorActionPtr action)
       xml_node<>* actionNode = _document->allocate_node(node_element, "Teleport");
       _xml->append_node( actionNode );
 
-      actionNode->append_attribute( _document->allocate_attribute( "mapId", _document->allocate_string( toStr(static_cast<int>( tAction->getMapId() )).c_str() )));
-      actionNode->append_attribute( _document->allocate_attribute( "x", _document->allocate_string( toStr( tAction->getX() ).c_str() )));
-      actionNode->append_attribute( _document->allocate_attribute( "y", _document->allocate_string( toStr( tAction->getY() ).c_str() )));
+      addAttributeEnum( actionNode, "mapId", tAction->getMapId() );
+      addAttribute( actionNode, "x", tAction->getX() );
+      addAttribute( actionNode, "y", tAction->getY() );
 
       serialized = true;
     }

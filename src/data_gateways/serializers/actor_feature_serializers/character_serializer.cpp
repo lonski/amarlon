@@ -1,4 +1,5 @@
 #include "character_serializer.h"
+#include <xml_utils.h>
 #include <character.h>
 #include <utils.h>
 #include <spell.h>
@@ -25,46 +26,22 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
 {
   if ( characterNode && character && _document )
   {
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "level",
-                                       _document->allocate_string( toStr( character->getLevel() ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "hitPoints",
-                                       _document->allocate_string( toStr( character->getHitPoints() ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "maxHitPoints",
-                                       _document->allocate_string( toStr( character->getMaxHitPoints() ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "experience",
-                                       _document->allocate_string( toStr( character->getExperience() ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "armorClass",
-                                       _document->allocate_string( toStr( character->_defaultArmorClass ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "speed",
-                                       _document->allocate_string( toStr( character->_speed ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "class",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(character->getClass())
-                                                                     ).c_str()) ) );
-    characterNode->append_attribute( _document->allocate_attribute(
-                                       "race",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(character->getRace())
-                                                                     ).c_str()) ) );
+    addAttribute    ( characterNode, "level",        character->getLevel()           );
+    addAttribute    ( characterNode, "hitPoints",    character->getHitPoints()       );
+    addAttribute    ( characterNode, "maxHitPoints", character->getMaxHitPoints()    );
+    addAttribute    ( characterNode, "experience",   character->getExperience()      );
+    addAttribute    ( characterNode, "armorClass",   character->_defaultArmorClass   );
+    addAttribute    ( characterNode, "speed",        character->_speed               );
+    addAttributeEnum( characterNode, "class",        character->getClass()           );
+    addAttributeEnum( characterNode, "race",         character->getRace()            );
 
     xml_node<>* spellsNode = _document->allocate_node(node_element, "Spells");
     characterNode->append_node(spellsNode);
     for ( auto spell : character->getSpells() )
     {
       xml_node<>* spellNode = _document->allocate_node(node_element, "Spell");
-      spellNode->append_attribute( _document->allocate_attribute(
-                                         "id",
-                                         _document->allocate_string( toStr(
-                                                                       static_cast<int>(spell->getId())
-                                                                       ).c_str()) ) );
       spellsNode->append_node(spellNode);
+      addAttributeEnum(spellNode, "id", spell->getId() );
     }
   }
 }

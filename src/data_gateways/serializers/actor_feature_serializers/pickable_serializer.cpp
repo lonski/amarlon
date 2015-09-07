@@ -1,6 +1,7 @@
 #include "pickable_serializer.h"
 #include <pickable.h>
 #include <utils.h>
+#include <xml_utils.h>
 
 using namespace rapidxml;
 
@@ -27,55 +28,17 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
     xml_node<>* _pickableNode = _document->allocate_node(node_element, "Pickable");
     _xml->append_node( _pickableNode );
 
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "stackable",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(pickable->isStackable())
-                                                                     ).c_str()) ) );
+    addAttribute    ( _pickableNode, "stackable",  static_cast<int>(pickable->isStackable()) );
+    addAttribute    ( _pickableNode, "amount",     pickable->getAmount() );
+    addAttribute    ( _pickableNode, "armorClass", pickable->getArmorClass() );
+    addAttribute    ( _pickableNode, "weight",     pickable->getWeight() );
+    addAttribute    ( _pickableNode, "price",      pickable->getPrice() );
+    addAttribute    ( _pickableNode, "damage",     std::string(pickable->getDamage()) );
+    addAttribute    ( _pickableNode, "uses",       pickable->getUsesCount() );
+    addAttributeEnum( _pickableNode, "itemSlot",   pickable->getItemSlot() );
+    addAttributeEnum( _pickableNode, "category",   pickable->getCategory() );
+    addAttributeEnum( _pickableNode, "targetType", pickable->getTargetType() );
 
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "amount",
-                                       _document->allocate_string( toStr( pickable->getAmount() ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "itemSlot",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(pickable->getItemSlot())
-                                                                     ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "category",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(pickable->getCategory())
-                                                                     ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "armorClass",
-                                       _document->allocate_string( toStr( pickable->getArmorClass() ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "weight",
-                                       _document->allocate_string( toStr( pickable->getWeight() ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "price",
-                                       _document->allocate_string( toStr( pickable->getPrice() ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "damage",
-                                       _document->allocate_string(
-                                         (std::string(pickable->getDamage())
-                                          ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "uses",
-                                       _document->allocate_string( toStr( pickable->getUsesCount()  ).c_str()) ) );
-
-    _pickableNode->append_attribute( _document->allocate_attribute(
-                                       "targetType",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(pickable->getTargetType())
-                                                                     ).c_str()) ) );
     _effectSerializer.setDestination(_document, _pickableNode);
     _effectSerializer.serialize( pickable->getEffect() );
   }

@@ -1,4 +1,5 @@
 #include "animation_serializer.h"
+#include <xml_utils.h>
 #include <animation.h>
 #include <blink.h>
 #include <utils.h>
@@ -28,20 +29,14 @@ bool AnimationSerializer::serialize(animation::AnimationPtr anim)
   {
     xml_node<>* _animNode = _document->allocate_node(node_element, "Animation");
     _xml->append_node( _animNode );
-
-    _animNode->append_attribute( _document->allocate_attribute(
-                                       "type",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(anim->getType())
-                                                                     ).c_str()) ) );
-
+    addAttributeEnum( _animNode, "type", anim->getType() );
 
     Params params = anim->toParams();
     for ( auto& pair : params )
     {
-      xml_node<>* pNode = _document->allocate_node(node_element, "P", _document->allocate_string(pair.second.c_str()) );
-      pNode->append_attribute( _document->allocate_attribute("name", _document->allocate_string(pair.first.c_str())));
+      xml_node<>* pNode = createNode( _document, "P", pair.second );
       _animNode->append_node( pNode );
+      addAttribute( pNode, "name", pair.first );
     }
 
   }

@@ -2,6 +2,7 @@
 #include <wearer.h>
 #include <actor_serializer.h>
 #include <utils.h>
+#include <xml_utils.h>
 
 using namespace rapidxml;
 
@@ -45,19 +46,10 @@ void WearerSerializer::serializeItemSlots()
       xml_node<>* _slotNode = _document->allocate_node(node_element, "ItemSlot");
       _wearerNode->append_node( _slotNode );
 
-      serializeItemSlotAttributes(slot, _slotNode);
+      addAttributeEnum( _slotNode, "type", slot );
       serializeEquippedItem(slot, _slotNode);
     }
   }
-}
-
-void WearerSerializer::serializeItemSlotAttributes(ItemSlotType slot, rapidxml::xml_node<>* slotNode)
-{
-  slotNode->append_attribute( _document->allocate_attribute(
-                                     "type",
-                                     _document->allocate_string( toStr(
-                                                                   static_cast<int>(slot)
-                                                                   ).c_str()) ) );
 }
 
 void WearerSerializer::serializeEquippedItem(ItemSlotType slot, xml_node<>* slotNode)

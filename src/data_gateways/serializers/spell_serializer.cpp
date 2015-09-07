@@ -1,5 +1,6 @@
 #include "spell_serializer.h"
 #include <spell.h>
+#include <xml_utils.h>
 #include <utils.h>
 
 using namespace rapidxml;
@@ -28,54 +29,25 @@ bool SpellSerializer::serialize(SpellPtr spell)
     xml_node<>* _spellNode = _document->allocate_node(node_element, "Spell");
     _xml->append_node( _spellNode );
 
-    _spellNode->append_attribute( _document->allocate_attribute(
-                                       "id",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(spell->getId())
-                                                                     ).c_str()) ) );
-
-    _spellNode->append_attribute( _document->allocate_attribute(
-                                       "name",
-                                       _document->allocate_string( spell->getName().c_str() )));
-
-    _spellNode->append_attribute( _document->allocate_attribute(
-                                       "level",
-                                       _document->allocate_string( toStr(
-                                                                     spell->getLevel()
-                                                                     ).c_str()) ) );
-
-    _spellNode->append_attribute( _document->allocate_attribute(
-                                       "class",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(spell->getClass())
-                                                                     ).c_str()) ) );
-
-    _spellNode->append_attribute( _document->allocate_attribute(
-                                       "targetType",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(spell->getTargetType())
-                                                                     ).c_str()) ) );
-
-    _spellNode->append_attribute( _document->allocate_attribute(
-                                       "range",
-                                       _document->allocate_string( toStr(
-                                                                     spell->getRange()
-                                                                     ).c_str()) ) );
-
+    addAttributeEnum( _spellNode, "id",         spell->getId()         );
+    addAttributeEnum( _spellNode, "class",      spell->getClass()      );
+    addAttributeEnum( _spellNode, "targetType", spell->getTargetType() );
+    addAttribute    ( _spellNode, "name",       spell->getName()       );
+    addAttribute    ( _spellNode, "level",      spell->getLevel()      );
+    addAttribute    ( _spellNode, "range",      spell->getRange()      );
 
     //Serialize Effects
     for ( auto& pair : spell->_effects )
     {
       xml_node<>* effectsNode = _document->allocate_node(node_element, "Effects");
-      effectsNode->append_attribute(_document->allocate_attribute("level", _document->allocate_string(toStr<int>(pair.first).c_str())));
+      _spellNode->append_node( effectsNode );
+      addAttribute( effectsNode, "level", pair.first );
 
       _effectSerializer.setDestination( _document, effectsNode );
       for( auto e : pair.second )
       {
         _effectSerializer.serialize( e );
       }
-
-      _spellNode->append_node( effectsNode );
     }
 
     //Serialize Animation

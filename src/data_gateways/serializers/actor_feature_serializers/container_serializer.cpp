@@ -2,6 +2,7 @@
 #include <container.h>
 #include <actor_serializer.h>
 #include <utils.h>
+#include <xml_utils.h>
 
 using namespace rapidxml;
 
@@ -28,10 +29,7 @@ bool ContainerSerializer::serialize(ActorFeaturePtr af)
   {
     xml_node<>* _containerNode = _document->allocate_node(node_element, "Container");
     _xml->append_node( _containerNode );
-
-    _containerNode->append_attribute( _document->allocate_attribute(
-                                       "maxSize",
-                                       _document->allocate_string( toStr( container->slotCount() ).c_str()) ) );
+    addAttribute( _containerNode, "maxSize", container->slotCount() );
 
     ActorSerializer actorSerializer(_document, _containerNode);
     for ( ActorPtr content : container->content() )

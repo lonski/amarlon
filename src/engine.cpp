@@ -59,6 +59,7 @@ void Engine::prologue(Configuration* cfg)
 
 void Engine::epilogue()
 {
+  Spell::Gateway.store( "d:\\spells_xxx.xml" );
   getWorld().store( _config->get("save_file") );
 }
 

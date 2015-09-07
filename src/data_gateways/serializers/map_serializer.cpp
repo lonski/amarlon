@@ -50,27 +50,27 @@ bool MapSerializer::serialize(MapPtr map)
 
 void MapSerializer::serializeAttributes()
 {
-  _mapNode->append_attribute( _document->allocate_attribute(    "height",_document->allocate_string( toStr(_map->getHeight()).c_str()) ) );
-  _mapNode->append_attribute( _document->allocate_attribute(    "width",_document->allocate_string( toStr(_map->getWidth()).c_str()) ) );
-  _mapNode->append_attribute( _document->allocate_attribute(    "id", _document->allocate_string( toStr(static_cast<int>(_map->getId())).c_str()) ) );
+  addAttribute(_mapNode, "height", _map->getHeight());
+  addAttribute(_mapNode,  "width", _map->getWidth());
+  addAttributeEnum(_mapNode, "id", _map->getId());
 
   auto tiles = _map->serializeTiles();
   std::string encodedTiles = base64_encode(reinterpret_cast<const unsigned char*>(&tiles[0]), tiles.size());
 
-  _mapNode->append_node( _document->allocate_node(node_element, "Tiles", _document->allocate_string(encodedTiles.c_str()) ) );
+  _mapNode->append_node( createNode(_document, "Tiles", encodedTiles) );
 
 }
 
 void MapSerializer::serializeExitActions()
 {
-  xml_node<>* exitActionsNode = _document->allocate_node(node_element, "OnExit");
+  xml_node<>* exitActionsNode = createNode(_document, "OnExit", "");
   _mapNode->append_node( exitActionsNode );
 
   for ( const auto& pair : _map->getExitActions() )
   {
-    xml_node<>* directionNode = _document->allocate_node(node_element, "Direction");
+    xml_node<>* directionNode = createNode(_document, "Direction", "");
     exitActionsNode->append_node(directionNode);
-    directionNode->append_attribute( _document->allocate_attribute( "id", _document->allocate_string( toStr(static_cast<int>(pair.first)).c_str() )));
+    addAttributeEnum( directionNode, "id", pair.first );
 
     _actionSerializer.setDestination(_document, directionNode);
     _actionSerializer.serialize(pair.second);
@@ -79,7 +79,7 @@ void MapSerializer::serializeExitActions()
 
 void MapSerializer::serializeActors()
 {
-  xml_node<>* actorsNode = _document->allocate_node(node_element, "Actors");
+  xml_node<>* actorsNode = createNode(_document, "Actors", "");
   _mapNode->append_node( actorsNode );
 
   _actorSerializer.setDestination(_document, actorsNode);

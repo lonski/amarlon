@@ -1,5 +1,6 @@
 #include "monster_serializer.h"
 #include <utils.h>
+#include <xml_utils.h>
 #include <monster.h>
 
 using namespace rapidxml;
@@ -28,17 +29,9 @@ bool MonsterSerializer::serialize(ActorFeaturePtr af)
     xml_node<>* _mobNode = _document->allocate_node(node_element, "Monster");
     _xml->append_node( _mobNode );
 
-    _mobNode->append_attribute( _document->allocate_attribute(
-                                       "hitPointsBonus",
-                                       _document->allocate_string( toStr( mob->_hpMod ).c_str()) ) );
-    _mobNode->append_attribute( _document->allocate_attribute(
-                                       "morale",
-                                       _document->allocate_string( toStr( mob->getMorale() ).c_str()) ) );
-    _mobNode->append_attribute( _document->allocate_attribute(
-                                       "damage",
-                                       _document->allocate_string(
-                                          ( std::string(mob->_damage)
-                                          ).c_str()) ) );
+    addAttribute( _mobNode, "hitPointsBonus", mob->_hpMod );
+    addAttribute( _mobNode, "morale", mob->getMorale() );
+    addAttribute( _mobNode, "damage", std::string(mob->_damage) );
 
     CharacterSerializer::serializeCharacterCommonPart(_mobNode, mob);
   }

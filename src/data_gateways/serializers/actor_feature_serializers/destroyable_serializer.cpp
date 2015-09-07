@@ -1,6 +1,7 @@
 #include "destroyable_serializer.h"
 #include <destroyable.h>
 #include <utils.h>
+#include <xml_utils.h>
 
 using namespace rapidxml;
 
@@ -33,20 +34,10 @@ bool DestroyableSerializer::serialize(ActorFeaturePtr af)
       xml_node<>* ruleNode = _document->allocate_node(node_element, "DropRule");
       _destrNode->append_node( ruleNode );
 
-      ruleNode->append_attribute( _document->allocate_attribute(
-                                       "dropActorId",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(rule.dropActorId)
-                                                                     ).c_str()) ) );
-      ruleNode->append_attribute( _document->allocate_attribute(
-                                       "amountMin",
-                                       _document->allocate_string( toStr( rule.amountMin ).c_str()) ) );
-      ruleNode->append_attribute( _document->allocate_attribute(
-                                       "amountMax",
-                                       _document->allocate_string( toStr( rule.amountMax ).c_str()) ) );
-      ruleNode->append_attribute( _document->allocate_attribute(
-                                       "chance",
-                                       _document->allocate_string( toStr( rule.chance ).c_str()) ) );
+      addAttributeEnum( ruleNode, "dropActorId", rule.dropActorId );
+      addAttribute    ( ruleNode, "amountMin",   rule.amountMin   );
+      addAttribute    ( ruleNode, "amountMax",   rule.amountMax   );
+      addAttribute    ( ruleNode, "chance",      rule.chance      );
     }
 
   }

@@ -1,5 +1,6 @@
 #include "actor_serializer.h"
 #include <utils.h>
+#include <xml_utils.h>
 #include <actor.h>
 #include <pickable_serializer.h>
 #include <destroyable_serializer.h>
@@ -48,9 +49,9 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
     _actorNode = _document->allocate_node(node_element, nodeName);
     _xml->append_node( _actorNode );
 
-    _actorNode->append_attribute( _document->allocate_attribute( "id",_document->allocate_string( toStr( static_cast<int>(actor->getId()) ).c_str()) ) );
-    _actorNode->append_attribute( _document->allocate_attribute( "x",_document->allocate_string( toStr( actor->getX() ).c_str()) ) );
-    _actorNode->append_attribute( _document->allocate_attribute( "y",_document->allocate_string( toStr( actor->getY() ).c_str()) ) );
+    addAttributeEnum( _actorNode, "id", actor->getId() );
+    addAttribute( _actorNode, "x", actor->getX() );
+    addAttribute( _actorNode, "y", actor->getY() );
 
     for ( const auto& afPair : actor->getFeatures() )
     {

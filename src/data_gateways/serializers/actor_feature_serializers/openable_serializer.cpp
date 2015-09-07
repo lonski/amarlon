@@ -1,6 +1,7 @@
 #include "openable_serializer.h"
 #include <openable.h>
 #include <utils.h>
+#include <xml_utils.h>
 
 using namespace rapidxml;
 
@@ -24,14 +25,8 @@ void OpenableSerializer::serializeOpenableCommonPart(xml_node<>* openableNode, O
 {
   if ( openableNode && openable && _document )
   {
-    openableNode->append_attribute( _document->allocate_attribute(
-                                       "lockId",
-                                       _document->allocate_string( toStr( openable->getLockId() ).c_str()) ) );
-    openableNode->append_attribute( _document->allocate_attribute(
-                                       "locked",
-                                       _document->allocate_string( toStr(
-                                                                     static_cast<int>(openable->isLocked())
-                                                                     ).c_str()) ) );
+    addAttribute( openableNode, "lockId", openable->getLockId() );
+    addAttribute( openableNode, "locked", static_cast<int>(openable->isLocked()) );
   }
 }
 

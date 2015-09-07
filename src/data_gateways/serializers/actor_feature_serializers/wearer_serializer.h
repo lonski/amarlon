@@ -25,7 +25,6 @@ private:
   WearerPtr _wearer;
 
   void serializeItemSlots();
-  void serializeItemSlotAttributes(ItemSlotType slot, rapidxml::xml_node<>* slotNode);
   void serializeEquippedItem(ItemSlotType slot, rapidxml::xml_node<>* slotNode);
 
 };

@@ -1,5 +1,6 @@
 #include "playable_character_serializer.h"
 #include <utils.h>
+#include <xml_utils.h>
 #include <playable_character.h>
 
 using namespace rapidxml;
@@ -33,10 +34,7 @@ bool PlayableCharacterSerializer::serialize(ActorFeaturePtr af)
 
     for ( AbilityScore::Type as : AbilityScore::Type() )
     {
-      _asNode->append_attribute( _document->allocate_attribute(
-                                       AbilityScore::toStr(as).c_str(),
-                                       _document->allocate_string(
-                                          toStr( pc->getAbilityScore(as) ).c_str()) ) );
+      addAttribute( _asNode, AbilityScore::toStr(as), pc->getAbilityScore(as) );
     }
 
     CharacterSerializer::serializeCharacterCommonPart(_pcNode, pc);
