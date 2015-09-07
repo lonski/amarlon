@@ -63,7 +63,11 @@ TEST_F(SpellTest, parseTest)
   xml_document<> xmlDoc;
 
   std::string xml = "<Spell id=\"1\" name=\"MySpell\" level=\"2\" class=\"1\" targetType=\"3\">"
-                    "  <Effects>"
+                    "  <Effects level='0'>"
+                    "    <Effect type=\"2\" heal=\"2\"/>"
+                    "    <Effect type=\"1\" lockId=\"666\"/>"
+                    "  </Effects>"
+                    "  <Effects level='4'>"
                     "    <Effect type=\"2\" heal=\"2\"/>"
                     "    <Effect type=\"1\" lockId=\"666\"/>"
                     "  </Effects>"
