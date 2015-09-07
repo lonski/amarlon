@@ -7,7 +7,6 @@
 #include <utils/configuration.h>
 #include <utils/messenger.h>
 
-
 namespace amarlon {
 
 int Engine::FovRadius = 20;

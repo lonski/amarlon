@@ -52,8 +52,10 @@ private:
   SpellId _id;
   int _range;
 
-  std::vector<EffectPtr> _effects;
+  std::set< std::pair<int, std::vector<EffectPtr> > > _effects;
   animation::AnimationPtr _animation;
+
+  std::vector<EffectPtr> getEffectsFor(ActorPtr actor);
 
 
   friend class SpellSerializer;

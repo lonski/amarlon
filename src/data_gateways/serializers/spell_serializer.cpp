@@ -64,13 +64,18 @@ bool SpellSerializer::serialize(SpellPtr spell)
 
 
     //Serialize Effects
-    xml_node<>* _effectsNode = _document->allocate_node(node_element, "Effects");
-    _spellNode->append_node( _effectsNode );
-    _effectSerializer.setDestination( _document, _effectsNode );
-
-    for( auto e : spell->_effects )
+    for ( auto& pair : spell->_effects )
     {
-      _effectSerializer.serialize( e );
+      xml_node<>* effectsNode = _document->allocate_node(node_element, "Effects");
+      effectsNode->append_attribute(_document->allocate_attribute("level", _document->allocate_string(toStr<int>(pair.first).c_str())));
+
+      _effectSerializer.setDestination( _document, effectsNode );
+      for( auto e : pair.second )
+      {
+        _effectSerializer.serialize( e );
+      }
+
+      _spellNode->append_node( effectsNode );
     }
 
     //Serialize Animation

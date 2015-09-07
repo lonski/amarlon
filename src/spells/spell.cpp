@@ -36,9 +36,15 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
     spell->_id = static_cast<SpellId>(dsc->id);
     spell->_range = dsc->range;
 
-    for ( auto& effectDsc : dsc->effects )
+    for ( auto& pair : dsc->effects )
     {
-      spell->_effects.push_back( Effect::create(effectDsc) );
+      std::vector<EffectPtr> effects;
+      for ( auto effectDsc : pair.second )
+      {
+        effects.push_back( Effect::create(effectDsc) );
+      }
+
+      spell->_effects.insert( std::make_pair(pair.first, effects) );
     }
 
     spell->_animation = animation::Animation::create( dsc->animation  );
@@ -59,9 +65,14 @@ SpellPtr Spell::clone()
   cloned->_animation  = _animation->clone();
   cloned->_range      = _range;
 
-  for ( auto e : _effects )
+  for ( auto& pair : _effects )
   {
-    cloned->_effects.push_back( e->clone() );
+    std::vector<EffectPtr> clonedEffects;
+    for( auto e : pair.second )
+    {
+      clonedEffects.push_back( e->clone() );
+    }
+    cloned->_effects.insert( std::make_pair(pair.first, clonedEffects) );
   }
 
   return cloned;
@@ -77,7 +88,7 @@ bool Spell::cast(ActorPtr caster, Target target)
     _animation->run(*TCODConsole::root);
   }
 
-  for ( auto effect : _effects )
+  for ( auto effect : getEffectsFor( caster ) )
   {
     success &= effect->apply(caster, target);
     //TODO : revoke applied effect if any failed
@@ -113,6 +124,19 @@ TargetType Spell::getTargetType() const
 int Spell::getRange() const
 {
   return _range;
+}
+
+std::vector<EffectPtr> Spell::getEffectsFor(ActorPtr actor)
+{
+  CharacterPtr character = actor->getFeature<Character>();
+  if ( character )
+  {
+    for(auto it = _effects.rbegin(); it != _effects.rend(); ++it )
+    {
+     if ( it->first <= character->getLevel() ) return it->second;
+    }
+  }
+  return std::vector<EffectPtr>{};
 }
 
 }

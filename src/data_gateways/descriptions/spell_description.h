@@ -2,6 +2,7 @@
 #define SPELL_DESCRIPTION
 
 #include <memory>
+#include <set>
 #include <vector>
 #include <description.h>
 #include <effect_description.h>
@@ -29,7 +30,7 @@ struct SpellDescription : Description
   int range;
   int id;
 
-  std::vector<EffectDescriptionPtr> effects;
+  std::set< std::pair<int, std::vector<EffectDescriptionPtr> > > effects;
   AnimationDescriptionPtr animation;
 };
 
