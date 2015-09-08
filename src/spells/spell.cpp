@@ -6,8 +6,6 @@
 
 namespace amarlon {
 
-SpellGateway Spell::Gateway;
-
 Spell::Spell()
   : _name("No name")
   , _class(CharacterClass::NoClass)

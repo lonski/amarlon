@@ -8,8 +8,6 @@
 #include <stdexcept>
 #include <libtcod.hpp>
 #include <map_id.h>
-#include <tile_db.h>
-#include <map_gateway.h>
 #include <container.h>
 #include <directions.h>
 #include <tile.h>
@@ -34,9 +32,6 @@ public:
   typedef std::vector< std::vector<Tile> > TileMatrix;
   typedef std::vector<Tile> TileRow;
 
-  static TileDB Tiles;
-  static MapGateway Gateway;
-
   Map(u32 width, u32 height, MapId id = MapId::Null);
   virtual ~Map();
 
@@ -55,12 +50,11 @@ public:
   virtual void performActionOnActors(std::function<void(ActorPtr)> func);
 
   virtual void render(TCODConsole* console);
-  virtual void updateActorCell(ActorPtr actor);
+  virtual void updateTile(u32 x, u32 y);
 
   virtual void computeFov(int x, int y, int radius);
   virtual void deserializeTiles(std::vector<unsigned char> tiles);
   std::vector<unsigned char> serializeTiles();
-  TCODMap& getCODMap();
 
   virtual TCODColor getColor(u32 x, u32 y);
   virtual char getChar(u32 x, u32 y);
@@ -86,9 +80,9 @@ private:
   Tile& getTile(u32 x, u32 y);
   void dateMapCoords(u32 x, u32 y);
   void renderTile(u32 x, u32 y, TCODConsole *console);
-  void renderActorsOnTile(u32 x, u32 y, TCODConsole *console);
   void validateMapCoords(u32 x, u32 y);
   void updateTiles();
+  void updateTile(Tile &tile);
 
 };
 

@@ -4,6 +4,8 @@
 #include <utils.h>
 #include <character_factory.h>
 #include <spell.h>
+#include <spell_gateway.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -204,7 +206,7 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_speed = dsc->speed;
     for(auto id : dsc->spells )
     {
-      character->_spells.insert( Spell::Gateway.fetch(id) );
+      character->_spells.insert( Engine::instance().getSpellGateway().fetch(id) );
     }
   }
 }

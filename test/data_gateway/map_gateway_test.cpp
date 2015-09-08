@@ -1,7 +1,10 @@
 #include "gtest/gtest.h"
 #include <memory>
 #include "data_gateways/map_gateway.h"
-#include "world/map.h"
+#include <map.h>
+#include <engine.h>
+#include <configuration.h>
+#include <tile_db.h>
 
 namespace amarlon {
 
@@ -27,22 +30,30 @@ TEST(MapGatewayTest, fetchExistingMap_givesMap)
 
 TEST(MapGatewayTest, mapHasValidTiles)
 {
-  Map::Tiles.loadTiles("data/tiles.xml");
+  Configuration cfg;
+  ASSERT_TRUE( cfg.load("config.cfg") );
+
+  Engine::instance().prologue(&cfg);
+
   MapGateway gateway;
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
-  ASSERT_EQ(map->getChar(39,27), Map::Tiles.getChar(TileType::PlainFloor));
+  ASSERT_EQ(map->getChar(39,27), Engine::instance().getTileDB().getChar(TileType::PlainFloor));
 }
 
 TEST(MapGatewayTest, mapHasValidTiles2)
 {
-  Map::Tiles.loadTiles("data/tiles.xml");
+  Configuration cfg;
+  ASSERT_TRUE( cfg.load("config.cfg") );
+
+  Engine::instance().prologue(&cfg);
+
   MapGateway gateway;
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
-  ASSERT_EQ(map->getChar(1,1), Map::Tiles.getChar(TileType::Tree));
+  ASSERT_EQ(map->getChar(1,1), Engine::instance().getTileDB().getChar(TileType::Tree));
 }
 
 TEST(MapGatewayTest, saveMaps)

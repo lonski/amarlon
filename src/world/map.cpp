@@ -8,9 +8,6 @@
 
 namespace amarlon {
 
-TileDB Map::Tiles;
-MapGateway Map::Gateway;
-
 using namespace std;
 
 Map::Map(u32 width, u32 height, MapId id)
@@ -50,20 +47,7 @@ bool Map::isInFov(int x, int y)
 
 bool Map::isBlocked(int x, int y)
 {
-  bool terrianBlocks = !_codMap.isWalkable(x,y);
-  bool actorBlocks = false;
-
-  Tile& tile = getTile(x, y);
-  for(ActorPtr actor : tile.actors->content())
-  {
-    if ( actor->blocks() )
-    {
-      actorBlocks = true;
-      break;
-    }
-  }
-
-  return terrianBlocks || actorBlocks;
+  return !_codMap.isWalkable(x,y);
 }
 
 void Map::addActor(ActorPtr actor)
@@ -73,13 +57,6 @@ void Map::addActor(ActorPtr actor)
   Tile& tile = getTile(x, y);
 
   if ( !tile.actors->add(actor) ) throw amarlon_exeption("Failed to add actor to tile!");
-
-  //update transparency
-  if ( _codMap.isTransparent(x,y) && !actor->isTransparent() )
-  {
-    _codMap.setProperties(x,y, false, _codMap.isWalkable(x,y));
-  }
-
   actor->setMap( shared_from_this() );
 }
 
@@ -139,53 +116,61 @@ void Map::render(TCODConsole *console)
     for(u32 x = 0; x < _width; ++x)
     {
       renderTile(x, y, console);
-      renderActorsOnTile(x, y, console);
     }
   }
 }
 
 void Map::renderTile(u32 x, u32 y, TCODConsole *console)
 {
-    bool inFov = isInFov(x,y);
-    bool explored = isExplored(x,y);
+  TCODColor     color      = TCODColor::black;
+  unsigned char character  = ' ';
 
-    if (inFov || explored)
-    {
-      TCODColor col = ( inFov ? getColor(x,y) : (getColor(x,y) * 0.6));
-      console->setChar(x, y, getChar(x, y) );
-      console->setCharForeground(x,y,col);
-    }
+  if ( isInFov(x,y) )         //Tile is in the field of view
+  {
+    Tile&    tile  = getTile(x, y);
+    ActorPtr actor = tile.top();
+
+    color     = actor ? actor->getColor() : tile.getColor();
+    character = actor ? actor->getChar()  : tile.getChar();
+    updateTile(tile);
+  }
+  else if ( isExplored(x,y) ) //Tile is beyond the 'fog of war'
+  {
+    Tile&    tile  = getTile(x, y);
+    ActorPtr actor = tile.top([](ActorPtr a){ return !a->isFovOnly(); });
+
+    color     = actor ? actor->getColor() : tile.getColor() * 0.6;
+    character = actor ? actor->getChar()  : tile.getChar();
+  }
+
+  console->setChar( x, y, character );
+  console->setCharForeground( x, y, color );
 }
 
-void Map::renderActorsOnTile(u32 x, u32 y, TCODConsole *console)
+void Map::updateTiles()
 {
-    Tile& tile = getTile(x, y);
-
-    tile.actors->sort([](ActorPtr a1, ActorPtr a2)
-                      {
-                        return a1->getTileRenderPriority() > a2->getTileRenderPriority();
-                      });
-
-    for (auto actor : tile.actors->content())
+  for ( auto row : _tiles )
+  {
+    for ( auto tile : row )
     {
-      bool inFov = isInFov(actor->getX(), actor->getY());
-      bool onlyInFov = actor->isFovOnly();
-      bool explored = isExplored(actor->getX(), actor->getY());
-
-      if (inFov || (!onlyInFov && explored) )
-      {
-        console->putChar(actor->getX(), actor->getY(), actor->getChar());
-        console->setCharForeground(actor->getX(), actor->getY(), actor->getColor());
-      }
+      updateTile(tile);
     }
+  }
 }
 
-void Map::updateActorCell(ActorPtr actor)
+void Map::updateTile(Tile& tile)
 {
-  _codMap.setProperties(actor->getX(),
-                       actor->getY(),
-                       actor->isTransparent(),
-                       _codMap.isWalkable(actor->getX(), actor->getY()));
+  ActorPtr actor = tile.top();
+
+  bool walkable    = actor ? tile.isWalkable() && !actor->blocks() : tile.isWalkable();
+  bool transparent = actor ? actor->isTransparent()                : tile.isTransparent();
+
+  _codMap.setProperties( tile.x, tile.y, transparent, walkable );
+}
+
+void Map::updateTile(u32 x, u32 y)
+{
+  updateTile( getTile(x, y) );
 }
 
 void Map::computeFov(int x, int y, int radius)
@@ -201,24 +186,9 @@ void Map::deserializeTiles(std::vector<unsigned char> tiles)
 
     Tile& tile = getTile(serialized->x, serialized->y);
     tile.deserialize( *serialized );
-    tile.update(this);
   }
-}
 
-void Map::updateTiles()
-{
-  for ( auto row : _tiles )
-  {
-    for ( auto tile : row )
-    {
-      tile.update(this);
-
-      for ( ActorPtr actor : tile.actors->content() )
-      {
-        updateActorCell(actor);
-      }
-    }
-  }
+  updateTiles();
 }
 
 std::vector<unsigned char> Map::serializeTiles()
@@ -240,19 +210,14 @@ std::vector<unsigned char> Map::serializeTiles()
   return v;
 }
 
-TCODMap &Map::getCODMap()
-{
-  return _codMap;
-}
-
 TCODColor Map::getColor(u32 x, u32 y)
 {
-  return Map::Tiles.getColor(getTile(x,y).type);
+  return getTile(x, y).getColor();
 }
 
 char Map::getChar(u32 x, u32 y)
 {
-  return Map::Tiles.getChar(getTile(x,y).type);
+  return getTile(x, y).getChar();
 }
 
 Tile& Map::getTile(u32 x, u32 y)

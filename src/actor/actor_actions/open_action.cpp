@@ -27,7 +27,7 @@ bool OpenAction::perform(ActorPtr performer)
         MapPtr map = _toOpen->getMap();
         if ( map )
         {
-          map->updateActorCell(_toOpen);
+          map->updateTile( _toOpen->getX(), _toOpen->getY() );
         }
         opened = true;
       }

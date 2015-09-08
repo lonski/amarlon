@@ -1,10 +1,10 @@
 #include <iostream>
 #include <stdexcept>
-#include "engine.h"
-#include "world/map.h"
-#include "gui/gui.h"
-#include "gui/message_box.h"
-#include "utils/configuration.h"
+#include <engine.h>
+#include <map.h>
+#include <gui.h>
+#include <message_box.h>
+#include <configuration.h>
 
 using namespace std;
 
@@ -33,7 +33,7 @@ int main()
     {
       try
       {
-        amarlon::Engine::instance().update();
+        amarlon::Engine::instance().update();        
         amarlon::Engine::instance().render();
         TCODConsole::root->flush();
 

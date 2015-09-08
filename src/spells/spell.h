@@ -7,7 +7,6 @@
 #include <target_type.h>
 #include <spell_description.h>
 #include <spell_id.h>
-#include <spell_gateway.h>
 
 namespace amarlon {
 
@@ -26,8 +25,6 @@ namespace animation {
 class Spell
 {
 public:
-
-  static SpellGateway Gateway;
 
   Spell();
   virtual ~Spell();

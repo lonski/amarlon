@@ -3,21 +3,30 @@
 #include <map.h>
 #undef private
 #include <actor.h>
+#include <map_gateway.h>
+#include <engine.h>
+#include <configuration.h>
 
 namespace amarlon {
 
 class MapTest : public ::testing::Test
 {
   virtual void SetUp()
-  {
-    Map::Tiles.loadTiles("data/tiles.xml");
-    Actor::DB.loadActors("data/actors.xml");
-    Map::Gateway.load("data/maps.xml");
+  {    
+    cfg.load("config.cfg");
+    Engine::instance().prologue(&cfg);
+
+    mapGateway.load("data/maps.xml");
   }
 
   virtual void TearDown()
   {
   }
+
+protected:
+  MapGateway mapGateway;
+  Configuration cfg;
+
 };
 
 TEST_F(MapTest, mapCreation)
@@ -52,7 +61,7 @@ TEST_F(MapTest, mapIsInFov_computed)
 
 TEST_F(MapTest, addActor)
 {
-  MapPtr map = Map::Gateway.fetch(MapId::GameStart);
+  MapPtr map = mapGateway.fetch(MapId::GameStart);
   ActorPtr actor = Actor::create(ActorType::HealthPotion,1,1);
 
   map->addActor(actor);

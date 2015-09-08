@@ -3,7 +3,8 @@
 
 namespace amarlon {
 
-World::World()
+World::World(MapGatewayPtr mapGateway)
+  : _mapGateway(mapGateway)
 {
 }
 
@@ -27,7 +28,7 @@ MapPtr World::fetch(MapId id)
   }
   else
   {
-    map = Map::Gateway.fetch(id);
+    map = _mapGateway->fetch(id);
     _maps.insert( std::make_pair(id, map) );
   }
 

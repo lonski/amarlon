@@ -6,6 +6,10 @@
 #include <spell.h>
 #include <utils/configuration.h>
 #include <utils/messenger.h>
+#include <spell_gateway.h>
+#include <world.h>
+#include <command_executor.h>
+#include <tile_db.h>
 
 namespace amarlon {
 
@@ -19,6 +23,8 @@ int Engine::screenHeight = 60 + Engine::bottomPanelHeight;
 
 Engine::Engine()
   : _config(nullptr)
+  , _spellGateway(new SpellGateway )
+  , _tileDB( new TileDB )
 {
 }
 
@@ -40,15 +46,13 @@ void Engine::prologue(Configuration* cfg)
   Engine::screenWidth       = Engine::consoleWidth + Engine::rightPanelWidth;
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
 
-  Map::Tiles.loadTiles( cfg->get("tiles_file") );
   Actor::DB.loadActors( cfg->get("actors_file") );
-  Map::Gateway.load( cfg->get("maps_file") );
-  Spell::Gateway.load( cfg->get("spells_file") );
 
+  getTileDB().loadTiles( cfg->get("tiles_file") );
+  getSpellGateway().load( cfg->get("spells_file") );
+
+  initializeWorld();
   Messenger::message()->setGui(_gui.get());
-
-  getWorld().load( cfg->get("save_file") );
-  getWorld().changeMap( MapId::GameStart );
 
   if ( Actor::Player == nullptr )
   {
@@ -57,9 +61,20 @@ void Engine::prologue(Configuration* cfg)
   }
 }
 
+void Engine::initializeWorld()
+{
+  assert(_config);
+
+  MapGatewayPtr mapGateway( new MapGateway );
+  mapGateway->load( _config->get("maps_file") );
+
+  _world.reset( new World(mapGateway) );
+  _world->load( _config->get("save_file") );
+  _world->changeMap( MapId::GameStart );
+}
+
 void Engine::epilogue()
 {
-  Spell::Gateway.store( "d:\\spells_xxx.xml" );
   getWorld().store( _config->get("save_file") );
 }
 
@@ -123,9 +138,19 @@ gui::WindowManager& Engine::windowManager() const
   return *_windowManager;
 }
 
-World& Engine::getWorld()
+World& Engine::getWorld() const
 {
-  return _world;
+  return *_world;
+}
+
+SpellGateway& Engine::getSpellGateway() const
+{
+  return *_spellGateway;
+}
+
+TileDB &Engine::getTileDB() const
+{
+  return *_tileDB;
 }
 
 std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()

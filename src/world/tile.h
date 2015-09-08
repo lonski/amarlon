@@ -2,16 +2,17 @@
 #define TILE_H
 
 #include <memory>
-#include <string>
 #include <vector>
 #include <tile_type.h>
-#include <iostream>
+#include <libtcod.hpp>
 
 namespace amarlon {
 
 class Container;
 class Map;
+class Actor;
 typedef std::shared_ptr<Container> ContainerPtr;
+typedef std::shared_ptr<Actor> ActorPtr;
 
 struct SerializedTile
 {
@@ -28,6 +29,9 @@ struct Tile
 
   bool explored;
   TileType type;
+
+  // instead of vector mainly because of 'add' function - managing actor stacking
+  // TODO: refactor to use rather a vector and Tile::add function
   ContainerPtr actors;
   uint32_t x;
   uint32_t y;
@@ -36,9 +40,26 @@ struct Tile
   Tile(const Tile& tile);
   Tile& operator=(const Tile& rhs);
 
-  void update(Map *map);
   std::vector<unsigned char> serialize();
   void deserialize(const SerializedTile& t);
+
+  /**
+   * @return Returns Actor with the highest tile render piority
+   */
+  ActorPtr top(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
+
+  /**
+   * @return The tile color, basing on the Tile DB
+   */
+  TCODColor getColor();
+
+  /**
+   * @return The character representing this tile, basing on the Tile DB
+   */
+  char getChar();
+
+  bool isWalkable() const;
+  bool isTransparent() const;
 
 };
 

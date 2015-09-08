@@ -28,7 +28,7 @@ bool CloseAction::perform(ActorPtr performer)
         MapPtr map = _toClose->getMap();
         if ( map )
         {
-          map->updateActorCell(_toClose);
+          map->updateTile( _toClose->getX(), _toClose->getY() );
         }
         closed = true;
       }

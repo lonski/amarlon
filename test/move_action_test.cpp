@@ -2,6 +2,8 @@
 #include <actor.h>
 #include <move_action.h>
 #include <map.h>
+#include <configuration.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -14,13 +16,15 @@ public:
 
   virtual void SetUp()
   {
-    Actor::DB.loadActors("data/actors.xml");
-    Map::Tiles.loadTiles("data/tiles.xml");
+    cfg.load("config.cfg");
+    Engine::instance().prologue(&cfg);
   }
   virtual void TearDown()
   {
   }
 
+protected:
+  Configuration cfg;
 };
 
 TEST_F(MoveActionTest, actorWithoutMap)

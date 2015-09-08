@@ -3,6 +3,7 @@
 #include <spell_description.h>
 #include <spell_parser.h>
 #include <xml/rapidxml.hpp>
+#include <spell_gateway.h>
 
 using namespace rapidxml;
 
@@ -16,21 +17,24 @@ public:
 
   virtual void SetUp()
   {
-    Spell::Gateway.load("data/spells.xml");
+    gateway.load("data/spells.xml");
   }
+
+protected:
+  SpellGateway gateway;
 
 };
 
 TEST_F(SpellTest, gatewayFetch)
 {
-  SpellPtr spell = Spell::Gateway.fetch(SpellId::CureLightWounds);
+  SpellPtr spell = gateway.fetch(SpellId::CureLightWounds);
   ASSERT_FALSE( spell == nullptr );
   EXPECT_EQ( spell->getLevel(), 1 );
 }
 
 TEST_F(SpellTest, gatewayStore)
 {
-  Spell::Gateway.store("test_spells.xml");
+  gateway.store("test_spells.xml");
 }
 
 TEST_F(SpellTest, spell_from_empty_description)

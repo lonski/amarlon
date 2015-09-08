@@ -1,9 +1,9 @@
 #include "tile.h"
 #include <container.h>
-#include <string>
-#include <sstream>
-#include <map.h>
 #include <cstring>
+#include <actor.h>
+#include <tile_db.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -33,16 +33,6 @@ Tile &Tile::operator=(const Tile &rhs)
   return *this;
 }
 
-void Tile::update(Map* map)
-{
-  if ( map != nullptr )
-  {
-    bool walkable = Map::Tiles.isWalkable(type);
-    bool transparent = Map::Tiles.isTransparent(type);
-    map->getCODMap().setProperties(x,y,transparent, walkable);
-  }
-}
-
 std::vector<unsigned char> Tile::serialize()
 {
   SerializedTile t;
@@ -62,6 +52,43 @@ void Tile::deserialize(const SerializedTile &t)
   type = static_cast<TileType>(t.type);
   x = t.x;
   y = t.y;
+}
+
+ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun)
+{
+  if ( !actors->empty() )
+  {
+    //todo: move to add() function after its implementation or something else to not sort every time
+    actors->sort([](ActorPtr a1, ActorPtr a2)
+                    {
+                      return a1->getTileRenderPriority() > a2->getTileRenderPriority();
+                    });
+
+    auto filtered = actors->content(&filterFun);
+
+    return filtered.empty() ? nullptr : filtered.front();
+  }
+  return nullptr;
+}
+
+TCODColor Tile::getColor()
+{
+  return Engine::instance().getTileDB().getColor(type);
+}
+
+char Tile::getChar()
+{
+  return Engine::instance().getTileDB().getChar(type);
+}
+
+bool Tile::isWalkable() const
+{
+  return Engine::instance().getTileDB().isWalkable(type);
+}
+
+bool Tile::isTransparent() const
+{
+  return Engine::instance().getTileDB().isTransparent(type);
 }
 
 }

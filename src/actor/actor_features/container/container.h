@@ -4,15 +4,14 @@
 #include <memory>
 #include <vector>
 #include <list>
-#include <string>
-#include <functional>
 #include <actor_feature.h>
-#include <actor_descriptions.h>
 
 namespace amarlon {
 
 class Actor;
 class Container;
+struct Description;
+typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::shared_ptr<Container> ContainerPtr;
 
@@ -37,6 +36,7 @@ public:
   bool remove(ActorPtr actor);
   std::vector<ActorPtr> content(std::function<bool(ActorPtr)>* filterFun = nullptr);
   size_t size() const;
+  bool empty() const;
   void performActionOnActors(std::function<void(ActorPtr)> fun);
   void sort(std::function<bool(ActorPtr, ActorPtr)> pred);
 

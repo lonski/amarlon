@@ -1,8 +1,9 @@
 #include "container.h"
 #include <algorithm>
 #include <iostream>
-#include "actor/actor.h"
-#include "amarlon_except.h"
+#include <actor.h>
+#include <amarlon_except.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 
@@ -166,6 +167,11 @@ std::vector<ActorPtr> Container::content(std::function<bool(ActorPtr)>* filterFu
 size_t Container::size() const
 {
   return _inventory.size();
+}
+
+bool Container::empty() const
+{
+  return _inventory.empty();
 }
 
 void Container::performActionOnActors(std::function<void(ActorPtr)> fun)

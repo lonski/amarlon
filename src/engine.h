@@ -4,17 +4,24 @@
 #include <libtcod.hpp>
 #include <singleton.h>
 #include <colored_string.h>
-#include <command_executor.h>
 #include <window_manager.h>
-#include <world.h>
 
 namespace amarlon {
 
 class Configuration;
 class Map;
 class Actor;
+class SpellGateway;
+class World;
+class CommandExecutor;
+class MapGateway;
+class TileDB;
 
 typedef std::shared_ptr<Map> MapPtr;
+typedef std::shared_ptr<SpellGateway> SpellGatewayPtr;
+typedef std::shared_ptr<World> WorldPtr;
+typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
+typedef std::shared_ptr<TileDB> TileDBPtr;
 
 namespace gui {
   class Gui;
@@ -47,17 +54,23 @@ public:
   gui::Gui& gui() const;
   gui::WindowManager& windowManager() const;
 
-  World& getWorld();
+  World& getWorld() const;
+  SpellGateway& getSpellGateway() const;
+  TileDB& getTileDB() const;
 
-private:  
+private:
   gui::GuiPtr _gui;
   CommandExecutorPtr _cmdExecutor;
   gui::WindowManagerPtr _windowManager;
   Configuration* _config;
-  World _world;
+
+  WorldPtr _world;
+  SpellGatewayPtr _spellGateway;
+  TileDBPtr _tileDB;
 
   void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();
+  void initializeWorld();
 
 };
 

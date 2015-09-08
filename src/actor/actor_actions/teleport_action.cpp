@@ -1,6 +1,7 @@
 #include "teleport_action.h"
 #include <actor.h>
 #include <map.h>
+#include <world.h>
 #include <engine.h>
 
 namespace amarlon {

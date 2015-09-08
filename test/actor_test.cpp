@@ -11,14 +11,13 @@ class ActorTest : public ::testing::Test
 {
   virtual void SetUp()
   {
-    Map::Tiles.loadTiles("data/tiles.xml");
-    Actor::DB.loadActors("data/actors.xml");
-    Map::Gateway.load("data/maps.xml");
+    Actor::DB.loadActors("data/actors.xml");    
   }
 
   virtual void TearDown()
   {
   }
+
 
 };
 

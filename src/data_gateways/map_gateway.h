@@ -34,6 +34,8 @@ protected:
 
 };
 
+typedef std::shared_ptr<MapGateway> MapGatewayPtr;
+
 }
 
 #endif // MAPGATEWAY_H
