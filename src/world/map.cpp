@@ -5,6 +5,7 @@
 #include <actor_action.h>
 #include <utils.h>
 #include <libtcod.hpp>
+#include <tile.h>
 
 namespace amarlon {
 
@@ -33,14 +34,14 @@ Map::~Map()
 
 bool Map::isExplored(int x, int y)
 {
-  return getTile(x,y).explored;
+  return getTile(x,y).isExplored();
 }
 
 bool Map::isInFov(int x, int y)
 {
   bool inFov = _codMap.isInFov(x,y);
 
-  if (inFov) getTile(x,y).explored = true;
+  if (inFov) getTile(x,y).setExplored(true);
 
   return inFov;
 }

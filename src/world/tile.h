@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <stdint.h>
 #include <tile_type.h>
 #include <libtcod.hpp>
 
@@ -16,10 +17,11 @@ typedef std::shared_ptr<Actor> ActorPtr;
 
 struct SerializedTile
 {
-  bool explored;
-  int type;
-  uint32_t x;
-  uint32_t y;
+  uint8_t type;
+  uint8_t flags;
+  uint8_t x;
+  uint8_t y;
+  uint8_t reserverd[4];
 };
 
 struct Tile
@@ -27,26 +29,25 @@ struct Tile
   constexpr static int defaultMonsterRenderPriority = 10;
   constexpr static int defaultItemRenderPriority = 20;
 
-  bool explored;
-  TileType type;
-
-  // instead of vector mainly because of 'add' function - managing actor stacking
-  // TODO: refactor to use rather a vector and Tile::add function
-  ContainerPtr actors;
-  uint32_t x;
-  uint32_t y;
-
   Tile(uint32_t x = 0, uint32_t y = 0);
   Tile(const Tile& tile);
   Tile& operator=(const Tile& rhs);
 
-  std::vector<unsigned char> serialize();
-  void deserialize(const SerializedTile& t);
+  // Instead of vector mainly because of 'add' function - managing actor stacking
+  // TODO: Refactor to use rather a vector and Tile::add function
+  ContainerPtr actors;
 
-  /**
-   * @return Returns Actor with the highest tile render piority
-   */
-  ActorPtr top(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
+  //TODO: Rethink if the coords should be here here.
+  //      How to remove it and deserialize tiles?
+  //      Maybe serialize each row separately in xml?
+  uint32_t x;
+  uint32_t y;
+
+  bool isWalkable() const;
+  bool isTransparent() const;
+  bool isExplored() const;
+  void setExplored(bool explored);
+  TileType getType() const;
 
   /**
    * @return The tile color, basing on the Tile DB
@@ -58,8 +59,17 @@ struct Tile
    */
   char getChar();
 
-  bool isWalkable() const;
-  bool isTransparent() const;
+  /**
+   * @return Returns Actor with the highest tile render piority
+   */
+  ActorPtr top(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
+
+  std::vector<unsigned char> serialize();
+  void deserialize(const SerializedTile& t);
+
+private:
+  uint8_t _flags;
+  TileType _type;
 
 };
 

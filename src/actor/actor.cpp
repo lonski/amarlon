@@ -3,6 +3,7 @@
 #include <iostream>
 #include <actor_action.h>
 #include <utils.h>
+#include <tile.h>
 
 namespace amarlon {
 

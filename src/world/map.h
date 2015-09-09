@@ -10,7 +10,6 @@
 #include <map_id.h>
 #include <container.h>
 #include <directions.h>
-#include <tile.h>
 
 namespace amarlon {
 
@@ -19,6 +18,7 @@ typedef unsigned int u32;
 class Actor;
 class ActorAction;
 class Map;
+struct Tile;
 
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::shared_ptr<Container> ContainerPtr;

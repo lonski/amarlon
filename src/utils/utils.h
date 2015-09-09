@@ -143,6 +143,18 @@ static inline bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy)
   return handled;
 }
 
+template<typename T>
+void setBit(T& var, int n, bool value)
+{
+  var ^= (-value ^ var) & (1 << n);
+}
+
+template<typename T>
+bool isBitSet(T& var, int n)
+{
+  return (var >> n) & 1;
+}
+
 std::string getItemNameAndAmount(ActorPtr a);
 
 }
