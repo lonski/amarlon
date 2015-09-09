@@ -1,9 +1,9 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include <iostream>
 #include <libtcod.hpp>
-#include "actor/actor.h"
+#include <actor.h>
+#include <memory>
 
 namespace amarlon {
 
@@ -24,6 +24,9 @@ enum class CommandId
   End
 };
 
+class Command;
+typedef std::shared_ptr<Command> CommandPtr;
+
 /**
  * @brief Command represent an user's input.
  */
@@ -32,7 +35,7 @@ class Command
 public:
   Command() = default;
   virtual ~Command() {}
-  static Command* create(CommandId cmd);
+  static CommandPtr create(CommandId cmd);
 
   /**
    * @return True if given key is matching the command

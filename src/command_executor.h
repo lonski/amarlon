@@ -12,6 +12,7 @@ class Actor;
 class Map;
 class Engine;
 class Command;
+typedef std::shared_ptr<Command> CommandPtr;
 
 class CommandExecutor
 {
@@ -20,7 +21,7 @@ public:
   bool execute(TCOD_key_t &key);
 
 private:
-  std::vector<Command*> _commands;
+  std::vector<CommandPtr> _commands;
 
 };
 

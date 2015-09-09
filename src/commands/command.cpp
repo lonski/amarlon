@@ -13,23 +13,23 @@
 
 namespace amarlon {
 
-Command *Command::create(CommandId cmd)
+CommandPtr Command::create(CommandId cmd)
 {
-  Command* c = NULL;
+  CommandPtr c;
 
   switch(cmd)
   {
-    case CommandId::Move: c = new CmdMoveOrAttack; break;
-    case CommandId::Open: c = new CmdOpen; break;
-    case CommandId::FullScreen: c = new CmdFullscreen; break;
-    case CommandId::Inventory: c = new CmdInventory; break;
-    case CommandId::Pick: c = new CmdPick; break;
-    case CommandId::Close: c = new CmdClose; break;
-    case CommandId::Use: c = new CmdUse; break;
-    case CommandId::Help: c = new CmdHelp; break;
-    case CommandId::PutInto: c = new CmdPutInto; break;
-    case CommandId::Look: c = new CmdLook; break;
-    case CommandId::Cast: c = new CmdCast; break;
+    case CommandId::Move:       c.reset( new CmdMoveOrAttack ); break;
+    case CommandId::Open:       c.reset( new CmdOpen         ); break;
+    case CommandId::FullScreen: c.reset( new CmdFullscreen   ); break;
+    case CommandId::Inventory:  c.reset( new CmdInventory    ); break;
+    case CommandId::Pick:       c.reset( new CmdPick         ); break;
+    case CommandId::Close:      c.reset( new CmdClose        ); break;
+    case CommandId::Use:        c.reset( new CmdUse          ); break;
+    case CommandId::Help:       c.reset( new CmdHelp         ); break;
+    case CommandId::PutInto:    c.reset( new CmdPutInto      ); break;
+    case CommandId::Look:       c.reset( new CmdLook         ); break;
+    case CommandId::Cast:       c.reset( new CmdCast         ); break;
     default: break;
   }
 
