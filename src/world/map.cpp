@@ -57,24 +57,23 @@ void Map::addActor(ActorPtr actor)
   u32 y( actor->getY() );
   Tile& tile = getTile(x, y);
 
-  if ( !tile.actors->add(actor) ) throw amarlon_exeption("Failed to add actor to tile!");
+  tile.actors->push_back(actor);
   actor->setMap( shared_from_this() );
 }
 
 ActorPtr Map::getFirstActor(int x, int y)
 {
-  Tile& tile = getTile(x, y);
-  return tile.actors->size() > 0 ? tile.actors->content().front() : nullptr;
+  return getTile(x, y).top();
 }
 
-std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool (amarlon::ActorPtr)>* filterFun)
+std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)> filterFun)
 {
   std::vector<ActorPtr> r;
   Tile& tile = getTile(x, y);
 
-  for ( auto a : tile.actors->content() )
+  for ( ActorPtr a : *tile.actors )
   {
-    if ( filterFun == nullptr || (*filterFun)(a))
+    if ( filterFun(a) )
     {
       r.push_back(a);
     }
@@ -91,7 +90,7 @@ std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)>* filterFun)
   {
     for(auto& tile : tileRow)
     {
-      for (auto a : tile.actors->content() )
+      for (ActorPtr a : *tile.actors )
       {
         if ( filterFun == nullptr || (*filterFun)(a))
         {
@@ -306,18 +305,16 @@ MapPtr Map::clone()
   return cloned;
 }
 
-ContainerPtr Map::getActorsContainer(u32 x, u32 y)
-{
-  return getTile(x,y).actors;
-}
-
 void Map::performActionOnActors(std::function<void(ActorPtr )> func)
 {
   for(auto& tileRow : _tiles)
   {
     for(auto& tile : tileRow)
     {
-      tile.actors->performActionOnActors( func );
+      for( auto a : *tile.actors )
+      {
+        func(a);
+      }
     }
   }
 

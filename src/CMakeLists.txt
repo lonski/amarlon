@@ -106,6 +106,7 @@ set(HEADER_FILES
     utils/base64.h
     utils/target.h
     utils/damage.h
+    utils/actor_container.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -229,6 +230,7 @@ set(SOURCE_FILES
     utils/text_formater.cpp
     utils/base64.cpp
     utils/damage.cpp
+    utils/actor_container.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp

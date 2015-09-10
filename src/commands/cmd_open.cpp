@@ -23,7 +23,7 @@ void CmdOpen::execute()
   std::function<bool (amarlon::ActorPtr)> filterFun = [](ActorPtr a)->bool{ return a->getFeature<Openable>() != nullptr; };
 
   ActorPtr toOpen = SingleNeighbourSelector("Select object to open...")
-                    .select(&filterFun)
+                    .select(filterFun)
                     .firstActor();
 
   if ( toOpen != nullptr)

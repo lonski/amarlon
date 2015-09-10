@@ -12,7 +12,7 @@ SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMes
 {
 }
 
-Target SingleNeighbourSelector::select(std::function<bool (amarlon::ActorPtr)>* filterFun)
+Target SingleNeighbourSelector::select(std::function<bool(ActorPtr)> filterFun)
 {
   Engine::instance().gui().setStatusMessage( _selectionMessage );
   TCODConsole::root->flush();

@@ -2,7 +2,6 @@
 #include <alabel_menu_item.h>
 #include <message_box.h>
 #include <amount_window.h>
-#include <container.h>
 #include <amarlon_except.h>
 #include <actor.h>
 #include <pickup_action.h>
@@ -25,8 +24,6 @@ AWindow& PickUpWindow::setDefaults()
   setWidth(40);
 
   _picker = nullptr;
-  _container = nullptr;
-  _filterFunc = [](ActorPtr){return true;};
 
   _afterPickUpAction = [](const std::string&, int){};
   _inventoryFullAction = [](const std::string&){ gui::msgBox("Inventory is full!", gui::MsgType::Error); };
@@ -45,7 +42,7 @@ void PickUpWindow::init()
 
 AWindow& PickUpWindow::show()
 {
-  if ( _picker && _container)
+  if ( _picker)
   {
     fillMenuWithItems();
 
@@ -100,7 +97,7 @@ void PickUpWindow::choose()
   if ( ActorPtr toPick = getSelectedActor() )
   {
     int amount = getAmountToPickUp(toPick);
-    if ( _picker->performAction( std::make_shared<PickUpAction>(toPick, amount, _container) ) )
+    if ( _picker->performAction( std::make_shared<PickUpAction>(toPick, amount, _removeFun )))
     {
       _afterPickUpAction( toPick->getName(), amount );
       fillMenuWithItems();
@@ -138,7 +135,7 @@ ActorPtr PickUpWindow::getSelectedActor()
 
 void PickUpWindow::fillMenuWithItems()
 {
-  _menu->fill<Actor>( _container->content(&_filterFunc), getItemNameAndAmount );
+  _menu->fill<Actor>( _sourceFun(), getItemNameAndAmount );
 }
 
 PickUpWindow& PickUpWindow::setPicker(ActorPtr picker)
@@ -147,15 +144,15 @@ PickUpWindow& PickUpWindow::setPicker(ActorPtr picker)
   return *this;
 }
 
-PickUpWindow& PickUpWindow::setContainer(ContainerPtr container)
+PickUpWindow& PickUpWindow::setSource(std::function<std::vector<ActorPtr>()> sourceFun)
 {
-  _container = container;
+  _sourceFun = sourceFun;
   return *this;
 }
 
-PickUpWindow& PickUpWindow::setFilterFunction(std::function<bool(ActorPtr)> fun)
+PickUpWindow &PickUpWindow::setRemoveAction(std::function<void(ActorPtr)> fun)
 {
-  _filterFunc = fun;
+  _removeFun = fun;
   return *this;
 }
 

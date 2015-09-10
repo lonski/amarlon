@@ -126,7 +126,7 @@ std::vector<ActorPtr > BodyManager::getEquipableItemsList(ItemSlotType slot)
     return a->hasFeature<Pickable>() && a->getFeature<Pickable>()->getItemSlot() == slot;
   };
 
-  return Actor::Player->getFeature<Container>()->content( &filterFun );
+  return Actor::Player->getFeature<Container>()->content( filterFun );
 }
 
 bool BodyManager::equipItem(ActorPtr toEquip)

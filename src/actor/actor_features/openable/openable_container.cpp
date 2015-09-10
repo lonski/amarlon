@@ -31,11 +31,16 @@ bool OpenableContainer::open(ActorPtr executor)
                   gui::MsgType::Error);
     };
 
+    auto sourceFun = [&](){ return getOwner().lock()->getFeature<Container>()->content
+                      (
+                        [](ActorPtr a)->bool{ return a && a->getFeature<Pickable>() != nullptr; }
+                      ); };
+
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(executor)
-                      .setContainer(getOwner().lock()->getFeature<Container>())
-                      .setFilterFunction( [](ActorPtr a){ return a && a->getFeature<Pickable>() != nullptr; } )
+                      .setSource( sourceFun )
+                      .setRemoveAction( [&](ActorPtr a){ getOwner().lock()->getFeature<Container>()->remove(a); } )
                       .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();

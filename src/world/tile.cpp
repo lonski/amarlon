@@ -1,5 +1,5 @@
 #include "tile.h"
-#include <container.h>
+#include <actor_container.h>
 #include <cstring>
 #include <actor.h>
 #include <tile_db.h>
@@ -11,7 +11,7 @@ namespace amarlon {
 const int TILE_EXPLORED_BIT = 1;
 
 Tile::Tile(uint32_t x, uint32_t y)
-  : actors( new Container(999) )
+  : actors(new ActorContainer )
   , x(x)
   , y(y)
   , _flags(0)
@@ -31,7 +31,7 @@ Tile &Tile::operator=(const Tile &rhs)
     x = rhs.x;
     y = rhs.y;
     _flags = rhs._flags;
-    actors = std::dynamic_pointer_cast<Container>( rhs.actors->clone() );
+    actors = rhs.actors->clone();
   }
   return *this;
 }
@@ -68,10 +68,9 @@ ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun)
                       return a1->getTileRenderPriority() > a2->getTileRenderPriority();
                     });
 
-    auto filtered = actors->content(&filterFun);
+    auto filtered = actors->filter(filterFun);
 
-    return filtered.empty() ? nullptr : filtered.front();
-  }
+    return filtered.empty() ? nullptr : filtered.front(); }
   return nullptr;
 }
 

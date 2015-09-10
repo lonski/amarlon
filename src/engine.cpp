@@ -165,7 +165,7 @@ std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
       return a != Actor::Player;
     };
 
-    std::vector<ActorPtr> actorsOnTile = map->getActors(Actor::Player->getX(), Actor::Player->getY(), &filterFun);
+    std::vector<ActorPtr> actorsOnTile = map->getActors(Actor::Player->getX(), Actor::Player->getY(), filterFun);
 
     for ( ActorPtr actor : actorsOnTile )
     {

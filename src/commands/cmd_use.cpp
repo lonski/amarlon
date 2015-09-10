@@ -67,7 +67,7 @@ std::vector<ActorPtr> CmdUse::getUsableItems()
                                            return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect();
                                          };
 
-  return Actor::Player->getFeature<Container>()->content(&filter);
+  return Actor::Player->getFeature<Container>()->content(filter);
 }
 
 }

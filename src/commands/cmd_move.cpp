@@ -43,7 +43,7 @@ ActorPtr CmdMoveOrAttack::getActorToAttack()
       return a->hasFeature<Character>() && a->getFeature<Character>()->isAlive();
     };
 
-    auto targets = map->getActors(targetX, targetY, &filterFun);
+    auto targets = map->getActors(targetX, targetY, filterFun);
     if ( !targets.empty() )
     {
       toAttack = targets.front();

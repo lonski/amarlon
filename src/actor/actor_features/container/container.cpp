@@ -149,13 +149,13 @@ bool Container::remove(ActorPtr actor)
   return found;
 }
 
-std::vector<ActorPtr> Container::content(std::function<bool(ActorPtr)>* filterFun)
+std::vector<ActorPtr> Container::content(std::function<bool(ActorPtr)> filterFun)
 {
   std::vector<ActorPtr> items;
 
   for (auto i : _inventory)
   {
-    if ( (filterFun == nullptr) || (filterFun && (*filterFun)(i)))
+    if ( filterFun(i) )
     {
       items.push_back(i);
     }

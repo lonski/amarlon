@@ -15,6 +15,7 @@ typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::shared_ptr<Container> ContainerPtr;
 
+// TODO: Rename to Inventory and adopt to use ActorContainer
 class Container : public ActorFeature
 {
 public:
@@ -34,7 +35,7 @@ public:
   bool add(ActorPtr actor);
   bool addFront(ActorPtr actor);
   bool remove(ActorPtr actor);
-  std::vector<ActorPtr> content(std::function<bool(ActorPtr)>* filterFun = nullptr);
+  std::vector<ActorPtr> content(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
   size_t size() const;
   bool empty() const;
   void performActionOnActors(std::function<void(ActorPtr)> fun);

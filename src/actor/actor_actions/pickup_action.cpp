@@ -3,10 +3,10 @@
 
 namespace amarlon{
 
-PickUpAction::PickUpAction(ActorPtr toPick, int amount, ContainerPtr sourceContainer)
+PickUpAction::PickUpAction(ActorPtr toPick, int amount, std::function<void(ActorPtr)> removeAction )
   : _toPick(toPick)
   , _amount(amount)
-  , _sourceContainer(sourceContainer)
+  , _removeAction(removeAction)
 {
 }
 
@@ -37,7 +37,7 @@ bool PickUpAction::perform(ActorPtr performer)
 
 ActorActionUPtr PickUpAction::clone()
 {
-  PickUpActionUPtr cloned = std::make_unique<PickUpAction>(_toPick, _amount, _sourceContainer);
+  PickUpActionUPtr cloned = std::make_unique<PickUpAction>(_toPick, _amount, _removeAction);
   cloned->_performer = _performer;
 
   return std::move(cloned);
@@ -68,7 +68,7 @@ bool PickUpAction::pickUpAll()
 
   if ( _performer->getFeature<Container>()->add(_toPick) )
   {
-    if ( _sourceContainer ) _sourceContainer->remove(_toPick);
+    _removeAction(_toPick);
     picked = true;
   }
 

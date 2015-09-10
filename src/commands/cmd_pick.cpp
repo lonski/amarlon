@@ -5,6 +5,7 @@
 #include <pick_up_window.h>
 #include <message_box.h>
 #include <messenger.h>
+#include <actor_container.h>
 
 namespace amarlon {
 
@@ -25,8 +26,6 @@ void CmdPick::execute()
   MapPtr map = Actor::Player->getMap();
   if ( map )
   {
-    ContainerPtr container = map->getActorsContainer(x, y);
-
     auto afterPickupAction =
     [](const std::string& item, int amount)
     {
@@ -42,8 +41,8 @@ void CmdPick::execute()
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(Actor::Player)
-                      .setContainer(container)
-                      .setFilterFunction( [](ActorPtr a){ return a->getFeature<Pickable>() != nullptr; } )
+                      .setSource( [&](){ return map->getActors( x, y, [](ActorPtr a){ return a->getFeature<Pickable>() != nullptr;}); } )
+                      .setRemoveAction([&](ActorPtr a){ map->removeActor(a); })
                       .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();

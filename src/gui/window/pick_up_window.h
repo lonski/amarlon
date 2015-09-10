@@ -10,8 +10,6 @@
 namespace amarlon {
 
 class Actor;
-class Container;
-typedef std::shared_ptr<Container> ContainerPtr;
 
 namespace gui {
 
@@ -32,14 +30,14 @@ public:
   PickUpWindow& setPicker(ActorPtr picker);
 
   /**
-   * @param container - a container from which the items will be pulled
+   * @param collection - a list of available items to choose
    */
-  PickUpWindow& setContainer(ContainerPtr container);
+  PickUpWindow& setSource(std::function<std::vector<ActorPtr>()> sourceFun);
 
   /**
-   * @param filterFunc - a function that filter the content of container
+   * @brief a function which will be called to remove actor from original container
    */
-  PickUpWindow& setFilterFunction(std::function<bool(ActorPtr)> fun);
+  PickUpWindow& setRemoveAction(std::function<void(ActorPtr)> fun);
 
   /**
    * @brief given function will be called each time item has been successfully picked
@@ -57,10 +55,10 @@ public:
 
 private:
   ActorPtr _picker;
-  ContainerPtr _container;
-  std::function<bool(ActorPtr)> _filterFunc;
+  std::function<std::vector<ActorPtr>()> _sourceFun;
 
   //actions
+  std::function<void(ActorPtr)> _removeFun;
   std::function<void(const std::string& itemName, int pickedAmount)> _afterPickUpAction;
   std::function<void(const std::string& itemName)> _inventoryFullAction;
 

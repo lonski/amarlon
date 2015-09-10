@@ -16,9 +16,9 @@ public:
    * @brief Makes actor pick up an item, and put it into inventory.
    * @param toPick - actor to be picked up
    * @param amount - usable if item is stackable, if not provided then max amount is picked up
-   * @param sourceContainer - container to remove the item from, after successfull picking it up
+   * @param removeAction - function will be called to remove whole actor from source container
    */
-  PickUpAction(ActorPtr toPick, int amount = -1, ContainerPtr sourceContainer = nullptr);
+  PickUpAction(ActorPtr toPick, int amount = -1, std::function<void(ActorPtr)> removeAction = [](ActorPtr){});
   virtual ~PickUpAction();
 
   /**
@@ -31,8 +31,8 @@ public:
 private:
   ActorPtr _toPick;
   int _amount;
-  ContainerPtr _sourceContainer;
   ActorPtr _performer;
+  std::function<void(ActorPtr)> _removeAction;
 
   bool pickUpAll();
   bool pickUpAmount();

@@ -42,7 +42,7 @@ public:
    *        for example only alive monsters could be selected
    * @return array of selected actors
    */
-  virtual Target select(std::function<bool (amarlon::ActorPtr)>* filterFun = nullptr) = 0;
+  virtual Target select(std::function<bool (amarlon::ActorPtr)> filterFun = [](ActorPtr){ return true;} ) = 0;
 
   virtual void setRange(int range);
   virtual int getRange() const;
