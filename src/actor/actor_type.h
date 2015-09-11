@@ -27,6 +27,7 @@ enum class ActorType
   GoldCoin = 22,
   BlackAle = 23,
   Dagger = 24,
+  Goblin = 25,
   End
 };
 

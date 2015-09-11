@@ -35,6 +35,7 @@ public:
 
   bool add(ActorPtr actor);
   bool remove(ActorPtr actor);
+  void clear();
 
   size_t size() const;
   bool empty() const;

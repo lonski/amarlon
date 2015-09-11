@@ -66,6 +66,11 @@ bool ActorContainer::remove(ActorPtr actor)
   return found;
 }
 
+void ActorContainer::clear()
+{
+  _collection.clear();
+}
+
 void ActorContainer::sort(std::function<bool(ActorPtr, ActorPtr)> fun)
 {
   _collection.sort(fun);

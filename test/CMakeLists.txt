@@ -92,6 +92,7 @@ set(SOURCE_FILES
     destroyable_test.cpp
     move_action_test.cpp
     spell_test.cpp
+    drop_action_test.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")

@@ -33,6 +33,7 @@ public:
   void push_front(ActorPtr actor);
 
   bool remove(ActorPtr actor);
+  void clear();
 
   void sort(std::function<bool(ActorPtr, ActorPtr)> fun);
   ActorContainer filter(std::function<bool(ActorPtr)> fun);

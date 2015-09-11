@@ -102,6 +102,11 @@ bool Inventory::empty() const
   return _items->empty();
 }
 
+void Inventory::clear()
+{
+  _items->clear();
+}
+
 void Inventory::performActionOnActors(std::function<void(ActorPtr)> fun)
 {
   std::for_each(_items->begin(), _items->end(), fun);
