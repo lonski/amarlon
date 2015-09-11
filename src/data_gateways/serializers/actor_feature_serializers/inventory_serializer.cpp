@@ -8,21 +8,21 @@ using namespace rapidxml;
 
 namespace amarlon {
 
-InventorzSerializer::InventorzSerializer()
-  : InventorzSerializer(nullptr, nullptr)
+InventorySerializer::InventorySerializer()
+  : InventorySerializer(nullptr, nullptr)
 {
 }
 
-InventorzSerializer::InventorzSerializer(xml_document<> *document, xml_node<> *xmlNode)
+InventorySerializer::InventorySerializer(xml_document<> *document, xml_node<> *xmlNode)
   : ActorFeatureSerializer(document, xmlNode)
 {
 }
 
-InventorzSerializer::~InventorzSerializer()
+InventorySerializer::~InventorySerializer()
 {
 }
 
-bool InventorzSerializer::serialize(ActorFeaturePtr af)
+bool InventorySerializer::serialize(ActorFeaturePtr af)
 {
   InventoryPtr container = std::dynamic_pointer_cast<Inventory>(af);
   if ( container && _document && _xml )

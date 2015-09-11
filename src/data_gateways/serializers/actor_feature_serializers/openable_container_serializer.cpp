@@ -5,21 +5,21 @@ using namespace rapidxml;
 
 namespace amarlon {
 
-OpenableInventorzSerializer::OpenableInventorzSerializer()
-  : OpenableInventorzSerializer(nullptr, nullptr)
+OpenableInventorySerializer::OpenableInventorySerializer()
+  : OpenableInventorySerializer(nullptr, nullptr)
 {
 }
 
-OpenableInventorzSerializer::OpenableInventorzSerializer(rapidxml::xml_document<> *document, rapidxml::xml_node<> *xmlNode)
+OpenableInventorySerializer::OpenableInventorySerializer(rapidxml::xml_document<> *document, rapidxml::xml_node<> *xmlNode)
   : OpenableSerializer(document, xmlNode)
 {
 }
 
-OpenableInventorzSerializer::~OpenableInventorzSerializer()
+OpenableInventorySerializer::~OpenableInventorySerializer()
 {
 }
 
-bool OpenableInventorzSerializer::serialize(ActorFeaturePtr af)
+bool OpenableInventorySerializer::serialize(ActorFeaturePtr af)
 {
   OpenableInventoryPtr cont = std::dynamic_pointer_cast<OpenableContainer>(af);
   if ( cont && _document && _xml )

@@ -6,12 +6,12 @@
 
 namespace amarlon {
 
-class OpenableInventorzSerializer : public OpenableSerializer
+class OpenableInventorySerializer : public OpenableSerializer
 {
 public:
-  OpenableInventorzSerializer();
-  OpenableInventorzSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
-  virtual ~OpenableInventorzSerializer();
+  OpenableInventorySerializer();
+  OpenableInventorySerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
+  virtual ~OpenableInventorySerializer();
 
   virtual bool serialize(ActorFeaturePtr af);
 

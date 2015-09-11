@@ -27,10 +27,10 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
 {
   _afSerializers.push_back( std::make_shared<PickableSerializer>() );
   _afSerializers.push_back( std::make_shared<DestroyableSerializer>() );
-  _afSerializers.push_back( std::make_shared<InventorzSerializer>() );
+  _afSerializers.push_back( std::make_shared<InventorySerializer>() );
   _afSerializers.push_back( std::make_shared<WearerSerializer>() );
   _afSerializers.push_back( std::make_shared<OpenableDoorSerializer>() );
-  _afSerializers.push_back( std::make_shared<OpenableInventorzSerializer>() );
+  _afSerializers.push_back( std::make_shared<OpenableInventorySerializer>() );
   _afSerializers.push_back( std::make_shared<MonsterSerializer>() );
   _afSerializers.push_back( std::make_shared<PlayableCharacterSerializer>() );
   _afSerializers.push_back( std::make_shared<MonsterAiSerializer>() );
