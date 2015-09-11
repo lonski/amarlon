@@ -8,6 +8,7 @@
 #include <single_neighbour_selector.h>
 #include <pick_up_window.h>
 #include <message_box.h>
+#include <inventory.h>
 
 namespace amarlon {
 
@@ -22,7 +23,7 @@ void CmdPutInto::execute()
                     .select()
                     .firstActor();
 
-  if ( target != nullptr && target->hasFeature<Container>())
+  if ( target != nullptr && target->hasFeature<Inventory>())
   {
     auto afterPutIntoAction =
     [&](const std::string& item, int amount)
@@ -40,8 +41,8 @@ void CmdPutInto::execute()
     Engine::instance().windowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(target)
-                      .setSource( [](){ return Actor::Player->getFeature<Container>()->content(); })
-                      .setRemoveAction([&](ActorPtr a){Actor::Player->getFeature<Container>()->remove(a);})
+                      .setSource( [](){ return Actor::Player->getFeature<Inventory>()->items(); })
+                      .setRemoveAction([&](ActorPtr a){Actor::Player->getFeature<Inventory>()->remove(a);})
                       .setAfterPickupAction( afterPutIntoAction )
                       .setInventoryFullAction( containerFullAction )
                       .setWindowTitle("Select item to put")

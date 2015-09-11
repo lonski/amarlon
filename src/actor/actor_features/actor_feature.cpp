@@ -5,6 +5,7 @@
 #include <character.h>
 #include <pickable.h>
 #include <destroyable.h>
+#include <inventory.h>
 #include <actor.h>
 
 namespace amarlon {
@@ -24,7 +25,7 @@ ActorFeaturePtr ActorFeature::create(Type featureType, DescriptionPtr dsc)
       case AI: feature = Ai::create(dsc); break;
       case OPENABLE: feature = Openable::create(dsc); break;
       case WEARER: feature = Wearer::create(dsc); break;
-      case CONTAINER: feature = Container::create(dsc); break;
+      case INVENTORY: feature = Inventory::create(dsc); break;
       case CHARACTER: feature = Character::create(dsc); break;
       case PICKABLE: feature = Pickable::create(dsc); break;
       case DESTROYABLE: feature = Destroyable::create(dsc); break;

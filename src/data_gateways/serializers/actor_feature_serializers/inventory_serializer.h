@@ -6,12 +6,12 @@
 
 namespace amarlon {
 
-class ContainerSerializer : public ActorFeatureSerializer
+class InventorzSerializer : public ActorFeatureSerializer
 {
 public:
-  ContainerSerializer();
-  ContainerSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
-  virtual ~ContainerSerializer();
+  InventorzSerializer();
+  InventorzSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
+  virtual ~InventorzSerializer();
 
   virtual bool serialize(ActorFeaturePtr af);
 

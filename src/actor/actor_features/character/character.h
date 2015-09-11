@@ -1,26 +1,28 @@
 #ifndef character_H
 #define character_H
 
-#include <actor_feature.h>
-#include <actor_descriptions.h>
 #include <map>
-#include <ability_scores.h>
-#include <character_classes.h>
-#include <saving_throws_table.h>
-#include <races.h>
-#include <carrying_capacity.h>
 #include <set>
+#include <actor_feature.h>
+#include <races.h>
+#include <character_classes.h>
+#include <ability_scores.h>
+#include <saving_throws_table.h>
+#include <carrying_capacity.h>
 #include <spell_id.h>
 #include <damage.h>
+#include <item_slot_type.h>
 
 namespace amarlon {
 
 class Character;
 class Pickable;
 class Spell;
+struct CharacterDescription;
 typedef std::shared_ptr<Character> CharacterPtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
 typedef std::shared_ptr<Spell> SpellPtr;
+typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 
 class Character : public ActorFeature
 {

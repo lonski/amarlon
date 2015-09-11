@@ -71,7 +71,7 @@ ItemSlotType EquipAction::aquireItemSlotType()
 
 void EquipAction::removeFromInventory()
 {
-  ContainerPtr container = _performer->getFeature<Container>();
+  InventoryPtr container = _performer->getFeature<Inventory>();
   if ( container )
   {
     container->remove(_toEquip);

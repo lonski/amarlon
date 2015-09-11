@@ -4,6 +4,7 @@
 #include <attack_bonus_table.h>
 #include <experience_table.h>
 #include <messenger.h>
+#include <inventory.h>
 
 namespace amarlon {
 
@@ -122,10 +123,10 @@ int PlayableCharacter::calculateInventoryItemsWeight()
 {
   int weight = 0;
 
-  ContainerPtr inventory = getOwner().lock()->getFeature<Container>();
+  InventoryPtr inventory = getOwner().lock()->getFeature<Inventory>();
   if ( inventory )
   {
-    for ( ActorPtr i : inventory->content() )
+    for ( ActorPtr i : inventory->items() )
     {
       weight += i->getFeature<Pickable>()->getWeight();
     }

@@ -35,7 +35,7 @@ bool UseAction::perform(ActorPtr performer)
 void UseAction::removeUsedItemFromInventory()
 {
   PickablePtr pickable = _toUse->getFeature<Pickable>();
-  ContainerPtr container = _performer->getFeature<Container>();
+  InventoryPtr container = _performer->getFeature<Inventory>();
 
   if ( pickable && container )
   {

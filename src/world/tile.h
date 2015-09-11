@@ -5,7 +5,6 @@
 #include <vector>
 #include <stdint.h>
 #include <tile_type.h>
-#include <actor_container.h>
 #include <libtcod.hpp>
 
 namespace amarlon {
@@ -13,7 +12,7 @@ namespace amarlon {
 class ActorContainer;
 class Map;
 class Actor;
-typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
+typedef std::shared_ptr<ActorContainer> ActorInventoryPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 
 struct SerializedTile
@@ -34,7 +33,7 @@ struct Tile
   Tile(const Tile& tile);
   Tile& operator=(const Tile& rhs);
 
-  ActorContainerPtr actors;
+  ActorInventoryPtr actors;
 
   //TODO: Rethink if the coords should be here here.
   //      How to remove it and deserialize tiles?

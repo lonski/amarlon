@@ -2,12 +2,13 @@
 #define OPENABLE_H
 
 #include <actor_feature.h>
-#include <actor_descriptions.h>
 
 namespace amarlon {
 
 class Actor;
 class Openable;
+struct OpenableDescription;
+typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
 typedef std::shared_ptr<Openable> OpenablePtr;
 typedef std::unique_ptr<Openable> OpenableUPtr;
 

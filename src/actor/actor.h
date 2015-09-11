@@ -5,16 +5,16 @@
 #include <memory>
 #include <libtcod.hpp>
 #include <actor_type.h>
+#include <amarlon_except.h>
 #include <actor_db.h>
 #include <actor_feature.h>
-#include <container.h>
 #include <pickable.h>
 #include <character.h>
 #include <ai.h>
 #include <openable.h>
 #include <wearer.h>
 #include <destroyable.h>
-#include <amarlon_except.h>
+#include <inventory.h>
 
 namespace amarlon {
 

@@ -18,7 +18,7 @@ public:
   DescriptionPtr parseFeatureDsc(ActorFeature::Type featureType);
 
   ActorDescriptionPtr       parseActorDsc();
-  ContainerDescriptionPtr   parseContainerDsc();
+  InventoryDescriptionPtr   parseInventoryDsc();
   PickableDescriptionPtr    parsePickableDsc();
   CharacterDescriptionPtr   parseCharacterDsc();
   AiDescriptionPtr          parseAiDsc();
@@ -30,7 +30,7 @@ private:
   std::map<ActorFeature::Type, std::function<DescriptionPtr ()> > _featureParsers;
   EffectParser _effectParser;
 
-  void parseContainerContentNode(ContainerDescriptionPtr contDsc, rapidxml::xml_node<>* contentNode);
+  void parseInventoryContentNode(InventoryDescriptionPtr contDsc, rapidxml::xml_node<>* contentNode);
   void mapParsers();
 
 };

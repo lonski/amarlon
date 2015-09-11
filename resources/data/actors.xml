@@ -6,12 +6,12 @@ When new actor is created with given ID as parameter, then the template will be 
 -->
 <Actors>
 	<Actor name="Player" id="1" character="@" color="ffffff" transparent="1" blocks="1" fovOnly="1">
-		<Container maxSize="20">
+		<Inventory maxSize="20">
 			<Content id="12">
 				<Pickable stackable="1" amount="4" category="4"/>
 			</Content>
 			<Content id="24"/>			
-		</Container>
+		</Inventory>
 		<PlayableCharacter level="1" experience="0" class="1" race="1" hitPoints="7" maxHitPoints="8" armorClass="11" speed="40">
 			<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14" CHA="10"/>
 			<Spells>
@@ -51,9 +51,9 @@ When new actor is created with given ID as parameter, then the template will be 
 				<Equipped id="20"/>
 			</ItemSlot>			
 		</Wearer>
-		<Container maxSize="20">
+		<Inventory maxSize="20">
 			<Content id="23"/>			
-		</Container>
+		</Inventory>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
 		</Destroyable>	

@@ -1,15 +1,15 @@
 #include "wearer.h"
 #include <algorithm>
-#include <iostream>
-#include "actor/actor.h"
-#include "amarlon_except.h"
+#include <inventory.h>
+#include <actor.h>
+#include <amarlon_except.h>
 
 namespace amarlon {
 
 const ActorFeature::Type Wearer::featureType = ActorFeature::WEARER;
 
 Wearer::Wearer()
-  : _equippedItems( new Container(0) )
+  : _equippedItems( new Inventory(0) )
 {
 }
 
@@ -29,7 +29,7 @@ WearerPtr Wearer::create(DescriptionPtr dsc)
       w->_itemSlots[slot] = nullptr;
     });
 
-    w->_equippedItems = Container::create(wearerDsc->eqItems);
+    w->_equippedItems = Inventory::create(wearerDsc->eqItems);
     if ( w->_equippedItems )
     {
       assignItemsToSlots( w );
@@ -42,7 +42,7 @@ WearerPtr Wearer::create(DescriptionPtr dsc)
 
 void Wearer::assignItemsToSlots(WearerPtr wearer)
 {
-  std::vector<ActorPtr> toEquip = wearer->_equippedItems->content();
+  std::vector<ActorPtr> toEquip = wearer->_equippedItems->items();
   std::for_each(toEquip.begin(), toEquip.end(), [&](ActorPtr a)
   {
     if ( a && a->hasFeature<Pickable>())
@@ -62,7 +62,7 @@ ActorFeaturePtr Wearer::clone()
     cloned->_itemSlots[ i.first ] = nullptr;
   }
 
-  cloned->_equippedItems = std::dynamic_pointer_cast<Container>(_equippedItems->clone());
+  cloned->_equippedItems = std::dynamic_pointer_cast<Inventory>(_equippedItems->clone());
   assignItemsToSlots(cloned);
 
   return cloned;

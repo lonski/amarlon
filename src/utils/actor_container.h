@@ -9,13 +9,13 @@ namespace amarlon {
 class Actor;
 class ActorContainer;
 typedef std::shared_ptr<Actor> ActorPtr;
-typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
+typedef std::shared_ptr<ActorContainer> ActorInventoryPtr;
 
 class ActorContainer
 {
 public:
   ActorContainer();
-  ActorContainerPtr clone();
+  ActorInventoryPtr clone();
 
   typedef std::list<ActorPtr>::iterator iterator;
   typedef std::list<ActorPtr>::const_iterator const_iterator;

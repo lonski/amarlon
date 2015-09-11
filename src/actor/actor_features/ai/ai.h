@@ -3,12 +3,13 @@
 
 #include <memory>
 #include <actor_feature.h>
-#include <actor_descriptions.h>
 
 namespace amarlon {
 
 class Ai;
+struct AiDescription;
 typedef std::shared_ptr<Ai> AiPtr;
+typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 
 class Ai : public ActorFeature
 {

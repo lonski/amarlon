@@ -5,6 +5,7 @@
 #include <gui.h>
 #include <amarlon_except.h>
 #include <utils.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

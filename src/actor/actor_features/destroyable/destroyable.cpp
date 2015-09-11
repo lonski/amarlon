@@ -1,6 +1,6 @@
 #include "destroyable.h"
 #include <dices.h>
-#include <container.h>
+#include <inventory.h>
 #include <map.h>
 #include <actor.h>
 
@@ -100,10 +100,10 @@ void Destroyable::dropInventory()
   ActorPtr owner = getOwner().lock();
   if (owner)
   {
-    ContainerPtr inventory = owner->getFeature<Container>();
+    InventoryPtr inventory = owner->getFeature<Inventory>();
     if ( inventory )
     {
-      for ( ActorPtr item : inventory->content() )
+      for ( ActorPtr item : inventory->items() )
       {
         inventory->remove(item);
         dropOnGround(item);

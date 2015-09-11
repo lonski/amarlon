@@ -24,7 +24,7 @@
 
 namespace amarlon {
 
-class Container;
+class Inventory;
 class Pickable;
 class Character;
 class Ai;
@@ -38,10 +38,10 @@ struct PlayableCharacterDescription;
 struct AiDescription;
 struct MonsterAiDescription;
 struct OpenableDescription;
-struct OpenableContainerDescription;
+struct OpenableInventoryDescription;
 struct OpenableDoorDescription;
 struct WearerDescription;
-struct ContainerDescription;
+struct InventoryDescription;
 struct DestroyableDescription;
 struct MonsterDescription;
 struct CharacterDescription;
@@ -52,10 +52,10 @@ typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescripti
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::shared_ptr<MonsterAiDescription> MonsterAiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
-typedef std::shared_ptr<OpenableContainerDescription> OpenableContainerDescriptionPtr;
+typedef std::shared_ptr<OpenableInventoryDescription> OpenableInventoryDescriptionPtr;
 typedef std::shared_ptr<OpenableDoorDescription> OpenableDoorDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
-typedef std::shared_ptr<ContainerDescription> ContainerDescriptionPtr;
+typedef std::shared_ptr<InventoryDescription> InventoryDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
 typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
@@ -176,18 +176,18 @@ struct OpenableDoorDescription : OpenableDescription
 {
 };
 
-struct OpenableContainerDescription : OpenableDescription
+struct OpenableInventoryDescription : OpenableDescription
 {
 };
 
-struct ContainerDescription : Description
+struct InventoryDescription : Description
 {
-  ContainerDescription() : maxSize(0) {}
+  InventoryDescription() : maxSize(0) {}
 
   struct Content
   {
     ActorType actorType;
-    std::shared_ptr<ContainerDescription> container;
+    std::shared_ptr<InventoryDescription> container;
     std::shared_ptr<PickableDescription> pickable;
     std::shared_ptr<Description> character;
     std::shared_ptr<AiDescription> ai;
@@ -209,11 +209,11 @@ struct WearerDescription : Description
 {
   WearerDescription()
     :
-    eqItems( new ContainerDescription )
+    eqItems( new InventoryDescription )
   {}
 
   std::vector<ItemSlotType> itemSlots;
-  std::shared_ptr<ContainerDescription> eqItems;
+  std::shared_ptr<InventoryDescription> eqItems;
 };
 
 struct DestroyableDescription : Description

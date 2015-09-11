@@ -33,7 +33,7 @@ bool UnEquipAction::perform(ActorPtr performer)
     if ( wearer && wearer->isEquipped( _slot ) )
     {
       ActorPtr unequipped = wearer->unequip( _slot );
-      ContainerPtr inventory = performer->getFeature<Container>();
+      InventoryPtr inventory = performer->getFeature<Inventory>();
       if ( inventory && inventory->add(unequipped) )
       {
         _result = UnEquipResult::Ok;

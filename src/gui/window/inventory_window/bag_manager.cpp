@@ -31,7 +31,7 @@ BagManager::BagManager(int w, int h)
 
 void BagManager::fillBag()
 {
-  ContainerPtr inventory = Actor::Player->getFeature<Container>();
+  InventoryPtr inventory = Actor::Player->getFeature<Inventory>();
   if ( inventory )
   {
     std::function<std::string(ActorPtr)> category_function = [&](ActorPtr a)
@@ -40,7 +40,7 @@ void BagManager::fillBag()
                                          return p ? PickableCategory2Str( p->getCategory() ) : "";
                                        };
 
-    _bagMenu->fill<Actor>( inventory->content(), getItemNameAndAmount, category_function);
+    _bagMenu->fill<Actor>( inventory->items(), getItemNameAndAmount, category_function);
   }
 }
 

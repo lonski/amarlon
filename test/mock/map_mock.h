@@ -22,7 +22,7 @@ public:
   MOCK_METHOD2(getFirstActor, ActorPtr(int,int));
   MOCK_METHOD3(getActors, std::vector<ActorPtr>(int,int,std::function<bool (amarlon::ActorPtr)>*));
   MOCK_METHOD1(getActors, std::vector<ActorPtr>(std::function<bool(ActorPtr)>*));
-  MOCK_METHOD2(getActorsContainer, ContainerPtr(u32,u32));
+  MOCK_METHOD2(getActorsContainer, InventoryPtr(u32,u32));
   MOCK_METHOD1(performActionOnActors, void(std::function<void(ActorPtr)>));
   MOCK_METHOD1(render, void(TCODConsole*));
   MOCK_METHOD1(updateActorCell, void(ActorPtr));

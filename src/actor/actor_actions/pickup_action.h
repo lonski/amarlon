@@ -6,8 +6,8 @@
 
 namespace amarlon{
 
-class Container;
-typedef std::shared_ptr<Container> ContainerPtr;
+class Inventory;
+typedef std::shared_ptr<Inventory> InventoryPtr;
 
 class PickUpAction : public ActorAction
 {

@@ -32,7 +32,7 @@ bool DropAction::perform(ActorPtr performer)
     else
     {
       dropOnMap(_toDrop);
-      _performer->getFeature<Container>()->remove(_toDrop);
+      _performer->getFeature<Inventory>()->remove(_toDrop);
       dropped = true;
     }
   }

@@ -50,7 +50,7 @@ bool PickUpAction::pickUpAmount()
   PickablePtr pickable = _toPick->getFeature<Pickable>();
   ActorPtr splitedItem = pickable->spilt(_amount);
 
-  if ( _performer->getFeature<Container>()->add(splitedItem) )
+  if ( _performer->getFeature<Inventory>()->add(splitedItem) )
   {
     picked = true;
   }
@@ -66,7 +66,7 @@ bool PickUpAction::pickUpAll()
 {
   bool picked = false;
 
-  if ( _performer->getFeature<Container>()->add(_toPick) )
+  if ( _performer->getFeature<Inventory>()->add(_toPick) )
   {
     _removeAction(_toPick);
     picked = true;

@@ -2,7 +2,6 @@
 #define PICKABLE_H
 
 #include <vector>
-#include <actor_descriptions.h>
 #include <actor_feature.h>
 #include <item_slot_type.h>
 #include <pickable_category.h>

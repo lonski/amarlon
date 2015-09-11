@@ -7,7 +7,7 @@
 namespace amarlon {
 
 class OpenableContainer;
-typedef std::shared_ptr<OpenableContainer> OpenableContainerPtr;
+typedef std::shared_ptr<OpenableContainer> OpenableInventoryPtr;
 
 class OpenableContainer : public Openable
 {

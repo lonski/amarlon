@@ -6,7 +6,7 @@
 
 namespace amarlon {
 
-class Container;
+class Inventory;
 
 class CmdPick : public Command
 {

@@ -6,6 +6,7 @@
 #include <utils.h>
 #include <libtcod.hpp>
 #include <tile.h>
+#include <actor_container.h>
 
 namespace amarlon {
 

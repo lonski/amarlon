@@ -6,6 +6,7 @@
 #include <message_box.h>
 #include <menu_window.h>
 #include <use_action.h>
+#include <inventory.h>
 
 namespace amarlon {
 
@@ -67,7 +68,7 @@ std::vector<ActorPtr> CmdUse::getUsableItems()
                                            return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect();
                                          };
 
-  return Actor::Player->getFeature<Container>()->content(filter);
+  return Actor::Player->getFeature<Inventory>()->items(filter);
 }
 
 }

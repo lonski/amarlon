@@ -24,7 +24,7 @@ public:
     AI,
     OPENABLE,
     WEARER,
-    CONTAINER,
+    INVENTORY,
     CHARACTER,
     PICKABLE,
     DESTROYABLE,

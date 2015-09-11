@@ -1,6 +1,7 @@
 #include "ai.h"
 #include <iostream>
 #include <ai_factory.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

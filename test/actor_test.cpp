@@ -44,8 +44,8 @@ TEST_F(ActorTest, actorEqual_different_container)
   std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
   std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
 
-  ContainerPtr c1( new Container(10) );
-  ContainerPtr c2( new Container(10) );
+  InventoryPtr c1( new Inventory(10) );
+  InventoryPtr c2( new Inventory(10) );
 
   a1->insertFeature(c1);
   a2->insertFeature(c2);

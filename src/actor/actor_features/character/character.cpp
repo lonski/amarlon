@@ -6,6 +6,7 @@
 #include <spell.h>
 #include <spell_gateway.h>
 #include <engine.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

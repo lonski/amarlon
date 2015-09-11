@@ -22,7 +22,7 @@ ActorParser::ActorParser()
 
 void ActorParser::mapParsers()
 {
-  _featureParsers[ActorFeature::CONTAINER]   = [&](){ return parseContainerDsc(); };
+  _featureParsers[ActorFeature::INVENTORY]   = [&](){ return parseInventoryDsc(); };
   _featureParsers[ActorFeature::OPENABLE]    = [&](){ return parseOpenableDsc(); };
   _featureParsers[ActorFeature::PICKABLE]    = [&](){ return parsePickableDsc(); };
   _featureParsers[ActorFeature::CHARACTER]   = [&](){ return parseCharacterDsc(); };
@@ -77,16 +77,16 @@ ActorDescriptionPtr ActorParser::parseActorDsc()
   return actorDsc;
 }
 
-void ActorParser::parseContainerContentNode(ContainerDescriptionPtr contDsc, xml_node<>* contentNode)
+void ActorParser::parseInventoryContentNode(InventoryDescriptionPtr contDsc, xml_node<>* contentNode)
 {
   ActorParser aParser(contentNode);
-  ContainerDescription::Content cActor;
+  InventoryDescription::Content cActor;
   ActorDescriptionPtr aDsc = aParser.parseActorDsc();
   if (aDsc != nullptr)
   {
     cActor.actorType = aDsc->id;
 
-    cActor.container = aParser.parseContainerDsc() ;
+    cActor.container = aParser.parseInventoryDsc() ;
     cActor.openable = aParser.parseOpenableDsc();
     cActor.pickable = aParser.parsePickableDsc();
     cActor.character = aParser.parseCharacterDsc();
@@ -97,24 +97,24 @@ void ActorParser::parseContainerContentNode(ContainerDescriptionPtr contDsc, xml
   }
 }
 
-ContainerDescriptionPtr ActorParser::parseContainerDsc()
+InventoryDescriptionPtr ActorParser::parseInventoryDsc()
 {
-  ContainerDescriptionPtr contDsc;
+  InventoryDescriptionPtr contDsc;
 
   if ( _xml != nullptr )
   {
-    xml_node<>* containerNode = _xml->first_node("Container");
-    if ( containerNode != nullptr)
+    xml_node<>* invNode = _xml->first_node("Inventory");
+    if ( invNode != nullptr)
     {
-      contDsc.reset( new ContainerDescription );
+      contDsc.reset( new InventoryDescription );
 
-      contDsc->maxSize = getAttribute<int>(containerNode, "maxSize");
+      contDsc->maxSize = getAttribute<int>(invNode, "maxSize");
 
-      xml_node<>* contentNode = containerNode->first_node("Content");
+      xml_node<>* contentNode = invNode->first_node("Content");
 
       while ( contentNode != nullptr)
       {
-        parseContainerContentNode(contDsc, contentNode);
+        parseInventoryContentNode(contDsc, contentNode);
         contentNode = contentNode->next_sibling();
       }
 
@@ -263,7 +263,7 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
       openableNode = _xml->first_node("OpenableContainer");
       if ( openableNode != nullptr )
       {
-        opDsc = std::make_shared<OpenableContainerDescription>();
+        opDsc = std::make_shared<OpenableInventoryDescription>();
       }
     }
 
@@ -298,7 +298,7 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
         xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");
         if (equippedNode != nullptr)
         {
-          parseContainerContentNode(wrDsc->eqItems, equippedNode );
+          parseInventoryContentNode(wrDsc->eqItems, equippedNode );
         }
 
         itemSlotNode = itemSlotNode->next_sibling();

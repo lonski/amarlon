@@ -2,7 +2,7 @@
 
 #define private public
 #include <actor.h>
-#include <container.h>
+#include <inventory.h>
 #include <wearer.h>
 #undef private
 

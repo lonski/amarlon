@@ -1,10 +1,11 @@
 #include "openable_container.h"
-#include "actor/actor.h"
-#include "engine.h"
-#include "utils/messenger.h"
-#include "utils/utils.h"
-#include "gui/window/pick_up_window.h"
-#include "gui/message_box.h"
+#include <actor.h>
+#include <engine.h>
+#include <messenger.h>
+#include <utils.h>
+#include <pick_up_window.h>
+#include <message_box.h>
+#include <inventory.h>
 
 namespace amarlon {
 
@@ -16,7 +17,7 @@ bool OpenableContainer::open(ActorPtr executor)
 {
   bool r = false;
 
-  if ( getOwner().lock()->hasFeature<Container>() )
+  if ( getOwner().lock()->hasFeature<Inventory>() )
   {
     auto afterPickupAction =
     [&](const std::string& item, int amount)
@@ -31,7 +32,7 @@ bool OpenableContainer::open(ActorPtr executor)
                   gui::MsgType::Error);
     };
 
-    auto sourceFun = [&](){ return getOwner().lock()->getFeature<Container>()->content
+    auto sourceFun = [&](){ return getOwner().lock()->getFeature<Inventory>()->items
                       (
                         [](ActorPtr a)->bool{ return a && a->getFeature<Pickable>() != nullptr; }
                       ); };
@@ -40,7 +41,7 @@ bool OpenableContainer::open(ActorPtr executor)
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(executor)
                       .setSource( sourceFun )
-                      .setRemoveAction( [&](ActorPtr a){ getOwner().lock()->getFeature<Container>()->remove(a); } )
+                      .setRemoveAction( [&](ActorPtr a){ getOwner().lock()->getFeature<Inventory>()->remove(a); } )
                       .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();
@@ -58,7 +59,7 @@ bool OpenableContainer::close(ActorPtr)
 
 ActorFeaturePtr OpenableContainer::clone()
 {
-  OpenableContainerPtr cloned( new OpenableContainer );
+  OpenableInventoryPtr cloned( new OpenableContainer );
   cloned->setLockId( getLockId() );
   isLocked() ? cloned->lock() : cloned->unlock();
 
@@ -68,7 +69,7 @@ ActorFeaturePtr OpenableContainer::clone()
 bool OpenableContainer::isEqual(ActorFeaturePtr rhs)
 {
   bool equal = false;
-  OpenableContainerPtr crhs = std::dynamic_pointer_cast<OpenableContainer>(rhs);
+  OpenableInventoryPtr crhs = std::dynamic_pointer_cast<OpenableContainer>(rhs);
 
   if (crhs)
   {
@@ -82,7 +83,7 @@ OpenablePtr OpenableContainer::Creator::create(OpenableDescriptionPtr dsc)
 {
   OpenablePtr op = nullptr;
 
-  OpenableContainerDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableContainerDescription>(dsc);
+  OpenableInventoryDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableInventoryDescription>(dsc);
   if ( contDsc != nullptr )
   {
     op = std::make_shared<OpenableContainer>();

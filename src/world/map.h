@@ -4,11 +4,10 @@
 #include <vector>
 #include <functional>
 #include <memory>
-#include <list>
+#include <map>
 #include <stdexcept>
 #include <libtcod.hpp>
 #include <map_id.h>
-#include <container.h>
 #include <directions.h>
 
 namespace amarlon {
@@ -21,7 +20,7 @@ class Map;
 struct Tile;
 
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
-typedef std::shared_ptr<Container> ContainerPtr;
+typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::weak_ptr<Map> MapWPtr;
 typedef std::unique_ptr<Map> MapUPtr;

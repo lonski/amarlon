@@ -25,9 +25,9 @@ public:
 
 void clearInventory(ActorPtr actor)
 {
-  ContainerPtr inv = actor->getFeature<Container>();
+  InventoryPtr inv = actor->getFeature<Inventory>();
   ASSERT_TRUE( inv != nullptr );
-  for ( auto i : inv->content() )
+  for ( auto i : inv->items() )
     inv->remove(i);
 }
 
@@ -62,7 +62,7 @@ TEST_F(CharacterTest, carryingLoad)
 
   //add some light item
   ActorPtr potka = Actor::create(ActorType::Dagger);
-  ASSERT_TRUE(ziomek->getFeature<Container>()->add(potka));
+  ASSERT_TRUE(ziomek->getFeature<Inventory>()->add(potka));
 
   //ziomek should have light load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Light );
@@ -75,7 +75,7 @@ TEST_F(CharacterTest, carryingLoad)
   int count = (cData.heavy / armor->getFeature<Pickable>()->getWeight()) + 1;
 
   while ( count-- )
-    ASSERT_TRUE(ziomek->getFeature<Container>()->add(armor->clone()));
+    ASSERT_TRUE(ziomek->getFeature<Inventory>()->add(armor->clone()));
 
   //ziomek should have heavy load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Heavy );

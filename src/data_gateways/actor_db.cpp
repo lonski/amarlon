@@ -96,8 +96,8 @@ public:
         case ActorFeature::AI:
           addFeature<Ai>();
           break;
-        case ActorFeature::CONTAINER:
-          addFeature<Container>();
+        case ActorFeature::INVENTORY:
+          addFeature<Inventory>();
           break;
         case ActorFeature::CHARACTER:
           addFeature<Character>();

@@ -3,14 +3,14 @@
 
 #include <map>
 #include <actor_feature.h>
-#include <actor_descriptions.h>
-#include <container.h>
 #include <item_slot_type.h>
 
 namespace amarlon {
 
 class Wearer;
+class Inventory;
 typedef std::shared_ptr<Wearer> WearerPtr;
+typedef std::shared_ptr<Inventory> InventoryPtr;
 
 class Wearer : public ActorFeature
 {
@@ -34,7 +34,7 @@ public:
 
 private:
   std::map<ItemSlotType, ActorPtr> _itemSlots;
-  ContainerPtr _equippedItems;
+  InventoryPtr _equippedItems;
 
   static void assignItemsToSlots(WearerPtr wearer);
 
