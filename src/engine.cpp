@@ -10,6 +10,7 @@
 #include <world.h>
 #include <command_executor.h>
 #include <tile_db.h>
+#include <actor_db.h>
 
 namespace amarlon {
 
@@ -25,6 +26,7 @@ Engine::Engine()
   : _config(nullptr)
   , _spellGateway(new SpellGateway )
   , _tileDB( new TileDB )
+  , _actorsDB( new ActorDB )
 {
 }
 
@@ -46,9 +48,8 @@ void Engine::prologue(Configuration* cfg)
   Engine::screenWidth       = Engine::consoleWidth + Engine::rightPanelWidth;
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
 
-  Actor::DB.loadActors( cfg->get("actors_file") );
-
-  getTileDB().loadTiles( cfg->get("tiles_file") );
+  getActorDB()     .load( cfg->get("actors_file") );
+  getTileDB()      .load( cfg->get("tiles_file" ) );
   getSpellGateway().load( cfg->get("spells_file") );
 
   initializeWorld();
@@ -151,6 +152,11 @@ SpellGateway& Engine::getSpellGateway() const
 TileDB &Engine::getTileDB() const
 {
   return *_tileDB;
+}
+
+ActorDB &Engine::getActorDB() const
+{
+  return *_actorsDB;
 }
 
 std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()

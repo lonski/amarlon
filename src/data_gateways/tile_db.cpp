@@ -40,7 +40,7 @@ bool TileDB::isTransparent(TileType type)
   return get<bool>(type, &TileDescription::transparent, false);
 }
 
-void TileDB::loadTiles(const string& fn)
+void TileDB::load(const string& fn)
 {
   ifstream ifs(fn);
 

@@ -4,8 +4,8 @@
 #include <destroyable.h>
 #include <actor.h>
 #undef private
-
-
+#include <configuration.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -19,11 +19,15 @@ public:
 
   virtual void SetUp()
   {
-    Actor::DB.loadActors("data/actors.xml");
+    cfg.load("config.cfg");
+    Engine::instance().prologue(&cfg);
   }
   virtual void TearDown()
   {
   }
+
+protected:
+  Configuration cfg;
 
 };
 

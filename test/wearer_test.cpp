@@ -5,6 +5,8 @@
 #include <inventory.h>
 #include <wearer.h>
 #undef private
+#include <configuration.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -15,7 +17,8 @@ class WearerTest : public ::testing::Test
 public:
   virtual void SetUp()
   {
-    Actor::DB.loadActors("data/actors.xml");
+    cfg.load("config.cfg");
+    Engine::instance().prologue(&cfg);
 
     WearerDescriptionPtr dsc(new WearerDescription);
     dsc->itemSlots.push_back(ItemSlotType::Armor);
@@ -29,6 +32,7 @@ public:
   }
 
 protected:
+  Configuration cfg;
   WearerPtr wearer;
 
 };

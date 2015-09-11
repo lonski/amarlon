@@ -16,12 +16,14 @@ class World;
 class CommandExecutor;
 class MapGateway;
 class TileDB;
+class ActorDB;
 
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<SpellGateway> SpellGatewayPtr;
 typedef std::shared_ptr<World> WorldPtr;
 typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 typedef std::shared_ptr<TileDB> TileDBPtr;
+typedef std::shared_ptr<ActorDB> ActorDBPtr;
 
 namespace gui {
   class Gui;
@@ -57,6 +59,7 @@ public:
   World& getWorld() const;
   SpellGateway& getSpellGateway() const;
   TileDB& getTileDB() const;
+  ActorDB& getActorDB() const;
 
 private:
   gui::GuiPtr _gui;
@@ -67,6 +70,7 @@ private:
   WorldPtr _world;
   SpellGatewayPtr _spellGateway;
   TileDBPtr _tileDB;
+  ActorDBPtr _actorsDB;
 
   void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();

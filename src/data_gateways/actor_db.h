@@ -38,7 +38,7 @@ public:
    * @brief loads given file, parses xml and creates actor descriptions
    * @param path to file to be loaded
    */
-  void loadActors(const std::string& fn);
+  void load(const std::string& fn);
 
 private:
   typedef std::shared_ptr<Description> DescriptionPtr;

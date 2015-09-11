@@ -62,7 +62,7 @@ TEST(UtilsTest, str2color)
 TEST(UtilsTest, loadTiles)
 {
   TileDB tiles;
-  tiles.loadTiles("data/tiles.xml");
+  tiles.load("data/tiles.xml");
 }
 
 TEST(UtilsTest, tolowers)

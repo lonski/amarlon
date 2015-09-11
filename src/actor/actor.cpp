@@ -4,10 +4,10 @@
 #include <actor_action.h>
 #include <utils.h>
 #include <tile.h>
+#include <engine.h>
 
 namespace amarlon {
 
-ActorDB Actor::DB;
 ActorPtr Actor::Player(nullptr);
 unsigned Actor::InstanceCounter = 0;
 
@@ -30,7 +30,7 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
 
 void Actor::init()
 {
-  _features = Actor::DB.getAllFeatures(_id);
+  _features = Engine::instance().getActorDB().getAllFeatures(_id);
   for (auto f : _features)
   {
     f.second->setOwner( shared_from_this() );
@@ -46,7 +46,7 @@ void Actor::morph(ActorType newType)
   _id = newType;
 
   _features.clear();
-  _features = Actor::DB.getAllFeatures(_id);
+  _features = Engine::instance().getActorDB().getAllFeatures(_id);
   for (auto f : _features) f.second->setOwner( shared_from_this() );
 }
 
@@ -90,22 +90,22 @@ bool Actor::isAlive() const
 
 bool Actor::isFovOnly() const
 {
-  return Actor::DB.isFovOnly(_id);
+  return Engine::instance().getActorDB().isFovOnly(_id);
 }
 
 bool Actor::isTransparent() const
 {
-  return Actor::DB.isTransparent(_id);
+  return Engine::instance().getActorDB().isTransparent(_id);
 }
 
 bool Actor::blocks() const
 {
-  return Actor::DB.blocks(_id);;
+  return Engine::instance().getActorDB().blocks(_id);;
 }
 
 int Actor::getTileRenderPriority() const
 {
-  int priority = Actor::DB.getTileRenderPriority(_id);
+  int priority = Engine::instance().getActorDB().getTileRenderPriority(_id);
 
   //not set in xml, neither default value defined in ActorDB
   if ( priority == -1 )
@@ -124,14 +124,14 @@ ActorType Actor::getId() const
 
 std::string Actor::getName() const
 {
-  return Actor::DB.getName(_id);;
+  return Engine::instance().getActorDB().getName(_id);;
 }
 
 std::string Actor::getDescription()
 {
   std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "\n \n";
 
-  str += Actor::DB.getDescription(_id) + "\n \n";
+  str += Engine::instance().getActorDB().getDescription(_id) + "\n \n";
 
   for ( auto& fPair : _features )
   {
@@ -174,12 +174,12 @@ void Actor::setMap(MapPtr map)
 
 TCODColor Actor::getColor() const
 {
-  return Actor::DB.getColor(_id);;
+  return Engine::instance().getActorDB().getColor(_id);;
 }
 
 unsigned char Actor::getChar() const
 {
-  return Actor::DB.getChar(_id);;
+  return Engine::instance().getActorDB().getChar(_id);;
 }
 
 ActorFeaturePtr Actor::getFeature(ActorFeature::Type afType) const

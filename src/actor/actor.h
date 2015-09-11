@@ -27,7 +27,6 @@ typedef std::weak_ptr<Map> MapWPtr;
 class Actor : public std::enable_shared_from_this<Actor>
 {
 public:
-  static ActorDB DB;
   static ActorPtr Player;
   static unsigned InstanceCounter;
 

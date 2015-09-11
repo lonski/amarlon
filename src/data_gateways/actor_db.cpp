@@ -142,7 +142,7 @@ FeatureMap ActorDB::getAllFeatures(ActorType type)
 
 // === LOAD ACTORS === //
 
-void ActorDB::loadActors(const string &fn)
+void ActorDB::load(const string &fn)
 {
   ifstream ifs(fn);
 
