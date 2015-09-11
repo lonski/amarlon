@@ -33,6 +33,7 @@ public:
   void actorLeveledUp(ActorPtr leveler, int level);
   void lookAtObject(ActorPtr object);
   void lookAtSomeItems(bool plural = false);
+  void custom(std::string msg);
 
 private:
   Messenger();

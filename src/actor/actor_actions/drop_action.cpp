@@ -53,6 +53,7 @@ void DropAction::dropOnMap(ActorPtr item)
   MapPtr map = _performer->getMap();
   if ( map )
   {
+    item->setMap(nullptr);
     item->setPosition( _performer->getX(), _performer->getY() );
     map->addActor( item );
     Messenger::message()->actorDropped(_performer, item, _amount);

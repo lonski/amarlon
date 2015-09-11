@@ -118,6 +118,14 @@ void Messenger::lookAtSomeItems(bool plural)
   }
 }
 
+void Messenger::custom(string msg)
+{
+  if ( _gui )
+  {
+    _gui->message(msg, TCODColor::darkYellow);
+  }
+}
+
 void Messenger::actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const string &from)
 {
   if ( _gui )
