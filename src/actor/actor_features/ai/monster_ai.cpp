@@ -5,6 +5,8 @@
 #include <amarlon_except.h>
 #include <monster_move_action.h>
 #include <attack_action.h>
+#include <engine.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 
@@ -75,8 +77,8 @@ void MonsterAi::update()
 
 void MonsterAi::huntPlayer()
 {
-  int dx = Actor::Player->getX() - _cX;
-  int dy = Actor::Player->getY() - _cY;
+  int dx = Engine::instance().getPlayer()->getX() - _cX;
+  int dy = Engine::instance().getPlayer()->getY() - _cY;
   int stepDx = (dx > 0 ? 1:-1);
   int stepDy = (dy > 0 ? 1:-1);
 
@@ -103,7 +105,7 @@ void MonsterAi::huntPlayer()
   }
   else if ( getOwner().lock()->hasFeature<Character>() )
   {
-    monster->performAction( std::make_shared<AttackAction>(Actor::Player) );
+    monster->performAction( std::make_shared<AttackAction>(Engine::instance().getPlayer()) );
   }
 }
 

@@ -18,7 +18,7 @@ bool CmdInventory::accept(TCOD_key_t &key)
 
 void CmdInventory::execute()
 {
-  Engine::instance().windowManager()
+  Engine::instance().getWindowManager()
                     .getWindow<gui::InventoryWindow>()
                     .show();
 }

@@ -1,7 +1,8 @@
 #include "openable_door.h"
-#include "actor/actor.h"
-#include "gui/gui.h"
-#include "gui/message_box.h"
+#include <actor.h>
+#include <gui.h>
+#include <message_box.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

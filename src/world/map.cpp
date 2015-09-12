@@ -83,7 +83,7 @@ std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)
   return r;
 }
 
-std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)>* filterFun)
+std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)> filterFun)
 {
   std::vector<ActorPtr> r;
 
@@ -93,7 +93,7 @@ std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)>* filterFun)
     {
       for (ActorPtr a : *tile.actors )
       {
-        if ( filterFun == nullptr || (*filterFun)(a))
+        if ( filterFun(a))
         {
           r.push_back(a);
         }

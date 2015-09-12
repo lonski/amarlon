@@ -44,7 +44,7 @@ public:
   virtual  bool removeActor(ActorPtr toRemove);
   virtual ActorPtr getFirstActor(int x, int y);
   virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
-  virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)>* filterFun = nullptr);
+  virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
   virtual void performActionOnActors(std::function<void(ActorPtr)> func);
 
   virtual void render(TCODConsole* console);

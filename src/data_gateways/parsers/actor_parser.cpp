@@ -263,7 +263,7 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
       openableNode = _xml->first_node("OpenableContainer");
       if ( openableNode != nullptr )
       {
-        opDsc = std::make_shared<OpenableInventoryDescription>();
+        opDsc = std::make_shared<OpenableContaineryDescription>();
       }
     }
 

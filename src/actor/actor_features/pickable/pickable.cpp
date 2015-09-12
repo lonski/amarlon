@@ -6,6 +6,7 @@
 #include <amarlon_except.h>
 #include <utils.h>
 #include <actor_descriptions.h>
+#include <cassert>
 
 namespace amarlon {
 

@@ -28,7 +28,7 @@ void CmdOpen::execute()
 
   if ( toOpen != nullptr)
   {
-    Actor::Player->performAction( std::make_shared<OpenAction>(toOpen) );
+    Engine::instance().getPlayer()->performAction( std::make_shared<OpenAction>(toOpen) );
   }
   else
   {

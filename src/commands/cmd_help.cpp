@@ -32,7 +32,7 @@ void CmdHelp::execute()
     if ( c % 10 == 0) ss << "\n";
   }
 
-  Engine::instance().windowManager()
+  Engine::instance().getWindowManager()
                     .getWindow<gui::ResizeableTextWindow>()
                     .setCenterGameScreen()
                     .setWindowTitle("Help")

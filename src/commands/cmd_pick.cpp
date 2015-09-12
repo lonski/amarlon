@@ -20,16 +20,16 @@ bool CmdPick::accept(TCOD_key_t &key)
 
 void CmdPick::execute()
 {
-  int x( Actor::Player->getX() );
-  int y( Actor::Player->getY() );
+  int x( Engine::instance().getPlayer()->getX() );
+  int y( Engine::instance().getPlayer()->getY() );
 
-  MapPtr map = Actor::Player->getMap();
+  MapPtr map = Engine::instance().getPlayer()->getMap();
   if ( map )
   {
     auto afterPickupAction =
     [](const std::string& item, int amount)
     {
-      Messenger::message()->actorPicked(Actor::Player->getName(), item, amount);
+      Messenger::message()->actorPicked(Engine::instance().getPlayer()->getName(), item, amount);
     };
 
     auto inventoryFullAction =
@@ -38,9 +38,9 @@ void CmdPick::execute()
       gui::msgBox("Cannot pickup "+item+":\nInventory is full!", gui::MsgType::Error);
     };
 
-    Engine::instance().windowManager()
+    Engine::instance().getWindowManager()
                       .getWindow<gui::PickUpWindow>()
-                      .setPicker(Actor::Player)
+                      .setPicker(Engine::instance().getPlayer())
                       .setSource( [&](){ return map->getActors( x, y, [](ActorPtr a){ return a->getFeature<Pickable>() != nullptr;}); } )
                       .setRemoveAction([&](ActorPtr a){ map->removeActor(a); })
                       .setAfterPickupAction( afterPickupAction )

@@ -29,7 +29,7 @@ void CmdCast::execute()
      {
        selector->setRange( spell->getRange() );
        ActorActionPtr action( new CastAction(spell, selector->select()) );
-       if ( !Actor::Player->performAction( action ) )
+       if ( !Engine::instance().getPlayer()->performAction( action ) )
        {
          gui::msgBox("Failed to cast spell!", gui::MsgType::Warning);
        }
@@ -41,9 +41,9 @@ SpellPtr CmdCast::getSpell()
 {
   SpellPtr spell;
 
-  CharacterPtr character = Actor::Player->getFeature<Character>();
+  CharacterPtr character = Engine::instance().getPlayer()->getFeature<Character>();
 
-  gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
+  gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
                    window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
                    window . setTitle("Choose spell to cast");
 

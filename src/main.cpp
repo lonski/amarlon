@@ -26,7 +26,7 @@ int main()
 
     TCODConsole::root->setFullscreen( std::stol(cfg.get("fullscreen")) );
     TCODMouse::showCursor(true);
-    amarlon::Engine::instance().gui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
+    amarlon::Engine::instance().getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
 
     TCOD_key_t lastKey;
     while ( !TCODConsole::isWindowClosed() )
@@ -38,7 +38,7 @@ int main()
         TCODConsole::root->flush();
 
         TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL, true);
-        amarlon::Engine::instance().processKey(lastKey);
+        amarlon::Engine::instance().processInput(lastKey);
       }
       catch(std::exception& e)
       {

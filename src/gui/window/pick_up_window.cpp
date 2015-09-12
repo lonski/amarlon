@@ -116,7 +116,7 @@ int PickUpWindow::getAmountToPickUp(ActorPtr toPick)
   PickablePtr pickable = toPick->getFeature<Pickable>();
   if ( pickable && pickable->isStackable() )
   {
-    amount = Engine::instance().windowManager()
+    amount = Engine::instance().getWindowManager()
                                .getWindow<gui::AmountWindow>()
                                .setMaxAmount( pickable->getAmount() )
                                .show()

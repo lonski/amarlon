@@ -38,7 +38,7 @@ struct PlayableCharacterDescription;
 struct AiDescription;
 struct MonsterAiDescription;
 struct OpenableDescription;
-struct OpenableInventoryDescription;
+struct OpenableContaineryDescription;
 struct OpenableDoorDescription;
 struct WearerDescription;
 struct InventoryDescription;
@@ -52,7 +52,7 @@ typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescripti
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::shared_ptr<MonsterAiDescription> MonsterAiDescriptionPtr;
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
-typedef std::shared_ptr<OpenableInventoryDescription> OpenableInventoryDescriptionPtr;
+typedef std::shared_ptr<OpenableContaineryDescription> OpenableContaineryDescriptionPtr;
 typedef std::shared_ptr<OpenableDoorDescription> OpenableDoorDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
 typedef std::shared_ptr<InventoryDescription> InventoryDescriptionPtr;
@@ -176,7 +176,7 @@ struct OpenableDoorDescription : OpenableDescription
 {
 };
 
-struct OpenableInventoryDescription : OpenableDescription
+struct OpenableContaineryDescription : OpenableDescription
 {
 };
 

@@ -25,7 +25,7 @@ static inline void msgBox(const std::string& text, MsgType type = MsgType::Info)
     case MsgType::Info: color = TCODColor::darkerOrange; break;
   }
 
-  Engine::instance().windowManager()
+  Engine::instance().getWindowManager()
                     .getWindow<ResizeableTextWindow>()
                     .setWindowFrameColor(color)
                     .setWindowText(text)

@@ -4,6 +4,7 @@
 #include <attack_bonus_table.h>
 #include <iostream>
 #include <utils.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

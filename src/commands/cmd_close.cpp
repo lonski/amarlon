@@ -33,7 +33,7 @@ void CmdClose::execute()
   {
     if ( target.actors.size() == 1 )
     {
-      Actor::Player->performAction( std::make_shared<CloseAction>(toClose) );
+      Engine::instance().getPlayer()->performAction( std::make_shared<CloseAction>(toClose) );
     }
     else
     {

@@ -31,7 +31,7 @@ void CmdUse::execute()
 
     if ( tSelector != nullptr )
     {
-      Actor::Player->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
+      Engine::instance().getPlayer()->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
     }
   }
 }
@@ -40,7 +40,7 @@ ActorPtr CmdUse::acquireItemToUse()
 {
   ActorPtr item;
 
-  gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
+  gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
                    window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
                    window . setTitle("Choose item to use");
 
@@ -68,7 +68,7 @@ std::vector<ActorPtr> CmdUse::getUsableItems()
                                            return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect();
                                          };
 
-  return Actor::Player->getFeature<Inventory>()->items(filter);
+  return Engine::instance().getPlayer()->getFeature<Inventory>()->items(filter);
 }
 
 }

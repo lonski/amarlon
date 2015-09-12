@@ -6,6 +6,7 @@
 #include <pick_up_window.h>
 #include <message_box.h>
 #include <inventory.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 
@@ -37,7 +38,7 @@ bool OpenableContainer::open(ActorPtr executor)
                         [](ActorPtr a)->bool{ return a && a->getFeature<Pickable>() != nullptr; }
                       ); };
 
-    Engine::instance().windowManager()
+    Engine::instance().getWindowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(executor)
                       .setSource( sourceFun )
@@ -83,7 +84,7 @@ OpenablePtr OpenableContainer::Creator::create(OpenableDescriptionPtr dsc)
 {
   OpenablePtr op = nullptr;
 
-  OpenableInventoryDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableInventoryDescription>(dsc);
+  OpenableContaineryDescriptionPtr contDsc = std::dynamic_pointer_cast<OpenableContaineryDescription>(dsc);
   if ( contDsc != nullptr )
   {
     op = std::make_shared<OpenableContainer>();

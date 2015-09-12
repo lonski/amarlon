@@ -3,6 +3,7 @@
 #include <actor.h>
 #include <playable_character.h>
 #include <attack_bonus_table.h>
+#include <engine.h>
 
 const unsigned MARGIN = 2;
 
@@ -38,7 +39,7 @@ void CharacterInfo::update()
   _col1->clear();
   _col2->clear();
 
-  PlayableCharacterPtr character = std::dynamic_pointer_cast<PlayableCharacter>( Actor::Player->getFeature<Character>() );
+  PlayableCharacterPtr character = std::dynamic_pointer_cast<PlayableCharacter>( Engine::instance().getPlayer()->getFeature<Character>() );
   if ( character )
   {
     _col1->pushBack(ColoredString("HP : " + toStr(character->getHitPoints()) + "/" + toStr(character->getMaxHitPoints()) ));

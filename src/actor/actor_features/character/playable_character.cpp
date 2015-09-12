@@ -5,6 +5,7 @@
 #include <experience_table.h>
 #include <messenger.h>
 #include <inventory.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

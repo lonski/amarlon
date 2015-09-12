@@ -14,17 +14,17 @@ SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMes
 
 Target SingleNeighbourSelector::select(std::function<bool(ActorPtr)> filterFun)
 {
-  Engine::instance().gui().setStatusMessage( _selectionMessage );
+  Engine::instance().getGui().setStatusMessage( _selectionMessage );
   TCODConsole::root->flush();
-  MapPtr map = Actor::Player->getMap();
-  ActorPtr player = Actor::Player;
+  MapPtr map = Engine::instance().getPlayer()->getMap();
+  ActorPtr player = Engine::instance().getPlayer();
 
   int dx(0), dy(0);
 
   DirectionSelector dSelector;
   dSelector.select(dx, dy);
 
-  Engine::instance().gui().clearStatusMessage();
+  Engine::instance().getGui().clearStatusMessage();
   Engine::instance().render();
 
   assert( map != nullptr );

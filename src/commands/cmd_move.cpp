@@ -3,6 +3,7 @@
 #include <map.h>
 #include <move_action.h>
 #include <attack_action.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -22,21 +23,21 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
 void CmdMoveOrAttack::execute()
 {
   //if MoveAction failed then path is blocked
-  if ( !Actor::Player->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
+  if ( !Engine::instance().getPlayer()->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
   {
-    Actor::Player->performAction( std::make_shared<AttackAction>( getActorToAttack() ));
+    Engine::instance().getPlayer()->performAction( std::make_shared<AttackAction>( getActorToAttack() ));
   }
 }
 
 ActorPtr CmdMoveOrAttack::getActorToAttack()
 {
   ActorPtr toAttack;
-  MapPtr map = Actor::Player->getMap();
+  MapPtr map = Engine::instance().getPlayer()->getMap();
 
   if ( map )
   {
-    int targetX = Actor::Player->getX() + _dx;
-    int targetY = Actor::Player->getY() + _dy;
+    int targetX = Engine::instance().getPlayer()->getX() + _dx;
+    int targetY = Engine::instance().getPlayer()->getY() + _dy;
 
     std::function<bool (amarlon::ActorPtr)> filterFun = [&](amarlon::ActorPtr a)->bool
     {

@@ -6,7 +6,6 @@
 #include <libtcod.hpp>
 #include <actor_type.h>
 #include <amarlon_except.h>
-#include <actor_db.h>
 #include <actor_feature.h>
 #include <pickable.h>
 #include <character.h>
@@ -27,7 +26,6 @@ typedef std::weak_ptr<Map> MapWPtr;
 class Actor : public std::enable_shared_from_this<Actor>
 {
 public:
-  static ActorPtr Player;
   static unsigned InstanceCounter;
 
   static ActorPtr create(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);

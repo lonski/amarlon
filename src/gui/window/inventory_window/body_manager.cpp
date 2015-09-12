@@ -29,7 +29,7 @@ void BodyManager::manage()
   {
     ItemSlotType slot = static_cast<ItemSlotType>( item->getProperty<int>("ItemSlotType") );
 
-    if ( Actor::Player->getFeature<Wearer>()->isEquipped( slot ) )
+    if ( Engine::instance().getPlayer()->getFeature<Wearer>()->isEquipped( slot ) )
     {
       if ( unequipItem(slot) )
       {
@@ -51,7 +51,7 @@ void BodyManager::fillBodySlots()
 {  
   _bodyMenu->removeAllItems();
 
-  WearerPtr wearer = Actor::Player->getFeature<Wearer>();
+  WearerPtr wearer = Engine::instance().getPlayer()->getFeature<Wearer>();
   if ( wearer )
   {
     for (auto slot : ItemSlotType())
@@ -74,7 +74,7 @@ void BodyManager::fillBodySlots()
 bool BodyManager::unequipItem(ItemSlotType slot)
 {
   UnEquipActionPtr action = std::make_shared<UnEquipAction>(slot);
-  Actor::Player->performAction( action );
+  Engine::instance().getPlayer()->performAction( action );
 
   UnEquipResult status = action->getResult();
   switch ( status )
@@ -99,7 +99,7 @@ ActorPtr BodyManager::chooseItemToEquip(ItemSlotType slot)
 
   if ( !equipableItems.empty() )
   {
-    gui::MenuWindow& window = Engine::instance().windowManager().getWindow<gui::MenuWindow>();
+    gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
 
     window.setTitle("Choose item to equip");
     window.setPosition(gui::AWidget::WINDOW_CENTER);
@@ -126,13 +126,13 @@ std::vector<ActorPtr > BodyManager::getEquipableItemsList(ItemSlotType slot)
     return a->hasFeature<Pickable>() && a->getFeature<Pickable>()->getItemSlot() == slot;
   };
 
-  return Actor::Player->getFeature<Inventory>()->items( filterFun );
+  return Engine::instance().getPlayer()->getFeature<Inventory>()->items( filterFun );
 }
 
 bool BodyManager::equipItem(ActorPtr toEquip)
 {
   EquipActionPtr action = std::make_shared<EquipAction>(toEquip);
-  Actor::Player->performAction( action );
+  Engine::instance().getPlayer()->performAction( action );
   EquipResult result = action->getResult();
 
   switch(result)

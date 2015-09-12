@@ -49,17 +49,14 @@ void Engine::prologue(Configuration* cfg)
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
 
   getActorDB()     .load( cfg->get("actors_file") );
-  getTileDB()      .load( cfg->get("tiles_file" ) );
+  getTileDB ()     .load( cfg->get("tiles_file" ) );
   getSpellGateway().load( cfg->get("spells_file") );
 
   initializeWorld();
   Messenger::message()->setGui(_gui.get());
 
-  if ( Actor::Player == nullptr )
-  {
-    Actor::Player = Actor::create(ActorType::Player, 42, 28);
-    getWorld().getCurrentMap()->addActor( Actor::Player );
-  }
+  //temporary solution
+  _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getId() == ActorType::Player; }).front();
 }
 
 void Engine::initializeWorld()
@@ -91,23 +88,23 @@ void Engine::render()
 
   if ( map )
   {
-    map->computeFov(Actor::Player->getX(), Actor::Player->getY(), FovRadius);
+    map->computeFov(_player->getX(), _player->getY(), FovRadius);
     map->render(TCODConsole::root);
   }
 
   if (_gui)
   {
-    _gui->setPlayerName(Actor::Player->getName());
+    _gui->setPlayerName(_player->getName());
 
-    if ( Actor::Player->isAlive() )
-      _gui->setHpBar(Actor::Player->getFeature<Character>()->getHitPoints(), Actor::Player->getFeature<Character>()->getMaxHitPoints());
+    if ( _player->isAlive() )
+      _gui->setHpBar(_player->getFeature<Character>()->getHitPoints(), _player->getFeature<Character>()->getMaxHitPoints());
 
     _gui->setViewList(getActorsBenethPlayersFeet());
     _gui->render();
   }
 
-  TCODConsole::root->putChar(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getChar());
-  TCODConsole::root->setCharForeground(Actor::Player->getX(), Actor::Player->getY(), Actor::Player->getColor());
+  TCODConsole::root->putChar(_player->getX(), _player->getY(), _player->getChar());
+  TCODConsole::root->setCharForeground(_player->getX(), _player->getY(), _player->getColor());
 }
 
 void Engine::updateAis()
@@ -116,7 +113,7 @@ void Engine::updateAis()
   if ( map )
   {    
     std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};    
-    auto ais = map->getActors( &filter );
+    auto ais = map->getActors( filter );
     for ( ActorPtr actor : ais )
     {
       actor->getFeature<Ai>()->update();
@@ -124,17 +121,17 @@ void Engine::updateAis()
   }
 }
 
-void Engine::processKey(TCOD_key_t &key)
+void Engine::processInput(TCOD_key_t &key)
 {
   _cmdExecutor->execute(key);
 }
 
-gui::Gui& Engine::gui() const
+gui::Gui& Engine::getGui() const
 {
   return *_gui;
 }
 
-gui::WindowManager& Engine::windowManager() const
+gui::WindowManager& Engine::getWindowManager() const
 {
   return *_windowManager;
 }
@@ -147,6 +144,11 @@ World& Engine::getWorld() const
 SpellGateway& Engine::getSpellGateway() const
 {
   return *_spellGateway;
+}
+
+ActorPtr Engine::getPlayer() const
+{
+  return _player;
 }
 
 TileDB &Engine::getTileDB() const
@@ -168,10 +170,10 @@ std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
   {
     std::function<bool(amarlon::ActorPtr)> filterFun = [&](ActorPtr a) -> bool
     {
-      return a != Actor::Player;
+      return a != _player;
     };
 
-    std::vector<ActorPtr> actorsOnTile = map->getActors(Actor::Player->getX(), Actor::Player->getY(), filterFun);
+    std::vector<ActorPtr> actorsOnTile = map->getActors(_player->getX(), _player->getY(), filterFun);
 
     for ( ActorPtr actor : actorsOnTile )
     {

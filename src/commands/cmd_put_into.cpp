@@ -28,7 +28,7 @@ void CmdPutInto::execute()
     auto afterPutIntoAction =
     [&](const std::string& item, int amount)
     {
-      Messenger::message()->actorPutInto(Actor::Player->getName(), target->getName(), item, amount);
+      Messenger::message()->actorPutInto(Engine::instance().getPlayer()->getName(), target->getName(), item, amount);
     };
 
     auto containerFullAction =
@@ -38,11 +38,11 @@ void CmdPutInto::execute()
                   gui::MsgType::Error);
     };
 
-    Engine::instance().windowManager()
+    Engine::instance().getWindowManager()
                       .getWindow<gui::PickUpWindow>()
                       .setPicker(target)
-                      .setSource( [](){ return Actor::Player->getFeature<Inventory>()->items(); })
-                      .setRemoveAction([&](ActorPtr a){Actor::Player->getFeature<Inventory>()->remove(a);})
+                      .setSource( [](){ return Engine::instance().getPlayer()->getFeature<Inventory>()->items(); })
+                      .setRemoveAction([&](ActorPtr a){Engine::instance().getPlayer()->getFeature<Inventory>()->remove(a);})
                       .setAfterPickupAction( afterPutIntoAction )
                       .setInventoryFullAction( containerFullAction )
                       .setWindowTitle("Select item to put")

@@ -5,10 +5,10 @@
 #include <utils.h>
 #include <tile.h>
 #include <engine.h>
+#include <actor_db.h>
 
 namespace amarlon {
 
-ActorPtr Actor::Player(nullptr);
 unsigned Actor::InstanceCounter = 0;
 
 ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)

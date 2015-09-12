@@ -26,7 +26,7 @@ void CmdLook::execute()
     if ( characterIter != target.actors.end() )
     {
       Engine::instance()
-          .windowManager()
+          .getWindowManager()
           .getWindow<gui::FixedSizeTextWindow>()
           .setText( (*characterIter)->getDescription() )
           .show();

@@ -6,6 +6,7 @@
 #undef private
 #include <configuration.h>
 #include <engine.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

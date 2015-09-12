@@ -49,17 +49,20 @@ public:
 
   void prologue(Configuration *cfg);
   void epilogue();
+
   void render();
   void update();
-  void processKey(TCOD_key_t& key);
+  void processInput(TCOD_key_t& key);
 
-  gui::Gui& gui() const;
-  gui::WindowManager& windowManager() const;
+  gui::Gui&           getGui() const;
+  gui::WindowManager& getWindowManager() const;
 
-  World& getWorld() const;
+  World&        getWorld()        const;
+  TileDB&       getTileDB()       const;
+  ActorDB&      getActorDB()      const;
   SpellGateway& getSpellGateway() const;
-  TileDB& getTileDB() const;
-  ActorDB& getActorDB() const;
+
+  ActorPtr getPlayer() const;
 
 private:
   gui::GuiPtr _gui;
@@ -71,6 +74,8 @@ private:
   SpellGatewayPtr _spellGateway;
   TileDBPtr _tileDB;
   ActorDBPtr _actorsDB;
+
+  ActorPtr _player;
 
   void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();

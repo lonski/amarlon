@@ -2,6 +2,7 @@
 #include <actor.h>
 #include <character.h>
 #include <monster.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -9,7 +10,7 @@ MonsterMoveAction::MonsterMoveAction(int dx, int dy)
   : MoveAction(dx, dy)
   , _moveCost(0)
 {
-  CharacterPtr player = Actor::Player->getFeature<Character>();
+  CharacterPtr player = Engine::instance().getPlayer()->getFeature<Character>();
   _moveCost = player ? player->getSpeed() : 40;
 }
 

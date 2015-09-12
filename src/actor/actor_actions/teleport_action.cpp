@@ -25,7 +25,7 @@ bool TeleportAction::perform(ActorPtr performer)
   MapPtr newMap = Engine::instance().getWorld().fetch( _map );
   newMap->addActor( performer );
 
-  if ( performer == Actor::Player )
+  if ( performer == Engine::instance().getPlayer() )
   {
     Engine::instance().getWorld().changeMap( _map );
     Engine::instance().render();

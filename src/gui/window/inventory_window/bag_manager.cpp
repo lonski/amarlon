@@ -31,7 +31,7 @@ BagManager::BagManager(int w, int h)
 
 void BagManager::fillBag()
 {
-  InventoryPtr inventory = Actor::Player->getFeature<Inventory>();
+  InventoryPtr inventory = Engine::instance().getPlayer()->getFeature<Inventory>();
   if ( inventory )
   {
     std::function<std::string(ActorPtr)> category_function = [&](ActorPtr a)
@@ -78,11 +78,11 @@ void BagManager::manage()
       switch(operation)
       {
         case EQUIP: equip( selectedItem ); break;
-        case DROP: Actor::Player->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ); break;
+        case DROP: Engine::instance().getPlayer()->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ); break;
         //TODO display actor info text instead of test string
         case INSPECT:
           Engine::instance()
-              .windowManager()
+              .getWindowManager()
               .getWindow<FixedSizeTextWindow>()
               .setText( selectedItem->getDescription() )
               .show();
@@ -98,13 +98,13 @@ void BagManager::manage()
 void BagManager::equip(ActorPtr item)
 {
   EquipActionPtr equipAction = std::make_shared<EquipAction>(item);
-  Actor::Player->performAction( equipAction );
+  Engine::instance().getPlayer()->performAction( equipAction );
 
   switch( equipAction->getResult() )
   {
     case EquipResult::AlreadyEquiped:
       { //try to unequip, and then equip again
-        if ( Actor::Player->performAction( std::make_shared<UnEquipAction>( item->getFeature<Pickable>()->getItemSlot() )))
+        if ( Engine::instance().getPlayer()->performAction( std::make_shared<UnEquipAction>( item->getFeature<Pickable>()->getItemSlot() )))
         {
           equip( item );
         }
@@ -134,7 +134,7 @@ int BagManager::getAmountToDrop(ActorPtr toDrop)
   PickablePtr pickable = toDrop->getFeature<Pickable>();
   if ( pickable && pickable->isStackable() )
   {
-    amount = Engine::instance().windowManager()
+    amount = Engine::instance().getWindowManager()
                                .getWindow<gui::AmountWindow>()
                                .setMaxAmount( pickable->getAmount() )
                                .show()
@@ -147,7 +147,7 @@ int BagManager::getAmountToDrop(ActorPtr toDrop)
 
 BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(ActorPtr selected)
 {
-  MenuWindow& menu = Engine::instance().windowManager().getWindow<MenuWindow>();
+  MenuWindow& menu = Engine::instance().getWindowManager().getWindow<MenuWindow>();
   menu.setTitle( selected->getName() );
   menu.setPosition( gui::AWidget::WINDOW_CENTER );
 

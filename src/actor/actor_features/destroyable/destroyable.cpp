@@ -3,6 +3,7 @@
 #include <inventory.h>
 #include <map.h>
 #include <actor.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

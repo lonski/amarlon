@@ -18,8 +18,8 @@ void SingleRangeSelector::initValues()
 {
     _dx = 0;
     _dy = 0;
-    _x = Actor::Player->getX();
-    _y = Actor::Player->getY();
+    _x = Engine::instance().getPlayer()->getX();
+    _y = Engine::instance().getPlayer()->getY();
 }
 
 Target SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)> filterFun)
@@ -29,14 +29,14 @@ Target SingleRangeSelector::select(std::function<bool (amarlon::ActorPtr)> filte
     bool accepted = false;
     TCOD_key_t key;
     Target target;
-    MapPtr map = Actor::Player->getMap();
+    MapPtr map = Engine::instance().getPlayer()->getMap();
     render();
 
     if ( map )
     {
       while ( key.vk != TCODK_ESCAPE && !accepted )
       {
-          Engine::instance().gui().setStatusMessage( _selectionMessage );
+          Engine::instance().getGui().setStatusMessage( _selectionMessage );
           TCODSystem::waitForEvent(TCOD_KEY_PRESSED, &key, NULL, true);
 
           int dx_tmp(0), dy_tmp(0);
