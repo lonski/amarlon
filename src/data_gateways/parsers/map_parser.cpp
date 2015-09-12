@@ -43,6 +43,7 @@ MapPtr MapParser::parse()
 
     parseActions();
   }
+  _map->updateTiles();
   return _map;
 }
 

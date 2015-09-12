@@ -49,6 +49,7 @@ public:
 
   virtual void render(TCODConsole* console);
   virtual void updateTile(u32 x, u32 y);
+  void updateTiles();
 
   virtual void computeFov(int x, int y, int radius);
   virtual void deserializeTiles(std::vector<unsigned char> tiles);
@@ -79,8 +80,6 @@ private:
   void dateMapCoords(u32 x, u32 y);
   void renderTile(u32 x, u32 y, TCODConsole *console);
   void validateMapCoords(u32 x, u32 y);
-  void updateTiles();
-  void updateTile(Tile &tile);
 
 };
 

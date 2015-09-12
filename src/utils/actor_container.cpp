@@ -89,9 +89,14 @@ ActorContainer ActorContainer::filter(std::function<bool(ActorPtr)> fun)
   return ac;
 }
 
-ActorInventoryPtr ActorContainer::clone()
+std::vector<ActorPtr> ActorContainer::toVector()
 {
-  ActorInventoryPtr cloned( new ActorContainer );
+  return std::vector<ActorPtr>{ _collection.begin(), _collection.end() };
+}
+
+ActorContainerPtr ActorContainer::clone()
+{
+  ActorContainerPtr cloned( new ActorContainer );
 
   std::for_each(_collection.begin(), _collection.end(), [&](ActorPtr a)
   {

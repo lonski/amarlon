@@ -3,19 +3,20 @@
 
 #include <list>
 #include <memory>
+#include <vector>
 
 namespace amarlon {
 
 class Actor;
 class ActorContainer;
 typedef std::shared_ptr<Actor> ActorPtr;
-typedef std::shared_ptr<ActorContainer> ActorInventoryPtr;
+typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 
 class ActorContainer
 {
 public:
   ActorContainer();
-  ActorInventoryPtr clone();
+  ActorContainerPtr clone();
 
   typedef std::list<ActorPtr>::iterator iterator;
   typedef std::list<ActorPtr>::const_iterator const_iterator;
@@ -37,7 +38,7 @@ public:
 
   void sort(std::function<bool(ActorPtr, ActorPtr)> fun);
   ActorContainer filter(std::function<bool(ActorPtr)> fun);
-
+  std::vector<ActorPtr> toVector();
 
 private:
   std::list<ActorPtr> _collection;

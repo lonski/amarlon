@@ -23,7 +23,7 @@ Map::Map(u32 width, u32 height, MapId id)
     TileRow row;
     for(u32 x = 0; x < width; ++x)
     {
-      row.push_back(Tile(x, y));
+      row.push_back(Tile());
     }
     _tiles.push_back(row);
   }
@@ -58,7 +58,7 @@ void Map::addActor(ActorPtr actor)
   u32 y( actor->getY() );
   Tile& tile = getTile(x, y);
 
-  tile.actors->push_back(actor);
+  tile.addActor(actor);
   actor->setMap( shared_from_this() );
 }
 
@@ -69,21 +69,11 @@ ActorPtr Map::getFirstActor(int x, int y)
 
 std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)> filterFun)
 {
-  std::vector<ActorPtr> r;
   Tile& tile = getTile(x, y);
-
-  for ( ActorPtr a : *tile.actors )
-  {
-    if ( filterFun(a) )
-    {
-      r.push_back(a);
-    }
-  }
-
-  return r;
+  return tile.getActors( filterFun ).toVector();
 }
 
-std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)> filterFun)
+std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun)
 {
   std::vector<ActorPtr> r;
 
@@ -91,13 +81,8 @@ std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)> filterFun)
   {
     for(auto& tile : tileRow)
     {
-      for (ActorPtr a : *tile.actors )
-      {
-        if ( filterFun(a))
-        {
-          r.push_back(a);
-        }
-      }
+      auto actorsFromTile = tile.getActors( filterFun ).toVector();
+      r.insert( r.end(), actorsFromTile.begin(), actorsFromTile.end() );
     }
   }
 
@@ -107,7 +92,7 @@ std::vector<ActorPtr > Map::getActors(std::function<bool(ActorPtr)> filterFun)
 bool Map::removeActor(ActorPtr toRemove)
 {  
   Tile& tile = getTile(toRemove->getX(), toRemove->getY());
-  return tile.actors->remove( toRemove );
+  return tile.removeActor( toRemove );
 }
 
 void Map::render(TCODConsole *console)
@@ -133,7 +118,7 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
 
     color     = actor ? actor->getColor() : tile.getColor();
     character = actor ? actor->getChar()  : tile.getChar();
-    updateTile(tile);
+    updateTile(x, y);
   }
   else if ( isExplored(x,y) ) //Tile is beyond the 'fog of war'
   {
@@ -150,28 +135,24 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
 
 void Map::updateTiles()
 {
-  for ( auto row : _tiles )
+  for ( uint32_t y = 0; y < getHeight(); ++y )
   {
-    for ( auto tile : row )
+    for ( uint32_t x = 0; x < getWidth(); ++x )
     {
-      updateTile(tile);
+      updateTile(x, y);
     }
   }
 }
 
-void Map::updateTile(Tile& tile)
+void Map::updateTile(u32 x, u32 y)
 {
+  Tile& tile = getTile(x, y);
   ActorPtr actor = tile.top();
 
   bool walkable    = actor ? tile.isWalkable() && !actor->blocks() : tile.isWalkable();
   bool transparent = actor ? actor->isTransparent()                : tile.isTransparent();
 
-  _codMap.setProperties( tile.x, tile.y, transparent, walkable );
-}
-
-void Map::updateTile(u32 x, u32 y)
-{
-  updateTile( getTile(x, y) );
+  _codMap.setProperties( x, y, transparent, walkable );
 }
 
 void Map::computeFov(int x, int y, int radius)
@@ -181,15 +162,24 @@ void Map::computeFov(int x, int y, int radius)
 
 void Map::deserializeTiles(std::vector<unsigned char> tiles)
 {
+  uint32 y(0), x(0);
   for (int pos = 0; pos + sizeof(SerializedTile) <= tiles.size(); pos += sizeof(SerializedTile) )
   {
     SerializedTile* serialized = reinterpret_cast<SerializedTile*>(&tiles[pos]);
 
-    Tile& tile = getTile(serialized->x, serialized->y);
+    Tile& tile = getTile(x, y);
     tile.deserialize( *serialized );
-  }
 
-  updateTiles();
+    if ( x == getWidth() - 1 )
+    {
+      x = 0;
+      ++y;
+    }
+    else
+    {
+      ++x;
+    }
+  }
 }
 
 std::vector<unsigned char> Map::serializeTiles()
@@ -312,7 +302,7 @@ void Map::performActionOnActors(std::function<void(ActorPtr )> func)
   {
     for(auto& tile : tileRow)
     {
-      for( auto a : *tile.actors )
+      for( auto a : tile.getActors() )
       {
         func(a);
       }

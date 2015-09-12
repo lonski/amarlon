@@ -12,16 +12,13 @@ namespace amarlon {
 class ActorContainer;
 class Map;
 class Actor;
-typedef std::shared_ptr<ActorContainer> ActorInventoryPtr;
+typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 
 struct SerializedTile
 {
   uint8_t type;
   uint8_t flags;
-  uint8_t x;
-  uint8_t y;
-  uint8_t reserverd[4];
 };
 
 struct Tile
@@ -29,17 +26,13 @@ struct Tile
   constexpr static int defaultMonsterRenderPriority = 10;
   constexpr static int defaultItemRenderPriority = 20;
 
-  Tile(uint32_t x = 0, uint32_t y = 0);
+  Tile();
   Tile(const Tile& tile);
   Tile& operator=(const Tile& rhs);
 
-  ActorInventoryPtr actors;
-
-  //TODO: Rethink if the coords should be here here.
-  //      How to remove it and deserialize tiles?
-  //      Maybe serialize each row separately in xml?
-  uint32_t x;
-  uint32_t y;
+  void addActor(ActorPtr actor);
+  bool removeActor(ActorPtr actor);
+  ActorContainer getActors( std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
 
   bool isWalkable() const;
   bool isTransparent() const;
@@ -66,6 +59,7 @@ struct Tile
   void deserialize(const SerializedTile& t);
 
 private:
+  ActorContainerPtr _actors;
   uint8_t _flags;
   TileType _type;
 
