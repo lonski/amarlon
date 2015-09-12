@@ -2,6 +2,7 @@
 #include "executor_selector.h"
 #include "single_neighbour_selector.h"
 #include "single_range_selector.h"
+#include "single_range_projectile_selector.h"
 
 namespace amarlon {
 
@@ -20,6 +21,7 @@ TargetSelector* TargetSelector::create(TargetType type)
     case TargetType::SELF: ts = new ExecutorSelector; break;
     case TargetType::SINGLE_NEIGHBOUR: ts = new SingleNeighbourSelector; break;
     case TargetType::SINGLE_RANGE: ts = new SingleRangeSelector; break;
+    case TargetType::SINGLE_RANGE_PROJECTILE: ts = new SingleRangeProjectileSelector; break;
     default:;
   }
 

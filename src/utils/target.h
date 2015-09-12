@@ -14,6 +14,7 @@ typedef std::shared_ptr<Actor> ActorPtr;
 struct Target
 {
   Target(std::vector<ActorPtr> actors_, uint32_t x_, uint32_t y_ );
+  Target(uint32_t x_, uint32_t y_ );
   Target();
 
   ActorPtr firstActor(std::function<bool(ActorPtr)>* filter = nullptr) const;

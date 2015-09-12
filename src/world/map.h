@@ -52,6 +52,7 @@ public:
   void updateTiles();
 
   virtual void computeFov(int x, int y, int radius);
+  virtual TCODMap& getCODMap();
   virtual void deserializeTiles(std::vector<unsigned char> tiles);
   std::vector<unsigned char> serializeTiles();
 

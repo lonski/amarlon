@@ -1,6 +1,9 @@
 #include "utils.h"
 #include <actor.h>
 #include <pickable.h>
+#include <engine.h>
+#include <map.h>
+#include <world.h>
 
 namespace amarlon {
 
@@ -124,6 +127,28 @@ std::vector<std::string> explode(const std::string &str, char ch)
   }
 
   return result;
+}
+
+float calculateDistance(int ox, int oy, int tx, int ty)
+{
+  int dx = ox - tx;
+  int dy = oy - ty;
+
+  return sqrtf( dx*dx + dy*dy );
+}
+
+TCODPath* calculatePath(Target start, Target end)
+{
+  MapPtr map = Engine::instance().getWorld().getCurrentMap();
+  if ( start && end && map )
+  {
+    TCODMap& codMap = map->getCODMap();
+    TCODPath* path = new TCODPath( &codMap, 1.0f );
+    path->compute( start.x, start.y, end.x, end.y );
+
+    return path;
+  }
+  return nullptr;
 }
 
 }

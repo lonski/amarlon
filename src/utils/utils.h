@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <memory>
 #include "libtcod.hpp"
+#include <target.h>
 
 namespace amarlon {
 
@@ -21,6 +22,8 @@ std::string colorToStr(TCODColor color, bool braces = false);
 TCODColor strToColor(const std::string& str);
 bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy);
 std::string getItemNameAndAmount(ActorPtr a);
+float calculateDistance(int ox, int oy, int tx, int ty);
+TCODPath *calculatePath(Target start, Target end );
 
 template<typename T>
 static T fromStr(const std::string& s)

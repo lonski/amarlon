@@ -49,7 +49,9 @@ bool Map::isInFov(int x, int y)
 
 bool Map::isBlocked(int x, int y)
 {
-  return !_codMap.isWalkable(x,y);
+  ActorPtr actor = getTile(x,y).top();
+  bool actorBlocks = actor ? actor->blocks() : false;
+  return !_codMap.isWalkable(x,y) || actorBlocks;
 }
 
 void Map::addActor(ActorPtr actor)
@@ -149,8 +151,8 @@ void Map::updateTile(u32 x, u32 y)
   Tile& tile = getTile(x, y);
   ActorPtr actor = tile.top();
 
-  bool walkable    = actor ? tile.isWalkable() && !actor->blocks() : tile.isWalkable();
-  bool transparent = actor ? actor->isTransparent()                : tile.isTransparent();
+  bool walkable    = tile.isWalkable();
+  bool transparent = actor ? actor->isTransparent(): tile.isTransparent();
 
   _codMap.setProperties( x, y, transparent, walkable );
 }
@@ -158,6 +160,11 @@ void Map::updateTile(u32 x, u32 y)
 void Map::computeFov(int x, int y, int radius)
 {
   _codMap.computeFov(x,y,radius);
+}
+
+TCODMap& Map::getCODMap()
+{
+  return _codMap;
 }
 
 void Map::deserializeTiles(std::vector<unsigned char> tiles)

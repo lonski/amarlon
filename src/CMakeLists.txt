@@ -92,6 +92,7 @@ set(HEADER_FILES
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
+    utils/target_selector/single_range_projectile_selector.h
     utils/target_selector/target_selector.h
     utils/colored_string.h
     utils/direction_selector.h
@@ -219,12 +220,14 @@ set(SOURCE_FILES
     gui/window/text_window/resizeable_text_window.cpp    
     gui/window/text_window/fixed_size_text_window.cpp
     utils/target_selector/executor_selector.cpp
+    utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
     utils/target_selector/target_selector.cpp
     utils/target_selector/single_range_selector.cpp
     utils/direction_selector.cpp
     utils/messenger.cpp
     utils/utils.cpp
+    utils/console_utils.cpp
     utils/configuration.cpp
     utils/dices.cpp
     utils/text_formater.cpp

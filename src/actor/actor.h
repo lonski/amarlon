@@ -45,6 +45,7 @@ public:
   bool isTransparent() const;
   bool blocks() const;
   int getTileRenderPriority() const;
+  float getDistance(uint32_t x, uint32_t y);
 
   /**
    * Actor ID is not an unique instance id, but a type id from <actor_type.h>

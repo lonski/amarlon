@@ -117,6 +117,11 @@ int Actor::getTileRenderPriority() const
   return priority;
 }
 
+float Actor::getDistance(uint32_t x, uint32_t y)
+{
+  return calculateDistance( getX(), getY(), x, y );
+}
+
 ActorType Actor::getId() const
 {
   return _id;

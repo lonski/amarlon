@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <utils.h>
+#include <console_utils.h>
 
 namespace amarlon { namespace animation {
 
@@ -20,21 +21,22 @@ AnimationPtr Throw::clone()
 
 void Throw::run(TCODConsole& console)
 {
-  Target loc  = getStartLocation();
+  Target start  = getStartLocation();
   Target stop = getEndLocation();
 
-  while( loc.x != stop.x || loc.y != stop.y)
+  TCODPath* path = calculatePath(start, stop);
+  while( path && !path->isEmpty() )
   {
-    if (loc.x != stop.x ) loc.x < stop.x ? ++loc.x : --loc.x;
-    if (loc.y != stop.y ) loc.y < stop.y ? ++loc.y : --loc.y;
+    int x(0), y(0);
+    path->walk(&x, &y, true);
 
     Engine::instance().render();
-    console.putChar(loc.x, loc.y, _ch);
-    console.setCharForeground(loc.x, loc.y, _color);
+    setTile(x, y, _ch, _color);
+
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
   }
-
+  delete path;
 }
 
 Type Throw::getType() const
