@@ -13,26 +13,14 @@ typedef std::shared_ptr<Actor> ActorPtr;
 
 struct Target
 {
-  Target(std::vector<ActorPtr> actors_, uint32_t x_, uint32_t y_ )
-    : actors(actors_)
-    , x(x_)
-    , y(y_)
-  {}
+  Target(std::vector<ActorPtr> actors_, uint32_t x_, uint32_t y_ );
+  Target();
 
-  Target()
-    : x(0)
-    , y(0)
-  {}
+  ActorPtr firstActor(std::function<bool(ActorPtr)>* filter = nullptr) const;
 
-  ActorPtr firstActor(std::function<bool(ActorPtr)>* filter = nullptr) const
-  {
-    if ( filter )
-    {
-      auto it = std::find_if(actors.begin(), actors.end(), *filter);
-      return it != actors.end() ? *it : nullptr;
-    }
-    return actors.empty() ? nullptr : actors.front();
-  }
+  bool operator==(const Target& rhs) const;
+  bool operator!=(const Target& rhs) const;
+  operator bool() const;
 
   std::vector<ActorPtr> actors;
   uint32_t x;

@@ -36,7 +36,7 @@ Tile &Tile::operator=(const Tile &rhs)
 void Tile::addActor(ActorPtr actor)
 {
   _actors->push_back(actor);
-  _actors->sort( [](ActorPtr a1, ActorPtr a2){ return a1->getTileRenderPriority() > a2->getTileRenderPriority();} );
+  _actors->sort( [](ActorPtr a1, ActorPtr a2){ return a1->getTileRenderPriority() < a2->getTileRenderPriority();} );
 }
 
 bool Tile::removeActor(ActorPtr actor)

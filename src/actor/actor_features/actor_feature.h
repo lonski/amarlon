@@ -38,7 +38,7 @@ public:
   void setOwner(ActorWPtr owner);
   ActorWPtr getOwner();
   virtual ActorFeaturePtr clone() = 0;
-  virtual bool isEqual(ActorFeaturePtr rhs) = 0;
+  virtual bool isEqual(ActorFeaturePtr rhs) const = 0;
   virtual ActorFeature::Type getType() = 0;
   virtual std::string getDescription();
 

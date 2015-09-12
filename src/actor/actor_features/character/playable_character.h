@@ -22,7 +22,7 @@ public:
   ~PlayableCharacter();
 
   virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   /* overriden functions */
   virtual CarryingCapacity::LoadLevel getLoadLevel();

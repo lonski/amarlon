@@ -26,7 +26,7 @@ ActorFeaturePtr Monster::clone()
   return ActorFeaturePtr( new Monster(*this) );
 }
 
-bool Monster::isEqual(ActorFeaturePtr rhs)
+bool Monster::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   MonsterPtr crhs = std::dynamic_pointer_cast<Monster>(rhs);

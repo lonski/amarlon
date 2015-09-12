@@ -31,7 +31,7 @@ ActorFeaturePtr MonsterAi::clone()
   return cloned;
 }
 
-bool MonsterAi::isEqual(ActorFeaturePtr rhs)
+bool MonsterAi::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   MonsterAiPtr crhs = std::dynamic_pointer_cast<MonsterAi>(rhs);

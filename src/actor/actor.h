@@ -34,7 +34,7 @@ public:
 
   void init();
   ActorPtr clone();  
-  bool operator==(const Actor& rhs);
+  bool operator==(const Actor& rhs) const;
 
   //void move(int dx, int dy);
   void morph(ActorType newType);

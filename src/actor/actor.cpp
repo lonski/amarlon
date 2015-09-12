@@ -61,7 +61,7 @@ ActorPtr Actor::clone()
 
   return cloned;
 }
-bool Actor::operator==(const Actor &rhs)
+bool Actor::operator==(const Actor &rhs) const
 {
   bool equal = true;
 

@@ -53,7 +53,7 @@ ActorFeaturePtr OpenableDoor::clone()
   return cloned;
 }
 
-bool OpenableDoor::isEqual(ActorFeaturePtr rhs)
+bool OpenableDoor::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   OpenableDoorPtr crhs = std::dynamic_pointer_cast<OpenableDoor>(rhs);

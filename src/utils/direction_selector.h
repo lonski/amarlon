@@ -9,7 +9,12 @@ class DirectionSelector
 {
 public:
   DirectionSelector();
-  TCOD_key_t select(int& dx, int& dy);
+
+  /**
+   * @brief Updates the coordinates according to selected direction.
+   * @return False if selection was aboirted, true otherwise
+   */
+  bool select(int& dx, int& dy);
 
 };
 

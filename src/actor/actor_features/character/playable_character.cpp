@@ -22,7 +22,7 @@ ActorFeaturePtr PlayableCharacter::clone()
   return ActorFeaturePtr( new PlayableCharacter(*this) );
 }
 
-bool PlayableCharacter::isEqual(ActorFeaturePtr rhs)
+bool PlayableCharacter::isEqual(ActorFeaturePtr rhs) const
 {  
   bool equal = false;
   PlayableCharacterPtr crhs = std::dynamic_pointer_cast<PlayableCharacter>(rhs);

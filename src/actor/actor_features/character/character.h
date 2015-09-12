@@ -45,7 +45,7 @@ public:
   Character();
   static CharacterPtr create(DescriptionPtr dsc);
 
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual bool isAlive() const;
   virtual int getHitPoints() const;

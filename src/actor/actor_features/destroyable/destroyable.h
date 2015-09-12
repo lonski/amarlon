@@ -19,7 +19,7 @@ public:
   static DestroyablePtr create(DescriptionPtr dsc);
 
   virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
   virtual ActorFeature::Type getType();
 
   void destroy();

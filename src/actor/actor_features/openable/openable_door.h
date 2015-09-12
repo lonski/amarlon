@@ -22,7 +22,7 @@ public:
   OpenableDoor();
 
   virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual bool open(ActorPtr executor);
   virtual bool close(ActorPtr executor);

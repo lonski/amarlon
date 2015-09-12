@@ -231,6 +231,7 @@ set(SOURCE_FILES
     utils/base64.cpp
     utils/damage.cpp
     utils/actor_container.cpp
+    utils/target.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp

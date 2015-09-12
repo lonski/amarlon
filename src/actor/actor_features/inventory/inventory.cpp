@@ -61,7 +61,7 @@ ActorFeaturePtr Inventory::clone()
   return cloned;
 }
 
-bool Inventory::isEqual(ActorFeaturePtr rhs)
+bool Inventory::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   InventoryPtr crhs = std::dynamic_pointer_cast<Inventory>(rhs);

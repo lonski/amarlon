@@ -69,7 +69,7 @@ ActorFeaturePtr Wearer::clone()
   return cloned;
 }
 
-bool Wearer::isEqual(ActorFeaturePtr rhs)
+bool Wearer::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   WearerPtr crhs = std::dynamic_pointer_cast<Wearer>(rhs);
@@ -122,12 +122,12 @@ ActorPtr Wearer::unequip(ItemSlotType slot)
   return r;
 }
 
-bool Wearer::isEquipped(ItemSlotType slot)
+bool Wearer::isEquipped(ItemSlotType slot) const
 {
   return (equipped(slot) != nullptr);
 }
 
-ActorPtr Wearer::equipped(ItemSlotType slot)
+ActorPtr Wearer::equipped(ItemSlotType slot) const
 {
   ActorPtr r;
   auto it = _itemSlots.find(slot);
@@ -139,7 +139,7 @@ ActorPtr Wearer::equipped(ItemSlotType slot)
   return r;
 }
 
-bool Wearer::hasSlot(ItemSlotType slot)
+bool Wearer::hasSlot(ItemSlotType slot) const
 {
   return (_itemSlots.find(slot) != _itemSlots.end());
 }

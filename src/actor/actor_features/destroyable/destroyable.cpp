@@ -38,7 +38,7 @@ ActorFeaturePtr Destroyable::clone()
   return cloned;
 }
 
-bool Destroyable::isEqual(ActorFeaturePtr rhs)
+bool Destroyable::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = true;
 

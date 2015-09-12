@@ -24,13 +24,13 @@ public:
   virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   bool equip(ActorPtr item);
   ActorPtr unequip(ItemSlotType slot);
-  bool isEquipped(ItemSlotType slot);
-  ActorPtr equipped(ItemSlotType slot);
-  bool hasSlot(ItemSlotType slot);
+  bool isEquipped(ItemSlotType slot) const;
+  ActorPtr equipped(ItemSlotType slot) const;
+  bool hasSlot(ItemSlotType slot) const;
 
 private:
   std::map<ItemSlotType, ActorPtr> _itemSlots;

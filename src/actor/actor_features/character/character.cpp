@@ -31,7 +31,7 @@ CharacterPtr Character::create(DescriptionPtr dsc)
   return factory.produce( std::dynamic_pointer_cast<CharacterDescription>(dsc) );
 }
 
-bool Character::isEqual(ActorFeaturePtr rhs)
+bool Character::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   CharacterPtr crhs = std::dynamic_pointer_cast<Character>(rhs);

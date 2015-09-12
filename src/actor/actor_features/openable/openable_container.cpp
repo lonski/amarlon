@@ -67,7 +67,7 @@ ActorFeaturePtr OpenableContainer::clone()
   return cloned;
 }
 
-bool OpenableContainer::isEqual(ActorFeaturePtr rhs)
+bool OpenableContainer::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   OpenableInventoryPtr crhs = std::dynamic_pointer_cast<OpenableContainer>(rhs);

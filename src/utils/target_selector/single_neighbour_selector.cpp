@@ -1,14 +1,15 @@
 #include "single_neighbour_selector.h"
-#include "utils/direction_selector.h"
-#include "world/map.h"
-#include "actor/actor.h"
-#include "engine.h"
-#include "gui/gui.h"
+#include <direction_selector.h>
+#include <map.h>
+#include <actor.h>
+#include <engine.h>
+#include <gui.h>
 
 namespace amarlon {
 
 SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMessage)
   : TargetSelector(selectionMessage)
+  , _selector( new DirectionSelector )
 {
 }
 
@@ -20,18 +21,15 @@ Target SingleNeighbourSelector::select(std::function<bool(ActorPtr)> filterFun)
   ActorPtr player = Engine::instance().getPlayer();
 
   int dx(0), dy(0);
-
-  DirectionSelector dSelector;
-  dSelector.select(dx, dy);
+  bool selected = _selector->select(dx, dy);
 
   Engine::instance().getGui().clearStatusMessage();
   Engine::instance().render();
 
-  assert( map != nullptr );
-
-  return Target(map->getActors(player->getX()+dx, player->getY()+dy, filterFun),
-                player->getX()+dx,
-                player->getY()+dy);
+  return selected ? Target(map->getActors(player->getX()+dx, player->getY()+dy, filterFun),
+                           player->getX()+dx,
+                           player->getY()+dy)
+                  : Target();
 }
 
 }

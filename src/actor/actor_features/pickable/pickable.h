@@ -32,7 +32,7 @@ public:
   virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual TargetType getTargetType() const;
   virtual bool use(ActorPtr executor, const Target& target);

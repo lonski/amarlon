@@ -85,7 +85,7 @@ ActorFeaturePtr Pickable::clone()
   return cloned;
 }
 
-bool Pickable::isEqual(ActorFeaturePtr rhs)
+bool Pickable::isEqual(ActorFeaturePtr rhs) const
 {
   bool equal = false;
   PickablePtr crhs = std::dynamic_pointer_cast<Pickable>(rhs);

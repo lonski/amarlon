@@ -26,7 +26,7 @@ public:
   MonsterAi();
 
   virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual void update();
 
