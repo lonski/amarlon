@@ -21,6 +21,7 @@ SpellDescriptionPtr SpellParser::parseSpellDsc()
     spellDsc->spellClass = getAttribute<int>(_xml, "class");
     spellDsc->targetType = getAttribute<int>(_xml, "targetType");
     spellDsc->range = getAttribute<int>(_xml, "range");
+    spellDsc->radius = getAttribute<int>(_xml, "radius");
     spellDsc->id = getAttribute<int>(_xml, "id");
 
     rapidxml::xml_node<>* effectsNode = _xml->first_node("Effects");

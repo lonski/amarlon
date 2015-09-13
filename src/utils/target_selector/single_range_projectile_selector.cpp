@@ -67,7 +67,7 @@ void SingleRangeProjectileSelector::render()
 
   Engine::instance().render();
   renderPath( Target(_x, _y), Target(_tx, _ty) );
-  highlightCircle( getRange(), Target({player}, player->getX(), player->getY()), TCODColor::lighterYellow * 0.1);
+  highlightCircle( getRange(), Target({player}, player->getX(), player->getY()));
   Engine::instance().getGui().setStatusMessage( _selectionMessage );
 
   TCODConsole::root->flush();

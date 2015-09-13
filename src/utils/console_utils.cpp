@@ -6,7 +6,7 @@
 
 namespace amarlon {
 
-void highlightCircle(int range, Target center, TCODColor color)
+void highlightCircle(int range, Target center)
 {
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
   if ( map )
@@ -17,7 +17,7 @@ void highlightCircle(int range, Target center, TCODColor color)
       {
         if ( calculateDistance(center.x, center.y, x, y ) <= range )
         {
-          TCODConsole::root->setCharBackground(x,y,color);
+          TCODConsole::root->setCharBackground(x,y, TCODColor::lighterYellow * 0.1);
         }
       }
     }
@@ -46,6 +46,14 @@ void renderPath(Target start, Target end)
     delete path;
     setTile(end.x, end.y, 'x', TCODColor::red);
   }
+}
+
+void highlightCell(uint32_t x, uint32_t y)
+{
+  TCODColor fgcol = TCODConsole::root->getCharForeground(x, y);
+  TCODColor bgcol = TCODConsole::root->getCharBackground(x, y);
+  TCODConsole::root->setCharForeground(x, y, TCODColor::lerp(fgcol, TCODColor::yellow, 0.6));
+  TCODConsole::root->setCharBackground(x, y, TCODColor::lerp(bgcol, TCODColor::yellow, 0.1));
 }
 
 }

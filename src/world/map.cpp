@@ -75,6 +75,23 @@ std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)
   return tile.getActors( filterFun ).toVector();
 }
 
+std::vector<ActorPtr> Map::getActors(int x, int y, int radius, std::function<bool (ActorPtr)> filterFun)
+{
+  std::vector<ActorPtr> actors;
+  for( uint32_t ly = 0; ly < getHeight(); ++ly )
+  {
+    for( uint32_t lx = 0; lx < getWidth(); ++lx )
+    {
+      if ( calculateDistance(x, y, lx, ly ) <= radius )
+      {
+        auto actorsFromTile = getActors(lx,ly,filterFun);
+        actors.insert(actors.end(), actorsFromTile.begin(), actorsFromTile.end());
+      }
+    }
+  }
+  return actors;
+}
+
 std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun)
 {
   std::vector<ActorPtr> r;

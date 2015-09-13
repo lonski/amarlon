@@ -3,25 +3,23 @@
 
 #include <target_selector.h>
 #include <functional>
+#include <target.h>
 
 namespace amarlon {
 
 class SingleRangeSelector : public TargetSelector
 {
 public:
-    SingleRangeSelector(const std::string& selectionMessage = "Select a tile...");
+    SingleRangeSelector(const std::string& selectionMessage = "Navigate to select a tile. Press [ESC] to cancel.");
 
     virtual Target select(std::function<bool (amarlon::ActorPtr)> filterFun = [](ActorPtr){return true;});
 
 private:
-    int _dx;
-    int _dy;
-    int _x;
-    int _y;
+    Target tStart;
+    Target tEnd;
 
     void render();
-    void initValues();
-    void highlightCurrentTile();
+    void initialize();
 };
 
 }

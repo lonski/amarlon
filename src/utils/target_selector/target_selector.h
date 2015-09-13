@@ -46,11 +46,14 @@ public:
 
   virtual void setRange(int range);
   virtual int getRange() const;
+  virtual void setRadius(int radius);
+  virtual int getRadius() const;
 
 protected:
   std::string _selectionMessage;
   std::function<void()> _updateFunction;
   int _range;
+  int _radius;
 
 };
 

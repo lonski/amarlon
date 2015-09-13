@@ -3,12 +3,14 @@
 #include "single_neighbour_selector.h"
 #include "single_range_selector.h"
 #include "single_range_projectile_selector.h"
+#include "area_range_selector.h"
 
 namespace amarlon {
 
 TargetSelector::TargetSelector(const std::string &selectionMessage)
   : _selectionMessage(selectionMessage)
   , _range(0)
+  , _radius(0)
 {
 }
 
@@ -18,10 +20,11 @@ TargetSelector* TargetSelector::create(TargetType type)
 
   switch(type)
   {
-    case TargetType::SELF: ts = new ExecutorSelector; break;
-    case TargetType::SINGLE_NEIGHBOUR: ts = new SingleNeighbourSelector; break;
-    case TargetType::SINGLE_RANGE: ts = new SingleRangeSelector; break;
+    case TargetType::SELF:                    ts = new ExecutorSelector; break;
+    case TargetType::SINGLE_NEIGHBOUR:        ts = new SingleNeighbourSelector; break;
+    case TargetType::SINGLE_RANGE:            ts = new SingleRangeSelector; break;
     case TargetType::SINGLE_RANGE_PROJECTILE: ts = new SingleRangeProjectileSelector; break;
+    case TargetType::AREA_RANGE:              ts = new AreaRangeSelector; break;
     default:;
   }
 
@@ -48,6 +51,16 @@ void TargetSelector::setRange(int range)
 int TargetSelector::getRange() const
 {
   return _range;
+}
+
+void TargetSelector::setRadius(int radius)
+{
+  _radius = radius;
+}
+
+int TargetSelector::getRadius() const
+{
+  return _radius;
 }
 
 }

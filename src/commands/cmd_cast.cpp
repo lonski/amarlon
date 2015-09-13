@@ -28,6 +28,7 @@ void CmdCast::execute()
      if ( selector )
      {
        selector->setRange( spell->getRange() );
+       selector->setRadius( spell->getRadius() );
        ActorActionPtr action( new CastAction(spell, selector->select()) );
        if ( !Engine::instance().getPlayer()->performAction( action ) )
        {

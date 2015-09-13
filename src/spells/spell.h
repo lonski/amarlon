@@ -40,6 +40,7 @@ public:
   virtual int getLevel() const;
   virtual TargetType getTargetType() const;
   virtual int getRange() const;
+  virtual int getRadius() const;
 
 private:
   std::string _name;
@@ -48,6 +49,7 @@ private:
   TargetType _targetType;
   SpellId _id;
   int _range;
+  int _radius;
 
   std::set< std::pair<int, std::vector<EffectPtr> > > _effects;
   animation::AnimationPtr _animation;

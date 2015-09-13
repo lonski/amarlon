@@ -10,7 +10,8 @@ namespace amarlon {
 class Map;
 typedef std::shared_ptr<Map> MapPtr;
 
-void highlightCircle(int range, Target center, TCODColor color);
+void highlightCircle(int range, Target center);
+void highlightCell(uint32_t x, uint32_t y);
 void setTile(uint32_t x, uint32_t y, char c, TCODColor color);
 void renderPath(Target start, Target end);
 
