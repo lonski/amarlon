@@ -14,18 +14,15 @@ bool DamageEffect::apply(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
-  std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->isAlive(); };
-  ActorPtr targetActor = target.firstActor(&filter);
-  if ( targetActor )
+  for ( auto a : target.actors )
   {
-    CharacterPtr character = targetActor->getFeature<Character>();
+    CharacterPtr character = a->getFeature<Character>();
     if ( character )
     {
       int hpBefore = character->getHitPoints();
+      std::string victimName = a->getName();
       character->takeDamage(_damage);
-
-      Messenger::message()->actorHit(executor, targetActor, hpBefore - character->getHitPoints() );
-
+      Messenger::message()->actorHit( executor->getName(), victimName, hpBefore - character->getHitPoints() );
       r = true;
     }
   }

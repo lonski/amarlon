@@ -108,11 +108,12 @@
 						<Pickable stackable="0" amount="1" itemSlot="7" category="1" armorClass="0" weight="1" price="2" damageDice="1d4"/>
 					</Content>
 				</Container>
-				<PlayableCharacter level="1" hitPoints="7" maxHitPoints="8" experience="0" armorClass="11" speed="40" class="1" race="1">
+				<PlayableCharacter level="3" hitPoints="7" maxHitPoints="8" experience="0" armorClass="11" speed="40" class="1" race="1">
 					<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14"/>
 					<Spells>
 						<Spell id="1"/>
 						<Spell id="2"/>
+						<Spell id="3"/>
 					</Spells>
 				</PlayableCharacter>
 				<Destroyable/>				

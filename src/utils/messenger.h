@@ -19,7 +19,7 @@ public:
 
   void setGui(gui::Gui* gui);
 
-  void actorHit(ActorPtr atacker, ActorPtr victim, int amount);
+  void actorHit(const std::string &atacker, const std::string &victim, int amount);
   void actorMissed(ActorPtr atacker, ActorPtr victim);
   void actorDies(ActorPtr victim);
   void actorPicked(ActorPtr picker, ActorPtr picked, int amount);

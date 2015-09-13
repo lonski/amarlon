@@ -16,10 +16,9 @@ SingleRangeProjectileSelector::SingleRangeProjectileSelector(const std::string &
 
 void SingleRangeProjectileSelector::initialize()
 {
-  _tx = 0;
-  _ty = 0;
-  _x = Engine::instance().getPlayer()->getX();
-  _y = Engine::instance().getPlayer()->getY();
+  tStart.x = Engine::instance().getPlayer()->getX();
+  tStart.y = Engine::instance().getPlayer()->getY();
+  tEnd = tStart;
   _map = Engine::instance().getPlayer()->getMap();
 }
 
@@ -27,7 +26,7 @@ Target SingleRangeProjectileSelector::select(std::function<bool (ActorPtr)> filt
 {
   initialize();
 
-  auto actors = _map->getActors([&](ActorPtr a){ return a->getDistance(_x, _y) <= getRange() &&
+  auto actors = _map->getActors([&](ActorPtr a){ return a->getDistance(tStart.x, tStart.y) <= getRange() &&
                                                         a->isAlive() &&
                                                         _map->isInFov(a->getX(), a->getY() ) &&
                                                         a->getId() != ActorType::Player &&
@@ -45,12 +44,12 @@ Target SingleRangeProjectileSelector::select(std::function<bool (ActorPtr)> filt
         if ( aIter == actors.end() ) aIter = actors.begin();
       }
 
-      _tx = (*aIter)->getX();
-      _ty = (*aIter)->getY();
+      tEnd.x = (*aIter)->getX();
+      tEnd.y = (*aIter)->getY();
 
       if ( key.vk == TCODK_ENTER || key.vk == TCODK_KPENTER )
       {
-        return Target( {*aIter}, _tx, _ty );
+        return Target( {*aIter}, tEnd.x, tEnd.y );
       }
     }
 
@@ -66,7 +65,7 @@ void SingleRangeProjectileSelector::render()
   ActorPtr player = Engine::instance().getPlayer();
 
   Engine::instance().render();
-  renderPath( Target(_x, _y), Target(_tx, _ty) );
+  renderPath( tStart, tEnd );
   highlightCircle( getRange(), Target({player}, player->getX(), player->getY()));
   Engine::instance().getGui().setStatusMessage( _selectionMessage );
 

@@ -26,6 +26,8 @@ void AreaRangeSelector::render()
   Engine::instance().render();
   Engine::instance().getGui().setStatusMessage( _selectionMessage );
   highlightCell(tEnd.x, tEnd.y);
+  highlightCircle( getRadius(), tEnd);
+  renderPath(tStart, tEnd);
   TCODConsole::root->flush();
 }
 

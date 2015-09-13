@@ -18,10 +18,8 @@ public:
     virtual Target select(std::function<bool (amarlon::ActorPtr)> filterFun = [](ActorPtr){return true;});
 
 private:
-    int _tx;
-    int _ty;
-    int _x;
-    int _y;
+    Target tStart;
+    Target tEnd;
     MapPtr _map;
 
     void render();

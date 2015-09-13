@@ -27,11 +27,11 @@ void Messenger::setGui(gui::Gui *gui)
   _gui = gui;
 }
 
-void Messenger::actorHit(ActorPtr atacker, ActorPtr victim, int amount)
+void Messenger::actorHit(const std::string& atacker, const std::string& victim, int amount)
 {
   if ( _gui )
   {
-    string msg = atacker->getName() + " hits " + tolowers(victim->getName());
+    string msg = atacker + " hits " + tolowers(victim);
 
     if (amount > 0)
     {

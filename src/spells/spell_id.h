@@ -7,7 +7,8 @@ enum class SpellId
 {
   Null            = 0,
   CureLightWounds = 1,
-  MagicMissile    = 2
+  MagicMissile    = 2,
+  Fireball        = 3
 };
 
 }

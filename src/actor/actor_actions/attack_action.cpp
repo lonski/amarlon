@@ -38,7 +38,8 @@ bool AttackAction::perform(ActorPtr performer)
           hit = true;
           int exp = attacked->getExperience();
 
-          Messenger::message()->actorHit( _performer, _target,
+          std::string attackedName = _target->getName();
+          Messenger::message()->actorHit( _performer->getName(), attackedName,
                                           attacked->takeDamage(attacker->getDamage()) );
 
           if ( !_target->isAlive() )
