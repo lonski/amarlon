@@ -13,6 +13,7 @@ Spell::Spell()
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
   , _range(0)
   , _radius(0)
+  , _duration(0)
 {
 }
 
@@ -35,6 +36,7 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
     spell->_id = static_cast<SpellId>(dsc->id);
     spell->_range = dsc->range;
     spell->_radius = dsc->radius;
+    spell->_duration = dsc->duration;
 
     for ( auto& pair : dsc->effects )
     {
@@ -65,6 +67,7 @@ SpellPtr Spell::clone()
   cloned->_animation  = _animation->clone();
   cloned->_range      = _range;
   cloned->_radius     = _radius;
+  cloned->_duration   = _duration;
 
   for ( auto& pair : _effects )
   {
@@ -136,6 +139,11 @@ int Spell::getRange() const
 int Spell::getRadius() const
 {
   return _radius;
+}
+
+int Spell::getDuration() const
+{
+  return _duration;
 }
 
 std::vector<EffectPtr> Spell::getEffectsFor(ActorPtr actor)

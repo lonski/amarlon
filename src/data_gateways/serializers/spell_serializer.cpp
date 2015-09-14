@@ -35,7 +35,8 @@ bool SpellSerializer::serialize(SpellPtr spell)
     addAttribute    ( _spellNode, "name",       spell->getName()       );
     addAttribute    ( _spellNode, "level",      spell->getLevel()      );
     addAttribute    ( _spellNode, "range",      spell->getRange()      );
-    addAttribute    ( _spellNode, "radius",      spell->getRadius()      );
+    addAttribute    ( _spellNode, "radius",     spell->getRadius()     );
+    addAttribute    ( _spellNode, "duration",   spell->getRadius()     );
 
     //Serialize Effects
     for ( auto& pair : spell->_effects )

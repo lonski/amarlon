@@ -22,6 +22,7 @@ struct SpellDescription : Description
     , range(0)
     , id(0)
     , radius(0)
+    , duration(0)
   {}
 
   std::string name;
@@ -31,6 +32,7 @@ struct SpellDescription : Description
   int range;
   int id;
   int radius;
+  int duration;
 
   std::set< std::pair<int, std::vector<EffectDescriptionPtr> > > effects;
   AnimationDescriptionPtr animation;
