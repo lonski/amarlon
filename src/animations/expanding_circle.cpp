@@ -1,52 +1,45 @@
-#include "throw.h"
+#include "expanding_circle.h"
 #include <engine.h>
 #include <chrono>
 #include <thread>
 #include <utils.h>
 #include <console_utils.h>
+#include <messenger.h>
 
 namespace amarlon { namespace animation {
 
-Throw::Throw()
+ExpandingCircle::ExpandingCircle()
   : _color(TCODColor::red)
   , _ch('*')
   , _frameDelay(15)
+  , _radius(0)
 {
 }
 
-AnimationPtr Throw::clone()
+AnimationPtr ExpandingCircle::clone()
 {
-  return ThrowPtr( new Throw(*this) );
+  return ExpandingCirclePtr( new ExpandingCircle(*this) );
 }
 
-void Throw::run(TCODConsole& console)
+void ExpandingCircle::run(TCODConsole& console)
 {
-  Target start  = getStartLocation();
+  //Target start  = getStartLocation();
   Target stop = getEndLocation();
-
-  TCODPath* path = calculatePath(start, stop);
-  while( path && !path->isEmpty() )
+  for(int r = 0; r <= _radius; ++r)
   {
-    int x(0), y(0);
-    path->walk(&x, &y, true);
-
     Engine::instance().render();
-    setTile(x, y, _ch, _color);
-
+    drawCircle(r, stop);
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
   }
-
-  delete path;
 }
 
-Type Throw::getType() const
+Type ExpandingCircle::getType() const
 {
-  return Type::Throw;
+  return Type::ExpandingCircle;
 }
 
-
-void Throw::load(const Params &params)
+void ExpandingCircle::load(const Params &params)
 {
   auto it = params.find("color");
   _color = it != params.end() ? strToColor( it->second ) : TCODColor::blue;
@@ -56,14 +49,18 @@ void Throw::load(const Params &params)
 
   it = params.find("char");
   _ch = it != params.end() ? it->second.front() : 15;
+
+  it = params.find("radius");
+  _radius = it != params.end() ? fromStr<int>( it->second ) : 0;
 }
 
-Params Throw::toParams() const
+Params ExpandingCircle::toParams() const
 {
   return {
     {"color",  colorToStr(_color) },
     {"delay",  toStr<int>(_frameDelay)  },
-    {"char",   std::string(_ch, 1)  }
+    {"char",   std::string(_ch, 1) },
+    {"radius", toStr<int>(_radius) }
   };
 }
 

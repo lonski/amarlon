@@ -164,10 +164,11 @@
 				<P name="damage">20d6+0#3</P>
 			</Effect>
 		</Effects>
-		<Animation type="2">
-			<P name="color">ee0000</P>
+		<Animation type="4">
+			<P name="color">ffa500</P>
 			<P name="char">*</P>
 			<P name="delay">50</P>
+			<P name="radius">4</P>
 		</Animation>
 	</Spell>
 </Spells>

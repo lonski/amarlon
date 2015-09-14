@@ -7,7 +7,9 @@ enum class Type
 {
   Null  = 0,
   Blink = 1,
-  Throw = 2
+  Throw = 2,
+  ExpandingCircle = 3,
+  ThrowExpandingCircle = 4
 };
 
 }}

@@ -144,6 +144,8 @@ set(HEADER_FILES
     animations/animation_type.h
     animations/blink.h
     animations/throw.h
+    animations/expanding_circle.h
+    animations/throw_expanding_circle.h
 )
 
 set(SOURCE_FILES
@@ -265,6 +267,8 @@ set(SOURCE_FILES
     animations/animation.cpp
     animations/blink.cpp
     animations/throw.cpp
+    animations/expanding_circle.cpp
+    animations/throw_expanding_circle.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

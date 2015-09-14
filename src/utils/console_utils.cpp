@@ -6,7 +6,29 @@
 
 namespace amarlon {
 
-void highlightCircle(int range, Target center)
+void drawCircle(int radius, Target center, char c, TCODColor color)
+{
+  MapPtr map = Engine::instance().getWorld().getCurrentMap();
+  if ( map )
+  {
+    for( uint32_t y = 0; y < map->getHeight(); ++y )
+    {
+      for( uint32_t x = 0; x < map->getWidth(); ++x )
+      {
+        float distance = calculateDistance(center.x, center.y, x, y );
+        if ( distance < radius && distance >= radius - 1 )
+        {
+          if ( !map->isBlocked(x,y) && map->isInFov(x,y) )
+          {
+            setTile(x,y,c,color);
+          }
+        }
+      }
+    }
+  }
+}
+
+void highlightFilledCircle(int range, Target center)
 {
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
   if ( map )
