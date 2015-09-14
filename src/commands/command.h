@@ -41,7 +41,11 @@ public:
    * @return True if given key is matching the command
    */
   virtual bool accept(TCOD_key_t &key) = 0;
-  virtual void execute() = 0;
+
+  /**
+   * @return The amount of turns the command execution took.
+   */
+  virtual int execute() = 0;
 
 };
 

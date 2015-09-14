@@ -13,7 +13,7 @@ bool CmdLook::accept(TCOD_key_t &key)
     return key.vk == TCODK_CHAR && key.c == 'l';
 }
 
-void CmdLook::execute()
+int CmdLook::execute()
 {
   SingleRangeSelector selector("Select a tile to inspect...");
   selector.setRange(5);
@@ -48,7 +48,7 @@ void CmdLook::execute()
       }
     }
   }
-
+  return 1;
 }
 
 

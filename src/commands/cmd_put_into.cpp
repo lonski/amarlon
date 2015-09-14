@@ -17,8 +17,9 @@ bool CmdPutInto::accept(TCOD_key_t &key)
   return key.vk == TCODK_CHAR && key.c == 'p';
 }
 
-void CmdPutInto::execute()
+int CmdPutInto::execute()
 {
+  int turns = 0;
   ActorPtr target = SingleNeighbourSelector("Select a container to put into...")
                     .select()
                     .firstActor();
@@ -47,13 +48,14 @@ void CmdPutInto::execute()
                       .setInventoryFullAction( containerFullAction )
                       .setWindowTitle("Select item to put")
                       .show();
+    ++turns;
   }
   else if ( target )
   {
     gui::msgBox("You cannot put anything into "+tolowers(target->getName())+".",
                 gui::MsgType::Error);
   }
-
+  return turns;
 }
 
 }

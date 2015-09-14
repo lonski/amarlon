@@ -18,8 +18,9 @@ bool CmdCast::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'C' );
 }
 
-void CmdCast::execute()
+int CmdCast::execute()
 {
+  int turns = 0;
   SpellPtr spell = getSpell();
   Engine::instance().render();
   if ( spell )
@@ -35,7 +36,9 @@ void CmdCast::execute()
          gui::msgBox("Failed to cast spell!", gui::MsgType::Warning);
        }
      }
+     ++turns;
   }
+  return turns;
 }
 
 SpellPtr CmdCast::getSpell()

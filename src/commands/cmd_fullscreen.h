@@ -10,7 +10,7 @@ class CmdFullscreen : public Command
 public:
   CmdFullscreen();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute();
+  virtual int execute();
 
 };
 

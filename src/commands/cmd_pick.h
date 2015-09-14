@@ -13,7 +13,7 @@ class CmdPick : public Command
 public:
   CmdPick();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute();
+  virtual int execute();
 
 };
 

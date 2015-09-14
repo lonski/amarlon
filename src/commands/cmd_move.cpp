@@ -20,13 +20,14 @@ bool CmdMoveOrAttack::accept(TCOD_key_t &key)
   return handleDirectionKey(key, _dx, _dy);
 }
 
-void CmdMoveOrAttack::execute()
+int CmdMoveOrAttack::execute()
 {
   //if MoveAction failed then path is blocked
   if ( !Engine::instance().getPlayer()->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
   {
     Engine::instance().getPlayer()->performAction( std::make_shared<AttackAction>( getActorToAttack() ));
   }
+  return 1;
 }
 
 ActorPtr CmdMoveOrAttack::getActorToAttack()

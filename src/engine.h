@@ -49,11 +49,12 @@ public:
   ~Engine();
 
   void prologue();
+  void initializeConsole();
   void epilogue();
 
   void render();
   void update();
-  void processInput();
+  int processInput();
 
   gui::Gui&           getGui() const;
   gui::WindowManager& getWindowManager() const;
@@ -80,7 +81,6 @@ private:
 
   std::vector<ColoredString> getActorsBenethPlayersFeet();
   void initializeWorld();
-  void initializeConsole();
 
 };
 

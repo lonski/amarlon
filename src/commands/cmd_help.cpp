@@ -15,7 +15,7 @@ bool CmdHelp::accept(TCOD_key_t &key)
   return key.vk == TCODK_CHAR && key.c == '?';
 }
 
-void CmdHelp::execute()
+int CmdHelp::execute()
 {
   /*
    * displaying ASCII codes mapped characters
@@ -38,7 +38,7 @@ void CmdHelp::execute()
                     .setWindowTitle("Help")
                     .setWindowText( ss.str() )
                     .show();
-
+  return 0;
 }
 
 }

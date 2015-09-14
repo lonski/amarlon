@@ -7,12 +7,13 @@ int main()
   try
   {
     amarlon::Engine::instance().prologue();
+    amarlon::Engine::instance().initializeConsole();
 
     while ( !TCODConsole::isWindowClosed() )
     {
       amarlon::Engine::instance().render();
-      amarlon::Engine::instance().processInput();
-      amarlon::Engine::instance().update();
+      int turns = amarlon::Engine::instance().processInput();
+      while ( turns-- ) amarlon::Engine::instance().update();
     }
 
     amarlon::Engine::instance().epilogue();

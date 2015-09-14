@@ -19,8 +19,9 @@ bool CmdUse::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'u' );
 }
 
-void CmdUse::execute()
+int CmdUse::execute()
 {  
+  int turns = 0;
   ActorPtr item = acquireItemToUse();
   Engine::instance().render();
 
@@ -32,8 +33,11 @@ void CmdUse::execute()
     if ( tSelector != nullptr )
     {
       Engine::instance().getPlayer()->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
+      ++turns;
     }
   }
+
+  return turns;
 }
 
 ActorPtr CmdUse::acquireItemToUse()

@@ -18,8 +18,9 @@ bool CmdClose::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == 'c' );
 }
 
-void CmdClose::execute()
+int CmdClose::execute()
 {
+  int turns = 0;
   Target target = SingleNeighbourSelector("Select object to close...")
                                          .select();
 
@@ -41,11 +42,13 @@ void CmdClose::execute()
                   "It is blocked!",
                   gui::MsgType::Warning);
     }
+    ++turns;
   }
   else
   {
     gui::msgBox("Nothing to close there.", gui::MsgType::Warning);
   }
+  return turns;
 }
 
 }

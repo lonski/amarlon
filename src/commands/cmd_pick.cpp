@@ -18,8 +18,9 @@ bool CmdPick::accept(TCOD_key_t &key)
   return ( key.vk == TCODK_CHAR && key.c == ',' );
 }
 
-void CmdPick::execute()
+int CmdPick::execute()
 {
+  int turns = 0;
   int x( Engine::instance().getPlayer()->getX() );
   int y( Engine::instance().getPlayer()->getY() );
 
@@ -46,8 +47,9 @@ void CmdPick::execute()
                       .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();
+    ++turns;
   }
-
+  return turns;
 }
 
 }

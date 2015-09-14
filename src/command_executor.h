@@ -18,7 +18,7 @@ class CommandExecutor
 {
 public:
   CommandExecutor();
-  bool execute(TCOD_key_t &key);
+  int execute(TCOD_key_t &key);
 
 private:
   std::vector<CommandPtr> _commands;

@@ -10,7 +10,7 @@ class CmdHelp : public Command
 public:
   CmdHelp();
   virtual bool accept(TCOD_key_t &key);
-  virtual void execute();
+  virtual int execute();
 
 };
 

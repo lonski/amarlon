@@ -46,7 +46,6 @@ void Engine::prologue()
     getSpellGateway().load( _config->get("spells_file") );
 
     initializeWorld();
-    initializeConsole();
 
     //temporary: just add player from map
     _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getId() == ActorType::Player; }).front();
@@ -124,11 +123,11 @@ void Engine::update()
   }
 }
 
-void Engine::processInput()
+int Engine::processInput()
 {
   TCOD_key_t key;
   TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL, true);
-  _cmdExecutor->execute(key);
+  return _cmdExecutor->execute(key);
 }
 
 gui::Gui& Engine::getGui() const
