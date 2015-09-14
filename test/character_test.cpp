@@ -2,7 +2,6 @@
 #include <actor.h>
 #include <character.h>
 #include <playable_character.h>
-#include <configuration.h>
 #include <engine.h>
 #include <actor_descriptions.h>
 
@@ -17,16 +16,12 @@ public:
 
   virtual void SetUp()
   {
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
+    Engine::instance().prologue();
   }
 
   virtual void TearDown()
   {
   }
-
-protected:
-  Configuration cfg;
 };
 
 void clearInventory(ActorPtr actor)

@@ -30,10 +30,7 @@ TEST(MapGatewayTest, fetchExistingMap_givesMap)
 
 TEST(MapGatewayTest, mapHasValidTiles)
 {
-  Configuration cfg;
-  ASSERT_TRUE( cfg.load("config.cfg") );
-
-  Engine::instance().prologue(&cfg);
+  Engine::instance().prologue();
 
   MapGateway gateway;
   gateway.load("data/maps.xml");
@@ -44,10 +41,7 @@ TEST(MapGatewayTest, mapHasValidTiles)
 
 TEST(MapGatewayTest, mapHasValidTiles2)
 {
-  Configuration cfg;
-  ASSERT_TRUE( cfg.load("config.cfg") );
-
-  Engine::instance().prologue(&cfg);
+  Engine::instance().prologue();
 
   MapGateway gateway;
   gateway.load("data/maps.xml");

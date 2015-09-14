@@ -3,9 +3,10 @@
 
 namespace amarlon {
 
-World::World(MapGatewayPtr mapGateway)
-  : _mapGateway(mapGateway)
+World::World(const std::string& mapsFile)
+  : _mapGateway( new MapGateway )
 {
+  _mapGateway->load( mapsFile );
 }
 
 World::~World()

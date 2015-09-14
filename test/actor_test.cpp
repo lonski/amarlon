@@ -4,7 +4,6 @@
 #define private public
 #include <heal_effect.h>
 #undef private
-#include <configuration.h>
 #include <engine.h>
 
 namespace amarlon {
@@ -13,16 +12,12 @@ class ActorTest : public ::testing::Test
 {
   virtual void SetUp()
   {
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
+    Engine::instance().prologue();
   }
 
   virtual void TearDown()
   {
   }
-
-protected:
-  Configuration cfg;
 
 };
 

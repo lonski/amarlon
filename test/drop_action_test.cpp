@@ -3,7 +3,6 @@
 #include <drop_action.h>
 #include <inventory.h>
 #include <map.h>
-#include <configuration.h>
 #include <engine.h>
 #include <world.h>
 #include <die_action.h>
@@ -20,8 +19,7 @@ public:
 
   virtual void SetUp()
   {
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
+    Engine::instance().prologue();
 
     guy = Actor::create(ActorType::Orc);
 
@@ -45,8 +43,6 @@ protected:
   ActorPtr guy;
   MapPtr map;
 
-protected:
-  Configuration cfg;
 };
 
 TEST_F(DropActionTest, dropOnMap)

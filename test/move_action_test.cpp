@@ -16,15 +16,12 @@ public:
 
   virtual void SetUp()
   {
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
+    Engine::instance().prologue();
   }
   virtual void TearDown()
   {
   }
 
-protected:
-  Configuration cfg;
 };
 
 TEST_F(MoveActionTest, actorWithoutMap)

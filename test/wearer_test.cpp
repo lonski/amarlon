@@ -5,7 +5,6 @@
 #include <inventory.h>
 #include <wearer.h>
 #undef private
-#include <configuration.h>
 #include <engine.h>
 #include <actor_descriptions.h>
 
@@ -18,8 +17,7 @@ class WearerTest : public ::testing::Test
 public:
   virtual void SetUp()
   {
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
+    Engine::instance().prologue();
 
     WearerDescriptionPtr dsc(new WearerDescription);
     dsc->itemSlots.push_back(ItemSlotType::Armor);
@@ -33,7 +31,6 @@ public:
   }
 
 protected:
-  Configuration cfg;
   WearerPtr wearer;
 
 };

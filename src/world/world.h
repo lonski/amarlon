@@ -14,7 +14,7 @@ typedef std::shared_ptr<Map> MapPtr;
 class World : public MapGateway
 {
 public:
-  World(MapGatewayPtr mapGateway);
+  World(const std::string& mapsFile);
   virtual ~World();
 
   virtual MapPtr fetch(MapId id);

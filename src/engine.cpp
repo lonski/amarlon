@@ -4,8 +4,8 @@
 #include <actor.h>
 #include <gui.h>
 #include <spell.h>
-#include <utils/configuration.h>
-#include <utils/messenger.h>
+#include <configuration.h>
+#include <messenger.h>
 #include <spell_gateway.h>
 #include <world.h>
 #include <command_executor.h>
@@ -23,7 +23,10 @@ int Engine::screenWidth = 100 + Engine::rightPanelWidth;
 int Engine::screenHeight = 60 + Engine::bottomPanelHeight;
 
 Engine::Engine()
-  : _config(nullptr)
+  : _gui( new gui::Gui )
+  , _cmdExecutor( new CommandExecutor )
+  , _windowManager( new gui::WindowManager )
+  , _config( new Configuration )
   , _spellGateway(new SpellGateway )
   , _tileDB( new TileDB )
   , _actorsDB( new ActorDB )
@@ -34,12 +37,31 @@ Engine::~Engine()
 {  
 }
 
-void Engine::prologue(Configuration* cfg)
+void Engine::prologue()
 {
-  _config = cfg;
-  _cmdExecutor.reset( new CommandExecutor );
-  _windowManager.reset( new gui::WindowManager );
-  _gui.reset( new gui::Gui );
+  if ( _config->load("config.cfg") )
+  {
+    getActorDB()     .load( _config->get("actors_file") );
+    getTileDB ()     .load( _config->get("tiles_file" ) );
+    getSpellGateway().load( _config->get("spells_file") );
+
+    initializeWorld();
+    initializeConsole();
+
+    //temporary: just add player from map
+    _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getId() == ActorType::Player; }).front();
+
+    Messenger::message()->setGui(_gui.get());
+    getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
+  }
+}
+
+void Engine::initializeConsole()
+{
+  TCODConsole::root->setCustomFont(_config->getFont(),TCOD_FONT_LAYOUT_TCOD | TCOD_FONT_TYPE_GREYSCALE);
+  TCODConsole::initRoot(Engine::screenWidth, Engine::screenHeight, "Amarlon", false, TCOD_RENDERER_SDL);
+  TCODConsole::root->setFullscreen( std::stol(_config->get("fullscreen")) );
+  TCODMouse::showCursor(true);
 
   Engine::consoleWidth      = std::stol( _config->get("console_width") );
   Engine::consoleHeight     = std::stol( _config->get("console_height") );
@@ -47,26 +69,13 @@ void Engine::prologue(Configuration* cfg)
   Engine::bottomPanelHeight = std::stol( _config->get("bottom_panel_height") );;
   Engine::screenWidth       = Engine::consoleWidth + Engine::rightPanelWidth;
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
-
-  getActorDB()     .load( cfg->get("actors_file") );
-  getTileDB ()     .load( cfg->get("tiles_file" ) );
-  getSpellGateway().load( cfg->get("spells_file") );
-
-  initializeWorld();
-  Messenger::message()->setGui(_gui.get());
-
-  //temporary solution
-  _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getId() == ActorType::Player; }).front();
 }
 
 void Engine::initializeWorld()
 {
-  assert(_config);
+  _world.reset( new World( _config->get("maps_file") ) );
 
-  MapGatewayPtr mapGateway( new MapGateway );
-  mapGateway->load( _config->get("maps_file") );
-
-  _world.reset( new World(mapGateway) );
+  //temporary: automatically load save game
   _world->load( _config->get("save_file") );
   _world->changeMap( MapId::GameStart );
 }
@@ -74,11 +83,6 @@ void Engine::initializeWorld()
 void Engine::epilogue()
 {
   getWorld().store( _config->get("save_file") );
-}
-
-void Engine::update()
-{
-  updateAis();
 }
 
 void Engine::render()
@@ -103,16 +107,15 @@ void Engine::render()
     _gui->render();
   }
 
-  TCODConsole::root->putChar(_player->getX(), _player->getY(), _player->getChar());
-  TCODConsole::root->setCharForeground(_player->getX(), _player->getY(), _player->getColor());
+  TCODConsole::root->flush();
 }
 
-void Engine::updateAis()
+void Engine::update()
 {
   MapPtr map = getWorld().getCurrentMap();
   if ( map )
-  {    
-    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};    
+  {
+    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};
     auto ais = map->getActors( filter );
     for ( ActorPtr actor : ais )
     {
@@ -121,8 +124,10 @@ void Engine::updateAis()
   }
 }
 
-void Engine::processInput(TCOD_key_t &key)
+void Engine::processInput()
 {
+  TCOD_key_t key;
+  TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL, true);
   _cmdExecutor->execute(key);
 }
 

@@ -24,6 +24,7 @@ typedef std::shared_ptr<World> WorldPtr;
 typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 typedef std::shared_ptr<TileDB> TileDBPtr;
 typedef std::shared_ptr<ActorDB> ActorDBPtr;
+typedef std::shared_ptr<Configuration> ConfigurationPtr;
 
 namespace gui {
   class Gui;
@@ -47,12 +48,12 @@ public:
 
   ~Engine();
 
-  void prologue(Configuration *cfg);
+  void prologue();
   void epilogue();
 
   void render();
   void update();
-  void processInput(TCOD_key_t& key);
+  void processInput();
 
   gui::Gui&           getGui() const;
   gui::WindowManager& getWindowManager() const;
@@ -68,7 +69,7 @@ private:
   gui::GuiPtr _gui;
   CommandExecutorPtr _cmdExecutor;
   gui::WindowManagerPtr _windowManager;
-  Configuration* _config;
+  ConfigurationPtr _config;
 
   WorldPtr _world;
   SpellGatewayPtr _spellGateway;
@@ -77,9 +78,9 @@ private:
 
   ActorPtr _player;
 
-  void updateAis();
   std::vector<ColoredString> getActorsBenethPlayersFeet();
   void initializeWorld();
+  void initializeConsole();
 
 };
 

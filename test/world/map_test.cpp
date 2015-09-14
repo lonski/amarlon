@@ -5,17 +5,14 @@
 #include <actor.h>
 #include <map_gateway.h>
 #include <engine.h>
-#include <configuration.h>
 
 namespace amarlon {
 
 class MapTest : public ::testing::Test
 {
   virtual void SetUp()
-  {    
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
-
+  {
+    Engine::instance().prologue();
     mapGateway.load("data/maps.xml");
   }
 
@@ -25,7 +22,6 @@ class MapTest : public ::testing::Test
 
 protected:
   MapGateway mapGateway;
-  Configuration cfg;
 
 };
 

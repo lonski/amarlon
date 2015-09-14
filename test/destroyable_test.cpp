@@ -4,7 +4,6 @@
 #include <destroyable.h>
 #include <actor.h>
 #undef private
-#include <configuration.h>
 #include <engine.h>
 #include <actor_descriptions.h>
 
@@ -20,15 +19,11 @@ public:
 
   virtual void SetUp()
   {
-    cfg.load("config.cfg");
-    Engine::instance().prologue(&cfg);
+    Engine::instance().prologue();
   }
   virtual void TearDown()
   {
   }
-
-protected:
-  Configuration cfg;
 
 };
 
