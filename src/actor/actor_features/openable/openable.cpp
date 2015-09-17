@@ -4,6 +4,7 @@
 #include <amarlon_except.h>
 #include <openable_factory.h>
 #include <actor_descriptions.h>
+#include <actor.h>
 
 namespace amarlon {
 
@@ -28,12 +29,22 @@ ActorFeature::Type Openable::getType()
 
 bool Openable::lock()
 {
+  ActorPtr actor = getOwner().lock();
+  if ( actor )
+  {
+    actor->notify(Event(EventId::Actor_Locked));
+  }
   _locked = true;
   return _locked;
 }
 
 bool Openable::unlock()
 {
+  ActorPtr actor = getOwner().lock();
+  if ( actor )
+  {
+    actor->notify(Event(EventId::Actor_Unlocked));
+  }
   _locked = false;
   return !_locked;
 }

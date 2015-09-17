@@ -1,196 +1,196 @@
 #include "messenger.h"
-#include "gui/gui.h"
-#include "actor/actor.h"
-#include "utils/utils.h"
+#include <gui.h>
+#include <actor.h>
+#include <utils.h>
 
 namespace amarlon {
 
 using namespace std;
 
-Messenger* Messenger::_msg(nullptr);
-
-Messenger::Messenger()
-  : _gui(nullptr)
+Messenger::Messenger(std::weak_ptr<gui::Gui> gui)
+  : _gui( gui )
 {
 }
 
-Messenger *Messenger::message()
+Messenger::~Messenger()
 {
-  if (_msg == nullptr)
-    _msg = new Messenger;
-
-  return _msg;
 }
 
-void Messenger::setGui(gui::Gui *gui)
+void Messenger::onNotify(Subject *subject, Event event)
 {
-  _gui = gui;
-}
-
-void Messenger::actorHit(const std::string& atacker, const std::string& victim, int amount)
-{
-  if ( _gui )
+  Actor* actor = dynamic_cast<Actor*>(subject);
+  if ( actor )
   {
-    string msg = atacker + " hits " + tolowers(victim);
+    char msg[128];
+    TCODColor color = TCODColor::white;
 
-    if (amount > 0)
+    switch( event.id )
     {
-      msg += " for " + to_string(amount) + "hp.";
+      case EventId::Actor_GotHit:
+      {
+        color = TCODColor::red;
+        const char* format = "%s hits %s for %s hp.";
+
+        sprintf(msg, format, event.params["attacker"].c_str(),
+                             tolowers(actor->getName()).c_str(),
+                             event.params["value"].c_str());
+      }
+      break;
+      case EventId::Actor_ReceivedDamage:
+      {
+        color = TCODColor::red;
+        const char* format = "%s got damage for %s hp.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             event.params["value"].c_str() );
+      }
+      break;
+      case EventId::Actor_ExperienceGained:
+      {
+        color = TCODColor::sky;
+        const char* format = "%s gained %s xp.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             event.params["value"].c_str());
+      }
+      break;
+      case EventId::Actor_ExperienceLost:
+      {
+        color = TCODColor::darkerSky;
+        const char* format = "%s lost %s xp.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             event.params["value"].c_str());
+      }
+      break;
+      case EventId::Actor_LeveledUp:
+      {
+        color = TCODColor::green;
+        const char* format = "%s advanced to level %d.";
+        msg[0] = '\0';
+
+        CharacterPtr character = actor->getFeature<Character>();
+        if ( character )
+        {
+          sprintf(msg,format, actor->getName().c_str(),
+                              character->getLevel() );
+        }
+      }
+      break;
+      case EventId::Actor_Missed:
+      {
+        color = TCODColor::darkerYellow;
+        const char* format = "%s missed %s.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             tolowers(event.params["target"]).c_str() );
+      }
+      break;
+      case EventId::Actor_Died:
+      {
+        color = TCODColor::darkerRed;
+        const char* format = "%s dies.";
+
+        sprintf(msg, format, actor->getName().c_str() );
+      }
+      break;
+      case EventId::Actor_Pick:
+      {
+        color = TCODColor::yellow;
+
+        if ( event.params.find("count") == event.params.end() )
+        {
+          const char* format = "%s picked %s.";
+          sprintf(msg, format, actor->getName().c_str(),
+                               tolowers( event.params["name"] ).c_str() );
+        }
+        else
+        {
+          const char* format = "%s picked %s from %s.";
+          sprintf(msg, format, actor->getName().c_str(),
+                               tolowers( event.params["name"] ).c_str(),
+                               tolowers( event.params["from"] ).c_str());
+        }
+      }
+      break;
+      case EventId::Actor_Drop:
+      {
+        color = TCODColor::yellow;
+
+        if ( fromStr<int>(event.params["count"]) > 1 )
+        {
+          const char* format = "%s dropped %s (%s).";
+          sprintf(msg, format, actor->getName().c_str(),
+                               tolowers(event.params["name"]).c_str(),
+                               event.params["count"].c_str() );
+        }
+        else
+        {
+          const char* format = "%s dropped %s.";
+          sprintf(msg, format, actor->getName().c_str(),
+                               tolowers(event.params["name"]).c_str() );
+        }
+      }
+      break;
+      case EventId::Actor_Healed:
+      {
+        color = TCODColor::lighterBlue;
+        const char* format = "%s has been healed for %s.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             event.params["value"].c_str());
+      }
+      break;
+      case EventId::Actor_Locked:
+      {
+        color = TCODColor::white;
+        const char* format = "%s has been locked.";
+
+        sprintf(msg, format, actor->getName().c_str());
+      }
+      break;
+      case EventId::Actor_Unlocked:
+      {
+        color = TCODColor::white;
+        const char* format = "%s has been unlocked.";
+
+        sprintf(msg, format, actor->getName().c_str());
+      }
+      break;
+      case EventId::Actor_Put:
+      {
+        color = TCODColor::darkYellow;
+        const char* format = "%s put %s into %s.";
+
+        sprintf(msg, format, event.params["putter"].c_str(),
+                             actor->getName().c_str(),
+                             event.params["container"].c_str() );
+      }
+      break;
+      case EventId::Player_Look_At:
+      {
+        color = TCODColor::lightViolet;
+
+        if ( event.params.find("item") != event.params.end() )
+        {
+          const char* format = "You see a(n) %s.";
+          sprintf(msg, format, actor->getName().c_str());
+        }
+        else
+        {
+          const char* format = event.params["plural"] == "yes" ? "You see some items laying there."
+                                                               : "You see some item laying there.";
+          strcpy_s(msg, format);
+        }
+
+      }
+      break;
+
+      default:;
     }
-    else
-    {
-      msg += " but the attack took no effect.";
-    }
-
-    _gui->message(msg, TCODColor::darkRed);
+    _gui.lock()->message( msg, color );
   }
-}
 
-void Messenger::actorMissed(ActorPtr atacker, ActorPtr victim)
-{
-  if ( _gui )
-  {
-    string msg = atacker->getName() + " missed " + tolowers(victim->getName() + ".");
-    _gui->message(msg, TCODColor::darkerYellow);
-  }
-}
-
-void Messenger::actorDies(ActorPtr victim)
-{
-  if ( _gui )
-  {
-    string msg = victim->getName() + " dies.";
-    _gui->message(msg, TCODColor::darkerRed);
-  }
-}
-
-void Messenger::actorPutInto(const std::string& putterName,
-                             const string& container,
-                             const std::string& itemName,
-                             int amount)
-{
-  if ( _gui )
-  {
-    string msg = putterName + " put " + tolowers(itemName);
-
-    if (amount > 1)
-      msg += " (" + to_string(amount) + ")";
-
-    msg += " into " + tolowers(container);
-
-    _gui->message(msg+".", TCODColor::darkYellow);
-  }
-}
-
-void Messenger::actorGainedExp(ActorPtr gainer, int exp)
-{
-  if ( _gui )
-  {
-    _gui->message(gainer->getName() + " gained " + toStr(exp) + "xp.", TCODColor::sky);
-  }
-}
-
-void Messenger::actorLeveledUp(ActorPtr leveler, int level)
-{
-  if ( _gui )
-  {
-    _gui->message(leveler->getName() + " advanced to level " + toStr(level) + "!", TCODColor::green);
-  }
-}
-
-void Messenger::lookAtObject(ActorPtr object)
-{
-  if ( _gui )
-  {
-    _gui->message("You see a(n) " + object->getName(), TCODColor::lightViolet);
-  }
-}
-
-void Messenger::lookAtSomeItems(bool plural)
-{
-  if ( _gui )
-  {
-    std::string msg = "You see some ";
-    msg.append(plural ? "items" : "item");
-    msg.append(" laying here.");
-
-    _gui->message(msg , TCODColor::lightViolet);
-  }
-}
-
-void Messenger::custom(string msg)
-{
-  if ( _gui )
-  {
-    _gui->message(msg, TCODColor::darkYellow);
-  }
-}
-
-void Messenger::actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const string &from)
-{
-  if ( _gui )
-  {
-    string msg = pickerName + " picked " + tolowers(itemName);
-
-    if (amount > 1)
-      msg += " (" + to_string(amount) + ")";
-
-    if (!from.empty())
-      msg += " from " + tolowers(from);
-
-    _gui->message(msg+".", TCODColor::darkYellow);
-  }
-}
-
-void Messenger::actorDropped(ActorPtr dropper, ActorPtr dropped, int amount)
-{
-  if ( _gui )
-  {
-    string msg = dropper->getName() + " dropped " + tolowers(dropped->getName());
-
-    if (amount > 1)
-      msg += " (" + to_string(amount) + ").";
-    else
-      msg += ".";
-
-    _gui->message(msg, TCODColor::darkYellow);
-  }
-}
-
-void Messenger::actorPicked(ActorPtr picker, ActorPtr picked, int amount)
-{
-  if ( _gui )
-  {
-    actorPicked(picker->getName(), picked->getName(), amount);
-  }
-}
-
-void Messenger::actorHealed(ActorPtr healed, int amount)
-{
-  if ( _gui )
-  {
-    string msg = healed->getName() + " has been healed for " + to_string(amount) + ".";
-
-    _gui->message(msg, TCODColor::lighterBlue);
-  }
-}
-
-void Messenger::actorHasBeenLocked(ActorPtr locker, ActorPtr locked)
-{
-  if ( _gui )
-  {
-    string msg = locker->getName() + " has locked the " + tolowers(locked->getName());
-    _gui->message(msg);
-  }
-}
-
-void Messenger::actorHasBeenUnLocked(ActorPtr unlocker, ActorPtr unlocked)
-{
-  if ( _gui )
-  {
-    string msg = unlocker->getName() + " has unlocked the " + tolowers(unlocked->getName());
-    _gui->message(msg);
-  }
 }
 
 }

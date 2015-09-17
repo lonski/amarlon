@@ -2,7 +2,7 @@
 #include <utils.h>
 #include <actor.h>
 #include <character.h>
-#include <messenger.h>
+
 
 namespace amarlon {
 
@@ -19,10 +19,7 @@ bool DamageEffect::apply(ActorPtr executor, const Target& target)
     CharacterPtr character = a->getFeature<Character>();
     if ( character )
     {
-      int hpBefore = character->getHitPoints();
-      std::string victimName = a->getName();
-      character->takeDamage(_damage);
-      Messenger::message()->actorHit( executor->getName(), victimName, hpBefore - character->getHitPoints() );
+      character->takeDamage(_damage, executor);
       r = true;
     }
   }
@@ -34,7 +31,6 @@ void DamageEffect::load(const Params& params)
 {
   auto it = params.find("damage");
   _damage = it != params.end() ? Damage( it->second ) : Damage();
-
 }
 
 EffectPtr DamageEffect::clone()

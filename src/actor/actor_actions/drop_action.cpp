@@ -1,7 +1,7 @@
 #include "drop_action.h"
 #include <actor.h>
 #include <map.h>
-#include <messenger.h>
+
 
 namespace amarlon {
 
@@ -56,7 +56,7 @@ void DropAction::dropOnMap(ActorPtr item)
     item->setMap(nullptr);
     item->setPosition( _performer->getX(), _performer->getY() );
     map->addActor( item );
-    Messenger::message()->actorDropped(_performer, item, _amount);
+    _performer->notify(Event(EventId::Actor_Drop,{{"name",item->getName()},{"count", std::to_string(_amount)}}));
   }
 }
 

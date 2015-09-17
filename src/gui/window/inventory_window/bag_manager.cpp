@@ -6,7 +6,6 @@
 #include <gui/window/amount_window.h>
 #include <engine.h>
 #include <world/map.h>
-#include <utils/messenger.h>
 #include <menu_window.h>
 #include <drop_action.h>
 #include <equip_action.h>

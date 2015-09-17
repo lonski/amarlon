@@ -14,6 +14,7 @@
 #include <wearer.h>
 #include <destroyable.h>
 #include <inventory.h>
+#include <subject.h>
 
 namespace amarlon {
 
@@ -24,6 +25,7 @@ typedef std::shared_ptr<Map> MapPtr;
 typedef std::weak_ptr<Map> MapWPtr;
 
 class Actor : public std::enable_shared_from_this<Actor>
+            , public Subject
 {
 public:
   static unsigned InstanceCounter;

@@ -32,6 +32,11 @@ bool PickUpAction::perform(ActorPtr performer)
     }
   }
 
+  if ( picked )
+  {
+    _performer->notify(Event(EventId::Actor_Pick,{{"name", _toPick->getName()}}));
+  }
+
   return picked;
 }
 

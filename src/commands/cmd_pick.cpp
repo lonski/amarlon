@@ -4,7 +4,7 @@
 #include <actor.h>
 #include <pick_up_window.h>
 #include <message_box.h>
-#include <messenger.h>
+
 #include <actor_container.h>
 
 namespace amarlon {
@@ -27,12 +27,6 @@ int CmdPick::execute()
   MapPtr map = Engine::instance().getPlayer()->getMap();
   if ( map )
   {
-    auto afterPickupAction =
-    [](const std::string& item, int amount)
-    {
-      Messenger::message()->actorPicked(Engine::instance().getPlayer()->getName(), item, amount);
-    };
-
     auto inventoryFullAction =
     [](const std::string& item)
     {
@@ -44,7 +38,6 @@ int CmdPick::execute()
                       .setPicker(Engine::instance().getPlayer())
                       .setSource( [&](){ return map->getActors( x, y, [](ActorPtr a){ return a->getFeature<Pickable>() != nullptr;}); } )
                       .setRemoveAction([&](ActorPtr a){ map->removeActor(a); })
-                      .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();
     ++turns;

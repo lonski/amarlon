@@ -1,7 +1,7 @@
 #include "openable_container.h"
 #include <actor.h>
 #include <engine.h>
-#include <messenger.h>
+
 #include <utils.h>
 #include <pick_up_window.h>
 #include <message_box.h>
@@ -20,12 +20,6 @@ bool OpenableContainer::open(ActorPtr executor)
 
   if ( getOwner().lock()->hasFeature<Inventory>() )
   {
-    auto afterPickupAction =
-    [&](const std::string& item, int amount)
-    {
-      Messenger::message()->actorPicked(executor->getName(), item, amount, getOwner().lock()->getName());
-    };
-
     auto inventoryFullAction =
     [&](const std::string& item)
     {
@@ -43,7 +37,6 @@ bool OpenableContainer::open(ActorPtr executor)
                       .setPicker(executor)
                       .setSource( sourceFun )
                       .setRemoveAction( [&](ActorPtr a){ getOwner().lock()->getFeature<Inventory>()->remove(a); } )
-                      .setAfterPickupAction( afterPickupAction )
                       .setInventoryFullAction( inventoryFullAction )
                       .show();
 

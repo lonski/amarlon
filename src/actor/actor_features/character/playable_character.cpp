@@ -3,7 +3,7 @@
 #include <die_action.h>
 #include <attack_bonus_table.h>
 #include <experience_table.h>
-#include <messenger.h>
+
 #include <inventory.h>
 #include <actor_descriptions.h>
 
@@ -75,6 +75,13 @@ void PlayableCharacter::modifyExperience(int modifier)
 {
   Character::modifyExperience(modifier);
 
+  ActorPtr actor = getOwner().lock();
+  if ( actor )
+  {
+    actor->notify(Event( (modifier > 0 ? EventId::Actor_ExperienceGained : EventId::Actor_ExperienceLost),
+                         { {"value", std::to_string(std::abs(modifier))} } ));
+  }
+
   if ( getLevel() < Experience::MAX_LEVEL )
   {
     LevelData data = Experience::getLevelData(getClass(), getLevel() + 1);
@@ -101,7 +108,12 @@ void PlayableCharacter::advanceLevel(LevelData data)
   setMaxHitPoints( getMaxHitPoints() + std::max(hpBonus, 1) );
   modifyHitPoints( hpBonus );
 
-  Messenger::message()->actorLeveledUp(getOwner().lock(), getLevel());
+  ActorPtr actor = getOwner().lock();
+  if ( actor )
+  {
+    actor->notify(Event(EventId::Actor_LeveledUp));
+  }
+
   //TODO: maybe popup some window or advance te level manually like BG/NWN?
   //Apply the spell levels
 }

@@ -2,7 +2,7 @@
 #include <single_range_selector.h>
 #include <engine.h>
 #include <gui.h>
-#include <messenger.h>
+
 #include <actor.h>
 #include <fixed_size_text_window.h>
 
@@ -36,14 +36,15 @@ int CmdLook::execute()
       auto objectIter = std::find_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){ return !a->hasFeature<Character>() && !a->hasFeature<Pickable>();});
       if ( objectIter != target.actors.end() )
       {
-        Messenger::message()->lookAtObject(*objectIter);
+        Engine::instance().getPlayer()->notify(Event(EventId::Player_Look_At,{{"item",(*objectIter)->getName()}}));
       }
       else
       {
         target.actors.erase(std::remove_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){return !a->hasFeature<Pickable>();}), target.actors.end());
         if ( !target.actors.empty() )
         {
-          Messenger::message()->lookAtSomeItems( target.actors.size() > 1 );
+          Engine::instance().getPlayer()->notify(Event(EventId::Player_Look_At,
+                                                 {{"plural", target.actors.size() > 1 ? "yes" : "no" }}));
         }
       }
     }

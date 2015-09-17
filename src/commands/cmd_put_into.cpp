@@ -2,7 +2,7 @@
 #include <engine.h>
 #include <map.h>
 #include <actor.h>
-#include <messenger.h>
+
 #include <utils.h>
 #include <direction_selector.h>
 #include <single_neighbour_selector.h>
@@ -27,9 +27,11 @@ int CmdPutInto::execute()
   if ( target != nullptr && target->hasFeature<Inventory>())
   {
     auto afterPutIntoAction =
-    [&](const std::string& item, int amount)
+    [&](const std::string&, int amount)
     {
-      Messenger::message()->actorPutInto(Engine::instance().getPlayer()->getName(), target->getName(), item, amount);
+      target->notify(Event(EventId::Actor_Put,{{"putter","Player"},
+                                               {"container",target->getName()},
+                                               {"count", std::to_string(amount)} }));
     };
 
     auto containerFullAction =

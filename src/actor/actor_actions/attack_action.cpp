@@ -1,7 +1,7 @@
 #include "attack_action.h"
 #include <actor.h>
 #include <dices.h>
-#include <messenger.h>
+
 
 namespace amarlon {
 
@@ -37,14 +37,10 @@ bool AttackAction::perform(ActorPtr performer)
         {
           hit = true;
           int exp = attacked->getExperience();
-
-          std::string attackedName = _target->getName();
-          Messenger::message()->actorHit( _performer->getName(), attackedName,
-                                          attacked->takeDamage(attacker->getDamage()) );
+          attacked->takeDamage(attacker->getDamage(), _performer);
 
           if ( !_target->isAlive() )
           {
-            Messenger::message()->actorGainedExp(_performer, exp);
             attacker->modifyExperience( exp );
           }
         }
@@ -52,7 +48,7 @@ bool AttackAction::perform(ActorPtr performer)
 
       if ( !hit )
       {
-        Messenger::message()->actorMissed(_performer, _target);
+        _performer->notify(Event(EventId::Actor_Missed,{{"target",_target->getName()}}));
       }
     }
   }

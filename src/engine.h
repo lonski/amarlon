@@ -6,6 +6,7 @@
 #include <colored_string.h>
 #include <window_manager.h>
 
+
 namespace amarlon {
 
 class Configuration;
@@ -17,6 +18,7 @@ class CommandExecutor;
 class MapGateway;
 class TileDB;
 class ActorDB;
+class Messenger;
 
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<SpellGateway> SpellGatewayPtr;
@@ -25,6 +27,7 @@ typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 typedef std::shared_ptr<TileDB> TileDBPtr;
 typedef std::shared_ptr<ActorDB> ActorDBPtr;
 typedef std::shared_ptr<Configuration> ConfigurationPtr;
+typedef std::shared_ptr<Messenger> MessengerPtr;
 
 namespace gui {
   class Gui;
@@ -63,6 +66,7 @@ public:
   TileDB&       getTileDB()       const;
   ActorDB&      getActorDB()      const;
   SpellGateway& getSpellGateway() const;
+  Messenger&    getMessenger()    const;
 
   ActorPtr getPlayer() const;
 
@@ -76,6 +80,7 @@ private:
   SpellGatewayPtr _spellGateway;
   TileDBPtr _tileDB;
   ActorDBPtr _actorsDB;
+  MessengerPtr _messenger;
 
   ActorPtr _player;
 

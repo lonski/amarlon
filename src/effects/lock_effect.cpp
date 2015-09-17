@@ -2,7 +2,7 @@
 #include <actor.h>
 #include <gui.h>
 #include <utils.h>
-#include <messenger.h>
+
 
 namespace amarlon {
 
@@ -55,7 +55,7 @@ Params LockEffect::toParams() const
   };
 }
 
-bool LockEffect::apply(ActorPtr executor, const Target& target)
+bool LockEffect::apply(ActorPtr, const Target& target)
 {
   bool r = false;
 
@@ -68,19 +68,11 @@ bool LockEffect::apply(ActorPtr executor, const Target& target)
     {
       if (toOpen->isLocked() && toOpen->getLockId() == _lockId)
       {
-        if ( toOpen->unlock() )
-        {
-          Messenger::message()->actorHasBeenUnLocked(executor, targetActor);
-        }
-        r = true;
+        r = toOpen->unlock();
       }
       else if ( toOpen->getLockId() == _lockId )
       {
-        if ( toOpen->lock() )
-        {
-          Messenger::message()->actorHasBeenLocked(executor, targetActor);
-        }
-        r = true;
+        r = toOpen->lock();
       }
     }
   }

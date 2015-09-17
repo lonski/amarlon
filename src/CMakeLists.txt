@@ -109,6 +109,10 @@ set(HEADER_FILES
     utils/target.h
     utils/damage.h
     utils/actor_container.h
+    utils/event.h
+    utils/event_id.h
+    utils/observer.h
+    utils/subject.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -239,6 +243,7 @@ set(SOURCE_FILES
     utils/damage.cpp
     utils/actor_container.cpp
     utils/target.cpp
+    utils/subject.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp

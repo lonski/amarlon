@@ -94,10 +94,22 @@ void Character::modifyHitPoints(int modifier)
   setHitPoints( toSet );
 }
 
-int Character::takeDamage(Damage dmg)
+int Character::takeDamage(Damage dmg, ActorPtr attacker)
 {
   //TODO: handle damage resists
   int roll = dmg.roll();
+
+  ActorPtr actor = getOwner().lock();
+  if ( actor )
+  {
+    if ( attacker )
+      actor->notify(Event(EventId::Actor_GotHit,
+                    { {"attacker", attacker->getName()}, {"value", std::to_string(roll)} } ));
+    else
+      actor->notify(Event(EventId::Actor_ReceivedDamage,
+                    { {"value", std::to_string(roll)} } ));
+  }
+
   modifyHitPoints(-1 * roll);
   return roll;
 }

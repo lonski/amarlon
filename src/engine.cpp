@@ -12,6 +12,7 @@
 #include <tile_db.h>
 #include <actor_db.h>
 
+
 namespace amarlon {
 
 int Engine::FovRadius = 20;
@@ -30,6 +31,7 @@ Engine::Engine()
   , _spellGateway(new SpellGateway )
   , _tileDB( new TileDB )
   , _actorsDB( new ActorDB )
+  , _messenger( new Messenger( _gui ) )
 {
 }
 
@@ -50,7 +52,6 @@ void Engine::prologue()
     //temporary: just add player from map
     _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getId() == ActorType::Player; }).front();
 
-    Messenger::message()->setGui(_gui.get());
     getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
   }
 }
@@ -148,6 +149,11 @@ World& Engine::getWorld() const
 SpellGateway& Engine::getSpellGateway() const
 {
   return *_spellGateway;
+}
+
+Messenger &Engine::getMessenger() const
+{
+  return *_messenger;
 }
 
 ActorPtr Engine::getPlayer() const

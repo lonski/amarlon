@@ -3,46 +3,28 @@
 
 #include <string>
 #include <memory>
+#include <observer.h>
 
 namespace amarlon {
 
 namespace gui {
   class Gui;
 }
-class Actor;
-typedef std::shared_ptr<Actor> ActorPtr;
 
-class Messenger
+class Messenger : public Observer
 {
 public:
-  static Messenger* message();
+  Messenger( std::weak_ptr<gui::Gui> gui );
+  virtual ~Messenger();
 
-  void setGui(gui::Gui* gui);
-
-  void actorHit(const std::string &atacker, const std::string &victim, int amount);
-  void actorMissed(ActorPtr atacker, ActorPtr victim);
-  void actorDies(ActorPtr victim);
-  void actorPicked(ActorPtr picker, ActorPtr picked, int amount);
-  void actorPicked(const std::string& pickerName, const std::string& itemName, int amount, const std::string& from = "");
-  void actorDropped(ActorPtr dropper, ActorPtr dropped, int amount);
-  void actorHealed(ActorPtr healed, int amount);
-  void actorHasBeenLocked(ActorPtr locker, ActorPtr locked);
-  void actorHasBeenUnLocked(ActorPtr unlocker, ActorPtr unlocked);
-  void actorPutInto(const std::string& putterName, const std::string& container, const std::string& itemName, int amount);
-  void actorGainedExp(ActorPtr gainer, int exp);
-  void actorLeveledUp(ActorPtr leveler, int level);
-  void lookAtObject(ActorPtr object);
-  void lookAtSomeItems(bool plural = false);
-  void custom(std::string msg);
+  virtual void onNotify(Subject* subject, Event event);
 
 private:
-  Messenger();
-  Messenger& operator=(const Messenger&);
-
-  static Messenger* _msg;
-  gui::Gui* _gui;
+  std::weak_ptr<gui::Gui> _gui;
 
 };
+
+typedef std::shared_ptr<Messenger> MessengerPtr;
 
 }
 

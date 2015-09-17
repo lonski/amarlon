@@ -6,6 +6,7 @@
 #include <tile.h>
 #include <engine.h>
 #include <actor_db.h>
+#include <messenger.h>
 
 namespace amarlon {
 
@@ -26,6 +27,7 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _map(map)
   , _instanceId( ++Actor::InstanceCounter )
 {
+  addObserver( &Engine::instance().getMessenger() );
 }
 
 void Actor::init()

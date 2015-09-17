@@ -1,7 +1,7 @@
 #include "heal_effect.h"
 #include <actor.h>
 #include <gui.h>
-#include <messenger.h>
+
 #include <executor_selector.h>
 #include <utils.h>
 
@@ -24,8 +24,8 @@ bool HealEffect::apply(ActorPtr, const Target& target)
     {
       int hpBeforeHeal = character->getHitPoints();
       character->modifyHitPoints( _heal.roll() );
-
-      Messenger::message()->actorHealed(targetActor, character->getHitPoints() - hpBeforeHeal );
+      targetActor->notify(Event(EventId::Actor_Healed,
+                                {{"value", std::to_string(character->getHitPoints() - hpBeforeHeal) }}));
 
       r = true;
     }
