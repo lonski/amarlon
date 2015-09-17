@@ -180,7 +180,7 @@ void Messenger::onNotify(Subject *subject, Event event)
         {
           const char* format = event.params["plural"] == "yes" ? "You see some items laying there."
                                                                : "You see some item laying there.";
-          strcpy_s(msg, format);
+          strcpy(msg, format);
         }
 
       }
