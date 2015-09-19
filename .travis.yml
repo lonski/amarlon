@@ -31,7 +31,7 @@ install:
     - sudo apt-get install -qq mercurial libsdl-dev
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
-
+    - sudo apt-get install libreadline-dev -qq
     # Use a recent version of clang++ to build the compiler (with C++11 support);
     # use the previously installed clang version (since installing one tends to remove another).
     - if [[ "${CXX}" == "clang++" ]]; then export CXX="clang++-$CLANG_VERSION"; fi
@@ -59,6 +59,13 @@ before_script:
     - ln -s libtcod.so libtcod.so.1
     - ln -s libtcodxx.so libtcodxx.so.1
     - cd -
+    #LUA
+    - wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
+    - tar -xvf lua-5.3.1.tar.gz
+    - cd lua-5.3.1/
+    - make linux
+    - sudo make linux install
+    - cd ..
     - mkdir build
     - cd build
 script:
