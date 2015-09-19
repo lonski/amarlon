@@ -277,9 +277,9 @@ set(SOURCE_FILES
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(amarlon_core ${TCOD_LIBRARIES})
+target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES})
 
 add_executable(amarlon main.cpp)
-target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES})
+target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${LUA_LIBRARIES})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)
