@@ -3,7 +3,9 @@ if(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
     set(LUA_FOUND TRUE)
 else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
     find_path(LUA_INCLUDE_DIR
-	NAMES lua/lua.h
+	NAMES 
+		lua.h
+		lua/lua.h
 	PATHS
 	    /usr/include
 	    /usr/local/include
@@ -11,12 +13,12 @@ else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
 	    "${CMAKE_CURRENT_SOURCE_DIR}/include"
 	    "${PROJECT_SOURCE_DIR}/include"
     )
-    set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}/lua")
+    set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}/lua" )
 
     find_library(LUA_CXX_LIBRARY
 	NAMES
 	    lua
-		liblua
+	    liblua
 	PATHS
 	    /usr/lib
 	    /usr/local/lib

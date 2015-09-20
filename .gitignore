@@ -19,3 +19,4 @@ include/gtest
 *.autosave
 doc/
 include/gmock
+include/selene
