@@ -1,4 +1,5 @@
 #include "target.h"
+#include <actor.h>
 
 namespace amarlon {
 
@@ -7,6 +8,13 @@ Target::Target(std::vector<ActorPtr> actors_, uint32_t x_, uint32_t y_)
   , x(x_)
   , y(y_)
 {}
+
+Target::Target(ActorPtr actor_)
+  : actors( {actor_ } )
+  , x( actor_->getX() )
+  , y( actor_->getY() )
+{
+}
 
 Target::Target(uint32_t x_, uint32_t y_)
   : x(x_)

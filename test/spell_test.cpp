@@ -67,14 +67,6 @@ TEST_F(SpellTest, parseTest)
   xml_document<> xmlDoc;
 
   std::string xml = "<Spell id=\"1\" name=\"MySpell\" level=\"2\" class=\"1\" targetType=\"3\">"
-                    "  <Effects level='0'>"
-                    "    <Effect type=\"2\" heal=\"2\"/>"
-                    "    <Effect type=\"1\" lockId=\"666\"/>"
-                    "  </Effects>"
-                    "  <Effects level='4'>"
-                    "    <Effect type=\"2\" heal=\"2\"/>"
-                    "    <Effect type=\"1\" lockId=\"666\"/>"
-                    "  </Effects>"
                     "</Spell>";
 
   xmlDoc.parse<0>( const_cast<char*>(xml.c_str()) );
@@ -87,7 +79,6 @@ TEST_F(SpellTest, parseTest)
   EXPECT_EQ(dsc->spellClass, 1);
   EXPECT_EQ(dsc->targetType, 3);
   EXPECT_EQ(dsc->id, 1);
-  EXPECT_EQ(dsc->effects.size(), (size_t)2);
 
 }
 

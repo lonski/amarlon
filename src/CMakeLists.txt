@@ -150,6 +150,9 @@ set(HEADER_FILES
     animations/throw.h
     animations/expanding_circle.h
     animations/throw_expanding_circle.h
+    lua_api/lua_state.h
+    lua_api/effect_forge.h
+    lua_api/actor_wrapper.h
 )
 
 set(SOURCE_FILES
@@ -274,6 +277,9 @@ set(SOURCE_FILES
     animations/throw.cpp
     animations/expanding_circle.cpp
     animations/throw_expanding_circle.cpp
+    lua_api/lua_state.cpp
+    lua_api/effect_forge.cpp
+    lua_api/actor_wrapper.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

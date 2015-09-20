@@ -11,6 +11,7 @@
 #include <command_executor.h>
 #include <tile_db.h>
 #include <actor_db.h>
+#include <lua_state.h>
 
 
 namespace amarlon {
@@ -32,6 +33,7 @@ Engine::Engine()
   , _tileDB( new TileDB )
   , _actorsDB( new ActorDB )
   , _messenger( new Messenger( _gui ) )
+  , _luaState( new lua_api::LuaState )
 {
 }
 
@@ -154,6 +156,11 @@ SpellGateway& Engine::getSpellGateway() const
 Messenger &Engine::getMessenger() const
 {
   return *_messenger;
+}
+
+lua_api::LuaState &Engine::getLuaState() const
+{
+  return *_luaState;
 }
 
 ActorPtr Engine::getPlayer() const

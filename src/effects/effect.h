@@ -23,6 +23,8 @@ public:
 
   static EffectPtr create(EffectType type);
   static EffectPtr create(EffectDescriptionPtr dsc);
+  static EffectPtr create(EffectDescription dsc);
+
   virtual EffectPtr clone() = 0;
   virtual bool isEqual(EffectPtr rhs) = 0;
 

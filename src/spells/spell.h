@@ -52,12 +52,9 @@ private:
   int _range;
   int _radius;
   int _duration;
-
-  std::set< std::pair<int, std::vector<EffectPtr> > > _effects;
   animation::AnimationPtr _animation;
 
-  std::vector<EffectPtr> getEffectsFor(ActorPtr actor);
-
+  std::string getScriptPath() const;
 
   friend class SpellSerializer;
 };

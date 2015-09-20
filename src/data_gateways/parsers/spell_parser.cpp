@@ -25,24 +25,6 @@ SpellDescriptionPtr SpellParser::parseSpellDsc()
     spellDsc->duration = getAttribute<int>(_xml, "duration");
     spellDsc->id = getAttribute<int>(_xml, "id");
 
-    rapidxml::xml_node<>* effectsNode = _xml->first_node("Effects");
-    while ( effectsNode != nullptr)
-    {
-      int level = getAttribute<int>(effectsNode, "level");
-      std::vector<EffectDescriptionPtr> effects;
-
-      rapidxml::xml_node<>* effectNode = effectsNode->first_node("Effect");
-      while( effectNode != nullptr )
-      {
-        _effectParser.setSource( effectNode );
-        effects.push_back( _effectParser.parseEffectDsc() );
-        effectNode = effectNode->next_sibling();
-      }
-
-      spellDsc->effects.insert( std::make_pair(level, effects) );
-      effectsNode = effectsNode->next_sibling();
-    }
-
     rapidxml::xml_node<>* animationNode = _xml->first_node("Animation");
     while( animationNode != nullptr )
     {

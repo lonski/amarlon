@@ -20,6 +20,11 @@ class TileDB;
 class ActorDB;
 class Messenger;
 
+namespace lua_api {
+  class LuaState;
+  typedef std::shared_ptr<LuaState> LuaStatePtr;
+}
+
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<SpellGateway> SpellGatewayPtr;
 typedef std::shared_ptr<World> WorldPtr;
@@ -62,11 +67,12 @@ public:
   gui::Gui&           getGui() const;
   gui::WindowManager& getWindowManager() const;
 
-  World&        getWorld()        const;
-  TileDB&       getTileDB()       const;
-  ActorDB&      getActorDB()      const;
-  SpellGateway& getSpellGateway() const;
-  Messenger&    getMessenger()    const;
+  World&             getWorld()         const;
+  TileDB&            getTileDB()        const;
+  ActorDB&           getActorDB()       const;
+  SpellGateway&      getSpellGateway()  const;
+  Messenger&         getMessenger()     const;
+  lua_api::LuaState& getLuaState()      const;
 
   ActorPtr getPlayer() const;
 
@@ -81,6 +87,7 @@ private:
   TileDBPtr _tileDB;
   ActorDBPtr _actorsDB;
   MessengerPtr _messenger;
+  lua_api::LuaStatePtr _luaState;
 
   ActorPtr _player;
 

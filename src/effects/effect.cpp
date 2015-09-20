@@ -30,21 +30,24 @@ EffectPtr Effect::create(EffectType type)
   return e;
 }
 
-EffectPtr Effect::create(EffectDescriptionPtr dsc)
+EffectPtr Effect::create(EffectDescription dsc)
 {
   /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
   EffectPtr e;
 
-  if ( dsc != nullptr)
+  e = Effect::create(dsc.type);
+  if ( e )
   {
-    e = Effect::create(dsc->type);
-    if ( e )
-    {
-      e->load(dsc->params);
-    }
+    e->load(dsc.params);
   }
 
   return e;
 }
+
+EffectPtr Effect::create(EffectDescriptionPtr dsc)
+{
+  return dsc != nullptr ? create(*dsc) : EffectPtr();
+}
+
 
 }

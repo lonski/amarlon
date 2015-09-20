@@ -34,7 +34,6 @@ struct SpellDescription : Description
   int radius;
   int duration;
 
-  std::set< std::pair<int, std::vector<EffectDescriptionPtr> > > effects;
   AnimationDescriptionPtr animation;
 };
 

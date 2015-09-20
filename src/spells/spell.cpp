@@ -3,6 +3,10 @@
 #include <actor.h>
 #include <effect.h>
 #include <animation.h>
+#include <engine.h>
+#include <lua_state.h>
+#include <actor_wrapper.h>
+#include <effect_forge.h>
 
 namespace amarlon {
 
@@ -38,17 +42,6 @@ SpellPtr Spell::create(SpellDescriptionPtr dsc)
     spell->_radius = dsc->radius;
     spell->_duration = dsc->duration;
 
-    for ( auto& pair : dsc->effects )
-    {
-      std::vector<EffectPtr> effects;
-      for ( auto effectDsc : pair.second )
-      {
-        effects.push_back( Effect::create(effectDsc) );
-      }
-
-      spell->_effects.insert( std::make_pair(pair.first, effects) );
-    }
-
     spell->_animation = animation::Animation::create( dsc->animation  );
   }
 
@@ -69,16 +62,6 @@ SpellPtr Spell::clone()
   cloned->_radius     = _radius;
   cloned->_duration   = _duration;
 
-  for ( auto& pair : _effects )
-  {
-    std::vector<EffectPtr> clonedEffects;
-    for( auto e : pair.second )
-    {
-      clonedEffects.push_back( e->clone() );
-    }
-    cloned->_effects.insert( std::make_pair(pair.first, clonedEffects) );
-  }
-
   return cloned;
 }
 
@@ -88,18 +71,26 @@ bool Spell::cast(ActorPtr caster, Target target)
 
   if ( target )
   {
-    success = true;
+    lua_api::LuaState& state = Engine::instance().getLuaState();
+    lua_api::ActorWrapper( caster, "caster" );
 
-    if ( _animation )
+    if ( state.execute( getScriptPath() ) )
     {
-      _animation->setLocation( Target({caster}, caster->getX(), caster->getY() ), target );
-      _animation->run(*TCODConsole::root);
-    }
 
-    for ( auto effect : getEffectsFor( caster ) )
-    {
-      success &= effect->apply(caster, target);
-      //TODO : revoke applied effect if any failed
+      success = true;
+
+      if ( _animation )
+      {
+        _animation->setLocation( Target({caster}, caster->getX(), caster->getY() ), target );
+        _animation->run(*TCODConsole::root);
+      }
+
+      //Apply effects produced in Lua script
+      lua_api::EffectForge& forge = state["forge"];
+      for ( auto effect : forge.produce() )
+      {
+        success &= effect->apply(caster, target);
+      }
     }
 
   }
@@ -146,17 +137,9 @@ int Spell::getDuration() const
   return _duration;
 }
 
-std::vector<EffectPtr> Spell::getEffectsFor(ActorPtr actor)
+std::string Spell::getScriptPath() const
 {
-  CharacterPtr character = actor->getFeature<Character>();
-  if ( character )
-  {
-    for(auto it = _effects.rbegin(); it != _effects.rend(); ++it )
-    {
-     if ( it->first <= character->getLevel() ) return it->second;
-    }
-  }
-  return std::vector<EffectPtr>{};
+  return "scripts/spells/" + std::to_string( static_cast<int>(_id) ) + ".lua";
 }
 
 }

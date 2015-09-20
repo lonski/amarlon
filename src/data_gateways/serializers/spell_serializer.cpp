@@ -38,20 +38,6 @@ bool SpellSerializer::serialize(SpellPtr spell)
     addAttribute    ( _spellNode, "radius",     spell->getRadius()     );
     addAttribute    ( _spellNode, "duration",   spell->getRadius()     );
 
-    //Serialize Effects
-    for ( auto& pair : spell->_effects )
-    {
-      xml_node<>* effectsNode = _document->allocate_node(node_element, "Effects");
-      _spellNode->append_node( effectsNode );
-      addAttribute( effectsNode, "level", pair.first );
-
-      _effectSerializer.setDestination( _document, effectsNode );
-      for( auto e : pair.second )
-      {
-        _effectSerializer.serialize( e );
-      }
-    }
-
     //Serialize Animation
     _effectSerializer.setDestination( _document, _spellNode );
     _animationSerializer.serialize( spell->_animation );
