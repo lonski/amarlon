@@ -4,6 +4,7 @@
 namespace amarlon { namespace lua_api {
 
 LuaState::LuaState()
+  : _state(true)
 {
   registerClasses();
 }
