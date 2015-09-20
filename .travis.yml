@@ -25,11 +25,17 @@ install:
     - sudo apt-get install -qq mercurial libsdl-dev git
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
-    - sudo apt-get install libreadline-dev liblua5.2-dev lua5.2 -qq
+    - sudo apt-get install libreadline-dev -qq
     - if [[ "${CXX}" == "clang++" ]]; then export CXX="clang++-$CLANG_VERSION"; fi
     - if [[ "${CC}" == "clang" ]]; then export CC="clang-$CLANG_VERSION"; fi
     - $CXX --version
 before_script:
+    #LUA
+    - wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
+    - tar -xvf lua-5.3.1.tar.gz
+    - cd lua-5.3.1/
+    - make linux
+    - sudo make linux install
     #Selene
     - git clone https://github.com/jeremyong/Selene.git
     - cp -r Selene/include/ include/selene
