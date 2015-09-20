@@ -8,7 +8,7 @@ LuaState::LuaState()
   registerClasses();
 }
 
-bool LuaState::execute(const std::__cxx11::string &path)
+bool LuaState::execute(const std::string &path)
 {
   return _state.Load(path);
 }
