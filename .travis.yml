@@ -36,6 +36,7 @@ before_script:
     - cd lua-5.3.1/
     - make linux
     - sudo make linux install
+    - cd -
     #Selene
     - git clone https://github.com/jeremyong/Selene.git
     - cp -r Selene/include/ include/selene
