@@ -11,7 +11,7 @@ before_install:
     - lsb_release -sc
     - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
     - echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-# LLVM
+    # LLVM
     - sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.4 main' >> /etc/apt/sources.list"
     - sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.5 main' >> /etc/apt/sources.list"
     - sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main' >> /etc/apt/sources.list"
@@ -20,25 +20,20 @@ before_install:
 
     - sudo apt-get update -qq
 install:
-#    - sudo apt-get install -qq gcc-5 g++-5
-#    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 20 --slave /usr/bin/g++ g++ /usr/bin/g++-5
-#    - sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 30
-#    - sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 30
-#    - sudo update-alternatives --set cc /usr/bin/gcc
-#    - sudo update-alternatives --set c++ /usr/bin/g++
     - sudo apt-get install -qq $LLVM_PACKAGE "clang-$CLANG_VERSION" 
     - sudo apt-get install -qq valgrind cppcheck
-    - sudo apt-get install -qq mercurial libsdl-dev
+    - sudo apt-get install -qq mercurial libsdl-dev git
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
     - sudo apt-get install libreadline-dev liblua5.2-dev lua5.2 -qq
-    # Use a recent version of clang++ to build the compiler (with C++11 support);
-    # use the previously installed clang version (since installing one tends to remove another).
     - if [[ "${CXX}" == "clang++" ]]; then export CXX="clang++-$CLANG_VERSION"; fi
     - if [[ "${CC}" == "clang" ]]; then export CC="clang-$CLANG_VERSION"; fi
     - $CXX --version
-#    - gcc --version
 before_script:
+    #Selene
+    - git clone https://github.com/jeremyong/Selene.git
+    - cp -r Selene/include/ include/selene
+    #GTest
     - sudo mkdir /usr/src/gtest/build
     - cd /usr/src/gtest/build
     - sudo cmake .. -DBUILD_SHARED_LIBS=1
@@ -47,6 +42,7 @@ before_script:
     - mkdir ./lib
     - sudo ln -s /usr/src/gtest/build/libgtest.so /usr/local/lib/libgtest.so
     - sudo ln -s /usr/src/gtest/build/libgtest_main.so /usr/local/lib/libgtest_main.so
+    #LibTCOD
     - hg clone https://bitbucket.org/libtcod/libtcod
     - cd libtcod
     - make -f build/makefile-linux debug
@@ -58,6 +54,7 @@ before_script:
     - cd lib
     - ln -s libtcod.so libtcod.so.1
     - ln -s libtcodxx.so libtcodxx.so.1
+    #Amarlon
     - cd -
     - mkdir build
     - cd build
