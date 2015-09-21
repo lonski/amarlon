@@ -87,6 +87,11 @@ public:
   bool isAlive() const;
 
   /**
+   * @brief A Buff/Debuff manager
+   */
+  StatusEffectsManager& getStatusEffects() const;
+
+  /**
    * @brief adds actor feature or overwrites existing one
    * @param feature to be inserted
    * @return overwriten feature if any, otherwise empty pointer

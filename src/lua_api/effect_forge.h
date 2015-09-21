@@ -24,7 +24,6 @@ public:
 
   void newRecipe();
   void setEffectType(int type);
-  void setEffectTime(int time);
   void setEffectParam(std::string name, std::string value);
   void pushRecipe();
 

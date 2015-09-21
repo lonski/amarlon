@@ -4,6 +4,25 @@
 
 namespace amarlon {
 
+class DummyEffect : public Effect
+{
+public:
+  DummyEffect() : _time(-1) {}
+  virtual ~DummyEffect() {}
+  EffectType getType() const { return EffectType::Null; }
+  EffectPtr clone() { return EffectPtr( new DummyEffect(*this) );  }
+  bool isEqual(EffectPtr rhs) { return std::dynamic_pointer_cast<DummyEffect>(rhs)->_time == _time; }
+  bool apply(ActorPtr, const Target&) { return true; }
+  bool revoke(ActorPtr, const Target&) { return true; }
+  Params toParams() const { return {}; }
+  void load(const Params&) {}
+  int  getTime() const { return _time; }
+  void setTime(int time) { _time = time; }
+
+private:
+  int _time;
+};
+
 class StatusEffectsManagerTest : public ::testing::Test
 {
 public:
@@ -16,7 +35,7 @@ protected:
 
 TEST_F(StatusEffectsManagerTest, addPermamentEffect)
 {
-  EffectPtr e = Effect::create( EffectType::Damage );
+  EffectPtr e( new DummyEffect );
   ASSERT_EQ( e->getTime(), -1 );
 
   ASSERT_EQ( _effects.getPermamentEffects().size(), (size_t)0 );
@@ -31,7 +50,7 @@ TEST_F(StatusEffectsManagerTest, addPermamentEffect)
 
 TEST_F(StatusEffectsManagerTest, addTemporaryEffect)
 {
-  EffectPtr e = Effect::create( EffectType::Damage );
+  EffectPtr e( new DummyEffect );
   ASSERT_EQ( e->getTime(), -1 );
   e->setTime(10);
   ASSERT_EQ( e->getTime(), 10 );
@@ -45,9 +64,19 @@ TEST_F(StatusEffectsManagerTest, addTemporaryEffect)
   ASSERT_EQ( tEffects[0], e );
 }
 
+TEST_F(StatusEffectsManagerTest, addZeroTimeEffect)
+{
+  EffectPtr e( new DummyEffect );
+  e->setTime(0);
+
+  _effects.add(e);
+  ASSERT_EQ( _effects.getPermamentEffects().size(), (size_t)0 );
+  ASSERT_EQ( _effects.getTemporaryEffects().size(), (size_t)0 );
+}
+
 TEST_F(StatusEffectsManagerTest, removePermamentEffect)
 {
-  auto e = Effect::create(EffectType::Damage);
+  EffectPtr e( new DummyEffect );
   ASSERT_EQ( _effects.getPermamentEffects().size(), (size_t)0 );
   ASSERT_EQ( _effects.getTemporaryEffects().size(), (size_t)0 );
   _effects.add( e );
@@ -61,7 +90,7 @@ TEST_F(StatusEffectsManagerTest, removePermamentEffect)
 
 TEST_F(StatusEffectsManagerTest, removeTemporaryEffect)
 {
-  auto e = Effect::create(EffectType::Damage);
+  EffectPtr e( new DummyEffect );
   e->setTime(10);
   ASSERT_EQ( _effects.getPermamentEffects().size(), (size_t)0 );
   ASSERT_EQ( _effects.getTemporaryEffects().size(), (size_t)0 );
@@ -75,12 +104,12 @@ TEST_F(StatusEffectsManagerTest, removeTemporaryEffect)
 
 TEST_F(StatusEffectsManagerTest, tick)
 {
-  auto eTmp1 = Effect::create(EffectType::Damage);
+  EffectPtr eTmp1( new DummyEffect );
   eTmp1->setTime(15);
-  auto eTmp2 = Effect::create(EffectType::Damage);
+  EffectPtr eTmp2( new DummyEffect );
   eTmp2->setTime(8);
 
-  auto ePerm = Effect::create(EffectType::Damage);
+  EffectPtr ePerm( new DummyEffect );
   ePerm->setTime(-1);
 
   _effects.add(eTmp1);
@@ -95,11 +124,11 @@ TEST_F(StatusEffectsManagerTest, tick)
 
 TEST_F(StatusEffectsManagerTest, removeExpiredEffect)
 {
-  auto e1 = Effect::create(EffectType::Damage);
+  EffectPtr e1( new DummyEffect );
   e1->setTime(8);
-  auto e2 = Effect::create(EffectType::Damage);
+  EffectPtr e2( new DummyEffect );
   e2->setTime(5);
-  auto e3 = Effect::create(EffectType::Damage);
+  EffectPtr e3( new DummyEffect );
   e3->setTime(3);
 
   _effects.add(e1);

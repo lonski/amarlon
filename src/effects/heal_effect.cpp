@@ -33,6 +33,11 @@ bool HealEffect::apply(ActorPtr, const Target& target)
   return r;
 }
 
+bool HealEffect::revoke(ActorPtr, const Target&)
+{
+  return true;
+}
+
 void HealEffect::load(const Params& params)
 {
   auto it = params.find("heal");
@@ -43,7 +48,6 @@ EffectPtr HealEffect::clone()
 {
   EffectPtr cloned( new HealEffect );
   cloned->load( toParams() );
-  cloned->setTime( getTime() );
 
   return cloned;
 }
@@ -56,7 +60,6 @@ bool HealEffect::isEqual(EffectPtr rhs)
   if (crhs != nullptr)
   {
     equal = _heal == crhs->_heal;
-    equal &= _time == crhs->_time;
   }
 
   return equal;

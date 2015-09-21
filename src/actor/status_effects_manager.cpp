@@ -11,10 +11,13 @@ StatusEffectsManager::StatusEffectsManager()
 
 void StatusEffectsManager::add(EffectPtr effect)
 {
-  if ( effect->getTime() == -1 )
-    _permEffects.push_back(effect);
-  else
-    _tempEffects.push_back(effect);
+  if ( effect->getTime() != 0 )
+  {
+    if ( effect->getTime() == -1 )
+      _permEffects.push_back(effect);
+    else
+      _tempEffects.push_back(effect);
+  }
 }
 
 void StatusEffectsManager::remove(EffectPtr effect)

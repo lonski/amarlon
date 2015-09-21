@@ -15,7 +15,6 @@ EffectPtr LockEffect::clone()
 {
   EffectPtr cloned( new LockEffect );
   cloned->load( toParams() );
-  cloned->setTime( getTime() );
 
   return cloned;
 }
@@ -27,8 +26,7 @@ bool LockEffect::isEqual(EffectPtr rhs)
 
   if (crhs != nullptr)
   {
-    equal = _lockId == crhs->_lockId;    
-    equal &= _time   == crhs->_time;
+    equal = _lockId == crhs->_lockId;
   }
 
   return equal;
@@ -80,6 +78,12 @@ bool LockEffect::apply(ActorPtr, const Target& target)
   }
 
   return r;
+}
+
+bool LockEffect::revoke(ActorPtr, const Target&)
+{
+  //TODO: think how it shoudl be done here..
+  return true;
 }
 
 }

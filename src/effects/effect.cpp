@@ -8,7 +8,6 @@
 namespace amarlon {
 
 Effect::Effect()
-  : _time(-1)
 {
 }
 
@@ -39,21 +38,10 @@ EffectPtr Effect::create(EffectDescription dsc)
   e = Effect::create(dsc.type);
   if ( e )
   {
-    e->setTime(dsc.time);
     e->load(dsc.params);
   }
 
   return e;
-}
-
-int Effect::getTime() const
-{
-    return _time;
-}
-
-void Effect::setTime(int time)
-{
-    _time = time;
 }
 
 EffectPtr Effect::create(EffectDescriptionPtr dsc)

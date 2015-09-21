@@ -99,6 +99,11 @@ bool Actor::isAlive() const
   return  f && f->isAlive();
 }
 
+StatusEffectsManager &Actor::getStatusEffects() const
+{
+  return *_effects;
+}
+
 bool Actor::isFovOnly() const
 {
   return Engine::instance().getActorDB().isFovOnly(_id);

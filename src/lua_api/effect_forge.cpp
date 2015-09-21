@@ -18,11 +18,6 @@ void EffectForge::setEffectType(int type)
   _currentRecipe.type = static_cast<EffectType>(type);
 }
 
-void EffectForge::setEffectTime(int time)
-{
-  _currentRecipe.time = time;
-}
-
 void EffectForge::setEffectParam(std::string name, std::string value)
 {
   _currentRecipe.params[name] = value;

@@ -25,12 +25,23 @@ public:
   static EffectPtr create(EffectDescriptionPtr dsc);
   static EffectPtr create(EffectDescription dsc);
 
+  virtual EffectType getType() const = 0;
   virtual EffectPtr clone() = 0;
   virtual bool isEqual(EffectPtr rhs) = 0;
 
+  /**
+   * @brief Applies the effect on given target
+   * @param executor - an actor who executes the effect
+   * @param target - the target on whis effect is applied
+   */
   virtual bool apply(ActorPtr executor, const Target& target) = 0;
 
-  virtual EffectType getType() const = 0;
+  /**
+   * @brief Removes the effect's non-permamrnet changes from the target
+   * @param executor - an actor who is revoking the effect
+   * @param target - the target from which the effect is going to be removed
+   */
+  virtual bool revoke(ActorPtr executor, const Target& target) = 0;
 
   /**
    * @brief Serialize all effect fields to key-value params.
@@ -44,11 +55,12 @@ public:
    */
   virtual void load(const Params& params) = 0;
 
-  int getTime() const;
-  void setTime(int time);
+  /**
+   * @brief Effect duration. Use "-1" for permament effect.
+   */
+  virtual int  getTime() const = 0;
+  virtual void setTime(int time) = 0;
 
-protected:
-  int _time;
 
 };
 

@@ -19,6 +19,7 @@ public:
    * @param name - object name visible in scripts
    */
   ActorWrapper(ActorPtr actor, const char* name);
+  ~ActorWrapper();
 
   int getLevel();
 
