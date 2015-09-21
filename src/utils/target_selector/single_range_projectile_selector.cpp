@@ -26,10 +26,10 @@ Target SingleRangeProjectileSelector::select(std::function<bool (ActorPtr)> filt
 {
   initialize();
 
-  auto actors = _map->getActors([&](ActorPtr a){ return a->getDistance(tStart.x, tStart.y) <= getRange() &&
+  auto actors = _map->getActors([&](ActorPtr a){ return calculateDistance(a->getX(), a->getY(), tStart.x, tStart.y) <= getRange() &&
                                                         a->isAlive() &&
                                                         _map->isInFov(a->getX(), a->getY() ) &&
-                                                        a->getId() != ActorType::Player &&
+                                                        a->getType() != ActorType::Player &&
                                                         filterFun(a); });
   auto aIter = actors.begin();
 

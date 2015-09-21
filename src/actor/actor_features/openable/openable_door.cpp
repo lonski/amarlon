@@ -14,11 +14,11 @@ bool OpenableDoor::open(ActorPtr)
 {
   bool r = false;
 
-  if (getOwner().lock()->getId() == ActorType::DoorClosed)
+  if (getOwner().lock()->getType() == ActorType::DoorClosed)
   {
     if ( !isLocked() )
     {
-      getOwner().lock()->changeType(ActorType::DoorOpen);
+      getOwner().lock()->setType(ActorType::DoorOpen);
       r = true;
     }
     else
@@ -34,9 +34,9 @@ bool OpenableDoor::close(ActorPtr)
 {
   bool r = false;
 
-  if (getOwner().lock()->getId() == ActorType::DoorOpen)
+  if (getOwner().lock()->getType() == ActorType::DoorOpen)
   {
-    getOwner().lock()->changeType(ActorType::DoorClosed);
+    getOwner().lock()->setType(ActorType::DoorClosed);
     getOwner().lock()->getFeature<Openable>()->unlock();
     r = true;
   }
@@ -71,7 +71,7 @@ bool OpenableDoor::lock()
   bool r = false;
 
   ActorPtr owner = getOwner().lock();
-  if (owner && owner->getId() == ActorType::DoorClosed)
+  if (owner && owner->getType() == ActorType::DoorClosed)
   {
     r = Openable::lock();
   }

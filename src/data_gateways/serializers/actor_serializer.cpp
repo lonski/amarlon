@@ -49,11 +49,11 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
     _actorNode = _document->allocate_node(node_element, nodeName);
     _xml->append_node( _actorNode );
 
-    addAttributeEnum( _actorNode, "id", actor->getId() );
+    addAttributeEnum( _actorNode, "id", actor->getType() );
     addAttribute( _actorNode, "x", actor->getX() );
     addAttribute( _actorNode, "y", actor->getY() );
 
-    for ( const auto& afPair : actor->getFeatures() )
+    for ( const auto& afPair : actor->_features )
     {
       for ( auto serializer : _afSerializers )
       {

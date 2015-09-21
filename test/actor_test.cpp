@@ -34,7 +34,7 @@ TEST_F(ActorTest, actorEqual_diferrent_id)
   std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
   std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
 
-  a2->changeType( ActorType::Bed );
+  a2->setType( ActorType::Bed );
 
   ASSERT_FALSE( *a1 == *a2 );
 }

@@ -10,12 +10,10 @@
 
 namespace amarlon {
 
-unsigned Actor::InstanceCounter = 0;
-
 ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
 {
   ActorPtr actor( new Actor(aId, x, y, map) );
-  actor->init();
+  actor->loadFeatures();
 
   return actor;
 }
@@ -25,12 +23,11 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _x(x)
   , _y(y)
   , _map(map)
-  , _instanceId( ++Actor::InstanceCounter )
 {
   addObserver( &Engine::instance().getMessenger() );
 }
 
-void Actor::init()
+void Actor::loadFeatures()
 {
   _features = Engine::instance().getActorDB().getAllFeatures(_id);
   for (auto f : _features)
@@ -45,16 +42,24 @@ Actor::~Actor()
 
 void Actor::morph(ActorType newType)
 {
-  _id = newType;
+  setType( newType );
+  loadFeatures();
+}
 
-  _features.clear();
-  _features = Engine::instance().getActorDB().getAllFeatures(_id);
-  for (auto f : _features) f.second->setOwner( shared_from_this() );
+void Actor::update()
+{
+  AiPtr ai = getFeature<Ai>();
+  if ( ai )
+  {
+    ai->update();
+  }
+
+  //TODO: tick effects
 }
 
 ActorPtr Actor::clone()
 {
-  ActorPtr cloned( new Actor( getId(), getX(), getY() ) );
+  ActorPtr cloned( new Actor( getType(), getX(), getY() ) );
 
   for ( auto af : _features )
   {
@@ -67,8 +72,8 @@ bool Actor::operator==(const Actor &rhs) const
 {
   bool equal = true;
 
-  equal &= ( getId() == rhs.getId() );
-  equal &= ( getFeatureCount() == rhs.getFeatureCount() );
+  equal &= ( getType() == rhs.getType() );
+  equal &= ( _features.size() == rhs._features.size() );
 
   for ( auto af : _features)
   {
@@ -79,7 +84,7 @@ bool Actor::operator==(const Actor &rhs) const
   return equal;
 }
 
-void Actor::changeType(ActorType newType)
+void Actor::setType(ActorType newType)
 {
   _id = newType;
 }
@@ -100,7 +105,7 @@ bool Actor::isTransparent() const
   return Engine::instance().getActorDB().isTransparent(_id);
 }
 
-bool Actor::blocks() const
+bool Actor::isBlocking() const
 {
   return Engine::instance().getActorDB().blocks(_id);;
 }
@@ -119,12 +124,7 @@ int Actor::getTileRenderPriority() const
   return priority;
 }
 
-float Actor::getDistance(uint32_t x, uint32_t y)
-{
-  return calculateDistance( getX(), getY(), x, y );
-}
-
-ActorType Actor::getId() const
+ActorType Actor::getType() const
 {
   return _id;
 }
@@ -216,20 +216,6 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
     }
   }
   return overwriten;
-}
-
-size_t Actor::getFeatureCount() const
-{
-  return _features.size();
-}
-
-const FeatureMap Actor::getFeatures() const
-{
-  return _features;
-}
-unsigned Actor::getInstanceId() const
-{
-  return _instanceId;
 }
 
 bool Actor::performAction(ActorActionPtr action)

@@ -50,7 +50,7 @@ bool Map::isInFov(int x, int y)
 bool Map::isBlocked(int x, int y)
 {
   ActorPtr actor = getTile(x,y).top();
-  bool actorBlocks = actor ? actor->blocks() : false;
+  bool actorBlocks = actor ? actor->isBlocking() : false;
   return !_codMap.isWalkable(x,y) || actorBlocks;
 }
 

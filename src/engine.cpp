@@ -52,7 +52,7 @@ void Engine::prologue()
     initializeWorld();
 
     //temporary: just add player from map
-    _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getId() == ActorType::Player; }).front();
+    _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getType() == ActorType::Player; }).front();
 
     getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
   }
@@ -117,11 +117,9 @@ void Engine::update()
   MapPtr map = getWorld().getCurrentMap();
   if ( map )
   {
-    std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->hasFeature<Ai>();};
-    auto ais = map->getActors( filter );
-    for ( ActorPtr actor : ais )
+    for ( auto actor : map->getActors() )
     {
-      actor->getFeature<Ai>()->update();
+      actor->update();
     }
   }
 }

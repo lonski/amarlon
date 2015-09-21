@@ -28,42 +28,61 @@ class Actor : public std::enable_shared_from_this<Actor>
             , public Subject
 {
 public:
-  static unsigned InstanceCounter;
-
   static ActorPtr create(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
-
   ~Actor();
 
-  void init();
   ActorPtr clone();  
   bool operator==(const Actor& rhs) const;
 
-  //void move(int dx, int dy);
-  void morph(ActorType newType);
-  void changeType(ActorType newType);
-
-  bool isAlive() const;
-  bool isFovOnly() const;
-  bool isTransparent() const;
-  bool blocks() const;
-  int getTileRenderPriority() const;
-  float getDistance(uint32_t x, uint32_t y);
+  /**
+   * Properties from general Actor Database
+   */
+  unsigned char getChar()       const;
+  TCODColor     getColor()      const;
+  std::string   getName()       const;
+  bool          isBlocking()    const;
+  bool          isTransparent() const;
+  bool          isFovOnly()     const;
 
   /**
-   * Actor ID is not an unique instance id, but a type id from <actor_type.h>
+   * Instance properties
    */
-  ActorType getId() const;
-  unsigned char getChar() const;
-  TCODColor getColor() const;
-  std::string getName() const;
-  std::string getDescription();
+  ActorType getType() const;
+  void      setType(ActorType newType);
+  MapPtr    getMap() const;
+  void      setMap(MapPtr map);
+  int       getX() const;
+  int       getY() const;
+  int       getTileRenderPriority() const;
 
-  int getX() const;
-  int getY() const;
+  /**
+   * @brief Changes the actors coordinates and sets its position on map
+   *        (if the map is set)
+   */
   void setPosition(int x, int y);
 
-  MapPtr getMap() const;
-  void setMap(MapPtr map);
+  /**
+   * @brief Builds a string actor's description from all ActorFeatures
+   *        and general properties.
+   */
+  std::string   getDescription();
+
+  /**
+   * @brief Changes the actor type, removes all ActorFeatures
+   *        and loads new, default, features.
+   */
+  void morph(ActorType newType);
+
+  /**
+   * @brief Allows player to take its turn. Ticks the time
+   *        - updates AI and updates the effects status
+   */
+  void update();
+
+  /**
+   * @brief Checks if the Character actor feature for alive status
+   */
+  bool isAlive() const;
 
   /**
    * @brief adds actor feature or overwrites existing one
@@ -86,31 +105,33 @@ public:
   template<typename T>
   std::shared_ptr<T> getFeature() const;
 
-  size_t getFeatureCount() const;
-  const FeatureMap getFeatures() const;
-
+  /**
+   * @return True if this instance of Actor contain given ActorFeature
+   */
   template<typename T>
   bool hasFeature();
 
-  unsigned getInstanceId() const;
-
+  /**
+   * @brief ActorActions are general interface for actor manipulation
+   * @param Action to be performed
+   * @return True if action has been performed successfully
+   */
   bool performAction(ActorActionPtr action);
 
 private:
   ActorType _id;
   int _x, _y;
   MapWPtr _map;
-  unsigned _instanceId;
-
   FeatureMap _features;
 
   Actor(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
+  void loadFeatures();
+
+  friend class ActorSerializer;
 
 };
 
 typedef std::shared_ptr<Actor> ActorPtr;
-
-// === IMPLEMENTATION === //
 
 template<typename T>
 std::shared_ptr<T> Actor::getFeature() const
