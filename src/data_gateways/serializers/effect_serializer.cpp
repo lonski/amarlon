@@ -31,6 +31,7 @@ bool EffectSerializer::serialize(EffectPtr effect)
     xml_node<>* _effectNode = _document->allocate_node(node_element, "Effect");
     _xml->append_node( _effectNode );
     addAttributeEnum( _effectNode, "type", effect->getType() );
+    addAttribute( _effectNode, "time", effect->getTime() );
 
     Params params = effect->toParams();
     for ( auto& pair : params )

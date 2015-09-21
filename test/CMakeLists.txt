@@ -6,6 +6,7 @@ include_directories(${GMOCK_INCLUDE_DIRS})
 set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_type.h
+    ${PROJECT_SOURCE_DIR}/src/actor/status_effects_manager.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/inventory/inventory.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/character/character.h
@@ -93,6 +94,7 @@ set(SOURCE_FILES
     move_action_test.cpp
     spell_test.cpp
     drop_action_test.cpp
+    status_effects_manager_test.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")

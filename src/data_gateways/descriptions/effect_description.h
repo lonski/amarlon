@@ -16,11 +16,13 @@ struct EffectDescription : Description
 {
   EffectDescription()
     : type(EffectType::Null)
+    , time(0)
   {
   }
 
   EffectType type;
   std::map<std::string, std::string> params;
+  int time;
 };
 
 }

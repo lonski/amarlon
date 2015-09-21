@@ -78,7 +78,6 @@ TEST(UtilsTest, diceTest)
   {
     int r = dices::roll(dices::D4);
     rolls.insert( r );
-    std::cout << r << " ";
   }
 
   for ( int i=1; i<=4; ++i)

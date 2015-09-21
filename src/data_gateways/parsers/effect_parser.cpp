@@ -18,6 +18,11 @@ EffectDescriptionPtr EffectParser::parseEffectDsc()
 
     effectDsc->type = (EffectType)getAttribute<int>(_xml, "type");
 
+    if ( attributeExists( _xml, "time") )
+      effectDsc->time = getAttribute<int>(_xml, "time");
+    else
+      effectDsc->time = -1;
+
     rapidxml::xml_node<>* pNode = _xml->first_node("P");
     while( pNode )
     {

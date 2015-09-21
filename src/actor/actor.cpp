@@ -7,6 +7,7 @@
 #include <engine.h>
 #include <actor_db.h>
 #include <messenger.h>
+#include <status_effects_manager.h>
 
 namespace amarlon {
 
@@ -23,6 +24,7 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _x(x)
   , _y(y)
   , _map(map)
+  , _effects( new StatusEffectsManager )
 {
   addObserver( &Engine::instance().getMessenger() );
 }
@@ -54,7 +56,7 @@ void Actor::update()
     ai->update();
   }
 
-  //TODO: tick effects
+  _effects->tick();
 }
 
 ActorPtr Actor::clone()
@@ -65,6 +67,8 @@ ActorPtr Actor::clone()
   {
     cloned->insertFeature( af.second->clone() );
   }
+
+  cloned->_effects = _effects->clone();
 
   return cloned;
 }

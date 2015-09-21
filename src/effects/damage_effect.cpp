@@ -37,6 +37,7 @@ EffectPtr DamageEffect::clone()
 {
   EffectPtr cloned( new DamageEffect );
   cloned->load( toParams() );
+  cloned->setTime( getTime() );
 
   return cloned;
 }
@@ -48,7 +49,8 @@ bool DamageEffect::isEqual(EffectPtr rhs)
 
   if (crhs != nullptr)
   {
-    equal  = _damage == crhs->_damage;
+    equal  =  _damage == crhs->_damage;
+    equal  &= _time   == crhs->_time;
   }
 
   return equal;

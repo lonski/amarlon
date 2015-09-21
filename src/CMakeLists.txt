@@ -25,6 +25,7 @@ set(HEADER_FILES
     effects/damage_effect.h
     actor/actor.h
     actor/actor_type.h
+    actor/status_effects_manager.h
     commands/cmd_help.h
     commands/cmd_close.h
     commands/cmd_fullscreen.h
@@ -177,6 +178,7 @@ set(SOURCE_FILES
     effects/heal_effect.cpp
     effects/damage_effect.cpp
     actor/actor.cpp
+    actor/status_effects_manager.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp
     commands/cmd_fullscreen.cpp

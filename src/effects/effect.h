@@ -44,6 +44,12 @@ public:
    */
   virtual void load(const Params& params) = 0;
 
+  int getTime() const;
+  void setTime(int time);
+
+protected:
+  int _time;
+
 };
 
 }

@@ -20,6 +20,8 @@ namespace amarlon {
 
 class Map;
 class ActorAction;
+class StatusEffectsManager;
+typedef std::shared_ptr<StatusEffectsManager> StatusEffectsManagerPtr;
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::weak_ptr<Map> MapWPtr;
@@ -123,6 +125,8 @@ private:
   int _x, _y;
   MapWPtr _map;
   FeatureMap _features;
+  StatusEffectsManagerPtr _effects;
+
 
   Actor(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
   void loadFeatures();
