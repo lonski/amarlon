@@ -7,8 +7,8 @@ cache:
 before_install:
     - echo -e "Ubuntu version:"
     - lsb_release -sc
-    #- echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
-    #- echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+    - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
+    - echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
     - sudo apt-get update -qq
 install:
     - sudo apt-get install -qq gcc-4.8 g++-4.8
