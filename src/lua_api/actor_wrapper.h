@@ -24,7 +24,7 @@ public:
   int getLevel();
 
 private:
-  unsigned _actor;
+  unsigned long long _actor;
 
 };
 
