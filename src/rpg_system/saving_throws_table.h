@@ -11,11 +11,11 @@ namespace SavingThrows
 {
   enum Type
   {
-    DeathRayOrPoison,
-    MagicWands,
-    ParalysisOrPertrify,
-    DragonBreath,
-    Spells
+    DeathRayOrPoison = 0,
+    MagicWands = 1,
+    ParalysisOrPertrify = 2,
+    DragonBreath = 3,
+    Spells = 4
   };
 
   int get(Type type, CharacterClass charClass, int level);

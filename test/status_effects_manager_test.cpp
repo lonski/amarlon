@@ -4,6 +4,10 @@
 #include <attack_roll_effect.h>
 #include <actor.h>
 #include <character.h>
+#include <saving_throw_modify_effect.h>
+#include <saving_throws_table.h>
+#include <morale_modify_effect.h>
+#include <monster.h>
 
 namespace amarlon {
 
@@ -154,22 +158,85 @@ TEST_F(StatusEffectsManagerTest, attackRollBuffTest)
   //create the actor
   ActorPtr orc = Actor::create(ActorType::Orc);
 
+  //init conditions
+  CharacterPtr c = orc->getFeature<Character>();
+  ASSERT_TRUE( c != nullptr );
+  ASSERT_EQ( c->getTmpAttackModifier(), 0 );
+
   //apply buff on actor
   attackBonusEffect->apply(nullptr, orc);
   attackBonusEffect.reset(); //delete, it should remain in avtor status mgr
 
   //check if applied
-  CharacterPtr c = orc->getFeature<Character>();
-  ASSERT_TRUE( c != nullptr );
-  ASSERT_EQ( c->getExtraAttackBonus(), 2 );
+  ASSERT_EQ( c->getTmpAttackModifier(), 2 );
 
   //tick the time to expire the effect
   int turns = 5;
   while ( turns-- ) orc->update();
 
   //check if effect is revoked
-  ASSERT_EQ( c->getExtraAttackBonus(), 0 );
+  ASSERT_EQ( c->getTmpAttackModifier(), 0 );
 
+}
+
+TEST_F(StatusEffectsManagerTest, savingThrowEffectTest)
+{
+  //create buff
+  EffectPtr saveThrowModEffect = Effect::create(EffectType::SavingThrow);
+  saveThrowModEffect->load( { {"time", "5"}, {"modifier", "-3"}, {"throw_type","2" } } );
+
+  //create the actor
+  ActorPtr orc = Actor::create(ActorType::Orc);
+
+  CharacterPtr c = orc->getFeature<Character>();
+  ASSERT_TRUE( c != nullptr );
+  ASSERT_EQ( c->getTmpSavingThrowModifier(SavingThrows::ParalysisOrPertrify), 0 );
+
+  //apply buff on actor
+  saveThrowModEffect->apply(nullptr, orc);
+  saveThrowModEffect.reset(); //delete, it should remain in avtor status mgr
+
+  //check if applied
+  ASSERT_EQ( c->getTmpSavingThrowModifier(SavingThrows::ParalysisOrPertrify), -3 );
+
+  int turns = 3;
+  while ( turns-- ) orc->update();
+  ASSERT_EQ( c->getTmpSavingThrowModifier(SavingThrows::ParalysisOrPertrify), -3 );
+
+  turns = 3;
+  while ( turns-- ) orc->update();
+
+  //check if effect is revoked
+  ASSERT_EQ( c->getTmpSavingThrowModifier(SavingThrows::ParalysisOrPertrify), 0 );
+
+}
+
+TEST_F(StatusEffectsManagerTest, moraleModifyBuffTest)
+{
+  //create buff
+  EffectPtr moraleEffect = Effect::create(EffectType::Morale);
+  moraleEffect->load( { {"time", "5"}, {"modifier", "6"} } );
+
+  //create the actor
+  ActorPtr orc = Actor::create(ActorType::Orc);
+
+  MonsterPtr m = std::dynamic_pointer_cast<Monster>( orc->getFeature<Character>() );
+  ASSERT_TRUE( m != nullptr );
+  ASSERT_EQ( m->getTmpMoraleModifier(), 0 );
+
+  //apply buff on actor
+  moraleEffect->apply(nullptr, orc);
+  moraleEffect.reset(); //delete, it should remain in avtor status mgr
+
+  //check if applied
+  ASSERT_EQ( m->getTmpMoraleModifier(), 6 );
+
+  //tick the time to expire the effect
+  int turns = 5;
+  while ( turns-- ) orc->update();
+
+  //check if effect is revoked
+  ASSERT_EQ( m->getTmpMoraleModifier(), 0 );
 }
 
 }

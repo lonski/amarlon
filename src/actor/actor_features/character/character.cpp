@@ -142,7 +142,17 @@ Race Character::getRace() const
 
 int Character::getSavingThrow(SavingThrows::Type type)
 {
-  return SavingThrows::get( type, getClass(), getLevel() );
+  return SavingThrows::get( type, getClass(), getLevel() ) + getTmpSavingThrowModifier(type);
+}
+
+int Character::getTmpSavingThrowModifier(SavingThrows::Type type)
+{
+  return _savingThrowsTmpMods[type];
+}
+
+void Character::setTmpSavingThrowModifier(SavingThrows::Type type, int modifier)
+{
+  _savingThrowsTmpMods[type] = modifier;
 }
 
 int Character::getSpeed()
@@ -160,12 +170,12 @@ void Character::setMovePoints(int points)
   _movePoints = points;
 }
 
-int Character::getExtraAttackBonus()
+int Character::getTmpAttackModifier()
 {
   return _extraAttackBonus;
 }
 
-void Character::setExtraAttackBonus(int bonus)
+void Character::setTmpAttackModifier(int bonus)
 {
   _extraAttackBonus = bonus;
 }

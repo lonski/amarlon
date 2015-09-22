@@ -3,8 +3,10 @@
 #include <heal_effect.h>
 #include <damage_effect.h>
 #include <attack_roll_effect.h>
+#include <saving_throw_modify_effect.h>
 #include <target_selector.h>
 #include <cassert>
+#include <morale_modify_effect.h>
 
 namespace amarlon {
 
@@ -22,10 +24,12 @@ EffectPtr Effect::create(EffectType type)
 
   switch(type)
   {
-    case EffectType::Lock:       e.reset( new LockEffect   );     break;
-    case EffectType::Heal:       e.reset( new HealEffect   );     break;
-    case EffectType::Damage:     e.reset( new DamageEffect );     break;
-    case EffectType::AttackRoll: e.reset( new AttackRollEffect ); break;
+    case EffectType::Lock:        e.reset( new LockEffect   );     break;
+    case EffectType::Heal:        e.reset( new HealEffect   );     break;
+    case EffectType::Damage:      e.reset( new DamageEffect );     break;
+    case EffectType::AttackRoll:  e.reset( new AttackRollEffect ); break;
+    case EffectType::SavingThrow: e.reset( new SavingThrowModifyEffect ); break;
+    case EffectType::Morale:      e.reset( new MoraleModifyEffect ); break;
     default:;
   }
 

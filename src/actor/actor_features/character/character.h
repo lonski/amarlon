@@ -60,6 +60,12 @@ public:
   virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
 
+  /**
+   * @brief Temporary saving throws modifiers granted by effects.
+   */
+  virtual int getTmpSavingThrowModifier(SavingThrows::Type type);
+  virtual void setTmpSavingThrowModifier(SavingThrows::Type type, int modifier);
+
   virtual int getSpeed();
   virtual int getMovePoints();
   virtual void setMovePoints(int points);
@@ -69,10 +75,10 @@ public:
   virtual int getMeleeAttackBonus() = 0;
 
   /**
-   * @brief Temporary attack bonus granted for example by effects
+   * @brief Temporary attack bonus granted by effects
    */
-  virtual int getExtraAttackBonus();
-  virtual void setExtraAttackBonus(int bonus);
+  virtual int getTmpAttackModifier();
+  virtual void setTmpAttackModifier(int bonus);
 
   virtual Damage getDamage() = 0;
   virtual int getArmorClass();
@@ -97,6 +103,7 @@ private:
   int _movePoints;
   int _extraAttackBonus;
   std::set<SpellPtr> _spells;
+  std::map<SavingThrows::Type, int> _savingThrowsTmpMods;
 
   friend class Character::Creator;
   friend class CharacterSerializer;

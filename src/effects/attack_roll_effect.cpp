@@ -28,7 +28,7 @@ bool AttackRollEffect::isEqual(EffectPtr rhs)
   if (crhs != nullptr)
   {
     equal = _time == crhs->_time;
-    equal &= _modifier = crhs->_modifier;
+    equal &= _modifier == crhs->_modifier;
   }
 
   return equal;
@@ -43,7 +43,7 @@ bool AttackRollEffect::apply(ActorPtr, const Target &target)
     CharacterPtr c = t->getFeature<Character>();
     if ( c )
     {
-      c->setExtraAttackBonus( c->getExtraAttackBonus() + _modifier );
+      c->setTmpAttackModifier( c->getTmpAttackModifier() + _modifier );
       t->getStatusEffects().add( shared_from_this() );
       r = true;
     }
@@ -60,7 +60,7 @@ bool AttackRollEffect::revoke(ActorPtr, const Target &target)
     CharacterPtr c = t->getFeature<Character>();
     if ( c )
     {
-      c->setExtraAttackBonus( c->getExtraAttackBonus() - _modifier );
+      c->setTmpAttackModifier( c->getTmpAttackModifier() - _modifier );
       r = true;
     }
   }

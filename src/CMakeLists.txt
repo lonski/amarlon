@@ -24,6 +24,8 @@ set(HEADER_FILES
     effects/heal_effect.h
     effects/damage_effect.h
     effects/attack_roll_effect.h
+    effects/saving_throw_modify_effect.h
+    effects/morale_modify_effect.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
@@ -179,6 +181,8 @@ set(SOURCE_FILES
     effects/heal_effect.cpp
     effects/damage_effect.cpp
     effects/attack_roll_effect.cpp
+    effects/saving_throw_modify_effect.cpp
+    effects/morale_modify_effect.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
     commands/cmd_help.cpp
