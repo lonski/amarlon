@@ -70,3 +70,4 @@ void DieAction::dropOnGround(ActorPtr item)
 }
 
 }
+

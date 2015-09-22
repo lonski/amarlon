@@ -27,3 +27,4 @@ CharacterPtr CharacterFactory::produce(CharacterDescriptionPtr dsc)
 }
 
 }
+

@@ -84,3 +84,4 @@ EquipResult EquipAction::getResult() const
 }
 
 }
+

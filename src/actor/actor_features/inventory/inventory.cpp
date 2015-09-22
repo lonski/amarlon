@@ -143,3 +143,4 @@ std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun)
 }
 
 }
+

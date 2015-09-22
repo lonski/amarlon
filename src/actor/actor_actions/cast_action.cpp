@@ -57,3 +57,4 @@ bool CastAction::isLevelCorrect() const
 }
 
 }
+

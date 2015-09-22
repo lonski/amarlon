@@ -28,3 +28,4 @@ OpenablePtr OpenableFactory::produce(OpenableDescriptionPtr dsc)
 }
 
 }
+

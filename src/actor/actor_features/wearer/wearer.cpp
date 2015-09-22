@@ -145,3 +145,4 @@ bool Wearer::hasSlot(ItemSlotType slot) const
 }
 
 }
+

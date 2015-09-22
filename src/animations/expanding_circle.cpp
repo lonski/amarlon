@@ -65,3 +65,4 @@ Params ExpandingCircle::toParams() const
 }
 
 }}
+

@@ -41,3 +41,4 @@ Params ThrowExpandingCircle::toParams() const
 }
 
 }}
+

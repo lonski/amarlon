@@ -65,3 +65,4 @@ void CmdMoveOrAttack::setDirection(int dx, int dy)
 }
 
 }
+

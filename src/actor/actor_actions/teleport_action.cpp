@@ -66,3 +66,4 @@ void TeleportAction::removeFromCurrentMap(ActorPtr performer)
 }
 
 }
+

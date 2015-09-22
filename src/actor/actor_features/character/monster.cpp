@@ -100,3 +100,4 @@ CharacterPtr Monster::Creator::create(CharacterDescriptionPtr dsc)
 }
 
 }
+

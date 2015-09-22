@@ -66,3 +66,4 @@ SpellPtr CmdCast::getSpell()
 }
 
 }
+

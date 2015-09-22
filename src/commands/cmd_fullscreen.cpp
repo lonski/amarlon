@@ -18,3 +18,4 @@ int CmdFullscreen::execute()
 }
 
 }
+
