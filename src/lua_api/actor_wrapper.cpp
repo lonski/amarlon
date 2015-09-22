@@ -8,7 +8,7 @@ namespace amarlon { namespace lua_api {
 
 ActorWrapper::ActorWrapper(ActorPtr actor, const char* name)
 {
-  _actor = ((int)actor.get());
+  _actor = ((unsigned)actor.get());
   LuaState& state = Engine::instance().getLuaState();
   state[name].SetObj<lua_api::ActorWrapper>( *this,
                                              "getLevel", &lua_api::ActorWrapper::getLevel);
