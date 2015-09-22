@@ -165,7 +165,7 @@ int Character::getExtraAttackBonus()
   return _extraAttackBonus;
 }
 
-int Character::setExtraAttackBonus(int bonus)
+void Character::setExtraAttackBonus(int bonus)
 {
   _extraAttackBonus = bonus;
 }
@@ -236,3 +236,4 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
 }
 
 }
+

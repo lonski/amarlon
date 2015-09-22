@@ -87,3 +87,4 @@ bool LockEffect::revoke(ActorPtr, const Target&)
 }
 
 }
+

@@ -44,3 +44,4 @@ void AWidget::setPosition(AWidget::PositionFlag position)
 }
 
 }}
+

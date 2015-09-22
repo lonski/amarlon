@@ -141,3 +141,4 @@ void ASlotMenuItem::render(TCODConsole &console)
 }
 
 }}
+

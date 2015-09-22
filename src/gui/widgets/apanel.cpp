@@ -118,3 +118,4 @@ void APanel::removeAllWidgets()
 }
 
 }}
+

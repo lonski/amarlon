@@ -129,3 +129,4 @@ AiPtr MonsterAi::Creator::create(AiDescriptionPtr dsc)
 }
 
 }
+

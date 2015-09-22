@@ -100,3 +100,4 @@ void AttackRollEffect::setTime(int time)
 }
 
 }
+

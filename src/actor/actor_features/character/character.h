@@ -72,7 +72,7 @@ public:
    * @brief Temporary attack bonus granted for example by effects
    */
   virtual int getExtraAttackBonus();
-  virtual int setExtraAttackBonus(int bonus);
+  virtual void setExtraAttackBonus(int bonus);
 
   virtual Damage getDamage() = 0;
   virtual int getArmorClass();

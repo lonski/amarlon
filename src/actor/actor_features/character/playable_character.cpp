@@ -199,3 +199,4 @@ CharacterPtr PlayableCharacter::Creator::create(CharacterDescriptionPtr dsc)
 }
 
 }
+

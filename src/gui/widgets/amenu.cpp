@@ -217,3 +217,4 @@ void AMenu::setAutosize(bool autosize)
 
 
 }}
+
