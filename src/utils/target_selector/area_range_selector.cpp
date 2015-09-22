@@ -70,3 +70,4 @@ Target AreaRangeSelector::select(std::function<bool (ActorPtr)> filterFun)
 }
 
 }
+

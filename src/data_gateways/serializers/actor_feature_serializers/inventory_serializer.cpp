@@ -42,3 +42,4 @@ bool InventorySerializer::serialize(ActorFeaturePtr af)
 }
 
 }
+

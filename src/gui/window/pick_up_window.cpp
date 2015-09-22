@@ -175,3 +175,4 @@ PickUpWindow &PickUpWindow::setWindowTitle(const std::string &title)
 }
 
 }}
+

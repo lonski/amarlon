@@ -152,3 +152,4 @@ TCODPath* calculatePath(Target start, Target end)
 }
 
 }
+

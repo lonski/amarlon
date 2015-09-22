@@ -63,3 +63,4 @@ void WearerSerializer::serializeEquippedItem(ItemSlotType slot, xml_node<>* slot
 }
 
 }
+

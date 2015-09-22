@@ -119,3 +119,4 @@ void AmountWindow::handlePressedKey(const TCOD_key_t &key)
 }
 
 }}
+

@@ -31,3 +31,4 @@ void OpenableSerializer::serializeOpenableCommonPart(xml_node<>* openableNode, O
 }
 
 }
+

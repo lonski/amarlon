@@ -169,3 +169,4 @@ void InventoryWindow::activatePreviousPanel()
 }
 
 }}
+

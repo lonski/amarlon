@@ -42,3 +42,4 @@ void ResizeableTextWindow::displayText()
 }
 
 }}
+

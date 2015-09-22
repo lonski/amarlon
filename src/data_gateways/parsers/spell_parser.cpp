@@ -39,3 +39,4 @@ SpellDescriptionPtr SpellParser::parseSpellDsc()
 }
 
 }
+

@@ -46,3 +46,4 @@ bool DestroyableSerializer::serialize(ActorFeaturePtr af)
 }
 
 }
+

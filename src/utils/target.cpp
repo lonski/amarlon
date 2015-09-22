@@ -54,3 +54,4 @@ Target::operator bool() const
 }
 
 }
+

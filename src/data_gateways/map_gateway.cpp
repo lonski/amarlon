@@ -96,3 +96,4 @@ bool MapGateway::store(const string& fn)
 }
 
 }
+

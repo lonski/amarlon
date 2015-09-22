@@ -45,3 +45,4 @@ bool AnimationSerializer::serialize(animation::AnimationPtr anim)
 }
 
 }
+

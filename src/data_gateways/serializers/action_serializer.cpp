@@ -52,3 +52,4 @@ bool ActionSerializer::serialize(ActorActionPtr action)
 }
 
 }
+

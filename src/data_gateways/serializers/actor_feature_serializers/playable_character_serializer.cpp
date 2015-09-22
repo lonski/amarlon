@@ -43,3 +43,4 @@ bool PlayableCharacterSerializer::serialize(ActorFeaturePtr af)
 }
 
 }
+

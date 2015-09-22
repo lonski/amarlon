@@ -47,3 +47,4 @@ bool EffectSerializer::serialize(EffectPtr effect)
 }
 
 }
+

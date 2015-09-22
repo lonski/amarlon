@@ -15,3 +15,4 @@ namespace amarlon { namespace AbilityScore {
   }
 
 }}
+

@@ -16,3 +16,4 @@ bool DirectionSelector::select(int &dx, int &dy)
 }
 
 }
+

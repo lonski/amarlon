@@ -202,3 +202,4 @@ void ActorDB::parseActorFeatures(ActorType actorId)
 }
 
 }
+

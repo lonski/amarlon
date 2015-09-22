@@ -39,3 +39,4 @@ bool MonsterSerializer::serialize(ActorFeaturePtr af)
 }
 
 }
+

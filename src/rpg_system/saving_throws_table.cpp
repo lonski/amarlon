@@ -14,3 +14,4 @@ int get(Type type, CharacterClass charClass, int level)
 }
 
 }
+

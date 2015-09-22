@@ -88,3 +88,4 @@ void Damage::parse(const std::string &str)
 }
 
 }
+

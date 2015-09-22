@@ -31,3 +31,4 @@ EffectDescriptionPtr EffectParser::parseEffectDsc()
 }
 
 }
+

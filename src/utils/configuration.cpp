@@ -67,3 +67,4 @@ const char* Configuration::getFont()
 }
 
 }
+

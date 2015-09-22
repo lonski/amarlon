@@ -83,9 +83,5 @@ void ALabel::setHeight(int height)
   _height = height;
 }
 
-
-
-
-
-
 }}
+

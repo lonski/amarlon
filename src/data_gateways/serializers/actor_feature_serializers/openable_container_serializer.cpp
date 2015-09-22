@@ -33,3 +33,4 @@ bool OpenableInventorySerializer::serialize(ActorFeaturePtr af)
 }
 
 }
+

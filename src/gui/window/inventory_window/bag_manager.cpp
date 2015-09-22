@@ -179,3 +179,4 @@ BagManager::ItemOperation BagManager::chooseItemOperationFromMenu(ActorPtr selec
 }
 
 }}
+

@@ -47,3 +47,4 @@ bool SpellSerializer::serialize(SpellPtr spell)
 }
 
 }
+

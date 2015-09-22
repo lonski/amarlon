@@ -25,3 +25,4 @@ int CommandExecutor::execute(TCOD_key_t &key)
 }
 
 }
+

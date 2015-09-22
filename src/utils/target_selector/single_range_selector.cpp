@@ -69,3 +69,4 @@ void SingleRangeSelector::render()
 }
 
 }
+

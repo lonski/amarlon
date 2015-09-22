@@ -31,3 +31,4 @@ TEST_F(MoveActionTest, actorWithoutMap)
 }
 
 }
+

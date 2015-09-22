@@ -88,3 +88,4 @@ void ALabelMenuItem::setColor(const TCODColor &color)
 }
 
 }}
+

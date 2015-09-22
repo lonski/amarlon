@@ -33,3 +33,4 @@ bool OpenableDoorSerializer::serialize(ActorFeaturePtr af)
 }
 
 }
+

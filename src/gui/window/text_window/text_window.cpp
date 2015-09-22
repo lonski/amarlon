@@ -82,3 +82,4 @@ TextWindow &TextWindow::setMargin(int margin)
 }
 
 }}
+

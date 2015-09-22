@@ -56,3 +56,4 @@ void TextFormater::pushTextAsLines(std::string text, TCODColor color)
 }
 
 }
+

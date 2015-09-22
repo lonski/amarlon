@@ -72,3 +72,4 @@ Params DamageEffect::toParams() const
 }
 
 }
+

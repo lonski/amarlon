@@ -47,3 +47,4 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
 }
 
 }
+

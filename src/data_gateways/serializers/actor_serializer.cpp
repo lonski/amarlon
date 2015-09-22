@@ -67,3 +67,4 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
 }
 
 }
+

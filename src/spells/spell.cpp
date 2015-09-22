@@ -143,3 +143,4 @@ std::string Spell::getScriptPath() const
 }
 
 }
+

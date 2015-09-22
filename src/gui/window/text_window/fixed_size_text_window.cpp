@@ -64,3 +64,4 @@ void FixedSizeTextWindow::handleKey(TCOD_key_t& k)
 }
 
 }}
+
