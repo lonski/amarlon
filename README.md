@@ -28,6 +28,7 @@ If you do not have experience, here are issues which do not require much knowled
 
 * [Logger implementation](https://github.com/lonski/amarlon/issues/89)
 * [Managing texts translations](https://github.com/lonski/amarlon/issues/77)
+* [Actor effects persistence](https://github.com/lonski/amarlon/issues/94)
 
 If you'd like to get familiar with existing code, then it is good idea to take a look at Unit Tests or write your own tests.
 
