@@ -4,9 +4,9 @@
 
 namespace amarlon {
 
-StatusEffectsManager::StatusEffectsManager()
+StatusEffectsManager::StatusEffectsManager(ActorPtr owner)
+  : _owner(owner)
 {
-
 }
 
 void StatusEffectsManager::add(EffectPtr effect)
@@ -42,7 +42,15 @@ void StatusEffectsManager::tick(int time)
       erase = e->getTime() <= 0;
     }
 
-    erase ? _tempEffects.erase(it++) : ++it;
+    if ( erase )
+    {
+      if ( _owner.lock() ) e->revoke(nullptr, _owner.lock());
+      _tempEffects.erase(it++);
+    }
+    else
+    {
+      ++it;
+    }
   }
 }
 

@@ -67,6 +67,13 @@ public:
   virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
+
+  /**
+   * @brief Temporary attack bonus granted for example by effects
+   */
+  virtual int getExtraAttackBonus();
+  virtual int setExtraAttackBonus(int bonus);
+
   virtual Damage getDamage() = 0;
   virtual int getArmorClass();
   virtual std::vector<SpellPtr> getSpells() const;
@@ -88,6 +95,7 @@ private:
   Race _race;
   int _speed;
   int _movePoints;
+  int _extraAttackBonus;
   std::set<SpellPtr> _spells;
 
   friend class Character::Creator;

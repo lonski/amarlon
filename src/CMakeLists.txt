@@ -23,6 +23,7 @@ set(HEADER_FILES
     effects/lock_effect.h
     effects/heal_effect.h
     effects/damage_effect.h
+    effects/attack_roll_effect.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
@@ -177,6 +178,7 @@ set(SOURCE_FILES
     effects/lock_effect.cpp
     effects/heal_effect.cpp
     effects/damage_effect.cpp
+    effects/attack_roll_effect.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
     commands/cmd_help.cpp

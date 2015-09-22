@@ -32,8 +32,10 @@ bool AttackAction::perform(ActorPtr performer)
 
       if ( dieRoll != dices::NATURAL_ONE ) //natural one is always a failure
       {
+        int attackRoll = dieRoll + attacker->getMeleeAttackBonus() + attacker->getExtraAttackBonus();
+
         if ( ( dieRoll == dices::NATURAL_TWENTY ) || //natural 20 is always a hit
-             ( dieRoll + attacker->getMeleeAttackBonus() >= attacked->getArmorClass()) ) //hit success
+             ( attackRoll >= attacked->getArmorClass()) ) //hit success
         {
           hit = true;
           int exp = attacked->getExperience();

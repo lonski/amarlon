@@ -7,15 +7,18 @@
 
 namespace amarlon {
 
+class Actor;
 class Effect;
 class StatusEffectsManager;
 typedef std::shared_ptr<StatusEffectsManager> StatusEffectsManagerPtr;
 typedef std::shared_ptr<Effect> EffectPtr;
+typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::weak_ptr<Actor> ActorWPtr;
 
 class StatusEffectsManager
 {
 public:
-  StatusEffectsManager();
+  StatusEffectsManager(ActorPtr owner = nullptr);
 
   void add(EffectPtr effect);
   void remove(EffectPtr effect);
@@ -27,6 +30,7 @@ public:
   StatusEffectsManagerPtr clone();
 
 private:
+  ActorWPtr _owner;
   std::list<EffectPtr> _permEffects;
   std::list<EffectPtr> _tempEffects;
 

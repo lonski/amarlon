@@ -14,6 +14,7 @@ namespace amarlon {
 ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
 {
   ActorPtr actor( new Actor(aId, x, y, map) );
+  actor->_effects.reset( new StatusEffectsManager( actor ) );
   actor->loadFeatures();
 
   return actor;
@@ -24,7 +25,6 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _x(x)
   , _y(y)
   , _map(map)
-  , _effects( new StatusEffectsManager )
 {
   addObserver( &Engine::instance().getMessenger() );
 }

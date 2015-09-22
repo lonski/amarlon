@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <status_effects_manager.h>
 #include <effect.h>
+#include <attack_roll_effect.h>
+#include <actor.h>
+#include <character.h>
 
 namespace amarlon {
 
@@ -140,6 +143,33 @@ TEST_F(StatusEffectsManagerTest, removeExpiredEffect)
   auto tEffects = _effects.getTemporaryEffects();
   ASSERT_EQ( tEffects.size(), (size_t)1 );
   ASSERT_EQ( tEffects[0], e1 );
+}
+
+TEST_F(StatusEffectsManagerTest, attackRollBuffTest)
+{
+  //create buff
+  EffectPtr attackBonusEffect = Effect::create(EffectType::AttackRoll);
+  attackBonusEffect->load( { {"time", "5"}, {"modifier", "2"} } );
+
+  //create the actor
+  ActorPtr orc = Actor::create(ActorType::Orc);
+
+  //apply buff on actor
+  attackBonusEffect->apply(nullptr, orc);
+  attackBonusEffect.reset(); //delete, it should remain in avtor status mgr
+
+  //check if applied
+  CharacterPtr c = orc->getFeature<Character>();
+  ASSERT_TRUE( c != nullptr );
+  ASSERT_EQ( c->getExtraAttackBonus(), 2 );
+
+  //tick the time to expire the effect
+  int turns = 5;
+  while ( turns-- ) orc->update();
+
+  //check if effect is revoked
+  ASSERT_EQ( c->getExtraAttackBonus(), 0 );
+
 }
 
 }

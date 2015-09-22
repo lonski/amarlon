@@ -22,6 +22,7 @@ Character::Character()
   , _race(Race::NoRace)
   , _speed(0)
   , _movePoints(0)
+  , _extraAttackBonus(0)
 {
 }
 
@@ -157,6 +158,16 @@ int Character::getMovePoints()
 void Character::setMovePoints(int points)
 {
   _movePoints = points;
+}
+
+int Character::getExtraAttackBonus()
+{
+  return _extraAttackBonus;
+}
+
+int Character::setExtraAttackBonus(int bonus)
+{
+  _extraAttackBonus = bonus;
 }
 
 int Character::getArmorClass()
