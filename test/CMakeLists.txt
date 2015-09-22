@@ -23,6 +23,7 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/effects/effect_type.h
     ${PROJECT_SOURCE_DIR}/src/effects/lock_effect.h
     ${PROJECT_SOURCE_DIR}/src/effects/heal_effect.h
+    ${PROJECT_SOURCE_DIR}/src/effects/attack_roll_effect.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/actor_descriptions.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/description.h
