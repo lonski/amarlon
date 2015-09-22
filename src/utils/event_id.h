@@ -19,7 +19,9 @@ enum class EventId
   Actor_Locked,
   Actor_Unlocked,
   Actor_Put,
-  Player_Look_At
+  Player_Look_At,
+  Actor_EffectAdded,
+  Actor_EffectRemoved
 
 };
 

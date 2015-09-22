@@ -37,15 +37,17 @@ bool AttackRollEffect::isEqual(EffectPtr rhs)
 bool AttackRollEffect::apply(ActorPtr, const Target &target)
 {
   bool r = false;
-  ActorPtr t = target.firstActor();
-  if ( t )
+  for ( ActorPtr t : target.actors )
   {
-    CharacterPtr c = t->getFeature<Character>();
-    if ( c )
+    if ( t )
     {
-      c->setTmpAttackModifier( c->getTmpAttackModifier() + _modifier );
-      t->getStatusEffects().add( shared_from_this() );
-      r = true;
+      CharacterPtr c = t->getFeature<Character>();
+      if ( c )
+      {
+        c->setTmpAttackModifier( c->getTmpAttackModifier() + _modifier );
+        t->getStatusEffects().add( shared_from_this() );
+        r = true;
+      }
     }
   }
   return r;
@@ -54,14 +56,16 @@ bool AttackRollEffect::apply(ActorPtr, const Target &target)
 bool AttackRollEffect::revoke(ActorPtr, const Target &target)
 {
   bool r = false;
-  ActorPtr t = target.firstActor();
-  if ( t )
+  for ( ActorPtr t : target.actors )
   {
-    CharacterPtr c = t->getFeature<Character>();
-    if ( c )
+    if ( t )
     {
-      c->setTmpAttackModifier( c->getTmpAttackModifier() - _modifier );
-      r = true;
+      CharacterPtr c = t->getFeature<Character>();
+      if ( c )
+      {
+        c->setTmpAttackModifier( c->getTmpAttackModifier() - _modifier );
+        r = true;
+      }
     }
   }
   return r;
@@ -97,6 +101,11 @@ int AttackRollEffect::getTime() const
 void AttackRollEffect::setTime(int time)
 {
   _time = time;
+}
+
+std::string AttackRollEffect::getName() const
+{
+  return "Modify Attack Roll";
 }
 
 }

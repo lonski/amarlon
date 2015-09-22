@@ -28,7 +28,7 @@ void ExpandingCircle::run(TCODConsole& console)
   for(int r = 0; r <= _radius; ++r)
   {
     Engine::instance().render();
-    drawCircle(r, stop);
+    drawCircle(r, stop, _ch, _color);
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
   }
@@ -41,7 +41,7 @@ Type ExpandingCircle::getType() const
 
 void ExpandingCircle::load(const Params &params)
 {
-  auto it = params.find("color");
+  auto it = params.find("circle_color");
   _color = it != params.end() ? strToColor( it->second ) : TCODColor::blue;
 
   it = params.find("delay");
@@ -57,7 +57,7 @@ void ExpandingCircle::load(const Params &params)
 Params ExpandingCircle::toParams() const
 {
   return {
-    {"color",  colorToStr(_color) },
+    {"circle_color",  colorToStr(_color) },
     {"delay",  toStr<int>(_frameDelay)  },
     {"char",   std::string(_ch, 1) },
     {"radius", toStr<int>(_radius) }

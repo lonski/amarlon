@@ -71,5 +71,10 @@ Params DamageEffect::toParams() const
   };
 }
 
+std::string DamageEffect::getName() const
+{
+  return "Damage";
+}
+
 }
 

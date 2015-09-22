@@ -1,6 +1,7 @@
 #include "status_effects_manager.h"
 #include <algorithm>
 #include <effect.h>
+#include <actor.h>
 
 namespace amarlon {
 
@@ -17,6 +18,8 @@ void StatusEffectsManager::add(EffectPtr effect)
       _permEffects.push_back(effect);
     else
       _tempEffects.push_back(effect);
+
+    notifyAdd(effect);
   }
 }
 
@@ -25,7 +28,10 @@ void StatusEffectsManager::remove(EffectPtr effect)
   auto& container = effect->getTime() == -1 ? _permEffects : _tempEffects;
   auto it = std::find(container.begin(), container.end(),effect);
   if ( it != container.end() )
-    container.erase( it );
+  {
+    notifyRemove(effect);
+    container.erase( it );  
+  }
 }
 
 void StatusEffectsManager::tick(int time)
@@ -44,6 +50,7 @@ void StatusEffectsManager::tick(int time)
 
     if ( erase )
     {
+      notifyRemove(e);
       if ( _owner.lock() ) e->revoke(nullptr, _owner.lock());
       _tempEffects.erase(it++);
     }
@@ -79,6 +86,24 @@ StatusEffectsManagerPtr StatusEffectsManager::clone()
   }
 
   return mgr;
+}
+
+void StatusEffectsManager::notifyAdd(EffectPtr e)
+{
+  ActorPtr a = _owner.lock();
+  if ( a )
+  {
+    a->notify(Event(EventId::Actor_EffectAdded, {{ "effect", e->getName()} }));
+  }
+}
+
+void StatusEffectsManager::notifyRemove(EffectPtr e)
+{
+  ActorPtr a = _owner.lock();
+  if ( a )
+  {
+    a->notify(Event(EventId::Actor_EffectRemoved, {{ "effect", e->getName()}} ));
+  }
 }
 
 }

@@ -29,6 +29,8 @@ public:
   virtual int  getTime() const { return 0; }
   virtual void setTime(int) {}
 
+  virtual std::string getName() const;
+
 private:
   int _lockId;
 

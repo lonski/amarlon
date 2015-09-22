@@ -61,6 +61,8 @@ public:
   virtual int  getTime() const = 0;
   virtual void setTime(int time) = 0;
 
+  virtual std::string getName() const = 0;
+
 
 };
 

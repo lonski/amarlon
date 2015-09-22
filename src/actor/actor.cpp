@@ -8,6 +8,7 @@
 #include <actor_db.h>
 #include <messenger.h>
 #include <status_effects_manager.h>
+#include <world.h>
 
 namespace amarlon {
 
@@ -97,6 +98,15 @@ bool Actor::isAlive() const
 {
   const CharacterPtr f = getFeature<Character>();
   return  f && f->isAlive();
+}
+
+bool Actor::isInFov()
+{
+  MapPtr cMap = Engine::instance().getWorld().getCurrentMap();
+  if ( cMap )
+  {
+    cMap->isInFov( getX(), getY() );
+  }
 }
 
 StatusEffectsManager &Actor::getStatusEffects() const

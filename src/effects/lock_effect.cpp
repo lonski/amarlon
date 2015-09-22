@@ -55,24 +55,31 @@ Params LockEffect::toParams() const
   };
 }
 
+std::string LockEffect::getName() const
+{
+  return "Lock";
+}
+
 bool LockEffect::apply(ActorPtr, const Target& target)
 {
   bool r = false;
 
-  ActorPtr targetActor = target.firstActor();
-  if (targetActor != nullptr)
+  for ( ActorPtr a : target.actors )
   {
-    OpenablePtr toOpen = targetActor->getFeature<Openable>();
-
-    if (toOpen != nullptr)
+    if (a != nullptr)
     {
-      if (toOpen->isLocked() && toOpen->getLockId() == _lockId)
+      OpenablePtr toOpen = a->getFeature<Openable>();
+
+      if (toOpen != nullptr)
       {
-        r = toOpen->unlock();
-      }
-      else if ( toOpen->getLockId() == _lockId )
-      {
-        r = toOpen->lock();
+        if (toOpen->isLocked() && toOpen->getLockId() == _lockId)
+        {
+          r = toOpen->unlock();
+        }
+        else if ( toOpen->getLockId() == _lockId )
+        {
+          r = toOpen->lock();
+        }
       }
     }
   }

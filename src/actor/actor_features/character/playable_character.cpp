@@ -54,7 +54,7 @@ int PlayableCharacter::getBaseAttackBonus()
 
 int PlayableCharacter::getMeleeAttackBonus()
 {
-  return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR);
+  return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR) + getTmpAttackModifier();
 }
 
 Damage PlayableCharacter::getDamage()

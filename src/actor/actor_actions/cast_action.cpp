@@ -25,7 +25,7 @@ bool CastAction::perform(ActorPtr caster)
     CharacterPtr character = _caster->getFeature<Character>();
     if ( character )
     {
-      if ( isClassCorrect() && isLevelCorrect()  )
+      if ( /*isClassCorrect() &&*/ isLevelCorrect()  )
       {
         _spell->cast(_caster, _target);
         success = true; //Casting action succedded, even if the spell failed

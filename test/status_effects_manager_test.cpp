@@ -25,6 +25,7 @@ public:
   void load(const Params&) {}
   int  getTime() const { return _time; }
   void setTime(int time) { _time = time; }
+  std::string getName() const { return "Dummy"; }
 
 private:
   int _time;

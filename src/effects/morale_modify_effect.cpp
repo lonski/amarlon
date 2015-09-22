@@ -36,15 +36,17 @@ bool MoraleModifyEffect::isEqual(EffectPtr rhs)
 bool MoraleModifyEffect::apply(ActorPtr, const Target &target)
 {
   bool r = false;
-  ActorPtr t = target.firstActor();
-  if ( t )
+  for ( ActorPtr t : target.actors )
   {
-    MonsterPtr m = std::dynamic_pointer_cast<Monster>( t->getFeature<Character>() );
-    if ( m )
+    if ( t )
     {
-      m->setTmpMoraleModifier( m->getTmpMoraleModifier() + _modifier );
-      t->getStatusEffects().add( shared_from_this() );
-      r = true;
+      MonsterPtr m = std::dynamic_pointer_cast<Monster>( t->getFeature<Character>() );
+      if ( m )
+      {
+        m->setTmpMoraleModifier( m->getTmpMoraleModifier() + _modifier );
+        t->getStatusEffects().add( shared_from_this() );
+        r = true;
+      }
     }
   }
   return r;
@@ -53,15 +55,17 @@ bool MoraleModifyEffect::apply(ActorPtr, const Target &target)
 bool MoraleModifyEffect::revoke(ActorPtr, const Target &target)
 {
   bool r = false;
-  ActorPtr t = target.firstActor();
-  if ( t )
+  for( ActorPtr t : target.actors )
   {
-    MonsterPtr m = std::dynamic_pointer_cast<Monster>( t->getFeature<Character>() );
-    if ( m )
+    if ( t )
     {
-      m->setTmpMoraleModifier( m->getTmpMoraleModifier() - _modifier );
-      t->getStatusEffects().add( shared_from_this() );
-      r = true;
+      MonsterPtr m = std::dynamic_pointer_cast<Monster>( t->getFeature<Character>() );
+      if ( m )
+      {
+        m->setTmpMoraleModifier( m->getTmpMoraleModifier() - _modifier );
+        t->getStatusEffects().add( shared_from_this() );
+        r = true;
+      }
     }
   }
   return r;
@@ -97,6 +101,11 @@ int MoraleModifyEffect::getTime() const
 void MoraleModifyEffect::setTime(int time)
 {
   _time = time;
+}
+
+std::string MoraleModifyEffect::getName() const
+{
+  return "Morale Modify";
 }
 
 }

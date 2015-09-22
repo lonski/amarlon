@@ -38,15 +38,17 @@ bool SavingThrowModifyEffect::isEqual(EffectPtr rhs)
 bool SavingThrowModifyEffect::apply(ActorPtr, const Target &target)
 {
   bool r = false;
-  ActorPtr t = target.firstActor();
-  if ( t )
+  for( ActorPtr t : target.actors )
   {
-    CharacterPtr c = t->getFeature<Character>();
-    if ( c )
+    if ( t )
     {
-      c->setTmpSavingThrowModifier( _type, c->getTmpSavingThrowModifier(_type) + _modifier );
-      t->getStatusEffects().add( shared_from_this() );
-      r = true;
+      CharacterPtr c = t->getFeature<Character>();
+      if ( c )
+      {
+        c->setTmpSavingThrowModifier( _type, c->getTmpSavingThrowModifier(_type) + _modifier );
+        t->getStatusEffects().add( shared_from_this() );
+        r = true;
+      }
     }
   }
   return r;
@@ -55,15 +57,17 @@ bool SavingThrowModifyEffect::apply(ActorPtr, const Target &target)
 bool SavingThrowModifyEffect::revoke(ActorPtr, const Target &target)
 {
   bool r = false;
-  ActorPtr t = target.firstActor();
-  if ( t )
+  for( ActorPtr t : target.actors )
   {
-    CharacterPtr c = t->getFeature<Character>();
-    if ( c )
+    if ( t )
     {
-      c->setTmpSavingThrowModifier( _type, c->getTmpSavingThrowModifier(_type) - _modifier );
-      t->getStatusEffects().add( shared_from_this() );
-      r = true;
+      CharacterPtr c = t->getFeature<Character>();
+      if ( c )
+      {
+        c->setTmpSavingThrowModifier( _type, c->getTmpSavingThrowModifier(_type) - _modifier );
+        t->getStatusEffects().add( shared_from_this() );
+        r = true;
+      }
     }
   }
   return r;
@@ -104,6 +108,11 @@ int SavingThrowModifyEffect::getTime() const
 void SavingThrowModifyEffect::setTime(int time)
 {
   _time = time;
+}
+
+std::string SavingThrowModifyEffect::getName() const
+{
+  return "Saving Throw Modify";
 }
 
 }

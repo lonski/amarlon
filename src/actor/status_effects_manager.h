@@ -34,6 +34,8 @@ private:
   std::list<EffectPtr> _permEffects;
   std::list<EffectPtr> _tempEffects;
 
+  void notifyAdd(EffectPtr e);
+  void notifyRemove(EffectPtr e);
 };
 
 }

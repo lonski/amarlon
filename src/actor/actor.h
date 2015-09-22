@@ -87,6 +87,11 @@ public:
   bool isAlive() const;
 
   /**
+   * @brief Checks if actor is in player's field of view
+   */
+  bool isInFov();
+
+  /**
    * @brief A Buff/Debuff manager
    */
   StatusEffectsManager& getStatusEffects() const;

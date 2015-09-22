@@ -16,18 +16,20 @@ bool HealEffect::apply(ActorPtr, const Target& target)
   bool r = false;
 
   std::function<bool(ActorPtr)> filter = [](ActorPtr a)->bool{ return a->isAlive(); };
-  ActorPtr targetActor = target.firstActor(&filter);
-  if ( targetActor )
+  for ( ActorPtr a : target.actors )
   {
-    CharacterPtr character = targetActor->getFeature<Character>();
-    if ( character )
+    if ( a && filter(a) )
     {
-      int hpBeforeHeal = character->getHitPoints();
-      character->modifyHitPoints( _heal.roll() );
-      targetActor->notify(Event(EventId::Actor_Healed,
-                                {{"value", std::to_string(character->getHitPoints() - hpBeforeHeal) }}));
+      CharacterPtr character = a->getFeature<Character>();
+      if ( character )
+      {
+        int hpBeforeHeal = character->getHitPoints();
+        character->modifyHitPoints( _heal.roll() );
+        a->notify(Event(EventId::Actor_Healed,
+                                  {{"value", std::to_string(character->getHitPoints() - hpBeforeHeal) }}));
 
-      r = true;
+        r = true;
+      }
     }
   }
   return r;
@@ -75,6 +77,11 @@ Params HealEffect::toParams() const
   return {
     { {"heal", _heal} }
   };
+}
+
+std::string HealEffect::getName() const
+{
+  return "Heal";
 }
 
 }

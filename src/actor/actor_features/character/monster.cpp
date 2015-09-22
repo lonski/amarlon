@@ -49,12 +49,12 @@ CarryingCapacity::LoadLevel Monster::getLoadLevel()
 
 int Monster::getBaseAttackBonus()
 {
-  return getMeleeAttackBonus();
+  return AttackBonus::get(CharacterClass::Monster, getLevel() );
 }
 
 int Monster::getMeleeAttackBonus()
 {
-  return AttackBonus::get(CharacterClass::Monster, getLevel() );
+  return getBaseAttackBonus() + getTmpAttackModifier();
 }
 
 Damage Monster::getDamage()

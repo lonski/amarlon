@@ -30,6 +30,8 @@ public:
   virtual int  getTime() const;
   virtual void setTime(int time);
 
+  virtual std::string getName() const;
+
 private:
   int _time;
   int _modifier;
