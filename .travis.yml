@@ -38,6 +38,7 @@ before_script:
     - cd luabind
     - mkdir build
     - cd build
+    - export CXXFLAGS="$CXXFLAGS -fPIC"
     - cmake .. -DLUABIND_DYNAMIC_LINK=1
     - make -j2
     - sudo cp libluabind09.so /usr/local/lib/libluabind.so
