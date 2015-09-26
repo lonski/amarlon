@@ -35,7 +35,7 @@ before_script:
     - sudo make linux install
     - cd -
     #Luabind
-    - git clone https://github.com/lonski/luabind.git
+    - git clone -b shared_lib_build https://github.com/lonski/luabind.git
     - cd luabind
     - mkdir build
     - cd build
