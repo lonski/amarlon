@@ -11,9 +11,9 @@ else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
       "${PROJECT_SOURCE_DIR}/include/lua"
       /usr/include/lua
       /usr/include/lua5.2
-	    /usr/local/include
+      /usr/local/include
       /usr/local/include/lua5.2
-	    /opt/local/include
+      /opt/local/include
       /opt/local/include/lua5.2
     )
     set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}" )
@@ -22,10 +22,13 @@ else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
 	NAMES
 	    lua
 	    liblua
+	    liblua5.2
 	PATHS
 	    /usr/lib
 	    /usr/local/lib
 	    /opt/local/lib
+	    /usr/lib/i386-linux-gnu/
+	    /usr/lib/i686-linux-gnu/
 	    "${CMAKE_CURRENT_SOURCE_DIR}/lib"
 	    "${PROJECT_SOURCE_DIR}/lib"
     )
