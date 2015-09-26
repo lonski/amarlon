@@ -16,9 +16,11 @@ function onCast(caster, target)
 	heal = Damage("1d6+1#0")
 	
 	for a in target.actors do
-		actor = ActorWrapper(a)
-		actor:takeHeal( heal, caster )
-		playAnimation( actor )
+		c = a:get():character():get()
+		if c ~= nil then
+			c:takeHeal( heal, caster )
+			playAnimation( a:get() )
+		end
 	end
 
 	return true

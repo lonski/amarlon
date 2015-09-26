@@ -94,6 +94,7 @@ struct PickableDescription : Description
     , weight(0)
     , price(0)
     , targetType(TargetType::SINGLE_NEIGHBOUR)
+    , id(0)
   {}
 
   bool stackable;
@@ -107,6 +108,7 @@ struct PickableDescription : Description
   int price;
   TargetType targetType;
   Damage damage;
+  int id;
 };
 
 

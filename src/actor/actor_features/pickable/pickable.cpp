@@ -6,6 +6,8 @@
 #include <utils.h>
 #include <actor_descriptions.h>
 #include <cassert>
+#include <lua_state.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -19,6 +21,7 @@ Pickable::Pickable(bool stackable, int amount)
   , _price(0)
   , _usesCount(0)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
+  , _id(0)
 {
 }
 
@@ -43,9 +46,15 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_damage = pDsc->damage;
     pickable->_usesCount = pDsc->uses;
     pickable->_targetType = pDsc->targetType;
+    pickable->_id = pDsc->id;
   }
 
   return pickable;
+}
+
+int Pickable::getId() const
+{
+  return _id;
 }
 
 ActorPtr Pickable::spilt(int amount)
@@ -80,6 +89,7 @@ ActorFeaturePtr Pickable::clone()
   cloned->_targetType = _targetType;
   cloned->_category = _category;
   cloned->_itemSlot = _itemSlot;
+  cloned->_id = _id;
 
   return cloned;
 }
@@ -99,6 +109,7 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_targetType == crhs->_targetType);
     equal &= (_category == crhs->_category);
     equal &= (_itemSlot == crhs->_itemSlot);
+    equal &= (_id == crhs->_id);
   }
 
   return equal;
@@ -109,17 +120,34 @@ TargetType Pickable::getTargetType() const
   return _targetType;
 }
 
-bool Pickable::use(ActorPtr executor, const Target& target)
+bool Pickable::use(ActorPtr /*executor*/, const Target& /*target*/)
 {
   bool r = false;
 
   if ( _usesCount != 0 )
   {
-    if ( true /* TODO: Execute item script */ )
-    {
-      --_usesCount;
-      r = true;
-    }
+//    lua_api::LuaState& lua = Engine::instance().getLuaState();
+
+//    if ( lua.execute( getScriptPath() )
+//    {
+//      try
+//      {
+//        r = luabind::call_function<bool>(
+//            lua()
+//          , "onUse"
+//          , new lua_api::ActorWrapper(executor)
+//          , this
+//          , boost::ref(target)
+//        )[luabind::adopt(_1)];
+
+//        if( r ) --_usesCount;
+//      }
+//      catch(luabind::error& e)
+//      {
+//        lua.logError(e);
+//      }
+//    }
+
   }
 
   return r;

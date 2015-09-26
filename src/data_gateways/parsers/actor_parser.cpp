@@ -135,6 +135,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
     {
       pickDsc.reset( new PickableDescription );
 
+      pickDsc->id = getAttribute<int>(pickableNode, "id");
       pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
       if ( pickDsc->amount == 0) pickDsc->amount = 1;

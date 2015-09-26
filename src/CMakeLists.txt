@@ -145,7 +145,6 @@ set(HEADER_FILES
     animations/expanding_circle.h
     animations/throw_expanding_circle.h
     lua_api/lua_state.h
-    lua_api/actor_wrapper.h
     lua_api/defines/converters.h
     lua_api/defines/converters.h
     lua_api/registrations/registrar.h
@@ -278,7 +277,6 @@ set(SOURCE_FILES
     animations/expanding_circle.cpp
     animations/throw_expanding_circle.cpp
     lua_api/lua_state.cpp
-    lua_api/actor_wrapper.cpp
     lua_api/registrations/registration_manager.cpp
     lua_api/registrations/spelldb_registrar.cpp
     lua_api/registrations/actor_registrar.cpp

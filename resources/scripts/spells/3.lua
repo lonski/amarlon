@@ -3,14 +3,16 @@ SPELL_ID = 3
 
 function onCast(caster, target)
 
+	if caster:get():character():get() == nil then return false end
+
 	radius = SpellDB:getRadius( SPELL_ID )
 
 	local function playAnimation()
 		frameDelay = 15
 
 		tStart = Target()
-		tStart.x = caster:getX()
-		tStart.y = caster:getY()
+		tStart.x = caster:get():getX()
+		tStart.y = caster:get():getY()
 
 		throw = Throw("fda500", string.byte("*"), frameDelay)
 		throw:setLocation(tStart, target)
@@ -21,11 +23,12 @@ function onCast(caster, target)
 		circle:run()
 	end
 	
-	dmg = Damage( string.format("%dd6+0#3", caster:getLevel()) )
+	dmg = Damage( string.format("%dd6+0#3", caster:get():character():get():getLevel()) )
 	
 	playAnimation()
 	for a in target.actors do
-		ActorWrapper(a):takeDamage( dmg, caster )
+	 	c = a:get():character():get()
+	 	if c ~= nil then c:takeDamage( dmg, caster ) end
 	end
 
 	return true

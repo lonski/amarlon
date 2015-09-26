@@ -3,10 +3,12 @@ SPELL_ID = 2
 
 function onCast(caster, target)
 	
+	if caster:get():character():get() == nil then return false end
+
 	dmg = Damage("1d6+1#2")
 
 	count = 1
-	level = caster:getLevel()
+	level = caster:get():character():get():getLevel()
 	if level >= 4  then count = count + 1 end
 	if level >= 7  then count = count + 1 end
 	if level >= 10 then count = count + 1 end
@@ -14,8 +16,8 @@ function onCast(caster, target)
 
 	local function playAnimation()
 		tStart = Target()
-		tStart.x = caster:getX()
-		tStart.y = caster:getY()
+		tStart.x = caster:get():getX()
+		tStart.y = caster:get():getY()
 
 		animation = Throw("dd0000", string.byte("*"), 15)
 		animation:setLocation( tStart, target )
@@ -24,14 +26,16 @@ function onCast(caster, target)
 
 	local function strike(enemy)
 	 	for i=1,count do
-	 		enemy:takeDamage( dmg, caster )
-	 		playAnimation()
+	 		c = enemy:get():character():get()
+	 		if c ~= nil then 
+	 			c:takeDamage( dmg, caster )
+	 			playAnimation()
+	 		end
 	 	end
 	end
 	
 	for a in target.actors do
-		actor = ActorWrapper(a)
-		strike(actor)
+		strike(a)
 	end
 
 	return true

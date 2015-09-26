@@ -27,13 +27,11 @@ public:
   virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
   virtual Damage getDamage();
-
-  virtual std::string getDescription();
-
-  /* class specific functions */
   virtual int getMorale();
   virtual int getTmpMoraleModifier();
   virtual void setTmpMoraleModifier(int modifier);
+
+  virtual std::string getDescription();
 
 private:
   int _morale;

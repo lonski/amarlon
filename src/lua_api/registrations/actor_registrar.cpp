@@ -1,7 +1,9 @@
 #include "actor_registrar.h"
 #include <lua_state.h>
 #include <actor.h>
-#include <actor_wrapper.h>
+#include <character.h>
+#include <monster.h>
+#include <status_effects_manager.h>
 
 namespace amarlon { namespace lua_api {
 
@@ -10,25 +12,30 @@ void ActorRegistrar::reg(lua_State* state)
   using namespace luabind;
   module( state )
   [
-      class_<ActorPtr>("Actor")
+      class_<ActorPtr>("ActorPtr")
         .def("get", &ActorPtr::get),
 
-      class_<lua_api::ActorWrapper>("ActorWrapper")
-        .def(constructor<ActorPtr>())
-        .def("getLevel", &ActorWrapper::getLevel)
-        .def("getX", &ActorWrapper::getX)
-        .def("getY", &ActorWrapper::getY)
-        .def("takeHeal", &ActorWrapper::takeHeal)
-        .def("takeDamage", &ActorWrapper::takeDamage)
-        .def("setAttackModifier", &ActorWrapper::setAttackModifier)
-        .def("setSavingThrowModifier", &ActorWrapper::setSavingThrowModifier)
-        .def("setMoraleModifier", &ActorWrapper::setMoraleModifier)
-        .def("getAttackModifier", &ActorWrapper::getAttackModifier)
-        .def("getSavingThrowModifier", &ActorWrapper::getSavingThrowModifier)
-        .def("getMoraleModifier", &ActorWrapper::getMoraleModifier)
-        .def("addStatusEffect", &ActorWrapper::addStatusEffect)
-        .def("isAllyOf", &ActorWrapper::isAllyOf)
-        .def("getName", &ActorWrapper::getName)
+      class_<Actor>("Actor")
+        .def("getX", &Actor::getX)
+        .def("getY", &Actor::getY)
+        .def("getStatusEffects", &Actor::getStatusEffects)
+        .def("isAllyOf", &Actor::isAllyOf)
+        .def("getName", &Actor::getName)
+        .def("character", (CharacterPtr(Actor::*)()const)&Actor::getFeature),
+
+      class_<CharacterPtr>("CharacterPtr")
+        .def("get", &CharacterPtr::get),
+
+      class_<Character>("Character")
+        .def("getLevel", &Character::getLevel )
+        .def("takeHeal", &Character::takeHeal )
+        .def("takeDamage", &Character::takeDamage )
+        .def("setAttackModifier", &Character::setTmpAttackModifier )
+        .def("getAttackModifier", &Character::getTmpAttackModifier )
+        .def("setSavingThrowModifier", &Character::setTmpSavingThrowModifier )
+        .def("getSavingThrowModifier", &Character::getTmpSavingThrowModifier )
+        .def("setMoraleModifier", &Character::setTmpMoraleModifier )
+        .def("getMoraleModifier", &Character::getTmpMoraleModifier )
   ];
 }
 

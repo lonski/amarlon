@@ -7,6 +7,7 @@ git clone https://github.com/lonski/luabind.git
 cd luabind
 mkdir build
 cd build
+export CXXFLAGS="$CXXFLAGS -fPIC"
 cmake .. -DLUABIND_DYNAMIC_LINK=1
 make -j`grep -c processor /proc/cpuinfo`
 

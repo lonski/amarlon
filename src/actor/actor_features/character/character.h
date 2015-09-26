@@ -85,6 +85,10 @@ public:
   virtual int getArmorClass();
   virtual std::vector<SpellPtr> getSpells() const;
 
+  virtual int getMorale() { return 0; }
+  virtual int getTmpMoraleModifier() { return 0; }
+  virtual void setTmpMoraleModifier(int) {}
+
   virtual std::string getDescription();
 
 protected:

@@ -28,6 +28,7 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
     xml_node<>* _pickableNode = _document->allocate_node(node_element, "Pickable");
     _xml->append_node( _pickableNode );
 
+    addAttribute    ( _pickableNode, "id",         pickable->getId() );
     addAttribute    ( _pickableNode, "stackable",  static_cast<int>(pickable->isStackable()) );
     addAttribute    ( _pickableNode, "amount",     pickable->getAmount() );
     addAttribute    ( _pickableNode, "armorClass", pickable->getArmorClass() );

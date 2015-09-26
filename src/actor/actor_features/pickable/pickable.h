@@ -26,6 +26,7 @@ public:
 
   static PickablePtr create(DescriptionPtr dsc);
 
+  virtual int getId() const;
   virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeaturePtr clone();
@@ -66,6 +67,7 @@ private:
   int _usesCount;
   TargetType _targetType;
   Damage _damage;
+  int _id;
 
 };
 
