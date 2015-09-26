@@ -66,7 +66,8 @@ before_script:
 script:
     - cmake ..
     - make -j2
-    - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./ut_amarlon
+    #- LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./ut_amarlon
+    - ./ut_amarlon
     - cd -
     - cppcheck --enable=style -I . -f -q --std=c++11 ./src ./test
 
