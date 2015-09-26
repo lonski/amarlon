@@ -39,14 +39,14 @@ before_script:
     - mkdir build
     - cd build
     - cmake .. -DLUABIND_DYNAMIC_LINK=1
-    - make -j`grep -c processor /proc/cpuinfo`
+    - make -j2
     - sudo cp libluabind09.so /usr/local/lib/libluabind.so
     - sudo cp -r ../luabind ../../include
     #GTest
     - sudo mkdir /usr/src/gtest/build
     - cd /usr/src/gtest/build
     - sudo cmake .. -DBUILD_SHARED_LIBS=1
-    - sudo make -j`grep -c processor /proc/cpuinfo`
+    - sudo make -j2
     - cd -
     - mkdir ./lib
     - sudo ln -s /usr/src/gtest/build/libgtest.so /usr/local/lib/libgtest.so
@@ -69,7 +69,7 @@ before_script:
     - cd build
 script:
     - cmake ..
-    - make
+    - make -j2
     - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./ut_amarlon
     - cd -
     - cppcheck --enable=style -I . -f -q --std=c++11 ./src ./test
