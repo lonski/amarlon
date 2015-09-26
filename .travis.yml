@@ -21,7 +21,7 @@ install:
     - sudo apt-get install -qq mercurial libsdl-dev git
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
-    - sudo apt-get install libreadline-dev -qq
+    - sudo apt-get install libreadline-dev libboost1.55-tools-dev -qq 
 
 before_script:
     #LUA
@@ -31,9 +31,15 @@ before_script:
     - make linux
     - sudo make linux install
     - cd -
-    #Selene
-    - git clone https://github.com/jeremyong/Selene.git
-    - cp -r Selene/include/ include/selene
+    #Luabind
+    - git clone https://github.com/lonski/luabind.git
+    - cd luabind
+    - mkdir build
+    - cd build
+    - cmake .. -DLUABIND_DYNAMIC_LINK=1
+    - make -j`grep -c processor /proc/cpuinfo`
+    - sudo cp libluabind09.so /usr/local/lib/libluabind.so
+    - sudo cp -r ../luabind ../../include
     #GTest
     - sudo mkdir /usr/src/gtest/build
     - cd /usr/src/gtest/build
