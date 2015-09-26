@@ -10,7 +10,8 @@ enum class TargetType
   AREA_RANGE              = 2, //multiple targets in circle with its center at any tile
   AREA_NEIGHBOUR          = 3, //multiple targets in circle with its center at neighbouring tile
   SELF                    = 4, //the actor who uses the effect
-  SINGLE_RANGE_PROJECTILE = 5  //single target in tile, path of projectile is drawn
+  SINGLE_RANGE_PROJECTILE = 5, //single target in tile, path of projectile is drawn
+  CASTER_AREA             = 6  //area with center at caster
 };
 
 }

@@ -5,11 +5,11 @@ else(GMOCK_LIBRARIES AND GMOCK_INCLUDE_DIRS)
     find_path(GMOCK_INCLUDE_DIR
 	NAMES gmock/gmock.h
 	PATHS
+      "${CMAKE_CURRENT_SOURCE_DIR}/include"
+      "${PROJECT_SOURCE_DIR}/include"
 	    /usr/include
 	    /usr/local/include
 	    /opt/local/include
-	    "${CMAKE_CURRENT_SOURCE_DIR}/include"
-	    "${PROJECT_SOURCE_DIR}/include"
     )
     set(GMOCK_INCLUDE_DIRS ${GMOCK_INCLUDE_DIR} "${GMOCK_INCLUDE_DIR}/gmock")
 

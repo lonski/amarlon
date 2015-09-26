@@ -8,6 +8,8 @@
 #include <actor_db.h>
 #include <messenger.h>
 #include <status_effects_manager.h>
+#include <world.h>
+#include <monster_ai.h>
 
 namespace amarlon {
 
@@ -97,6 +99,40 @@ bool Actor::isAlive() const
 {
   const CharacterPtr f = getFeature<Character>();
   return  f && f->isAlive();
+}
+
+bool Actor::isInFov()
+{
+  MapPtr cMap = Engine::instance().getWorld().getCurrentMap();
+  if ( cMap )
+  {
+    return cMap->isInFov( getX(), getY() );
+  }
+  return false;
+}
+
+bool Actor::isAllyOf(ActorPtr actor)
+{
+  //a temporary stub
+  //only monsters are allies between them
+  //TODO real implementation
+  bool isAlly = false;
+
+  if ( this != actor.get() )
+  {
+    if ( isAlive() )
+    {
+      MonsterAiPtr thisAi = std::dynamic_pointer_cast<MonsterAi>(getFeature<Ai>());
+      MonsterAiPtr actorAi = std::dynamic_pointer_cast<MonsterAi>(actor->getFeature<Ai>());
+      isAlly = (thisAi != nullptr && actorAi != nullptr);
+    }
+  }
+  else
+  {
+    isAlly = true;
+  }
+
+  return isAlly;
 }
 
 StatusEffectsManager &Actor::getStatusEffects() const

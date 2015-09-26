@@ -11,6 +11,7 @@ namespace amarlon {
 Monster::Monster(int level, int hitPointsBonus)
   : _morale(0)
   , _hpMod(hitPointsBonus)
+  , _tmpMoraleModifier(0)
 {
   setLevel(level);
   setMaxHitPoints( std::max( dices::roll(dices::D8, getLevel() ) + _hpMod, 1 ) );
@@ -48,12 +49,12 @@ CarryingCapacity::LoadLevel Monster::getLoadLevel()
 
 int Monster::getBaseAttackBonus()
 {
-  return getMeleeAttackBonus();
+  return AttackBonus::get(CharacterClass::Monster, getLevel() );
 }
 
 int Monster::getMeleeAttackBonus()
 {
-  return AttackBonus::get(CharacterClass::Monster, getLevel() );
+  return getBaseAttackBonus() + getTmpAttackModifier();
 }
 
 Damage Monster::getDamage()
@@ -78,7 +79,17 @@ std::string Monster::getDescription()
 
 int Monster::getMorale()
 {
-  return _morale;
+  return _morale + _tmpMoraleModifier;
+}
+
+int Monster::getTmpMoraleModifier()
+{
+  return _tmpMoraleModifier;
+}
+
+void Monster::setTmpMoraleModifier(int modifier)
+{
+  _tmpMoraleModifier = modifier;
 }
 
 CharacterPtr Monster::Creator::create(CharacterDescriptionPtr dsc)

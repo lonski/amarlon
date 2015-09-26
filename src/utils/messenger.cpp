@@ -19,7 +19,7 @@ Messenger::~Messenger()
 void Messenger::onNotify(Subject *subject, Event event)
 {
   Actor* actor = dynamic_cast<Actor*>(subject);
-  if ( actor )
+  if ( actor && actor->isAlive() && actor->isInFov() )
   {
     char msg[128];
     TCODColor color = TCODColor::white;
@@ -135,10 +135,21 @@ void Messenger::onNotify(Subject *subject, Event event)
       case EventId::Actor_Healed:
       {
         color = TCODColor::lighterBlue;
-        const char* format = "%s has been healed for %s.";
+        if ( event.params.find("healer") != event.params.end() )
+        {
+          const char* format = "%s has been healed for %s by %s.";
 
-        sprintf(msg, format, actor->getName().c_str(),
-                             event.params["value"].c_str());
+          sprintf(msg, format, actor->getName().c_str(),
+                               event.params["value"].c_str(),
+                               event.params["healer"].c_str());
+        }
+        else
+        {
+          const char* format = "%s has been healed for %s.";
+
+          sprintf(msg, format, actor->getName().c_str(),
+                               event.params["value"].c_str());
+        }
       }
       break;
       case EventId::Actor_Locked:
@@ -183,6 +194,24 @@ void Messenger::onNotify(Subject *subject, Event event)
           strcpy(msg, format);
         }
 
+      }
+      break;
+      case EventId::Actor_EffectAdded:
+      {
+        color = TCODColor::lightCyan;
+        const char* format = "%s feels %s effect.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             event.params["effect"].c_str() );
+      }
+      break;
+      case EventId::Actor_EffectRemoved:
+      {
+        color = TCODColor::lightCyan;
+        const char* format = "%s fades from %s.";
+
+        sprintf(msg, format, event.params["effect"].c_str(),
+                             actor->getName().c_str());
       }
       break;
 

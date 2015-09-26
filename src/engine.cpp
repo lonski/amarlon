@@ -6,7 +6,7 @@
 #include <spell.h>
 #include <configuration.h>
 #include <messenger.h>
-#include <spell_gateway.h>
+#include <spell_db.h>
 #include <world.h>
 #include <command_executor.h>
 #include <tile_db.h>
@@ -25,15 +25,6 @@ int Engine::screenWidth = 100 + Engine::rightPanelWidth;
 int Engine::screenHeight = 60 + Engine::bottomPanelHeight;
 
 Engine::Engine()
-  : _gui( new gui::Gui )
-  , _cmdExecutor( new CommandExecutor )
-  , _windowManager( new gui::WindowManager )
-  , _config( new Configuration )
-  , _spellGateway(new SpellGateway )
-  , _tileDB( new TileDB )
-  , _actorsDB( new ActorDB )
-  , _messenger( new Messenger( _gui ) )
-  , _luaState( new lua_api::LuaState )
 {
 }
 
@@ -43,18 +34,30 @@ Engine::~Engine()
 
 void Engine::prologue()
 {
+  _gui.reset( new gui::Gui );
+  _cmdExecutor.reset( new CommandExecutor );
+  _windowManager.reset( new gui::WindowManager );
+  _config.reset( new Configuration );
+  _spellDB.reset(new SpellDB );
+  _tileDB.reset( new TileDB );
+  _actorsDB.reset( new ActorDB );
+  _messenger.reset( new Messenger( _gui ) );
+  _luaState.reset( new lua_api::LuaState );
+
   if ( _config->load("config.cfg") )
   {
-    getActorDB()     .load( _config->get("actors_file") );
-    getTileDB ()     .load( _config->get("tiles_file" ) );
-    getSpellGateway().load( _config->get("spells_file") );
+    getActorDB().load( _config->get("actors_file") );
+    getTileDB ().load( _config->get("tiles_file" ) );
+    getSpellDB().load( _config->get("spells_file") );
 
     initializeWorld();
+    getLuaState().registerAPI();
 
     //temporary: just add player from map
     _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getType() == ActorType::Player; }).front();
 
     getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
+
   }
 }
 
@@ -85,6 +88,16 @@ void Engine::initializeWorld()
 void Engine::epilogue()
 {
   getWorld().store( _config->get("save_file") );
+
+  _gui.reset();
+  _cmdExecutor.reset();
+  _windowManager.reset();
+  _config.reset();
+  _spellDB.reset();
+  _tileDB.reset();
+  _actorsDB.reset();
+  _messenger.reset();
+  _luaState.reset();
 }
 
 void Engine::render()
@@ -146,9 +159,9 @@ World& Engine::getWorld() const
   return *_world;
 }
 
-SpellGateway& Engine::getSpellGateway() const
+SpellDB& Engine::getSpellDB() const
 {
-  return *_spellGateway;
+  return *_spellDB;
 }
 
 Messenger &Engine::getMessenger() const

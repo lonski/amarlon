@@ -23,13 +23,15 @@ public:
   virtual ~Animation();
 
   static AnimationPtr create(AnimationDescriptionPtr dsc);
+  static AnimationPtr create(AnimationDescription dsc);
+  static AnimationPtr create(Type type);
   virtual AnimationPtr clone() = 0;
-  virtual void run(TCODConsole& console) = 0;
+  virtual void run() = 0;
   virtual Type getType() const = 0;
 
   /**
-   * @brief Serialize all effect fields to key-value params.
-   *        Used to serialize effect into XML file.
+   * @brief Serialize all animation fields to key-value params.
+   *        Used to serialize animation into XML file.
    * @return A map with field name and its value
    */
   virtual Params toParams() const = 0;

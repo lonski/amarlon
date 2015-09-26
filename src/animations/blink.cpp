@@ -18,8 +18,10 @@ AnimationPtr Blink::clone()
   return BlinkPtr( new Blink(*this) );
 }
 
-void Blink::run(TCODConsole& console)
+void Blink::run()
 {
+  TCODConsole& console = *TCODConsole::root;
+
   Target target = getEndLocation();
 
   TCODColor originalColor = console.getCharForeground(target.x, target.y);

@@ -1,23 +1,17 @@
 #include "spell.h"
 #include <libtcod.h>
 #include <actor.h>
-#include <effect.h>
 #include <animation.h>
 #include <engine.h>
+#include <spell_db.h>
 #include <lua_state.h>
-#include <actor_wrapper.h>
-#include <effect_forge.h>
+#include <lua_api/actor_wrapper.h>
+#include <boost/ref.hpp>
 
 namespace amarlon {
 
-Spell::Spell()
-  : _name("No name")
-  , _class(CharacterClass::NoClass)
-  , _level(0)
-  , _targetType(TargetType::SINGLE_NEIGHBOUR)
-  , _range(0)
-  , _radius(0)
-  , _duration(0)
+Spell::Spell(SpellId id)
+  : _id(id)
 {
 }
 
@@ -25,44 +19,14 @@ Spell::~Spell()
 {
 }
 
-SpellPtr Spell::create(SpellDescriptionPtr dsc)
+SpellPtr Spell::create(SpellId id)
 {
-  SpellPtr spell;
-
-  if ( dsc )
-  {
-    spell.reset( new Spell );
-
-    spell->_name = dsc->name;
-    spell->_level = dsc->level;
-    spell->_class = static_cast<CharacterClass>(dsc->spellClass);
-    spell->_targetType = static_cast<TargetType>(dsc->targetType);
-    spell->_id = static_cast<SpellId>(dsc->id);
-    spell->_range = dsc->range;
-    spell->_radius = dsc->radius;
-    spell->_duration = dsc->duration;
-
-    spell->_animation = animation::Animation::create( dsc->animation  );
-  }
-
-  return spell;
+  return SpellPtr( new Spell(id) );
 }
 
 SpellPtr Spell::clone()
 {
-  SpellPtr cloned = std::make_shared<Spell>();
-
-  cloned->_name       = _name;
-  cloned->_class      = _class;
-  cloned->_level      = _level;
-  cloned->_targetType = _targetType;
-  cloned->_id         = _id;
-  cloned->_animation  = _animation->clone();
-  cloned->_range      = _range;
-  cloned->_radius     = _radius;
-  cloned->_duration   = _duration;
-
-  return cloned;
+  return create(_id);
 }
 
 bool Spell::cast(ActorPtr caster, Target target)
@@ -71,25 +35,23 @@ bool Spell::cast(ActorPtr caster, Target target)
 
   if ( target )
   {
-    lua_api::LuaState& state = Engine::instance().getLuaState();
-    lua_api::ActorWrapper( caster, "caster" );
+    lua_api::LuaState& lua = Engine::instance().getLuaState();
+    SpellDB& spellDb = Engine::instance().getSpellDB();
 
-    if ( state.execute( getScriptPath() ) )
+    if ( lua.execute( spellDb.getScriptPath(_id) ) )
     {
-
-      success = true;
-
-      if ( _animation )
+      try
       {
-        _animation->setLocation( Target({caster}, caster->getX(), caster->getY() ), target );
-        _animation->run(*TCODConsole::root);
+        success = luabind::call_function<bool>(
+            lua()
+          , "onCast"
+          , new lua_api::ActorWrapper(caster)
+          , boost::ref(target)
+        )[luabind::adopt(_1)];
       }
-
-      //Apply effects produced in Lua script
-      lua_api::EffectForge& forge = state["forge"];
-      for ( auto effect : forge.produce() )
+      catch(luabind::error& e)
       {
-        success &= effect->apply(caster, target);
+        lua.logError(e);
       }
     }
 
@@ -105,41 +67,31 @@ SpellId Spell::getId() const
 
 std::string Spell::getName() const
 {
-  return _name;
+  return Engine::instance().getSpellDB().getName(_id);
 }
 CharacterClass Spell::getClass() const
 {
-  return _class;
+  return Engine::instance().getSpellDB().getClass(_id);
 }
 
 int Spell::getLevel() const
 {
-  return _level;
+  return Engine::instance().getSpellDB().getLevel(_id);
 }
 
 TargetType Spell::getTargetType() const
 {
-  return _targetType;
+  return Engine::instance().getSpellDB().getTargetType(_id);
 }
 
 int Spell::getRange() const
 {
-  return _range;
+  return Engine::instance().getSpellDB().getRange(_id);
 }
 
 int Spell::getRadius() const
 {
-  return _radius;
-}
-
-int Spell::getDuration() const
-{
-  return _duration;
-}
-
-std::string Spell::getScriptPath() const
-{
-  return "scripts/spells/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  return Engine::instance().getSpellDB().getRadius(_id);
 }
 
 }

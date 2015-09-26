@@ -32,11 +32,14 @@ public:
 
   /* class specific functions */
   virtual int getMorale();
+  virtual int getTmpMoraleModifier();
+  virtual void setTmpMoraleModifier(int modifier);
 
 private:
   int _morale;
   int _hpMod;
   Damage _damage;
+  int _tmpMoraleModifier;
 
   friend class Monster::Creator;
   friend class MonsterSerializer;

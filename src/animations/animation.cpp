@@ -16,21 +16,30 @@ Animation::~Animation()
 
 AnimationPtr Animation::create(AnimationDescriptionPtr dsc)
 {
+  return dsc ? create(*dsc) : AnimationPtr();
+}
+
+AnimationPtr Animation::create(AnimationDescription dsc)
+{
+  AnimationPtr a = create(dsc.type);
+
+  if ( a ) a->load( dsc.params );
+
+  return a;
+}
+
+AnimationPtr Animation::create(Type type)
+{
   AnimationPtr a;
-  if ( dsc )
+
+  switch(type)
   {
-    switch(dsc->type)
-    {
-      case Type::Blink: a.reset( new Blink ); break;
-      case Type::Throw: a.reset( new Throw ); break;
-      case Type::ExpandingCircle: a.reset( new ExpandingCircle ); break;
-      case Type::ThrowExpandingCircle: a.reset( new ThrowExpandingCircle ); break;
-      default:;
-    }    
+    case Type::Blink: a.reset( new Blink); break;
+    case Type::Throw: a.reset( new Throw); break;
+    case Type::ExpandingCircle: a.reset( new ExpandingCircle); break;
+    case Type::ThrowExpandingCircle: a.reset( new ThrowExpandingCircle); break;
+    default:;
   }
-
-  if ( a ) a->load( dsc->params );
-
   return a;
 }
 

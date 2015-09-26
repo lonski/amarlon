@@ -1,7 +1,6 @@
 #include "pickable.h"
 #include <iostream>
 #include <actor.h>
-#include <effect.h>
 #include <gui.h>
 #include <amarlon_except.h>
 #include <utils.h>
@@ -44,7 +43,6 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_damage = pDsc->damage;
     pickable->_usesCount = pDsc->uses;
     pickable->_targetType = pDsc->targetType;
-    pickable->setEffect( Effect::create(pDsc->effect) );
   }
 
   return pickable;
@@ -71,7 +69,6 @@ ActorPtr Pickable::spilt(int amount)
 ActorFeaturePtr Pickable::clone()
 {
   PickablePtr cloned( new Pickable(isStackable(), getAmount()) );
-  cloned->setEffect( _effect ? _effect->clone() : nullptr );
 
   cloned->_itemSlot = _itemSlot;
   cloned->_category = _category;
@@ -81,6 +78,8 @@ ActorFeaturePtr Pickable::clone()
   cloned->_price = _price;
   cloned->_usesCount = _usesCount;
   cloned->_targetType = _targetType;
+  cloned->_category = _category;
+  cloned->_itemSlot = _itemSlot;
 
   return cloned;
 }
@@ -98,9 +97,8 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_price == crhs->_price);
     equal &= (_damage == crhs->_damage);
     equal &= (_targetType == crhs->_targetType);
-    //equal &= _usesCount == crhs->_usesCount;
-    //equal &= (_amount == crhs->_amount);  no amount comparing
-    if ( getEffect() ) equal &= (getEffect()->isEqual( crhs->getEffect() ));
+    equal &= (_category == crhs->_category);
+    equal &= (_itemSlot == crhs->_itemSlot);
   }
 
   return equal;
@@ -115,9 +113,9 @@ bool Pickable::use(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
-  if ( _effect != nullptr && _usesCount != 0 )
+  if ( _usesCount != 0 )
   {
-    if ( _effect->apply(executor, target) )
+    if ( true /* TODO: Execute item script */ )
     {
       --_usesCount;
       r = true;
@@ -136,15 +134,7 @@ bool Pickable::isStackable() const
 {
   return _stackable;
 }
-EffectPtr Pickable::getEffect() const
-{
-  return _effect;
-}
 
-void Pickable::setEffect(EffectPtr effect)
-{
-  _effect = effect;
-}
 ItemSlotType Pickable::getItemSlot() const
 {
   return _itemSlot;

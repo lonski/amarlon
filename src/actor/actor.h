@@ -87,6 +87,16 @@ public:
   bool isAlive() const;
 
   /**
+   * @brief Checks if actor is in player's field of view
+   */
+  bool isInFov();
+
+  /**
+   * @brief Return true if given actor is allied
+   */
+  bool isAllyOf(ActorPtr actor);
+
+  /**
    * @brief A Buff/Debuff manager
    */
   StatusEffectsManager& getStatusEffects() const;

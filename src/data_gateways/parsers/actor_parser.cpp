@@ -147,14 +147,6 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
 
       pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
-
-      // == effects == //
-      xml_node<>* effectNode = pickableNode->first_node("Effect");
-      if ( effectNode != nullptr)
-      {
-        _effectParser.setSource( effectNode );
-        pickDsc->effect = _effectParser.parseEffectDsc();
-      }
     }
   }
 

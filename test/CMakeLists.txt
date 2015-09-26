@@ -19,17 +19,12 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable/destroyable.h
-    ${PROJECT_SOURCE_DIR}/src/effects/effect.h
-    ${PROJECT_SOURCE_DIR}/src/effects/effect_type.h
-    ${PROJECT_SOURCE_DIR}/src/effects/lock_effect.h
-    ${PROJECT_SOURCE_DIR}/src/effects/heal_effect.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/actor_descriptions.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/description.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/effect_description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/spell_description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/map_gateway.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/spell_gateway.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/spell_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h

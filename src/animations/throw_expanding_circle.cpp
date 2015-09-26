@@ -11,13 +11,13 @@ AnimationPtr ThrowExpandingCircle::clone()
   return ThrowExpandingCirclePtr( new ThrowExpandingCircle(*this) );
 }
 
-void ThrowExpandingCircle::run(TCODConsole &console)
+void ThrowExpandingCircle::run()
 {
   _throw.setLocation( getStartLocation(), getEndLocation() );\
   _circle.setLocation( getStartLocation(), getEndLocation() );
 
-  _throw.run(console);
-  _circle.run(console);
+  _throw.run();
+  _circle.run();
 }
 
 Type ThrowExpandingCircle::getType() const

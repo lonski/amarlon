@@ -6,6 +6,8 @@
 #include <target_selector.h>
 #include <menu_window.h>
 #include <engine.h>
+#include <world.h>
+#include <map.h>
 
 namespace amarlon {
 
@@ -30,7 +32,8 @@ int CmdCast::execute()
      {
        selector->setRange( spell->getRange() );
        selector->setRadius( spell->getRadius() );
-       ActorActionPtr action( new CastAction(spell, selector->select()) );
+       MapPtr map = Engine::instance().getWorld().getCurrentMap();
+       ActorActionPtr action( new CastAction(spell, selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); })) );
        if ( !Engine::instance().getPlayer()->performAction( action ) )
        {
          gui::msgBox("Failed to cast spell!", gui::MsgType::Warning);

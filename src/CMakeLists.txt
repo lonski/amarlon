@@ -1,4 +1,5 @@
 set(HEADER_FILES
+    test.h
     actor/actor_features/ai/ai.h    
     actor/actor_features/ai/ai_factory.h
     actor/actor_features/ai/monster_ai.h
@@ -18,15 +19,10 @@ set(HEADER_FILES
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/destroyable/drop_rule.h
-    effects/effect.h
-    effects/effect_type.h
-    effects/lock_effect.h
-    effects/heal_effect.h
-    effects/damage_effect.h
-    effects/attack_roll_effect.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
+    actor/status_effect.h
     commands/cmd_help.h
     commands/cmd_close.h
     commands/cmd_fullscreen.h
@@ -42,18 +38,15 @@ set(HEADER_FILES
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
-    data_gateways/parsers/spell_parser.h
-    data_gateways/parsers/effect_parser.h
     data_gateways/parsers/actor_parser.h
     data_gateways/parsers/map_parser.h
     data_gateways/parsers/animation_parser.h
+    data_gateways/parsers/spell_parser.h
     data_gateways/serializers/serializer.h
     data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
     data_gateways/serializers/action_serializer.h
     data_gateways/serializers/actor_serializer.h
-    data_gateways/serializers/effect_serializer.h
-    data_gateways/serializers/spell_serializer.h
     data_gateways/serializers/actor_feature_serializers/actor_feature_serializer.h
     data_gateways/serializers/actor_feature_serializers/pickable_serializer.h
     data_gateways/serializers/actor_feature_serializers/destroyable_serializer.h
@@ -70,12 +63,11 @@ set(HEADER_FILES
     data_gateways/actor_db.h
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
-    data_gateways/descriptions/effect_description.h
     data_gateways/descriptions/spell_description.h
     data_gateways/descriptions/description.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
-    data_gateways/spell_gateway.h
+    data_gateways/spell_db.h
     gui/window/inventory_window/inventory_panel.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
@@ -153,8 +145,19 @@ set(HEADER_FILES
     animations/expanding_circle.h
     animations/throw_expanding_circle.h
     lua_api/lua_state.h
-    lua_api/effect_forge.h
     lua_api/actor_wrapper.h
+    lua_api/defines/converters.h
+    lua_api/defines/converters.h
+    lua_api/registrations/registrar.h
+    lua_api/registrations/registration_manager.h
+    lua_api/registrations/spelldb_registrar.h
+    lua_api/registrations/actor_registrar.h
+    lua_api/registrations/damage_registrar.h
+    lua_api/registrations/target_registrar.h
+    lua_api/registrations/status_effect_registrar.h
+    lua_api/registrations/animation_registrar.h
+    lua_api/registrations/free_functions_registrar.h
+    lua_api/registrations/globals_registrar.cpp
 )
 
 set(SOURCE_FILES
@@ -174,13 +177,9 @@ set(SOURCE_FILES
     actor/actor_features/character/character_factory.cpp
     actor/actor_features/pickable/pickable.cpp
     actor/actor_features/destroyable/destroyable.cpp
-    effects/effect.cpp
-    effects/lock_effect.cpp
-    effects/heal_effect.cpp
-    effects/damage_effect.cpp
-    effects/attack_roll_effect.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
+    actor/status_effect.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp
     commands/cmd_fullscreen.cpp
@@ -197,14 +196,11 @@ set(SOURCE_FILES
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
-    data_gateways/parsers/effect_parser.cpp
     data_gateways/parsers/spell_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
     data_gateways/serializers/actor_serializer.cpp
-    data_gateways/serializers/effect_serializer.cpp
-    data_gateways/serializers/spell_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/pickable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/destroyable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/inventory_serializer.cpp
@@ -220,7 +216,7 @@ set(SOURCE_FILES
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp
-    data_gateways/spell_gateway.cpp
+    data_gateways/spell_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
@@ -282,14 +278,22 @@ set(SOURCE_FILES
     animations/expanding_circle.cpp
     animations/throw_expanding_circle.cpp
     lua_api/lua_state.cpp
-    lua_api/effect_forge.cpp
     lua_api/actor_wrapper.cpp
+    lua_api/registrations/registration_manager.cpp
+    lua_api/registrations/spelldb_registrar.cpp
+    lua_api/registrations/actor_registrar.cpp
+    lua_api/registrations/damage_registrar.cpp
+    lua_api/registrations/target_registrar.cpp
+    lua_api/registrations/status_effect_registrar.cpp
+    lua_api/registrations/animation_registrar.cpp
+    lua_api/registrations/free_functions_registrar.cpp
+    lua_api/registrations/globals_registrar.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${CMAKE_DL_LIBS})
+target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_executable(amarlon main.cpp)
-target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${CMAKE_DL_LIBS})
+target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)

@@ -14,7 +14,7 @@ class Blink : public Animation
 public:
   Blink(TCODColor targetColor = TCODColor::blue, int frameCount = 20, int frameDelay = 15);
   virtual AnimationPtr clone();
-  virtual void run(TCODConsole& console);
+  virtual void run();
   virtual Type getType() const;
 
   TCODColor getTargetColor() const;

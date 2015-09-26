@@ -5,11 +5,11 @@ else(GTEST_LIBRARIES AND GTEST_INCLUDE_DIRS)
     find_path(GTEST_INCLUDE_DIR
 	NAMES gtest/gtest.h
 	PATHS
+      "${CMAKE_CURRENT_SOURCE_DIR}/include"
+      "${PROJECT_SOURCE_DIR}/include"
 	    /usr/include
 	    /usr/local/include
 	    /opt/local/include
-	    "${CMAKE_CURRENT_SOURCE_DIR}/include"
-	    "${PROJECT_SOURCE_DIR}/include"
     )
     set(GTEST_INCLUDE_DIRS ${GTEST_INCLUDE_DIR} "${GTEST_INCLUDE_DIR}/gtest")
 

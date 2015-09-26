@@ -12,9 +12,9 @@ typedef std::shared_ptr<Throw> ThrowPtr;
 class Throw : public Animation
 {
 public:
-  Throw();
+  Throw(TCODColor color = TCODColor::red, char ch = '*', int frameDelay = 15 );
   virtual AnimationPtr clone();
-  virtual void run(TCODConsole& console);
+  virtual void run();
   virtual Type getType() const;
 
   virtual void load(const Params& params);

@@ -25,6 +25,7 @@ TargetSelector* TargetSelector::create(TargetType type)
     case TargetType::SINGLE_RANGE:            ts = new SingleRangeSelector; break;
     case TargetType::SINGLE_RANGE_PROJECTILE: ts = new SingleRangeProjectileSelector; break;
     case TargetType::AREA_RANGE:              ts = new AreaRangeSelector; break;
+    case TargetType::CASTER_AREA:             ts = new ExecutorAreaSelector; break;
     default:;
   }
 
