@@ -7,13 +7,16 @@ else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
 		lua.h
 		lua/lua.h
 	PATHS
-      "${CMAKE_CURRENT_SOURCE_DIR}/include"
-      "${PROJECT_SOURCE_DIR}/include"
-	    /usr/include
+      "${CMAKE_CURRENT_SOURCE_DIR}/include/lua"
+      "${PROJECT_SOURCE_DIR}/include/lua"
+      /usr/include/lua
+      /usr/include/lua5.2
 	    /usr/local/include
+      /usr/local/include/lua5.2
 	    /opt/local/include
+      /opt/local/include/lua5.2
     )
-    set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}/lua" )
+    set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}" )
 
     find_library(LUA_CXX_LIBRARY
 	NAMES
