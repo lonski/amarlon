@@ -24,18 +24,11 @@ install:
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
     - sudo apt-get remove libboost1.46-dev -qq
-    - sudo apt-get install libreadline-dev libboost1.55-tools-dev libboost1.55-dev -qq 
+    - sudo apt-get install libreadline-dev libboost1.55-tools-dev libboost1.55-dev liblua5.2-dev liblua5.2-0 -qq 
 
 before_script:
-    #LUA
-    - wget http://www.lua.org/ftp/lua-5.3.1.tar.gz
-    - tar -xvf lua-5.3.1.tar.gz
-    - cd lua-5.3.1/
-    - make linux
-    - sudo make linux install
-    - cd -
     #Luabind
-    - git clone -b shared_lib_build https://github.com/lonski/luabind.git
+    - git clone https://github.com/lonski/luabind.git
     - cd luabind
     - mkdir build
     - cd build
