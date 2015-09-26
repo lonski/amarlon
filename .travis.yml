@@ -36,7 +36,7 @@ before_script:
     - make -j2
     - sudo cp src/libluabind09.so /usr/local/lib/libluabind.so
     - sudo cp -r ../luabind ../../include
-    - cd -
+    - cd ../../
     #GTest
     - sudo mkdir /usr/src/gtest/build
     - cd /usr/src/gtest/build
