@@ -35,7 +35,7 @@ before_script:
     - cmake .. -DLUABIND_DYNAMIC_LINK=1
     - make -j2
     - sudo cp src/libluabind09.so /usr/local/lib/libluabind.so
-    - sudo cp src/libluabind09.so /usr/local/lib/libluabind90.so
+    - sudo cp src/libluabind09.so /usr/local/lib/libluabind09.so
     - cp -r ../luabind ../../include
     - touch ../../include/luabind/build_information.hpp
     - cd ../../
