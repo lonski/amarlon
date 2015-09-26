@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <actor_feature_serializer.h>
-#include <effect_serializer.h>
 #include <item_slot_type.h>
 
 namespace amarlon {

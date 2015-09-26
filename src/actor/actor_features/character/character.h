@@ -51,8 +51,9 @@ public:
   virtual int getHitPoints() const;
   virtual int getMaxHitPoints() const;
   virtual void setHitPoints(int newHp);
-  virtual void modifyHitPoints(int modifier);
+  virtual int modifyHitPoints(int modifier);
   virtual int takeDamage(Damage dmg, ActorPtr attacker);
+  virtual int takeHeal(Damage heal, ActorPtr healer);
   virtual int getExperience() const;
   virtual void modifyExperience(int modifier);
   virtual int getLevel() const;

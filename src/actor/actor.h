@@ -92,6 +92,11 @@ public:
   bool isInFov();
 
   /**
+   * @brief Return true if given actor is allied
+   */
+  bool isAllyOf(ActorPtr actor);
+
+  /**
    * @brief A Buff/Debuff manager
    */
   StatusEffectsManager& getStatusEffects() const;

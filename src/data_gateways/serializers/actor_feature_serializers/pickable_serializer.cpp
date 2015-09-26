@@ -38,9 +38,6 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
     addAttributeEnum( _pickableNode, "itemSlot",   pickable->getItemSlot() );
     addAttributeEnum( _pickableNode, "category",   pickable->getCategory() );
     addAttributeEnum( _pickableNode, "targetType", pickable->getTargetType() );
-
-    _effectSerializer.setDestination(_document, _pickableNode);
-    _effectSerializer.serialize( pickable->getEffect() );
   }
 
   return pickable != nullptr;

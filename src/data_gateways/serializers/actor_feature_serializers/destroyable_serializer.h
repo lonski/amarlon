@@ -2,7 +2,6 @@
 #define DESTROYABLE_SERIALIZER_H
 
 #include <actor_feature_serializer.h>
-#include <effect_serializer.h>
 
 namespace amarlon {
 

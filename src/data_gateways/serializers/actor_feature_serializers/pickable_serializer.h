@@ -2,7 +2,6 @@
 #define PICKABLE_SERIALIZER_H
 
 #include <actor_feature_serializer.h>
-#include <effect_serializer.h>
 
 namespace amarlon {
 
@@ -14,9 +13,6 @@ public:
   virtual ~PickableSerializer();
 
   virtual bool serialize(ActorFeaturePtr af);
-
-private:
-  EffectSerializer _effectSerializer;
 
 };
 

@@ -16,7 +16,7 @@ class ThrowExpandingCircle : public Animation
 public:
   ThrowExpandingCircle();
   virtual AnimationPtr clone();
-  virtual void run(TCODConsole& console);
+  virtual void run();
   virtual Type getType() const;
 
   virtual void load(const Params& params);

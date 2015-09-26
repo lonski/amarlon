@@ -13,7 +13,8 @@ include_directories(${TCOD_INCLUDE_DIRS})
 
 find_package(lua HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${LUA_INCLUDE_DIRS})
-include_directories("${PROJECT_SOURCE_DIR}/include/selene")
+
+find_package(luabind HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 
 header_dirs("${PROJECT_SOURCE_DIR}/src" AMARLON_HEADER_DIRS)
 

@@ -1,10 +1,8 @@
 #include <gtest/gtest.h>
 #include <actor.h>
 #include <map.h>
-#define private public
-#include <heal_effect.h>
-#undef private
 #include <engine.h>
+#include <descriptions/actor_descriptions.h>
 
 namespace amarlon {
 
@@ -17,6 +15,7 @@ class ActorTest : public ::testing::Test
 
   virtual void TearDown()
   {
+    Engine::instance().epilogue();
   }
 
 };
@@ -116,8 +115,8 @@ TEST_F(ActorTest, actorEqual_different_pickable)
 
   ASSERT_TRUE( *a1 == *a2 );
 
-  HealEffectPtr e = std::dynamic_pointer_cast<HealEffect>(a1->getFeature<Pickable>()->getEffect());
-  e->_heal.value = 666;
+  PickablePtr p = a1->getFeature<Pickable>();
+  p->setItemSlot(ItemSlotType::Bullets);
 
   ASSERT_FALSE( *a1 == *a2 );
 }

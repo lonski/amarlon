@@ -10,7 +10,21 @@ namespace amarlon {
 
 typedef std::shared_ptr<Map> MapPtr;
 
-TEST(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
+class MapGatewayTest : public ::testing::Test
+{
+  virtual void SetUp()
+  {
+    Engine::instance().prologue();
+  }
+
+  virtual void TearDown()
+  {
+    Engine::instance().epilogue();
+  }
+
+};
+
+TEST_F(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
 {
   MapGateway gateway;
   MapPtr map ( gateway.fetch(MapId::Null) );
@@ -18,7 +32,7 @@ TEST(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
   ASSERT_TRUE(map == nullptr);
 }
 
-TEST(MapGatewayTest, fetchExistingMap_givesMap)
+TEST_F(MapGatewayTest, fetchExistingMap_givesMap)
 {
   MapGateway gateway;
   gateway.load("data/maps.xml");
@@ -28,29 +42,25 @@ TEST(MapGatewayTest, fetchExistingMap_givesMap)
   ASSERT_EQ(map->getId(), MapId::GameStart );
 }
 
-TEST(MapGatewayTest, mapHasValidTiles)
+TEST_F(MapGatewayTest, mapHasValidTiles)
 {
-  Engine::instance().prologue();
-
   MapGateway gateway;
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
-  ASSERT_EQ(map->getChar(39,27), Engine::instance().getTileDB().getChar(TileType::PlainFloor));
+  EXPECT_EQ(map->getChar(39,27), Engine::instance().getTileDB().getChar(TileType::PlainFloor));
 }
 
-TEST(MapGatewayTest, mapHasValidTiles2)
+TEST_F(MapGatewayTest, mapHasValidTiles2)
 {
-  Engine::instance().prologue();
-
   MapGateway gateway;
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
-  ASSERT_EQ(map->getChar(1,1), Engine::instance().getTileDB().getChar(TileType::Tree));
+  EXPECT_EQ(map->getChar(1,1), Engine::instance().getTileDB().getChar(TileType::Tree));
 }
 
-TEST(MapGatewayTest, saveMaps)
+TEST_F(MapGatewayTest, saveMaps)
 {
   MapGateway gateway;
   gateway.load("data/maps.xml");

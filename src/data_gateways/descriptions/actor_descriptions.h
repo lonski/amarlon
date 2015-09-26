@@ -17,7 +17,6 @@
 #include <races.h>
 #include <target_type.h>
 #include <description.h>
-#include <effect_description.h>
 #include <spell_id.h>
 #include <set>
 #include <damage.h>
@@ -101,7 +100,6 @@ struct PickableDescription : Description
   int amount;
   int uses;
 
-  EffectDescriptionPtr effect;
   ItemSlotType itemSlot;
   PickableCategory category;
   int armorClass;

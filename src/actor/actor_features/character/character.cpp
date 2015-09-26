@@ -4,7 +4,7 @@
 #include <utils.h>
 #include <character_factory.h>
 #include <spell.h>
-#include <spell_gateway.h>
+#include <spell_db.h>
 #include <engine.h>
 #include <actor_descriptions.h>
 
@@ -80,9 +80,10 @@ void Character::setHitPoints(int newHp)
   }
 }
 
-void Character::modifyHitPoints(int modifier)
+int Character::modifyHitPoints(int modifier)
 {
-  int toSet = getHitPoints() + modifier;
+  int hpBeforeHeal = getHitPoints();
+  int toSet = hpBeforeHeal + modifier;
   if ( toSet > getMaxHitPoints() )
   {
     toSet = getMaxHitPoints();
@@ -93,6 +94,25 @@ void Character::modifyHitPoints(int modifier)
   }
 
   setHitPoints( toSet );
+  return getHitPoints() - hpBeforeHeal;
+}
+
+int Character::takeHeal(Damage heal, ActorPtr healer)
+{
+  int healed = modifyHitPoints(heal.roll());
+
+  ActorPtr actor = getOwner().lock();
+  if ( actor )
+  {
+    if ( healer && healer != actor )
+      actor->notify(Event(EventId::Actor_Healed,
+                    { {"healer", healer->getName()}, {"value", std::to_string(healed)} } ));
+    else
+      actor->notify(Event(EventId::Actor_Healed,
+                    { {"value", std::to_string(healed)} } ));
+  }
+
+  return healed;
 }
 
 int Character::takeDamage(Damage dmg, ActorPtr attacker)
@@ -240,7 +260,7 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_speed = dsc->speed;
     for(auto id : dsc->spells )
     {
-      character->_spells.insert( Engine::instance().getSpellGateway().fetch(id) );
+      character->_spells.insert( Spell::create(id) );
     }
   }
 }

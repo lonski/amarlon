@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <utils.h>
 #include <actor.h>
-#include <effect.h>
 #include <map.h>
 #include <tile.h>
 

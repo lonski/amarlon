@@ -10,7 +10,7 @@
 			<Actor id="2" x="45" y="18"/>
 			<Actor id="25" x="38" y="20">
 				<MonsterAi/>
-				<Monster hitPointsBonus="-1" morale="7" damageDice="1d6" level="1" hitPoints="1" maxHitPoints="1" experience="10" armorClass="11" speed="30" class="1" race="6"/>
+				<Monster hitPointsBonus="111" morale="7" damageDice="1d6" level="1" hitPoints="1" maxHitPoints="1" experience="10" armorClass="11" speed="30" class="1" race="6"/>
 				<Destroyable>
 					<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
 				</Destroyable>
@@ -19,21 +19,13 @@
 				<OpenableContainer lockId="0" locked="0"/>
 				<Inventory maxSize="5">
 					<Content id="13" x="0" y="0">
-						<Pickable stackable="1" amount="9" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1" targetType="4">
-							<Effect type="2">
-								<P name="heal">5</P>
-							</Effect>
-						</Pickable>
+						<Pickable stackable="1" amount="9" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1" targetType="4"/>
 					</Content>
 					<Content id="14" x="0" y="0">
 						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
 					</Content>
 					<Content id="16" x="0" y="0">
-						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="-1" targetType="0">
-							<Effect type="1">
-								<P name="lock">5</P>
-							</Effect>
-						</Pickable>
+						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="-1" targetType="0"/>
 					</Content>
 				</Inventory>
 			</Actor>
@@ -47,11 +39,7 @@
 			<Actor id="7" x="41" y="30"/>
 			<Actor id="7" x="42" y="30"/>
 			<Actor id="13" x="41" y="32">
-				<Pickable stackable="1" amount="8" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1" targetType="4">
-					<Effect type="2">
-						<P name="heal">3</P>
-					</Effect>
-				</Pickable>
+				<Pickable stackable="1" amount="8" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1" targetType="4"/>
 			</Actor>
 			<Actor id="8" x="46" y="32"/>
 			<Actor id="12" x="41" y="33">
@@ -108,7 +96,7 @@
 						<Pickable stackable="0" amount="1" itemSlot="7" category="1" armorClass="0" weight="1" price="2" damageDice="1d4"/>
 					</Content>
 				</Container>
-				<PlayableCharacter level="3" hitPoints="7" maxHitPoints="8" experience="0" armorClass="11" speed="40" class="1" race="1">
+				<PlayableCharacter level="4" hitPoints="555" maxHitPoints="666" experience="0" armorClass="11" speed="40" class="1" race="1">
 					<AbilityScores STR="16" INT="9" WIS="9" DEX="14" CON="14"/>
 					<Spells>
 						<Spell id="1"/>

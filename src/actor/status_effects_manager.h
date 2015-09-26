@@ -4,38 +4,38 @@
 #include <memory>
 #include <list>
 #include <vector>
+#include <spell_id.h>
+#include <target.h>
 
 namespace amarlon {
 
 class Actor;
-class Effect;
 class StatusEffectsManager;
+class StatusEffect;
 typedef std::shared_ptr<StatusEffectsManager> StatusEffectsManagerPtr;
-typedef std::shared_ptr<Effect> EffectPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::weak_ptr<Actor> ActorWPtr;
+typedef std::shared_ptr<StatusEffect> StatusEffectPtr;
 
 class StatusEffectsManager
 {
 public:
   StatusEffectsManager(ActorPtr owner = nullptr);
 
-  void add(EffectPtr effect);
-  void remove(EffectPtr effect);
+  void add(StatusEffectPtr effect);
+  void remove(StatusEffectPtr effect);
   void tick(int time = 1);
 
-  std::vector<EffectPtr> getPermamentEffects() const;
-  std::vector<EffectPtr> getTemporaryEffects() const;
+  std::vector<StatusEffectPtr> getEffects() const;
 
   StatusEffectsManagerPtr clone();
 
 private:
   ActorWPtr _owner;
-  std::list<EffectPtr> _permEffects;
-  std::list<EffectPtr> _tempEffects;
+  std::list<StatusEffectPtr> _effects;
 
-  void notifyAdd(EffectPtr e);
-  void notifyRemove(EffectPtr e);
+  void notifyAdd(StatusEffectPtr e);
+  void notifyRemove(StatusEffectPtr e);
 };
 
 }

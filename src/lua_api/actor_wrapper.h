@@ -2,29 +2,42 @@
 #define ACTOR_WRAPPER_H
 
 #include <memory>
+#include <damage.h>
 
 namespace amarlon {
 
 class Actor;
+class StatusEffect;
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<StatusEffect> StatusEffectPtr;
 
 namespace lua_api {
 
 class ActorWrapper
 {
 public:
-  /**
-   * @brief Registers an actor instance to Lua State
-   * @param actor - actor's instance to be registered
-   * @param name - object name visible in scripts
-   */
-  ActorWrapper(ActorPtr actor, const char* name);
+  ActorWrapper(ActorPtr actor);
   ~ActorWrapper();
 
   int getLevel();
+  int getX() const;
+  int getY() const;
+  void takeHeal(Damage takeHeal, ActorWrapper healer);
+  void takeDamage(Damage dmg, ActorWrapper attacker);
+  void setAttackModifier(int modifier);
+  int  getAttackModifier() const;
+  void setSavingThrowModifier(int modifier, int savingThrowType);
+  int  getSavingThrowModifier(int savingThrowType);
+  void setMoraleModifier(int modifier);
+  int  getMoraleModifier();
+  void addStatusEffect(StatusEffectPtr effect);
+  bool isAllyOf(ActorWrapper actor);
+  std::string getName() const;
+
+  ActorPtr getActor() const;
 
 private:
-  unsigned long long _actor;
+  ActorPtr _actor;
 
 };
 

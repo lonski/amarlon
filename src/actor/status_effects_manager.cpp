@@ -1,7 +1,7 @@
 #include "status_effects_manager.h"
 #include <algorithm>
-#include <effect.h>
 #include <actor.h>
+#include <status_effect.h>
 
 namespace amarlon {
 
@@ -10,49 +10,46 @@ StatusEffectsManager::StatusEffectsManager(ActorPtr owner)
 {
 }
 
-void StatusEffectsManager::add(EffectPtr effect)
+void StatusEffectsManager::add(StatusEffectPtr effect)
 {
-  if ( effect->getTime() != 0 )
+  if ( effect->getDuration() != 0 )
   {
-    if ( effect->getTime() == -1 )
-      _permEffects.push_back(effect);
-    else
-      _tempEffects.push_back(effect);
-
+    _effects.push_back(effect);
     notifyAdd(effect);
   }
 }
 
-void StatusEffectsManager::remove(EffectPtr effect)
+void StatusEffectsManager::remove(StatusEffectPtr effect)
 {
-  auto& container = effect->getTime() == -1 ? _permEffects : _tempEffects;
-  auto it = std::find(container.begin(), container.end(),effect);
-  if ( it != container.end() )
+  auto it = std::find(_effects.begin(), _effects.end(),effect);
+  if ( it != _effects.end() )
   {
     notifyRemove(effect);
-    container.erase( it );  
+    _effects.erase( it );
   }
 }
 
 void StatusEffectsManager::tick(int time)
 {
-  auto it = _tempEffects.begin();
-  while ( it != _tempEffects.end())
+  auto it = _effects.begin();
+  while ( it != _effects.end())
   {
-    EffectPtr& e = *it;
+    auto& e = *it;
     bool erase = false;
 
-    if ( e->getTime() != -1 ) //omit permament effects
+    if ( e->getDuration() != -1 ) //omit permament effects
     {
-      e->setTime( e->getTime() - time );
-      erase = e->getTime() <= 0;
+      e->setDuration( e->getDuration() - time );
+      erase = e->getDuration() <= 0;
     }
 
     if ( erase )
     {
       notifyRemove(e);
-      if ( _owner.lock() ) e->revoke(nullptr, _owner.lock());
-      _tempEffects.erase(it++);
+      if ( _owner.lock() && e->cancel(_owner.lock()) )
+        _effects.erase(it++);
+      else
+        printf("LOG: failed to cancel effect SpellId=%s",e->getName().c_str());
     }
     else
     {
@@ -61,34 +58,19 @@ void StatusEffectsManager::tick(int time)
   }
 }
 
-std::vector<EffectPtr> StatusEffectsManager::getPermamentEffects() const
+std::vector<StatusEffectPtr> StatusEffectsManager::getEffects() const
 {
-  return { _permEffects.begin(), _permEffects.end() };
-}
-
-std::vector<EffectPtr> StatusEffectsManager::getTemporaryEffects() const
-{
-  return { _tempEffects.begin(), _tempEffects.end() };
+  return { _effects.begin(), _effects.end() };
 }
 
 StatusEffectsManagerPtr StatusEffectsManager::clone()
 {
-  StatusEffectsManagerPtr mgr(new StatusEffectsManager);
-
-  for ( auto e : _permEffects )
-  {
-    mgr->_permEffects.push_back( e->clone() );
-  }
-
-  for ( auto e : _tempEffects )
-  {
-    mgr->_tempEffects.push_back( e->clone() );
-  }
+  StatusEffectsManagerPtr mgr(new StatusEffectsManager(*this));
 
   return mgr;
 }
 
-void StatusEffectsManager::notifyAdd(EffectPtr e)
+void StatusEffectsManager::notifyAdd(StatusEffectPtr e)
 {
   ActorPtr a = _owner.lock();
   if ( a )
@@ -97,7 +79,7 @@ void StatusEffectsManager::notifyAdd(EffectPtr e)
   }
 }
 
-void StatusEffectsManager::notifyRemove(EffectPtr e)
+void StatusEffectsManager::notifyRemove(StatusEffectPtr e)
 {
   ActorPtr a = _owner.lock();
   if ( a )

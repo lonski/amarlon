@@ -8,11 +8,11 @@
 
 namespace amarlon { namespace animation {
 
-ExpandingCircle::ExpandingCircle()
-  : _color(TCODColor::red)
-  , _ch('*')
-  , _frameDelay(15)
-  , _radius(0)
+ExpandingCircle::ExpandingCircle(TCODColor color, char ch, int frameDelay, int radius)
+  : _color(color)
+  , _ch(ch)
+  , _frameDelay(frameDelay)
+  , _radius(radius)
 {
 }
 
@@ -21,8 +21,10 @@ AnimationPtr ExpandingCircle::clone()
   return ExpandingCirclePtr( new ExpandingCircle(*this) );
 }
 
-void ExpandingCircle::run(TCODConsole& console)
+void ExpandingCircle::run()
 {
+  TCODConsole& console = *TCODConsole::root;
+
   //Target start  = getStartLocation();
   Target stop = getEndLocation();
   for(int r = 0; r <= _radius; ++r)

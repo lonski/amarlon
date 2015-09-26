@@ -19,4 +19,5 @@ include/gtest
 *.autosave
 doc/
 include/gmock
-include/selene
+include/lua
+include/luabind

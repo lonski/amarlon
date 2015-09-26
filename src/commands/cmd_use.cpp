@@ -1,7 +1,6 @@
 #include "cmd_use.h"
 #include <target_type.h>
 #include <target_selector.h>
-#include <effect.h>
 #include <engine.h>
 #include <message_box.h>
 #include <menu_window.h>
@@ -67,12 +66,8 @@ ActorPtr CmdUse::acquireItemToUse()
 
 std::vector<ActorPtr> CmdUse::getUsableItems()
 {
-  std::function<bool(ActorPtr)> filter = [](ActorPtr a)
-                                         {
-                                           return a->getFeature<Pickable>() && a->getFeature<Pickable>()->getEffect();
-                                         };
-
-  return Engine::instance().getPlayer()->getFeature<Inventory>()->items(filter);
+  //TODO: filter usable items
+  return Engine::instance().getPlayer()->getFeature<Inventory>()->items();
 }
 
 }

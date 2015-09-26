@@ -7,10 +7,10 @@
 
 namespace amarlon { namespace animation {
 
-Throw::Throw()
-  : _color(TCODColor::red)
-  , _ch('*')
-  , _frameDelay(15)
+Throw::Throw(TCODColor color, char ch, int frameDelay)
+  : _color(color)
+  , _ch(ch)
+  , _frameDelay(frameDelay)
 {
 }
 
@@ -19,8 +19,10 @@ AnimationPtr Throw::clone()
   return ThrowPtr( new Throw(*this) );
 }
 
-void Throw::run(TCODConsole& console)
+void Throw::run()
 {
+  TCODConsole& console = *TCODConsole::root;
+
   Target start  = getStartLocation();
   Target stop = getEndLocation();
 

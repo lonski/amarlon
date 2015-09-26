@@ -3,7 +3,16 @@
 
 #include <string>
 #include <memory>
-#include <selene.h>
+
+extern "C"
+{
+    #include "lua.h"
+    #include "lualib.h"
+    #include "lauxlib.h"
+}
+
+#include <luabind/luabind.hpp>
+#include <luabind/adopt_policy.hpp>
 
 namespace amarlon {
 
@@ -13,18 +22,20 @@ class LuaState
 {
 public:
   LuaState();
+  ~LuaState();
 
   /**
    * @brief Executes script file from given path
    */
   bool execute(const std::string& path);
+  lua_State* operator()() const;
 
-  sel::Selector operator[](const char *name);
+  void registerAPI();
+  void logError(const luabind::error& e) const;
 
 private:
-  sel::State _state;
+  lua_State* _state;
 
-  void registerClasses();
 
 };
 

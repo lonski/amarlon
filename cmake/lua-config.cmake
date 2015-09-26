@@ -7,11 +7,11 @@ else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
 		lua.h
 		lua/lua.h
 	PATHS
+      "${CMAKE_CURRENT_SOURCE_DIR}/include"
+      "${PROJECT_SOURCE_DIR}/include"
 	    /usr/include
 	    /usr/local/include
 	    /opt/local/include
-	    "${CMAKE_CURRENT_SOURCE_DIR}/include"
-	    "${PROJECT_SOURCE_DIR}/include"
     )
     set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}/lua" )
 

@@ -49,12 +49,12 @@ int PlayableCharacter::calculateLoadPenalty()
 
 int PlayableCharacter::getBaseAttackBonus()
 {
-  return AttackBonus::get(getClass(), getLevel());
+  return AttackBonus::get(getClass(), getLevel()) + getTmpAttackModifier();
 }
 
 int PlayableCharacter::getMeleeAttackBonus()
 {
-  return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR) + getTmpAttackModifier();
+  return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR);
 }
 
 Damage PlayableCharacter::getDamage()

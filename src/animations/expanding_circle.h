@@ -12,9 +12,10 @@ typedef std::shared_ptr<ExpandingCircle> ExpandingCirclePtr;
 class ExpandingCircle : public Animation
 {
 public:
-  ExpandingCircle();
+  ExpandingCircle(TCODColor color = TCODColor::red, char ch = '*', int frameDelay = 15, int radius = 0);
+
   virtual AnimationPtr clone();
-  virtual void run(TCODConsole& console);
+  virtual void run();
   virtual Type getType() const;
 
   virtual void load(const Params& params);

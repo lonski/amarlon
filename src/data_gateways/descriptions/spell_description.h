@@ -5,8 +5,6 @@
 #include <set>
 #include <vector>
 #include <description.h>
-#include <effect_description.h>
-#include <animation_description.h>
 
 namespace amarlon {
 
@@ -22,7 +20,6 @@ struct SpellDescription : Description
     , range(0)
     , id(0)
     , radius(0)
-    , duration(0)
   {}
 
   std::string name;
@@ -32,9 +29,6 @@ struct SpellDescription : Description
   int range;
   int id;
   int radius;
-  int duration;
-
-  AnimationDescriptionPtr animation;
 };
 
 }

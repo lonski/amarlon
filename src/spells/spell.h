@@ -11,25 +11,17 @@
 namespace amarlon {
 
 class Actor;
-class Effect;
 class Spell;
 typedef std::shared_ptr<Actor>  ActorPtr;
-typedef std::shared_ptr<Effect> EffectPtr;
 typedef std::shared_ptr<Spell>  SpellPtr;
-
-namespace animation {
-  class Animation;
-  typedef std::shared_ptr<Animation> AnimationPtr;
-}
 
 class Spell
 {
 public:
 
-  Spell();
   virtual ~Spell();
 
-  static SpellPtr create(SpellDescriptionPtr dsc);
+  static SpellPtr create(SpellId id);
   virtual SpellPtr clone();
 
   virtual bool cast(ActorPtr caster, Target target);
@@ -41,20 +33,11 @@ public:
   virtual TargetType getTargetType() const;
   virtual int getRange() const;
   virtual int getRadius() const;
-  virtual int getDuration() const;
 
-private:
-  std::string _name;
-  CharacterClass _class;
-  int _level;
-  TargetType _targetType;
+private:  
   SpellId _id;
-  int _range;
-  int _radius;
-  int _duration;
-  animation::AnimationPtr _animation;
 
-  std::string getScriptPath() const;
+  Spell(SpellId id);
 
   friend class SpellSerializer;
 };

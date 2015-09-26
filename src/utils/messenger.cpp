@@ -135,10 +135,21 @@ void Messenger::onNotify(Subject *subject, Event event)
       case EventId::Actor_Healed:
       {
         color = TCODColor::lighterBlue;
-        const char* format = "%s has been healed for %s.";
+        if ( event.params.find("healer") != event.params.end() )
+        {
+          const char* format = "%s has been healed for %s by %s.";
 
-        sprintf(msg, format, actor->getName().c_str(),
-                             event.params["value"].c_str());
+          sprintf(msg, format, actor->getName().c_str(),
+                               event.params["value"].c_str(),
+                               event.params["healer"].c_str());
+        }
+        else
+        {
+          const char* format = "%s has been healed for %s.";
+
+          sprintf(msg, format, actor->getName().c_str(),
+                               event.params["value"].c_str());
+        }
       }
       break;
       case EventId::Actor_Locked:
