@@ -34,7 +34,7 @@ before_script:
     - cd build
     - cmake .. -DLUABIND_DYNAMIC_LINK=1
     - make -j2
-    - sudo cp libluabind09.so /usr/local/lib/libluabind.so
+    - sudo cp src/libluabind09.so /usr/local/lib/libluabind.so
     - sudo cp -r ../luabind ../../include
     #GTest
     - sudo mkdir /usr/src/gtest/build
