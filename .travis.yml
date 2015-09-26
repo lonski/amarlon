@@ -23,7 +23,7 @@ install:
     - sudo apt-get install -qq mercurial libsdl-dev git
     - sudo apt-get install -qq libgtest-dev google-mock
     - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
-    - sudo apt-get install libreadline-dev libboost1.55-tools-dev -qq 
+    - sudo apt-get install libreadline-dev libboost1.46-tools-dev -qq 
 
 before_script:
     #LUA
