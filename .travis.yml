@@ -18,8 +18,8 @@ install:
     - sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 30
     - sudo update-alternatives --set cc /usr/bin/gcc
     - sudo update-alternatives --set c++ /usr/bin/g++
-    - sudo apt-get install -qq valgrind cppcheck
-    - sudo apt-get install -qq mercurial libsdl-dev git
+    - sudo apt-get install -qq valgrind cppcheck git
+    - sudo apt-get install -qq libboost1.55-dev libsdl-dev
 
 before_script:
     - wget https://github.com/lonski/amarlon_dependencies/releases/download/1.0/amarlon_dep_linux-1.0.tar.gz
