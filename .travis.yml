@@ -22,7 +22,7 @@ install:
     - sudo apt-get install -qq libsdl-dev
 
 before_script:
-    - wget https://github.com/lonski/amarlon_dependencies/releases/download/1.0/amarlon_dep_linux64-1.0.tar.gz
+    - wget https://github.com/lonski/amarlon_dependencies/releases/download/1.0/amarlon_dep_linux64-1.0.tar
     - tar -xvf amarlon_dep_linux64-1.0.tar.gz
 script:
     - mkdir build
