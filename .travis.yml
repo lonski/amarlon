@@ -23,7 +23,7 @@ install:
 
 before_script:
     - wget https://github.com/lonski/amarlon_dependencies/releases/download/1.0/amarlon-dep-linux64-1.0.tar
-    - tar -xvf amarlon_dep_linux64-1.0.tar.gz
+    - tar -xvf amarlon-dep-linux64-1.0.tar
 script:
     - mkdir build
     - cd build
