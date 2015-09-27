@@ -14,7 +14,8 @@ include_directories(${TCOD_INCLUDE_DIRS})
 find_package(lua HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${LUA_INCLUDE_DIRS})
 
-find_package(luabind HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
+find_package(luabind09 HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
+include_directories(${LUABIND_INCLUDE_DIRS})
 
 header_dirs("${PROJECT_SOURCE_DIR}/src" AMARLON_HEADER_DIRS)
 

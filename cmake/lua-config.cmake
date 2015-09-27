@@ -2,30 +2,23 @@ if(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
     # it's in cache already
     set(LUA_FOUND TRUE)
 else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
+
     find_path(LUA_INCLUDE_DIR
-	NAMES 
-		lua.h
-	PATHS
-      "${CMAKE_CURRENT_SOURCE_DIR}/include/lua"
-      "${PROJECT_SOURCE_DIR}/include/lua"
-	  PATH_SUFFIXES include/lua52 include/lua5.2 include/lua include lua
-	  $ENV{LUA_DIR}
-	  PATHS
+      NAMES
+        lua/lua.h
+      PATHS
+        "${CMAKE_CURRENT_SOURCE_DIR}/include"
+        "${PROJECT_SOURCE_DIR}/include"
     )
-    set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}" )
+    set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR} "${LUA_INCLUDE_DIR}/lua" )
 
     find_library(LUA_CXX_LIBRARY
-	NAMES
-	    lua
-	    lua52
-	    lua5.2
-	    lua-5.2
-	PATHS
-	    PATH_SUFFIXES lib64 lib
-	    $ENV{LUA_DIR}
-	    PATHS
-	    "${CMAKE_CURRENT_SOURCE_DIR}/lib"
-	    "${PROJECT_SOURCE_DIR}/lib"
+      NAMES
+        lua
+        liblua
+      PATHS
+        "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+        "${PROJECT_SOURCE_DIR}/lib"
     )
 	
     set(LUA_LIBRARIES ${LUA_LIBRARIES} ${LUA_CXX_LIBRARY})

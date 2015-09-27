@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2014, Lukasz Gromanowski <lgromanowski@gmail.com>
+# Copyright (c) 2014, Lukasz Gromanowski <lgromanowski@gmail.com> and Michał Łoński
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,41 +40,32 @@ if(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
     # it's in cache already
     set(TCOD_FOUND TRUE)
 else(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
+
     find_path(TCOD_INCLUDE_DIR
-	NAMES libtcod/libtcod.h
-	PATHS
-      "${CMAKE_CURRENT_SOURCE_DIR}/include"
-      "${PROJECT_SOURCE_DIR}/include"
-	    /usr/include
-	    /usr/local/include
-	    /opt/local/include
+      NAMES
+        libtcod/libtcod.h
+      PATHS
+        "${CMAKE_CURRENT_SOURCE_DIR}/include"
+        "${PROJECT_SOURCE_DIR}/include"
     )
     set(TCOD_INCLUDE_DIRS ${TCOD_INCLUDE_DIR} "${TCOD_INCLUDE_DIR}/libtcod")
 
     find_library(TCOD_C_LIBRARY
-	NAMES
-	    tcod
-		libtcod
-		libtcod-debug
-	PATHS
-      "${CMAKE_CURRENT_SOURCE_DIR}/lib"
-      "${PROJECT_SOURCE_DIR}/lib"
-	    /usr/lib
-	    /usr/local/lib
-	    /opt/local/lib
+      NAMES
+        tcod
+        libtcod
+      PATHS
+          "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+          "${PROJECT_SOURCE_DIR}/lib"
     )
+
     find_library(TCOD_CXX_LIBRARY
-	NAMES
-	    tcodxx
-		libtcod
-		libtcod-debug
-		libtcod-mingw
-	PATHS
-      "${CMAKE_CURRENT_SOURCE_DIR}/lib"
-      "${PROJECT_SOURCE_DIR}/lib"
-	    /usr/lib
-	    /usr/local/lib
-	    /opt/local/lib
+      NAMES
+        tcodxx
+        libtcodxx
+      PATHS
+          "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+          "${PROJECT_SOURCE_DIR}/lib"
     )
 
     set(TCOD_LIBRARIES ${TCOD_LIBRARIES} ${TCOD_C_LIBRARY} ${TCOD_CXX_LIBRARY})

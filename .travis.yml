@@ -9,7 +9,6 @@ before_install:
     - lsb_release -sc
     - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
     - echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-    - echo "yes" | sudo add-apt-repository ppa:boost-latest/ppa
     - sudo apt-get update -qq
 install:
     - sudo apt-get install build-essential
@@ -21,50 +20,13 @@ install:
     - sudo update-alternatives --set c++ /usr/bin/g++
     - sudo apt-get install -qq valgrind cppcheck
     - sudo apt-get install -qq mercurial libsdl-dev git
-    - sudo apt-get install -qq libgtest-dev google-mock
-    - sudo apt-get install -qq libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-wave-dev
-    - sudo apt-get remove libboost1.46-dev -qq
-    - sudo apt-get install libreadline-dev libboost1.55-tools-dev libboost1.55-dev liblua5.2-dev liblua5.2-0 -qq 
 
 before_script:
-    #Luabind
-    - git clone https://github.com/lonski/luabind.git
-    - cd luabind
-    - mkdir build
-    - cd build
-    - cmake .. -DLUABIND_DYNAMIC_LINK=1
-    - make -j2
-    - sudo cp src/libluabind09.so /usr/local/lib/libluabind.so
-    - sudo cp src/libluabind09.so /usr/local/lib/libluabind09.so
-    - cp -r ../luabind ../../include
-    - touch ../../include/luabind/build_information.hpp
-    - cd ../../
-    #GTest
-    - sudo mkdir /usr/src/gtest/build
-    - cd /usr/src/gtest/build
-    - sudo cmake .. -DBUILD_SHARED_LIBS=1
-    - sudo make -j2
-    - cd -
-    - mkdir ./lib
-    - sudo ln -s /usr/src/gtest/build/libgtest.so /usr/local/lib/libgtest.so
-    - sudo ln -s /usr/src/gtest/build/libgtest_main.so /usr/local/lib/libgtest_main.so
-    #LibTCOD
-    - hg clone https://bitbucket.org/libtcod/libtcod
-    - cd libtcod
-    - make -f build/makefile-linux debug
-    - cp ./libtcod_debug.so ../lib/libtcod_debug.so
-    - cp ./libtcodxx_debug.so ../lib/libtcodxx_debug.so
-    - cp ./libtcod_debug.so ../lib/libtcod.so
-    - cp ./libtcodxx_debug.so ../lib/libtcodxx.so
-    - cd -
-    - cd lib
-    - ln -s libtcod.so libtcod.so.1
-    - ln -s libtcodxx.so libtcodxx.so.1
-    #Amarlon
-    - cd -
-    - mkdir build
-    - cd build
+    - wget https://github.com/lonski/amarlon_dependencies/releases/download/1.0/amarlon_dep_linux-1.0.tar.gz
+    - tar -xvf amarlon_dep_linux-1.0.tar.gz
 script:
+    - mkdir build
+    - cd build
     - cmake ..
     - make -j2
     - LD_LIBRARY_PATH=../lib valgrind --error-exitcode=1 --track-origins=yes --leak-check=full ./ut_amarlon
