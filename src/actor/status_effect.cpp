@@ -3,7 +3,6 @@
 #include <spell_db.h>
 #include <lua_state.h>
 #include <spell_db.h>
-#include <boost/ref.hpp>
 
 namespace amarlon {
 
@@ -29,7 +28,7 @@ bool StatusEffect::cancel(Target target)
         success = luabind::call_function<bool>(
             lua()
           , "onCancel"
-          , boost::ref(target)
+          , &target
         );
       }
       catch(luabind::error& e)
