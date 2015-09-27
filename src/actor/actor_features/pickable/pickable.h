@@ -25,17 +25,24 @@ public:
   virtual ~Pickable();
 
   static PickablePtr create(DescriptionPtr dsc);
-
-  virtual int getId() const;
   virtual ActorFeature::Type getType() { return featureType; }
 
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
-
-  virtual TargetType getTargetType() const;
-  virtual bool use(ActorPtr executor, const Target& target);
-  virtual int getUsesCount() const;
   ActorPtr spilt(int amount);
+
+  /**
+   * @brief Executes Lua script defined by scriptId.
+   */
+  virtual bool use(ActorPtr executor, const Target& target);
+  /**
+   * @brief Defines if item can be used.
+   * @return True if script id is defined and uses count != 0
+   */
+  virtual bool isUsable() const;
+  virtual int getUsesCount() const;
+  virtual TargetType getTargetType() const;
+  virtual int getScriptId() const;
 
   int getAmount() const;
   void setAmount(int getAmount);
@@ -67,7 +74,9 @@ private:
   int _usesCount;
   TargetType _targetType;
   Damage _damage;
-  int _id;
+  int _scriptId;
+
+  std::string getScriptPath() const;
 
 };
 

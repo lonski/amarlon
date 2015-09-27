@@ -8,6 +8,7 @@
 #include <cassert>
 #include <lua_state.h>
 #include <engine.h>
+#include <cstdio>
 
 namespace amarlon {
 
@@ -21,7 +22,7 @@ Pickable::Pickable(bool stackable, int amount)
   , _price(0)
   , _usesCount(0)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
-  , _id(0)
+  , _scriptId(0)
 {
 }
 
@@ -46,15 +47,10 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_damage = pDsc->damage;
     pickable->_usesCount = pDsc->uses;
     pickable->_targetType = pDsc->targetType;
-    pickable->_id = pDsc->id;
+    pickable->_scriptId = pDsc->scriptId;
   }
 
   return pickable;
-}
-
-int Pickable::getId() const
-{
-  return _id;
 }
 
 ActorPtr Pickable::spilt(int amount)
@@ -89,7 +85,7 @@ ActorFeaturePtr Pickable::clone()
   cloned->_targetType = _targetType;
   cloned->_category = _category;
   cloned->_itemSlot = _itemSlot;
-  cloned->_id = _id;
+  cloned->_scriptId = _scriptId;
 
   return cloned;
 }
@@ -109,7 +105,7 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_targetType == crhs->_targetType);
     equal &= (_category == crhs->_category);
     equal &= (_itemSlot == crhs->_itemSlot);
-    equal &= (_id == crhs->_id);
+    equal &= (_scriptId == crhs->_scriptId);
   }
 
   return equal;
@@ -120,37 +116,46 @@ TargetType Pickable::getTargetType() const
   return _targetType;
 }
 
-bool Pickable::use(ActorPtr /*executor*/, const Target& /*target*/)
+int Pickable::getScriptId() const
+{
+  return _scriptId;
+}
+
+bool Pickable::use(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
   if ( _usesCount != 0 )
   {
-//    lua_api::LuaState& lua = Engine::instance().getLuaState();
+    lua_api::LuaState& lua = Engine::instance().getLuaState();
 
-//    if ( lua.execute( getScriptPath() )
-//    {
-//      try
-//      {
-//        r = luabind::call_function<bool>(
-//            lua()
-//          , "onUse"
-//          , new lua_api::ActorWrapper(executor)
-//          , this
-//          , boost::ref(target)
-//        )[luabind::adopt(_1)];
+    if ( lua.execute( getScriptPath() ) )
+    {
+      try
+      {
+        r = luabind::call_function<bool>(
+            lua()
+          , "onUse"
+          , executor
+          , getOwner().lock()
+          , &target
+        );
 
-//        if( r ) --_usesCount;
-//      }
-//      catch(luabind::error& e)
-//      {
-//        lua.logError(e);
-//      }
-//    }
-
+        if( r ) --_usesCount;
+      }
+      catch(luabind::error& e)
+      {
+        lua.logError(e);
+      }
+    }
   }
 
   return r;
+}
+
+bool Pickable::isUsable() const
+{
+  return _scriptId != 0 && _usesCount !=0;
 }
 
 int Pickable::getUsesCount() const
@@ -238,7 +243,12 @@ std::string Pickable::getDescription()
     str += colorToStr(TCODColor::darkTurquoise, true) + "Armor class: " + toStr(getArmorClass()) + "\n";
   }
 
-  return str;
+         return str;
+  }
+
+std::string Pickable::getScriptPath() const
+{
+  return "scripts/items/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
 }
 
 int Pickable::getAmount() const

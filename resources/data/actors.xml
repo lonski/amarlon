@@ -84,7 +84,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="1" amount="1" category="4"/>
 	</Actor>
 	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="4" uses="1" targetType="4"/>
+		<Pickable id="1" stackable="1" amount="1" category="4" uses="1" targetType="4"/>
 	</Actor>
 	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" category="0"/>
@@ -93,7 +93,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="0" amount="1" category="0"/>
 	</Actor>
 	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" uses="-1" targetType="0"/>
+		<Pickable id="2" stackable="0" amount="1" uses="-1" targetType="0"/>
 	</Actor>
 	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" itemSlot="6" category="2"/>

@@ -18,15 +18,11 @@
 			<Actor id="6" x="41" y="28">
 				<OpenableContainer lockId="0" locked="0"/>
 				<Inventory maxSize="5">
-					<Content id="13" x="0" y="0">
-						<Pickable stackable="1" amount="9" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1" targetType="4"/>
-					</Content>
+					<Content id="13" x="0" y="0"/>
 					<Content id="14" x="0" y="0">
 						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
 					</Content>
-					<Content id="16" x="0" y="0">
-						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="-1" targetType="0"/>
-					</Content>
+					<Content id="16" x="0" y="0"/>
 				</Inventory>
 			</Actor>
 			<Actor id="5" x="42" y="28"/>
@@ -38,9 +34,7 @@
 			<Actor id="11" x="47" y="29"/>
 			<Actor id="7" x="41" y="30"/>
 			<Actor id="7" x="42" y="30"/>
-			<Actor id="13" x="41" y="32">
-				<Pickable stackable="1" amount="8" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0" uses="1" targetType="4"/>
-			</Actor>
+			<Actor id="13" x="41" y="32"/>
 			<Actor id="8" x="46" y="32"/>
 			<Actor id="12" x="41" y="33">
 				<Pickable stackable="1" amount="1" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0"/>

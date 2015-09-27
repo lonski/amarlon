@@ -66,8 +66,8 @@ ActorPtr CmdUse::acquireItemToUse()
 
 std::vector<ActorPtr> CmdUse::getUsableItems()
 {
-  //TODO: filter usable items
-  return Engine::instance().getPlayer()->getFeature<Inventory>()->items();
+  auto filter = [&](ActorPtr a){ return a->getFeature<Pickable>()->isUsable(); };
+  return Engine::instance().getPlayer()->getFeature<Inventory>()->items(filter);
 }
 
 }

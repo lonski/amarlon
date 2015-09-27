@@ -18,6 +18,5 @@ include/gtest
 *.includes
 *.autosave
 doc/
-include/gmock
-include/lua
-include/luabind
+include
+lib
