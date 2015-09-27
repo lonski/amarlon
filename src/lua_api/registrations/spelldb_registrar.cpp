@@ -7,7 +7,6 @@ namespace amarlon { namespace lua_api {
 
 void SpellDBRegistrar::reg(lua_State* state)
 {
-  printf("\nSpellDB reg!\n");
   using namespace luabind;
   module( state )
   [
