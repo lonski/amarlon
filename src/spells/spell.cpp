@@ -5,7 +5,6 @@
 #include <engine.h>
 #include <spell_db.h>
 #include <lua_state.h>
-#include <boost/ref.hpp>
 
 namespace amarlon {
 
@@ -45,7 +44,7 @@ bool Spell::cast(ActorPtr caster, Target target)
             lua()
           , "onCast"
           , caster
-          , boost::ref(target)
+          , &target
         );
       }
       catch(luabind::error& e)
