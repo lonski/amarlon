@@ -43,12 +43,12 @@ else(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
 
     find_path(TCOD_INCLUDE_DIR
       NAMES
-        libtcod/libtcod.h
+        tcod/libtcod.h
       PATHS
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
         "${PROJECT_SOURCE_DIR}/include"
     )
-    set(TCOD_INCLUDE_DIRS ${TCOD_INCLUDE_DIR} "${TCOD_INCLUDE_DIR}/libtcod")
+    set(TCOD_INCLUDE_DIRS ${TCOD_INCLUDE_DIR} "${TCOD_INCLUDE_DIR}/tcod")
 
     find_library(TCOD_C_LIBRARY
       NAMES
@@ -71,7 +71,7 @@ else(TCOD_LIBRARIES AND TCOD_INCLUDE_DIRS)
     set(TCOD_LIBRARIES ${TCOD_LIBRARIES} ${TCOD_C_LIBRARY} ${TCOD_CXX_LIBRARY})
 
     include(FindPackageHandleStandardArgs)
-    find_package_handle_standard_args(libtcod DEFAULT_MSG TCOD_LIBRARIES TCOD_INCLUDE_DIRS)
+    find_package_handle_standard_args(tcod DEFAULT_MSG TCOD_LIBRARIES TCOD_INCLUDE_DIRS)
 
     # show the TCOD_INCLUDE_DIRS and TCOD_LIBRARIES variables only in the advanced view
     mark_as_advanced(TCOD_INCLUDE_DIRS TCOD_LIBRARIES)
