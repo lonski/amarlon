@@ -16,21 +16,18 @@
 				</Destroyable>
 			</Actor>
 			<Actor id="6" x="41" y="28">
-				<OpenableContainer lockId="0" locked="0"/>
 				<Inventory maxSize="5">
 					<Content id="13" x="0" y="0"/>
 					<Content id="14" x="0" y="0">
 						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
-					</Content>
-					<Content id="16" x="0" y="0"/>
+					</Content>					
 				</Inventory>
 			</Actor>
+			<Actor id="16" x="41" y="29"/>
 			<Actor id="5" x="42" y="28"/>
 			<Actor id="9" x="46" y="28"/>
 			<Actor id="11" x="47" y="28"/>
-			<Actor id="3" x="44" y="29">
-				<OpenableDoor lockId="0" locked="0"/>
-			</Actor>
+			<Actor id="3" x="44" y="29"/>
 			<Actor id="11" x="47" y="29"/>
 			<Actor id="7" x="41" y="30"/>
 			<Actor id="7" x="42" y="30"/>
@@ -43,15 +40,11 @@
 				<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
 			</Actor>
 			<Actor id="3" x="44" y="33">
-				<OpenableDoor lockId="5" locked="1"/>
+				<Openable scriptId="1" lockId="1" locked="1"/>
 			</Actor>
 			<Actor id="10" x="46" y="33"/>
-			<Actor id="3" x="48" y="33">
-				<OpenableDoor lockId="0" locked="0"/>
-			</Actor>
-			<Actor id="4" x="61" y="33">
-				<OpenableDoor lockId="0" locked="0"/>
-			</Actor>
+			<Actor id="3" x="48" y="33"/>
+			<Actor id="4" x="61" y="33"/>
 			<Actor id="8" x="46" y="34"/>
 			<Actor id="1" x="42" y="28">
 				<Wearer>

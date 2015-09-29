@@ -4,9 +4,6 @@ set(HEADER_FILES
     actor/actor_features/ai/ai_factory.h
     actor/actor_features/ai/monster_ai.h
     actor/actor_features/openable/openable.h
-    actor/actor_features/openable/openable_container.h
-    actor/actor_features/openable/openable_door.h    
-    actor/actor_features/openable/openable_factory.h
     actor/actor_features/wearer/item_slot_type.h
     actor/actor_features/wearer/wearer.h
     actor/actor_features/actor_feature.h
@@ -53,8 +50,6 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/inventory_serializer.h
     data_gateways/serializers/actor_feature_serializers/wearer_serializer.h
     data_gateways/serializers/actor_feature_serializers/openable_serializer.h
-    data_gateways/serializers/actor_feature_serializers/openable_door_serializer.h
-    data_gateways/serializers/actor_feature_serializers/openable_container_serializer.h
     data_gateways/serializers/actor_feature_serializers/character_serializer.h
     data_gateways/serializers/actor_feature_serializers/monster_serializer.h
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
@@ -164,9 +159,6 @@ set(SOURCE_FILES
     actor/actor_features/ai/ai_factory.cpp
     actor/actor_features/ai/monster_ai.cpp
     actor/actor_features/openable/openable.cpp
-    actor/actor_features/openable/openable_container.cpp
-    actor/actor_features/openable/openable_door.cpp
-    actor/actor_features/openable/openable_factory.cpp
     actor/actor_features/wearer/wearer.cpp
     actor/actor_features/actor_feature.cpp
     actor/actor_features/inventory/inventory.cpp
@@ -205,8 +197,6 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/inventory_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/wearer_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/openable_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/openable_door_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/openable_container_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/character_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/monster_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp

@@ -21,13 +21,20 @@ OpenableSerializer::~OpenableSerializer()
 {
 }
 
-void OpenableSerializer::serializeOpenableCommonPart(xml_node<>* openableNode, OpenablePtr openable)
+bool OpenableSerializer::serialize(ActorFeaturePtr af)
 {
-  if ( openableNode && openable && _document )
+  OpenablePtr openable = std::dynamic_pointer_cast<Openable>(af);
+  if ( openable && _xml && _document )
   {
-    addAttribute( openableNode, "lockId", openable->getLockId() );
-    addAttribute( openableNode, "locked", static_cast<int>(openable->isLocked()) );
+    xml_node<>* openableNode = _document->allocate_node(node_element, "Openable");
+    _xml->append_node( openableNode );
+
+    addAttribute( openableNode, "lockId",   openable->getLockId() );
+    addAttribute( openableNode, "locked",   static_cast<int>(openable->isLocked()) );
+    addAttribute( openableNode, "scriptId", static_cast<int>(openable->getScriptId()) );
+    return true;
   }
+  return false;
 }
 
 }

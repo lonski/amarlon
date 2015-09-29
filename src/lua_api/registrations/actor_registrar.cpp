@@ -1,8 +1,9 @@
 #include "actor_registrar.h"
+#include <converters.h>
 #include <lua_state.h>
 #include <actor.h>
 #include <character.h>
-#include <monster.h>
+#include <openable.h>
 #include <status_effects_manager.h>
 
 namespace amarlon { namespace lua_api {
@@ -21,7 +22,12 @@ void ActorRegistrar::reg(lua_State* state)
         .def("getStatusEffects", &Actor::getStatusEffects)
         .def("isAllyOf", &Actor::isAllyOf)
         .def("getName", &Actor::getName)
-        .def("character", (CharacterPtr(Actor::*)()const)&Actor::getFeature),
+        .def("getType", &Actor::getType)
+        .def("setType", &Actor::setType)
+        .def("morph", &Actor::morph)
+        .def("isBlocking", &Actor::isBlocking )
+        .def("character", (CharacterPtr(Actor::*)()const)&Actor::getFeature)
+        .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature),
 
       class_<CharacterPtr>("CharacterPtr")
         .def("get", &CharacterPtr::get),
@@ -35,7 +41,17 @@ void ActorRegistrar::reg(lua_State* state)
         .def("setSavingThrowModifier", &Character::setTmpSavingThrowModifier )
         .def("getSavingThrowModifier", &Character::getTmpSavingThrowModifier )
         .def("setMoraleModifier", &Character::setTmpMoraleModifier )
-        .def("getMoraleModifier", &Character::getTmpMoraleModifier )
+        .def("getMoraleModifier", &Character::getTmpMoraleModifier ),
+
+      class_<OpenablePtr>("OpenablePtr")
+        .def("get", &OpenablePtr::get),
+
+      class_<Openable>("Openable")
+        .def("isLocked", &Openable::isLocked )
+        .def("getLockId", &Openable::getLockId )
+        .def("lock", &Openable::lock )
+        .def("unlock", &Openable::unlock )
+
   ];
 }
 

@@ -135,7 +135,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
     {
       pickDsc.reset( new PickableDescription );
 
-      pickDsc->scriptId = getAttribute<int>(pickableNode, "id");
+      pickDsc->scriptId = getAttribute<int>(pickableNode, "scriptId");
       pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
@@ -244,27 +244,13 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
 
   if ( _xml != nullptr )
   {
-    //door
-    xml_node<>* openableNode = _xml->first_node("OpenableDoor");
-    if (openableNode != nullptr)
+    xml_node<>* openableNode = _xml->first_node("Openable");
+    if ( openableNode )
     {
-      opDsc = std::make_shared<OpenableDoorDescription>();
-    }
-    else
-    //container
-    {
-      openableNode = _xml->first_node("OpenableContainer");
-      if ( openableNode != nullptr )
-      {
-        opDsc = std::make_shared<OpenableContaineryDescription>();
-      }
-    }
-
-    //create common dsc
-    if ( opDsc != nullptr )
-    {
+      opDsc.reset( new OpenableDescription );
       opDsc->lockId = getAttribute<int>(openableNode, "lockId");
       opDsc->locked = getAttribute<bool>(openableNode, "locked");
+      opDsc->scriptId = getAttribute<int>(openableNode, "scriptId");
     }
   }
 

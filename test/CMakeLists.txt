@@ -14,8 +14,6 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/ai.h    
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/ai/monster_ai.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_container.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_features/openable/openable_door.h    
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable/destroyable.h

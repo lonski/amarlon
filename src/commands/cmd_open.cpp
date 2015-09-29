@@ -29,13 +29,29 @@ int CmdOpen::execute()
 
   if ( toOpen != nullptr)
   {
-    Engine::instance().getPlayer()->performAction( std::make_shared<OpenAction>(toOpen) );
-    ++turns;
+    OpenablePtr openable = toOpen->getFeature<Openable>();
+    if ( openable )
+    {
+      if ( !openable->isLocked() )
+      {
+        Engine::instance().getPlayer()->performAction( std::make_shared<OpenAction>(toOpen) );
+        ++turns;
+      }
+      else
+      {
+        gui::msgBox(toOpen->getName() + " is locked.", gui::MsgType::Warning);
+      }
+    }
+    else
+    {
+      gui::msgBox(toOpen->getName() + " is not openable.", gui::MsgType::Warning);
+    }
   }
   else
   {
     gui::msgBox("Nothing to open there.", gui::MsgType::Warning);
   }
+
   return turns;
 }
 

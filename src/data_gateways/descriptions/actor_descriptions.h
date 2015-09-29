@@ -166,10 +166,12 @@ struct OpenableDescription : Description
   OpenableDescription()
     : lockId(0)
     , locked(false)
+    , scriptId(0)
   {}
 
   int lockId;
   bool locked;
+  int scriptId;
 };
 
 struct OpenableDoorDescription : OpenableDescription

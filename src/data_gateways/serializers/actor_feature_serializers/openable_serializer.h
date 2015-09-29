@@ -19,7 +19,7 @@ public:
   /** Openable is an abstract class - here is just common serialization in protected section
    *  which should be called in each serializer for given Openable type
    */
-  virtual bool serialize(ActorFeaturePtr af) = 0;
+  virtual bool serialize(ActorFeaturePtr af);
 
 protected:
   void serializeOpenableCommonPart(rapidxml::xml_node<>* openableNode, OpenablePtr openable);

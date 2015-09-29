@@ -16,40 +16,33 @@ class Openable : public ActorFeature
 {
 public:  
 
-  class Creator
-  {
-  public:
-    virtual ~Creator() {}
-    virtual OpenablePtr create(OpenableDescriptionPtr dsc) = 0;
-
-  protected:
-    void fillCommonOpenablePart(OpenablePtr openable, OpenableDescriptionPtr dsc);
-
-  };
-
   const static ActorFeature::Type featureType;  
 
   Openable();
-  ~Openable() {}
+  virtual ~Openable();
 
   static OpenablePtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType();
+  virtual ActorFeaturePtr clone();
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
-  virtual bool open(ActorPtr executor) = 0;
-  virtual bool close(ActorPtr executor) = 0;
+  virtual bool open(ActorPtr executor);
+  virtual bool close(ActorPtr executor);
 
+  virtual bool isLocked() const;
+  virtual int getLockId() const;
+  virtual int getScriptId() const;
   virtual bool lock();
   virtual bool unlock();
-  virtual bool isLocked() const;
-  virtual void setLocked(bool locked);
-
-  int getLockId() const;
-  void setLockId(int getLockId);
 
 protected:
   bool _locked;
   int _lockId;
+  int _scriptId;
+
+  std::string getScriptPath() const;
+
 
 };
 

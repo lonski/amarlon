@@ -103,7 +103,7 @@ TEST_F(ActorTest, actorEqual_different_openable)
 
   ASSERT_TRUE( *a1 == *a2 );
 
-  a2->getFeature<Openable>()->setLockId(666);
+  a2->getFeature<Openable>()->lock();
 
   ASSERT_FALSE( *a1 == *a2 );
 }

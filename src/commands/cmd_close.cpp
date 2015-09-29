@@ -34,7 +34,15 @@ int CmdClose::execute()
   {
     if ( target.actors.size() == 1 )
     {
-      Engine::instance().getPlayer()->performAction( std::make_shared<CloseAction>(toClose) );
+      OpenablePtr openable = toClose->getFeature<Openable>();
+      if ( openable )
+      {
+        Engine::instance().getPlayer()->performAction( std::make_shared<CloseAction>(toClose) );
+      }
+      else
+      {
+        gui::msgBox(toClose->getName() + " is not closable.", gui::MsgType::Warning);
+      }
     }
     else
     {

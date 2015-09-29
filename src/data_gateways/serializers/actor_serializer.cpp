@@ -6,11 +6,10 @@
 #include <destroyable_serializer.h>
 #include <inventory_serializer.h>
 #include <wearer_serializer.h>
-#include <openable_door_serializer.h>
-#include <openable_container_serializer.h>
 #include <monster_serializer.h>
 #include <playable_character_serializer.h>
 #include <monster_ai_serializer.h>
+#include <openable_serializer.h>
 
 using namespace rapidxml;
 
@@ -29,11 +28,10 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   _afSerializers.push_back( std::make_shared<DestroyableSerializer>() );
   _afSerializers.push_back( std::make_shared<InventorySerializer>() );
   _afSerializers.push_back( std::make_shared<WearerSerializer>() );
-  _afSerializers.push_back( std::make_shared<OpenableDoorSerializer>() );
-  _afSerializers.push_back( std::make_shared<OpenableInventorySerializer>() );
   _afSerializers.push_back( std::make_shared<MonsterSerializer>() );
   _afSerializers.push_back( std::make_shared<PlayableCharacterSerializer>() );
   _afSerializers.push_back( std::make_shared<MonsterAiSerializer>() );
+  _afSerializers.push_back( std::make_shared<OpenableSerializer>() );
 }
 
 ActorSerializer::~ActorSerializer()
