@@ -14,22 +14,33 @@ CONFIG += c++14
 
 SOURCES += main.cpp\
         editor.cpp \
-    spell_editor.cpp \
+    spells/spell_editor.cpp \
     ../src/spells/protobuf/spells.pb.cc \
-    spell_edit.cpp
+    ../src/world/protobuf/tiles.pb.cc \
+    spells/spell_edit.cpp \
+    tiles/tiles_editor.cpp \
+    tiles/tile_edit_dlg.cpp
 
 HEADERS  += editor.h \
-    spell_editor.h \
+    spells/spell_editor.h \
     ../src/spells/protobuf/spells.pb.h \
-    spell_edit.h \
-    enum_mappings.h
+    ../src/world/protobuf/tiles.pb.h \
+    spells/spell_edit.h \
+    enum_mappings.h \
+    tiles/tiles_editor.h \
+    tiles/tile_edit_dlg.h
 
 FORMS    += editor.ui \
-    spell_editor.ui \
-    spell_edit.ui
+    spells/spell_editor.ui \
+    spells/spell_edit.ui \
+    tiles/tiles_editor.ui \
+    tiles/tileeditdlg.ui
 
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lprotobuf
 
 INCLUDEPATH += $$PWD/../include
 INCLUDEPATH += ../src/spells/protobuf
+INCLUDEPATH += ../src/world/protobuf
+INCLUDEPATH += spells
+INCLUDEPATH += tiles
 DEPENDPATH += $$PWD/../include

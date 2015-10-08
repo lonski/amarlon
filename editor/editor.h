@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <spell_editor.h>
+#include <tiles_editor.h>
 
 namespace Ui {
 class editor;
@@ -19,9 +20,12 @@ public:
 private slots:
   void on_pushButton_clicked();
 
+  void on_pushButton_2_clicked();
+
 private:
   Ui::editor *ui;
   SpellEditor _spellsEditor;
+  TilesEditor _tilesEditor;
 };
 
 #endif // EDITOR_H

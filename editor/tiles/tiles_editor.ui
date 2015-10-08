@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>spell_editor</class>
- <widget class="QMainWindow" name="spell_editor">
+ <class>TilesEditor</class>
+ <widget class="QMainWindow" name="TilesEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,21 +14,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <widget class="QTableWidget" name="sTable">
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-      </widget>
-     </widget>
+     <widget class="QTableWidget" name="tTable"/>
     </item>
    </layout>
   </widget>
@@ -46,8 +34,8 @@
      <string>File</string>
     </property>
     <addaction name="actionNew"/>
-    <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionSave_as"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -62,27 +50,26 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator"/>
-   <addaction name="actionSpellNew"/>
+   <addaction name="actionNew_tile"/>
   </widget>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Open..</string>
-   </property>
-  </action>
   <action name="actionNew">
    <property name="text">
     <string>New</string>
    </property>
   </action>
-  <action name="actionSave">
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open..</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
    <property name="text">
     <string>Save as..</string>
    </property>
   </action>
-  <action name="actionSpellNew">
+  <action name="actionNew_tile">
    <property name="text">
-    <string>New spell</string>
+    <string>New tile</string>
    </property>
   </action>
  </widget>
