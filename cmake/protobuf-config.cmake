@@ -1,7 +1,7 @@
-if(PROTOBUF_LIBRARIES)
+if(PROTOBUF_LIBRARIES AND PROTOBUF_INCLUDE_DIRS)
     # it's in cache already
     set(PROTOBUF_FOUND TRUE)
-else(PROTOBUF_LIBRARIES)
+else(PROTOBUF_LIBRARIES AND PROTOBUF_INCLUDE_DIRS)
 
     find_library(PROTOBUF_LIBRARY
       NAMES
@@ -10,14 +10,25 @@ else(PROTOBUF_LIBRARIES)
       PATHS
           "${CMAKE_CURRENT_SOURCE_DIR}/lib"
           "${PROJECT_SOURCE_DIR}/lib"
+          /usr/local/lib
     )
 
-    set(PROTOBUF_LIBRARIES ${PROTOBUF_LIBRARIES} ${PROTOBUF_LIBRARY} )
+  find_path(PROTOBUF_INCLUDE_DIR
+      NAMES
+        google/protobuf/message.h
+      PATHS
+          /usr/src/include
+          "${CMAKE_CURRENT_SOURCE_DIR}/include"
+          "${PROJECT_SOURCE_DIR}/include"
+    )
+
+    set(PROTOBUF_LIBRARIES ${PROTOBUF_LIBRARIES} ${PROTOBUF_LIBRARY})
+    set(PROTOBUF_INCLUDE_DIRS "${PROTOBUF_INCLUDE_DIR}/google/protobuf")
 
     include(FindPackageHandleStandardArgs)
-    find_package_handle_standard_args(protobuf DEFAULT_MSG PROTOBUF_LIBRARIES)
+    find_package_handle_standard_args(protobuf DEFAULT_MSG PROTOBUF_LIBRARIES PROTOBUF_INCLUDE_DIRS)
 
     # show the PROTOBUF_LIBRARIES variables only in the advanced view
-    mark_as_advanced(PROTOBUF_LIBRARIES)
+    mark_as_advanced(PROTOBUF_LIBRARIES PROTOBUF_INCLUDE_DIRS)
 
-endif(PROTOBUF_LIBRARIES)
+endif(PROTOBUF_LIBRARIES AND PROTOBUF_INCLUDE_DIRS)
