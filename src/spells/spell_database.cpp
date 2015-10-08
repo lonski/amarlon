@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <spell_factory.h>
-#include <protobuf/spells.pb.h>
+#include <spells.pb.h>
 
 namespace amarlon {
 

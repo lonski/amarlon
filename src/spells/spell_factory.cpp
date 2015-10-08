@@ -1,6 +1,6 @@
 #include "spell_factory.h"
 #include <spell.h>
-#include <protobuf/spells.pb.h>
+#include <spells.pb.h>
 
 namespace amarlon {
 

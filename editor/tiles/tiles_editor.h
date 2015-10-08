@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <tile_edit_dlg.h>
-#include <tiles.pb.h>
+#include <tiles/tiles.pb.h>
 
 namespace Ui {
 class TilesEditor;

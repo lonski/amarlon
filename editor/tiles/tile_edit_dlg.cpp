@@ -1,6 +1,6 @@
 #include "tile_edit_dlg.h"
 #include "ui_tileeditdlg.h"
-#include <tiles.pb.h>
+#include <tiles/tiles.pb.h>
 
 TileEditDlg::TileEditDlg(QWidget *parent) :
   QDialog(parent),

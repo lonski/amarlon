@@ -101,9 +101,6 @@ set(HEADER_FILES
     world/map_id.h
     world/tile_type.h
     world/tile.h
-    world/protobuf/tiles.proto
-    world/protobuf/tiles.pb.h
-    world/protobuf/tiles.pb.cc
     command_executor.h
     engine.h
     actor/actor_actions/actor_action.h
@@ -133,8 +130,6 @@ set(HEADER_FILES
     spells/spell_id.h
     spells/spell_database.h
     spells/spell_factory.h
-    spells/protobuf/spells.proto
-    spells/protobuf/spells.pb.h
     animations/animation.h
     animations/animation_type.h
     animations/blink.h
@@ -154,6 +149,12 @@ set(HEADER_FILES
     lua_api/registrations/animation_registrar.h
     lua_api/registrations/free_functions_registrar.h
     lua_api/registrations/globals_registrar.cpp
+    protobuf/tiles/tiles.proto
+    protobuf/tiles/tiles.pb.h
+    protobuf/tiles/tiles.pb.cc
+    protobuf/spells/spells.proto
+    protobuf/spells/spells.pb.h
+    protobuf/spells/spells.pb.cc
 )
 
 set(SOURCE_FILES
@@ -262,7 +263,6 @@ set(SOURCE_FILES
     spells/spell.cpp
     spells/spell_database.cpp
     spells/spell_factory.cpp
-    spells/protobuf/spells.pb.cc
     animations/animation.cpp
     animations/blink.cpp
     animations/throw.cpp

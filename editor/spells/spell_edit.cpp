@@ -1,6 +1,6 @@
 #include "spell_edit.h"
 #include "ui_spell_edit.h"
-#include <spells.pb.h>
+#include <spells/spells.pb.h>
 #include <enum_mappings.h>
 
 SpellEdit::SpellEdit(QWidget *parent)

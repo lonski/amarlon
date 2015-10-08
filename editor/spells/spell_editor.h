@@ -2,7 +2,7 @@
 #define SPELL_EDITOR_H
 
 #include <QMainWindow>
-#include <spells.pb.h>
+#include <spells/spells.pb.h>
 #include <QListWidgetItem>
 #include <spell_edit.h>
 #include <QTableWidgetItem>
