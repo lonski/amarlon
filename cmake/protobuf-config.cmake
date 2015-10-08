@@ -17,13 +17,12 @@ else(PROTOBUF_LIBRARIES AND PROTOBUF_INCLUDE_DIRS)
       NAMES
         google/protobuf/message.h
       PATHS
-          /usr/src/include
           "${CMAKE_CURRENT_SOURCE_DIR}/include"
           "${PROJECT_SOURCE_DIR}/include"
     )
 
     set(PROTOBUF_LIBRARIES ${PROTOBUF_LIBRARIES} ${PROTOBUF_LIBRARY})
-    set(PROTOBUF_INCLUDE_DIRS "${PROTOBUF_INCLUDE_DIR}/google/protobuf")
+    set(PROTOBUF_INCLUDE_DIRS "${PROTOBUF_INCLUDE_DIR}")
 
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(protobuf DEFAULT_MSG PROTOBUF_LIBRARIES PROTOBUF_INCLUDE_DIRS)
