@@ -79,22 +79,22 @@ ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun)
 
 TCODColor Tile::getColor()
 {
-  return Engine::instance().getTileDB().getColor(_type);
+  return Engine::instance().getTileDatabase().getColor(_type);
 }
 
 char Tile::getChar()
 {
-  return Engine::instance().getTileDB().getChar(_type);
+  return Engine::instance().getTileDatabase().getChar(_type);
 }
 
 bool Tile::isWalkable() const
 {
-  return Engine::instance().getTileDB().isWalkable(_type);
+  return Engine::instance().getTileDatabase().isWalkable(_type);
 }
 
 bool Tile::isTransparent() const
 {
-  return Engine::instance().getTileDB().isTransparent(_type);
+  return Engine::instance().getTileDatabase().isTransparent(_type);
 }
 
 bool Tile::isExplored() const

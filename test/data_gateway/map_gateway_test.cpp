@@ -48,7 +48,7 @@ TEST_F(MapGatewayTest, mapHasValidTiles)
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
-  EXPECT_EQ(map->getChar(39,27), Engine::instance().getTileDB().getChar(TileType::PlainFloor));
+  EXPECT_EQ(map->getChar(39,27), Engine::instance().getTileDatabase().getChar(TileType::PlainFloor));
 }
 
 TEST_F(MapGatewayTest, mapHasValidTiles2)
@@ -57,7 +57,7 @@ TEST_F(MapGatewayTest, mapHasValidTiles2)
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
-  EXPECT_EQ(map->getChar(1,1), Engine::instance().getTileDB().getChar(TileType::Tree));
+  EXPECT_EQ(map->getChar(1,1), Engine::instance().getTileDatabase().getChar(TileType::Tree));
 }
 
 TEST_F(MapGatewayTest, saveMaps)

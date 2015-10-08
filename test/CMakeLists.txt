@@ -25,7 +25,6 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/data_gateways/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/tile_parser.h
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/world/map_id.h
     ${PROJECT_SOURCE_DIR}/src/world/tile_type.h

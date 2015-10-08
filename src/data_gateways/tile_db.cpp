@@ -1,78 +1,63 @@
 #include "tile_db.h"
 #include <fstream>
 #include <vector>
-#include <utils/utils.h>
+#include <utils.h>
 #include <memory>
+#include <tiles.pb.h>
 
 namespace amarlon {
 
 using namespace std;
-using namespace rapidxml;
 
-TileDB::TileDB()
+TileDatabase::TileDatabase()
+  : _tilesData( new proto::TilesData )
 {
 }
 
-template<typename T>
-T TileDB::get(TileType type, T TileDescription::*field, T defValue)
+proto::TileData* TileDatabase::getTileData(TileType id)
 {
-  auto it = _tiles.find( type );
-  return it != _tiles.end() ? it->second.*field : defValue;
+  for( int i=0; i<_tilesData->tile_size(); ++i)
+  {
+    const proto::TileData& sd = _tilesData->tile(i);
+    if ( sd.id() == static_cast<int>(id) ) return const_cast<proto::TileData*>(&sd);
+  }
+  return nullptr;
 }
 
-char TileDB::getChar(TileType type)
+char TileDatabase::getChar(TileType type)
 {
-  return get<char>(type, &TileDescription::character, '#');
+  proto::TileData* td = getTileData(type);
+  return td != nullptr ? td->character().front() : '#';
 }
 
-TCODColor TileDB::getColor(TileType type)
+TCODColor TileDatabase::getColor(TileType type)
 {
-  return get<TCODColor>(type, &TileDescription::color, TCODColor::white);
+  proto::TileData* td = getTileData(type);
+  return td != nullptr ? strToColor(td->color()) : TCODColor::white;
 }
 
-bool TileDB::isWalkable(TileType type)
+bool TileDatabase::isWalkable(TileType type)
 {
-  return get<bool>(type, &TileDescription::walkable, false);
+  proto::TileData* td = getTileData(type);
+  return td != nullptr ? td->walkable() : false;
 }
 
-bool TileDB::isTransparent(TileType type)
+bool TileDatabase::isTransparent(TileType type)
 {
-  return get<bool>(type, &TileDescription::transparent, false);
+  proto::TileData* td = getTileData(type);
+  return td != nullptr ? td->transparent() : false;
 }
 
-void TileDB::load(const string& fn)
+bool TileDatabase::load(const string& fn)
 {
   ifstream ifs(fn);
 
   if (ifs.is_open())
   {
-    vector<char> buffer;
-    buffer.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
-    buffer.push_back('\0');
-
-    parseTiles(buffer);
+    _tilesData->ParseFromIstream(&ifs);
+    return true;
   }
-}
-
-void TileDB::parseTiles(vector<char>& dataToParse)
-{
-  xml_document<> doc;
-  doc.parse<0>(&dataToParse[0]);
-
-  xml_node<>* root = doc.first_node("Tiles");
-  xml_node<>* tileNode = root ? root->first_node("Tile") : nullptr;
-
-  while( tileNode != nullptr )
-  {
-    _tileParser.setSource( tileNode );
-
-    std::unique_ptr<TileDescription> tileDsc( _tileParser.parseTileDsc() );
-    if ( tileDsc ) _tiles[ tileDsc->type ] = *tileDsc;
-
-    tileNode = tileNode->next_sibling();
-  }
-
-  doc.clear();
+  return false;
 }
 
 }

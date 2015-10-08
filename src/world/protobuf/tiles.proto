@@ -1,0 +1,16 @@
+syntax="proto2";
+
+package amarlon.proto;
+
+message TileData {
+  required int32 id = 1;
+  required string name = 2;
+  required string character = 3 [default="#"];
+  required string color = 4 [default="ffffff"];
+  optional bool walkable = 5 [default=false];
+  optional bool transparent = 6 [default=false];
+}
+
+message TilesData {
+  repeated TileData tile = 1;
+}

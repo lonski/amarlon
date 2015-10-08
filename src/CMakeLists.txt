@@ -32,9 +32,7 @@ set(HEADER_FILES
     commands/cmd_put_into.h
     commands/cmd_look.h
     commands/cmd_cast.h
-    data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
-    data_gateways/parsers/tile_parser.h
     data_gateways/parsers/actor_parser.h
     data_gateways/parsers/map_parser.h
     data_gateways/parsers/animation_parser.h
@@ -103,6 +101,9 @@ set(HEADER_FILES
     world/map_id.h
     world/tile_type.h
     world/tile.h
+    world/protobuf/tiles.proto
+    world/protobuf/tiles.pb.h
+    world/protobuf/tiles.pb.cc
     command_executor.h
     engine.h
     actor/actor_actions/actor_action.h
@@ -186,7 +187,6 @@ set(SOURCE_FILES
     commands/cmd_cast.cpp
     data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
-    data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp

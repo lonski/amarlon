@@ -16,7 +16,7 @@ class SpellDatabase;
 class World;
 class CommandExecutor;
 class MapGateway;
-class TileDB;
+class TileDatabase;
 class ActorDB;
 class Messenger;
 
@@ -29,7 +29,7 @@ typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<SpellDatabase> SpellDatabasePtr;
 typedef std::shared_ptr<World> WorldPtr;
 typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
-typedef std::shared_ptr<TileDB> TileDBPtr;
+typedef std::shared_ptr<TileDatabase> TileDatabasePtr;
 typedef std::shared_ptr<ActorDB> ActorDBPtr;
 typedef std::shared_ptr<Configuration> ConfigurationPtr;
 typedef std::shared_ptr<Messenger> MessengerPtr;
@@ -68,7 +68,7 @@ public:
   gui::WindowManager& getWindowManager() const;
 
   World&             getWorld()     const;
-  TileDB&            getTileDB()    const;
+  TileDatabase&            getTileDatabase()    const;
   ActorDB&           getActorDB()   const;
   SpellDatabase&           getSpellDatabase()   const;
   Messenger&         getMessenger() const;
@@ -84,7 +84,7 @@ private:
 
   WorldPtr _world;
   SpellDatabasePtr _SpellDatabase;
-  TileDBPtr _tileDB;
+  TileDatabasePtr _tileDB;
   ActorDBPtr _actorsDB;
   MessengerPtr _messenger;
   lua_api::LuaStatePtr _luaState;

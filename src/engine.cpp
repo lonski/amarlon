@@ -39,7 +39,7 @@ void Engine::prologue()
   _windowManager.reset( new gui::WindowManager );
   _config.reset( new Configuration );
   _SpellDatabase.reset(new SpellDatabase );
-  _tileDB.reset( new TileDB );
+  _tileDB.reset( new TileDatabase );
   _actorsDB.reset( new ActorDB );
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
@@ -47,7 +47,7 @@ void Engine::prologue()
   if ( _config->load("config.cfg") )
   {
     getActorDB().load( _config->get("actors_file") );
-    getTileDB ().load( _config->get("tiles_file" ) );
+    getTileDatabase ().load( _config->get("tiles_file" ) );
     getSpellDatabase().load( _config->get("spells_file") );
 
     initializeWorld();
@@ -179,7 +179,7 @@ ActorPtr Engine::getPlayer() const
   return _player;
 }
 
-TileDB &Engine::getTileDB() const
+TileDatabase &Engine::getTileDatabase() const
 {
   return *_tileDB;
 }

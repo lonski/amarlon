@@ -1,7 +1,6 @@
 #include "spell_database.h"
 #include <fstream>
 #include <vector>
-#include <spell.h>
 #include <spell_factory.h>
 #include <protobuf/spells.pb.h>
 
