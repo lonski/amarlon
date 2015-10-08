@@ -5,7 +5,7 @@ function onCast(caster, target)
 
 	if caster:get():character():get() == nil then return false end
 
-	radius = SpellDB:getRadius( SPELL_ID )
+	radius = SpellDatabase:getRadius( SPELL_ID )
 
 	local function playAnimation()
 		frameDelay = 15

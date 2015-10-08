@@ -5,7 +5,6 @@
 #include <target.h>
 #include <character_classes.h>
 #include <target_type.h>
-#include <spell_description.h>
 #include <spell_id.h>
 
 namespace amarlon {
@@ -36,10 +35,9 @@ public:
 
 private:  
   SpellId _id;
-
   Spell(SpellId id);
 
-  friend class SpellSerializer;
+  friend class SpellFactory;
 };
 
 }

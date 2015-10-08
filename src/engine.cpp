@@ -6,7 +6,7 @@
 #include <spell.h>
 #include <configuration.h>
 #include <messenger.h>
-#include <spell_db.h>
+#include <spell_database.h>
 #include <world.h>
 #include <command_executor.h>
 #include <tile_db.h>
@@ -38,7 +38,7 @@ void Engine::prologue()
   _cmdExecutor.reset( new CommandExecutor );
   _windowManager.reset( new gui::WindowManager );
   _config.reset( new Configuration );
-  _spellDB.reset(new SpellDB );
+  _SpellDatabase.reset(new SpellDatabase );
   _tileDB.reset( new TileDB );
   _actorsDB.reset( new ActorDB );
   _messenger.reset( new Messenger( _gui ) );
@@ -48,7 +48,7 @@ void Engine::prologue()
   {
     getActorDB().load( _config->get("actors_file") );
     getTileDB ().load( _config->get("tiles_file" ) );
-    getSpellDB().load( _config->get("spells_file") );
+    getSpellDatabase().load( _config->get("spells_file") );
 
     initializeWorld();
     getLuaState().registerAPI();
@@ -93,7 +93,7 @@ void Engine::epilogue()
   _cmdExecutor.reset();
   _windowManager.reset();
   _config.reset();
-  _spellDB.reset();
+  _SpellDatabase.reset();
   _tileDB.reset();
   _actorsDB.reset();
   _messenger.reset();
@@ -159,9 +159,9 @@ World& Engine::getWorld() const
   return *_world;
 }
 
-SpellDB& Engine::getSpellDB() const
+SpellDatabase& Engine::getSpellDatabase() const
 {
-  return *_spellDB;
+  return *_SpellDatabase;
 }
 
 Messenger &Engine::getMessenger() const

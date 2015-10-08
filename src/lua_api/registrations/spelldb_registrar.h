@@ -5,11 +5,11 @@
 
 namespace amarlon { namespace lua_api {
 
-class SpellDBRegistrar : public Registrar
+class SpellDatabaseRegistrar : public Registrar
 {
 public:
-  SpellDBRegistrar() = default;
-  virtual ~SpellDBRegistrar() = default;
+  SpellDatabaseRegistrar() = default;
+  virtual ~SpellDatabaseRegistrar() = default;
 
   virtual void reg(lua_State* state);
 

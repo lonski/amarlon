@@ -1,0 +1,17 @@
+syntax="proto2";
+
+package amarlon.proto;
+
+message SpellData {
+  required int32 id = 1;
+  required string name = 2;
+  required int32 level = 3;
+  required int32 class = 4;
+  required int32 target = 5;
+  optional float range = 6 [default=0];
+  optional float radius = 7 [default=0];
+}
+
+message SpellsData {
+  repeated SpellData spell = 1;
+}

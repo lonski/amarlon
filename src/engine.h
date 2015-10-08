@@ -12,7 +12,7 @@ namespace amarlon {
 class Configuration;
 class Map;
 class Actor;
-class SpellDB;
+class SpellDatabase;
 class World;
 class CommandExecutor;
 class MapGateway;
@@ -26,7 +26,7 @@ namespace lua_api {
 }
 
 typedef std::shared_ptr<Map> MapPtr;
-typedef std::shared_ptr<SpellDB> SpellDBPtr;
+typedef std::shared_ptr<SpellDatabase> SpellDatabasePtr;
 typedef std::shared_ptr<World> WorldPtr;
 typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 typedef std::shared_ptr<TileDB> TileDBPtr;
@@ -70,7 +70,7 @@ public:
   World&             getWorld()     const;
   TileDB&            getTileDB()    const;
   ActorDB&           getActorDB()   const;
-  SpellDB&           getSpellDB()   const;
+  SpellDatabase&           getSpellDatabase()   const;
   Messenger&         getMessenger() const;
   lua_api::LuaState& getLuaState()  const;
 
@@ -83,7 +83,7 @@ private:
   ConfigurationPtr _config;
 
   WorldPtr _world;
-  SpellDBPtr _spellDB;
+  SpellDatabasePtr _SpellDatabase;
   TileDBPtr _tileDB;
   ActorDBPtr _actorsDB;
   MessengerPtr _messenger;

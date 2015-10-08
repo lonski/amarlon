@@ -3,7 +3,7 @@
 #include <actor.h>
 #include <animation.h>
 #include <engine.h>
-#include <spell_db.h>
+#include <spell_database.h>
 #include <lua_state.h>
 
 namespace amarlon {
@@ -34,9 +34,9 @@ bool Spell::cast(ActorPtr caster, Target target)
   if ( target )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    SpellDB& spellDb = Engine::instance().getSpellDB();
+    SpellDatabase& SpellDatabase = Engine::instance().getSpellDatabase();
 
-    if ( lua.execute( spellDb.getScriptPath(_id) ) )
+    if ( lua.execute( SpellDatabase.getScriptPath(_id) ) )
     {
       try
       {
@@ -65,31 +65,31 @@ SpellId Spell::getId() const
 
 std::string Spell::getName() const
 {
-  return Engine::instance().getSpellDB().getName(_id);
+  return Engine::instance().getSpellDatabase().getName(_id);
 }
 CharacterClass Spell::getClass() const
 {
-  return Engine::instance().getSpellDB().getClass(_id);
+  return Engine::instance().getSpellDatabase().getClass(_id);
 }
 
 int Spell::getLevel() const
 {
-  return Engine::instance().getSpellDB().getLevel(_id);
+  return Engine::instance().getSpellDatabase().getLevel(_id);
 }
 
 TargetType Spell::getTargetType() const
 {
-  return Engine::instance().getSpellDB().getTargetType(_id);
+  return Engine::instance().getSpellDatabase().getTargetType(_id);
 }
 
 int Spell::getRange() const
 {
-  return Engine::instance().getSpellDB().getRange(_id);
+  return Engine::instance().getSpellDatabase().getRange(_id);
 }
 
 int Spell::getRadius() const
 {
-  return Engine::instance().getSpellDB().getRadius(_id);
+  return Engine::instance().getSpellDatabase().getRadius(_id);
 }
 
 }

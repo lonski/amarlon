@@ -4,7 +4,7 @@
 #include <utils.h>
 #include <character_factory.h>
 #include <spell.h>
-#include <spell_db.h>
+#include <spell_database.h>
 #include <engine.h>
 #include <actor_descriptions.h>
 
