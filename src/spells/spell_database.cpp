@@ -29,13 +29,6 @@ bool SpellDatabase::load(const std::string &fn)
   if (ifs.is_open())
   {
     _spellsData->ParseFromIstream(&ifs);
-
-    for( int i=0; i<_spellsData->spell_size(); ++i)
-    {
-      const proto::SpellData& sd = _spellsData->spell(i);
-      printf("%s\n", sd.name().c_str());
-    }
-
     return true;
   }
   return false;

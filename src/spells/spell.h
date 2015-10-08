@@ -14,13 +14,17 @@ class Spell;
 typedef std::shared_ptr<Actor>  ActorPtr;
 typedef std::shared_ptr<Spell>  SpellPtr;
 
+namespace proto {
+  class SpellData;
+}
+
 class Spell
 {
 public:
 
   virtual ~Spell();
 
-  static SpellPtr create(SpellId id);
+  static SpellPtr create(SpellId id, proto::SpellData* flyweight = nullptr);
   virtual SpellPtr clone();
 
   virtual bool cast(ActorPtr caster, Target target);
@@ -35,8 +39,9 @@ public:
 
 private:  
   SpellId _id;
-  Spell(SpellId id);
+  proto::SpellData* _flyweight;
 
+  Spell(SpellId id, proto::SpellData* flyweight);
   friend class SpellFactory;
 };
 

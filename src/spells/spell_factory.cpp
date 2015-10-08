@@ -9,7 +9,7 @@ SpellPtr SpellFactory::produce(proto::SpellData *spellData)
   SpellPtr spell;
   if ( spellData != nullptr )
   {
-    spell.reset(new Spell(static_cast<SpellId>(spellData->id())));
+    spell.reset(new Spell(static_cast<SpellId>(spellData->id()), spellData));
   }
   return spell;
 }

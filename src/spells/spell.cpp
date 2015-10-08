@@ -5,11 +5,13 @@
 #include <engine.h>
 #include <spell_database.h>
 #include <lua_state.h>
+#include <spells.pb.h>
 
 namespace amarlon {
 
-Spell::Spell(SpellId id)
+Spell::Spell(SpellId id, proto::SpellData* flyweight)
   : _id(id)
+  , _flyweight(flyweight)
 {
 }
 
@@ -17,9 +19,9 @@ Spell::~Spell()
 {
 }
 
-SpellPtr Spell::create(SpellId id)
+SpellPtr Spell::create(SpellId id, proto::SpellData *flyweight)
 {
-  return SpellPtr( new Spell(id) );
+  return SpellPtr( new Spell(id, flyweight) );
 }
 
 SpellPtr Spell::clone()
@@ -65,31 +67,37 @@ SpellId Spell::getId() const
 
 std::string Spell::getName() const
 {
-  return Engine::instance().getSpellDatabase().getName(_id);
+  return _flyweight ? _flyweight->name()
+                    : Engine::instance().getSpellDatabase().getName(_id);
 }
 CharacterClass Spell::getClass() const
 {
-  return Engine::instance().getSpellDatabase().getClass(_id);
+  return _flyweight ? static_cast<CharacterClass>(_flyweight->class_())
+                    : Engine::instance().getSpellDatabase().getClass(_id);
 }
 
 int Spell::getLevel() const
 {
-  return Engine::instance().getSpellDatabase().getLevel(_id);
+  return _flyweight ? _flyweight->level()
+                    : Engine::instance().getSpellDatabase().getLevel(_id);
 }
 
 TargetType Spell::getTargetType() const
 {
-  return Engine::instance().getSpellDatabase().getTargetType(_id);
+  return _flyweight ? static_cast<TargetType>(_flyweight->target())
+                    : Engine::instance().getSpellDatabase().getTargetType(_id);
 }
 
 int Spell::getRange() const
 {
-  return Engine::instance().getSpellDatabase().getRange(_id);
+  return _flyweight ? _flyweight->range()
+                    : Engine::instance().getSpellDatabase().getRange(_id);
 }
 
 int Spell::getRadius() const
 {
-  return Engine::instance().getSpellDatabase().getRadius(_id);
+  return _flyweight ? _flyweight->radius()
+                    : Engine::instance().getSpellDatabase().getRadius(_id);
 }
 
 }
