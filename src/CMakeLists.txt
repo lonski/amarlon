@@ -155,6 +155,9 @@ set(HEADER_FILES
     protobuf/spells/spells.proto
     protobuf/spells/spells.pb.h
     protobuf/spells/spells.pb.cc
+    protobuf/actors/actors.proto
+    protobuf/actors/actors.pb.h
+    protobuf/actors/actors.pb.cc
 )
 
 set(SOURCE_FILES

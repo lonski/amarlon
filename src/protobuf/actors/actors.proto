@@ -1,0 +1,102 @@
+syntax="proto2";
+
+package amarlon.proto;
+
+message ActorData {
+  required int32 id = 1;
+  required string name = 2;
+  optional string symbol = 3 [default="@"];
+  optional string color = 4 [default="ffffff"];
+  optional bool blocks = 5 [default=true];
+  optional bool fovOnly = 6 [default=true];
+  optional string description = 7 [default=""];
+
+  optional Inventory inventory = 8;
+  optional Character character = 9;
+  optional Destroyable destroyable = 10;
+  optional Wearer wearer = 11;
+  optional Ai ai = 12;
+  optional Openable openable = 13;
+  optional Pickable pickable = 14;
+
+  message Inventory {
+    optional int32 slots = 1 [default=20];
+    repeated ActorData item = 2;
+  }
+
+  message Character {
+    required int32 level = 1;
+    required int32 class = 2;
+    required int32 race = 3;
+    optional int32 experience = 4 [default=0];
+    optional int32 armor = 5 [default=0];
+    optional int32 speed = 6 [default=40];
+    optional int32 hp = 7 [default=0];
+    optional int32 maxHp = 8 [default=0];
+    optional int32 hpBonus = 9 [default=0];
+    optional string damage = 10 [default="0d0+0#0"];
+    optional int32 morale = 11 [default=0];
+
+    optional AbilityScores abilityScores = 12;
+    repeated Spell spells = 13;
+
+    message AbilityScores {
+      required int32 STR = 1;
+      required int32 INT = 2;
+      required int32 WIS = 3;
+      required int32 DEX = 4;
+      required int32 CON = 5;
+      required int32 CHA = 6;
+    }
+
+    message Spell {
+      required int32 id = 1;
+    }
+  }
+
+  message Destroyable {
+
+    message DropRule {
+      required int32 itemId = 1;
+      optional int32 min = 2 [default=1];
+      optional int32 max = 3 [default=1];
+      optional float chance = 4 [default=1.0];
+    }
+  }
+
+  message Wearer {
+
+    repeated ItemSlot itemSlots = 1;
+
+    message ItemSlot {
+      required int32 id = 1;
+      optional ActorData item = 2;
+    }
+  }
+
+  message Ai {
+    required int32 type = 1;
+  }
+
+  message Openable {
+    required int32 scriptId = 1;
+  }
+
+  message Pickable {
+    optional bool stackable = 1 [default=false];
+    optional int32 amount = 2 [default=1];
+    optional int32 uses = 3 [default=0];
+    optional int32 itemSlot = 4 [default=0];
+    optional int32 category = 5 [default=0];
+    optional int32 armor = 6 [default=0];
+    optional int32 weight = 7 [default=0];
+    optional int32 price = 8 [default=0];
+    optional int32 target = 9 [default=0];
+    optional string damage = 10 [default="0d0+0#0"];
+    optional int32 scriptId = 11 [default=0];
+  }
+}
+
+message ActorsData {
+  repeated ActorData actor = 1;
+}
