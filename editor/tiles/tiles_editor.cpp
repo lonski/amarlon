@@ -2,12 +2,15 @@
 #include "ui_tiles_editor.h"
 #include <QFileDialog>
 #include <fstream>
+#include <QDesktopWidget>
 
 TilesEditor::TilesEditor(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::TilesEditor)
 {
   ui->setupUi(this);
+  move(QApplication::desktop()->screen()->rect().center() - rect().center());
+  populate();
 }
 
 TilesEditor::~TilesEditor()
@@ -115,4 +118,22 @@ void TilesEditor::on_actionNew_tile_triggered()
   _editDlg.setTile( _tilesData.add_tile() );
   _editDlg.exec();
   populate();
+}
+
+void TilesEditor::on_actionDelete_tile_triggered()
+{
+  auto* item = ui->tTable->item(ui->tTable->currentRow(), 0);
+  if ( item )
+  {
+    int id = item->text().toInt();
+    for( auto it = _tilesData.tile().begin(); it != _tilesData.tile().end(); ++it )
+    {
+      if ( it->id() == id )
+      {
+        _tilesData.mutable_tile()->erase(it);
+        populate();
+        break;
+      }
+    }
+  }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TilesEditor</class>
- <widget class="QMainWindow" name="TilesEditor">
+ <class>ActorsEditor</class>
+ <widget class="QMainWindow" name="ActorsEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTableWidget" name="tTable"/>
+     <widget class="QTableWidget" name="aTable"/>
     </item>
    </layout>
   </widget>
@@ -50,8 +50,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew_tile"/>
-   <addaction name="actionDelete_tile"/>
+   <addaction name="actionNew_actor"/>
+   <addaction name="actionDelete_actor"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -68,14 +68,14 @@
     <string>Save as..</string>
    </property>
   </action>
-  <action name="actionNew_tile">
+  <action name="actionNew_actor">
    <property name="text">
-    <string>New tile</string>
+    <string>New actor</string>
    </property>
   </action>
-  <action name="actionDelete_tile">
+  <action name="actionDelete_actor">
    <property name="text">
-    <string>Delete tile</string>
+    <string>Delete actor</string>
    </property>
   </action>
  </widget>

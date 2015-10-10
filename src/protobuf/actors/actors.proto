@@ -9,19 +9,20 @@ message ActorData {
   optional string color = 4 [default="ffffff"];
   optional bool blocks = 5 [default=true];
   optional bool fovOnly = 6 [default=true];
-  optional string description = 7 [default=""];
+  optional bool transparent = 7 [default=true];
+  optional string description = 8 [default=""];
 
-  optional Inventory inventory = 8;
-  optional Character character = 9;
-  optional Destroyable destroyable = 10;
-  optional Wearer wearer = 11;
-  optional Ai ai = 12;
-  optional Openable openable = 13;
-  optional Pickable pickable = 14;
+  optional Inventory inventory = 9;
+  optional Character character = 10;
+  optional Destroyable destroyable = 11;
+  optional Wearer wearer = 12;
+  optional Ai ai = 13;
+  optional Openable openable = 14;
+  optional Pickable pickable = 15;
 
   message Inventory {
-    optional int32 slots = 1 [default=20];
-    repeated ActorData item = 2;
+    optional int32 slotAmount = 1 [default=20];
+    repeated int32 item = 2;
   }
 
   message Character {
@@ -38,7 +39,7 @@ message ActorData {
     optional int32 morale = 11 [default=0];
 
     optional AbilityScores abilityScores = 12;
-    repeated Spell spells = 13;
+    repeated int32 spells = 13;
 
     message AbilityScores {
       required int32 STR = 1;
@@ -48,13 +49,11 @@ message ActorData {
       required int32 CON = 5;
       required int32 CHA = 6;
     }
-
-    message Spell {
-      required int32 id = 1;
-    }
   }
 
   message Destroyable {
+
+    repeated DropRule dropRules = 1;
 
     message DropRule {
       required int32 itemId = 1;
@@ -70,7 +69,7 @@ message ActorData {
 
     message ItemSlot {
       required int32 id = 1;
-      optional ActorData item = 2;
+      optional int32 item = 2;
     }
   }
 

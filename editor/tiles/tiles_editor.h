@@ -34,6 +34,8 @@ private slots:
 
   void on_actionNew_tile_triggered();
 
+  void on_actionDelete_tile_triggered();
+
 private:
   Ui::TilesEditor *ui;
   amarlon::proto::TilesData _tilesData;

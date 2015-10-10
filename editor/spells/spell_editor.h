@@ -27,6 +27,8 @@ private slots:
   void on_sTable_cellDoubleClicked(int row, int column);
   void on_actionSave_triggered();
 
+  void on_actionDelete_spell_triggered();
+
 private:
   Ui::spell_editor *ui;
   amarlon::proto::SpellsData _spellsData;
@@ -36,7 +38,6 @@ private:
   void saveDatabase(const QString& fn);
   void clear();
   void populate();
-  amarlon::proto::SpellData* getSpellByName(const QString& name);
   amarlon::proto::SpellData* getSpell(std::function<bool(const amarlon::proto::SpellData&)> filter );
 
 };

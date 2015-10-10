@@ -22,5 +22,45 @@ static QStringList target_types = {
   "Caster area"
 };
 
+static QStringList pickable_categories = {
+  "Miscellaneous",
+  "Weapon",
+  "Armor",
+  "Jewelery",
+  "Potions",
+  "Scrolls",
+  "Amunition",
+  "Wealth"
+};
+
+static QStringList item_slots = {
+  "None",
+  "Helmet",
+  "Amulet",
+  "Body",
+  "Belt",
+  "Hands",
+  "Boots",
+  "Main hand",
+  "Offhand",
+  "Left ring",
+  "Right ring",
+  "Cloak",
+  "Arrows",
+  "Bolts",
+  "Bullets",
+};
+
+static QStringList races = {
+  "NoRace"   ,
+  "Human"    ,
+  "Dwarf"    ,
+  "Elf"      ,
+  "Halfling" ,
+  "Orc"      ,
+  "Goblin"   ,
+  "Undead"
+};
+
 #endif // ENUM_MAPPINGS
 

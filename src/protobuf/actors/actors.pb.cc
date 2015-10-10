@@ -33,9 +33,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* ActorData_Character_AbilityScores_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ActorData_Character_AbilityScores_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ActorData_Character_Spell_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ActorData_Character_Spell_reflection_ = NULL;
 const ::google::protobuf::Descriptor* ActorData_Destroyable_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ActorData_Destroyable_reflection_ = NULL;
@@ -71,13 +68,14 @@ void protobuf_AssignDesc_actors_2eproto() {
       "actors.proto");
   GOOGLE_CHECK(file != NULL);
   ActorData_descriptor_ = file->message_type(0);
-  static const int ActorData_offsets_[14] = {
+  static const int ActorData_offsets_[15] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, symbol_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, color_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, blocks_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, fovonly_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, transparent_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, description_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, inventory_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, character_),
@@ -100,7 +98,7 @@ void protobuf_AssignDesc_actors_2eproto() {
       -1);
   ActorData_Inventory_descriptor_ = ActorData_descriptor_->nested_type(0);
   static const int ActorData_Inventory_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Inventory, slots_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Inventory, slotamount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Inventory, item_),
   };
   ActorData_Inventory_reflection_ =
@@ -161,23 +159,9 @@ void protobuf_AssignDesc_actors_2eproto() {
       sizeof(ActorData_Character_AbilityScores),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Character_AbilityScores, _internal_metadata_),
       -1);
-  ActorData_Character_Spell_descriptor_ = ActorData_Character_descriptor_->nested_type(1);
-  static const int ActorData_Character_Spell_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Character_Spell, id_),
-  };
-  ActorData_Character_Spell_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      ActorData_Character_Spell_descriptor_,
-      ActorData_Character_Spell::default_instance_,
-      ActorData_Character_Spell_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Character_Spell, _has_bits_[0]),
-      -1,
-      -1,
-      sizeof(ActorData_Character_Spell),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Character_Spell, _internal_metadata_),
-      -1);
   ActorData_Destroyable_descriptor_ = ActorData_descriptor_->nested_type(2);
   static const int ActorData_Destroyable_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData_Destroyable, droprules_),
   };
   ActorData_Destroyable_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -330,8 +314,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       ActorData_Character_AbilityScores_descriptor_, &ActorData_Character_AbilityScores::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      ActorData_Character_Spell_descriptor_, &ActorData_Character_Spell::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       ActorData_Destroyable_descriptor_, &ActorData_Destroyable::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       ActorData_Destroyable_DropRule_descriptor_, &ActorData_Destroyable_DropRule::default_instance());
@@ -363,8 +345,6 @@ void protobuf_ShutdownFile_actors_2eproto() {
   delete ActorData_Character::_default_damage_;
   delete ActorData_Character_AbilityScores::default_instance_;
   delete ActorData_Character_AbilityScores_reflection_;
-  delete ActorData_Character_Spell::default_instance_;
-  delete ActorData_Character_Spell_reflection_;
   delete ActorData_Destroyable::default_instance_;
   delete ActorData_Destroyable_reflection_;
   delete ActorData_Destroyable_DropRule::default_instance_;
@@ -391,48 +371,47 @@ void protobuf_AddDesc_actors_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014actors.proto\022\ramarlon.proto\"\233\014\n\tActorD"
+    "\n\014actors.proto\022\ramarlon.proto\"\212\014\n\tActorD"
     "ata\022\n\n\002id\030\001 \002(\005\022\014\n\004name\030\002 \002(\t\022\021\n\006symbol\030"
     "\003 \001(\t:\001@\022\025\n\005color\030\004 \001(\t:\006ffffff\022\024\n\006block"
-    "s\030\005 \001(\010:\004true\022\025\n\007fovOnly\030\006 \001(\010:\004true\022\025\n\013"
-    "description\030\007 \001(\t:\000\0225\n\tinventory\030\010 \001(\0132\""
-    ".amarlon.proto.ActorData.Inventory\0225\n\tch"
-    "aracter\030\t \001(\0132\".amarlon.proto.ActorData."
-    "Character\0229\n\013destroyable\030\n \001(\0132$.amarlon"
-    ".proto.ActorData.Destroyable\022/\n\006wearer\030\013"
-    " \001(\0132\037.amarlon.proto.ActorData.Wearer\022\'\n"
-    "\002ai\030\014 \001(\0132\033.amarlon.proto.ActorData.Ai\0223"
-    "\n\010openable\030\r \001(\0132!.amarlon.proto.ActorDa"
-    "ta.Openable\0223\n\010pickable\030\016 \001(\0132!.amarlon."
-    "proto.ActorData.Pickable\032F\n\tInventory\022\021\n"
-    "\005slots\030\001 \001(\005:\00220\022&\n\004item\030\002 \003(\0132\030.amarlon"
-    ".proto.ActorData\032\313\003\n\tCharacter\022\r\n\005level\030"
-    "\001 \002(\005\022\r\n\005class\030\002 \002(\005\022\014\n\004race\030\003 \002(\005\022\025\n\nex"
-    "perience\030\004 \001(\005:\0010\022\020\n\005armor\030\005 \001(\005:\0010\022\021\n\005s"
-    "peed\030\006 \001(\005:\00240\022\r\n\002hp\030\007 \001(\005:\0010\022\020\n\005maxHp\030\010"
-    " \001(\005:\0010\022\022\n\007hpBonus\030\t \001(\005:\0010\022\027\n\006damage\030\n "
-    "\001(\t:\0070d0+0#0\022\021\n\006morale\030\013 \001(\005:\0010\022G\n\rabili"
-    "tyScores\030\014 \001(\01320.amarlon.proto.ActorData"
-    ".Character.AbilityScores\0228\n\006spells\030\r \003(\013"
-    "2(.amarlon.proto.ActorData.Character.Spe"
-    "ll\032]\n\rAbilityScores\022\013\n\003STR\030\001 \002(\005\022\013\n\003INT\030"
-    "\002 \002(\005\022\013\n\003WIS\030\003 \002(\005\022\013\n\003DEX\030\004 \002(\005\022\013\n\003CON\030\005"
-    " \002(\005\022\013\n\003CHA\030\006 \002(\005\032\023\n\005Spell\022\n\n\002id\030\001 \002(\005\032\\"
-    "\n\013Destroyable\032M\n\010DropRule\022\016\n\006itemId\030\001 \002("
-    "\005\022\016\n\003min\030\002 \001(\005:\0011\022\016\n\003max\030\003 \001(\005:\0011\022\021\n\006cha"
-    "nce\030\004 \001(\002:\0011\032\205\001\n\006Wearer\022;\n\titemSlots\030\001 \003"
-    "(\0132(.amarlon.proto.ActorData.Wearer.Item"
-    "Slot\032>\n\010ItemSlot\022\n\n\002id\030\001 \002(\005\022&\n\004item\030\002 \001"
-    "(\0132\030.amarlon.proto.ActorData\032\022\n\002Ai\022\014\n\004ty"
-    "pe\030\001 \002(\005\032\034\n\010Openable\022\020\n\010scriptId\030\001 \002(\005\032\352"
-    "\001\n\010Pickable\022\030\n\tstackable\030\001 \001(\010:\005false\022\021\n"
-    "\006amount\030\002 \001(\005:\0011\022\017\n\004uses\030\003 \001(\005:\0010\022\023\n\010ite"
-    "mSlot\030\004 \001(\005:\0010\022\023\n\010category\030\005 \001(\005:\0010\022\020\n\005a"
-    "rmor\030\006 \001(\005:\0010\022\021\n\006weight\030\007 \001(\005:\0010\022\020\n\005pric"
-    "e\030\010 \001(\005:\0010\022\021\n\006target\030\t \001(\005:\0010\022\027\n\006damage\030"
-    "\n \001(\t:\0070d0+0#0\022\023\n\010scriptId\030\013 \001(\005:\0010\"5\n\nA"
-    "ctorsData\022\'\n\005actor\030\001 \003(\0132\030.amarlon.proto"
-    ".ActorData", 1650);
+    "s\030\005 \001(\010:\004true\022\025\n\007fovOnly\030\006 \001(\010:\004true\022\031\n\013"
+    "transparent\030\007 \001(\010:\004true\022\025\n\013description\030\010"
+    " \001(\t:\000\0225\n\tinventory\030\t \001(\0132\".amarlon.prot"
+    "o.ActorData.Inventory\0225\n\tcharacter\030\n \001(\013"
+    "2\".amarlon.proto.ActorData.Character\0229\n\013"
+    "destroyable\030\013 \001(\0132$.amarlon.proto.ActorD"
+    "ata.Destroyable\022/\n\006wearer\030\014 \001(\0132\037.amarlo"
+    "n.proto.ActorData.Wearer\022\'\n\002ai\030\r \001(\0132\033.a"
+    "marlon.proto.ActorData.Ai\0223\n\010openable\030\016 "
+    "\001(\0132!.amarlon.proto.ActorData.Openable\0223"
+    "\n\010pickable\030\017 \001(\0132!.amarlon.proto.ActorDa"
+    "ta.Pickable\0321\n\tInventory\022\026\n\nslotAmount\030\001"
+    " \001(\005:\00220\022\014\n\004item\030\002 \003(\005\032\214\003\n\tCharacter\022\r\n\005"
+    "level\030\001 \002(\005\022\r\n\005class\030\002 \002(\005\022\014\n\004race\030\003 \002(\005"
+    "\022\025\n\nexperience\030\004 \001(\005:\0010\022\020\n\005armor\030\005 \001(\005:\001"
+    "0\022\021\n\005speed\030\006 \001(\005:\00240\022\r\n\002hp\030\007 \001(\005:\0010\022\020\n\005m"
+    "axHp\030\010 \001(\005:\0010\022\022\n\007hpBonus\030\t \001(\005:\0010\022\027\n\006dam"
+    "age\030\n \001(\t:\0070d0+0#0\022\021\n\006morale\030\013 \001(\005:\0010\022G\n"
+    "\rabilityScores\030\014 \001(\01320.amarlon.proto.Act"
+    "orData.Character.AbilityScores\022\016\n\006spells"
+    "\030\r \003(\005\032]\n\rAbilityScores\022\013\n\003STR\030\001 \002(\005\022\013\n\003"
+    "INT\030\002 \002(\005\022\013\n\003WIS\030\003 \002(\005\022\013\n\003DEX\030\004 \002(\005\022\013\n\003C"
+    "ON\030\005 \002(\005\022\013\n\003CHA\030\006 \002(\005\032\236\001\n\013Destroyable\022@\n"
+    "\tdropRules\030\001 \003(\0132-.amarlon.proto.ActorDa"
+    "ta.Destroyable.DropRule\032M\n\010DropRule\022\016\n\006i"
+    "temId\030\001 \002(\005\022\016\n\003min\030\002 \001(\005:\0011\022\016\n\003max\030\003 \001(\005"
+    ":\0011\022\021\n\006chance\030\004 \001(\002:\0011\032k\n\006Wearer\022;\n\titem"
+    "Slots\030\001 \003(\0132(.amarlon.proto.ActorData.We"
+    "arer.ItemSlot\032$\n\010ItemSlot\022\n\n\002id\030\001 \002(\005\022\014\n"
+    "\004item\030\002 \001(\005\032\022\n\002Ai\022\014\n\004type\030\001 \002(\005\032\034\n\010Opena"
+    "ble\022\020\n\010scriptId\030\001 \002(\005\032\352\001\n\010Pickable\022\030\n\tst"
+    "ackable\030\001 \001(\010:\005false\022\021\n\006amount\030\002 \001(\005:\0011\022"
+    "\017\n\004uses\030\003 \001(\005:\0010\022\023\n\010itemSlot\030\004 \001(\005:\0010\022\023\n"
+    "\010category\030\005 \001(\005:\0010\022\020\n\005armor\030\006 \001(\005:\0010\022\021\n\006"
+    "weight\030\007 \001(\005:\0010\022\020\n\005price\030\010 \001(\005:\0010\022\021\n\006tar"
+    "get\030\t \001(\005:\0010\022\027\n\006damage\030\n \001(\t:\0070d0+0#0\022\023\n"
+    "\010scriptId\030\013 \001(\005:\0010\"5\n\nActorsData\022\'\n\005acto"
+    "r\030\001 \003(\0132\030.amarlon.proto.ActorData", 1633);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "actors.proto", &protobuf_RegisterTypes);
   ActorData::_default_symbol_ =
@@ -445,7 +424,6 @@ void protobuf_AddDesc_actors_2eproto() {
       new ::std::string("0d0+0#0", 7);
   ActorData_Character::default_instance_ = new ActorData_Character();
   ActorData_Character_AbilityScores::default_instance_ = new ActorData_Character_AbilityScores();
-  ActorData_Character_Spell::default_instance_ = new ActorData_Character_Spell();
   ActorData_Destroyable::default_instance_ = new ActorData_Destroyable();
   ActorData_Destroyable_DropRule::default_instance_ = new ActorData_Destroyable_DropRule();
   ActorData_Wearer::default_instance_ = new ActorData_Wearer();
@@ -460,7 +438,6 @@ void protobuf_AddDesc_actors_2eproto() {
   ActorData_Inventory::default_instance_->InitAsDefaultInstance();
   ActorData_Character::default_instance_->InitAsDefaultInstance();
   ActorData_Character_AbilityScores::default_instance_->InitAsDefaultInstance();
-  ActorData_Character_Spell::default_instance_->InitAsDefaultInstance();
   ActorData_Destroyable::default_instance_->InitAsDefaultInstance();
   ActorData_Destroyable_DropRule::default_instance_->InitAsDefaultInstance();
   ActorData_Wearer::default_instance_->InitAsDefaultInstance();
@@ -492,7 +469,7 @@ static void MergeFromFail(int line) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int ActorData_Inventory::kSlotsFieldNumber;
+const int ActorData_Inventory::kSlotAmountFieldNumber;
 const int ActorData_Inventory::kItemFieldNumber;
 #endif  // !_MSC_VER
 
@@ -515,7 +492,7 @@ ActorData_Inventory::ActorData_Inventory(const ActorData_Inventory& from)
 
 void ActorData_Inventory::SharedCtor() {
   _cached_size_ = 0;
-  slots_ = 20;
+  slotamount_ = 20;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -555,7 +532,7 @@ ActorData_Inventory* ActorData_Inventory::New(::google::protobuf::Arena* arena) 
 }
 
 void ActorData_Inventory::Clear() {
-  slots_ = 20;
+  slotamount_ = 20;
   item_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   if (_internal_metadata_.have_unknown_fields()) {
@@ -573,33 +550,35 @@ bool ActorData_Inventory::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 slots = 1 [default = 20];
+      // optional int32 slotAmount = 1 [default = 20];
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &slots_)));
-          set_has_slots();
+                 input, &slotamount_)));
+          set_has_slotamount();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_item;
+        if (input->ExpectTag(16)) goto parse_item;
         break;
       }
 
-      // repeated .amarlon.proto.ActorData item = 2;
+      // repeated int32 item = 2;
       case 2: {
-        if (tag == 18) {
+        if (tag == 16) {
          parse_item:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_item:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_item()));
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 16, input, this->mutable_item())));
+        } else if (tag == 18) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_item())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_loop_item;
-        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(16)) goto parse_item;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -629,14 +608,14 @@ failure:
 void ActorData_Inventory::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.proto.ActorData.Inventory)
-  // optional int32 slots = 1 [default = 20];
-  if (has_slots()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->slots(), output);
+  // optional int32 slotAmount = 1 [default = 20];
+  if (has_slotamount()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->slotamount(), output);
   }
 
-  // repeated .amarlon.proto.ActorData item = 2;
-  for (unsigned int i = 0, n = this->item_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+  // repeated int32 item = 2;
+  for (int i = 0; i < this->item_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(
       2, this->item(i), output);
   }
 
@@ -650,16 +629,15 @@ void ActorData_Inventory::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ActorData_Inventory::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.proto.ActorData.Inventory)
-  // optional int32 slots = 1 [default = 20];
-  if (has_slots()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->slots(), target);
+  // optional int32 slotAmount = 1 [default = 20];
+  if (has_slotamount()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->slotamount(), target);
   }
 
-  // repeated .amarlon.proto.ActorData item = 2;
-  for (unsigned int i = 0, n = this->item_size(); i < n; i++) {
+  // repeated int32 item = 2;
+  for (int i = 0; i < this->item_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->item(i), target);
+      WriteInt32ToArray(2, this->item(i), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -673,19 +651,21 @@ void ActorData_Inventory::SerializeWithCachedSizes(
 int ActorData_Inventory::ByteSize() const {
   int total_size = 0;
 
-  // optional int32 slots = 1 [default = 20];
-  if (has_slots()) {
+  // optional int32 slotAmount = 1 [default = 20];
+  if (has_slotamount()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->slots());
+        this->slotamount());
   }
 
-  // repeated .amarlon.proto.ActorData item = 2;
-  total_size += 1 * this->item_size();
-  for (int i = 0; i < this->item_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->item(i));
+  // repeated int32 item = 2;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->item_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->item(i));
+    }
+    total_size += 1 * this->item_size() + data_size;
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -715,8 +695,8 @@ void ActorData_Inventory::MergeFrom(const ActorData_Inventory& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   item_.MergeFrom(from.item_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_slots()) {
-      set_slots(from.slots());
+    if (from.has_slotamount()) {
+      set_slotamount(from.slotamount());
     }
   }
   if (from._internal_metadata_.have_unknown_fields()) {
@@ -738,7 +718,6 @@ void ActorData_Inventory::CopyFrom(const ActorData_Inventory& from) {
 
 bool ActorData_Inventory::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->item())) return false;
   return true;
 }
 
@@ -747,7 +726,7 @@ void ActorData_Inventory::Swap(ActorData_Inventory* other) {
   InternalSwap(other);
 }
 void ActorData_Inventory::InternalSwap(ActorData_Inventory* other) {
-  std::swap(slots_, other->slots_);
+  std::swap(slotamount_, other->slotamount_);
   item_.UnsafeArenaSwap(&other->item_);
   std::swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -1240,237 +1219,6 @@ void ActorData_Character_AbilityScores::InternalSwap(ActorData_Character_Ability
 
 // -------------------------------------------------------------------
 
-#ifndef _MSC_VER
-const int ActorData_Character_Spell::kIdFieldNumber;
-#endif  // !_MSC_VER
-
-ActorData_Character_Spell::ActorData_Character_Spell()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:amarlon.proto.ActorData.Character.Spell)
-}
-
-void ActorData_Character_Spell::InitAsDefaultInstance() {
-}
-
-ActorData_Character_Spell::ActorData_Character_Spell(const ActorData_Character_Spell& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:amarlon.proto.ActorData.Character.Spell)
-}
-
-void ActorData_Character_Spell::SharedCtor() {
-  _cached_size_ = 0;
-  id_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-ActorData_Character_Spell::~ActorData_Character_Spell() {
-  // @@protoc_insertion_point(destructor:amarlon.proto.ActorData.Character.Spell)
-  SharedDtor();
-}
-
-void ActorData_Character_Spell::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void ActorData_Character_Spell::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* ActorData_Character_Spell::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ActorData_Character_Spell_descriptor_;
-}
-
-const ActorData_Character_Spell& ActorData_Character_Spell::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_actors_2eproto();
-  return *default_instance_;
-}
-
-ActorData_Character_Spell* ActorData_Character_Spell::default_instance_ = NULL;
-
-ActorData_Character_Spell* ActorData_Character_Spell::New(::google::protobuf::Arena* arena) const {
-  ActorData_Character_Spell* n = new ActorData_Character_Spell;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
-
-void ActorData_Character_Spell::Clear() {
-  id_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  if (_internal_metadata_.have_unknown_fields()) {
-    mutable_unknown_fields()->Clear();
-  }
-}
-
-bool ActorData_Character_Spell::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:amarlon.proto.ActorData.Character.Spell)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &id_)));
-          set_has_id();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:amarlon.proto.ActorData.Character.Spell)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:amarlon.proto.ActorData.Character.Spell)
-  return false;
-#undef DO_
-}
-
-void ActorData_Character_Spell::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:amarlon.proto.ActorData.Character.Spell)
-  // required int32 id = 1;
-  if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:amarlon.proto.ActorData.Character.Spell)
-}
-
-::google::protobuf::uint8* ActorData_Character_Spell::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:amarlon.proto.ActorData.Character.Spell)
-  // required int32 id = 1;
-  if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:amarlon.proto.ActorData.Character.Spell)
-  return target;
-}
-
-int ActorData_Character_Spell::ByteSize() const {
-  int total_size = 0;
-
-  // required int32 id = 1;
-  if (has_id()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->id());
-  }
-  if (_internal_metadata_.have_unknown_fields()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void ActorData_Character_Spell::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const ActorData_Character_Spell* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const ActorData_Character_Spell>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void ActorData_Character_Spell::MergeFrom(const ActorData_Character_Spell& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_id()) {
-      set_id(from.id());
-    }
-  }
-  if (from._internal_metadata_.have_unknown_fields()) {
-    mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-  }
-}
-
-void ActorData_Character_Spell::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void ActorData_Character_Spell::CopyFrom(const ActorData_Character_Spell& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool ActorData_Character_Spell::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-
-  return true;
-}
-
-void ActorData_Character_Spell::Swap(ActorData_Character_Spell* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void ActorData_Character_Spell::InternalSwap(ActorData_Character_Spell* other) {
-  std::swap(id_, other->id_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
-}
-
-::google::protobuf::Metadata ActorData_Character_Spell::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ActorData_Character_Spell_descriptor_;
-  metadata.reflection = ActorData_Character_Spell_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
 ::std::string* ActorData_Character::_default_damage_ = NULL;
 #ifndef _MSC_VER
 const int ActorData_Character::kLevelFieldNumber;
@@ -1780,23 +1528,25 @@ bool ActorData_Character::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(106)) goto parse_spells;
+        if (input->ExpectTag(104)) goto parse_spells;
         break;
       }
 
-      // repeated .amarlon.proto.ActorData.Character.Spell spells = 13;
+      // repeated int32 spells = 13;
       case 13: {
-        if (tag == 106) {
+        if (tag == 104) {
          parse_spells:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_spells:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_spells()));
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 104, input, this->mutable_spells())));
+        } else if (tag == 106) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_spells())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(106)) goto parse_loop_spells;
-        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(104)) goto parse_spells;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1892,9 +1642,9 @@ void ActorData_Character::SerializeWithCachedSizes(
       12, *this->abilityscores_, output);
   }
 
-  // repeated .amarlon.proto.ActorData.Character.Spell spells = 13;
-  for (unsigned int i = 0, n = this->spells_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+  // repeated int32 spells = 13;
+  for (int i = 0; i < this->spells_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(
       13, this->spells(i), output);
   }
 
@@ -1976,11 +1726,10 @@ void ActorData_Character::SerializeWithCachedSizes(
         12, *this->abilityscores_, target);
   }
 
-  // repeated .amarlon.proto.ActorData.Character.Spell spells = 13;
-  for (unsigned int i = 0, n = this->spells_size(); i < n; i++) {
+  // repeated int32 spells = 13;
+  for (int i = 0; i < this->spells_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        13, this->spells(i), target);
+      WriteInt32ToArray(13, this->spells(i), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2106,12 +1855,14 @@ int ActorData_Character::ByteSize() const {
     }
 
   }
-  // repeated .amarlon.proto.ActorData.Character.Spell spells = 13;
-  total_size += 1 * this->spells_size();
-  for (int i = 0; i < this->spells_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->spells(i));
+  // repeated int32 spells = 13;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->spells_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->spells(i));
+    }
+    total_size += 1 * this->spells_size() + data_size;
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2204,7 +1955,6 @@ bool ActorData_Character::IsInitialized() const {
   if (has_abilityscores()) {
     if (!this->abilityscores_->IsInitialized()) return false;
   }
-  if (!::google::protobuf::internal::AllAreInitialized(this->spells())) return false;
   return true;
 }
 
@@ -2593,6 +2343,7 @@ void ActorData_Destroyable_DropRule::InternalSwap(ActorData_Destroyable_DropRule
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
+const int ActorData_Destroyable::kDropRulesFieldNumber;
 #endif  // !_MSC_VER
 
 ActorData_Destroyable::ActorData_Destroyable()
@@ -2653,6 +2404,7 @@ ActorData_Destroyable* ActorData_Destroyable::New(::google::protobuf::Arena* are
 }
 
 void ActorData_Destroyable::Clear() {
+  droprules_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   if (_internal_metadata_.have_unknown_fields()) {
     mutable_unknown_fields()->Clear();
@@ -2668,14 +2420,35 @@ bool ActorData_Destroyable::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .amarlon.proto.ActorData.Destroyable.DropRule dropRules = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_dropRules:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_droprules()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(10)) goto parse_loop_dropRules;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormat::SkipField(
-          input, tag, mutable_unknown_fields()));
   }
 success:
   // @@protoc_insertion_point(parse_success:amarlon.proto.ActorData.Destroyable)
@@ -2689,6 +2462,12 @@ failure:
 void ActorData_Destroyable::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.proto.ActorData.Destroyable)
+  // repeated .amarlon.proto.ActorData.Destroyable.DropRule dropRules = 1;
+  for (unsigned int i = 0, n = this->droprules_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->droprules(i), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -2699,6 +2478,13 @@ void ActorData_Destroyable::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ActorData_Destroyable::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.proto.ActorData.Destroyable)
+  // repeated .amarlon.proto.ActorData.Destroyable.DropRule dropRules = 1;
+  for (unsigned int i = 0, n = this->droprules_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->droprules(i), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -2709,6 +2495,14 @@ void ActorData_Destroyable::SerializeWithCachedSizes(
 
 int ActorData_Destroyable::ByteSize() const {
   int total_size = 0;
+
+  // repeated .amarlon.proto.ActorData.Destroyable.DropRule dropRules = 1;
+  total_size += 1 * this->droprules_size();
+  for (int i = 0; i < this->droprules_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->droprules(i));
+  }
 
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
@@ -2735,6 +2529,7 @@ void ActorData_Destroyable::MergeFrom(const ::google::protobuf::Message& from) {
 
 void ActorData_Destroyable::MergeFrom(const ActorData_Destroyable& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  droprules_.MergeFrom(from.droprules_);
   if (from._internal_metadata_.have_unknown_fields()) {
     mutable_unknown_fields()->MergeFrom(from.unknown_fields());
   }
@@ -2754,6 +2549,7 @@ void ActorData_Destroyable::CopyFrom(const ActorData_Destroyable& from) {
 
 bool ActorData_Destroyable::IsInitialized() const {
 
+  if (!::google::protobuf::internal::AllAreInitialized(this->droprules())) return false;
   return true;
 }
 
@@ -2762,6 +2558,8 @@ void ActorData_Destroyable::Swap(ActorData_Destroyable* other) {
   InternalSwap(other);
 }
 void ActorData_Destroyable::InternalSwap(ActorData_Destroyable* other) {
+  droprules_.UnsafeArenaSwap(&other->droprules_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2789,7 +2587,6 @@ ActorData_Wearer_ItemSlot::ActorData_Wearer_ItemSlot()
 }
 
 void ActorData_Wearer_ItemSlot::InitAsDefaultInstance() {
-  item_ = const_cast< ::amarlon::proto::ActorData*>(&::amarlon::proto::ActorData::default_instance());
 }
 
 ActorData_Wearer_ItemSlot::ActorData_Wearer_ItemSlot(const ActorData_Wearer_ItemSlot& from)
@@ -2803,7 +2600,7 @@ ActorData_Wearer_ItemSlot::ActorData_Wearer_ItemSlot(const ActorData_Wearer_Item
 void ActorData_Wearer_ItemSlot::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
-  item_ = NULL;
+  item_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2814,7 +2611,6 @@ ActorData_Wearer_ItemSlot::~ActorData_Wearer_ItemSlot() {
 
 void ActorData_Wearer_ItemSlot::SharedDtor() {
   if (this != default_instance_) {
-    delete item_;
   }
 }
 
@@ -2844,12 +2640,19 @@ ActorData_Wearer_ItemSlot* ActorData_Wearer_ItemSlot::New(::google::protobuf::Ar
 }
 
 void ActorData_Wearer_ItemSlot::Clear() {
-  if (_has_bits_[0 / 32] & 3u) {
-    id_ = 0;
-    if (has_item()) {
-      if (item_ != NULL) item_->::amarlon::proto::ActorData::Clear();
-    }
-  }
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<ActorData_Wearer_ItemSlot*>(16)->f)
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(id_, item_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   if (_internal_metadata_.have_unknown_fields()) {
     mutable_unknown_fields()->Clear();
@@ -2876,16 +2679,18 @@ bool ActorData_Wearer_ItemSlot::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_item;
+        if (input->ExpectTag(16)) goto parse_item;
         break;
       }
 
-      // optional .amarlon.proto.ActorData item = 2;
+      // optional int32 item = 2;
       case 2: {
-        if (tag == 18) {
+        if (tag == 16) {
          parse_item:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_item()));
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &item_)));
+          set_has_item();
         } else {
           goto handle_unusual;
         }
@@ -2923,10 +2728,9 @@ void ActorData_Wearer_ItemSlot::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // optional .amarlon.proto.ActorData item = 2;
+  // optional int32 item = 2;
   if (has_item()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, *this->item_, output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->item(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2944,11 +2748,9 @@ void ActorData_Wearer_ItemSlot::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // optional .amarlon.proto.ActorData item = 2;
+  // optional int32 item = 2;
   if (has_item()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, *this->item_, target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->item(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2968,11 +2770,11 @@ int ActorData_Wearer_ItemSlot::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->id());
   }
-  // optional .amarlon.proto.ActorData item = 2;
+  // optional int32 item = 2;
   if (has_item()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->item_);
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->item());
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3005,7 +2807,7 @@ void ActorData_Wearer_ItemSlot::MergeFrom(const ActorData_Wearer_ItemSlot& from)
       set_id(from.id());
     }
     if (from.has_item()) {
-      mutable_item()->::amarlon::proto::ActorData::MergeFrom(from.item());
+      set_item(from.item());
     }
   }
   if (from._internal_metadata_.have_unknown_fields()) {
@@ -3028,9 +2830,6 @@ void ActorData_Wearer_ItemSlot::CopyFrom(const ActorData_Wearer_ItemSlot& from) 
 bool ActorData_Wearer_ItemSlot::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (has_item()) {
-    if (!this->item_->IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -4415,6 +4214,7 @@ const int ActorData::kSymbolFieldNumber;
 const int ActorData::kColorFieldNumber;
 const int ActorData::kBlocksFieldNumber;
 const int ActorData::kFovOnlyFieldNumber;
+const int ActorData::kTransparentFieldNumber;
 const int ActorData::kDescriptionFieldNumber;
 const int ActorData::kInventoryFieldNumber;
 const int ActorData::kCharacterFieldNumber;
@@ -4458,6 +4258,7 @@ void ActorData::SharedCtor() {
   color_.UnsafeSetDefault(_default_color_);
   blocks_ = true;
   fovonly_ = true;
+  transparent_ = true;
   description_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   inventory_ = NULL;
   character_ = NULL;
@@ -4529,14 +4330,15 @@ void ActorData::Clear() {
     }
     blocks_ = true;
     fovonly_ = true;
+    transparent_ = true;
     if (has_description()) {
       description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
+  }
+  if (_has_bits_[8 / 32] & 32512u) {
     if (has_inventory()) {
       if (inventory_ != NULL) inventory_->::amarlon::proto::ActorData_Inventory::Clear();
     }
-  }
-  if (_has_bits_[8 / 32] & 16128u) {
     if (has_character()) {
       if (character_ != NULL) character_->::amarlon::proto::ActorData_Character::Clear();
     }
@@ -4663,13 +4465,28 @@ bool ActorData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_description;
+        if (input->ExpectTag(56)) goto parse_transparent;
         break;
       }
 
-      // optional string description = 7 [default = ""];
+      // optional bool transparent = 7 [default = true];
       case 7: {
-        if (tag == 58) {
+        if (tag == 56) {
+         parse_transparent:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &transparent_)));
+          set_has_transparent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(66)) goto parse_description;
+        break;
+      }
+
+      // optional string description = 8 [default = ""];
+      case 8: {
+        if (tag == 66) {
          parse_description:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_description()));
@@ -4680,91 +4497,91 @@ bool ActorData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(66)) goto parse_inventory;
+        if (input->ExpectTag(74)) goto parse_inventory;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Inventory inventory = 8;
-      case 8: {
-        if (tag == 66) {
+      // optional .amarlon.proto.ActorData.Inventory inventory = 9;
+      case 9: {
+        if (tag == 74) {
          parse_inventory:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_inventory()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(74)) goto parse_character;
+        if (input->ExpectTag(82)) goto parse_character;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Character character = 9;
-      case 9: {
-        if (tag == 74) {
+      // optional .amarlon.proto.ActorData.Character character = 10;
+      case 10: {
+        if (tag == 82) {
          parse_character:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_character()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(82)) goto parse_destroyable;
+        if (input->ExpectTag(90)) goto parse_destroyable;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Destroyable destroyable = 10;
-      case 10: {
-        if (tag == 82) {
+      // optional .amarlon.proto.ActorData.Destroyable destroyable = 11;
+      case 11: {
+        if (tag == 90) {
          parse_destroyable:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_destroyable()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(90)) goto parse_wearer;
+        if (input->ExpectTag(98)) goto parse_wearer;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Wearer wearer = 11;
-      case 11: {
-        if (tag == 90) {
+      // optional .amarlon.proto.ActorData.Wearer wearer = 12;
+      case 12: {
+        if (tag == 98) {
          parse_wearer:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_wearer()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(98)) goto parse_ai;
+        if (input->ExpectTag(106)) goto parse_ai;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Ai ai = 12;
-      case 12: {
-        if (tag == 98) {
+      // optional .amarlon.proto.ActorData.Ai ai = 13;
+      case 13: {
+        if (tag == 106) {
          parse_ai:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ai()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(106)) goto parse_openable;
+        if (input->ExpectTag(114)) goto parse_openable;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Openable openable = 13;
-      case 13: {
-        if (tag == 106) {
+      // optional .amarlon.proto.ActorData.Openable openable = 14;
+      case 14: {
+        if (tag == 114) {
          parse_openable:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_openable()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(114)) goto parse_pickable;
+        if (input->ExpectTag(122)) goto parse_pickable;
         break;
       }
 
-      // optional .amarlon.proto.ActorData.Pickable pickable = 14;
-      case 14: {
-        if (tag == 114) {
+      // optional .amarlon.proto.ActorData.Pickable pickable = 15;
+      case 15: {
+        if (tag == 122) {
          parse_pickable:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_pickable()));
@@ -4845,56 +4662,61 @@ void ActorData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(6, this->fovonly(), output);
   }
 
-  // optional string description = 7 [default = ""];
+  // optional bool transparent = 7 [default = true];
+  if (has_transparent()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->transparent(), output);
+  }
+
+  // optional string description = 8 [default = ""];
   if (has_description()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "amarlon.proto.ActorData.description");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      7, this->description(), output);
+      8, this->description(), output);
   }
 
-  // optional .amarlon.proto.ActorData.Inventory inventory = 8;
+  // optional .amarlon.proto.ActorData.Inventory inventory = 9;
   if (has_inventory()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, *this->inventory_, output);
+      9, *this->inventory_, output);
   }
 
-  // optional .amarlon.proto.ActorData.Character character = 9;
+  // optional .amarlon.proto.ActorData.Character character = 10;
   if (has_character()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      9, *this->character_, output);
+      10, *this->character_, output);
   }
 
-  // optional .amarlon.proto.ActorData.Destroyable destroyable = 10;
+  // optional .amarlon.proto.ActorData.Destroyable destroyable = 11;
   if (has_destroyable()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      10, *this->destroyable_, output);
+      11, *this->destroyable_, output);
   }
 
-  // optional .amarlon.proto.ActorData.Wearer wearer = 11;
+  // optional .amarlon.proto.ActorData.Wearer wearer = 12;
   if (has_wearer()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      11, *this->wearer_, output);
+      12, *this->wearer_, output);
   }
 
-  // optional .amarlon.proto.ActorData.Ai ai = 12;
+  // optional .amarlon.proto.ActorData.Ai ai = 13;
   if (has_ai()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      12, *this->ai_, output);
+      13, *this->ai_, output);
   }
 
-  // optional .amarlon.proto.ActorData.Openable openable = 13;
+  // optional .amarlon.proto.ActorData.Openable openable = 14;
   if (has_openable()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      13, *this->openable_, output);
+      14, *this->openable_, output);
   }
 
-  // optional .amarlon.proto.ActorData.Pickable pickable = 14;
+  // optional .amarlon.proto.ActorData.Pickable pickable = 15;
   if (has_pickable()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      14, *this->pickable_, output);
+      15, *this->pickable_, output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -4955,7 +4777,12 @@ void ActorData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(6, this->fovonly(), target);
   }
 
-  // optional string description = 7 [default = ""];
+  // optional bool transparent = 7 [default = true];
+  if (has_transparent()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->transparent(), target);
+  }
+
+  // optional string description = 8 [default = ""];
   if (has_description()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
@@ -4963,56 +4790,56 @@ void ActorData::SerializeWithCachedSizes(
       "amarlon.proto.ActorData.description");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->description(), target);
+        8, this->description(), target);
   }
 
-  // optional .amarlon.proto.ActorData.Inventory inventory = 8;
+  // optional .amarlon.proto.ActorData.Inventory inventory = 9;
   if (has_inventory()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        8, *this->inventory_, target);
+        9, *this->inventory_, target);
   }
 
-  // optional .amarlon.proto.ActorData.Character character = 9;
+  // optional .amarlon.proto.ActorData.Character character = 10;
   if (has_character()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        9, *this->character_, target);
+        10, *this->character_, target);
   }
 
-  // optional .amarlon.proto.ActorData.Destroyable destroyable = 10;
+  // optional .amarlon.proto.ActorData.Destroyable destroyable = 11;
   if (has_destroyable()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        10, *this->destroyable_, target);
+        11, *this->destroyable_, target);
   }
 
-  // optional .amarlon.proto.ActorData.Wearer wearer = 11;
+  // optional .amarlon.proto.ActorData.Wearer wearer = 12;
   if (has_wearer()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        11, *this->wearer_, target);
+        12, *this->wearer_, target);
   }
 
-  // optional .amarlon.proto.ActorData.Ai ai = 12;
+  // optional .amarlon.proto.ActorData.Ai ai = 13;
   if (has_ai()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        12, *this->ai_, target);
+        13, *this->ai_, target);
   }
 
-  // optional .amarlon.proto.ActorData.Openable openable = 13;
+  // optional .amarlon.proto.ActorData.Openable openable = 14;
   if (has_openable()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        13, *this->openable_, target);
+        14, *this->openable_, target);
   }
 
-  // optional .amarlon.proto.ActorData.Pickable pickable = 14;
+  // optional .amarlon.proto.ActorData.Pickable pickable = 15;
   if (has_pickable()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        14, *this->pickable_, target);
+        15, *this->pickable_, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -5084,58 +4911,63 @@ int ActorData::ByteSize() const {
       total_size += 1 + 1;
     }
 
-    // optional string description = 7 [default = ""];
+    // optional bool transparent = 7 [default = true];
+    if (has_transparent()) {
+      total_size += 1 + 1;
+    }
+
+    // optional string description = 8 [default = ""];
     if (has_description()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->description());
     }
 
-    // optional .amarlon.proto.ActorData.Inventory inventory = 8;
+  }
+  if (_has_bits_[8 / 32] & 32512u) {
+    // optional .amarlon.proto.ActorData.Inventory inventory = 9;
     if (has_inventory()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           *this->inventory_);
     }
 
-  }
-  if (_has_bits_[8 / 32] & 16128u) {
-    // optional .amarlon.proto.ActorData.Character character = 9;
+    // optional .amarlon.proto.ActorData.Character character = 10;
     if (has_character()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           *this->character_);
     }
 
-    // optional .amarlon.proto.ActorData.Destroyable destroyable = 10;
+    // optional .amarlon.proto.ActorData.Destroyable destroyable = 11;
     if (has_destroyable()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           *this->destroyable_);
     }
 
-    // optional .amarlon.proto.ActorData.Wearer wearer = 11;
+    // optional .amarlon.proto.ActorData.Wearer wearer = 12;
     if (has_wearer()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           *this->wearer_);
     }
 
-    // optional .amarlon.proto.ActorData.Ai ai = 12;
+    // optional .amarlon.proto.ActorData.Ai ai = 13;
     if (has_ai()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           *this->ai_);
     }
 
-    // optional .amarlon.proto.ActorData.Openable openable = 13;
+    // optional .amarlon.proto.ActorData.Openable openable = 14;
     if (has_openable()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           *this->openable_);
     }
 
-    // optional .amarlon.proto.ActorData.Pickable pickable = 14;
+    // optional .amarlon.proto.ActorData.Pickable pickable = 15;
     if (has_pickable()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -5190,15 +5022,18 @@ void ActorData::MergeFrom(const ActorData& from) {
     if (from.has_fovonly()) {
       set_fovonly(from.fovonly());
     }
+    if (from.has_transparent()) {
+      set_transparent(from.transparent());
+    }
     if (from.has_description()) {
       set_has_description();
       description_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.description_);
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_inventory()) {
       mutable_inventory()->::amarlon::proto::ActorData_Inventory::MergeFrom(from.inventory());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_character()) {
       mutable_character()->::amarlon::proto::ActorData_Character::MergeFrom(from.character());
     }
@@ -5238,11 +5073,11 @@ void ActorData::CopyFrom(const ActorData& from) {
 bool ActorData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
-  if (has_inventory()) {
-    if (!this->inventory_->IsInitialized()) return false;
-  }
   if (has_character()) {
     if (!this->character_->IsInitialized()) return false;
+  }
+  if (has_destroyable()) {
+    if (!this->destroyable_->IsInitialized()) return false;
   }
   if (has_wearer()) {
     if (!this->wearer_->IsInitialized()) return false;
@@ -5267,6 +5102,7 @@ void ActorData::InternalSwap(ActorData* other) {
   color_.Swap(&other->color_);
   std::swap(blocks_, other->blocks_);
   std::swap(fovonly_, other->fovonly_);
+  std::swap(transparent_, other->transparent_);
   description_.Swap(&other->description_);
   std::swap(inventory_, other->inventory_);
   std::swap(character_, other->character_);
@@ -5291,58 +5127,58 @@ void ActorData::InternalSwap(ActorData* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // ActorData_Inventory
 
-// optional int32 slots = 1 [default = 20];
-bool ActorData_Inventory::has_slots() const {
+// optional int32 slotAmount = 1 [default = 20];
+bool ActorData_Inventory::has_slotamount() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-void ActorData_Inventory::set_has_slots() {
+void ActorData_Inventory::set_has_slotamount() {
   _has_bits_[0] |= 0x00000001u;
 }
-void ActorData_Inventory::clear_has_slots() {
+void ActorData_Inventory::clear_has_slotamount() {
   _has_bits_[0] &= ~0x00000001u;
 }
-void ActorData_Inventory::clear_slots() {
-  slots_ = 20;
-  clear_has_slots();
+void ActorData_Inventory::clear_slotamount() {
+  slotamount_ = 20;
+  clear_has_slotamount();
 }
- ::google::protobuf::int32 ActorData_Inventory::slots() const {
-  // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Inventory.slots)
-  return slots_;
+ ::google::protobuf::int32 ActorData_Inventory::slotamount() const {
+  // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Inventory.slotAmount)
+  return slotamount_;
 }
- void ActorData_Inventory::set_slots(::google::protobuf::int32 value) {
-  set_has_slots();
-  slots_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Inventory.slots)
+ void ActorData_Inventory::set_slotamount(::google::protobuf::int32 value) {
+  set_has_slotamount();
+  slotamount_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Inventory.slotAmount)
 }
 
-// repeated .amarlon.proto.ActorData item = 2;
+// repeated int32 item = 2;
 int ActorData_Inventory::item_size() const {
   return item_.size();
 }
 void ActorData_Inventory::clear_item() {
   item_.Clear();
 }
-const ::amarlon::proto::ActorData& ActorData_Inventory::item(int index) const {
+ ::google::protobuf::int32 ActorData_Inventory::item(int index) const {
   // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Inventory.item)
   return item_.Get(index);
 }
-::amarlon::proto::ActorData* ActorData_Inventory::mutable_item(int index) {
-  // @@protoc_insertion_point(field_mutable:amarlon.proto.ActorData.Inventory.item)
-  return item_.Mutable(index);
+ void ActorData_Inventory::set_item(int index, ::google::protobuf::int32 value) {
+  item_.Set(index, value);
+  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Inventory.item)
 }
-::amarlon::proto::ActorData* ActorData_Inventory::add_item() {
+ void ActorData_Inventory::add_item(::google::protobuf::int32 value) {
+  item_.Add(value);
   // @@protoc_insertion_point(field_add:amarlon.proto.ActorData.Inventory.item)
-  return item_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::amarlon::proto::ActorData >*
-ActorData_Inventory::mutable_item() {
-  // @@protoc_insertion_point(field_mutable_list:amarlon.proto.ActorData.Inventory.item)
-  return &item_;
-}
-const ::google::protobuf::RepeatedPtrField< ::amarlon::proto::ActorData >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 ActorData_Inventory::item() const {
   // @@protoc_insertion_point(field_list:amarlon.proto.ActorData.Inventory.item)
   return item_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+ActorData_Inventory::mutable_item() {
+  // @@protoc_insertion_point(field_mutable_list:amarlon.proto.ActorData.Inventory.item)
+  return &item_;
 }
 
 // -------------------------------------------------------------------
@@ -5491,34 +5327,6 @@ void ActorData_Character_AbilityScores::clear_cha() {
   set_has_cha();
   cha_ = value;
   // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Character.AbilityScores.CHA)
-}
-
-// -------------------------------------------------------------------
-
-// ActorData_Character_Spell
-
-// required int32 id = 1;
-bool ActorData_Character_Spell::has_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-void ActorData_Character_Spell::set_has_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-void ActorData_Character_Spell::clear_has_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-void ActorData_Character_Spell::clear_id() {
-  id_ = 0;
-  clear_has_id();
-}
- ::google::protobuf::int32 ActorData_Character_Spell::id() const {
-  // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Character.Spell.id)
-  return id_;
-}
- void ActorData_Character_Spell::set_id(::google::protobuf::int32 value) {
-  set_has_id();
-  id_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Character.Spell.id)
 }
 
 // -------------------------------------------------------------------
@@ -5861,34 +5669,34 @@ void ActorData_Character::set_allocated_abilityscores(::amarlon::proto::ActorDat
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.Character.abilityScores)
 }
 
-// repeated .amarlon.proto.ActorData.Character.Spell spells = 13;
+// repeated int32 spells = 13;
 int ActorData_Character::spells_size() const {
   return spells_.size();
 }
 void ActorData_Character::clear_spells() {
   spells_.Clear();
 }
-const ::amarlon::proto::ActorData_Character_Spell& ActorData_Character::spells(int index) const {
+ ::google::protobuf::int32 ActorData_Character::spells(int index) const {
   // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Character.spells)
   return spells_.Get(index);
 }
-::amarlon::proto::ActorData_Character_Spell* ActorData_Character::mutable_spells(int index) {
-  // @@protoc_insertion_point(field_mutable:amarlon.proto.ActorData.Character.spells)
-  return spells_.Mutable(index);
+ void ActorData_Character::set_spells(int index, ::google::protobuf::int32 value) {
+  spells_.Set(index, value);
+  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Character.spells)
 }
-::amarlon::proto::ActorData_Character_Spell* ActorData_Character::add_spells() {
+ void ActorData_Character::add_spells(::google::protobuf::int32 value) {
+  spells_.Add(value);
   // @@protoc_insertion_point(field_add:amarlon.proto.ActorData.Character.spells)
-  return spells_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::amarlon::proto::ActorData_Character_Spell >*
-ActorData_Character::mutable_spells() {
-  // @@protoc_insertion_point(field_mutable_list:amarlon.proto.ActorData.Character.spells)
-  return &spells_;
-}
-const ::google::protobuf::RepeatedPtrField< ::amarlon::proto::ActorData_Character_Spell >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 ActorData_Character::spells() const {
   // @@protoc_insertion_point(field_list:amarlon.proto.ActorData.Character.spells)
   return spells_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+ActorData_Character::mutable_spells() {
+  // @@protoc_insertion_point(field_mutable_list:amarlon.proto.ActorData.Character.spells)
+  return &spells_;
 }
 
 // -------------------------------------------------------------------
@@ -5995,6 +5803,36 @@ void ActorData_Destroyable_DropRule::clear_chance() {
 
 // ActorData_Destroyable
 
+// repeated .amarlon.proto.ActorData.Destroyable.DropRule dropRules = 1;
+int ActorData_Destroyable::droprules_size() const {
+  return droprules_.size();
+}
+void ActorData_Destroyable::clear_droprules() {
+  droprules_.Clear();
+}
+const ::amarlon::proto::ActorData_Destroyable_DropRule& ActorData_Destroyable::droprules(int index) const {
+  // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Destroyable.dropRules)
+  return droprules_.Get(index);
+}
+::amarlon::proto::ActorData_Destroyable_DropRule* ActorData_Destroyable::mutable_droprules(int index) {
+  // @@protoc_insertion_point(field_mutable:amarlon.proto.ActorData.Destroyable.dropRules)
+  return droprules_.Mutable(index);
+}
+::amarlon::proto::ActorData_Destroyable_DropRule* ActorData_Destroyable::add_droprules() {
+  // @@protoc_insertion_point(field_add:amarlon.proto.ActorData.Destroyable.dropRules)
+  return droprules_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::amarlon::proto::ActorData_Destroyable_DropRule >*
+ActorData_Destroyable::mutable_droprules() {
+  // @@protoc_insertion_point(field_mutable_list:amarlon.proto.ActorData.Destroyable.dropRules)
+  return &droprules_;
+}
+const ::google::protobuf::RepeatedPtrField< ::amarlon::proto::ActorData_Destroyable_DropRule >&
+ActorData_Destroyable::droprules() const {
+  // @@protoc_insertion_point(field_list:amarlon.proto.ActorData.Destroyable.dropRules)
+  return droprules_;
+}
+
 // -------------------------------------------------------------------
 
 // ActorData_Wearer_ItemSlot
@@ -6023,7 +5861,7 @@ void ActorData_Wearer_ItemSlot::clear_id() {
   // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Wearer.ItemSlot.id)
 }
 
-// optional .amarlon.proto.ActorData item = 2;
+// optional int32 item = 2;
 bool ActorData_Wearer_ItemSlot::has_item() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -6034,36 +5872,17 @@ void ActorData_Wearer_ItemSlot::clear_has_item() {
   _has_bits_[0] &= ~0x00000002u;
 }
 void ActorData_Wearer_ItemSlot::clear_item() {
-  if (item_ != NULL) item_->::amarlon::proto::ActorData::Clear();
+  item_ = 0;
   clear_has_item();
 }
-const ::amarlon::proto::ActorData& ActorData_Wearer_ItemSlot::item() const {
+ ::google::protobuf::int32 ActorData_Wearer_ItemSlot::item() const {
   // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.Wearer.ItemSlot.item)
-  return item_ != NULL ? *item_ : *default_instance_->item_;
-}
-::amarlon::proto::ActorData* ActorData_Wearer_ItemSlot::mutable_item() {
-  set_has_item();
-  if (item_ == NULL) {
-    item_ = new ::amarlon::proto::ActorData;
-  }
-  // @@protoc_insertion_point(field_mutable:amarlon.proto.ActorData.Wearer.ItemSlot.item)
   return item_;
 }
-::amarlon::proto::ActorData* ActorData_Wearer_ItemSlot::release_item() {
-  clear_has_item();
-  ::amarlon::proto::ActorData* temp = item_;
-  item_ = NULL;
-  return temp;
-}
-void ActorData_Wearer_ItemSlot::set_allocated_item(::amarlon::proto::ActorData* item) {
-  delete item_;
-  item_ = item;
-  if (item) {
-    set_has_item();
-  } else {
-    clear_has_item();
-  }
-  // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.Wearer.ItemSlot.item)
+ void ActorData_Wearer_ItemSlot::set_item(::google::protobuf::int32 value) {
+  set_has_item();
+  item_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.Wearer.ItemSlot.item)
 }
 
 // -------------------------------------------------------------------
@@ -6688,15 +6507,39 @@ void ActorData::clear_fovonly() {
   // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.fovOnly)
 }
 
-// optional string description = 7 [default = ""];
-bool ActorData::has_description() const {
+// optional bool transparent = 7 [default = true];
+bool ActorData::has_transparent() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-void ActorData::set_has_description() {
+void ActorData::set_has_transparent() {
   _has_bits_[0] |= 0x00000040u;
 }
-void ActorData::clear_has_description() {
+void ActorData::clear_has_transparent() {
   _has_bits_[0] &= ~0x00000040u;
+}
+void ActorData::clear_transparent() {
+  transparent_ = true;
+  clear_has_transparent();
+}
+ bool ActorData::transparent() const {
+  // @@protoc_insertion_point(field_get:amarlon.proto.ActorData.transparent)
+  return transparent_;
+}
+ void ActorData::set_transparent(bool value) {
+  set_has_transparent();
+  transparent_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.proto.ActorData.transparent)
+}
+
+// optional string description = 8 [default = ""];
+bool ActorData::has_description() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void ActorData::set_has_description() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void ActorData::clear_has_description() {
+  _has_bits_[0] &= ~0x00000080u;
 }
 void ActorData::clear_description() {
   description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -6741,15 +6584,15 @@ void ActorData::clear_description() {
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.description)
 }
 
-// optional .amarlon.proto.ActorData.Inventory inventory = 8;
+// optional .amarlon.proto.ActorData.Inventory inventory = 9;
 bool ActorData::has_inventory() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 void ActorData::set_has_inventory() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
 }
 void ActorData::clear_has_inventory() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 void ActorData::clear_inventory() {
   if (inventory_ != NULL) inventory_->::amarlon::proto::ActorData_Inventory::Clear();
@@ -6784,15 +6627,15 @@ void ActorData::set_allocated_inventory(::amarlon::proto::ActorData_Inventory* i
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.inventory)
 }
 
-// optional .amarlon.proto.ActorData.Character character = 9;
+// optional .amarlon.proto.ActorData.Character character = 10;
 bool ActorData::has_character() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 void ActorData::set_has_character() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
 }
 void ActorData::clear_has_character() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 void ActorData::clear_character() {
   if (character_ != NULL) character_->::amarlon::proto::ActorData_Character::Clear();
@@ -6827,15 +6670,15 @@ void ActorData::set_allocated_character(::amarlon::proto::ActorData_Character* c
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.character)
 }
 
-// optional .amarlon.proto.ActorData.Destroyable destroyable = 10;
+// optional .amarlon.proto.ActorData.Destroyable destroyable = 11;
 bool ActorData::has_destroyable() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 void ActorData::set_has_destroyable() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000400u;
 }
 void ActorData::clear_has_destroyable() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 void ActorData::clear_destroyable() {
   if (destroyable_ != NULL) destroyable_->::amarlon::proto::ActorData_Destroyable::Clear();
@@ -6870,15 +6713,15 @@ void ActorData::set_allocated_destroyable(::amarlon::proto::ActorData_Destroyabl
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.destroyable)
 }
 
-// optional .amarlon.proto.ActorData.Wearer wearer = 11;
+// optional .amarlon.proto.ActorData.Wearer wearer = 12;
 bool ActorData::has_wearer() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 void ActorData::set_has_wearer() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000800u;
 }
 void ActorData::clear_has_wearer() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 void ActorData::clear_wearer() {
   if (wearer_ != NULL) wearer_->::amarlon::proto::ActorData_Wearer::Clear();
@@ -6913,15 +6756,15 @@ void ActorData::set_allocated_wearer(::amarlon::proto::ActorData_Wearer* wearer)
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.wearer)
 }
 
-// optional .amarlon.proto.ActorData.Ai ai = 12;
+// optional .amarlon.proto.ActorData.Ai ai = 13;
 bool ActorData::has_ai() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 void ActorData::set_has_ai() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00001000u;
 }
 void ActorData::clear_has_ai() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 void ActorData::clear_ai() {
   if (ai_ != NULL) ai_->::amarlon::proto::ActorData_Ai::Clear();
@@ -6956,15 +6799,15 @@ void ActorData::set_allocated_ai(::amarlon::proto::ActorData_Ai* ai) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.ai)
 }
 
-// optional .amarlon.proto.ActorData.Openable openable = 13;
+// optional .amarlon.proto.ActorData.Openable openable = 14;
 bool ActorData::has_openable() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 void ActorData::set_has_openable() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00002000u;
 }
 void ActorData::clear_has_openable() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 void ActorData::clear_openable() {
   if (openable_ != NULL) openable_->::amarlon::proto::ActorData_Openable::Clear();
@@ -6999,15 +6842,15 @@ void ActorData::set_allocated_openable(::amarlon::proto::ActorData_Openable* ope
   // @@protoc_insertion_point(field_set_allocated:amarlon.proto.ActorData.openable)
 }
 
-// optional .amarlon.proto.ActorData.Pickable pickable = 14;
+// optional .amarlon.proto.ActorData.Pickable pickable = 15;
 bool ActorData::has_pickable() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00004000u) != 0;
 }
 void ActorData::set_has_pickable() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00004000u;
 }
 void ActorData::clear_has_pickable() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00004000u;
 }
 void ActorData::clear_pickable() {
   if (pickable_ != NULL) pickable_->::amarlon::proto::ActorData_Pickable::Clear();

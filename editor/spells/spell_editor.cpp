@@ -5,12 +5,14 @@
 #include <fstream>
 #include <QDebug>
 #include <enum_mappings.h>
+#include <QDesktopWidget>
 
 SpellEditor::SpellEditor(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::spell_editor)
 {
   ui->setupUi(this);
+  move(QApplication::desktop()->screen()->rect().center() - rect().center());
   populate();
 }
 
@@ -75,16 +77,6 @@ void SpellEditor::populate()
   }
 }
 
-amarlon::proto::SpellData* SpellEditor::getSpellByName(const QString &name)
-{
-  for( int i=0; i < _spellsData.spell_size(); ++i )
-  {
-    const amarlon::proto::SpellData& spell = _spellsData.spell(i);
-    if ( spell.name() == name.toStdString() ) return const_cast<amarlon::proto::SpellData*>( &spell );
-  }
-  return nullptr;
-}
-
 amarlon::proto::SpellData *SpellEditor::getSpell(std::function<bool (const amarlon::proto::SpellData&)> filter)
 {
   for( int i=0; i < _spellsData.spell_size(); ++i )
@@ -121,14 +113,6 @@ void SpellEditor::on_sTable_cellDoubleClicked(int row, int /*column*/)
       _editDlg.exec();
       populate();
     }
-    else
-    {
-      qDebug() << "Spell not found, row="<<row;
-    }
-  }
-  else
-  {
-    qDebug() << "Item not found, row=" << row;
   }
 }
 
@@ -138,5 +122,23 @@ void SpellEditor::on_actionSave_triggered()
   if ( !fn.isEmpty() )
   {
     saveDatabase(fn);
+  }
+}
+
+void SpellEditor::on_actionDelete_spell_triggered()
+{
+  auto* item = ui->sTable->item(ui->sTable->currentRow(), 0);
+  if ( item )
+  {
+    int id = item->text().toInt();
+    for( auto it = _spellsData.spell().begin(); it != _spellsData.spell().end(); ++it )
+    {
+      if ( it->id() == id )
+      {
+        _spellsData.mutable_spell()->erase(it);
+        populate();
+        break;
+      }
+    }
   }
 }

@@ -1,12 +1,15 @@
 #include "tile_edit_dlg.h"
 #include "ui_tileeditdlg.h"
 #include <tiles/tiles.pb.h>
+#include <QDesktopWidget>
 
 TileEditDlg::TileEditDlg(QWidget *parent) :
   QDialog(parent),
-  ui(new Ui::TileEditDlg)
+  ui(new Ui::TileEditDlg),
+  _tile(nullptr)
 {
   ui->setupUi(this);
+  move(QApplication::desktop()->screen()->rect().center() - rect().center());
 }
 
 TileEditDlg::~TileEditDlg()

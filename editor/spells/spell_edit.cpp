@@ -2,6 +2,7 @@
 #include "ui_spell_edit.h"
 #include <spells/spells.pb.h>
 #include <enum_mappings.h>
+#include <QDesktopWidget>
 
 SpellEdit::SpellEdit(QWidget *parent)
   : QDialog(parent)
@@ -9,6 +10,7 @@ SpellEdit::SpellEdit(QWidget *parent)
   , _spell(nullptr)
 {
   ui->setupUi(this);
+  move(QApplication::desktop()->screen()->rect().center() - rect().center());
   ui->fClass->clear();
   ui->fTarget->clear();
   ui->fClass->addItems( char_classes );
