@@ -96,7 +96,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="fHPBonus"/>
+        <widget class="QSpinBox" name="fHPBonus">
+         <property name="minimum">
+          <number>-99</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_11">

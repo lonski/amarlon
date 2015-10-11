@@ -2,6 +2,7 @@
 #include "ui_wearer_edit_dlg.h"
 #include <actors/actors.pb.h>
 #include <QInputDialog>
+#include <enum_mappings.h>
 
 WearerEditDlg::WearerEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -47,7 +48,7 @@ void WearerEditDlg::fillForm()
       const auto& slot = _wearer->itemslots(i);
 
       ui->sTable->insertRow( ui->sTable->rowCount() );
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( QString::number(slot.id()) ));
+      ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( item_slots.at(slot.id()) ));
       ui->sTable->setItem(ui->sTable->rowCount() - 1, 1, new QTableWidgetItem( QString::number(slot.item()) ));
     }
   }

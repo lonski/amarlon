@@ -46,7 +46,7 @@
      <item>
       <widget class="QLineEdit" name="fSymbol">
        <property name="maxLength">
-        <number>1</number>
+        <number>3</number>
        </property>
       </widget>
      </item>
