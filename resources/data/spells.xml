@@ -1,0 +1,6 @@
+<Spells>
+	<Spell id="1" name="Cure Light Wounds" level="1" class="2" targetType="0"/>
+	<Spell id="2" name="Magic Missile" level="1" class="1" targetType="5" range="10"/>
+	<Spell id="3" name="Fireball" level="3" class="1" targetType="2" range="10" radius="4"/>
+	<Spell id="4" name="Bless" level="2" class="2" targetType="6" radius="10"/>
+</Spells>

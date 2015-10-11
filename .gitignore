@@ -20,4 +20,3 @@ include/gtest
 doc/
 include
 lib
-build-*

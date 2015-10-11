@@ -3,15 +3,13 @@
 #include <actor.h>
 #include <animation.h>
 #include <engine.h>
-#include <spell_database.h>
+#include <spell_db.h>
 #include <lua_state.h>
-#include <spells.pb.h>
 
 namespace amarlon {
 
-Spell::Spell(SpellId id, proto::SpellData* flyweight)
+Spell::Spell(SpellId id)
   : _id(id)
-  , _flyweight(flyweight)
 {
 }
 
@@ -19,9 +17,9 @@ Spell::~Spell()
 {
 }
 
-SpellPtr Spell::create(SpellId id, proto::SpellData *flyweight)
+SpellPtr Spell::create(SpellId id)
 {
-  return SpellPtr( new Spell(id, flyweight) );
+  return SpellPtr( new Spell(id) );
 }
 
 SpellPtr Spell::clone()
@@ -36,9 +34,9 @@ bool Spell::cast(ActorPtr caster, Target target)
   if ( target )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    SpellDatabase& SpellDatabase = Engine::instance().getSpellDatabase();
+    SpellDB& spellDb = Engine::instance().getSpellDB();
 
-    if ( lua.execute( SpellDatabase.getScriptPath(_id) ) )
+    if ( lua.execute( spellDb.getScriptPath(_id) ) )
     {
       try
       {
@@ -67,37 +65,31 @@ SpellId Spell::getId() const
 
 std::string Spell::getName() const
 {
-  return _flyweight ? _flyweight->name()
-                    : Engine::instance().getSpellDatabase().getName(_id);
+  return Engine::instance().getSpellDB().getName(_id);
 }
 CharacterClass Spell::getClass() const
 {
-  return _flyweight ? static_cast<CharacterClass>(_flyweight->class_())
-                    : Engine::instance().getSpellDatabase().getClass(_id);
+  return Engine::instance().getSpellDB().getClass(_id);
 }
 
 int Spell::getLevel() const
 {
-  return _flyweight ? _flyweight->level()
-                    : Engine::instance().getSpellDatabase().getLevel(_id);
+  return Engine::instance().getSpellDB().getLevel(_id);
 }
 
 TargetType Spell::getTargetType() const
 {
-  return _flyweight ? static_cast<TargetType>(_flyweight->target())
-                    : Engine::instance().getSpellDatabase().getTargetType(_id);
+  return Engine::instance().getSpellDB().getTargetType(_id);
 }
 
 int Spell::getRange() const
 {
-  return _flyweight ? _flyweight->range()
-                    : Engine::instance().getSpellDatabase().getRange(_id);
+  return Engine::instance().getSpellDB().getRange(_id);
 }
 
 int Spell::getRadius() const
 {
-  return _flyweight ? _flyweight->radius()
-                    : Engine::instance().getSpellDatabase().getRadius(_id);
+  return Engine::instance().getSpellDB().getRadius(_id);
 }
 
 }

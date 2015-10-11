@@ -32,10 +32,13 @@ set(HEADER_FILES
     commands/cmd_put_into.h
     commands/cmd_look.h
     commands/cmd_cast.h
+    data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
+    data_gateways/parsers/tile_parser.h
     data_gateways/parsers/actor_parser.h
     data_gateways/parsers/map_parser.h
     data_gateways/parsers/animation_parser.h
+    data_gateways/parsers/spell_parser.h
     data_gateways/serializers/serializer.h
     data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
@@ -55,9 +58,11 @@ set(HEADER_FILES
     data_gateways/actor_db.h
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
+    data_gateways/descriptions/spell_description.h
     data_gateways/descriptions/description.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
+    data_gateways/spell_db.h
     gui/window/inventory_window/inventory_panel.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
@@ -128,8 +133,6 @@ set(HEADER_FILES
     rpg_system/carrying_capacity.h
     spells/spell.h
     spells/spell_id.h
-    spells/spell_database.h
-    spells/spell_factory.h
     animations/animation.h
     animations/animation_type.h
     animations/blink.h
@@ -149,15 +152,6 @@ set(HEADER_FILES
     lua_api/registrations/animation_registrar.h
     lua_api/registrations/free_functions_registrar.h
     lua_api/registrations/globals_registrar.cpp
-    protobuf/tiles/tiles.proto
-    protobuf/tiles/tiles.pb.h
-    protobuf/tiles/tiles.pb.cc
-    protobuf/spells/spells.proto
-    protobuf/spells/spells.pb.h
-    protobuf/spells/spells.pb.cc
-    protobuf/actors/actors.proto
-    protobuf/actors/actors.pb.h
-    protobuf/actors/actors.pb.cc
 )
 
 set(SOURCE_FILES
@@ -191,7 +185,9 @@ set(SOURCE_FILES
     commands/cmd_cast.cpp
     data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
+    data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
+    data_gateways/parsers/spell_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
@@ -209,6 +205,7 @@ set(SOURCE_FILES
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp
+    data_gateways/spell_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
@@ -264,8 +261,6 @@ set(SOURCE_FILES
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
     spells/spell.cpp
-    spells/spell_database.cpp
-    spells/spell_factory.cpp
     animations/animation.cpp
     animations/blink.cpp
     animations/throw.cpp
@@ -284,7 +279,7 @@ set(SOURCE_FILES
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS} ${PROTOBUF_LIBRARIES})
+target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_executable(amarlon main.cpp)
 target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})

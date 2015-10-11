@@ -12,11 +12,11 @@ namespace amarlon {
 class Configuration;
 class Map;
 class Actor;
-class SpellDatabase;
+class SpellDB;
 class World;
 class CommandExecutor;
 class MapGateway;
-class TileDatabase;
+class TileDB;
 class ActorDB;
 class Messenger;
 
@@ -26,10 +26,10 @@ namespace lua_api {
 }
 
 typedef std::shared_ptr<Map> MapPtr;
-typedef std::shared_ptr<SpellDatabase> SpellDatabasePtr;
+typedef std::shared_ptr<SpellDB> SpellDBPtr;
 typedef std::shared_ptr<World> WorldPtr;
 typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
-typedef std::shared_ptr<TileDatabase> TileDatabasePtr;
+typedef std::shared_ptr<TileDB> TileDBPtr;
 typedef std::shared_ptr<ActorDB> ActorDBPtr;
 typedef std::shared_ptr<Configuration> ConfigurationPtr;
 typedef std::shared_ptr<Messenger> MessengerPtr;
@@ -68,9 +68,9 @@ public:
   gui::WindowManager& getWindowManager() const;
 
   World&             getWorld()     const;
-  TileDatabase&            getTileDatabase()    const;
+  TileDB&            getTileDB()    const;
   ActorDB&           getActorDB()   const;
-  SpellDatabase&           getSpellDatabase()   const;
+  SpellDB&           getSpellDB()   const;
   Messenger&         getMessenger() const;
   lua_api::LuaState& getLuaState()  const;
 
@@ -83,8 +83,8 @@ private:
   ConfigurationPtr _config;
 
   WorldPtr _world;
-  SpellDatabasePtr _SpellDatabase;
-  TileDatabasePtr _tileDB;
+  SpellDBPtr _spellDB;
+  TileDBPtr _tileDB;
   ActorDBPtr _actorsDB;
   MessengerPtr _messenger;
   lua_api::LuaStatePtr _luaState;

@@ -1,7 +1,9 @@
 #include "status_effect.h"
 #include <engine.h>
-#include <spell_database.h>
+#include <spell_db.h>
 #include <lua_state.h>
+#include <spell_db.h>
+
 namespace amarlon {
 
 StatusEffect::StatusEffect(SpellId spell, int duration)
@@ -17,9 +19,9 @@ bool StatusEffect::cancel(Target target)
   if ( target )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    SpellDatabase& SpellDatabase = Engine::instance().getSpellDatabase();
+    SpellDB& spellDb = Engine::instance().getSpellDB();
 
-    if ( lua.execute( SpellDatabase.getScriptPath(_spell) ) )
+    if ( lua.execute( spellDb.getScriptPath(_spell) ) )
     {
       try
       {
@@ -52,7 +54,7 @@ void StatusEffect::setDuration(int duration)
 
 std::string StatusEffect::getName() const
 {
-  return Engine::instance().getSpellDatabase().getName(_spell);
+  return Engine::instance().getSpellDB().getName(_spell);
 }
 
 }

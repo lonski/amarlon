@@ -1,22 +1,22 @@
 #include "spelldb_registrar.h"
 #include <converters.h>
 #include <lua_state.h>
-#include <spell_database.h>
+#include <spell_db.h>
 
 namespace amarlon { namespace lua_api {
 
-void SpellDatabaseRegistrar::reg(lua_State* state)
+void SpellDBRegistrar::reg(lua_State* state)
 {
   using namespace luabind;
   module( state )
   [
-      class_<SpellDatabase>("SpellDatabase")
-        .def("getName",       &SpellDatabase::getName)
-        .def("getLevel",      &SpellDatabase::getLevel)
-        .def("getRange",      &SpellDatabase::getRange)
-        .def("getClass",      &SpellDatabase::getClass)
-        .def("getTargetType", &SpellDatabase::getTargetType)
-        .def("getRadius",     &SpellDatabase::getRadius)
+      class_<SpellDB>("SpellDB")
+        .def("getName",       &SpellDB::getName)
+        .def("getLevel",      &SpellDB::getLevel)
+        .def("getRange",      &SpellDB::getRange)
+        .def("getClass",      &SpellDB::getClass)
+        .def("getTargetType", &SpellDB::getTargetType)
+        .def("getRadius",     &SpellDB::getRadius)
   ];
 }
 

@@ -20,11 +20,13 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/actor_descriptions.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/description.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/spell_description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/map_gateway.h
-    ${PROJECT_SOURCE_DIR}/src/spells/spell_database.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/spell_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/tile_parser.h
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/world/map_id.h
     ${PROJECT_SOURCE_DIR}/src/world/tile_type.h

@@ -3,7 +3,7 @@
 //#include <spell_description.h>
 //#include <spell_parser.h>
 //#include <xml/rapidxml.hpp>
-//#include <spell_database.h>
+//#include <spell_db.h>
 
 //using namespace rapidxml;
 

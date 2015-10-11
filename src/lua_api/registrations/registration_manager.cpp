@@ -13,7 +13,7 @@ namespace amarlon { namespace lua_api {
 
 void RegistrationManager::registerAll(lua_State* state)
 {
-  SpellDatabaseRegistrar().reg(state);
+  SpellDBRegistrar().reg(state);
   ActorRegistrar().reg(state);
   DamageRegistrar().reg(state);
   TargetRegistrar().reg(state);
