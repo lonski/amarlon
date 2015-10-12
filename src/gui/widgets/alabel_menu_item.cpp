@@ -10,7 +10,7 @@ ALabelMenuItem::ALabelMenuItem()
   setColor(TCODColor::lightChartreuse);
 }
 
-ALabelMenuItem::ALabelMenuItem(const std::__cxx11::string &text)
+ALabelMenuItem::ALabelMenuItem(const std::string &text)
   : _label(new ALabel)
   , _selected(false)
 {

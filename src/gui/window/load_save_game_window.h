@@ -35,7 +35,7 @@ private:
 
   bool choose();
   void fillSaveSlots();
-  std::string promptForName(const std::__cxx11::string &def);
+  std::string promptForName(const std::string &def);
 
 };
 

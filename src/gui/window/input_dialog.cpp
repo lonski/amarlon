@@ -23,7 +23,7 @@ std::string InputDialog::getText() const
   return _input;
 }
 
-void InputDialog::setText(const std::__cxx11::string &text)
+void InputDialog::setText(const std::string &text)
 {
   _input = text;
 }
