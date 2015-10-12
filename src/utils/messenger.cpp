@@ -21,6 +21,7 @@ void Messenger::onNotify(Subject *subject, Event event)
 
   Actor* actor = dynamic_cast<Actor*>(subject);
   char msg[128];
+  msg[0] = '\0';
   TCODColor color = TCODColor::white;
 
   if ( actor && actor->isInFov() )
@@ -87,14 +88,6 @@ void Messenger::onNotify(Subject *subject, Event event)
 
           sprintf(msg, format, actor->getName().c_str(),
                                tolowers(event.params["target"]).c_str() );
-        }
-        break;
-        case EventId::Actor_Died:
-        {
-          color = TCODColor::darkerRed;
-          const char* format = "%s dies.";
-
-          sprintf(msg, format, actor->getName().c_str() );
         }
         break;
         case EventId::Actor_Pick:
@@ -224,6 +217,13 @@ void Messenger::onNotify(Subject *subject, Event event)
           const char* format = "%s has been unlocked.";
 
           sprintf(msg, format, actor->getName().c_str());
+        }
+        break;
+        case EventId::Actor_Died:
+        {
+          color = TCODColor::darkerRed;
+          const char* format = "%s dies.";
+          sprintf(msg, format, actor->getName().c_str() );
         }
         break;
       default:;

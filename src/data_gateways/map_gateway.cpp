@@ -45,18 +45,19 @@ bool MapGateway::load(const string& fn)
     vector<char> buf;
     buf.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
     buf.push_back('\0');
-    parseMaps(buf);
+
+    xml_document<> doc;
+    doc.parse<0>(&buf[0]);
+
+    parseMaps(doc);
 
     return true;
   }
   return false;
 }
 
-void MapGateway::parseMaps(vector<char>& buf)
+void MapGateway::parseMaps(rapidxml::xml_document<>& doc)
 {
-  xml_document<> doc;
-  doc.parse<0>(&buf[0]);
-
   xml_node<>* maps = doc.first_node("Maps");
   xml_node<>* mapNode = maps ? maps->first_node("Map") : nullptr;
 
@@ -68,7 +69,6 @@ void MapGateway::parseMaps(vector<char>& buf)
 
     mapNode = mapNode->next_sibling();
   }
-
 }
 
 std::shared_ptr<xml_document<> > MapGateway::serializeMaps()

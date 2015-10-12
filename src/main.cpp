@@ -7,9 +7,9 @@ int main()
   try
   {
     amarlon::Engine::instance().prologue();
-    amarlon::Engine::instance().initializeConsole();
+    amarlon::Engine::instance().showGameMenu();
 
-    while ( !TCODConsole::isWindowClosed() )
+    while ( !TCODConsole::isWindowClosed() && !amarlon::Engine::instance().isQuiting() )
     {
       amarlon::Engine::instance().render();
       int turns = amarlon::Engine::instance().processInput();

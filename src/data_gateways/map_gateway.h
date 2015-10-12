@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include <xml/rapidxml.hpp>
 #include <xml/rapidxml_print.hpp>
 #include <map_id.h>
 #include <map_parser.h>
@@ -29,7 +30,7 @@ protected:
   MapParser _mapParser;
   std::map<MapId, MapPtr> _maps;  
 
-  void parseMaps(std::vector<char> &buf);
+  void parseMaps(rapidxml::xml_document<> &doc);
   std::shared_ptr< rapidxml::xml_document<> > serializeMaps();
 
 };

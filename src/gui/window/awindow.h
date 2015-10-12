@@ -21,7 +21,10 @@ public:
     TEXT,
     MENU,
     RESIZABLE_TEXT,
-    FIXED_SIZE_TEXT
+    FIXED_SIZE_TEXT,
+    GAME_MENU,
+    LOAD_SAVE_GAME,
+    INPUT
   };
 
   /**

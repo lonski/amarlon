@@ -10,6 +10,7 @@
 #include "cmd_put_into.h"
 #include "cmd_look.h"
 #include "cmd_cast.h"
+#include "cmd_game_menu.h"
 
 namespace amarlon {
 
@@ -30,6 +31,8 @@ CommandPtr Command::create(CommandId cmd)
     case CommandId::PutInto:    c.reset( new CmdPutInto      ); break;
     case CommandId::Look:       c.reset( new CmdLook         ); break;
     case CommandId::Cast:       c.reset( new CmdCast         ); break;
+    case CommandId::GameMenu:   c.reset( new CmdGameMenu     ); break;
+
     default: break;
   }
 

@@ -21,6 +21,7 @@ enum class CommandId
   PutInto,
   Look,
   Cast,
+  GameMenu,
   End
 };
 

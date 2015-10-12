@@ -16,7 +16,11 @@ typedef std::shared_ptr<ABar>   ABarPtr;
 class ASlotMenuItem : public AMenuItem
 {
 public:
-  ASlotMenuItem(int width = 10, const std::string& name = "");
+  ASlotMenuItem(int width = 10,
+                const std::string& name = "",
+                const std::string& value = "",
+                const std::string& separator=":",
+                TCODColor color = TCODColor::darkYellow );
 
   virtual void render(TCODConsole& console);
 
@@ -47,8 +51,8 @@ private:
   bool _selected;
 
   void InitalizeNameLabel(const std::string &name);
-  void initalizeValueLabel();
-  void initalizeSeparator();
+  void initalizeValueLabel(const std::string &value);
+  void initalizeSeparator(const std::string &s);
   void initalizeBackground();
 
 };

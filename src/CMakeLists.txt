@@ -32,6 +32,7 @@ set(HEADER_FILES
     commands/cmd_put_into.h
     commands/cmd_look.h
     commands/cmd_cast.h
+    commands/cmd_game_menu.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -70,6 +71,8 @@ set(HEADER_FILES
     gui/window/inventory_window/character_info_panel.h
     gui/window/amount_window.h
     gui/window/window_manager.h
+    gui/window/game_menu_window.h
+    gui/window/load_save_game_window.h
     gui/gui.h
     gui/message_box.h
     gui/window/pick_up_window.h
@@ -78,6 +81,7 @@ set(HEADER_FILES
     gui/window/text_window/resizeable_text_window.h
     gui/window/awindow.h
     gui/window/menu_window.h
+    gui/window/input_dialog.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -183,6 +187,7 @@ set(SOURCE_FILES
     commands/cmd_put_into.cpp
     commands/cmd_look.cpp
     commands/cmd_cast.cpp
+    commands/cmd_game_menu.cpp
     data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp
@@ -213,11 +218,14 @@ set(SOURCE_FILES
     gui/window/amount_window.cpp
     gui/window/window_manager.cpp
     gui/window/menu_window.cpp
+    gui/window/game_menu_window.cpp
+    gui/window/load_save_game_window.cpp
     gui/gui.cpp
     gui/window/pick_up_window.cpp
     gui/window/text_window/text_window.cpp
     gui/window/text_window/resizeable_text_window.cpp    
     gui/window/text_window/fixed_size_text_window.cpp
+    gui/window/input_dialog.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp

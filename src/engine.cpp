@@ -12,7 +12,7 @@
 #include <tile_db.h>
 #include <actor_db.h>
 #include <lua_state.h>
-
+#include <window/game_menu_window.h>
 
 namespace amarlon {
 
@@ -25,6 +25,8 @@ int Engine::screenWidth = 100 + Engine::rightPanelWidth;
 int Engine::screenHeight = 60 + Engine::bottomPanelHeight;
 
 Engine::Engine()
+  : _quit(false)
+  , _running(false)
 {
 }
 
@@ -34,31 +36,65 @@ Engine::~Engine()
 
 void Engine::prologue()
 {
+  _windowManager.reset( new gui::WindowManager );
+
+  _config.reset( new Configuration );
+  _config->load("config.cfg");
+
+  initializeConsole();
+}
+
+void Engine::enterGame(const std::string& savedGameFn)
+{
   _gui.reset( new gui::Gui );
   _cmdExecutor.reset( new CommandExecutor );
-  _windowManager.reset( new gui::WindowManager );
-  _config.reset( new Configuration );
+
   _spellDB.reset(new SpellDB );
   _tileDB.reset( new TileDB );
   _actorsDB.reset( new ActorDB );
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
-  if ( _config->load("config.cfg") )
+  getActorDB().load( _config->get("actors_file") );
+  getTileDB ().load( _config->get("tiles_file" ) );
+  getSpellDB().load( _config->get("spells_file") );
+  getLuaState().registerAPI();
+
+  _world.reset( new World( _config->get("maps_file") ) );
+
+  if ( savedGameFn.empty() )
   {
-    getActorDB().load( _config->get("actors_file") );
-    getTileDB ().load( _config->get("tiles_file" ) );
-    getSpellDB().load( _config->get("spells_file") );
-
-    initializeWorld();
-    getLuaState().registerAPI();
-
-    //temporary: just add player from map
-    _player = getWorld().getCurrentMap()->getActors([](ActorPtr a){ return a->getType() == ActorType::Player; }).front();
-
-    getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
-
+    _world->changeMap( MapId::GameStart );
+    _world->setPlayer( Actor::create(ActorType::Player, 42, 28) );
   }
+  else
+  {
+    _world->load(savedGameFn);
+  }
+
+  _running = true;
+
+  getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
+}
+
+void Engine::showGameMenu()
+{
+  _windowManager->getWindow<gui::GameMenu>().show();
+}
+
+void Engine::quit()
+{
+  _quit = true;
+}
+
+bool Engine::isQuiting() const
+{
+  return _quit;
+}
+
+bool Engine::isRunning() const
+{
+  return _running;
 }
 
 void Engine::initializeConsole()
@@ -76,19 +112,8 @@ void Engine::initializeConsole()
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
 }
 
-void Engine::initializeWorld()
-{
-  _world.reset( new World( _config->get("maps_file") ) );
-
-  //temporary: automatically load save game
-  _world->load( _config->get("save_file") );
-  _world->changeMap( MapId::GameStart );
-}
-
 void Engine::epilogue()
 {
-  getWorld().store( _config->get("save_file") );
-
   _gui.reset();
   _cmdExecutor.reset();
   _windowManager.reset();
@@ -98,6 +123,8 @@ void Engine::epilogue()
   _actorsDB.reset();
   _messenger.reset();
   _luaState.reset();
+
+  _running = false;
 }
 
 void Engine::render()
@@ -107,16 +134,16 @@ void Engine::render()
 
   if ( map )
   {
-    map->computeFov(_player->getX(), _player->getY(), FovRadius);
+    map->computeFov(getPlayer()->getX(), getPlayer()->getY(), FovRadius);
     map->render(TCODConsole::root);
   }
 
   if (_gui)
   {
-    _gui->setPlayerName(_player->getName());
+    _gui->setPlayerName(getPlayer()->getName());
 
-    if ( _player->isAlive() )
-      _gui->setHpBar(_player->getFeature<Character>()->getHitPoints(), _player->getFeature<Character>()->getMaxHitPoints());
+    if ( getPlayer()->isAlive() )
+      _gui->setHpBar(getPlayer()->getFeature<Character>()->getHitPoints(), getPlayer()->getFeature<Character>()->getMaxHitPoints());
 
     _gui->setViewList(getActorsBenethPlayersFeet());
     _gui->render();
@@ -174,9 +201,9 @@ lua_api::LuaState &Engine::getLuaState() const
   return *_luaState;
 }
 
-ActorPtr Engine::getPlayer() const
+const ActorPtr Engine::getPlayer() const
 {
-  return _player;
+  return getWorld().getPlayer();
 }
 
 TileDB &Engine::getTileDB() const
@@ -198,10 +225,10 @@ std::vector<ColoredString> Engine::getActorsBenethPlayersFeet()
   {
     std::function<bool(amarlon::ActorPtr)> filterFun = [&](ActorPtr a) -> bool
     {
-      return a != _player;
+      return a != getPlayer();
     };
 
-    std::vector<ActorPtr> actorsOnTile = map->getActors(_player->getX(), _player->getY(), filterFun);
+    std::vector<ActorPtr> actorsOnTile = map->getActors(getPlayer()->getX(), getPlayer()->getY(), filterFun);
 
     for ( ActorPtr actor : actorsOnTile )
     {

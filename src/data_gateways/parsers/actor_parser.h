@@ -25,6 +25,8 @@ public:
   WearerDescriptionPtr      parseWearerDsc();
   DestroyableDescriptionPtr parseDestroyableDsc();
 
+  ActorPtr parse();
+
 private:
   std::map<ActorFeature::Type, std::function<DescriptionPtr ()> > _featureParsers;
 

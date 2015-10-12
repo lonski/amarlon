@@ -3,6 +3,7 @@
 #include <utils/xml_utils.h>
 #include <utils/utils.h>
 #include <races.h>
+#include <actor.h>
 
 namespace amarlon {
 
@@ -320,6 +321,24 @@ DestroyableDescriptionPtr ActorParser::parseDestroyableDsc()
   }
 
   return destrDsc;
+}
+
+ActorPtr ActorParser::parse()
+{
+  int aX = getAttribute<int>(_xml, "x");
+  int aY = getAttribute<int>(_xml, "y");
+  ActorType aId = static_cast<ActorType>(getAttribute<int>(_xml, "id"));
+
+  ActorPtr actor = Actor::create(aId, aX, aY);
+
+  for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f)
+  {
+    ActorFeature::Type featureType = static_cast<ActorFeature::Type>( f );
+    DescriptionPtr dsc( parseFeatureDsc(featureType) );
+    if ( dsc ) actor->insertFeature( ActorFeature::create(featureType, dsc) );
+  }
+
+  return actor;
 }
 
 }

@@ -22,7 +22,12 @@ LuaState::~LuaState()
 
 bool LuaState::execute(const std::string &path)
 {
-  return luaL_dofile(_state, path.c_str()) == 0;
+  if (luaL_dofile(_state, path.c_str()) != 0)
+  {
+      gui::msgBox(lua_tostring(_state, -1), gui::MsgType::Error);
+      return false;
+  }
+  return true;
 }
 
 lua_State* LuaState::operator()() const

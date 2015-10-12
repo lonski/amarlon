@@ -57,8 +57,19 @@ public:
   ~Engine();
 
   void prologue();
-  void initializeConsole();
   void epilogue();
+
+  void enterGame(const std::string &savedGameFn = "");
+  void showGameMenu();
+  void quit();
+  /**
+   * @brief A flag to quit the game was set.
+   */
+  bool isQuiting() const;
+  /**
+   * @brief The game was already started and is running.
+   */
+  bool isRunning() const;
 
   void render();
   void update();
@@ -74,7 +85,7 @@ public:
   Messenger&         getMessenger() const;
   lua_api::LuaState& getLuaState()  const;
 
-  ActorPtr getPlayer() const;
+  const ActorPtr getPlayer() const;
 
 private:
   gui::GuiPtr _gui;
@@ -89,10 +100,11 @@ private:
   MessengerPtr _messenger;
   lua_api::LuaStatePtr _luaState;
 
-  ActorPtr _player;
+  bool _quit;
+  bool _running;
 
   std::vector<ColoredString> getActorsBenethPlayersFeet();
-  void initializeWorld();
+  void initializeConsole();
 
 };
 

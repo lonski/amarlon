@@ -14,18 +14,22 @@ namespace amarlon { namespace gui {
 
 */
 
-ASlotMenuItem::ASlotMenuItem(int width, const std::string &name)
+ASlotMenuItem::ASlotMenuItem(int width,
+                             const std::string &name,
+                             const std::string &value,
+                             const std::string &separator,
+                             TCODColor color)
   : _panel(width, 5)
   , _background(new ABar)
   , _slotName(new ALabel)
   , _slotValue(new ALabel)
   , _selected(false)
 {
-  _panel.setFrameColor(TCODColor::darkYellow);
+  _panel.setFrameColor(color);
 
   InitalizeNameLabel(name);
-  initalizeValueLabel();
-  initalizeSeparator();
+  initalizeValueLabel(value);
+  initalizeSeparator(separator);
   initalizeBackground();
 }
 
@@ -36,17 +40,18 @@ void ASlotMenuItem::InitalizeNameLabel(const std::string &name)
   _panel.addWidget(_slotName);
 }
 
-void ASlotMenuItem::initalizeValueLabel()
+void ASlotMenuItem::initalizeValueLabel(const std::string &value)
 {
   _slotValue->setPosition( _panel.getWidth() / 3, 2 );
   _slotValue->setColor(TCODColor::lightChartreuse);
+  _slotValue->setValue(value);
   _panel.addWidget(_slotValue);
 }
 
-void ASlotMenuItem::initalizeSeparator()
+void ASlotMenuItem::initalizeSeparator(const std::string &s)
 {
   ALabel* sep = new ALabel;
-  sep->setValue(":");
+  sep->setValue(s);
   sep->setPosition( _panel.getWidth() / 3 - 2, 2 );
   _panel.addWidget(sep);
 }
