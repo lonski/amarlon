@@ -20,6 +20,7 @@ public:
   virtual void SetUp()
   {
     Engine::instance().prologue();
+    Engine::instance().enterGame();
 
     guy = Actor::create(ActorType::Orc);
 

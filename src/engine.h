@@ -57,6 +57,7 @@ public:
   ~Engine();
 
   void prologue();
+  void initializeConsole();
   void epilogue();
 
   void enterGame(const std::string &savedGameFn = "");
@@ -104,7 +105,6 @@ private:
   bool _running;
 
   std::vector<ColoredString> getActorsBenethPlayersFeet();
-  void initializeConsole();
 
 };
 

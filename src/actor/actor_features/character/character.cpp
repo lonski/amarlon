@@ -47,7 +47,7 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal &= _experience         == crhs->_experience;
     equal &= _class              == crhs->_class;
     equal &= _race               == crhs->_race;
-    equal &= _spellbook          == crhs->_spellbook;
+    equal &= *_spellbook         == *(crhs->_spellbook);
   }
 
   return equal;

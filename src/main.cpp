@@ -7,6 +7,7 @@ int main()
   try
   {
     amarlon::Engine::instance().prologue();
+    amarlon::Engine::instance().initializeConsole();
     amarlon::Engine::instance().showGameMenu();
 
     while ( !TCODConsole::isWindowClosed() && !amarlon::Engine::instance().isQuiting() )

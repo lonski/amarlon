@@ -41,13 +41,6 @@ void Engine::prologue()
   _config.reset( new Configuration );
   _config->load("config.cfg");
 
-#ifndef TESTING
-  initializeConsole();
-#endif
-}
-
-void Engine::enterGame(const std::string& savedGameFn)
-{
   _gui.reset( new gui::Gui );
   _cmdExecutor.reset( new CommandExecutor );
 
@@ -63,7 +56,10 @@ void Engine::enterGame(const std::string& savedGameFn)
   getLuaState().registerAPI();
 
   _world.reset( new World( _config->get("maps_file") ) );
+}
 
+void Engine::enterGame(const std::string& savedGameFn)
+{
   if ( savedGameFn.empty() )
   {
     _world->changeMap( MapId::GameStart );
