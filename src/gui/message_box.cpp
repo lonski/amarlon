@@ -6,7 +6,7 @@
 
 namespace amarlon { namespace gui {
 
-void msgBox(const std::__cxx11::string &text, MsgType type)
+void msgBox(const std::string &text, MsgType type)
 {
   TCODColor color;
   switch (type)
@@ -25,7 +25,7 @@ void msgBox(const std::__cxx11::string &text, MsgType type)
       .show();
 }
 
-QuestionDialog::Response questionBox(const std::__cxx11::string &text, MsgType type)
+QuestionDialog::Response questionBox(const std::string &text, MsgType type)
 {
   TCODColor color;
   switch (type)
