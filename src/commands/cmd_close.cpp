@@ -6,6 +6,7 @@
 #include <single_neighbour_selector.h>
 #include <message_box.h>
 #include <close_action.h>
+#include <engine.h>
 
 namespace amarlon {
 
@@ -46,7 +47,7 @@ int CmdClose::execute()
     }
     else
     {
-      gui::msgBox("Cannot close " + tolowers(toClose->getName())+":\n"
+      gui::msgBox("Cannot close " + tolowers(toClose->getName())+":#"
                   "It is blocked!",
                   gui::MsgType::Warning);
     }

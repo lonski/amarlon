@@ -27,7 +27,7 @@ void ResizeableTextWindow::displayText()
   _list->clear();
   _list->setPosition(_margin, _margin -1);
 
-  std::vector<std::string> lines = explode(_text, '\n');
+  std::vector<std::string> lines = explode(_text, '#');
 
   size_t width = 1;
   std::for_each(lines.begin(), lines.end(), [&](const std::string& line)

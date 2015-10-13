@@ -24,7 +24,9 @@ Monster::~Monster()
 
 ActorFeaturePtr Monster::clone()
 {
-  return ActorFeaturePtr( new Monster(*this) );
+  auto* c = new Monster(*this);
+  cloneBase(c);
+  return ActorFeaturePtr( c );
 }
 
 bool Monster::isEqual(ActorFeaturePtr rhs) const

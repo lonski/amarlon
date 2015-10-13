@@ -33,6 +33,9 @@ public:
   virtual TargetType getTargetType() const;
   virtual int getRange() const;
   virtual int getRadius() const;
+  virtual std::string getDescription() const;
+
+  bool operator==(const Spell& rhs);
 
 private:  
   SpellId _id;

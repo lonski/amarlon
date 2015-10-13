@@ -35,7 +35,6 @@ void InventoryWindow::initalize()
   _panels[BODYSLOTS] = _bodyMgr;
   _panels[INVENTORY] = _bagMgr;
   _panels[CHARACTER_INFO] = _charInfo;
-
 }
 
 AWindow &InventoryWindow::setDefaults()

@@ -23,6 +23,7 @@ int CmdUse::execute()
   int turns = 0;
   ActorPtr item = acquireItemToUse();
   Engine::instance().render();
+  TCODConsole::root->flush();
 
   if (item != nullptr)
   {    

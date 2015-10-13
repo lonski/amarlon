@@ -8,6 +8,7 @@
 #include <engine.h>
 #include <world.h>
 #include <map.h>
+#include <spell_book.h>
 
 namespace amarlon {
 
@@ -25,6 +26,7 @@ int CmdCast::execute()
   int turns = 0;
   SpellPtr spell = getSpell();
   Engine::instance().render();
+  TCODConsole::root->flush();
   if ( spell )
   {
      TargetSelectorPtr selector( TargetSelector::create( spell->getTargetType() ) );
@@ -47,23 +49,25 @@ int CmdCast::execute()
 SpellPtr CmdCast::getSpell()
 {
   SpellPtr spell;
-
   CharacterPtr character = Engine::instance().getPlayer()->getFeature<Character>();
 
   gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
                    window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
                    window . setTitle("Choose spell to cast");
 
-  if ( character && !character->getSpells().empty() )
+  if ( character && character->getSpellBook() )
   {
-    window.fill<Spell>( character->getSpells(), [](SpellPtr s){ return s->getName(); } );
+    auto spells = character->getSpellBook()->getSlots( [](SpellSlotPtr s){ return s->isPrepared && s->spell; } );
+
+    window.fill<SpellSlot>( spells, [](SpellSlotPtr s){ return s->spell->getName(); } );
     window.show();
-    if ( auto selected = window.getSelectedItem() )
-    {
-      spell = selected->getObject<Spell>();
-    }
+
+    if ( auto selected = window.getSelectedItem() ) spell = selected->getObject<SpellSlot>()->spell;
   }
-  else gui::msgBox("You don't know any spells!", gui::MsgType::Warning);
+  else
+  {
+    gui::msgBox("You don't have any prepared spells!", gui::MsgType::Warning);
+  }
 
   return spell;
 }

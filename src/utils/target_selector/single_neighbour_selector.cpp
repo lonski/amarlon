@@ -25,6 +25,7 @@ Target SingleNeighbourSelector::select(std::function<bool(ActorPtr)> filterFun)
 
   Engine::instance().getGui().clearStatusMessage();
   Engine::instance().render();
+  TCODConsole::root->flush();
 
   return selected ? Target(map->getActors(player->getX()+dx, player->getY()+dy, filterFun),
                            player->getX()+dx,

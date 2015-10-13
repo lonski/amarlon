@@ -17,6 +17,7 @@ SpellDescriptionPtr SpellParser::parseSpellDsc()
     spellDsc.reset( new SpellDescription );
 
     spellDsc->name = getAttribute<std::string>(_xml, "name");
+    spellDsc->description = getAttribute<std::string>(_xml, "description");
     spellDsc->level = getAttribute<int>(_xml, "level");
     spellDsc->spellClass = getAttribute<int>(_xml, "class");
     spellDsc->targetType = getAttribute<int>(_xml, "targetType");

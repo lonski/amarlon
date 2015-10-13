@@ -8,6 +8,7 @@ set(HEADER_FILES
     alabel_menu_item.h
     aslot_menu_item.h
     amenu.h
+    asub_panel.h
 )
 
 set(SOURCE_FILES

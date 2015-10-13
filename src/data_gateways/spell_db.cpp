@@ -86,6 +86,12 @@ int SpellDB::getRadius(SpellId id)
   return it != _spells.end() ? it->second->radius : 0;
 }
 
+std::string SpellDB::getDescription(SpellId id)
+{
+  auto it = _spells.find(id);
+  return it != _spells.end() ? it->second->description : "";
+}
+
 std::string SpellDB::getScriptPath(SpellId id) const
 {
   return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";

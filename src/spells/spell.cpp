@@ -5,6 +5,7 @@
 #include <engine.h>
 #include <spell_db.h>
 #include <lua_state.h>
+#include <spell_book.h>
 
 namespace amarlon {
 
@@ -19,7 +20,7 @@ Spell::~Spell()
 
 SpellPtr Spell::create(SpellId id)
 {
-  return SpellPtr( new Spell(id) );
+  return id != SpellId::Null ? SpellPtr( new Spell(id) ) : nullptr;
 }
 
 SpellPtr Spell::clone()
@@ -55,6 +56,24 @@ bool Spell::cast(ActorPtr caster, Target target)
 
   }
 
+  //Set spell prepared = false in caster's spellbook
+  if ( success )
+  {
+    CharacterPtr character = caster->getFeature<Character>();
+    if ( character && character->getSpellBook() )
+    {
+      auto sSlots = character->
+                    getSpellBook()->
+                    getSlots([&](SpellSlotPtr s)
+                      { return s->spell && s->spell->getId() == _id; });
+
+      if ( !sSlots.empty() )
+      {
+        sSlots.front()->isPrepared = false;
+      }
+    }
+  }
+
   return success;
 }
 
@@ -67,6 +86,7 @@ std::string Spell::getName() const
 {
   return Engine::instance().getSpellDB().getName(_id);
 }
+
 CharacterClass Spell::getClass() const
 {
   return Engine::instance().getSpellDB().getClass(_id);
@@ -90,6 +110,25 @@ int Spell::getRange() const
 int Spell::getRadius() const
 {
   return Engine::instance().getSpellDB().getRadius(_id);
+}
+
+std::string Spell::getDescription() const
+{
+  std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
+
+  str += Engine::instance().getSpellDB().getDescription(_id) + "# #";
+
+  str += colorToStr(TCODColor::darkTurquoise, true) + "Class : " + CharacterClass2Str( getClass() ) + "#";
+  str += colorToStr(TCODColor::darkTurquoise, true) + "Level : " + toStr(getLevel()) + "#";
+  str += colorToStr(TCODColor::darkTurquoise, true) + "Range : " + toStr(getRange()) + "#";
+  str += colorToStr(TCODColor::darkTurquoise, true) + "Radius: " + toStr(getRadius()) + "#";
+
+  return str;
+}
+
+bool Spell::operator==(const Spell &rhs)
+{
+  return _id == rhs._id;
 }
 
 }

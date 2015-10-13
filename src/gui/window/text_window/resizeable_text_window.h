@@ -9,13 +9,13 @@ namespace amarlon { namespace gui {
 class ResizeableTextWindow : public TextWindow
 {
   friend class WindowManager;
-  ResizeableTextWindow();
 
 public:
   static WindowId getId() { return AWindow::RESIZABLE_TEXT; }
   virtual AWindow& setDefaults();
 
 protected:
+  ResizeableTextWindow();
   virtual void displayText();
   virtual void handleKey(TCOD_key_t&) {}
 

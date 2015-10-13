@@ -50,10 +50,13 @@ void ASlotMenuItem::initalizeValueLabel(const std::string &value)
 
 void ASlotMenuItem::initalizeSeparator(const std::string &s)
 {
-  ALabel* sep = new ALabel;
-  sep->setValue(s);
-  sep->setPosition( _panel.getWidth() / 3 - 2, 2 );
-  _panel.addWidget(sep);
+  if ( !s.empty() )
+  {
+    ALabel* sep = new ALabel;
+    sep->setValue(s);
+    sep->setPosition( _panel.getWidth() / 3 - 2, 2 );
+    _panel.addWidget(sep);
+  }
 }
 
 void ASlotMenuItem::initalizeBackground()
@@ -137,6 +140,16 @@ TCODColor ASlotMenuItem::getColor() const
 void ASlotMenuItem::setColor(const TCODColor& color)
 {
   _slotValue->setColor(color);
+}
+
+TCODColor ASlotMenuItem::getNameColor() const
+{
+  return _slotName->getColor();
+}
+
+void ASlotMenuItem::setNameColor(const TCODColor& c)
+{
+  _slotName->setColor(c);
 }
 
 void ASlotMenuItem::render(TCODConsole &console)

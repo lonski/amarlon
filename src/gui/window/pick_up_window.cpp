@@ -5,6 +5,7 @@
 #include <amarlon_except.h>
 #include <actor.h>
 #include <pickup_action.h>
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 
@@ -81,6 +82,7 @@ AWindow& PickUpWindow::show()
           choose();
           _menu->selectNext();
           Engine::instance().render();
+          TCODConsole::root->flush();
           break;
         }
 

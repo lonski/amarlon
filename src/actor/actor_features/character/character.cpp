@@ -7,6 +7,7 @@
 #include <spell_db.h>
 #include <engine.h>
 #include <actor_descriptions.h>
+#include <spell_book.h>
 
 namespace amarlon {
 
@@ -23,6 +24,7 @@ Character::Character()
   , _speed(0)
   , _movePoints(0)
   , _extraAttackBonus(0)
+  , _spellbook(new SpellBook)
 {
 }
 
@@ -45,7 +47,7 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal &= _experience         == crhs->_experience;
     equal &= _class              == crhs->_class;
     equal &= _race               == crhs->_race;
-    equal &= _spells             == crhs->_spells;
+    equal &= _spellbook          == crhs->_spellbook;
   }
 
   return equal;
@@ -206,20 +208,20 @@ int Character::getArmorClass()
   return armor ? armor->getArmorClass() : _defaultArmorClass;
 }
 
-std::vector<SpellPtr> Character::getSpells() const
-{
-  return std::vector<SpellPtr>{_spells.begin(), _spells.end()};
-}
-
 std::string Character::getDescription()
 {
   std::string str = colorToStr(TCODColor::darkerTurquoise, true)
       + "Class: " + (getRace() == Race::NoRace ? "" : Race2Str(getRace()) + " ")
-      + CharacterClass2Str( getClass() ) +"\n \n"
-      + colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "\n"
-      + colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "\n";
+      + CharacterClass2Str( getClass() ) +"# #"
+      + colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "#"
+      + colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "#";
 
   return str;
+}
+
+SpellBookPtr Character::getSpellBook()
+{
+  return _spellbook;
 }
 
 void Character::setLevel(int level)
@@ -249,6 +251,11 @@ PickablePtr Character::getEquippedItem(ItemSlotType slot)
   return item;
 }
 
+void Character::cloneBase(Character *c)
+{
+  c->_spellbook = _spellbook->clone();
+}
+
 void Character::Creator::fillCommonCharacterPart(CharacterPtr character, CharacterDescriptionPtr dsc)
 {
   if ( character != nullptr && dsc != nullptr )
@@ -258,10 +265,7 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_race = dsc->race;
     character->_defaultArmorClass = dsc->defaultArmorClass;
     character->_speed = dsc->speed;
-    for(auto id : dsc->spells )
-    {
-      character->_spells.insert( Spell::create(id) );
-    }
+    character->_spellbook = SpellBook::create(dsc->spellbook);
   }
 }
 

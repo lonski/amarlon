@@ -6,16 +6,16 @@
 
 namespace amarlon { namespace gui {
 
-class AInventoryPanel : public APanel
+class ASubPanel : public APanel
 {
 public:
-  AInventoryPanel(int w, int h)
+  ASubPanel(int w, int h)
     : APanel(w, h)
     , _active(false)
   {
   }
 
-  virtual ~AInventoryPanel() {}
+  virtual ~ASubPanel() {}
   virtual bool isActive() const { return _active; }
   virtual void activate() { _active = true; }
   virtual void deactivate() { _active = false; }
@@ -29,7 +29,7 @@ private:
 
 };
 
-typedef std::shared_ptr<AInventoryPanel> AInventoryPanelPtr;
+typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
 
 }}
 

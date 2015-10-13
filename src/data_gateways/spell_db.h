@@ -25,6 +25,7 @@ public:
   virtual TargetType getTargetType(SpellId id);
   virtual int getRange(SpellId id);
   virtual int getRadius(SpellId id);
+  virtual std::string getDescription(SpellId id);
   virtual std::string getScriptPath(SpellId id) const;
 
   virtual bool load(const std::string& fn);

@@ -17,7 +17,7 @@ std::vector<ColoredString> TextFormater::format(std::string text, unsigned lineW
   _lineWidth = lineWidth;
   _lines.clear();
 
-  for( std::string line : explode(text,'\n') )
+  for( std::string line : explode(text,'#') )
   {
     TCODColor color = TCODColor::white;
     if ( !line.empty() && line.front() == '{' )

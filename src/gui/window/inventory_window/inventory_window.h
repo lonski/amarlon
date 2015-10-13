@@ -4,7 +4,7 @@
 #include <memory>
 #include <libtcod.hpp>
 #include <awindow.h>
-#include <inventory_panel.h>
+#include <asub_panel.h>
 #include <bag_manager.h>
 #include <body_manager.h>
 #include <character_info_panel.h>
@@ -40,7 +40,7 @@ private:
     CHARACTER_INFO
   };
 
-  std::map<WindowPanel, AInventoryPanelPtr> _panels;
+  std::map<WindowPanel, ASubPanelPtr> _panels;
   WindowPanel _activePanel;
 
   BagManagerPtr _bagMgr;

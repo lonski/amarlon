@@ -6,6 +6,7 @@
 #include <single_neighbour_selector.h>
 #include <gui/message_box.h>
 #include <open_action.h>
+#include <engine.h>
 
 namespace amarlon {
 

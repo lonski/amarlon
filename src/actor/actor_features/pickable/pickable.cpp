@@ -223,8 +223,8 @@ std::string Pickable::getDescription()
     str += ItemSlotType2Str( getItemSlot() ) ;
     str += ")";
   }
-  str += "\n";
-  str += colorToStr(TCODColor::darkerTurquoise, true) + "Weight: " + toStr( getWeight() ) + " lbs\n \n";
+  str += "#";
+  str += colorToStr(TCODColor::darkerTurquoise, true) + "Weight: " + toStr( getWeight() ) + " lbs# #";
 
   if ( getDamage() != Damage() )
   {
@@ -236,11 +236,11 @@ std::string Pickable::getDescription()
       str += ( _damage.value >0 ? "+" : "-" ) + toStr(_damage.value);
     }
 
-    str += "\n";
+    str += "#";
   }
   if ( getArmorClass() != 0 )
   {
-    str += colorToStr(TCODColor::darkTurquoise, true) + "Armor class: " + toStr(getArmorClass()) + "\n";
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Armor class: " + toStr(getArmorClass()) + "#";
   }
 
          return str;

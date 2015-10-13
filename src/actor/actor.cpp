@@ -181,9 +181,9 @@ std::string Actor::getName() const
 
 std::string Actor::getDescription()
 {
-  std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "\n \n";
+  std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
 
-  str += Engine::instance().getActorDB().getDescription(_id) + "\n \n";
+  str += Engine::instance().getActorDB().getDescription(_id) + "# #";
 
   for ( auto& fPair : _features )
   {

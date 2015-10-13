@@ -30,7 +30,7 @@ int CmdPick::execute()
     auto inventoryFullAction =
     [](const std::string& item)
     {
-      gui::msgBox("Cannot pickup "+item+":\nInventory is full!", gui::MsgType::Error);
+      gui::msgBox("Cannot pickup "+item+":#Inventory is full!", gui::MsgType::Error);
     };
 
     Engine::instance().getWindowManager()

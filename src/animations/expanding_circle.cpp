@@ -30,6 +30,7 @@ void ExpandingCircle::run()
   for(int r = 0; r <= _radius; ++r)
   {
     Engine::instance().render();
+    TCODConsole::root->flush();
     drawCircle(r, stop, _ch, _color);
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));

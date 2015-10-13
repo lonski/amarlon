@@ -10,7 +10,7 @@ const unsigned MARGIN = 2;
 namespace amarlon { namespace gui {
 
 CharacterInfo::CharacterInfo(int w, int h)
-  : AInventoryPanel(w, h)
+  : ASubPanel(w, h)
   , _col1( new AList )
   , _col2( new AList )
 {

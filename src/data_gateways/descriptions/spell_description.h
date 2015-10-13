@@ -29,6 +29,7 @@ struct SpellDescription : Description
   int range;
   int id;
   int radius;
+  std::string description;
 };
 
 }

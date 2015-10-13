@@ -4,14 +4,14 @@
 #include <memory>
 #include <string>
 #include <item_slot_type.h>
-#include <inventory_panel.h>
+#include <asub_panel.h>
 #include <amenu.h>
 
 namespace amarlon {
   class Actor;
 namespace gui {
 
-class BodyManager : public AInventoryPanel
+class BodyManager : public ASubPanel
 {
 public:  
   BodyManager(int w, int h);

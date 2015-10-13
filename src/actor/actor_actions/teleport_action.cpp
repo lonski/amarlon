@@ -29,6 +29,7 @@ bool TeleportAction::perform(ActorPtr performer)
   {
     Engine::instance().getWorld().changeMap( _map );
     Engine::instance().render();
+    TCODConsole::root->flush();
   }
 
   return true;

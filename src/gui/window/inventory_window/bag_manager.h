@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <amenu.h>
-#include <inventory_panel.h>
+#include <asub_panel.h>
 #include <body_manager.h>
 
 namespace amarlon {
@@ -11,7 +11,7 @@ namespace amarlon {
   class Engine;
 namespace gui {
 
-class BagManager : public AInventoryPanel
+class BagManager : public ASubPanel
 {
 public:
   BagManager(int w, int h);

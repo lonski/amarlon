@@ -205,14 +205,32 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");
 
-      xml_node<>* spellsNode = characterNode->first_node("Spells");
-      if ( spellsNode )
+      xml_node<>* spellbookNode = characterNode->first_node("Spellbook");
+      if ( spellbookNode )
       {
-        xml_node<>* spellNode = spellsNode->first_node("Spell");
-        while ( spellNode )
+        xml_node<>* slotsNode = spellbookNode->first_node("Slots");
+        if ( slotsNode )
         {
-          dsc->spells.insert(static_cast<SpellId>(getAttribute<int>(spellNode, "id")));
-          spellNode = spellNode->next_sibling();
+          xml_node<>* slotNode = slotsNode->first_node("Slot");
+          while ( slotNode )
+          {
+            SpellSlotDescription slot;
+            slot.level = getAttribute<int>(slotNode, "level");
+            slot.prepared = getAttribute<bool>(slotNode, "prepared");
+            slot.spell = getAttribute<int>(slotNode, "spell");
+            dsc->spellbook.spellSlots.push_back(slot);
+            slotNode = slotNode->next_sibling();
+          }
+        }
+        xml_node<>* knownNode = spellbookNode->first_node("Known");
+        if ( knownNode )
+        {
+          xml_node<>* kNode = knownNode->first_node("Spell");
+          while( kNode )
+          {
+            dsc->spellbook.knownSpells.push_back( getAttribute<int>(kNode, "id") );
+            kNode = kNode->next_sibling();
+          }
         }
       }
     }

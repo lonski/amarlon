@@ -1,6 +1,4 @@
 #include "cmd_inventory.h"
-#include <iostream>
-#include <algorithm>
 #include <memory>
 #include <engine.h>
 #include <inventory_window.h>

@@ -3,6 +3,7 @@
 #include <character.h>
 #include <utils.h>
 #include <spell.h>
+#include <spell_book.h>
 
 using namespace rapidxml;
 
@@ -35,13 +36,27 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
     addAttributeEnum( characterNode, "class",        character->getClass()           );
     addAttributeEnum( characterNode, "race",         character->getRace()            );
 
-    xml_node<>* spellsNode = _document->allocate_node(node_element, "Spells");
-    characterNode->append_node(spellsNode);
-    for ( auto spell : character->getSpells() )
+    xml_node<>* spellbookNode = _document->allocate_node(node_element, "Spellbook");
+    characterNode->append_node(spellbookNode);
+
+    xml_node<>* slotsNode = _document->allocate_node(node_element, "Slots");
+    spellbookNode->append_node(slotsNode);
+    for ( auto slot : character->_spellbook->getSlots() )
+    {
+      xml_node<>* slotNode = _document->allocate_node(node_element, "Slot");
+      slotsNode->append_node(slotNode);
+      addAttribute(slotNode,"level",slot->level);
+      addAttribute(slotNode,"prepared",(int)slot->isPrepared);
+      if ( slot->spell ) addAttribute(slotNode,"spell",(int)slot->spell->getId());
+    }
+
+    xml_node<>* knownNode = _document->allocate_node(node_element, "Known");
+    spellbookNode->append_node(knownNode);
+    for ( auto spell : character->_spellbook->getKnownSpells() )
     {
       xml_node<>* spellNode = _document->allocate_node(node_element, "Spell");
-      spellsNode->append_node(spellNode);
-      addAttributeEnum(spellNode, "id", spell->getId() );
+      knownNode->append_node(spellNode);
+      addAttribute(spellNode,"id",(int)spell->getId());
     }
   }
 }

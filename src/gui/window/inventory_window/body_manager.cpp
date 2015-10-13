@@ -7,13 +7,14 @@
 #include <menu_window.h>
 #include <unequip_action.h>
 #include <equip_action.h>
+#include <engine.h>
 
 const unsigned MARGIN = 2;
 
 namespace amarlon { namespace gui {
 
 BodyManager::BodyManager(int w, int h)
-  : AInventoryPanel(w, h)
+  : ASubPanel(w, h)
   , _bodyMenu( new AMenu )
 {
   setTitle("Equipped items");
@@ -80,7 +81,7 @@ bool BodyManager::unequipItem(ItemSlotType slot)
   switch ( status )
   {
     case UnEquipResult::InventoryFull:
-      msgBox("Item cannot be unequipped:\nNot enough space in inventory", gui::MsgType::Error);
+      msgBox("Item cannot be unequipped:#Not enough space in inventory", gui::MsgType::Error);
       break;
 
     case UnEquipResult::Nok:
@@ -164,13 +165,13 @@ void BodyManager::selectPrevious()
 
 void BodyManager::activate()
 {
-  AInventoryPanel::activate();
+  ASubPanel::activate();
   _bodyMenu->selectNext();
 }
 
 void BodyManager::deactivate()
 {
-  AInventoryPanel::deactivate();
+  ASubPanel::deactivate();
   _bodyMenu->deselect();
 }
 

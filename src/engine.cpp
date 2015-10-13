@@ -41,7 +41,9 @@ void Engine::prologue()
   _config.reset( new Configuration );
   _config->load("config.cfg");
 
+#ifndef TESTING
   initializeConsole();
+#endif
 }
 
 void Engine::enterGame(const std::string& savedGameFn)
@@ -148,8 +150,6 @@ void Engine::render()
     _gui->setViewList(getActorsBenethPlayersFeet());
     _gui->render();
   }
-
-  TCODConsole::root->flush();
 }
 
 void Engine::update()

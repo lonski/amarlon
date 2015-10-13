@@ -19,7 +19,9 @@ PlayableCharacter::~PlayableCharacter()
 
 ActorFeaturePtr PlayableCharacter::clone()
 {
-  return ActorFeaturePtr( new PlayableCharacter(*this) );
+  auto* c = new PlayableCharacter(*this);
+  cloneBase(c);
+  return ActorFeaturePtr( c );
 }
 
 bool PlayableCharacter::isEqual(ActorFeaturePtr rhs) const

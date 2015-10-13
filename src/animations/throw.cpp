@@ -33,6 +33,7 @@ void Throw::run()
     path->walk(&x, &y, true);
 
     Engine::instance().render();
+    TCODConsole::root->flush();
     setTile(x, y, _ch, _color);
 
     console.flush();

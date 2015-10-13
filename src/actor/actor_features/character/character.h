@@ -18,10 +18,12 @@ namespace amarlon {
 class Character;
 class Pickable;
 class Spell;
+class SpellBook;
 struct CharacterDescription;
 typedef std::shared_ptr<Character> CharacterPtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
 typedef std::shared_ptr<Spell> SpellPtr;
+typedef std::shared_ptr<SpellBook> SpellBookPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 
 class Character : public ActorFeature
@@ -83,18 +85,20 @@ public:
 
   virtual Damage getDamage() = 0;
   virtual int getArmorClass();
-  virtual std::vector<SpellPtr> getSpells() const;
+  virtual SpellBookPtr getSpellBook();
+  virtual std::string getDescription();
 
   virtual int getMorale() { return 0; }
   virtual int getTmpMoraleModifier() { return 0; }
   virtual void setTmpMoraleModifier(int) {}
 
-  virtual std::string getDescription();
+
 
 protected:
   virtual void setLevel(int level);
   virtual void setMaxHitPoints(int maxHp);
   PickablePtr getEquippedItem(ItemSlotType slot);
+  void cloneBase(Character* c);
 
 private:
   int _level;
@@ -107,7 +111,9 @@ private:
   int _speed;
   int _movePoints;
   int _extraAttackBonus;
-  std::set<SpellPtr> _spells;
+
+  SpellBookPtr _spellbook;
+
   std::map<SavingThrows::Type, int> _savingThrowsTmpMods;
 
   friend class Character::Creator;

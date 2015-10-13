@@ -31,6 +31,9 @@ public:
   virtual TCODColor getColor() const;
   virtual void setColor(const TCODColor&);
 
+  virtual TCODColor getNameColor() const;
+  virtual void setNameColor(const TCODColor&c);
+
   virtual std::string getValue() const;
   virtual void setValue(const std::string& value);
 

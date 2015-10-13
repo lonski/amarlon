@@ -90,7 +90,7 @@ set(SOURCE_FILES
     status_effects_manager_test.cpp
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1 -DTESTING=1")
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(ut_amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${LUABIND_LIBRARIES})

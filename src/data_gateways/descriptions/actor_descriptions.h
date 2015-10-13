@@ -44,6 +44,7 @@ struct InventoryDescription;
 struct DestroyableDescription;
 struct MonsterDescription;
 struct CharacterDescription;
+struct SpellbookDescription;
 
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
@@ -58,6 +59,7 @@ typedef std::shared_ptr<InventoryDescription> InventoryDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
 typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
+typedef std::shared_ptr<SpellbookDescription> SpellbookDescriptionPtr;
 
 struct ActorDescription : Description
 {
@@ -111,6 +113,18 @@ struct PickableDescription : Description
   int scriptId;
 };
 
+struct SpellSlotDescription
+{
+  int level;
+  int spell;
+  bool prepared;
+};
+
+struct SpellbookDescription : Description
+{
+  std::vector<SpellSlotDescription> spellSlots;
+  std::vector<int> knownSpells;
+};
 
 struct CharacterDescription : Description
 {
@@ -133,7 +147,7 @@ struct CharacterDescription : Description
   CharacterClass cClass;
   Race race;
   int speed;
-  std::set<SpellId> spells;
+  SpellbookDescription spellbook;
 };
 
 struct PlayableCharacterDescription : CharacterDescription

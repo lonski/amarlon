@@ -37,7 +37,7 @@ int CmdPutInto::execute()
     auto containerFullAction =
     [&target](const std::string& item)
     {
-      gui::msgBox("Cannot put "+item+" into "+tolowers(target->getName())+":\nNot enough space!",
+      gui::msgBox("Cannot put "+item+" into "+tolowers(target->getName())+":#Not enough space!",
                   gui::MsgType::Error);
     };
 

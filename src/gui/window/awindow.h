@@ -24,7 +24,9 @@ public:
     FIXED_SIZE_TEXT,
     GAME_MENU,
     LOAD_SAVE_GAME,
-    INPUT
+    INPUT,
+    SPELLBOOK,
+    QUESTION
   };
 
   /**

@@ -33,6 +33,7 @@ set(HEADER_FILES
     commands/cmd_look.h
     commands/cmd_cast.h
     commands/cmd_game_menu.h
+    commands/cmd_spellbook.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -64,7 +65,6 @@ set(HEADER_FILES
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
     data_gateways/spell_db.h
-    gui/window/inventory_window/inventory_panel.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h     
@@ -73,6 +73,7 @@ set(HEADER_FILES
     gui/window/window_manager.h
     gui/window/game_menu_window.h
     gui/window/load_save_game_window.h
+    gui/window/question_dialog.h
     gui/gui.h
     gui/message_box.h
     gui/window/pick_up_window.h
@@ -82,6 +83,10 @@ set(HEADER_FILES
     gui/window/awindow.h
     gui/window/menu_window.h
     gui/window/input_dialog.h
+    gui/window/spellbook_window/spellbook_window.h
+    gui/window/spellbook_window/spell_level_panel.h
+    gui/window/spellbook_window/spell_slot_panel.h
+    gui/window/spellbook_window/known_spells_panel.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -137,6 +142,8 @@ set(HEADER_FILES
     rpg_system/carrying_capacity.h
     spells/spell.h
     spells/spell_id.h
+    spells/spell_book.h
+    spells/spell_slot.h
     animations/animation.h
     animations/animation_type.h
     animations/blink.h
@@ -188,6 +195,7 @@ set(SOURCE_FILES
     commands/cmd_look.cpp
     commands/cmd_cast.cpp
     commands/cmd_game_menu.cpp
+    commands/cmd_spellbook.cpp
     data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp
@@ -220,12 +228,18 @@ set(SOURCE_FILES
     gui/window/menu_window.cpp
     gui/window/game_menu_window.cpp
     gui/window/load_save_game_window.cpp
+    gui/window/question_dialog.cpp
     gui/gui.cpp
+    gui/message_box.cpp
     gui/window/pick_up_window.cpp
     gui/window/text_window/text_window.cpp
     gui/window/text_window/resizeable_text_window.cpp    
     gui/window/text_window/fixed_size_text_window.cpp
     gui/window/input_dialog.cpp
+    gui/window/spellbook_window/spellbook_window.cpp
+    gui/window/spellbook_window/spell_level_panel.cpp
+    gui/window/spellbook_window/spell_slot_panel.cpp
+    gui/window/spellbook_window/known_spells_panel.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
@@ -269,6 +283,7 @@ set(SOURCE_FILES
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
     spells/spell.cpp
+    spells/spell_book.cpp
     animations/animation.cpp
     animations/blink.cpp
     animations/throw.cpp

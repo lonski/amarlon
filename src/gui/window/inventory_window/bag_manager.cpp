@@ -15,7 +15,7 @@
 namespace amarlon { namespace gui {
 
 BagManager::BagManager(int w, int h)
-  : AInventoryPanel(w, h)
+  : ASubPanel(w, h)
   , _bagMenu( new AMenu )
 {
   _bagMenu->setPosition(2,2);  
@@ -55,13 +55,13 @@ void BagManager::selectPrevious()
 
 void BagManager::activate()
 {
-  AInventoryPanel::activate();
+  ASubPanel::activate();
   _bagMenu->selectNext();
 }
 
 void BagManager::deactivate()
 {
-  AInventoryPanel::deactivate();
+  ASubPanel::deactivate();
   _bagMenu->deselect();
 }
 

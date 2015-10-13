@@ -1,12 +1,12 @@
 #ifndef CHARACTER_INFO_PANEL_H
 #define CHARACTER_INFO_PANEL_H
 
-#include <inventory_panel.h>
+#include <asub_panel.h>
 #include <alist.h>
 
 namespace amarlon { namespace gui {
 
-class CharacterInfo : public AInventoryPanel
+class CharacterInfo : public ASubPanel
 {
 public:
   CharacterInfo(int w, int h);

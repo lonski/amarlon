@@ -22,6 +22,7 @@ enum class CommandId
   Look,
   Cast,
   GameMenu,
+  Spellbook,
   End
 };
 
