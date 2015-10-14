@@ -61,6 +61,13 @@ set(HEADER_FILES
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
     data_gateways/descriptions/spell_description.h
+    data_gateways/descriptions/actor_feature_descriptions/pickable_description.h
+    data_gateways/descriptions/actor_feature_descriptions/character_description.h
+    data_gateways/descriptions/actor_feature_descriptions/ai_description.h
+    data_gateways/descriptions/actor_feature_descriptions/openable_description.h
+    data_gateways/descriptions/actor_feature_descriptions/wearer_description.h
+    data_gateways/descriptions/actor_feature_descriptions/inventory_description.h
+    data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
     data_gateways/descriptions/description.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h

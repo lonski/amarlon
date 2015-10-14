@@ -53,9 +53,9 @@ ActorDescriptionPtr ActorParser::parseActorDsc()
 
     std::string charStr = getAttribute<std::string>(_xml, "character");
     if (charStr.size() > 1 || std::isdigit(charStr[0]))
-      actorDsc->character = (unsigned char)std::stol(charStr);
+      actorDsc->symbol = (unsigned char)std::stol(charStr);
     else
-      actorDsc->character = charStr[0];
+      actorDsc->symbol = charStr[0];
 
     string colorStr = getAttribute<std::string>(_xml, "color");
     actorDsc->color = strToColor(colorStr);

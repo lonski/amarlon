@@ -2,8 +2,9 @@
 #define ACTORPARSER_H
 
 #include <map>
+#include <parsers/parser.h>
+
 #include "actor_descriptions.h"
-#include "parsers/parser.h"
 #include "actor_feature.h"
 
 namespace amarlon {
@@ -14,6 +15,10 @@ public:
   ActorParser();
   ActorParser(rapidxml::xml_node<>* xmlNode);
 
+  ActorPtr parse();
+  ActorDescriptionPtr parseDescription();
+
+private:
   DescriptionPtr parseFeatureDsc(ActorFeature::Type featureType);
 
   ActorDescriptionPtr       parseActorDsc();
@@ -25,13 +30,12 @@ public:
   WearerDescriptionPtr      parseWearerDsc();
   DestroyableDescriptionPtr parseDestroyableDsc();
 
-  ActorPtr parse();
-
-private:
   std::map<ActorFeature::Type, std::function<DescriptionPtr ()> > _featureParsers;
 
   void parseInventoryContentNode(InventoryDescriptionPtr contDsc, rapidxml::xml_node<>* contentNode);
   void mapParsers();
+
+  friend class ActorDB;
 
 };
 

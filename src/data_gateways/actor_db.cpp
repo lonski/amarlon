@@ -59,7 +59,7 @@ string ActorDB::getName(ActorType type)
 
 unsigned char ActorDB::getChar(ActorType type)
 {
-  return getParam<unsigned char>(type, &ActorDescription::character, 'X');
+  return getParam<unsigned char>(type, &ActorDescription::symbol, 'X');
 }
 
 TCODColor ActorDB::getColor(ActorType type)
