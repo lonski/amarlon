@@ -15,9 +15,9 @@ namespace amarlon {
 
 ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
 {
-  ActorPtr actor( new Actor(aId, x, y, map) );
-  actor->_effects.reset( new StatusEffectsManager( actor ) );
-  actor->loadFeatures();
+  ActorPtr actor = Engine::instance().getActorDB().fetch(aId);
+  actor->setMap(map);
+  actor->setPosition(x,y);
 
   return actor;
 }
@@ -31,23 +31,13 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   addObserver( &Engine::instance().getMessenger() );
 }
 
-void Actor::loadFeatures()
-{
-  _features = Engine::instance().getActorDB().getAllFeatures(_id);
-  for (auto f : _features)
-  {
-    f.second->setOwner( shared_from_this() );
-  }
-}
-
 Actor::~Actor()
 {
 }
 
 void Actor::morph(ActorType newType)
 {
-  setType( newType );
-  loadFeatures();
+  Engine::instance().getActorDB().morph(shared_from_this(), newType);
 }
 
 void Actor::update()

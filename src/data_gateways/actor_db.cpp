@@ -6,6 +6,8 @@
 #include <actor.h>
 #include <map.h>
 #include <tile.h>
+#include <status_effects_manager.h>
+#include <status_effect.h>
 
 namespace amarlon {
 
@@ -14,6 +16,40 @@ using namespace rapidxml;
 
 ActorDB::ActorDB()
 {
+}
+
+ActorPtr ActorDB::fetch(ActorType type)
+{
+  ActorPtr actor( new Actor );
+  morph(actor, type);
+
+  return actor;
+}
+
+void ActorDB::morph(ActorPtr actor, ActorType type)
+{
+  if ( actor )
+  {
+    actor->setType( type );
+    actor->_effects.reset( new StatusEffectsManager( actor ) );
+
+    auto it = _actorDscs.find(type);
+    if ( it != _actorDscs.end() )
+    {
+      ActorDescriptionPtr dsc = std::dynamic_pointer_cast<ActorDescription>(it->second);
+      for ( auto e : dsc->statusEffects )
+      {
+        StatusEffectPtr se( new StatusEffect(static_cast<SpellId>(e.spellId), e.duration));
+        actor->getStatusEffects().add( se );
+      }
+    }
+
+    actor->_features = getAllFeatures(type);
+    for (auto f : actor->_features)
+    {
+      f.second->setOwner( actor );
+    }
+  }
 }
 
 string ActorDB::getName(ActorType type)

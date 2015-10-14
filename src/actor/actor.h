@@ -142,11 +142,10 @@ private:
   FeatureMap _features;
   StatusEffectsManagerPtr _effects;
 
-
-  Actor(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
-  void loadFeatures();
+  Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
 
   friend class ActorSerializer;
+  friend class ActorDB;
 
 };
 

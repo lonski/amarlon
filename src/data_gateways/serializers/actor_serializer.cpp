@@ -10,6 +10,8 @@
 #include <playable_character_serializer.h>
 #include <monster_ai_serializer.h>
 #include <openable_serializer.h>
+#include <status_effects_manager.h>
+#include <status_effect.h>
 
 using namespace rapidxml;
 
@@ -51,6 +53,22 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
     addAttribute( _actorNode, "x", actor->getX() );
     addAttribute( _actorNode, "y", actor->getY() );
 
+    //Serialize Status Effects
+    auto effects = actor->getStatusEffects().getEffects();
+    if ( !effects.empty() )
+    {
+      xml_node<>* semNode = _document->allocate_node(node_element, "StatusEffects");
+      _actorNode->append_node(semNode);
+      for(auto e : effects)
+      {
+        xml_node<>* eNode = _document->allocate_node(node_element, "StatusEffect");
+        semNode->append_node( eNode );
+        addAttributeEnum(eNode, "spell", e->getSpellId());
+        addAttribute(eNode, "duration", e->getDuration());
+      }
+    }
+
+    //Serialize ActorFeatures
     for ( const auto& afPair : actor->_features )
     {
       for ( auto serializer : _afSerializers )

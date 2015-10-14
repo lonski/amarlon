@@ -61,6 +61,12 @@ typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 typedef std::shared_ptr<SpellbookDescription> SpellbookDescriptionPtr;
 
+struct StatusEffectDsc
+{
+  int spellId;
+  int duration;
+};
+
 struct ActorDescription : Description
 {
   ActorDescription()
@@ -82,6 +88,7 @@ struct ActorDescription : Description
   bool transparent;  
   int tilePriority;
   std::string description;
+  std::vector<StatusEffectDsc> statusEffects;
 };
 
 struct PickableDescription : Description

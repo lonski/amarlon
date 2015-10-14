@@ -20,6 +20,9 @@ class ActorDB
 public:
   ActorDB();
 
+  ActorPtr fetch(ActorType type);
+  void morph(ActorPtr actor, ActorType type);
+
   std::string getName(ActorType type);
   unsigned char getChar(ActorType type);
   TCODColor getColor(ActorType type);
@@ -45,7 +48,7 @@ private:
   typedef std::map<ActorFeature::Type, DescriptionPtr> FeatureDescriptionMap;
 
   std::map<ActorType, FeatureDescriptionMap> _featureDscs;
-  std::map<ActorType, DescriptionPtr>        _actorDscs;
+  std::map<ActorType, DescriptionPtr>   _actorDscs;
 
   ActorParser _actorParser;
 
@@ -74,7 +77,7 @@ template<typename T>
 T ActorDB::getParam(ActorType type, T ActorDescription::*field, T defValue)
 {
   auto it = _actorDscs.find(type);
-  ActorDescriptionPtr dsc = it != _actorDscs.end() ? std::dynamic_pointer_cast<ActorDescription>( it->second ) : nullptr;
+  ActorDescriptionPtr dsc = it != _actorDscs.end() ? std::dynamic_pointer_cast<ActorDescription>(it->second) : nullptr;
 
   return dsc ? (*dsc).*field : defValue;
 }

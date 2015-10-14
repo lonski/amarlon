@@ -57,4 +57,9 @@ std::string StatusEffect::getName() const
   return Engine::instance().getSpellDB().getName(_spell);
 }
 
+SpellId StatusEffect::getSpellId() const
+{
+  return _spell;
+}
+
 }

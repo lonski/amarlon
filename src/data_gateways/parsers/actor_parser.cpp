@@ -4,6 +4,8 @@
 #include <utils/utils.h>
 #include <races.h>
 #include <actor.h>
+#include <status_effect.h>
+#include <status_effects_manager.h>
 
 namespace amarlon {
 
@@ -73,6 +75,20 @@ ActorDescriptionPtr ActorParser::parseActorDsc()
       actorDsc->description = getNodeValue<std::string>(dNode);
     }
 
+    //Parse Status Effects
+    xml_node<>* semNode = _xml->first_node("StatusEffects");
+    if ( semNode )
+    {
+      xml_node<>* eNode = semNode->first_node("StatusEffect");
+      while ( eNode )
+      {
+        StatusEffectDsc d;
+        d.duration = getAttribute<int>(eNode, "duration");
+        d.spellId = getAttribute<int>(eNode, "spell");
+        actorDsc->statusEffects.push_back( d );
+        eNode = eNode->next_sibling();
+      }
+    }
   }
 
   return actorDsc;
@@ -354,6 +370,13 @@ ActorPtr ActorParser::parse()
     ActorFeature::Type featureType = static_cast<ActorFeature::Type>( f );
     DescriptionPtr dsc( parseFeatureDsc(featureType) );
     if ( dsc ) actor->insertFeature( ActorFeature::create(featureType, dsc) );
+  }
+
+  ActorDescriptionPtr dsc = parseActorDsc();
+  for ( auto e : dsc->statusEffects )
+  {
+    StatusEffectPtr se( new StatusEffect(static_cast<SpellId>(e.spellId), e.duration));
+    actor->getStatusEffects().add( se );
   }
 
   return actor;
