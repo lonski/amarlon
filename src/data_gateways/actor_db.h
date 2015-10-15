@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <libtcod.hpp>
 #include <actor_type.h>
 
 namespace amarlon {

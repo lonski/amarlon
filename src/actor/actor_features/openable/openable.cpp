@@ -31,6 +31,7 @@ OpenablePtr Openable::create(DescriptionPtr dsc)
     openable->_lockId = oDsc->lockId;
     openable->_locked = oDsc->locked;
     openable->_scriptId = oDsc->scriptId;
+    openable->_closed = oDsc->closed;
   }
 
   return openable;
@@ -54,6 +55,7 @@ bool Openable::isEqual(ActorFeaturePtr rhs) const
   {
     equal = _lockId == oRhs->_locked;
     equal &= _scriptId == oRhs->_scriptId;
+    equal &= _closed == oRhs->_closed;
   }
   return equal;
 }
@@ -62,7 +64,7 @@ bool Openable::open(ActorPtr executor)
 {
   bool r = false;
 
-  if ( _scriptId > 0 )
+  if ( _scriptId > 0 && isClosed() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
 
@@ -76,6 +78,8 @@ bool Openable::open(ActorPtr executor)
           , executor
           , getOwner().lock()
         );
+
+        _closed = !r;
       }
       catch(luabind::error& e)
       {
@@ -91,7 +95,7 @@ bool Openable::close(ActorPtr executor)
 {
   bool r = false;
 
-  if ( _scriptId > 0 )
+  if ( _scriptId > 0 && !isClosed() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
 
@@ -105,6 +109,8 @@ bool Openable::close(ActorPtr executor)
           , executor
           , getOwner().lock()
         );
+
+        _closed = r;
       }
       catch(luabind::error& e)
       {
@@ -114,6 +120,11 @@ bool Openable::close(ActorPtr executor)
   }
 
   return r;
+}
+
+bool Openable::isClosed() const
+{
+  return _closed;
 }
 
 bool Openable::lock()

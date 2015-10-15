@@ -148,16 +148,6 @@ void Messenger::onNotify(Subject *subject, Event event)
           }
         }
         break;
-        case EventId::Actor_Put:
-        {
-          color = TCODColor::darkYellow;
-          const char* format = "%s put %s into %s.";
-
-          sprintf(msg, format, event.params["putter"].c_str(),
-                               actor->getName().c_str(),
-                               event.params["container"].c_str() );
-        }
-        break;
         case EventId::Player_Look_At:
         {
           color = TCODColor::lightViolet;
@@ -224,6 +214,16 @@ void Messenger::onNotify(Subject *subject, Event event)
           color = TCODColor::darkerRed;
           const char* format = "%s dies.";
           sprintf(msg, format, actor->getName().c_str() );
+        }
+        break;
+        case EventId::Actor_Put:
+        {
+          color = TCODColor::darkYellow;
+          const char* format = "%s put %s into %s.";
+
+          sprintf(msg, format, event.params["putter"].c_str(),
+                               actor->getName().c_str(),
+                               event.params["container"].c_str() );
         }
         break;
       default:;

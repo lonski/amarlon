@@ -11,7 +11,7 @@ CmdInventory::CmdInventory()
 
 bool CmdInventory::accept(TCOD_key_t &key)
 {
-  return ( key.vk == TCODK_CHAR && key.c == 'i' );
+  return ( key.vk == TCODK_CHAR && key.c == 'I' );
 }
 
 int CmdInventory::execute()

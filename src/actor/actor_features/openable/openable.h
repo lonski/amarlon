@@ -30,6 +30,7 @@ public:
   virtual bool open(ActorPtr executor);
   virtual bool close(ActorPtr executor);
 
+  virtual bool isClosed() const;
   virtual bool isLocked() const;
   virtual int getLockId() const;
   virtual int getScriptId() const;
@@ -40,6 +41,7 @@ protected:
   bool _locked;
   int _lockId;
   int _scriptId;
+  bool _closed;
 
   std::string getScriptPath() const;
 

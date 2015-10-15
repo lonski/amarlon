@@ -245,6 +245,7 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
       opDsc->lockId = getAttribute<int>(openableNode, "lockId");
       opDsc->locked = getAttribute<bool>(openableNode, "locked");
       opDsc->scriptId = getAttribute<int>(openableNode, "scriptId");
+      opDsc->closed = getAttribute<bool>(openableNode, "closed");
     }
   }
 

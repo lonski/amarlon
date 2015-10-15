@@ -23,6 +23,7 @@ enum class CommandId
   Cast,
   GameMenu,
   Spellbook,
+  Inspect,
   End
 };
 

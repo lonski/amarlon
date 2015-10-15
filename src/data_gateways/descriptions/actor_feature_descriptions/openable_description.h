@@ -11,11 +11,13 @@ struct OpenableDescription : Description
     : lockId(0)
     , locked(false)
     , scriptId(0)
+    , closed(false)
   {}
 
   int lockId;
   bool locked;
   int scriptId;
+  bool closed;
 };
 
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;

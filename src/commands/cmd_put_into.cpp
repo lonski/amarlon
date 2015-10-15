@@ -19,6 +19,9 @@ bool CmdPutInto::accept(TCOD_key_t &key)
 
 int CmdPutInto::execute()
 {
+  //TODO: handle closed actors
+  //check for Openable feature
+  //and check if its closed
   int turns = 0;
   ActorPtr target = SingleNeighbourSelector("Select a container to put into...")
                     .select()

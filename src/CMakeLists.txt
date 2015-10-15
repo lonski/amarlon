@@ -34,6 +34,7 @@ set(HEADER_FILES
     commands/cmd_cast.h
     commands/cmd_game_menu.h
     commands/cmd_spellbook.h
+    commands/cmd_inspect.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -203,6 +204,7 @@ set(SOURCE_FILES
     commands/cmd_cast.cpp
     commands/cmd_game_menu.cpp
     commands/cmd_spellbook.cpp
+    commands/cmd_inspect.cpp
     data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp
