@@ -45,13 +45,13 @@ int CmdInspect::execute()
         window.setRemoveAction( [&](ActorPtr a){ return inv->remove(a); } );
         window.show();
 
-        ++turns;
       }
     }
     else
     {
       gui::msgBox(toInspect->getName() + " is empty.", gui::MsgType::Warning);
     }
+    ++turns;
   }
   else
   {

@@ -19,9 +19,6 @@ bool CmdPutInto::accept(TCOD_key_t &key)
 
 int CmdPutInto::execute()
 {
-  //TODO: handle closed actors
-  //check for Openable feature
-  //and check if its closed
   int turns = 0;
   ActorPtr target = SingleNeighbourSelector("Select a container to put into...")
                     .select()
@@ -29,30 +26,39 @@ int CmdPutInto::execute()
 
   if ( target != nullptr && target->hasFeature<Inventory>())
   {
-    auto afterPutIntoAction =
-    [&](const std::string&, int amount)
+    OpenablePtr openable = target->getFeature<Openable>();
+    if ( openable && openable->isClosed() )
     {
-      target->notify(Event(EventId::Actor_Put,{{"putter","Player"},
-                                               {"container",target->getName()},
-                                               {"count", std::to_string(amount)} }));
-    };
-
-    auto containerFullAction =
-    [&target](const std::string& item)
+      gui::msgBox("Cannot put into " + target->getName() + " - it is closed.", gui::MsgType::Warning);
+    }
+    else
     {
-      gui::msgBox("Cannot put "+item+" into "+tolowers(target->getName())+":#Not enough space!",
-                  gui::MsgType::Error);
-    };
+      auto afterPutIntoAction =
+      [&](const std::string& item, int amount)
+      {
+        target->notify(Event(EventId::Actor_Put,{{"putter","Player"},
+                                                 {"container",target->getName()},
+                                                 {"count", std::to_string(amount)},
+                                                 {"item", tolowers(item)}}));
+      };
 
-    Engine::instance().getWindowManager()
-                      .getWindow<gui::PickUpWindow>()
-                      .setPicker(target)
-                      .setSource( [](){ return Engine::instance().getPlayer()->getFeature<Inventory>()->items(); })
-                      .setRemoveAction([&](ActorPtr a){Engine::instance().getPlayer()->getFeature<Inventory>()->remove(a);})
-                      .setAfterPickupAction( afterPutIntoAction )
-                      .setInventoryFullAction( containerFullAction )
-                      .setWindowTitle("Select item to put")
-                      .show();
+      auto containerFullAction =
+      [&target](const std::string& item)
+      {
+        gui::msgBox("Cannot put "+item+" into "+tolowers(target->getName())+":#Not enough space!",
+                    gui::MsgType::Error);
+      };
+
+      Engine::instance().getWindowManager()
+                        .getWindow<gui::PickUpWindow>()
+                        .setPicker(target)
+                        .setSource( [](){ return Engine::instance().getPlayer()->getFeature<Inventory>()->items(); })
+                        .setRemoveAction([&](ActorPtr a){Engine::instance().getPlayer()->getFeature<Inventory>()->remove(a);})
+                        .setAfterPickupAction( afterPutIntoAction )
+                        .setInventoryFullAction( containerFullAction )
+                        .setWindowTitle("Select item to put")
+                        .show();
+    }
     ++turns;
   }
   else if ( target )

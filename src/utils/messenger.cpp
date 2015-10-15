@@ -222,7 +222,7 @@ void Messenger::onNotify(Subject *subject, Event event)
           const char* format = "%s put %s into %s.";
 
           sprintf(msg, format, event.params["putter"].c_str(),
-                               actor->getName().c_str(),
+                               event.params["item"].c_str(),
                                event.params["container"].c_str() );
         }
         break;
