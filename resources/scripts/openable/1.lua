@@ -8,6 +8,9 @@ function onOpen(opener, toOpen)
     openable = toOpen:get():openable():get()
     if openable ~= nil then
       toOpen:get():setType( OPENED_DOOR )
+      toOpen:get():setSymbol( string.byte("\\") )
+      toOpen:get():setTransparent( true )
+      toOpen:get():setBlocking( false )
       result = true
     end
   end
@@ -25,6 +28,9 @@ function onClose(closer, toClose)
     openable = toClose:get():openable():get()
     if openable ~= nil then
       toClose:get():setType( CLOSED_DOOR )
+      toClose:get():setSymbol( string.byte("+") )
+      toClose:get():setTransparent( false )
+      toClose:get():setBlocking( true )
       result = true
     end
   end

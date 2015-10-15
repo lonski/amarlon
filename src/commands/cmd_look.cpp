@@ -2,7 +2,6 @@
 #include <single_range_selector.h>
 #include <engine.h>
 #include <gui.h>
-
 #include <actor.h>
 #include <fixed_size_text_window.h>
 
@@ -16,12 +15,11 @@ bool CmdLook::accept(TCOD_key_t &key)
 int CmdLook::execute()
 {
   SingleRangeSelector selector("Select a tile to inspect...");
-  selector.setRange(5);
+  selector.setRange(30);
   Target target = selector.select();
 
   if (!target.actors.empty())
   {
-
     auto characterIter = std::find_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){ return a->hasFeature<Character>();});
     if ( characterIter != target.actors.end() )
     {
@@ -44,7 +42,7 @@ int CmdLook::execute()
         if ( !target.actors.empty() )
         {
           Engine::instance().getPlayer()->notify(Event(EventId::Player_Look_At,
-                                                 {{"plural", target.actors.size() > 1 ? "yes" : "no" }}));
+                                                 { {"plural", target.actors.size() > 1 ? "yes" : "no" }} ));
         }
       }
     }

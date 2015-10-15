@@ -79,7 +79,7 @@ void MapParser::parseActors()
     while ( actorNode != nullptr )
     {
       _actorParser->setSource( actorNode );
-      _map->addActor( _actorParser->parse() );
+      _map->addActor( Actor::create(_actorParser->parseDescription()) );
       actorNode = actorNode->next_sibling();
     }
   }

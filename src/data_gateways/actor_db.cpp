@@ -1,13 +1,11 @@
 #include "actor_db.h"
 #include <fstream>
-#include <vector>
 #include <algorithm>
 #include <utils.h>
+#include <actor_descriptions.h>
+#include <xml/rapidxml.hpp>
 #include <actor.h>
-#include <map.h>
-#include <tile.h>
-#include <status_effects_manager.h>
-#include <status_effect.h>
+#include <actor_parser.h>
 
 namespace amarlon {
 
@@ -20,162 +18,16 @@ ActorDB::ActorDB()
 
 ActorPtr ActorDB::fetch(ActorType type)
 {
-  ActorPtr actor( new Actor );
-  morph(actor, type);
+  ActorPtr actor;
+
+  auto it = std::find_if(_descriptions.begin(), _descriptions.end(), [type](ActorDescriptionPtr a){ return a->id == type; });
+  if (it != _descriptions.end())
+  {
+    actor = Actor::create(*it, false);
+  }
 
   return actor;
 }
-
-void ActorDB::morph(ActorPtr actor, ActorType type)
-{
-  if ( actor )
-  {
-    actor->setType( type );
-    actor->_effects.reset( new StatusEffectsManager( actor ) );
-
-    auto it = _actorDscs.find(type);
-    if ( it != _actorDscs.end() )
-    {
-      ActorDescriptionPtr dsc = std::dynamic_pointer_cast<ActorDescription>(it->second);
-      for ( auto e : dsc->statusEffects )
-      {
-        StatusEffectPtr se( new StatusEffect(static_cast<SpellId>(e.spellId), e.duration));
-        actor->getStatusEffects().add( se );
-      }
-    }
-
-    actor->_features = getAllFeatures(type);
-    for (auto f : actor->_features)
-    {
-      f.second->setOwner( actor );
-    }
-  }
-}
-
-string ActorDB::getName(ActorType type)
-{
-  return getParam<std::string>(type, &ActorDescription::name, "No name");
-}
-
-unsigned char ActorDB::getChar(ActorType type)
-{
-  return getParam<unsigned char>(type, &ActorDescription::symbol, 'X');
-}
-
-TCODColor ActorDB::getColor(ActorType type)
-{
-  return getParam<TCODColor>(type, &ActorDescription::color, TCODColor::white);
-}
-
-bool ActorDB::blocks(ActorType type)
-{
-  return getParam<bool>(type, &ActorDescription::blocks, false);
-}
-
-bool ActorDB::isFovOnly(ActorType type)
-{
-  return getParam<bool>(type, &ActorDescription::fovOnly, false);
-}
-
-bool ActorDB::isTransparent(ActorType type)
-{
-  return getParam<bool>(type, &ActorDescription::transparent, false);
-}
-
-int ActorDB::getTileRenderPriority(ActorType type)
-{
-  int piority = getParam<int>(type, &ActorDescription::tilePriority, -1);
-
-  //not set in xml, set default prority for particural actor type
-  if ( piority == -1 )
-  {
-    switch( type )
-    {
-      case ActorType::DoorOpen:
-      case ActorType::DoorClosed:
-      {
-        piority = Tile::defaultItemRenderPriority + 1;
-      }
-      break;
-      default:;
-    }
-  }
-
-  return piority;
-}
-
-string ActorDB::getDescription(ActorType type)
-{
-  return getParam<std::string>(type, &ActorDescription::description, "");
-}
-
-// === GET ALL FEATURES === //
-
-class FeatureGetter
-{
-public:
-  FeatureGetter(ActorDB* actorDB)
-    : _actorDB(actorDB)
-  {}
-
-  FeatureMap get(ActorType type)
-  {
-    _features.clear();
-    _aType = type;
-
-    for (auto fType : ActorFeature::Type() )
-    {
-      //TODO: find out more elegant and generic way
-      switch(fType)
-      {
-        case ActorFeature::AI:
-          addFeature<Ai>();
-          break;
-        case ActorFeature::INVENTORY:
-          addFeature<Inventory>();
-          break;
-        case ActorFeature::CHARACTER:
-          addFeature<Character>();
-          break;
-        case ActorFeature::OPENABLE:
-          addFeature<Openable>();
-          break;
-        case ActorFeature::PICKABLE:
-          addFeature<Pickable>();
-          break;
-        case ActorFeature::WEARER:
-          addFeature<Wearer>();
-          break;
-        case ActorFeature::DESTROYABLE:
-          addFeature<Destroyable>();
-          break;
-        default:;
-      }
-    }
-
-    return _features;
-  }
-
-private:
-  template<typename T>
-  void addFeature()
-  {
-    std::shared_ptr<T> t = _actorDB->getFeature<T>(_aType);
-    if ( t ) _features[T::featureType] = ActorFeaturePtr(t);
-  }
-
-  ActorDB* _actorDB;
-  FeatureMap _features;
-  ActorType _aType;
-
-};
-
-FeatureMap ActorDB::getAllFeatures(ActorType type)
-{
-  return FeatureGetter(this).get(type);
-}
-
-// === LOAD ACTORS === //
 
 void ActorDB::load(const string &fn)
 {
@@ -191,7 +43,7 @@ void ActorDB::load(const string &fn)
   }
 }
 
-void ActorDB::parseActors(vector<char>& dataToParse)
+void ActorDB::parseActors(std::vector<char>& dataToParse)
 {
   xml_document<> doc;
   doc.parse<0>(&dataToParse[0]);
@@ -199,41 +51,20 @@ void ActorDB::parseActors(vector<char>& dataToParse)
   xml_node<>* root = doc.first_node("Actors");
   if (root != nullptr)
   {
+    ActorParser parser;
     xml_node<>* actorNode = root->first_node("Actor");
 
     while( actorNode != nullptr )
     {
-      parseActor(actorNode);
+      parser.setSource( actorNode );
+      auto dsc = parser.parseDescription();
+      if ( dsc ) _descriptions.push_back( dsc );
+
       actorNode = actorNode->next_sibling();
     }
   }
 
   doc.clear();
-}
-
-void ActorDB::parseActor(xml_node<>* actorNode)
-{
-  _actorParser.setSource( actorNode );
-
-  ActorDescriptionPtr actorDsc = _actorParser.parseActorDsc();
-  if ( actorDsc != nullptr )
-  {
-    _actorDscs[actorDsc->id] = DescriptionPtr(actorDsc);
-    parseActorFeatures(actorDsc->id);
-  }
-}
-
-void ActorDB::parseActorFeatures(ActorType actorId)
-{
-  FeatureDescriptionMap actorDescriptions;
-
-  for (auto fType : ActorFeature::Type() )
-  {
-    DescriptionPtr featureDsc( _actorParser.parseFeatureDsc(fType) );
-    if ( featureDsc ) actorDescriptions[ fType ] = featureDsc;
-  }
-
-  _featureDscs[actorId] = actorDescriptions;
 }
 
 }

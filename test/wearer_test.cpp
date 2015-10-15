@@ -2,11 +2,11 @@
 
 #define private public
 #include <actor.h>
-#include <inventory.h>
 #include <wearer.h>
 #undef private
 #include <engine.h>
 #include <actor_descriptions.h>
+#include <actor_container.h>
 
 namespace amarlon {
 
@@ -81,14 +81,13 @@ TEST_F(WearerTest, unequip_item)
 TEST_F(WearerTest, clone_wearer)
 {
   WearerDescriptionPtr dsc(new WearerDescription);
-  dsc->eqItems->maxSize = 2;
   dsc->itemSlots.push_back(ItemSlotType::LeftRing);
   dsc->itemSlots.push_back(ItemSlotType::Offhand);
 
   WearerPtr w1 = Wearer::create(dsc);
   WearerPtr wcloned = std::dynamic_pointer_cast<Wearer>(w1->clone());
 
-  ASSERT_TRUE( wcloned->_equippedItems->isEqual( w1->_equippedItems ) );
+  ASSERT_TRUE( wcloned->_equippedItems->size() ==  w1->_equippedItems->size() );
   for (auto slot : ItemSlotType())
   {    
     ASSERT_EQ( wcloned->hasSlot(slot), w1->hasSlot(slot) );
@@ -111,7 +110,6 @@ TEST_F(WearerTest, compare_test)
   WearerDescriptionPtr dsc(new WearerDescription);
   dsc->itemSlots.push_back(ItemSlotType::Armor);
   dsc->itemSlots.push_back(ItemSlotType::Boots);
-  dsc->eqItems->maxSize = 2;
 
   w1 = Wearer::create(dsc);
   w2 = Wearer::create(dsc);

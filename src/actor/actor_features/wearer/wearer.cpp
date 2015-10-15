@@ -1,6 +1,6 @@
 #include "wearer.h"
 #include <algorithm>
-#include <inventory.h>
+#include <actor_container.h>
 #include <actor.h>
 #include <amarlon_except.h>
 #include <actor_descriptions.h>
@@ -10,7 +10,7 @@ namespace amarlon {
 const ActorFeature::Type Wearer::featureType = ActorFeature::WEARER;
 
 Wearer::Wearer()
-  : _equippedItems( new Inventory(0) )
+  : _equippedItems( new ActorContainer )
 {
 }
 
@@ -23,34 +23,36 @@ WearerPtr Wearer::create(DescriptionPtr dsc)
   if ( wearerDsc != nullptr )
   {
     w.reset( new Wearer );
-    wearerDsc->eqItems->maxSize = wearerDsc->itemSlots.size();
 
     std::for_each(wearerDsc->itemSlots.begin(), wearerDsc->itemSlots.end(), [&](ItemSlotType slot)
     {
       w->_itemSlots[slot] = nullptr;
     });
 
-    w->_equippedItems = Inventory::create(wearerDsc->eqItems);
+    for ( auto aDsc : wearerDsc->eqItems )
+    {
+      w->_equippedItems->push_back( Actor::create(aDsc) );
+    }
+
     if ( w->_equippedItems )
     {
       assignItemsToSlots( w );
     }
 
-  }else throw creation_error("Wrong wearer description!");
+  };
 
   return w;
 }
 
 void Wearer::assignItemsToSlots(WearerPtr wearer)
 {
-  std::vector<ActorPtr> toEquip = wearer->_equippedItems->items();
+  std::vector<ActorPtr> toEquip = wearer->_equippedItems->toVector();
   std::for_each(toEquip.begin(), toEquip.end(), [&](ActorPtr a)
   {
     if ( a && a->hasFeature<Pickable>())
     {
       wearer->_itemSlots[ a->getFeature<Pickable>()->getItemSlot() ] = a;
     }
-    else throw inventory_error("Unequippable item in wearer container!");
   });
 }
 
@@ -63,7 +65,7 @@ ActorFeaturePtr Wearer::clone()
     cloned->_itemSlots[ i.first ] = nullptr;
   }
 
-  cloned->_equippedItems = std::dynamic_pointer_cast<Inventory>(_equippedItems->clone());
+  cloned->_equippedItems = _equippedItems->clone();
   assignItemsToSlots(cloned);
 
   return cloned;
@@ -98,8 +100,9 @@ bool Wearer::equip(ActorPtr item)
     ItemSlotType slot = item->getFeature<Pickable>()->getItemSlot();
     if ( _itemSlots.count(slot) && !isEquipped(slot) )
     {    
-      r = _equippedItems->add(item);
-      if ( r ) _itemSlots[slot] = item;
+      _equippedItems->push_back(item);
+      _itemSlots[slot] = item;
+      r = true;
     }
   }
 

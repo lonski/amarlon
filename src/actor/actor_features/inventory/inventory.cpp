@@ -31,24 +31,16 @@ InventoryPtr Inventory::create(DescriptionPtr dsc)
   {
     cont.reset( new Inventory(contDsc->maxSize) );
 
-    std::for_each(contDsc->content.begin(), contDsc->content.end(), [&](InventoryDescription::Content ca)
+    std::for_each(contDsc->content.begin(), contDsc->content.end(), [&](ActorDescriptionPtr aDsc)
     {
-      ActorType aId = ca.actorType;
-      if( aId != ActorType::Null )
+      if ( aDsc )
       {
-        ActorPtr nActor = Actor::create(aId);
-
-        if (ca.container) nActor->insertFeature ( Inventory::create( ca.container ) );
-        if (ca.openable)  nActor->insertFeature ( Openable::create ( ca.openable  ) );
-        if (ca.pickable)  nActor->insertFeature ( Pickable::create ( ca.pickable  ) );
-        if (ca.character) nActor->insertFeature ( Character::create( ca.character   ) );
-        if (ca.ai)        nActor->insertFeature ( Ai::create       ( ca.ai        ) );
-        if (ca.wearer)    nActor->insertFeature ( Wearer::create   ( ca.wearer    ) );
-
-        cont->add( nActor );
+        ActorPtr a = Actor::create(aDsc->id);
+        a->deserialize( aDsc );
+        cont->add( a );
       }
     });
-  }else throw creation_error("Wrong container description!");
+  }
 
   return cont;
 }

@@ -123,7 +123,7 @@ void World::parsePlayer(rapidxml::xml_document<> &doc)
   if(playerNode != nullptr)
   {
     ActorParser parser(playerNode);
-    _player = parser.parse();
+    _player = Actor::create( parser.parseDescription(), false );
   }
 
   getCurrentMap()->addActor( _player );

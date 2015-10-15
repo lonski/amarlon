@@ -10,6 +10,8 @@
 #include <inventory_description.h>
 #include <destroyable_description.h>
 
+#include <experimental/optional>
+
 namespace amarlon {
 
 struct StatusEffectDsc
@@ -22,23 +24,19 @@ struct ActorDescription : Description
 {
   ActorDescription()
     : id(ActorType::Null)
-    , symbol('X')
-    , color(TCODColor::white)
-    , blocks(false)
-    , fovOnly(false)
-    , transparent(false)
-    , tilePriority(666)
   {}
 
   ActorType id;
-  std::string name;
-  unsigned char symbol;
-  TCODColor color;
-  bool blocks;
-  bool fovOnly;
-  bool transparent;  
-  int tilePriority;
-  std::string description;
+  std::experimental::optional<int> x;
+  std::experimental::optional<int> y;
+  std::experimental::optional<std::string> name;
+  std::experimental::optional<unsigned char> symbol;
+  std::experimental::optional<TCODColor> color;
+  std::experimental::optional<bool> blocks;
+  std::experimental::optional<bool> fovOnly;
+  std::experimental::optional<bool> transparent;
+  std::experimental::optional<int> tilePriority;
+  std::experimental::optional<std::string> description;
   std::vector<StatusEffectDsc> statusEffects;
 
   PickableDescriptionPtr pickable;

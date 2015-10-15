@@ -21,7 +21,9 @@ namespace amarlon {
 class Map;
 class ActorAction;
 class StatusEffectsManager;
+struct ActorDescription;
 typedef std::shared_ptr<StatusEffectsManager> StatusEffectsManagerPtr;
+typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::weak_ptr<Map> MapWPtr;
@@ -30,32 +32,59 @@ class Actor : public std::enable_shared_from_this<Actor>
             , public Subject
 {
 public:
+  /**
+   * @brief Builds an actor basing on the description from ActorDatabase
+   */
   static ActorPtr create(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
+  /**
+   * @brief Builds an actor from description structure.
+   * @param dsc - description structure, on which base actor will be build.
+   * @param prototyped - if true, actor will be build from default description from ActorDatabase
+   *        and then its content will be overriden with passed description structure.
+   *        Otherwise, actor will be build only basing on passed description scructure.
+   */
+  static ActorPtr create(ActorDescriptionPtr dsc, bool prototyped = true);
+
+  /**
+   * @brief Overrides actor's content with content from given description structure.
+   */
+  void deserialize(ActorDescriptionPtr dsc);
   ~Actor();
 
   ActorPtr clone();  
   bool operator==(const Actor& rhs) const;
+  Actor& operator=(const Actor& rhs);
 
   /**
-   * Properties from general Actor Database
-   */
-  unsigned char getChar()       const;
-  TCODColor     getColor()      const;
-  std::string   getName()       const;
-  bool          isBlocking()    const;
-  bool          isTransparent() const;
-  bool          isFovOnly()     const;
-
-  /**
-   * Instance properties
+   * Actor properties
    */
   ActorType getType() const;
-  void      setType(ActorType newType);
-  MapPtr    getMap() const;
-  void      setMap(MapPtr map);
-  int       getX() const;
-  int       getY() const;
-  int       getTileRenderPriority() const;
+  void setType(ActorType newType);
+
+  unsigned char getSymbol() const;
+  void setSymbol(unsigned char s);
+
+  TCODColor getColor() const;
+  void setColor( TCODColor c );
+
+  std::string getName() const;
+  void setName(std::string n);
+
+  bool isBlocking() const;
+  void setBlocking(bool b);
+
+  bool isTransparent() const;
+  void setTransparent(bool t);
+
+  bool isFovOnly() const;
+  void setFovOnly(bool f);
+
+  int getX() const;
+  int getY() const;
+  int getTileRenderPriority() const;
+
+  MapPtr getMap() const;
+  void setMap(MapPtr map);
 
   /**
    * @brief Changes the actors coordinates and sets its position on map
@@ -142,11 +171,19 @@ private:
   FeatureMap _features;
   StatusEffectsManagerPtr _effects;
 
+  bool _fovOnly;
+  bool _transparent;
+  bool _blocks;
+  int _priority;
+  std::string _name;
+  std::string _description;
+  TCODColor _color;
+  char _symbol;
+
   Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
+  Actor(const Actor& a);
 
   friend class ActorSerializer;
-  friend class ActorDB;
-
 };
 
 typedef std::shared_ptr<Actor> ActorPtr;

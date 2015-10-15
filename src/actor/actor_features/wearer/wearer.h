@@ -8,9 +8,9 @@
 namespace amarlon {
 
 class Wearer;
-class Inventory;
+class ActorContainer;
 typedef std::shared_ptr<Wearer> WearerPtr;
-typedef std::shared_ptr<Inventory> InventoryPtr;
+typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 
 class Wearer : public ActorFeature
 {
@@ -34,7 +34,7 @@ public:
 
 private:
   std::map<ItemSlotType, ActorPtr> _itemSlots;
-  InventoryPtr _equippedItems;
+  ActorContainerPtr _equippedItems;
 
   static void assignItemsToSlots(WearerPtr wearer);
 

@@ -136,7 +136,7 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
     ActorPtr actor = tile.top();
 
     color     = actor ? actor->getColor() : tile.getColor();
-    character = actor ? actor->getChar()  : tile.getChar();
+    character = actor ? actor->getSymbol()  : tile.getChar();
     updateTile(x, y);
   }
   else if ( isExplored(x,y) ) //Tile is beyond the 'fog of war'
@@ -145,7 +145,7 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
     ActorPtr actor = tile.top([](ActorPtr a){ return !a->isFovOnly(); });
 
     color     = actor ? actor->getColor() : tile.getColor() * 0.6;
-    character = actor ? actor->getChar()  : tile.getChar();
+    character = actor ? actor->getSymbol()  : tile.getChar();
   }
 
   console->setChar( x, y, character );

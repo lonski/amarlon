@@ -1,11 +1,7 @@
 #include "actor_parser.h"
-#include <string>
 #include <utils/xml_utils.h>
 #include <utils/utils.h>
-#include <races.h>
-#include <actor.h>
-#include <status_effect.h>
-#include <status_effects_manager.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 
@@ -14,33 +10,14 @@ using namespace std;
 
 ActorParser::ActorParser()
 {
-  mapParsers();
 }
 
-  ActorParser::ActorParser(xml_node<> *xmlNode)
+ActorParser::ActorParser(xml_node<> *xmlNode)
  : Parser(xmlNode)
 {
-  mapParsers();
 }
 
-void ActorParser::mapParsers()
-{
-  _featureParsers[ActorFeature::INVENTORY]   = [&](){ return parseInventoryDsc(); };
-  _featureParsers[ActorFeature::OPENABLE]    = [&](){ return parseOpenableDsc(); };
-  _featureParsers[ActorFeature::PICKABLE]    = [&](){ return parsePickableDsc(); };
-  _featureParsers[ActorFeature::CHARACTER]   = [&](){ return parseCharacterDsc(); };
-  _featureParsers[ActorFeature::WEARER]      = [&](){ return parseWearerDsc(); };
-  _featureParsers[ActorFeature::AI]          = [&](){ return parseAiDsc(); };
-  _featureParsers[ActorFeature::DESTROYABLE] = [&](){ return parseDestroyableDsc(); };
-}
-
-DescriptionPtr ActorParser::parseFeatureDsc(const ActorFeature::Type featureType)
-{
-  auto it = _featureParsers.find(featureType);
-  return it != _featureParsers.end() ? (it->second)() : nullptr;
-}
-
-ActorDescriptionPtr ActorParser::parseActorDsc()
+ActorDescriptionPtr ActorParser::parseDescription()
 {
   ActorDescriptionPtr actorDsc;
 
@@ -49,30 +26,25 @@ ActorDescriptionPtr ActorParser::parseActorDsc()
     actorDsc.reset( new ActorDescription );
 
     actorDsc->id = (ActorType)getAttribute<int>(_xml, "id");
-    actorDsc->name = getAttribute<std::string>(_xml, "name");
 
-    std::string charStr = getAttribute<std::string>(_xml, "character");
-    if (charStr.size() > 1 || std::isdigit(charStr[0]))
-      actorDsc->symbol = (unsigned char)std::stol(charStr);
-    else
-      actorDsc->symbol = charStr[0];
+    if ( attributeExists(_xml, "name") )         actorDsc->name         = getAttribute<std::string>(_xml, "name");
+    if ( attributeExists(_xml, "x") )            actorDsc->x            = getAttribute<int>(_xml, "x");
+    if ( attributeExists(_xml, "y") )            actorDsc->y            = getAttribute<int>(_xml, "y");
+    if ( attributeExists(_xml, "blocks") )       actorDsc->blocks       = getAttribute<bool>(_xml, "blocks");
+    if ( attributeExists(_xml, "fovOnly") )      actorDsc->fovOnly      = getAttribute<bool>(_xml, "fovOnly");
+    if ( attributeExists(_xml, "transparent") )  actorDsc->transparent  = getAttribute<bool>(_xml, "transparent");
+    if ( attributeExists(_xml, "tilePriority") ) actorDsc->tilePriority = getAttribute<int>(_xml, "tilePriority");
+    if ( attributeExists(_xml, "color") )        actorDsc->color        = strToColor( getAttribute<std::string>(_xml, "color") );
 
-    string colorStr = getAttribute<std::string>(_xml, "color");
-    actorDsc->color = strToColor(colorStr);
+    if ( xml_node<>* dNode = _xml->first_node("Description") ) actorDsc->description = getNodeValue<std::string>(dNode);
 
-    actorDsc->blocks = getAttribute<bool>(_xml, "blocks");
-    actorDsc->fovOnly = getAttribute<bool>(_xml, "fovOnly");
-    actorDsc->transparent = getAttribute<bool>(_xml, "transparent");
-
-    if ( attributeExists(_xml, "tilePriority") )
-      actorDsc->tilePriority = getAttribute<int>(_xml, "tilePriority");
-    else
-      actorDsc->tilePriority = -1;
-
-    xml_node<>* dNode = _xml->first_node("Description");
-    if ( dNode != nullptr )
+    if ( attributeExists(_xml, "character") )
     {
-      actorDsc->description = getNodeValue<std::string>(dNode);
+      std::string charStr = getAttribute<std::string>(_xml, "character");
+      if (charStr.size() > 1 || std::isdigit(charStr[0]))
+        actorDsc->symbol = (unsigned char)std::stol(charStr);
+      else
+        actorDsc->symbol = charStr[0];
     }
 
     //Parse Status Effects
@@ -89,29 +61,18 @@ ActorDescriptionPtr ActorParser::parseActorDsc()
         eNode = eNode->next_sibling();
       }
     }
+
+    //Parse Actor Features
+    actorDsc->pickable = parsePickableDsc();
+    actorDsc->character = parseCharacterDsc();
+    actorDsc->ai = parseAiDsc();
+    actorDsc->openable = parseOpenableDsc();
+    actorDsc->wearer = parseWearerDsc();
+    actorDsc->inventory = parseInventoryDsc();
+    actorDsc->destroyable = parseDestroyableDsc();
   }
 
   return actorDsc;
-}
-
-void ActorParser::parseInventoryContentNode(InventoryDescriptionPtr contDsc, xml_node<>* contentNode)
-{
-  ActorParser aParser(contentNode);
-  InventoryDescription::Content cActor;
-  ActorDescriptionPtr aDsc = aParser.parseActorDsc();
-  if (aDsc != nullptr)
-  {
-    cActor.actorType = aDsc->id;
-
-    cActor.container = aParser.parseInventoryDsc() ;
-    cActor.openable = aParser.parseOpenableDsc();
-    cActor.pickable = aParser.parsePickableDsc();
-    cActor.character = aParser.parseCharacterDsc();
-    cActor.ai = aParser.parseAiDsc();
-    cActor.destroyable = aParser.parseDestroyableDsc();
-
-    contDsc->content.push_back( cActor );
-  }
 }
 
 InventoryDescriptionPtr ActorParser::parseInventoryDsc()
@@ -124,17 +85,15 @@ InventoryDescriptionPtr ActorParser::parseInventoryDsc()
     if ( invNode != nullptr)
     {
       contDsc.reset( new InventoryDescription );
-
       contDsc->maxSize = getAttribute<int>(invNode, "maxSize");
-
+      ActorParser parser;
       xml_node<>* contentNode = invNode->first_node("Content");
-
       while ( contentNode != nullptr)
       {
-        parseInventoryContentNode(contDsc, contentNode);
+        parser.setSource(contentNode);
+        contDsc->content.push_back( parser.parseDescription() );
         contentNode = contentNode->next_sibling();
       }
-
     }
   }
 
@@ -298,6 +257,7 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
 
   if (_xml != nullptr)
   {
+    ActorParser parser;
     xml_node<>* wearerNode = _xml->first_node("Wearer");
     if (wearerNode != nullptr)
     {
@@ -312,13 +272,12 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
         xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");
         if (equippedNode != nullptr)
         {
-          parseInventoryContentNode(wrDsc->eqItems, equippedNode );
+          parser.setSource(equippedNode);
+          wrDsc->eqItems.push_back(parser.parseDescription());
         }
 
         itemSlotNode = itemSlotNode->next_sibling();
       }
-
-      wrDsc->eqItems->maxSize = wrDsc->itemSlots.size();
     }
   }
 
@@ -355,31 +314,6 @@ DestroyableDescriptionPtr ActorParser::parseDestroyableDsc()
   }
 
   return destrDsc;
-}
-
-ActorPtr ActorParser::parse()
-{
-  int aX = getAttribute<int>(_xml, "x");
-  int aY = getAttribute<int>(_xml, "y");
-  ActorType aId = static_cast<ActorType>(getAttribute<int>(_xml, "id"));
-
-  ActorPtr actor = Actor::create(aId, aX, aY);
-
-  for (int f = ActorFeature::FT_NULL+1; f != ActorFeature::FT_END; ++f)
-  {
-    ActorFeature::Type featureType = static_cast<ActorFeature::Type>( f );
-    DescriptionPtr dsc( parseFeatureDsc(featureType) );
-    if ( dsc ) actor->insertFeature( ActorFeature::create(featureType, dsc) );
-  }
-
-  ActorDescriptionPtr dsc = parseActorDsc();
-  for ( auto e : dsc->statusEffects )
-  {
-    StatusEffectPtr se( new StatusEffect(static_cast<SpellId>(e.spellId), e.duration));
-    actor->getStatusEffects().add( se );
-  }
-
-  return actor;
 }
 
 }

@@ -52,6 +52,13 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
     addAttributeEnum( _actorNode, "id", actor->getType() );
     addAttribute( _actorNode, "x", actor->getX() );
     addAttribute( _actorNode, "y", actor->getY() );
+    addAttribute( _actorNode, "fovOnly", actor->isFovOnly() );
+    addAttribute( _actorNode, "transparent", actor->isTransparent() );
+    addAttribute( _actorNode, "blocks", actor->isBlocking() );
+    addAttribute( _actorNode, "tilePriority", actor->getTileRenderPriority() );
+    addAttribute( _actorNode, "name", actor->getName().c_str() );
+    addAttribute( _actorNode, "color", colorToStr( actor->getColor() ) );
+    addAttribute( _actorNode, "character", actor->getSymbol() );
 
     //Serialize Status Effects
     auto effects = actor->getStatusEffects().getEffects();
