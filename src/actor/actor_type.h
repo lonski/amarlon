@@ -28,6 +28,7 @@ enum class ActorType
   BlackAle = 23,
   Dagger = 24,
   Goblin = 25,
+  BladeTrap = 26,
   End
 };
 

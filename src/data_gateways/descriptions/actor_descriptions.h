@@ -36,6 +36,7 @@ struct ActorDescription : Description
   std::experimental::optional<bool> blocks;
   std::experimental::optional<bool> fovOnly;
   std::experimental::optional<bool> transparent;
+  std::experimental::optional<bool> visible;
   std::experimental::optional<int> tilePriority;
   std::experimental::optional<std::string> description;
   std::vector<StatusEffectDsc> statusEffects;

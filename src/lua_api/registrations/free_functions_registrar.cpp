@@ -1,6 +1,7 @@
 #include "free_functions_registrar.h"
 #include <lua_state.h>
 #include <message_box.h>
+#include <dices.h>
 
 namespace amarlon {
 
@@ -23,7 +24,10 @@ void FreeFunctionRegistrar::reg(lua_State* state)
   module(state)
   [
       def("log", &log),
-      def("msg", &msg)
+      def("msg", &msg),
+      def("rollDice",  (int(*)(dices::Dice))&dices::roll ),
+      def("rollDiceN", (int(*)(dices::Dice, int))&dices::roll )
+
   ];
 }
 

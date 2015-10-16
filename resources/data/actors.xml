@@ -69,14 +69,6 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Destroyable>	
 		<Description>Orcs are grotesque humanoids bent on war and domination. They have lupine ears, reddish eyes, truncated, upturned noses, and black hair (but very little body hair). An adult male orc is a little over 6 feet tall and weighs about 210 pounds; females are slightly smaller. Orcs prefer wearing vivid colors that many humans would consider unpleasant, such as blood red, mustard yellow, yellow-green, and deep purple. They utilize all manner of weapons and armor scavenged from battlefields.</Description>
 	</Actor>
-	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" experience="10" class="1" race="6" armorClass="11" hitPointsBonus="-1" damage="1d6+0#1" morale="7" speed="30"/>
-		<MonsterAi/>
-		<Destroyable>
-			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
-		</Destroyable>
-		<Description>Goblins are small, wicked humanoids that favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise. An adult goblin stands 3 to 3.5 feet tall and weigh 40 to 45 pounds. Its eyes are usually bright and crafty-looking, varying in color from red to yellow. A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color. Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
-	</Actor>	
 	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
 		<Openable scriptId="1" closed="1" />
 	</Actor>
@@ -125,5 +117,15 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2"/>
 		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
 	</Actor>
-	
+	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+		<Monster level="1" experience="10" class="1" race="6" armorClass="11" hitPointsBonus="-1" damage="1d6+0#1" morale="7" speed="30"/>
+		<MonsterAi/>
+		<Destroyable>
+			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
+		</Destroyable>
+		<Description>Goblins are small, wicked humanoids that favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise. An adult goblin stands 3 to 3.5 feet tall and weigh 40 to 45 pounds. Its eyes are usually bright and crafty-looking, varying in color from red to yellow. A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color. Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
+	</Actor>	
+	<Actor name="Blade Trap" id="26" character="^" color="ff2222" transparent="1" blocks="0" fovOnly="0" visible="0">
+		<Trap armed="1" difficulty="20" spell="7"/>
+	</Actor>
 </Actors>

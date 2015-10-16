@@ -135,19 +135,19 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
   if ( isInFov(x,y) )         //Tile is in the field of view
   {
     Tile&    tile  = getTile(x, y);
-    ActorPtr actor = tile.top();
+    ActorPtr actor = tile.top([](ActorPtr a){ return a->isVisible(); });
 
-    color     = actor ? actor->getColor() : tile.getColor();
-    character = actor ? actor->getSymbol()  : tile.getChar();
+    color     = actor ? actor->getColor()  : tile.getColor();
+    character = actor ? actor->getSymbol() : tile.getChar();
     updateTile(x, y);
   }
   else if ( isExplored(x,y) ) //Tile is beyond the 'fog of war'
   {
     Tile&    tile  = getTile(x, y);
-    ActorPtr actor = tile.top([](ActorPtr a){ return !a->isFovOnly(); });
+    ActorPtr actor = tile.top([](ActorPtr a){ return !a->isFovOnly() && a->isVisible(); });
 
-    color     = actor ? actor->getColor() : tile.getColor() * 0.6;
-    character = actor ? actor->getSymbol()  : tile.getChar();
+    color     = actor ? actor->getColor()  : tile.getColor() * 0.6;
+    character = actor ? actor->getSymbol() : tile.getChar();
   }
 
   console->setChar( x, y, character );

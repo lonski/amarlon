@@ -1,6 +1,7 @@
 #include "trap.h"
 #include <trap_description.h>
 #include <spell.h>
+#include <actor.h>
 
 namespace amarlon {
 
@@ -22,7 +23,9 @@ TrapPtr Trap::create(DescriptionPtr dsc)
   TrapDescriptionPtr tDsc = std::dynamic_pointer_cast<TrapDescription>(dsc);
   if ( tDsc )
   {
+    trap.reset(new Trap);
     trap->_armed = tDsc->armed;
+    trap->_difficulty = tDsc->difficulty;
     trap->_spell = Spell::create( static_cast<SpellId>(tDsc->spell) );
   }
   return trap;
@@ -38,6 +41,7 @@ ActorFeaturePtr Trap::clone()
   TrapPtr trap( new Trap );
 
   trap->_armed = _armed;
+  trap->_difficulty = _difficulty;
   trap->_spell = _spell->clone();
 
   return trap;
@@ -50,7 +54,8 @@ bool Trap::isEqual(ActorFeaturePtr rhs) const
   TrapPtr tRhs = std::dynamic_pointer_cast<Trap>(rhs);
   if ( tRhs )
   {
-    equal = _armed == tRhs->_armed;
+    equal =  _armed == tRhs->_armed;
+    equal &= _difficulty == tRhs->_difficulty;
     equal &= *_spell == *tRhs->_spell;
   }
 

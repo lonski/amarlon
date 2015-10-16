@@ -12,6 +12,7 @@
 #include <openable_serializer.h>
 #include <status_effects_manager.h>
 #include <status_effect.h>
+#include <trap_serializer.h>
 
 using namespace rapidxml;
 
@@ -34,6 +35,7 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   _afSerializers.push_back( std::make_shared<PlayableCharacterSerializer>() );
   _afSerializers.push_back( std::make_shared<MonsterAiSerializer>() );
   _afSerializers.push_back( std::make_shared<OpenableSerializer>() );
+  _afSerializers.push_back( std::make_shared<TrapSerializer>() );
 }
 
 ActorSerializer::~ActorSerializer()
@@ -55,6 +57,7 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
     addAttribute( _actorNode, "fovOnly", actor->isFovOnly() );
     addAttribute( _actorNode, "transparent", actor->isTransparent() );
     addAttribute( _actorNode, "blocks", actor->isBlocking() );
+    if (!actor->isVisible()) addAttribute( _actorNode, "visible", actor->isVisible() );
     addAttribute( _actorNode, "tilePriority", actor->getTileRenderPriority() );
     addAttribute( _actorNode, "name", actor->getName().c_str() );
     addAttribute( _actorNode, "color", colorToStr( actor->getColor() ) );

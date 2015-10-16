@@ -53,6 +53,7 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     if (dsc->transparent)  _transparent = *(dsc->transparent);
     if (dsc->tilePriority) _priority = *(dsc->tilePriority);
     if (dsc->description)  _description = *(dsc->description);
+    if (dsc->visible)      setVisible( *(dsc->visible) );
 
     //Status Effects
     _effects.reset( new StatusEffectsManager( shared_from_this() ) );
@@ -249,6 +250,7 @@ void Actor::interract(ActorPtr actor)
   if ( trap && actor && actor->isAlive() )
   {
     trap->trigger( Target(actor) );
+    if ( isInFov() ) setVisible(true);
   }
 }
 

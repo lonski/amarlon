@@ -59,6 +59,7 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
     data_gateways/serializers/actor_feature_serializers/ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
+    data_gateways/serializers/actor_feature_serializers/trap_serializer.h
     data_gateways/actor_db.h
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
@@ -227,6 +228,7 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp
     data_gateways/tile_db.cpp
