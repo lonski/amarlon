@@ -80,6 +80,9 @@ bool Openable::open(ActorPtr executor)
         );
 
         _closed = !r;
+
+        ActorPtr owner = getOwner().lock();
+        if ( owner ) owner->interract(executor);
       }
       catch(luabind::error& e)
       {

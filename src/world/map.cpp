@@ -62,6 +62,8 @@ void Map::addActor(ActorPtr actor)
 
   tile.addActor(actor);
   actor->setMap( shared_from_this() );
+
+  for ( auto a : tile.getActors() ) a->interract( actor );
 }
 
 ActorPtr Map::getFirstActor(int x, int y)

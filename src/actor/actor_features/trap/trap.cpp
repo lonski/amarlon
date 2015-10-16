@@ -4,6 +4,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Trap::featureType = ActorFeature::TRAP;
+
 Trap::Trap()
   : _armed(false)
   , _difficulty(0)

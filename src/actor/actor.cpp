@@ -12,6 +12,7 @@
 #include <world.h>
 #include <monster_ai.h>
 #include <actor_descriptions.h>
+#include <trap.h>
 
 namespace amarlon {
 
@@ -240,6 +241,15 @@ bool Actor::isAllyOf(ActorPtr actor)
   }
 
   return isAlly;
+}
+
+void Actor::interract(ActorPtr actor)
+{
+  TrapPtr trap = getFeature<Trap>();
+  if ( trap && actor && actor->isAlive() )
+  {
+    trap->trigger( Target(actor) );
+  }
 }
 
 StatusEffectsManager &Actor::getStatusEffects() const
