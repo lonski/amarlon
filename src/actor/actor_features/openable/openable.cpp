@@ -14,6 +14,7 @@ Openable::Openable()
   : _locked(false)
   , _lockId(0)
   , _scriptId(0)
+  , _closed(false)
 {
 }
 

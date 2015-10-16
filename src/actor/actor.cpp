@@ -88,6 +88,7 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _priority( -1 )
   , _color(TCODColor::white)
   , _symbol('#')
+  , _visible(true)
 {
   addObserver( &Engine::instance().getMessenger() );
 }
@@ -201,6 +202,17 @@ bool Actor::isInFov()
   if ( cMap )
   {
     return cMap->isInFov( getX(), getY() );
+  }
+  return false;
+}
+
+bool Actor::sees(ActorPtr actor)
+{
+  //Check if actors are on the same map
+  if ( _map.lock() != nullptr && _map.lock() == actor->getMap() )
+  {
+    //And are in player's field of viev and are visible
+    return isInFov() && actor->isInFov() && isVisible();
   }
   return false;
 }
@@ -335,6 +347,16 @@ MapPtr Actor::getMap() const
 void Actor::setMap(MapPtr map)
 {
   _map = map;
+}
+
+bool Actor::isVisible() const
+{
+  return _visible;
+}
+
+void Actor::setVisible(bool visible)
+{
+  _visible = visible;
 }
 
 TCODColor Actor::getColor() const

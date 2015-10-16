@@ -86,6 +86,9 @@ public:
   MapPtr getMap() const;
   void setMap(MapPtr map);
 
+  bool isVisible() const;
+  void setVisible(bool visible);
+
   /**
    * @brief Changes the actors coordinates and sets its position on map
    *        (if the map is set)
@@ -119,6 +122,11 @@ public:
    * @brief Checks if actor is in player's field of view
    */
   bool isInFov();
+
+  /**
+   * @brief Check if this actor can see the passed one
+   */
+  bool sees(ActorPtr actor);
 
   /**
    * @brief Return true if given actor is allied
@@ -179,6 +187,7 @@ private:
   std::string _description;
   TCODColor _color;
   char _symbol;
+  bool _visible;
 
   Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
   Actor(const Actor& a);

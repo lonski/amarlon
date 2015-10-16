@@ -68,7 +68,10 @@ void MonsterAi::update()
 
         if ( _trackCount > 0)
         {
-          huntPlayer();
+          if ( Engine::instance().getPlayer()->isVisible() )
+          {
+            huntPlayer();
+          }
         }
       }
     }
@@ -77,12 +80,14 @@ void MonsterAi::update()
 
 void MonsterAi::huntPlayer()
 {
-  int dx = Engine::instance().getPlayer()->getX() - _cX;
-  int dy = Engine::instance().getPlayer()->getY() - _cY;
+  ActorPtr player = Engine::instance().getPlayer();
+  ActorPtr monster = getOwner().lock();
+
+  int dx = player->getX() - _cX;
+  int dy = player->getY() - _cY;
   int stepDx = (dx > 0 ? 1:-1);
   int stepDy = (dy > 0 ? 1:-1);
 
-  ActorPtr monster = getOwner().lock();
   float distance = sqrtf(dx*dx + dy*dy);
 
   if ( distance >= 2 )
@@ -91,7 +96,7 @@ void MonsterAi::huntPlayer()
     dy = (int)(round(dy/distance));
 
     if ( !_map->isBlocked(_cX+dx, _cY+dy) )
-    {      
+    {
       monster->performAction( std::make_shared<MonsterMoveAction>(dx, dy) );
     }
     else if ( !_map->isBlocked(_cX+stepDx, _cY) )
@@ -105,8 +110,9 @@ void MonsterAi::huntPlayer()
   }
   else if ( getOwner().lock()->hasFeature<Character>() )
   {
-    monster->performAction( std::make_shared<AttackAction>(Engine::instance().getPlayer()) );
+    monster->performAction( std::make_shared<AttackAction>(player) );
   }
+
 }
 
 void MonsterAi::updatePosition()
