@@ -10,13 +10,26 @@ StatusEffectsManager::StatusEffectsManager(ActorPtr owner)
 {
 }
 
-void StatusEffectsManager::add(StatusEffectPtr effect)
+bool StatusEffectsManager::add(StatusEffectPtr effect)
 {
+  bool r = false;
+
   if ( effect->getDuration() != 0 )
   {
-    _effects.push_back(effect);
+    auto it = std::find_if(_effects.begin(), _effects.end(), [&](StatusEffectPtr e){return *e == *effect;});
+    if ( it != _effects.end() ) //effect already applied
+    {
+      (*it)->setDuration( std::max((*it)->getDuration(), effect->getDuration()) );
+    }
+    else
+    {
+      _effects.push_back(effect);
+      r = true;
+    }
     notifyAdd(effect);
   }
+
+  return r;
 }
 
 void StatusEffectsManager::remove(StatusEffectPtr effect)
@@ -61,6 +74,18 @@ void StatusEffectsManager::tick(int time)
 std::vector<StatusEffectPtr> StatusEffectsManager::getEffects() const
 {
   return { _effects.begin(), _effects.end() };
+}
+
+std::vector<ColoredString> StatusEffectsManager::getEffectsStringList() const
+{
+  std::vector<ColoredString> effects;
+
+  for(auto e : _effects )
+  {
+    effects.push_back( ColoredString( e->getName(), TCODColor::lightCyan ) );
+  }
+
+  return effects;
 }
 
 StatusEffectsManagerPtr StatusEffectsManager::clone()

@@ -5,7 +5,7 @@ function onCast(caster, target)
 
 	if caster:get():character():get() == nil then return false end
 
-	duration = caster:get():character():get():getLevel() + 1
+	duration = caster:get():character():get():getLevel() + 3
 
 	local function playAnimation(actor)
 		t = Target()
@@ -19,7 +19,7 @@ function onCast(caster, target)
 
 	local function addStatusEffect(actor)
 		effect = StatusEffect(SPELL_ID, duration)
-		actor:get():getStatusEffects():add( effect )
+		return actor:get():getStatusEffects():add( effect )
 	end
 
 	local function applyModifiers(actor)
@@ -34,10 +34,11 @@ function onCast(caster, target)
 		end
 	end
 
-	for a in target.actors do
-		applyModifiers(a)
+	for a in target.actors do		
 		if a:get():isAllyOf(caster) then			
-			addStatusEffect(a)
+			if addStatusEffect(a) then
+				applyModifiers(a)
+			end
 			playAnimation(a)
 		end
 	end

@@ -48,6 +48,7 @@ public:
   void setHpBar(float value, float maxValue);
   void message(std::string msg, TCODColor color = TCODColor::white);
   void setViewList(const std::vector<ColoredString>& items);
+  void setEffectsList(const std::vector<ColoredString>& items);
   void setPlayerName(std::string name);
   void setStatusMessage(const std::string& status);
   void clearStatusMessage();
@@ -59,6 +60,7 @@ private:
   AListPtr _viewList;
   ABarPtr _hpBar;
   ALabelPtr _playerName;
+  AListPtr _effects;
 
   std::vector<AWidgetPtr> _widgets;
 

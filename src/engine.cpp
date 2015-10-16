@@ -13,6 +13,7 @@
 #include <actor_db.h>
 #include <lua_state.h>
 #include <window/game_menu_window.h>
+#include <status_effects_manager.h>
 
 namespace amarlon {
 
@@ -138,12 +139,13 @@ void Engine::render()
 
   if (_gui)
   {
-    _gui->setPlayerName(getPlayer()->getName());
-
     if ( getPlayer()->isAlive() )
+    {
+      _gui->setPlayerName(getPlayer()->getName());
       _gui->setHpBar(getPlayer()->getFeature<Character>()->getHitPoints(), getPlayer()->getFeature<Character>()->getMaxHitPoints());
-
-    _gui->setViewList(getActorsBenethPlayersFeet());
+      _gui->setViewList(getActorsBenethPlayersFeet());
+      _gui->setEffectsList( getPlayer()->getStatusEffects().getEffectsStringList() );
+    }
     _gui->render();
   }
 }

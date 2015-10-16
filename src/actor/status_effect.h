@@ -19,6 +19,8 @@ public:
   std::string getName() const;
   SpellId getSpellId() const;
 
+  bool operator==(const StatusEffect& rhs);
+
 private:
   SpellId _spell;
   int _duration;

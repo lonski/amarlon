@@ -20,7 +20,6 @@ Gui::Gui()
   , viewConHeight(bottomConHeight)
   , LogSize( logConHeight - 3 ) // 3 is for frame
   , _frameColor(TCODColor::darkerOrange)
-
 {
   setupRightPanel();
   setupLogPanel();
@@ -32,15 +31,23 @@ void Gui::setupRightPanel()
   APanelPtr rightPanel( new APanel(rightConWidth, rightConHeight) );
   rightPanel->setPosition( Engine::screenWidth - rightConWidth, 0 );
 
+  //Player Name
   _playerName.reset( new ALabel );
   _playerName->setPosition(2,2);
   rightPanel->addWidget(_playerName);
 
+  //HP Bar
   _hpBar.reset( new ABar );
   _hpBar->setPosition(2,4);
   _hpBar->setName("HP");
   _hpBar->setWidth( rightPanel->getWidth() - 4 );
   rightPanel->addWidget(_hpBar);
+
+  //Status Effects
+  _effects.reset( new AList );
+  _effects->setPosition( 2, _hpBar->getY() + 4 );
+  _effects->setWidth( rightPanel->getWidth() - 4 );
+  rightPanel->addWidget( _effects );
 
   _widgets.push_back( rightPanel );
 }
@@ -106,6 +113,15 @@ void Gui::setViewList(const std::vector<ColoredString> &items)
     }
 
     _viewList->pushBack(e);
+  }
+}
+
+void Gui::setEffectsList(const std::vector<ColoredString> &items)
+{
+  _effects->clear();
+  for(auto e : items)
+  {
+    _effects->pushBack(e);
   }
 }
 

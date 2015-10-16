@@ -62,4 +62,9 @@ SpellId StatusEffect::getSpellId() const
   return _spell;
 }
 
+bool StatusEffect::operator==(const StatusEffect &rhs)
+{
+  return _spell == rhs.getSpellId();
+}
+
 }

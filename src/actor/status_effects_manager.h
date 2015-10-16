@@ -6,6 +6,7 @@
 #include <vector>
 #include <spell_id.h>
 #include <target.h>
+#include <colored_string.h>
 
 namespace amarlon {
 
@@ -22,12 +23,12 @@ class StatusEffectsManager
 public:
   StatusEffectsManager(ActorPtr owner = nullptr);
 
-  void add(StatusEffectPtr effect);
+  bool add(StatusEffectPtr effect);
   void remove(StatusEffectPtr effect);
   void tick(int time = 1);
 
   std::vector<StatusEffectPtr> getEffects() const;
-
+  std::vector<ColoredString> getEffectsStringList() const;
   StatusEffectsManagerPtr clone();
 
 private:
