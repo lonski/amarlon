@@ -28,6 +28,7 @@ public:
     CHARACTER,
     PICKABLE,
     DESTROYABLE,
+    TRAP,
     FT_END
   };
 

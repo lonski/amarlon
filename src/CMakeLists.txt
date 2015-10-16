@@ -16,6 +16,7 @@ set(HEADER_FILES
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/destroyable/drop_rule.h
+    actor/actor_features/trap/trap.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
@@ -69,6 +70,7 @@ set(HEADER_FILES
     data_gateways/descriptions/actor_feature_descriptions/wearer_description.h
     data_gateways/descriptions/actor_feature_descriptions/inventory_description.h
     data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
+    data_gateways/descriptions/actor_feature_descriptions/trap_description.h
     data_gateways/descriptions/description.h
     data_gateways/map_gateway.h
     data_gateways/tile_db.h
@@ -187,6 +189,7 @@ set(SOURCE_FILES
     actor/actor_features/character/character_factory.cpp
     actor/actor_features/pickable/pickable.cpp
     actor/actor_features/destroyable/destroyable.cpp
+    actor/actor_features/trap/trap.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
     actor/status_effect.cpp

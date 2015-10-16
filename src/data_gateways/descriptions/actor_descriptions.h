@@ -9,6 +9,7 @@
 #include <wearer_description.h>
 #include <inventory_description.h>
 #include <destroyable_description.h>
+#include <trap_description.h>
 
 #include <experimental/optional>
 
@@ -46,6 +47,8 @@ struct ActorDescription : Description
   WearerDescriptionPtr wearer;
   InventoryDescriptionPtr inventory;
   DestroyableDescriptionPtr destroyable;
+  TrapDescriptionPtr trap;
+
 };
 
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;

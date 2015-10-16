@@ -62,13 +62,14 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     }
 
     //Features
-    if ( dsc->pickable )    _features[ActorFeature::PICKABLE]    = ActorFeature::create(ActorFeature::PICKABLE, dsc->pickable);
-    if ( dsc->character )   _features[ActorFeature::CHARACTER]   = ActorFeature::create(ActorFeature::CHARACTER, dsc->character);
-    if ( dsc->ai )          _features[ActorFeature::AI]          = ActorFeature::create(ActorFeature::AI, dsc->ai);
-    if ( dsc->openable )    _features[ActorFeature::OPENABLE]    = ActorFeature::create(ActorFeature::OPENABLE, dsc->openable);
-    if ( dsc->wearer )      _features[ActorFeature::WEARER]      = ActorFeature::create(ActorFeature::WEARER, dsc->wearer);
-    if ( dsc->inventory )   _features[ActorFeature::INVENTORY]   = ActorFeature::create(ActorFeature::INVENTORY, dsc->inventory);
+    if ( dsc->pickable )    _features[ActorFeature::PICKABLE]    = ActorFeature::create(ActorFeature::PICKABLE,    dsc->pickable);
+    if ( dsc->character )   _features[ActorFeature::CHARACTER]   = ActorFeature::create(ActorFeature::CHARACTER,   dsc->character);
+    if ( dsc->ai )          _features[ActorFeature::AI]          = ActorFeature::create(ActorFeature::AI,          dsc->ai);
+    if ( dsc->openable )    _features[ActorFeature::OPENABLE]    = ActorFeature::create(ActorFeature::OPENABLE,    dsc->openable);
+    if ( dsc->wearer )      _features[ActorFeature::WEARER]      = ActorFeature::create(ActorFeature::WEARER,      dsc->wearer);
+    if ( dsc->inventory )   _features[ActorFeature::INVENTORY]   = ActorFeature::create(ActorFeature::INVENTORY,   dsc->inventory);
     if ( dsc->destroyable ) _features[ActorFeature::DESTROYABLE] = ActorFeature::create(ActorFeature::DESTROYABLE, dsc->destroyable);
+    if ( dsc->trap )        _features[ActorFeature::TRAP]        = ActorFeature::create(ActorFeature::TRAP,        dsc->trap);
 
     for (auto f : _features)
     {

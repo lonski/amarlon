@@ -70,6 +70,7 @@ ActorDescriptionPtr ActorParser::parseDescription()
     actorDsc->wearer = parseWearerDsc();
     actorDsc->inventory = parseInventoryDsc();
     actorDsc->destroyable = parseDestroyableDsc();
+    actorDsc->trap = parseTrapDsc();
   }
 
   return actorDsc;
@@ -315,6 +316,25 @@ DestroyableDescriptionPtr ActorParser::parseDestroyableDsc()
   }
 
   return destrDsc;
+}
+
+TrapDescriptionPtr ActorParser::parseTrapDsc()
+{
+  TrapDescriptionPtr tDsc;
+
+  if (_xml != nullptr)
+  {
+    xml_node<>* trapNode = _xml->first_node("Trap");
+    if (trapNode != nullptr)
+    {
+      tDsc.reset( new TrapDescription );
+      tDsc->armed = getAttribute<bool>( trapNode, "armed" );
+      tDsc->difficulty = getAttribute<int>( trapNode, "difficulty" );
+      tDsc->spell = getAttribute<int>( trapNode, "spell" );
+    }
+  }
+
+  return tDsc;
 }
 
 }
