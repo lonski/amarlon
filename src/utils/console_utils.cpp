@@ -28,7 +28,7 @@ void drawCircle(int radius, Target center, char c, TCODColor color)
   }
 }
 
-void highlightFilledCircle(int range, Target center)
+void highlightFilledCircle(int range, Target center, TCODColor color)
 {
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
   if ( map )
@@ -39,7 +39,7 @@ void highlightFilledCircle(int range, Target center)
       {
         if ( calculateDistance(center.x, center.y, x, y ) <= range )
         {
-          TCODConsole::root->setCharBackground(x,y, TCODColor::lighterYellow * 0.1);
+          TCODConsole::root->setCharBackground(x,y, color);
         }
       }
     }

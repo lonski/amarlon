@@ -62,6 +62,7 @@ public:
   virtual CharacterClass getClass() const;
   virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
+  virtual bool rollSavingThrow(SavingThrows::Type type);
 
   virtual int getSpeed();
   virtual int getMovePoints();
@@ -81,7 +82,7 @@ public:
   virtual void setTmpMoraleModifier(int) {}
 
   /**
-   * @brief Temporary attack bonus granted by effects
+   * @brief Temporary modifiers granted by effects
    */
   virtual int getTmpAttackModifier();
   virtual void setTmpAttackModifier(int bonus);

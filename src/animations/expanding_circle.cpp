@@ -35,6 +35,9 @@ void ExpandingCircle::run()
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
   }
+
+  Engine::instance().render();
+  console.flush();
 }
 
 Type ExpandingCircle::getType() const

@@ -15,6 +15,7 @@
 #include <destroyable.h>
 #include <inventory.h>
 #include <subject.h>
+#include <bitset>
 
 namespace amarlon {
 
@@ -86,8 +87,15 @@ public:
   MapPtr getMap() const;
   void setMap(MapPtr map);
 
+  /**
+   * Non persistent status properties
+   */
+
   bool isVisible() const;
   void setVisible(bool visible);
+
+  bool isSleeping() const;
+  void wakeUp();
 
   /**
    * @brief Changes the actors coordinates and sets its position on map
@@ -187,7 +195,8 @@ private:
   std::string _description;
   TCODColor _color;
   char _symbol;
-  bool _visible;
+
+  std::bitset<1> _flags;
 
   Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
   Actor(const Actor& a);

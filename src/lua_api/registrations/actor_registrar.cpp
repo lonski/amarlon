@@ -51,7 +51,8 @@ void ActorRegistrar::reg(lua_State* state)
         .def("setMoraleModifier", &Character::setTmpMoraleModifier )
         .def("getMoraleModifier", &Character::getTmpMoraleModifier )
         .def("setArmorModifier", &Character::setTmpArmorClassModifier )
-        .def("getArmorModifier", &Character::getTmpArmorClassModifier ),
+        .def("getArmorModifier", &Character::getTmpArmorClassModifier )
+        .def("rollSavingThrow", &Character::rollSavingThrow ),
 
       class_<OpenablePtr>("OpenablePtr")
         .def("get", &OpenablePtr::get),

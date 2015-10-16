@@ -9,7 +9,7 @@ enum class Type
   Blink = 1,
   Throw = 2,
   ExpandingCircle = 3,
-  ThrowExpandingCircle = 4
+  BlinkingCircle = 4
 };
 
 }}

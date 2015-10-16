@@ -2,7 +2,7 @@
 #include <blink.h>
 #include <throw.h>
 #include <expanding_circle.h>
-#include <throw_expanding_circle.h>
+#include <blinking_circle.h>
 
 namespace amarlon { namespace animation {
 
@@ -37,7 +37,7 @@ AnimationPtr Animation::create(Type type)
     case Type::Blink: a.reset( new Blink); break;
     case Type::Throw: a.reset( new Throw); break;
     case Type::ExpandingCircle: a.reset( new ExpandingCircle); break;
-    case Type::ThrowExpandingCircle: a.reset( new ThrowExpandingCircle); break;
+    case Type::BlinkingCircle: a.reset( new BlinkingCircle); break;
     default:;
   }
   return a;

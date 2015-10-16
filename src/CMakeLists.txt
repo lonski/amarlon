@@ -157,7 +157,7 @@ set(HEADER_FILES
     animations/blink.h
     animations/throw.h
     animations/expanding_circle.h
-    animations/throw_expanding_circle.h
+    animations/blinking_circle.h
     lua_api/lua_state.h
     lua_api/defines/converters.h
     lua_api/defines/converters.h
@@ -297,7 +297,7 @@ set(SOURCE_FILES
     animations/blink.cpp
     animations/throw.cpp
     animations/expanding_circle.cpp
-    animations/throw_expanding_circle.cpp
+    animations/blinking_circle.cpp
     lua_api/lua_state.cpp
     lua_api/registrations/registration_manager.cpp
     lua_api/registrations/spelldb_registrar.cpp

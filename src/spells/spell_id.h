@@ -9,7 +9,9 @@ enum class SpellId
   CureLightWounds = 1,
   MagicMissile    = 2,
   Fireball        = 3,
-  Bless           = 4
+  Bless           = 4,
+  Shield          = 5,
+  Sleep           = 6
 };
 
 }

@@ -10,6 +10,7 @@ namespace amarlon
 
 AreaRangeSelector::AreaRangeSelector(const std::string &selectionMessage)
   : TargetSelector(selectionMessage)
+  , _renderPath(true)
 {
   initialize();
 }
@@ -27,7 +28,7 @@ void AreaRangeSelector::render()
   Engine::instance().getGui().setStatusMessage( _selectionMessage );
   highlightCell(tEnd.x, tEnd.y);
   highlightFilledCircle( getRadius(), tEnd);
-  renderPath(tStart, tEnd);
+  if ( _renderPath ) renderPath(tStart, tEnd);
   TCODConsole::root->flush();
 }
 
@@ -67,6 +68,11 @@ Target AreaRangeSelector::select(std::function<bool (ActorPtr)> filterFun)
   }
 
   return Target();
+}
+
+void AreaRangeSelector::setRenderPath(bool renderPath)
+{
+  _renderPath = renderPath;
 }
 
 }

@@ -3,6 +3,7 @@
 #include <blink.h>
 #include <throw.h>
 #include <expanding_circle.h>
+#include <blinking_circle.h>
 #include <converters.h>
 
 namespace amarlon { namespace lua_api {
@@ -31,7 +32,14 @@ void AnimationRegistrar::reg(lua_State* state)
         .def("setLocation", &animation::ExpandingCircle::setLocation)
         .def("getStartLocation", &animation::ExpandingCircle::getStartLocation)
         .def("getEndLocation", &animation::ExpandingCircle::getEndLocation)
-        .def("run", &animation::ExpandingCircle::run)
+        .def("run", &animation::ExpandingCircle::run),
+
+      class_<animation::BlinkingCircle, std::shared_ptr<animation::BlinkingCircle> >("BlinkingCircle")
+        .def(constructor<TCODColor, int, int, int>())
+        .def("setLocation", &animation::BlinkingCircle::setLocation)
+        .def("getStartLocation", &animation::BlinkingCircle::getStartLocation)
+        .def("getEndLocation", &animation::BlinkingCircle::getEndLocation)
+        .def("run", &animation::BlinkingCircle::run)
   ];
 }
 

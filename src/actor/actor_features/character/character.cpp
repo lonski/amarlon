@@ -125,6 +125,8 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
   ActorPtr actor = getOwner().lock();
   if ( actor )
   {
+    actor->wakeUp();
+
     if ( attacker )
       actor->notify(Event(EventId::Actor_GotHit,
                     { {"attacker", attacker->getName()}, {"value", std::to_string(roll)} } ));
@@ -165,6 +167,16 @@ Race Character::getRace() const
 int Character::getSavingThrow(SavingThrows::Type type)
 {
   return SavingThrows::get( type, getClass(), getLevel() ) + getTmpSavingThrowModifier(type);
+}
+
+bool Character::rollSavingThrow(SavingThrows::Type type)
+{
+  int roll = dices::roll(dices::D20);
+
+  if ( roll == dices::NATURAL_ONE )    return false;
+  if ( roll == dices::NATURAL_TWENTY ) return true;
+
+  return roll >= getSavingThrow(type);
 }
 
 int Character::getTmpSavingThrowModifier(SavingThrows::Type type)

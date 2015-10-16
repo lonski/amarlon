@@ -1,30 +1,34 @@
-#include "blink.h"
+#include "blinking_circle.h"
 #include <engine.h>
 #include <chrono>
 #include <thread>
 #include <utils.h>
+#include <console_utils.h>
 
 namespace amarlon { namespace animation {
 
-Blink::Blink(TCODColor targetColor, int frameCount, int frameDelay)
+BlinkingCircle::BlinkingCircle(TCODColor targetColor, int radius, int frameCount, int frameDelay)
   : _targetColor(targetColor)
   , _frames(frameCount)
   , _frameDelay(frameDelay)
+  , _radius(radius)
 {
 }
 
-AnimationPtr Blink::clone()
+AnimationPtr BlinkingCircle::clone()
 {
-  return BlinkPtr( new Blink(*this) );
+  return BlinkingCirclePtr( new BlinkingCircle(*this) );
 }
 
-void Blink::run()
+void BlinkingCircle::run()
 {
   TCODConsole& console = *TCODConsole::root;
+  Engine::instance().render();
+  console.flush();
 
   Target target = getEndLocation();
 
-  TCODColor originalColor = console.getCharForeground(target.x, target.y);
+  TCODColor originalColor = TCODColor::black;
   TCODColor newColor = originalColor;
 
   int rDiff = _targetColor.r - originalColor.r;
@@ -40,7 +44,8 @@ void Blink::run()
     newColor.g += gStep;
     newColor.b += bStep;
 
-    console.setCharForeground(target.x, target.y, newColor);
+    highlightFilledCircle(_radius, target, newColor);
+
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
   }
@@ -51,7 +56,8 @@ void Blink::run()
     newColor.g -= gStep;
     newColor.b -= bStep;
 
-    console.setCharForeground(target.x, target.y, newColor);
+    highlightFilledCircle(_radius, target, newColor);
+
     console.flush();
     std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
   }
@@ -60,17 +66,17 @@ void Blink::run()
   console.flush();
 }
 
-Type Blink::getType() const
+Type BlinkingCircle::getType() const
 {
-  return Type::Blink;
+  return Type::BlinkingCircle;
 }
 
-TCODColor Blink::getTargetColor() const
+TCODColor BlinkingCircle::getTargetColor() const
 {
   return _targetColor;
 }
 
-void Blink::load(const Params &params)
+void BlinkingCircle::load(const Params &params)
 {
   auto it = params.find("color");
   _targetColor = it != params.end() ? strToColor( it->second ) : TCODColor::blue;
@@ -80,16 +86,19 @@ void Blink::load(const Params &params)
 
   it = params.find("delay");
   _frameDelay = it != params.end() ? fromStr<int>( it->second ) : 15;
+
+  it = params.find("radius");
+  _radius = it != params.end() ? fromStr<int>( it->second ) : 0;
 }
 
-Params Blink::toParams() const
+Params BlinkingCircle::toParams() const
 {
   return {
     {"color",  colorToStr(_targetColor) },
     {"frames", toStr<int>(_frames)      },
-    {"delay",  toStr<int>(_frameDelay)  }
+    {"delay",  toStr<int>(_frameDelay)  },
+    {"radius", toStr<int>(_radius) }
   };
 }
 
 }}
-

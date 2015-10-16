@@ -116,7 +116,7 @@ std::string Spell::getDescription() const
 {
   std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
 
-  str += Engine::instance().getSpellDB().getDescription(_id) + "# #";
+  str += Engine::instance().getSpellDB().getDescription(_id);
 
   str += colorToStr(TCODColor::darkTurquoise, true) + "Class : " + CharacterClass2Str( getClass() ) + "#";
   str += colorToStr(TCODColor::darkTurquoise, true) + "Level : " + toStr(getLevel()) + "#";

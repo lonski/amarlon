@@ -88,8 +88,8 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _priority( -1 )
   , _color(TCODColor::white)
   , _symbol('#')
-  , _visible(true)
 {
+  setVisible(true);
   addObserver( &Engine::instance().getMessenger() );
 }
 
@@ -115,7 +115,7 @@ void Actor::morph(ActorType newType)
 void Actor::update()
 {
   AiPtr ai = getFeature<Ai>();
-  if ( ai )
+  if ( ai && !isSleeping() )
   {
     ai->update();
   }
@@ -351,12 +351,22 @@ void Actor::setMap(MapPtr map)
 
 bool Actor::isVisible() const
 {
-  return _visible;
+  return _flags[0];
 }
 
 void Actor::setVisible(bool visible)
 {
-  _visible = visible;
+  _flags.set(0, visible);
+}
+
+bool Actor::isSleeping() const
+{
+  return getStatusEffects().hasEffect( SpellId::Sleep );
+}
+
+void Actor::wakeUp()
+{
+  getStatusEffects().remove( SpellId::Sleep );
 }
 
 TCODColor Actor::getColor() const

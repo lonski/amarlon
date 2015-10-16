@@ -42,6 +42,19 @@ void StatusEffectsManager::remove(StatusEffectPtr effect)
   }
 }
 
+void StatusEffectsManager::remove(SpellId spell)
+{
+  auto it = std::find_if(_effects.begin(),
+                         _effects.end(),
+                         [&](StatusEffectPtr e){return e->getSpellId() == spell;});
+
+  if ( it != _effects.end() )
+  {
+    notifyRemove( *it );
+    _effects.erase( it );
+  }
+}
+
 void StatusEffectsManager::tick(int time)
 {
   auto it = _effects.begin();

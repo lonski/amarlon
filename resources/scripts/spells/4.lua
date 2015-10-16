@@ -5,7 +5,14 @@ function onCast(caster, target)
 
 	if caster:get():character():get() == nil then return false end
 
-	duration = caster:get():character():get():getLevel() + 3
+	duration = caster:get():character():get():getLevel() * 5 + 1 
+
+	local function playAreaAnimation()
+		radius = SpellDB:getRadius( SPELL_ID )
+		animation = BlinkingCircle("333300", radius, 40, 1)
+		animation:setLocation( target, target )
+		animation:run()
+	end
 
 	local function playAnimation(actor)
 		t = Target()
@@ -33,6 +40,8 @@ function onCast(caster, target)
 			c:setMoraleModifier( c:getMoraleModifier() + 1 )
 		end
 	end
+
+	playAreaAnimation()
 
 	for a in target.actors do		
 		if a:get():isAllyOf(caster) then			
