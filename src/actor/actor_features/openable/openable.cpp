@@ -64,7 +64,6 @@ bool Openable::isEqual(ActorFeaturePtr rhs) const
 bool Openable::open(ActorPtr executor)
 {
   bool r = false;
-
   if ( _scriptId > 0 && isClosed() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();

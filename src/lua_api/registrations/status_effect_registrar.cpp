@@ -18,6 +18,7 @@ void StatusEffectRegistrar::reg(lua_State* state)
 
       class_<StatusEffectsManager>("StatusEffectsManager")
         .def("add", &StatusEffectsManager::add)
+        .def("hasEffect", &StatusEffectsManager::hasEffect)
   ];
 }
 

@@ -1,5 +1,6 @@
 --Spell: Magic Missile
 SPELL_ID = 2
+SHIELD = 5
 
 function onCast(caster, target)
 	
@@ -28,7 +29,9 @@ function onCast(caster, target)
 	 	for i=1,count do
 	 		c = enemy:get():character():get()
 	 		if c ~= nil then 
-	 			c:takeDamage( dmg, caster )
+	 			if enemy:get():getStatusEffects():hasEffect(SHIELD) == false then
+	 				c:takeDamage( dmg, caster )
+	 			end
 	 			playAnimation()
 	 		end
 	 	end

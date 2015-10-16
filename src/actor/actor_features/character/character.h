@@ -63,12 +63,6 @@ public:
   virtual Race getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
 
-  /**
-   * @brief Temporary saving throws modifiers granted by effects.
-   */
-  virtual int getTmpSavingThrowModifier(SavingThrows::Type type);
-  virtual void setTmpSavingThrowModifier(SavingThrows::Type type, int modifier);
-
   virtual int getSpeed();
   virtual int getMovePoints();
   virtual void setMovePoints(int points);
@@ -77,14 +71,8 @@ public:
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
 
-  /**
-   * @brief Temporary attack bonus granted by effects
-   */
-  virtual int getTmpAttackModifier();
-  virtual void setTmpAttackModifier(int bonus);
-
   virtual Damage getDamage() = 0;
-  virtual int getArmorClass();
+  virtual int getArmorClass(DamageType dmgType = DamageType::Physical);
   virtual SpellBookPtr getSpellBook();
   virtual std::string getDescription();
 
@@ -92,7 +80,15 @@ public:
   virtual int getTmpMoraleModifier() { return 0; }
   virtual void setTmpMoraleModifier(int) {}
 
-
+  /**
+   * @brief Temporary attack bonus granted by effects
+   */
+  virtual int getTmpAttackModifier();
+  virtual void setTmpAttackModifier(int bonus);
+  virtual int getTmpArmorClassModifier(DamageType dmgType = DamageType::Physical);
+  virtual void setTmpArmorClassModifier(int bonus, DamageType dmgType = DamageType::Physical);
+  virtual int getTmpSavingThrowModifier(SavingThrows::Type type);
+  virtual void setTmpSavingThrowModifier(SavingThrows::Type type, int modifier);
 
 protected:
   virtual void setLevel(int level);
@@ -110,11 +106,10 @@ private:
   Race _race;
   int _speed;
   int _movePoints;
-  int _extraAttackBonus;
-
+  int _abTempBonus;
   SpellBookPtr _spellbook;
-
   std::map<SavingThrows::Type, int> _savingThrowsTmpMods;
+  std::map<DamageType, int> _acTempBonus;
 
   friend class Character::Creator;
   friend class CharacterSerializer;

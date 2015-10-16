@@ -10,7 +10,8 @@ enum class DamageType
   Magic    = 2,
   Fire     = 3,
   Cold     = 4,
-  Lighting = 5
+  Lighting = 5,
+  Missile  = 6
 };
 
 }

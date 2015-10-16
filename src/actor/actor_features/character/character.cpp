@@ -23,7 +23,7 @@ Character::Character()
   , _race(Race::NoRace)
   , _speed(0)
   , _movePoints(0)
-  , _extraAttackBonus(0)
+  , _abTempBonus(0)
   , _spellbook(new SpellBook)
 {
 }
@@ -194,18 +194,30 @@ void Character::setMovePoints(int points)
 
 int Character::getTmpAttackModifier()
 {
-  return _extraAttackBonus;
+  return _abTempBonus;
 }
 
 void Character::setTmpAttackModifier(int bonus)
 {
-  _extraAttackBonus = bonus;
+  _abTempBonus = bonus;
 }
 
-int Character::getArmorClass()
+int Character::getTmpArmorClassModifier(DamageType dmgType)
+{
+  return _acTempBonus[dmgType];
+}
+
+void Character::setTmpArmorClassModifier(int bonus, DamageType dmgType)
+{
+  _acTempBonus[dmgType] = bonus;
+}
+
+int Character::getArmorClass(DamageType dmgType)
 {
   PickablePtr armor = getEquippedItem(ItemSlotType::Armor);
-  return armor ? armor->getArmorClass() : _defaultArmorClass;
+  int ac = armor ? armor->getArmorClass() : _defaultArmorClass;
+
+  return ac + getTmpArmorClassModifier(dmgType);
 }
 
 std::string Character::getDescription()

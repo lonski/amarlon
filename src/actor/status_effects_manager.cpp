@@ -88,6 +88,14 @@ std::vector<ColoredString> StatusEffectsManager::getEffectsStringList() const
   return effects;
 }
 
+bool StatusEffectsManager::hasEffect(SpellId spell) const
+{
+  for( auto e : _effects )
+    if ( e->getSpellId() == spell ) return true;
+
+  return false;
+}
+
 StatusEffectsManagerPtr StatusEffectsManager::clone()
 {
   StatusEffectsManagerPtr mgr(new StatusEffectsManager(*this));

@@ -22,6 +22,7 @@ class StatusEffectsManager
 {
 public:
   StatusEffectsManager(ActorPtr owner = nullptr);
+  StatusEffectsManagerPtr clone();
 
   bool add(StatusEffectPtr effect);
   void remove(StatusEffectPtr effect);
@@ -29,7 +30,7 @@ public:
 
   std::vector<StatusEffectPtr> getEffects() const;
   std::vector<ColoredString> getEffectsStringList() const;
-  StatusEffectsManagerPtr clone();
+  bool hasEffect(SpellId spell) const;
 
 private:
   ActorWPtr _owner;
