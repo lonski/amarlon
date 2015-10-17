@@ -38,13 +38,7 @@ bool AttackAction::perform(ActorPtr performer)
              ( attackRoll >= attacked->getArmorClass()) ) //hit success
         {
           hit = true;
-          int exp = attacked->getExperience();
           attacked->takeDamage(attacker->getDamage(), _performer);
-
-          if ( !_target->isAlive() )
-          {
-            attacker->modifyExperience( exp );
-          }
         }
       }
 

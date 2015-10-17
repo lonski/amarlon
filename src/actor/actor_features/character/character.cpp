@@ -71,15 +71,6 @@ int Character::getMaxHitPoints() const
 void Character::setHitPoints(int newHp)
 {
   _hitPoints = newHp;
-
-  if ( _hitPoints <= 0 )
-  {
-    ActorPtr owner = getOwner().lock();
-    if ( owner )
-    {
-      owner->performAction( std::make_shared<DieAction>() );
-    }
-  }
 }
 
 int Character::modifyHitPoints(int modifier)
@@ -136,6 +127,20 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
   }
 
   modifyHitPoints(-1 * roll);
+
+  //Die
+  if ( _hitPoints <= 0 && actor )
+  {
+    actor->performAction( std::make_shared<DieAction>() );
+    if ( attacker )
+    {
+      if ( CharacterPtr c = attacker->getFeature<Character>() )
+      {
+        c->modifyExperience( getExperience() );
+      }
+    }
+  }
+
   return roll;
 }
 
