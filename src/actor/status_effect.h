@@ -14,18 +14,19 @@ typedef std::shared_ptr<Spell> SpellPtr;
 class StatusEffect
 {
 public:
-  StatusEffect(SpellId spell, int duration);
+  StatusEffect(const std::string name, const std::string& script, int duration);
 
   bool cancel(Target target);
   int getDuration() const;
   void setDuration(int duration);
   std::string getName() const;
-  SpellId getSpellId() const;
+  std::string getScript() const;
 
   bool operator==(const StatusEffect& rhs);
 
 private:
-  SpellPtr _spell;
+  std::string _name;
+  std::string _script;
   int _duration;
 
 };

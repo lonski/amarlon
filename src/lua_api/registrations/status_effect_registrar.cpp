@@ -11,10 +11,11 @@ void StatusEffectRegistrar::reg(lua_State* state)
   module( state )
   [
       class_<StatusEffect, std::shared_ptr<StatusEffect> >("StatusEffect")
-        .def(constructor<SpellId, int>())
+        .def(constructor<std::string, std::string, int>())
         .def("getDuration", &StatusEffect::getDuration)
         .def("setDuration", &StatusEffect::setDuration)
-        .def("getName", &StatusEffect::getName),
+        .def("getName", &StatusEffect::getName)
+        .def("getScript", &StatusEffect::getScript),
 
       class_<StatusEffectsManager>("StatusEffectsManager")
         .def("add", &StatusEffectsManager::add)

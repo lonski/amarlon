@@ -21,7 +21,7 @@ function onCast(caster, target, spell)
 	end
 
 	local function addStatusEffect(actor)
-		effect = StatusEffect(SPELL_ID, duration)
+		effect = StatusEffect(spell:getName(), spell:getScript(), duration)
 		return actor:get():getStatusEffects():add( effect )
 	end
 
@@ -43,7 +43,7 @@ function onCast(caster, target, spell)
 	return true
 end
 
-function onCancel(target, spell)
+function onCancel(target)
 
 	local function removeModifiers(actor)
 		c = actor:get():character():get()

@@ -57,7 +57,8 @@ ActorDescriptionPtr ActorParser::parseDescription()
       {
         StatusEffectDsc d;
         d.duration = getAttribute<int>(eNode, "duration");
-        d.spellId = getAttribute<int>(eNode, "spell");
+        d.name = getAttribute<std::string>(eNode, "name");
+        d.script = getAttribute<std::string>(eNode, "script");
         actorDsc->statusEffects.push_back( d );
         eNode = eNode->next_sibling();
       }

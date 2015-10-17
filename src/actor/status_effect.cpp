@@ -5,9 +5,10 @@
 
 namespace amarlon {
 
-StatusEffect::StatusEffect(SpellId spell, int duration)
-  : _spell( Spell::create(spell) )
-  , _duration(duration)
+StatusEffect::StatusEffect(const std::string name, const std::string& script, int duration)
+  : _name( name )
+  , _script( script )
+  , _duration( duration )
 {
 }
 
@@ -18,7 +19,7 @@ bool StatusEffect::cancel(Target target)
   if ( target )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    if ( lua.execute( Spell::getScriptPath( getSpellId() ) ) )
+    if ( lua.execute( _script ) )
     {
       try
       {
@@ -26,7 +27,6 @@ bool StatusEffect::cancel(Target target)
             lua()
           , "onCancel"
           , &target
-          , _spell.get()
         );
       }
       catch(luabind::error& e)
@@ -52,17 +52,18 @@ void StatusEffect::setDuration(int duration)
 
 std::string StatusEffect::getName() const
 {
-  return _spell->getName();
+  return _name;
 }
 
-SpellId StatusEffect::getSpellId() const
+std::string StatusEffect::getScript() const
 {
-  return _spell->getId();
+  return _script;
 }
 
 bool StatusEffect::operator==(const StatusEffect &rhs)
 {
-  return _spell->getId() == rhs.getSpellId();
+  return _script == rhs._script &&
+         _name == rhs._name;
 }
 
 }

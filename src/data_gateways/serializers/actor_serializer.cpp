@@ -73,7 +73,8 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
       {
         xml_node<>* eNode = _document->allocate_node(node_element, "StatusEffect");
         semNode->append_node( eNode );
-        addAttributeEnum(eNode, "spell", e->getSpellId());
+        addAttribute(eNode, "name", e->getName());
+        addAttribute(eNode, "script", e->getScript());
         addAttribute(eNode, "duration", e->getDuration());
       }
     }

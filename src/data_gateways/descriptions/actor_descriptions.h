@@ -17,7 +17,8 @@ namespace amarlon {
 
 struct StatusEffectDsc
 {
-  int spellId;
+  std::string name;
+  std::string script;
   int duration;
 };
 

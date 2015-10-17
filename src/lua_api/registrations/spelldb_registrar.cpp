@@ -29,6 +29,9 @@ void SpellDBRegistrar::reg(lua_State* state)
         .def("getClass",      &Spell::getClass)
         .def("getTargetType", &Spell::getTargetType)
         .def("getRadius",     &Spell::getRadius)
+        .def("getScript",     &Spell::getScript)
+
+
   ];
 }
 

@@ -23,7 +23,3 @@ function onCast(caster, target, spell)
 
 	return true
 end
-
-function onCancel(target, spell)
-	return true
-end

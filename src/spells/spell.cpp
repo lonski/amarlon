@@ -37,7 +37,7 @@ bool Spell::cast(ActorPtr caster, Target target)
   if ( target )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    if ( lua.execute( getScriptPath(_id) ) )
+    if ( lua.execute( getScript() ) )
     {
       try
       {
@@ -137,9 +137,9 @@ bool Spell::operator==(const Spell &rhs)
   return _id == rhs._id;
 }
 
-std::string Spell::getScriptPath(SpellId id)
+std::string Spell::getScript() const
 {
-  return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";
+  return "scripts/spells/" + std::to_string( static_cast<int>(_id) ) + ".lua";
 }
 
 }

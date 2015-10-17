@@ -26,12 +26,12 @@ public:
 
   bool add(StatusEffectPtr effect);
   void remove(StatusEffectPtr effect);
-  void remove(SpellId spell);
+  void remove(const std::string &name);
   void tick(int time = 1);
 
   std::vector<StatusEffectPtr> getEffects() const;
   std::vector<ColoredString> getEffectsStringList() const;
-  bool hasEffect(SpellId spell) const;
+  bool hasEffect(const std::string &name) const;
 
 private:
   ActorWPtr _owner;

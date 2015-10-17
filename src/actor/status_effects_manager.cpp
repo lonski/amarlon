@@ -42,11 +42,11 @@ void StatusEffectsManager::remove(StatusEffectPtr effect)
   }
 }
 
-void StatusEffectsManager::remove(SpellId spell)
+void StatusEffectsManager::remove(const std::string& name)
 {
   auto it = std::find_if(_effects.begin(),
                          _effects.end(),
-                         [&](StatusEffectPtr e){return e->getSpellId() == spell;});
+                         [&](StatusEffectPtr e){return e->getName() == name;});
 
   if ( it != _effects.end() )
   {
@@ -101,10 +101,10 @@ std::vector<ColoredString> StatusEffectsManager::getEffectsStringList() const
   return effects;
 }
 
-bool StatusEffectsManager::hasEffect(SpellId spell) const
+bool StatusEffectsManager::hasEffect(const std::string& name) const
 {
   for( auto e : _effects )
-    if ( e->getSpellId() == spell ) return true;
+    if ( e->getName() == name ) return true;
 
   return false;
 }

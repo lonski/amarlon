@@ -22,7 +22,6 @@ public:
   virtual ~Spell();
 
   static SpellPtr create(SpellId id);
-  static std::string getScriptPath(SpellId id);
 
   virtual SpellPtr clone();
 
@@ -36,6 +35,7 @@ public:
   virtual int getRange() const;
   virtual int getRadius() const;
   virtual std::string getDescription() const;
+  std::string getScript() const;
 
   bool operator==(const Spell& rhs);
 

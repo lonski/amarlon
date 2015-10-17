@@ -59,7 +59,7 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     _effects.reset( new StatusEffectsManager( shared_from_this() ) );
     for ( auto e : dsc->statusEffects )
     {
-      StatusEffectPtr se( new StatusEffect(static_cast<SpellId>(e.spellId), e.duration));
+      StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
       getStatusEffects().add( se );
     }
 
@@ -374,12 +374,12 @@ void Actor::setVisible(bool visible)
 
 bool Actor::isSleeping() const
 {
-  return getStatusEffects().hasEffect( SpellId::Sleep );
+  return getStatusEffects().hasEffect( "Sleep" );
 }
 
 void Actor::wakeUp()
 {
-  getStatusEffects().remove( SpellId::Sleep );
+  getStatusEffects().remove( "Sleep" );
 }
 
 TCODColor Actor::getColor() const

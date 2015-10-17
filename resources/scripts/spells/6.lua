@@ -25,7 +25,7 @@ function onCast(caster, target, spell)
 
 	local function addStatusEffect(actor)
 		duration = caster:get():character():get():getLevel() * 5 + 1
-		effect = StatusEffect(SPELL_ID, duration)
+		effect = StatusEffect(spell:getName(), spell:getScript(), duration)
 		return actor:get():getStatusEffects():add( effect )
 	end
 
@@ -48,6 +48,6 @@ function onCast(caster, target, spell)
 	return true
 end
 
-function onCancel(target, spell)
-	return true
+function onCancel(target)
+	return true;
 end
