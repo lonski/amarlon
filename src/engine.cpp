@@ -51,16 +51,16 @@ void Engine::prologue()
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
-  getLuaState().registerAPI();
-}
-
-void Engine::enterGame(const std::string& savedGameFn)
-{
   getSpellDB().load( _config->get("spells_file") );
   getTileDB ().load( _config->get("tiles_file" ) );
   getActorDB().load( _config->get("actors_file") );
   _world.reset( new World( _config->get("maps_file") ) );
 
+  getLuaState().registerAPI();
+}
+
+void Engine::enterGame(const std::string& savedGameFn)
+{
   if ( savedGameFn.empty() )
   {
     _world->changeMap( MapId::GameStart );

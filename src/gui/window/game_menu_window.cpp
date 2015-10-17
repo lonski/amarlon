@@ -55,6 +55,7 @@ void GameMenu::fillMenuSlots()
 
 bool GameMenu::new_game()
 {
+  Engine::instance().prologue();
   Engine::instance().enterGame();
   return true;
 }
@@ -91,6 +92,7 @@ bool GameMenu::load_game()
   std::string fn = window.getSelectedFilename();
   if ( !fn.empty() )
   {
+    Engine::instance().prologue();
     Engine::instance().enterGame(fn);
     return true;
   }
