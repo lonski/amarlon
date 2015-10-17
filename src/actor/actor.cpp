@@ -150,6 +150,7 @@ Actor& Actor::operator=(const Actor &rhs)
     _description = rhs._description;
     _color = rhs._color;
     _symbol = rhs._symbol;
+    _flags = rhs._flags;
 
     for ( auto af : rhs._features )
     {

@@ -82,6 +82,11 @@ void Gui::message(std::string msg, TCODColor color)
   _log->pushBack( ColoredString(msg, color) );
 }
 
+void Gui::clearLog()
+{
+  _log->clear();
+}
+
 void Gui::setStatusMessage(const std::string &status)
 {
   TCODConsole::root->print(

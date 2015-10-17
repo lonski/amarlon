@@ -47,6 +47,7 @@ public:
 
   void setHpBar(float value, float maxValue);
   void message(std::string msg, TCODColor color = TCODColor::white);
+  void clearLog();
   void setViewList(const std::vector<ColoredString>& items);
   void setEffectsList(const std::vector<ColoredString>& items);
   void setPlayerName(std::string name);

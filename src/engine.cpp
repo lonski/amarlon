@@ -51,16 +51,16 @@ void Engine::prologue()
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
-  getSpellDB().load( _config->get("spells_file") );
-  getTileDB ().load( _config->get("tiles_file" ) );
-  getActorDB().load( _config->get("actors_file") );
   getLuaState().registerAPI();
-
-  _world.reset( new World( _config->get("maps_file") ) );
 }
 
 void Engine::enterGame(const std::string& savedGameFn)
 {
+  getSpellDB().load( _config->get("spells_file") );
+  getTileDB ().load( _config->get("tiles_file" ) );
+  getActorDB().load( _config->get("actors_file") );
+  _world.reset( new World( _config->get("maps_file") ) );
+
   if ( savedGameFn.empty() )
   {
     _world->changeMap( MapId::GameStart );
@@ -73,6 +73,7 @@ void Engine::enterGame(const std::string& savedGameFn)
 
   _running = true;
 
+  getGui().clearLog();
   getGui().message(":: Welcome to Amarlon! ::", TCODColor::sky);
 }
 
