@@ -4,7 +4,7 @@ SPELL_ID = 5
 DMG_PHYSICAL = 1
 DMG_MISSILE  = 6
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 	
 	if caster:get():character():get() == nil then return false end
 
@@ -43,7 +43,7 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 
 	local function removeModifiers(actor)
 		c = actor:get():character():get()

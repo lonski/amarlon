@@ -1,11 +1,11 @@
 --Spell: Fireball
 SPELL_ID = 3
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 
 	if caster:get():character():get() == nil then return false end
 
-	radius = SpellDB:getRadius( SPELL_ID )
+	radius = spell:getRadius()
 
 	local function playAnimation()
 		frameDelay = 15
@@ -34,6 +34,6 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 	return true
 end

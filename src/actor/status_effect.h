@@ -8,6 +8,9 @@
 
 namespace amarlon {
 
+class Spell;
+typedef std::shared_ptr<Spell> SpellPtr;
+
 class StatusEffect
 {
 public:
@@ -22,7 +25,7 @@ public:
   bool operator==(const StatusEffect& rhs);
 
 private:
-  SpellId _spell;
+  SpellPtr _spell;
   int _duration;
 
 };

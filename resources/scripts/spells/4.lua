@@ -1,14 +1,14 @@
 --Spell: Bless
 SPELL_ID = 4
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 
 	if caster:get():character():get() == nil then return false end
 
 	duration = caster:get():character():get():getLevel() * 5 + 1 
 
 	local function playAreaAnimation()
-		radius = SpellDB:getRadius( SPELL_ID )
+		radius = spell:getRadius()
 		animation = BlinkingCircle("333300", radius, 40, 1)
 		animation:setLocation( target, target )
 		animation:run()
@@ -55,7 +55,7 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 
 	local function removeModifiers(actor)
 		c = actor:get():character():get()

@@ -47,7 +47,7 @@ void ActorFeature::setOwner(ActorWPtr owner)
   _owner = owner;
 }
 
-ActorWPtr ActorFeature::getOwner()
+ActorWPtr ActorFeature::getOwner() const
 {
   return _owner;
 }

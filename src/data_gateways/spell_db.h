@@ -26,8 +26,8 @@ public:
   virtual int getRange(SpellId id);
   virtual int getRadius(SpellId id);
   virtual std::string getDescription(SpellId id);
-  virtual std::string getScriptPath(SpellId id) const;
 
+  virtual SpellPtr fetch(SpellId id);
   virtual bool load(const std::string& fn);
 
 protected:

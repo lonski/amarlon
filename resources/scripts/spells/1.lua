@@ -1,7 +1,7 @@
 --Spell: Cure Light Wounds
 SPELL_ID = 1
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 
 	local function playAnimation(actor)
 		t = Target()
@@ -26,6 +26,6 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 	return true
 end

@@ -37,7 +37,7 @@ public:
   static ActorFeaturePtr create(Type featureType, DescriptionPtr dsc);
 
   void setOwner(ActorWPtr owner);
-  ActorWPtr getOwner();
+  ActorWPtr getOwner() const;
   virtual ActorFeaturePtr clone() = 0;
   virtual bool isEqual(ActorFeaturePtr rhs) const = 0;
   virtual ActorFeature::Type getType() = 0;

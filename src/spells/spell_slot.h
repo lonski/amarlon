@@ -41,6 +41,9 @@ struct SpellSlot
     isPrepared = false;
     spell = nullptr;
   }
+
+private:
+
 };
 
 typedef std::shared_ptr<SpellSlot> SpellSlotPtr;

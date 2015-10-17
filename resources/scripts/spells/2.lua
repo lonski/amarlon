@@ -2,7 +2,7 @@
 SPELL_ID = 2
 SHIELD = 5
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 	
 	if caster:get():character():get() == nil then return false end
 
@@ -44,6 +44,6 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 	return true
 end

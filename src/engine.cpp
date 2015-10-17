@@ -51,9 +51,9 @@ void Engine::prologue()
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
-  getActorDB().load( _config->get("actors_file") );
-  getTileDB ().load( _config->get("tiles_file" ) );
   getSpellDB().load( _config->get("spells_file") );
+  getTileDB ().load( _config->get("tiles_file" ) );
+  getActorDB().load( _config->get("actors_file") );
   getLuaState().registerAPI();
 
   _world.reset( new World( _config->get("maps_file") ) );

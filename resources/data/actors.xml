@@ -26,6 +26,10 @@ When new actor is created with given ID as parameter, then the template will be 
 				<Known>
 					<Spell id="1"/>
 					<Spell id="2"/>
+					<Spell id="3"/>
+					<Spell id="4"/>
+					<Spell id="5"/>
+					<Spell id="6"/>
 				</Known>					
 			</Spellbook>
 		</PlayableCharacter>

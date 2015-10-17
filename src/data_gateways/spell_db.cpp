@@ -92,9 +92,18 @@ std::string SpellDB::getDescription(SpellId id)
   return it != _spells.end() ? it->second->description : "";
 }
 
-std::string SpellDB::getScriptPath(SpellId id) const
+SpellPtr SpellDB::fetch(SpellId id)
 {
-  return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";
+  SpellPtr spell;
+
+  if ( id != SpellId::Null )
+  {
+    spell.reset(new Spell(id));
+    auto it = _spells.find(id);
+    spell->_flyweight = it != _spells.end() ? it->second : nullptr;
+  }
+
+  return spell;
 }
 
 }

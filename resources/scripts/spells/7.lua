@@ -3,7 +3,7 @@ SPELL_ID = 7
 D20 = 20
 DMG_PHYSICAL = 1
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 
 	damage = Damage("1d8+0#1")
 
@@ -24,6 +24,6 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 	return true
 end

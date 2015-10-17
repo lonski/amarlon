@@ -2,12 +2,12 @@
 SPELL_ID = 6
 SPELL_SAVING_THROW = 4
 
-function onCast(caster, target)
+function onCast(caster, target, spell)
 	
 	if caster:get():character():get() == nil then return false end
 
 	local function playAreaAnimation()
-		radius = SpellDB:getRadius( SPELL_ID )
+		radius = spell:getRadius()
 		animation = BlinkingCircle("333333", radius, 40, 1)
 		animation:setLocation( target, target )
 		animation:run()
@@ -48,6 +48,6 @@ function onCast(caster, target)
 	return true
 end
 
-function onCancel(target)
+function onCancel(target, spell)
 	return true
 end

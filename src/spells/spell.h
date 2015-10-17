@@ -22,6 +22,8 @@ public:
   virtual ~Spell();
 
   static SpellPtr create(SpellId id);
+  static std::string getScriptPath(SpellId id);
+
   virtual SpellPtr clone();
 
   virtual bool cast(ActorPtr caster, Target target);
@@ -37,12 +39,14 @@ public:
 
   bool operator==(const Spell& rhs);
 
-private:  
+private:
   SpellId _id;
+  SpellDescriptionPtr _flyweight;
 
   Spell(SpellId id);
 
   friend class SpellSerializer;
+  friend class SpellDB;
 };
 
 }

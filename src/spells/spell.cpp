@@ -20,12 +20,14 @@ Spell::~Spell()
 
 SpellPtr Spell::create(SpellId id)
 {
-  return id != SpellId::Null ? SpellPtr( new Spell(id) ) : nullptr;
+  return Engine::instance().getSpellDB().fetch(id);
 }
 
 SpellPtr Spell::clone()
 {
-  return create(_id);
+  SpellPtr s(new Spell(_id));
+  s->_flyweight = _flyweight;
+  return s;
 }
 
 bool Spell::cast(ActorPtr caster, Target target)
@@ -35,9 +37,7 @@ bool Spell::cast(ActorPtr caster, Target target)
   if ( target )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    SpellDB& spellDb = Engine::instance().getSpellDB();
-
-    if ( lua.execute( spellDb.getScriptPath(_id) ) )
+    if ( lua.execute( getScriptPath(_id) ) )
     {
       try
       {
@@ -46,6 +46,7 @@ bool Spell::cast(ActorPtr caster, Target target)
           , "onCast"
           , caster
           , &target
+          , this
         );
       }
       catch(luabind::error& e)
@@ -64,8 +65,11 @@ bool Spell::cast(ActorPtr caster, Target target)
     {
       auto sSlots = character->
                     getSpellBook()->
-                    getSlots([&](SpellSlotPtr s)
-                      { return s->spell && s->spell->getId() == _id; });
+                    getSlots([&](SpellSlotPtr s){
+                      return s->spell &&
+                             s->isPrepared &&
+                             s->spell->getId() == _id;
+                    });
 
       if ( !sSlots.empty() )
       {
@@ -84,39 +88,41 @@ SpellId Spell::getId() const
 
 std::string Spell::getName() const
 {
-  return Engine::instance().getSpellDB().getName(_id);
+  return _flyweight ? _flyweight->name : "No name";
 }
 
 CharacterClass Spell::getClass() const
 {
-  return Engine::instance().getSpellDB().getClass(_id);
+  return _flyweight ? static_cast<CharacterClass>(_flyweight->spellClass)
+                    : CharacterClass::NoClass;
 }
 
 int Spell::getLevel() const
 {
-  return Engine::instance().getSpellDB().getLevel(_id);
+  return _flyweight ? _flyweight->level : 0;
 }
 
 TargetType Spell::getTargetType() const
 {
-  return Engine::instance().getSpellDB().getTargetType(_id);
+  return _flyweight ? static_cast<TargetType>(_flyweight->targetType)
+                    : TargetType::SELF;
 }
 
 int Spell::getRange() const
 {
-  return Engine::instance().getSpellDB().getRange(_id);
+  return _flyweight ? _flyweight->range : 0;
 }
 
 int Spell::getRadius() const
 {
-  return Engine::instance().getSpellDB().getRadius(_id);
+  return _flyweight ? _flyweight->radius : 0;
 }
 
 std::string Spell::getDescription() const
 {
   std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
 
-  str += Engine::instance().getSpellDB().getDescription(_id);
+  str += _flyweight ? _flyweight->description : "";
 
   str += colorToStr(TCODColor::darkTurquoise, true) + "Class : " + CharacterClass2Str( getClass() ) + "#";
   str += colorToStr(TCODColor::darkTurquoise, true) + "Level : " + toStr(getLevel()) + "#";
@@ -129,6 +135,11 @@ std::string Spell::getDescription() const
 bool Spell::operator==(const Spell &rhs)
 {
   return _id == rhs._id;
+}
+
+std::string Spell::getScriptPath(SpellId id)
+{
+  return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";
 }
 
 }

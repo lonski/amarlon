@@ -81,7 +81,7 @@ void MonsterAi::update()
 
 bool MonsterAi::isHunting() const
 {
-  return _trackCount > 0;
+  return _trackCount > 0 && getOwner().lock()->isAlive();
 }
 
 void MonsterAi::huntPlayer()
