@@ -23,12 +23,14 @@ public:
   };
 
   static int TrackingTurns;
+  const static ActorFeature::Type featureType;
   MonsterAi();
 
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual void update();
+  virtual bool isHunting() const;
 
   void updatePosition();
 private:

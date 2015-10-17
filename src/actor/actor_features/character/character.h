@@ -78,8 +78,11 @@ public:
   virtual std::string getDescription();
 
   virtual int getMorale() { return 0; }
-  virtual int getTmpMoraleModifier() { return 0; }
-  virtual void setTmpMoraleModifier(int) {}
+
+  /**
+   * @brief Restores character HP and spells.
+   */
+  virtual void rest();
 
   /**
    * @brief Temporary modifiers granted by effects
@@ -90,6 +93,8 @@ public:
   virtual void setTmpArmorClassModifier(int bonus, DamageType dmgType = DamageType::Physical);
   virtual int getTmpSavingThrowModifier(SavingThrows::Type type);
   virtual void setTmpSavingThrowModifier(SavingThrows::Type type, int modifier);
+  virtual int getTmpMoraleModifier() { return 0; }
+  virtual void setTmpMoraleModifier(int) {}
 
 protected:
   virtual void setLevel(int level);

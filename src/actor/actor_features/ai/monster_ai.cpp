@@ -10,6 +10,7 @@
 
 namespace amarlon {
 
+const ActorFeature::Type MonsterAi::featureType = ActorFeature::AI;
 int MonsterAi::TrackingTurns = 5;
 
 MonsterAi::MonsterAi()
@@ -76,6 +77,11 @@ void MonsterAi::update()
       }
     }
   }
+}
+
+bool MonsterAi::isHunting() const
+{
+  return _trackCount > 0;
 }
 
 void MonsterAi::huntPlayer()

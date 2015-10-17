@@ -28,6 +28,11 @@ public:
   void addKnownSpell(SpellPtr spell);
   void addKnownSpell(Spell* spell);
 
+  /**
+   * @brief Prepares all spells so they will be ready to cast.
+   */
+  void prepareSpells();
+
   bool operator==(const SpellBook& rhs);
   SpellBookPtr clone();
 

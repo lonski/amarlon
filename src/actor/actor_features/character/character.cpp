@@ -243,6 +243,12 @@ std::string Character::getDescription()
   return str;
 }
 
+void Character::rest()
+{
+  setHitPoints( getMaxHitPoints() );
+  _spellbook->prepareSpells();
+}
+
 SpellBookPtr Character::getSpellBook()
 {
   return _spellbook;

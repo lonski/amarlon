@@ -13,6 +13,7 @@
 #include "cmd_game_menu.h"
 #include "cmd_spellbook.h"
 #include "cmd_inspect.h"
+#include "cmd_rest.h"
 
 namespace amarlon {
 
@@ -36,6 +37,7 @@ CommandPtr Command::create(CommandId cmd)
     case CommandId::GameMenu:   c.reset( new CmdGameMenu     ); break;
     case CommandId::Spellbook:  c.reset( new CmdSpellbook    ); break;
     case CommandId::Inspect:    c.reset( new CmdInspect      ); break;
+    case CommandId::Rest:       c.reset( new CmdRest         ); break;
 
     default: break;
   }

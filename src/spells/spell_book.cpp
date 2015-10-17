@@ -61,6 +61,11 @@ void SpellBook::addKnownSpell(Spell *spell)
   addKnownSpell( SpellPtr(spell) );
 }
 
+void SpellBook::prepareSpells()
+{
+  for(auto s : _spellSlots) if ( s->spell ) s->isPrepared = true;
+}
+
 bool SpellBook::operator==(const SpellBook &rhs)
 {
   bool e = true;

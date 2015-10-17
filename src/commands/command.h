@@ -24,6 +24,7 @@ enum class CommandId
   GameMenu,
   Spellbook,
   Inspect,
+  Rest,
   End
 };
 
