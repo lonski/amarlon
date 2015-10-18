@@ -6,6 +6,7 @@
 #include <character_classes.h>
 #include <target_type.h>
 #include <actor_type.h>
+#include <trap_id.h>
 #include <utils.h>
 #include <luabind/detail/policy.hpp>
 
@@ -41,6 +42,7 @@ namespace luabind
     LUABIND_DEFINE_ENUMCLASS(amarlon::CharacterClass)
     LUABIND_DEFINE_ENUMCLASS(amarlon::TargetType)
     LUABIND_DEFINE_ENUMCLASS(amarlon::ActorType)
+    LUABIND_DEFINE_ENUMCLASS(amarlon::TrapId)
 
     //Converter for TCODColor
     template <>

@@ -17,6 +17,7 @@ set(HEADER_FILES
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/destroyable/drop_rule.h
     actor/actor_features/trap/trap.h
+    actor/actor_features/trap/trap_id.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h

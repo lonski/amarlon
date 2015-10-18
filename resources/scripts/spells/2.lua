@@ -1,6 +1,6 @@
 --Spell: Magic Missile
 SPELL_ID = 2
-SHIELD = 5
+SHIELD = "Shield"
 
 function onCast(caster, target, spell)
 	

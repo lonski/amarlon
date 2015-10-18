@@ -1,6 +1,7 @@
 #include "trap.h"
 #include <trap_description.h>
-#include <spell.h>
+#include <engine.h>
+#include <lua_state.h>
 #include <actor.h>
 
 namespace amarlon {
@@ -8,7 +9,8 @@ namespace amarlon {
 const ActorFeature::Type Trap::featureType = ActorFeature::TRAP;
 
 Trap::Trap()
-  : _armed(false)
+  : _id(TrapId::Null)
+  , _armed(false)
   , _difficulty(0)
 {
 }
@@ -26,7 +28,7 @@ TrapPtr Trap::create(DescriptionPtr dsc)
     trap.reset(new Trap);
     trap->_armed = tDsc->armed;
     trap->_difficulty = tDsc->difficulty;
-    trap->_spell = Spell::create( static_cast<SpellId>(tDsc->spell) );
+    trap->_id = static_cast<TrapId>(tDsc->id);
   }
   return trap;
 }
@@ -38,13 +40,7 @@ ActorFeature::Type Trap::getType()
 
 ActorFeaturePtr Trap::clone()
 {
-  TrapPtr trap( new Trap );
-
-  trap->_armed = _armed;
-  trap->_difficulty = _difficulty;
-  trap->_spell = _spell->clone();
-
-  return trap;
+  return TrapPtr(new Trap(*this));
 }
 
 bool Trap::isEqual(ActorFeaturePtr rhs) const
@@ -56,18 +52,46 @@ bool Trap::isEqual(ActorFeaturePtr rhs) const
   {
     equal =  _armed == tRhs->_armed;
     equal &= _difficulty == tRhs->_difficulty;
-    equal &= *_spell == *tRhs->_spell;
+    equal &= _id == tRhs->_id;
   }
 
   return equal;
 }
 
-void Trap::trigger(Target victim)
+bool Trap::trigger(Target victim)
 {
-  if ( isArmed() && _spell )
-  {
-    _spell->cast( getOwner().lock(), victim );
+  bool r = false;
+
+  if ( isArmed() && victim )
+  { 
+    lua_api::LuaState& lua = Engine::instance().getLuaState();
+    if ( lua.execute( getScript() ) )
+    {
+      try
+      {
+        r = luabind::call_function<bool>(
+            lua()
+          , "onTrigger"
+          , &victim
+          , this
+        );
+
+        if ( !r )
+        {
+          for (auto a : victim.actors)
+            a->notify( Event(EventId::Actor_DodgedTrap,
+                             { {"trap",getName()} }) );
+        }
+      }
+      catch(luabind::error& e)
+      {
+        lua.logError(e);
+      }
+    }
   }
+
+
+  return r;
 }
 
 bool Trap::isArmed() const
@@ -80,14 +104,24 @@ void Trap::setArmed(bool armed)
   _armed = armed;
 }
 
+std::string Trap::getScript() const
+{
+  return "scripts/traps/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+}
+
+std::string Trap::getName() const
+{
+  return TrapId2Str(_id);
+}
+
 int Trap::getDifficulty()
 {
   return _difficulty;
 }
 
-SpellId Trap::getSpellId() const
+TrapId Trap::getId() const
 {
-  return _spell ? _spell->getId() : SpellId::Null;
+  return _id;
 }
 
 }

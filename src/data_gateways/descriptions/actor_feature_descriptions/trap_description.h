@@ -9,12 +9,12 @@ struct TrapDescription : Description
 {
   TrapDescription()
     : armed(true)
-    , spell(0)
+    , id(0)
     , difficulty(0)
   {}
 
   bool armed;
-  int spell;
+  int id;
   int difficulty;
 };
 

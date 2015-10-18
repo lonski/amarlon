@@ -3,17 +3,15 @@
 
 #include <actor_feature.h>
 #include <target.h>
-#include <spell_id.h>
+#include <trap_id.h>
 
 namespace amarlon {
 
 class Actor;
 class Trap;
-class Spell;
 struct TrapDescription;
 typedef std::shared_ptr<TrapDescription> TrapDescriptionPtr;
 typedef std::shared_ptr<Trap> TrapPtr;
-typedef std::shared_ptr<Spell> SpellPtr;
 
 class Trap : public ActorFeature
 {
@@ -26,24 +24,27 @@ public:
   static TrapPtr create(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType();
+  virtual TrapId getId() const;
+
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
-  virtual void trigger(Target victim);
+  virtual bool trigger(Target victim);
 
   virtual bool isArmed() const;
   virtual void setArmed(bool armed);
+
+  virtual std::string getScript() const;
+  virtual std::string getName() const;
 
   /**
    * @brief Describes how hard is to disarm this trap.
    */
   virtual int getDifficulty();
 
-  virtual SpellId getSpellId() const;
-
 private:
+  TrapId _id;
   bool _armed;
-  SpellPtr _spell;
   int _difficulty;
 
 };

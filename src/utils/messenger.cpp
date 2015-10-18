@@ -184,6 +184,15 @@ void Messenger::onNotify(Subject *subject, Event event)
                                actor->getName().c_str());
         }
         break;
+        case EventId::Actor_DodgedTrap:
+        {
+          color = TCODColor::lighterLime;
+          const char* format = "%s dodged %s.";
+
+          sprintf(msg, format, actor->getName().c_str(),
+                               event.params["trap"].c_str());
+        }
+        break;
 
         default:;
       }

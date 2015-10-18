@@ -4,6 +4,7 @@
 #include <actor.h>
 #include <character.h>
 #include <openable.h>
+#include <trap.h>
 #include <status_effects_manager.h>
 
 namespace amarlon { namespace lua_api {
@@ -15,6 +16,9 @@ void ActorRegistrar::reg(lua_State* state)
   [
       class_<ActorPtr>("ActorPtr")
         .def("get", &ActorPtr::get),
+
+      class_<ActorWPtr>("ActorWPtr")
+        .def("lock", &ActorWPtr::lock),
 
       class_<Actor>("Actor")
         .def("getX", &Actor::getX)
@@ -35,6 +39,7 @@ void ActorRegistrar::reg(lua_State* state)
         .def("isFovOnly", &Actor::isFovOnly )
         .def("setFovOnly", &Actor::setFovOnly )
         .def("character", (CharacterPtr(Actor::*)()const)&Actor::getFeature)
+        .def("trap", (TrapPtr(Actor::*)()const)&Actor::getFeature)
         .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature),
 
       class_<CharacterPtr>("CharacterPtr")
@@ -62,7 +67,19 @@ void ActorRegistrar::reg(lua_State* state)
         .def("isLocked", &Openable::isLocked )
         .def("getLockId", &Openable::getLockId )
         .def("lock", &Openable::lock )
-        .def("unlock", &Openable::unlock )
+        .def("unlock", &Openable::unlock ),
+
+      class_<TrapPtr>("TrapPtr")
+        .def("get", &TrapPtr::get),
+
+      class_<Trap>("Trap")
+        .def("isArmed",       &Trap::isArmed )
+        .def("setArmed",      &Trap::setArmed )
+        .def("getId",         &Trap::getId )
+        .def("getScript",     &Trap::getScript )
+        .def("getDifficulty", &Trap::getDifficulty )
+        .def("getOwner",      &Trap::getOwner )
+        .def("getName",       &Trap::getName )
 
   ];
 }

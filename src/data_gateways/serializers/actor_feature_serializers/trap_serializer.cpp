@@ -29,8 +29,8 @@ bool TrapSerializer::serialize(ActorFeaturePtr af)
     xml_node<>* trapNode = _document->allocate_node(node_element, "Trap");
     _xml->append_node( trapNode );
 
+    addAttribute( trapNode, "id",      static_cast<int>(trap->getId()) );
     addAttribute( trapNode, "armed",      static_cast<int>(trap->isArmed()) );
-    addAttribute( trapNode, "spell",      static_cast<int>(trap->getSpellId()) );
     addAttribute( trapNode, "difficulty", trap->getDifficulty() );
     return true;
   }

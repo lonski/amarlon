@@ -54,7 +54,6 @@ bool Spell::cast(ActorPtr caster, Target target)
         lua.logError(e);
       }
     }
-
   }
 
   //Set spell prepared = false in caster's spellbook
