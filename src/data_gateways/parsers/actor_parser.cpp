@@ -263,6 +263,7 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
       opDsc.reset( new OpenableDescription );
       opDsc->lockId = getAttribute<int>(openableNode, "lockId");
       opDsc->locked = getAttribute<bool>(openableNode, "locked");
+      opDsc->lockLevel = getAttribute<int>(openableNode, "lockLevel");
       opDsc->scriptId = getAttribute<int>(openableNode, "scriptId");
       opDsc->closed = getAttribute<bool>(openableNode, "closed");
     }

@@ -67,7 +67,8 @@ void ActorRegistrar::reg(lua_State* state)
         .def("isLocked", &Openable::isLocked )
         .def("getLockId", &Openable::getLockId )
         .def("lock", &Openable::lock )
-        .def("unlock", &Openable::unlock ),
+        .def("unlock", &Openable::unlock )
+        .def("getLockLevel", &Openable::getLockLevel ),
 
       class_<TrapPtr>("TrapPtr")
         .def("get", &TrapPtr::get),

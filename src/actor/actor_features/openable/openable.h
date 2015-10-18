@@ -33,6 +33,7 @@ public:
   virtual bool isClosed() const;
   virtual bool isLocked() const;
   virtual int getLockId() const;
+  virtual int getLockLevel() const;
   virtual int getScriptId() const;
   virtual bool lock();
   virtual bool unlock();
@@ -40,6 +41,7 @@ public:
 protected:
   bool _locked;
   int _lockId;
+  int _lockLevel;
   int _scriptId;
   bool _closed;
 

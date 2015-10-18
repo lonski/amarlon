@@ -31,6 +31,7 @@ bool OpenableSerializer::serialize(ActorFeaturePtr af)
 
     addAttribute( openableNode, "lockId",   openable->getLockId() );
     addAttribute( openableNode, "locked",   static_cast<int>(openable->isLocked()) );
+    addAttribute( openableNode, "lockLevel", static_cast<int>(openable->getLockLevel()) );
     addAttribute( openableNode, "scriptId", static_cast<int>(openable->getScriptId()) );
     addAttribute( openableNode, "closed",   static_cast<int>(openable->isClosed()) );
     return true;

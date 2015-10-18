@@ -13,6 +13,7 @@ const ActorFeature::Type Openable::featureType = ActorFeature::OPENABLE;
 Openable::Openable()
   : _locked(false)
   , _lockId(0)
+  , _lockLevel(0)
   , _scriptId(0)
   , _closed(false)
 {
@@ -30,6 +31,7 @@ OpenablePtr Openable::create(DescriptionPtr dsc)
   if ( oDsc )
   {
     openable->_lockId = oDsc->lockId;
+    openable->_lockLevel = oDsc->lockLevel;
     openable->_locked = oDsc->locked;
     openable->_scriptId = oDsc->scriptId;
     openable->_closed = oDsc->closed;
@@ -55,6 +57,7 @@ bool Openable::isEqual(ActorFeaturePtr rhs) const
   if ( oRhs)
   {
     equal = _lockId == oRhs->_locked;
+    equal &= _lockLevel == oRhs->_lockLevel;
     equal &= _scriptId == oRhs->_scriptId;
     equal &= _closed == oRhs->_closed;
   }
