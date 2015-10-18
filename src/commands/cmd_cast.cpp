@@ -25,8 +25,10 @@ int CmdCast::execute()
 {
   int turns = 0;
   SpellPtr spell = getSpell();
+
   Engine::instance().render();
   TCODConsole::root->flush();
+
   if ( spell )
   {
      TargetSelectorPtr selector( TargetSelector::create( spell->getTargetType() ) );

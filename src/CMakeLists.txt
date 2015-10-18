@@ -145,6 +145,7 @@ set(HEADER_FILES
     actor/actor_actions/use_action.h
     actor/actor_actions/die_action.h
     actor/actor_actions/cast_action.h
+    actor/actor_actions/use_skill_action.h
     world/directions.h
     world/world.h
     rpg_system/ability_scores.h
@@ -298,6 +299,7 @@ set(SOURCE_FILES
     actor/actor_actions/use_action.cpp
     actor/actor_actions/die_action.cpp
     actor/actor_actions/cast_action.cpp
+    actor/actor_actions/use_skill_action.cpp
     world/world.cpp
     rpg_system/ability_scores.cpp
     rpg_system/attack_bonus_table.cpp

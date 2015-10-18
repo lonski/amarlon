@@ -22,6 +22,7 @@ public:
   std::string getScript() const;
   int getLevel() const;
   std::string getName() const;
+  TargetType getTargetType() const;
 
   bool use(ActorPtr user, Target target);
 

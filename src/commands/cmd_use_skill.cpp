@@ -5,6 +5,10 @@
 #include <window_manager.h>
 #include <actor.h>
 #include <message_box.h>
+#include <target_selector.h>
+#include <world.h>
+#include <map.h>
+#include <use_skill_action.h>
 
 namespace amarlon {
 
@@ -23,8 +27,20 @@ int CmdUseSkill::execute()
 
   if ( SkillPtr skill = getSkill() )
   {
-    //TODO
-    ++turns;
+    Engine::instance().render();
+    TCODConsole::root->flush();
+
+    TargetSelectorPtr selector( TargetSelector::create( skill->getTargetType() ) );
+    if ( selector )
+    {
+      MapPtr map = Engine::instance().getWorld().getCurrentMap();
+      ActorActionPtr action( new UseSkillAction(skill, selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); })) );
+      if ( !Engine::instance().getPlayer()->performAction( action ) )
+      {
+        gui::msgBox("Failed to use skill!", gui::MsgType::Warning);
+      }
+      ++turns;
+    }
   }
 
   return turns;

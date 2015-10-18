@@ -29,6 +29,11 @@ std::string Skill::getName() const
   return SkillId2Str(_id);
 }
 
+TargetType Skill::getTargetType() const
+{
+  return SkillId2TargetType(_id);
+}
+
 bool Skill::use(ActorPtr user, Target target)
 {
   bool r = false;
