@@ -51,22 +51,27 @@ SpellPtr CmdCast::getSpell()
   SpellPtr spell;
   CharacterPtr character = Engine::instance().getPlayer()->getFeature<Character>();
 
-  gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
-                   window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
-                   window . setTitle("Choose spell to cast");
-
   if ( character && character->getSpellBook() )
   {
     auto spells = character->getSpellBook()->getSlots( [](SpellSlotPtr s){ return s->isPrepared && s->spell; } );
+    if ( !spells.empty() )
+    {
+      gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
+                       window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
+                       window . setTitle("Choose spell to cast");
+                       window . fill<SpellSlot>( spells, [](SpellSlotPtr s){ return s->spell->getName(); } );
+                       window . show();
 
-    window.fill<SpellSlot>( spells, [](SpellSlotPtr s){ return s->spell->getName(); } );
-    window.show();
-
-    if ( auto selected = window.getSelectedItem() ) spell = selected->getObject<SpellSlot>()->spell;
+      if ( auto selected = window.getSelectedItem() ) spell = selected->getObject<SpellSlot>()->spell;
+    }
+    else
+    {
+      gui::msgBox("You don't have any prepared spells!", gui::MsgType::Warning);
+    }
   }
   else
   {
-    gui::msgBox("You don't have any prepared spells!", gui::MsgType::Warning);
+    gui::msgBox("You don't know any spells!", gui::MsgType::Warning);
   }
 
   return spell;
