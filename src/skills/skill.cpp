@@ -43,6 +43,7 @@ bool Skill::use(ActorPtr user, Target target)
         , "onUse"
         , user
         , &target
+        , this
       );
     }
     catch(luabind::error& e)
