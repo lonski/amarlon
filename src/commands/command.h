@@ -25,6 +25,7 @@ enum class CommandId
   Spellbook,
   Inspect,
   Rest,
+  UseSkill,
   End
 };
 

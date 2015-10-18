@@ -32,6 +32,11 @@ When new actor is created with given ID as parameter, then the template will be 
 					<Spell id="6"/>
 				</Known>					
 			</Spellbook>
+			<Skills>
+				<Skill id="1" level="50" />
+				<Skill id="2" level="40" />
+				<Skill id="3" level="70" />
+			</Skills>
 		</PlayableCharacter>
 		<Wearer>
 			<ItemSlot type="1"/>

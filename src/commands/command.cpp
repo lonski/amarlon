@@ -14,6 +14,7 @@
 #include "cmd_spellbook.h"
 #include "cmd_inspect.h"
 #include "cmd_rest.h"
+#include "cmd_use_skill.h"
 
 namespace amarlon {
 
@@ -38,6 +39,7 @@ CommandPtr Command::create(CommandId cmd)
     case CommandId::Spellbook:  c.reset( new CmdSpellbook    ); break;
     case CommandId::Inspect:    c.reset( new CmdInspect      ); break;
     case CommandId::Rest:       c.reset( new CmdRest         ); break;
+    case CommandId::UseSkill:   c.reset( new CmdUseSkill     ); break;
 
     default: break;
   }
