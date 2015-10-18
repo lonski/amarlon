@@ -176,6 +176,8 @@ set(HEADER_FILES
     lua_api/registrations/animation_registrar.h
     lua_api/registrations/free_functions_registrar.h
     lua_api/registrations/globals_registrar.cpp
+    skills/skill.h
+    skills/skill_id.h
 )
 
 set(SOURCE_FILES
@@ -316,6 +318,7 @@ set(SOURCE_FILES
     lua_api/registrations/animation_registrar.cpp
     lua_api/registrations/free_functions_registrar.cpp
     lua_api/registrations/globals_registrar.cpp
+    skills/skill.cpp
 )
 
 add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
