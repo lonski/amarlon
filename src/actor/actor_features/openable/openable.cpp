@@ -170,6 +170,11 @@ int Openable::getLockId() const
   return _lockId;
 }
 
+int Openable::getLockLevel() const
+{
+  return _lockLevel;
+}
+
 int Openable::getScriptId() const
 {
   return _scriptId;
