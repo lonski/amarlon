@@ -37,7 +37,7 @@ int CmdUseSkill::execute()
       ActorActionPtr action( new UseSkillAction(skill, selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); })) );
       if ( !Engine::instance().getPlayer()->performAction( action ) )
       {
-        gui::msgBox("Failed to use skill!", gui::MsgType::Warning);
+        gui::msgBox(skill->getName() + " failed!", gui::MsgType::Warning);
       }
       ++turns;
     }

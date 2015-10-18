@@ -33,7 +33,7 @@ When new actor is created with given ID as parameter, then the template will be 
 				</Known>					
 			</Spellbook>
 			<Skills>
-				<Skill id="1" level="50" />
+				<Skill id="1" level="90" />
 				<Skill id="2" level="40" />
 				<Skill id="3" level="70" />
 				<Skill id="4" level="50" />

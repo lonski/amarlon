@@ -40,7 +40,7 @@
 				<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
 			</Actor>
 			<Actor id="3" x="44" y="33">
-				<Openable scriptId="1" lockId="1" locked="1" closed="1"/>
+				<Openable scriptId="1" lockId="1" locked="1" closed="1" lockLevel="80"/>
 			</Actor>
 			<Actor id="10" x="46" y="33"/>
 			<Actor id="3" x="48" y="33"/>
