@@ -55,6 +55,16 @@ bool Skill::use(ActorPtr user, Target target)
   return r;
 }
 
+bool Skill::operator==(const Skill &rhs) const
+{
+  return _id == rhs._id && _level == rhs._level;
+}
+
+SkillPtr Skill::clone() const
+{
+  return SkillPtr(new Skill(_id, _level));
+}
+
 Skill::Skill(SkillId id, int level)
   : _id(id)
   , _level(level)

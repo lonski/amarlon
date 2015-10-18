@@ -8,6 +8,7 @@
 #include <engine.h>
 #include <actor_descriptions.h>
 #include <spell_book.h>
+#include <skill.h>
 
 namespace amarlon {
 
@@ -48,6 +49,12 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal &= _class              == crhs->_class;
     equal &= _race               == crhs->_race;
     equal &= *_spellbook         == *(crhs->_spellbook);
+    equal &= _skills.size() == crhs->_skills.size();
+
+    if ( equal ) equal &= std::equal(_skills.begin(),
+                                     _skills.end(),
+                                     crhs->_skills.begin(),
+                                     [](SkillPtr a, SkillPtr b){ return *a == *b;});
   }
 
   return equal;
@@ -248,6 +255,11 @@ std::string Character::getDescription()
   return str;
 }
 
+std::vector<SkillPtr> Character::getSkills() const
+{
+  return _skills;
+}
+
 void Character::rest()
 {
   setHitPoints( getMaxHitPoints() );
@@ -289,6 +301,8 @@ PickablePtr Character::getEquippedItem(ItemSlotType slot)
 void Character::cloneBase(Character *c)
 {
   c->_spellbook = _spellbook->clone();
+  c->_skills.clear();
+  for ( auto s : _skills ) c->_skills.push_back( s->clone() );
 }
 
 void Character::Creator::fillCommonCharacterPart(CharacterPtr character, CharacterDescriptionPtr dsc)
@@ -301,6 +315,9 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_defaultArmorClass = dsc->defaultArmorClass;
     character->_speed = dsc->speed;
     character->_spellbook = SpellBook::create(dsc->spellbook);
+    for(auto s : dsc->skills)
+      character->_skills.push_back( Skill::create( static_cast<SkillId>(s.id),
+                                                   s.level ) );
   }
 }
 

@@ -10,6 +10,11 @@
 
 namespace amarlon {
 
+struct SkillDescription
+{
+  int id;
+  int level;
+};
 
 struct SpellSlotDescription
 {
@@ -46,6 +51,7 @@ struct CharacterDescription : Description
   Race race;
   int speed;
   SpellbookDescription spellbook;
+  std::vector<SkillDescription> skills;
 };
 
 

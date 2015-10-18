@@ -23,6 +23,8 @@ public:
 
 protected:
   void serializeCharacterCommonPart(rapidxml::xml_node<>* characterNode, CharacterPtr character);
+  void serializeSpellbook(rapidxml::xml_node<>* characterNode, CharacterPtr character);
+  void serializeSkills(CharacterPtr character, rapidxml::xml_node<>* characterNode);
 
 };
 

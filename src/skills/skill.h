@@ -25,6 +25,9 @@ public:
 
   bool use(ActorPtr user, Target target);
 
+  bool operator==(const Skill& rhs) const;
+  SkillPtr clone() const;
+
 private:
   SkillId _id;
   int _level;

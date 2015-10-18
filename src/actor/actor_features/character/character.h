@@ -19,12 +19,14 @@ class Character;
 class Pickable;
 class Spell;
 class SpellBook;
+class Skill;
 struct CharacterDescription;
 typedef std::shared_ptr<Character> CharacterPtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
 typedef std::shared_ptr<Spell> SpellPtr;
 typedef std::shared_ptr<SpellBook> SpellBookPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
+typedef std::shared_ptr<Skill> SkillPtr;
 
 class Character : public ActorFeature
 {
@@ -76,6 +78,7 @@ public:
   virtual int getArmorClass(DamageType dmgType = DamageType::Physical);
   virtual SpellBookPtr getSpellBook();
   virtual std::string getDescription();
+  virtual std::vector<SkillPtr> getSkills() const;
 
   virtual int getMorale() { return 0; }
 
@@ -116,6 +119,7 @@ private:
   SpellBookPtr _spellbook;
   std::map<SavingThrows::Type, int> _savingThrowsTmpMods;
   std::map<DamageType, int> _acTempBonus;
+  std::vector<SkillPtr> _skills;
 
   friend class Character::Creator;
   friend class CharacterSerializer;

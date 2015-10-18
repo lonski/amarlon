@@ -183,6 +183,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");
 
+      //Parse Spellbook
       xml_node<>* spellbookNode = characterNode->first_node("Spellbook");
       if ( spellbookNode )
       {
@@ -211,8 +212,23 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
           }
         }
       }
-    }
 
+      //Parse skills
+      xml_node<>* skillsNode = characterNode->first_node("Skills");
+      if ( skillsNode )
+      {
+        xml_node<>* skillNode = skillsNode->first_node("Skill");
+        while( skillNode )
+        {
+          SkillDescription s;
+          s.id = getAttribute<int>(skillNode, "id");
+          s.level = getAttribute<int>(skillNode, "level");
+          dsc->skills.push_back(s);
+          skillNode = skillNode->next_sibling();
+        }
+      }
+
+    }
   }
 
   return dsc;
