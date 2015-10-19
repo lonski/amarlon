@@ -163,7 +163,6 @@ void Messenger::onNotify(Subject *subject, Event event)
                                                                  : "You see some item laying there.";
             strcpy(msg, format);
           }
-
         }
         break;
         case EventId::Actor_EffectAdded:
@@ -191,6 +190,14 @@ void Messenger::onNotify(Subject *subject, Event event)
 
           sprintf(msg, format, actor->getName().c_str(),
                                event.params["trap"].c_str());
+        }
+        break;
+        case EventId::Actor_TriggeredTrap:
+        {
+          color = TCODColor::lighterRed;
+          const char* format = "%s triggers!";
+
+          sprintf(msg, format, event.params["trap"].c_str());
         }
         break;
 

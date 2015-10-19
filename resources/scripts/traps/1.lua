@@ -13,7 +13,7 @@ function onTrigger(target, trap)
 		if c ~= nil then
 			roll = rollDice(D20) + 1
 			if roll >= c:getArmorClass(DMG_PHYSICAL) then
-				c:takeDamage(damage, trap:getOwner():lock())
+				c:takeDamage(damage, ActorPtr())
 				hit = true;
 			end
 		end

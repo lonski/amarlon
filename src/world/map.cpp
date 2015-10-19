@@ -129,29 +129,29 @@ void Map::render(TCODConsole *console)
 
 void Map::renderTile(u32 x, u32 y, TCODConsole *console)
 {
-  TCODColor     color      = TCODColor::black;
-  unsigned char character  = ' ';
+  //console->setCharBackground( x, x, TCODColor::black );
+  ActorPtr actor;
 
   if ( isInFov(x,y) )         //Tile is in the field of view
   {
     Tile&    tile  = getTile(x, y);
-    ActorPtr actor = tile.top([](ActorPtr a){ return a->isVisible(); });
+    actor = tile.top([](ActorPtr a){ return a->isVisible(); });
 
-    color     = actor ? actor->getColor()  : tile.getColor();
-    character = actor ? actor->getSymbol() : tile.getChar();
+    console->setChar( x, y, tile.getChar() );
+    console->setCharForeground( x, y, tile.getColor() );
+
     updateTile(x, y);
   }
   else if ( isExplored(x,y) ) //Tile is beyond the 'fog of war'
   {
     Tile&    tile  = getTile(x, y);
-    ActorPtr actor = tile.top([](ActorPtr a){ return !a->isFovOnly() && a->isVisible(); });
+    actor = tile.top([](ActorPtr a){ return !a->isFovOnly() && a->isVisible(); });
 
-    color     = actor ? actor->getColor()  : tile.getColor() * 0.6;
-    character = actor ? actor->getSymbol() : tile.getChar();
+    console->setChar( x, y, tile.getChar() );
+    console->setCharForeground( x, y, tile.getColor()*0.6 );
   }
 
-  console->setChar( x, y, character );
-  console->setCharForeground( x, y, color );
+  if ( actor ) actor->render(console);
 }
 
 void Map::updateTiles()

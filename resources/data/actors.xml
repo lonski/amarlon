@@ -137,7 +137,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Destroyable>
 		<Description>Goblins are small, wicked humanoids that favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise. An adult goblin stands 3 to 3.5 feet tall and weigh 40 to 45 pounds. Its eyes are usually bright and crafty-looking, varying in color from red to yellow. A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color. Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
 	</Actor>	
-	<Actor name="Blade Trap" id="26" character="^" color="ff2222" transparent="1" blocks="0" fovOnly="0" visible="0">
+	<Actor name="Blade Trap" id="26" character=" " color="000000" transparent="1" blocks="0" fovOnly="0">
 		<Trap id="1" armed="1" difficulty="20"/>
 	</Actor>
 </Actors>

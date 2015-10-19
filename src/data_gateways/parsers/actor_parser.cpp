@@ -348,6 +348,7 @@ TrapDescriptionPtr ActorParser::parseTrapDsc()
     {
       tDsc.reset( new TrapDescription );
       tDsc->armed = getAttribute<bool>( trapNode, "armed" );
+      tDsc->detected = getAttribute<bool>( trapNode, "detected" );
       tDsc->difficulty = getAttribute<int>( trapNode, "difficulty" );
       tDsc->id = getAttribute<int>( trapNode, "id" );
     }

@@ -186,6 +186,11 @@ public:
    */
   bool performAction(ActorActionPtr action);
 
+  /**
+   * @brief Draws actor symbol on console
+   */
+  virtual void render(TCODConsole* console);
+
 private:
   ActorType _id;
   int _x, _y;

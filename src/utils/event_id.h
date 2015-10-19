@@ -22,7 +22,8 @@ enum class EventId
   Player_Look_At,
   Actor_EffectAdded,
   Actor_EffectRemoved,
-  Actor_DodgedTrap
+  Actor_DodgedTrap,
+  Actor_TriggeredTrap
 
 };
 

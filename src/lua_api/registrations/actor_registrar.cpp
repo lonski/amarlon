@@ -15,6 +15,7 @@ void ActorRegistrar::reg(lua_State* state)
   module( state )
   [
       class_<ActorPtr>("ActorPtr")
+        .def(constructor<>())
         .def("get", &ActorPtr::get),
 
       class_<ActorWPtr>("ActorWPtr")
@@ -38,6 +39,7 @@ void ActorRegistrar::reg(lua_State* state)
         .def("setTransparent", &Actor::setTransparent )
         .def("isFovOnly", &Actor::isFovOnly )
         .def("setFovOnly", &Actor::setFovOnly )
+        .def("notify", &Actor::notify )
         .def("character", (CharacterPtr(Actor::*)()const)&Actor::getFeature)
         .def("trap", (TrapPtr(Actor::*)()const)&Actor::getFeature)
         .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature),

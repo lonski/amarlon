@@ -29,6 +29,7 @@ TrapPtr Trap::create(DescriptionPtr dsc)
     trap->_armed = tDsc->armed;
     trap->_difficulty = tDsc->difficulty;
     trap->_id = static_cast<TrapId>(tDsc->id);
+    trap->_detected = tDsc->detected;
   }
   return trap;
 }
@@ -53,6 +54,7 @@ bool Trap::isEqual(ActorFeaturePtr rhs) const
     equal =  _armed == tRhs->_armed;
     equal &= _difficulty == tRhs->_difficulty;
     equal &= _id == tRhs->_id;
+    equal &= _detected == tRhs->_detected;
   }
 
   return equal;
@@ -69,6 +71,10 @@ bool Trap::trigger(Target victim)
     {
       try
       {
+        for (auto a : victim.actors)
+          a->notify( Event(EventId::Actor_TriggeredTrap,
+                           { {"trap",getName()} }) );
+
         r = luabind::call_function<bool>(
             lua()
           , "onTrigger"
@@ -88,6 +94,8 @@ bool Trap::trigger(Target victim)
         lua.logError(e);
       }
     }
+
+    setArmed(false);
   }
 
 
@@ -102,6 +110,16 @@ bool Trap::isArmed() const
 void Trap::setArmed(bool armed)
 {
   _armed = armed;
+}
+
+bool Trap::isDetected() const
+{
+  return _detected;
+}
+
+void Trap::setDetected(bool detected)
+{
+  _detected = detected;
 }
 
 std::string Trap::getScript() const

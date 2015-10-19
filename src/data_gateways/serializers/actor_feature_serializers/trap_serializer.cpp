@@ -31,6 +31,7 @@ bool TrapSerializer::serialize(ActorFeaturePtr af)
 
     addAttribute( trapNode, "id",      static_cast<int>(trap->getId()) );
     addAttribute( trapNode, "armed",      static_cast<int>(trap->isArmed()) );
+    addAttribute( trapNode, "detected",      static_cast<int>(trap->isDetected()) );
     addAttribute( trapNode, "difficulty", trap->getDifficulty() );
     return true;
   }

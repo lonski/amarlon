@@ -11,11 +11,13 @@ struct TrapDescription : Description
     : armed(true)
     , id(0)
     , difficulty(0)
+    , detected(false)
   {}
 
   bool armed;
   int id;
   int difficulty;
+  bool detected;
 };
 
 typedef std::shared_ptr<TrapDescription> TrapDescriptionPtr;

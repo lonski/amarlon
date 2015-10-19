@@ -34,6 +34,9 @@ public:
   virtual bool isArmed() const;
   virtual void setArmed(bool armed);
 
+  virtual bool isDetected() const;
+  virtual void setDetected(bool detected);
+
   virtual std::string getScript() const;
   virtual std::string getName() const;
 
@@ -46,6 +49,7 @@ private:
   TrapId _id;
   bool _armed;
   int _difficulty;
+  bool _detected;
 
 };
 

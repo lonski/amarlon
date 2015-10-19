@@ -111,7 +111,8 @@ void Actor::morph(ActorType newType)
   ActorPtr newActor = Engine::instance().getActorDB().fetch(newType);
   if ( newActor )
   {
-    *this = *newActor;
+    newActor->setPosition( getX(), getY() );
+    *this = *newActor;    
   }
 }
 
@@ -251,7 +252,7 @@ void Actor::interract(ActorPtr actor)
   if ( trap && actor && actor->isAlive() )
   {
     trap->trigger( Target(actor) );
-    if ( isInFov() ) setVisible(true);
+    if ( isInFov() ) trap->setDetected(true);
   }
 }
 
@@ -435,6 +436,23 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
 bool Actor::performAction(ActorActionPtr action)
 {
   return action ? action->perform( shared_from_this() ) : false;
+}
+
+void Actor::render(TCODConsole *console)
+{
+  if ( getSymbol() != ' ' )
+  {
+    console->setChar( getX(), getY(), getSymbol() );
+    console->setCharForeground( getX(), getY(), getColor() );
+  }
+
+  TrapPtr trap = getFeature<Trap>();
+  if ( trap && trap->isDetected() )
+  {
+    console->setCharBackground( getX(),
+                                getY(),
+                                trap->isArmed() ? TCODColor::red : TCODColor::desaturatedRed );
+  }
 }
 
 }
