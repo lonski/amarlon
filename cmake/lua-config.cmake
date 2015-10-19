@@ -16,6 +16,7 @@ else(LUA_LIBRARIES AND LUA_INCLUDE_DIRS)
       NAMES
         lua
         liblua
+		lua53
       PATHS
         "${CMAKE_CURRENT_SOURCE_DIR}/lib"
         "${PROJECT_SOURCE_DIR}/lib"

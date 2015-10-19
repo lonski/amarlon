@@ -43,6 +43,7 @@ static inline TargetType SkillId2TargetType(SkillId t)
     case SkillId::Hide:        type = TargetType::SELF;             break;
     case SkillId::PickPockets: type = TargetType::SINGLE_NEIGHBOUR; break;
     case SkillId::SilentMove:  type = TargetType::SELF;             break;
+    case SkillId::FindTraps:   type = TargetType::CASTER_AREA;      break;
     default:;
   }
   return type;

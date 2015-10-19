@@ -44,7 +44,7 @@
 			</Actor>
 			<Actor id="10" x="46" y="33"/>
 			<Actor id="3" x="48" y="33">
-				<Trap id="1" armed="1" difficulty="20" detected="1"/>
+				<Trap id="1" armed="1" difficulty="20" detected="0"/>
 			</Actor>
 			<Actor id="4" x="61" y="33"/>
 			<Actor id="8" x="46" y="34"/>
