@@ -84,6 +84,7 @@ void ActorRegistrar::reg(lua_State* state)
         .def("getOwner",      &Trap::getOwner )
         .def("getName",       &Trap::getName )
         .def("setDetected",   &Trap::setDetected)
+        .def("isDetected",    &Trap::isDetected)
 
   ];
 }

@@ -39,6 +39,8 @@ int CmdRest::execute()
     fadeIn();
     tickTime();
     restoreCharacters();
+    Engine::instance().render();
+    TCODConsole::root->flush();
     fadeOut();
 
     gui::msgBox("You rested for "+toStr(_restHours)+" hours.", gui::MsgType::Info);

@@ -242,6 +242,22 @@ void Messenger::onNotify(Subject *subject, Event event)
                                event.params["container"].c_str() );
         }
         break;
+        case EventId::TrapDisarmed:
+        {
+          color = TCODColor::darkLime;
+          const char* format = "%s has been disarmed.";
+
+          sprintf(msg, format, event.params["trap"].c_str());
+        }
+        break;
+        case EventId::TrapArmed:
+        {
+          color = TCODColor::darkPink;
+          const char* format = "%s has been armed.";
+
+          sprintf(msg, format, event.params["trap"].c_str());
+        }
+        break;
       default:;
       }
       _gui.lock()->message( msg, color );

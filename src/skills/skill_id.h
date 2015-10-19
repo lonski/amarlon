@@ -23,7 +23,7 @@ static inline std::string SkillId2Str(SkillId t)
   switch ( t )
   {
     case SkillId::OpenLocks: str = "Open locks"; break;
-    case SkillId::DisarmTraps: str = "Disarm traps"; break;
+    case SkillId::DisarmTraps: str = "Disarm/arm traps"; break;
     case SkillId::Hide: str = "Hide"; break;
     case SkillId::PickPockets: str = "Pick pockets"; break;
     case SkillId::SilentMove: str = "Silent move"; break;

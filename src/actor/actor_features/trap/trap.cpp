@@ -109,7 +109,12 @@ bool Trap::isArmed() const
 
 void Trap::setArmed(bool armed)
 {
-  _armed = armed;
+  if ( armed != _armed )
+  {
+    _armed = armed;
+    EventId id = _armed ? EventId::TrapArmed : EventId::TrapDisarmed;
+    getOwner().lock()->notify( Event(id, { {"trap",getName()} }) );
+  }
 }
 
 bool Trap::isDetected() const

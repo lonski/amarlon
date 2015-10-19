@@ -300,6 +300,7 @@ int Actor::getTileRenderPriority() const
     p = isAlive() ? Tile::defaultMonsterRenderPriority
                   : Tile::defaultItemRenderPriority;
   }
+  printf("\n%s iaAlive = %d", getName().c_str(), (int)isAlive());
 
   return p;
 }

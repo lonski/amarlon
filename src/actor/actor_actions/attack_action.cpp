@@ -24,7 +24,7 @@ bool AttackAction::perform(ActorPtr performer)
     CharacterPtr attacker = _performer->getFeature<Character>();
     CharacterPtr attacked = _target->getFeature<Character>();
 
-    if ( attacker && attacked )
+    if ( attacker && attacked && attacker != attacked)
     {
       success = true;
       bool hit = false;

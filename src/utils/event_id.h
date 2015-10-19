@@ -23,7 +23,9 @@ enum class EventId
   Actor_EffectAdded,
   Actor_EffectRemoved,
   Actor_DodgedTrap,
-  Actor_TriggeredTrap
+  Actor_TriggeredTrap,
+  TrapDisarmed,
+  TrapArmed
 
 };
 

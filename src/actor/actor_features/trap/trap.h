@@ -12,6 +12,7 @@ class Trap;
 struct TrapDescription;
 typedef std::shared_ptr<TrapDescription> TrapDescriptionPtr;
 typedef std::shared_ptr<Trap> TrapPtr;
+typedef std::shared_ptr<Actor> ActorPtr;
 
 class Trap : public ActorFeature
 {
