@@ -33,7 +33,7 @@ function onUse(user, target, skill)
 			end
 			
 			--Check for hostile actors
-			actors = map:getActors( x, y, HOSTILE_ACTOR_RADIUS_CHECK )
+			actors = map:getActorsInRadius( x, y, HOSTILE_ACTOR_RADIUS_CHECK )
 			for i=0, actors:size() - 1 do
 				actor = actors:at(i):get()
 				if actor:isInFov() and actor:isHostileTo(user) then
@@ -43,7 +43,6 @@ function onUse(user, target, skill)
 			end			
 		end
 		
-		if hostileActorsNearby then msg("hostile mobs spotted!") end
 		return inShadow and not hostileActorsNearby
 	end
 	

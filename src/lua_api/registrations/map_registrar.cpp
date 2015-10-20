@@ -23,7 +23,8 @@ void MapRegistrar::reg(lua_State* state)
         .def("isInFov", &Map::isInFov)
         .def("isBlocked", &Map::isBlocked)
         .def("isTransparent", &Map::isTransparent)
-        .def("getActors", (ActorVector(Map::*)(int,int,int))&Map::getActors)
+        .def("getActorsInRadius", (ActorVector(Map::*)(int,int,int))&Map::getActors)
+        .def("getActors", (ActorVector(Map::*)())&Map::getActors)
 
   ];
 }

@@ -13,7 +13,7 @@ enum class SkillId
   DisarmTraps = 2,
   Hide        = 3,
   PickPockets = 4, //TODO - needs NPC's
-  SilentMove  = 5, //TODO - need to implement isNoticed() status of player by monster
+  SilentMove  = 5,
   FindTraps   = 6
 };
 

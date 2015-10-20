@@ -11,7 +11,7 @@
 namespace amarlon {
 
 const ActorFeature::Type MonsterAi::featureType = ActorFeature::AI;
-int MonsterAi::TrackingTurns = 5;
+int MonsterAi::TrackingTurns = 10;
 
 AiType MonsterAi::getAiType() const
 {
@@ -74,7 +74,7 @@ void MonsterAi::update()
       {
         updatePosition();
 
-        if (_map->isInFov(_cX, _cY))
+        if (_map->isInFov(_cX, _cY) && Engine::instance().getPlayer()->isVisible())
         {
           _trackCount = TrackingTurns;
         }
@@ -85,10 +85,7 @@ void MonsterAi::update()
 
         if ( _trackCount > 0)
         {
-          if ( Engine::instance().getPlayer()->isVisible() )
-          {
-            huntPlayer();
-          }
+          huntPlayer();
         }
       }
     }

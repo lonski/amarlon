@@ -120,6 +120,11 @@ std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun)
   return r;
 }
 
+std::vector<ActorPtr> Map::getActors()
+{
+  return getActors([](ActorPtr){return true;});
+}
+
 bool Map::removeActor(ActorPtr toRemove)
 {  
   Tile& tile = getTile(toRemove->getX(), toRemove->getY());

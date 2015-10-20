@@ -14,6 +14,7 @@ namespace amarlon {
 const ActorFeature::Type Ai::featureType = ActorFeature::AI;
 
 Ai::Ai()
+  : Ai(nullptr)
 {
 }
 
@@ -46,11 +47,32 @@ bool Ai::performAction(ActorActionPtr action)
   if ( action )
   {
     updateHidingStatus( action );
+    updateSneakingStatus( action );
     r = action->perform( getOwner().lock() );
   }
 
   return r;
 }
+
+void Ai::updateSneakingStatus(ActorActionPtr action)
+{
+  ActorPtr owner = getOwner().lock();
+  if ( isSneaking() && owner )
+  {
+    bool remainSneaking = false;
+
+    if ( std::dynamic_pointer_cast<MoveAction>(action) )
+    {
+      if ( CharacterPtr c = owner->getFeature<Character>() )
+      {
+        remainSneaking = UseSkillAction( c->getSkill(SkillId::SilentMove), Target(owner)).perform( owner );
+      }
+    }
+
+    if ( !remainSneaking ) setSneaking(false);
+  }
+}
+
 
 void Ai::updateHidingStatus(ActorActionPtr action)
 {
@@ -105,6 +127,17 @@ void Ai::setHiding(bool hiding)
 
   EventId event = hiding ? EventId::Actor_Hidden : EventId::Actor_CancelHidden;
   if ( ActorPtr owner = getOwner().lock() ) owner->notify( Event( event ));
+}
+
+bool Ai::isSneaking() const
+{
+  return _flags[2];
+}
+
+void Ai::setSneaking(bool sneaking)
+{
+  _flags.set(2, sneaking);
+  getOwner().lock()->setVisible( !sneaking );
 }
 
 bool Ai::canOperate() const

@@ -37,6 +37,9 @@ public:
   virtual bool isHiding() const;
   virtual void setHiding(bool hiding);
 
+  virtual bool isSneaking() const;
+  virtual void setSneaking(bool sneaking);
+
   /**
    * @brief Checks if AI is not sleeping, not paralyzed etc
    *        And can perform actions.
@@ -47,10 +50,11 @@ public:
   virtual bool isAllyOf(ActorPtr actor) const = 0;
 
 protected:
-  std::bitset<1> _flags;
+  std::bitset<3> _flags;
 
   void cloneBase(AiPtr ai);
   void updateHidingStatus(ActorActionPtr action);
+  void updateSneakingStatus(ActorActionPtr action);
 
 
 };
