@@ -123,7 +123,7 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
   ActorPtr actor = getOwner().lock();
   if ( actor )
   {
-    actor->wakeUp();
+    if ( AiPtr ai = actor->getFeature<Ai>() ) ai->wakeUp();
 
     if ( attacker )
       actor->notify(Event(EventId::Actor_GotHit,

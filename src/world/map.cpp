@@ -135,7 +135,7 @@ void Map::renderTile(u32 x, u32 y, TCODConsole *console)
   if ( isInFov(x,y) )         //Tile is in the field of view
   {
     Tile&    tile  = getTile(x, y);
-    actor = tile.top([](ActorPtr a){ return a->isVisible(); });
+    actor = tile.top([](ActorPtr a){ return a->isVisible() || a->getType() == ActorType::Player; });
 
     console->setChar( x, y, tile.getChar() );
     console->setCharForeground( x, y, tile.getColor() );

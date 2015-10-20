@@ -41,6 +41,7 @@ public:
   Command() = default;
   virtual ~Command() {}
   static CommandPtr create(CommandId cmd);
+  static CommandPtr createSystemCommand(CommandId cmd);
 
   /**
    * @return True if given key is matching the command

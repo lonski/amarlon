@@ -1,8 +1,8 @@
 set(HEADER_FILES
     test.h
     actor/actor_features/ai/ai.h    
-    actor/actor_features/ai/ai_factory.h
     actor/actor_features/ai/monster_ai.h
+    actor/actor_features/ai/player_ai.h
     actor/actor_features/openable/openable.h
     actor/actor_features/wearer/item_slot_type.h
     actor/actor_features/wearer/wearer.h
@@ -62,6 +62,7 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
     data_gateways/serializers/actor_feature_serializers/ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
+    data_gateways/serializers/actor_feature_serializers/player_ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/trap_serializer.h
     data_gateways/actor_db.h
     data_gateways/descriptions/animation_description.h
@@ -185,8 +186,8 @@ set(HEADER_FILES
 
 set(SOURCE_FILES
     actor/actor_features/ai/ai.cpp
-    actor/actor_features/ai/ai_factory.cpp
     actor/actor_features/ai/monster_ai.cpp
+    actor/actor_features/ai/player_ai.cpp
     actor/actor_features/openable/openable.cpp
     actor/actor_features/wearer/wearer.cpp
     actor/actor_features/actor_feature.cpp
@@ -237,6 +238,7 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/player_ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp
     data_gateways/actor_db.cpp
     data_gateways/map_gateway.cpp

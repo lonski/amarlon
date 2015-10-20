@@ -92,6 +92,11 @@ std::string SpellDB::getDescription(SpellId id)
   return it != _spells.end() ? it->second->description : "";
 }
 
+std::string SpellDB::getScript(SpellId id) const
+{
+  return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";
+}
+
 SpellPtr SpellDB::fetch(SpellId id)
 {
   SpellPtr spell;

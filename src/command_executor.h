@@ -27,6 +27,19 @@ private:
 
 typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 
+class SystemCommandExecutor
+{
+public:
+  SystemCommandExecutor();
+  int execute(TCOD_key_t &key);
+
+private:
+  std::vector<CommandPtr> _commands;
+
+};
+
+typedef std::shared_ptr<SystemCommandExecutor> SystemCommandExecutorPtr;
+
 }
 
 #endif // COMMANDEXECUTOR_H

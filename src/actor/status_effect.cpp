@@ -16,7 +16,7 @@ bool StatusEffect::cancel(Target target)
 {
   bool success = false;
 
-  if ( target )
+  if ( target && !_script.empty() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
     if ( lua.execute( _script ) )

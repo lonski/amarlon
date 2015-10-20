@@ -14,16 +14,10 @@ typedef std::shared_ptr<Map> MapPtr;
 class MonsterAi : public Ai
 {
 public:
-
-  class Creator : public Ai::Creator
-  {
-  public:
-    virtual ~Creator() {}
-    virtual AiPtr create(AiDescriptionPtr dsc);
-  };
-
   static int TrackingTurns;
   const static ActorFeature::Type featureType;
+
+  MonsterAi(AiDescriptionPtr dsc);
   MonsterAi();
 
   virtual ActorFeaturePtr clone();
@@ -32,7 +26,6 @@ public:
   virtual void update();
   virtual bool isHunting() const;
 
-  void updatePosition();
 private:
   MapPtr _map;
   int _trackCount;
@@ -40,6 +33,7 @@ private:
 
   void retrievePlayerPtr();
   void huntPlayer();
+  void updatePosition();
 
 };
 

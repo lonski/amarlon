@@ -21,6 +21,8 @@ bool AttackAction::perform(ActorPtr performer)
 
   if ( _performer && _target )
   {
+    performer->setVisible(true);
+
     CharacterPtr attacker = _performer->getFeature<Character>();
     CharacterPtr attacked = _target->getFeature<Character>();
 

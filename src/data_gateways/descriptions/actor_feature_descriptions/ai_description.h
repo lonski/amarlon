@@ -2,20 +2,16 @@
 #define AI_DESCRIPTION
 
 #include <description.h>
+#include <ai_type.h>
 
 namespace amarlon {
 
-
 struct AiDescription : Description
 {
-};
-
-struct MonsterAiDescription : AiDescription
-{
+  AiType type;
 };
 
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
-typedef std::shared_ptr<MonsterAiDescription> MonsterAiDescriptionPtr;
 
 }
 

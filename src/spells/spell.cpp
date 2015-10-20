@@ -138,7 +138,7 @@ bool Spell::operator==(const Spell &rhs)
 
 std::string Spell::getScript() const
 {
-  return "scripts/spells/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  return Engine::instance().getSpellDB().getScript(_id);
 }
 
 }

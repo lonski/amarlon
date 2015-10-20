@@ -94,9 +94,6 @@ public:
   bool isVisible() const;
   void setVisible(bool visible);
 
-  bool isSleeping() const;
-  void wakeUp();
-
   /**
    * @brief Changes the actors coordinates and sets its position on map
    *        (if the map is set)

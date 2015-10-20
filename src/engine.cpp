@@ -14,6 +14,7 @@
 #include <lua_state.h>
 #include <window/game_menu_window.h>
 #include <status_effects_manager.h>
+#include <player_ai.h>
 
 namespace amarlon {
 
@@ -43,7 +44,7 @@ void Engine::prologue()
   _config->load("config.cfg");
 
   _gui.reset( new gui::Gui );
-  _cmdExecutor.reset( new CommandExecutor );
+  _sysCmdExecutor.reset( new SystemCommandExecutor );
 
   _spellDB.reset(new SpellDB );
   _tileDB.reset( new TileDB );
@@ -115,7 +116,7 @@ void Engine::initializeConsole()
 void Engine::epilogue()
 {
   _gui.reset();
-  _cmdExecutor.reset();
+  _sysCmdExecutor.reset();
   _windowManager.reset();
   _config.reset();
   _spellDB.reset();
@@ -167,7 +168,15 @@ int Engine::processInput()
 {
   TCOD_key_t key;
   TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL, true);
-  return _cmdExecutor->execute(key);
+
+  int ret = _sysCmdExecutor->execute(key);
+  if ( ret == -1 && getPlayer() )
+  {
+    PlayerAiPtr ai = getPlayer()->getFeature<PlayerAi>();
+    if ( ai ) ret = ai->processInput(key);
+  }
+
+  return std::max(ret, 0);
 }
 
 gui::Gui& Engine::getGui() const

@@ -85,6 +85,7 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _x(x)
   , _y(y)
   , _map(map)
+  , _effects( new StatusEffectsManager )
   , _fovOnly(true)
   , _transparent(false)
   , _blocks(false)
@@ -118,12 +119,7 @@ void Actor::morph(ActorType newType)
 
 void Actor::update()
 {
-  AiPtr ai = getFeature<Ai>();
-  if ( ai && !isSleeping() )
-  {
-    ai->update();
-  }
-
+  for ( auto afPair : _features ) afPair.second->update();
   _effects->tick();
 }
 
@@ -300,7 +296,6 @@ int Actor::getTileRenderPriority() const
     p = isAlive() ? Tile::defaultMonsterRenderPriority
                   : Tile::defaultItemRenderPriority;
   }
-  printf("\n%s iaAlive = %d", getName().c_str(), (int)isAlive());
 
   return p;
 }
@@ -373,16 +368,11 @@ bool Actor::isVisible() const
 void Actor::setVisible(bool visible)
 {
   _flags.set(0, visible);
-}
 
-bool Actor::isSleeping() const
-{
-  return getStatusEffects().hasEffect( "Sleep" );
-}
-
-void Actor::wakeUp()
-{
-  getStatusEffects().remove( "Sleep" );
+  if ( visible )
+  {
+    getStatusEffects().remove( "Invisibility" );
+  }
 }
 
 TCODColor Actor::getColor() const
@@ -436,16 +426,27 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
 
 bool Actor::performAction(ActorActionPtr action)
 {
-  return action ? action->perform( shared_from_this() ) : false;
+  AiPtr ai = getFeature<Ai>();
+  return ai ? ai->performAction(action) : false;
+//  return action ? action->perform( shared_from_this() ) : false;
 }
 
 void Actor::render(TCODConsole *console)
 {
   if ( getSymbol() != ' ' )
   {
-    console->setChar( getX(), getY(), getSymbol() );
-    console->setCharForeground( getX(), getY(), getColor() );
+    if ( !isVisible() )
+    {
+      console->setChar( getX(), getY(), getSymbol() );
+      console->setCharForeground( getX(), getY(), getColor()*0.3 );
+    }
+    else
+    {
+      console->setChar( getX(), getY(), getSymbol() );
+      console->setCharForeground( getX(), getY(), getColor() );
+    }
   }
+
 
   TrapPtr trap = getFeature<Trap>();
   if ( trap && trap->isDetected() )

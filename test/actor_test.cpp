@@ -88,7 +88,8 @@ TEST_F(ActorTest, actorEqual_different_container)
   ActorPtr ca1c = Actor::create(ActorType::CookBook);
   ActorPtr ca2c = ca1c->clone();
 
-  AiDescriptionPtr dsc = std::make_shared<MonsterAiDescription>();
+  AiDescriptionPtr dsc = std::make_shared<AiDescription>();
+  dsc->type = AiType::MonsterAi;
   ca1c->insertFeature( Ai::create( dsc ));
   c1->add(ca1c);
   c2->add(ca2c);

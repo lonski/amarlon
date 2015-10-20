@@ -22,6 +22,7 @@ bool OpenAction::perform(ActorPtr performer)
     OpenablePtr openable = _toOpen->getFeature<Openable>();
     if ( openable )
     {
+      performer->setVisible(true);
       if ( openable->open(performer) )
       {
         MapPtr map = _toOpen->getMap();

@@ -14,7 +14,7 @@ class Map;
 class Actor;
 class SpellDB;
 class World;
-class CommandExecutor;
+class SystemCommandExecutor;
 class MapGateway;
 class TileDB;
 class ActorDB;
@@ -28,7 +28,7 @@ namespace lua_api {
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<SpellDB> SpellDBPtr;
 typedef std::shared_ptr<World> WorldPtr;
-typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
+typedef std::shared_ptr<SystemCommandExecutor> SystemCommandExecutorPtr;
 typedef std::shared_ptr<TileDB> TileDBPtr;
 typedef std::shared_ptr<ActorDB> ActorDBPtr;
 typedef std::shared_ptr<Configuration> ConfigurationPtr;
@@ -90,7 +90,7 @@ public:
 
 private:
   gui::GuiPtr _gui;
-  CommandExecutorPtr _cmdExecutor;
+  SystemCommandExecutorPtr _sysCmdExecutor;
   gui::WindowManagerPtr _windowManager;
   ConfigurationPtr _config;
 

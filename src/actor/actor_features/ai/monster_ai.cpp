@@ -13,6 +13,15 @@ namespace amarlon {
 const ActorFeature::Type MonsterAi::featureType = ActorFeature::AI;
 int MonsterAi::TrackingTurns = 5;
 
+MonsterAi::MonsterAi(AiDescriptionPtr dsc )
+  : Ai(dsc)
+  , _map(nullptr)
+  , _trackCount(0)
+  , _cX(0)
+  , _cY(0)
+{
+}
+
 MonsterAi::MonsterAi()
   : _map(nullptr)
   , _trackCount(0)
@@ -28,6 +37,8 @@ ActorFeaturePtr MonsterAi::clone()
   cloned->_trackCount = _trackCount;
   cloned->_cX = _cX;
   cloned->_cY = _cY;
+
+  cloneBase(cloned);
 
   return cloned;
 }
@@ -48,7 +59,7 @@ bool MonsterAi::isEqual(ActorFeaturePtr rhs) const
 void MonsterAi::update()
 {  
   ActorPtr owner = getOwner().lock();
-  if ( owner )
+  if ( owner && canOperate() )
   {
     MapPtr map = owner->getMap();
     if ( map )
@@ -125,19 +136,6 @@ void MonsterAi::updatePosition()
 {
   _cX = getOwner().lock()->getX();
   _cY = getOwner().lock()->getY();
-}
-
-AiPtr MonsterAi::Creator::create(AiDescriptionPtr dsc)
-{
-  AiPtr ai = nullptr;
-
-  MonsterAiDescriptionPtr aiDsc = std::dynamic_pointer_cast<MonsterAiDescription>(dsc);
-  if ( aiDsc != nullptr )
-  {
-    ai = std::make_shared<MonsterAi>();
-  }
-
-  return ai;
 }
 
 }
