@@ -12,6 +12,7 @@
 #include <spell_id.h>
 #include <damage.h>
 #include <item_slot_type.h>
+#include <skill_id.h>
 
 namespace amarlon {
 
@@ -79,6 +80,7 @@ public:
   virtual SpellBookPtr getSpellBook();
   virtual std::string getDescription();
   virtual std::vector<SkillPtr> getSkills() const;
+  virtual SkillPtr getSkill(SkillId id) const;
 
   virtual int getMorale() { return 0; }
 

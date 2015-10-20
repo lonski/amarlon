@@ -13,6 +13,11 @@ namespace amarlon {
 const ActorFeature::Type MonsterAi::featureType = ActorFeature::AI;
 int MonsterAi::TrackingTurns = 5;
 
+AiType MonsterAi::getAiType() const
+{
+  return AiType::MonsterAi;
+}
+
 MonsterAi::MonsterAi(AiDescriptionPtr dsc )
   : Ai(dsc)
   , _map(nullptr)
@@ -93,6 +98,23 @@ void MonsterAi::update()
 bool MonsterAi::isHunting() const
 {
   return _trackCount > 0 && getOwner().lock()->isAlive();
+}
+
+bool MonsterAi::isHostileTo(ActorPtr actor) const
+{
+  if ( actor )
+  {
+    AiPtr ai = actor->getFeature<Ai>();
+    //Hostile to all non monsters
+    return ai && ai->getAiType() != getAiType();
+  }
+  return false;
+}
+
+bool MonsterAi::isAllyOf(ActorPtr actor) const
+{
+  //Allied with all other monsters
+  return !isHostileTo(actor);
 }
 
 void MonsterAi::huntPlayer()

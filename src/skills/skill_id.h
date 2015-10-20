@@ -11,7 +11,7 @@ enum class SkillId
   Null        = 0,
   OpenLocks   = 1,
   DisarmTraps = 2,
-  Hide        = 3, //TODO
+  Hide        = 3,
   PickPockets = 4, //TODO - needs NPC's
   SilentMove  = 5, //TODO - need to implement isNoticed() status of player by monster
   FindTraps   = 6

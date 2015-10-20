@@ -139,6 +139,11 @@ public:
   bool isAllyOf(ActorPtr actor);
 
   /**
+   * @brief Return true if given actor is hostile
+   */
+  bool isHostileTo(ActorPtr actor);
+
+  /**
    * @brief Handles interraction between two actors. For example, when another actor
    *        is entering tile, where this actor is already.
    */

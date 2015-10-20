@@ -200,6 +200,22 @@ void Messenger::onNotify(Subject *subject, Event event)
           sprintf(msg, format, event.params["trap"].c_str());
         }
         break;
+        case EventId::Actor_Hidden:
+        {
+          color = TCODColor::green;
+          const char* format = "%s hides in the shadows.";
+
+          sprintf(msg, format, actor->getName().c_str());
+        }
+        break;
+        case EventId::Actor_CancelHidden:
+        {
+          color = TCODColor::pink;
+          const char* format = "%s leaves the shadows.";
+
+          sprintf(msg, format, actor->getName().c_str());
+        }
+        break;
 
         default:;
       }

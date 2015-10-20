@@ -5,6 +5,7 @@
 #include <character.h>
 #include <openable.h>
 #include <trap.h>
+#include <ai.h>
 #include <status_effects_manager.h>
 
 namespace amarlon { namespace lua_api {
@@ -42,7 +43,11 @@ void ActorRegistrar::reg(lua_State* state)
         .def("notify", &Actor::notify )
         .def("character", (CharacterPtr(Actor::*)()const)&Actor::getFeature)
         .def("trap", (TrapPtr(Actor::*)()const)&Actor::getFeature)
-        .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature),
+        .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature)
+        .def("ai", (AiPtr(Actor::*)()const)&Actor::getFeature)
+        .def("getMap", &Actor::getMap)
+        .def("isInFov", &Actor::isInFov)
+        .def("isHostileTo", &Actor::isHostileTo),
 
       class_<CharacterPtr>("CharacterPtr")
         .def("get", &CharacterPtr::get),
@@ -84,7 +89,18 @@ void ActorRegistrar::reg(lua_State* state)
         .def("getOwner",      &Trap::getOwner )
         .def("getName",       &Trap::getName )
         .def("setDetected",   &Trap::setDetected)
-        .def("isDetected",    &Trap::isDetected)
+        .def("isDetected",    &Trap::isDetected),
+
+      class_<AiPtr>("AiPtr")
+        .def("get", &AiPtr::get),
+
+      class_<Ai>("Ai")
+        .def("performAction", &Ai::performAction )
+        .def("isSleeping", &Ai::isSleeping )
+        .def("wakeUp", &Ai::wakeUp )
+        .def("isHiding", &Ai::isHiding )
+        .def("setHiding", &Ai::setHiding )
+        .def("canOperate", &Ai::canOperate )
 
   ];
 }

@@ -260,6 +260,12 @@ std::vector<SkillPtr> Character::getSkills() const
   return _skills;
 }
 
+SkillPtr Character::getSkill(SkillId id) const
+{
+  for ( auto s : _skills ) if ( s->getId() == id ) return s;
+  return nullptr;
+}
+
 void Character::rest()
 {
   setHitPoints( getMaxHitPoints() );

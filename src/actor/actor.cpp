@@ -149,6 +149,7 @@ Actor& Actor::operator=(const Actor &rhs)
     _symbol = rhs._symbol;
     _flags = rhs._flags;
 
+    _features.clear();
     for ( auto af : rhs._features )
     {
       insertFeature( af.second->clone() );
@@ -220,26 +221,14 @@ bool Actor::sees(ActorPtr actor)
 
 bool Actor::isAllyOf(ActorPtr actor)
 {
-  //a temporary stub
-  //only monsters are allies between them
-  //TODO real implementation
-  bool isAlly = false;
+  AiPtr ai = getFeature<Ai>();
+  return ai && ai->isAllyOf(actor);
+}
 
-  if ( this != actor.get() )
-  {
-    if ( isAlive() )
-    {
-      MonsterAiPtr thisAi = std::dynamic_pointer_cast<MonsterAi>(getFeature<Ai>());
-      MonsterAiPtr actorAi = std::dynamic_pointer_cast<MonsterAi>(actor->getFeature<Ai>());
-      isAlly = (thisAi != nullptr && actorAi != nullptr);
-    }
-  }
-  else
-  {
-    isAlly = true;
-  }
-
-  return isAlly;
+bool Actor::isHostileTo(ActorPtr actor)
+{
+  AiPtr ai = getFeature<Ai>();
+  return ai && ai->isHostileTo(actor);
 }
 
 void Actor::interract(ActorPtr actor)

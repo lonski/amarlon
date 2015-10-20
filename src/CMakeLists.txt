@@ -180,6 +180,7 @@ set(HEADER_FILES
     lua_api/registrations/free_functions_registrar.h
     lua_api/registrations/globals_registrar.h
     lua_api/registrations/skill_registrar.h
+    lua_api/registrations/map_registrar.h
     skills/skill.h
     skills/skill_id.h
 )
@@ -326,6 +327,7 @@ set(SOURCE_FILES
     lua_api/registrations/free_functions_registrar.cpp
     lua_api/registrations/globals_registrar.cpp
     lua_api/registrations/skill_registrar.cpp
+    lua_api/registrations/map_registrar.cpp
     skills/skill.cpp
 )
 

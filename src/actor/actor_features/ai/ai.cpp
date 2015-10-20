@@ -6,6 +6,8 @@
 #include <actor_action.h>
 #include <actor.h>
 #include <status_effects_manager.h>
+#include <move_action.h>
+#include <use_skill_action.h>
 
 namespace amarlon {
 
@@ -39,7 +41,34 @@ AiPtr Ai::create(DescriptionPtr dsc)
 
 bool Ai::performAction(ActorActionPtr action)
 {
-  return action && canOperate() ? action->perform( getOwner().lock() ) : false;
+  bool r = false;
+
+  if ( action )
+  {
+    updateHidingStatus( action );
+    r = action->perform( getOwner().lock() );
+  }
+
+  return r;
+}
+
+void Ai::updateHidingStatus(ActorActionPtr action)
+{
+  ActorPtr owner = getOwner().lock();
+  if ( isHiding() && owner )
+  {
+    bool remainHidden = false;
+
+    if ( std::dynamic_pointer_cast<MoveAction>(action) )
+    {
+      if ( CharacterPtr c = owner->getFeature<Character>() )
+      {
+        remainHidden = UseSkillAction( c->getSkill(SkillId::Hide), Target(owner)).perform( owner );
+      }
+    }
+
+    if ( !remainHidden ) setHiding(false);
+  }
 }
 
 bool Ai::isSleeping() const
@@ -62,6 +91,20 @@ void Ai::wakeUp()
   {
     owner->getStatusEffects().remove( "Sleep" );
   }
+}
+
+bool Ai::isHiding() const
+{
+  return _flags[0];
+}
+
+void Ai::setHiding(bool hiding)
+{
+  _flags.set(0, hiding);
+  getOwner().lock()->setVisible( !hiding );
+
+  EventId event = hiding ? EventId::Actor_Hidden : EventId::Actor_CancelHidden;
+  if ( ActorPtr owner = getOwner().lock() ) owner->notify( Event( event ));
 }
 
 bool Ai::canOperate() const

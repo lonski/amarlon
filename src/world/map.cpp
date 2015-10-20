@@ -54,6 +54,11 @@ bool Map::isBlocked(int x, int y)
   return !_codMap.isWalkable(x,y) || actorBlocks;
 }
 
+bool Map::isTransparent(int x, int y) const
+{
+  return _codMap.isTransparent(x,y);
+}
+
 void Map::addActor(ActorPtr actor)
 {
   u32 x( actor->getX() );
@@ -92,6 +97,11 @@ std::vector<ActorPtr> Map::getActors(int x, int y, int radius, std::function<boo
     }
   }
   return actors;
+}
+
+std::vector<ActorPtr> Map::getActors(int x, int y, int radius)
+{
+  return getActors(x,y,radius, [](ActorPtr){return true;});
 }
 
 std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun)

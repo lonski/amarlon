@@ -16,6 +16,8 @@ class PlayerAi : public Ai
 {
 public:
   const static ActorFeature::Type featureType;
+  virtual AiType getAiType() const;
+
   PlayerAi(AiDescriptionPtr dsc);
   PlayerAi();
 
@@ -29,6 +31,9 @@ public:
    * @return Amount of turns that the processing took.
    */
   virtual int processInput(TCOD_key_t key);
+
+  virtual bool isHostileTo(ActorPtr actor) const;
+  virtual bool isAllyOf(ActorPtr actor) const;
 
 private:
   CommandExecutorPtr _cmdExecutor;

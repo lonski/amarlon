@@ -16,6 +16,7 @@ class MonsterAi : public Ai
 public:
   static int TrackingTurns;
   const static ActorFeature::Type featureType;
+  virtual AiType getAiType() const;
 
   MonsterAi(AiDescriptionPtr dsc);
   MonsterAi();
@@ -25,6 +26,9 @@ public:
 
   virtual void update();
   virtual bool isHunting() const;
+
+  virtual bool isHostileTo(ActorPtr actor) const;
+  virtual bool isAllyOf(ActorPtr actor) const;
 
 private:
   MapPtr _map;

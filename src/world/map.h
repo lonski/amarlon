@@ -39,12 +39,14 @@ public:
   virtual bool isExplored(int x, int y);
   virtual bool isInFov(int x, int y);
   virtual bool isBlocked(int x, int y);
+  virtual bool isTransparent(int x, int y) const;
 
   virtual void addActor(ActorPtr actor);
   virtual  bool removeActor(ActorPtr toRemove);
   virtual ActorPtr getFirstActor(int x, int y);
   virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
-  virtual std::vector<ActorPtr> getActors(int x, int y, int radius, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
+  virtual std::vector<ActorPtr> getActors(int x, int y, int radius, std::function<bool(ActorPtr)> filterFun);
+  virtual std::vector<ActorPtr> getActors(int x, int y, int radius);
   virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
   virtual void performActionOnActors(std::function<void(ActorPtr)> func);
 
