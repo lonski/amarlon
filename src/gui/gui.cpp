@@ -36,16 +36,32 @@ void Gui::setupRightPanel()
   _playerName->setPosition(2,2);
   rightPanel->addWidget(_playerName);
 
+  //Player level
+  _playerLevel.reset( new ALabel );
+  _playerLevel->setPosition(2, _playerName->getY() + 2);
+  rightPanel->addWidget(_playerLevel);
+
   //HP Bar
   _hpBar.reset( new ABar );
-  _hpBar->setPosition(2,4);
+  _hpBar->setPosition(2,_playerLevel->getY() + 2);
   _hpBar->setName("HP");
+  _hpBar->setDisplayValues(false);
   _hpBar->setWidth( rightPanel->getWidth() - 4 );
   rightPanel->addWidget(_hpBar);
 
+  //Exp Bar
+  _expBar.reset( new ABar );
+  _expBar->setPosition(2, _hpBar->getY() + 4 );
+  _expBar->setName("XP");
+  _expBar->setDisplayValues(false);
+  _expBar->setBgColor(TCODColor::darkestGreen);
+  _expBar->setFgColor(TCODColor::darkGreen);
+  _expBar->setWidth( rightPanel->getWidth() - 4 );
+  rightPanel->addWidget(_expBar);
+
   //Status Effects
   _effects.reset( new AList );
-  _effects->setPosition( 2, _hpBar->getY() + 4 );
+  _effects->setPosition( 2, _expBar->getY() + 4 );
   _effects->setWidth( rightPanel->getWidth() - 4 );
   rightPanel->addWidget( _effects );
 
@@ -139,9 +155,20 @@ void Gui::setHpBar(float value, float maxValue)
   _hpBar->setMaxValue(maxValue);
 }
 
+void Gui::setExpBar(float value, float maxValue)
+{
+  _expBar->setValue(value);
+  _expBar->setMaxValue(maxValue);
+}
+
 void Gui::setPlayerName(std::string name)
 {
   _playerName->setValue(name);
+}
+
+void Gui::setPlayerLevel(std::string level)
+{
+  _playerLevel->setValue("Level: " + level);
 }
 
 }}

@@ -10,6 +10,7 @@
 #include <spell_book.h>
 #include <skill.h>
 #include <algorithm>
+#include <experience_table.h>
 
 namespace amarlon {
 
@@ -154,6 +155,12 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
 int Character::getExperience() const
 {
   return _experience;
+}
+
+int Character::getExperienceToNextLevel() const
+{
+  LevelData data = Experience::getLevelData(getClass(), getLevel() + 1);
+  return data.expNeeded;
 }
 
 void Character::modifyExperience(int modifier)

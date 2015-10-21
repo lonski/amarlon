@@ -145,13 +145,24 @@ void Engine::render()
 
   if (_gui)
   {
-    if ( getPlayer()->isAlive() )
+    _gui->setPlayerName(getPlayer()->getName());
+    _gui->setViewList(getActorsBenethPlayersFeet());
+    _gui->setEffectsList( getPlayer()->getStatusEffects().getEffectsStringList() );
+
+    CharacterPtr c = getPlayer()->getFeature<Character>();
+    if ( c )
     {
-      _gui->setPlayerName(getPlayer()->getName());
-      _gui->setHpBar(getPlayer()->getFeature<Character>()->getHitPoints(), getPlayer()->getFeature<Character>()->getMaxHitPoints());
-      _gui->setViewList(getActorsBenethPlayersFeet());
-      _gui->setEffectsList( getPlayer()->getStatusEffects().getEffectsStringList() );
+      _gui->setHpBar(c->getHitPoints(), c->getMaxHitPoints());
+      _gui->setExpBar(c->getExperience(), c->getExperienceToNextLevel());
+      _gui->setPlayerLevel( toStr(c->getLevel()) );
     }
+    else
+    {
+      _gui->setHpBar(0, 1);
+      _gui->setExpBar(0, 1);
+      _gui->setPlayerLevel(0);
+    }
+
     _gui->render();
   }
 }

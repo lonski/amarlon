@@ -12,6 +12,7 @@ Trap::Trap()
   : _id(TrapId::Null)
   , _armed(false)
   , _difficulty(0)
+  , _detected(false)
 {
 }
 

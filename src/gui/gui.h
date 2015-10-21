@@ -46,11 +46,13 @@ public:
   void render();
 
   void setHpBar(float value, float maxValue);
+  void setExpBar(float value, float maxValue);
   void message(std::string msg, TCODColor color = TCODColor::white);
   void clearLog();
   void setViewList(const std::vector<ColoredString>& items);
   void setEffectsList(const std::vector<ColoredString>& items);
   void setPlayerName(std::string name);
+  void setPlayerLevel(std::string level);
   void setStatusMessage(const std::string& status);
   void clearStatusMessage();
 
@@ -60,7 +62,9 @@ private:
   AListPtr _log;
   AListPtr _viewList;
   ABarPtr _hpBar;
+  ABarPtr _expBar;
   ALabelPtr _playerName;
+  ALabelPtr _playerLevel;
   AListPtr _effects;
 
   std::vector<AWidgetPtr> _widgets;
