@@ -3,7 +3,7 @@
 #include <map.h>
 #undef private
 #include <actor.h>
-#include <map_gateway.h>
+#include <map_db.h>
 #include <engine.h>
 
 namespace amarlon {
@@ -13,7 +13,7 @@ class MapTest : public ::testing::Test
   virtual void SetUp()
   {
     Engine::instance().prologue();
-    mapGateway.load("data/maps.xml");
+    MapDB.load("data/maps.xml");
   }
 
   virtual void TearDown()
@@ -21,7 +21,7 @@ class MapTest : public ::testing::Test
   }
 
 protected:
-  MapGateway mapGateway;
+  MapDB MapDB;
 
 };
 
@@ -57,7 +57,7 @@ TEST_F(MapTest, mapIsInFov_computed)
 
 TEST_F(MapTest, addActor)
 {
-  MapPtr map = mapGateway.fetch(MapId::GameStart);
+  MapPtr map = MapDB.fetch(MapId::GameStart);
   ActorPtr actor = Actor::create(ActorType::HealthPotion,1,1);
 
   map->addActor(actor);

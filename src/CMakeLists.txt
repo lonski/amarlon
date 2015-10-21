@@ -66,7 +66,6 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/player_ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/trap_serializer.h
-    data_gateways/actor_db.h
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
     data_gateways/descriptions/spell_description.h
@@ -79,9 +78,10 @@ set(HEADER_FILES
     data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
     data_gateways/descriptions/actor_feature_descriptions/trap_description.h
     data_gateways/descriptions/description.h
-    data_gateways/map_gateway.h
-    data_gateways/tile_db.h
-    data_gateways/spell_db.h
+    data_gateways/databases/map_db.h
+    data_gateways/databases/actor_db.h
+    data_gateways/databases/tile_db.h
+    data_gateways/databases/spell_db.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h     
@@ -245,10 +245,10 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/player_ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp
-    data_gateways/actor_db.cpp
-    data_gateways/map_gateway.cpp
-    data_gateways/tile_db.cpp
-    data_gateways/spell_db.cpp
+    data_gateways/databases/actor_db.cpp
+    data_gateways/databases/map_db.cpp
+    data_gateways/databases/tile_db.cpp
+    data_gateways/databases/spell_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp

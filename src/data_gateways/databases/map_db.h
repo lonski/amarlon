@@ -1,5 +1,5 @@
-#ifndef MAPGATEWAY_H
-#define MAPGATEWAY_H
+#ifndef MapDB_H
+#define MapDB_H
 
 #include <map>
 #include <vector>
@@ -16,11 +16,11 @@ class Actor;
 
 typedef std::shared_ptr<Map> MapPtr;
 
-class MapGateway
+class MapDB
 {
 public:
-  MapGateway();
-  virtual ~MapGateway();
+  MapDB();
+  virtual ~MapDB();
 
   virtual MapPtr fetch(MapId id);
   virtual bool load(const std::string& fn);
@@ -35,8 +35,8 @@ protected:
 
 };
 
-typedef std::shared_ptr<MapGateway> MapGatewayPtr;
+typedef std::shared_ptr<MapDB> MapDBPtr;
 
 }
 
-#endif // MAPGATEWAY_H
+#endif // MapDB_H

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include <memory>
-#include "data_gateways/map_gateway.h"
+#include <map_db.h>
 #include <map.h>
 #include <engine.h>
 #include <configuration.h>
@@ -10,7 +10,7 @@ namespace amarlon {
 
 typedef std::shared_ptr<Map> MapPtr;
 
-class MapGatewayTest : public ::testing::Test
+class MapDBTest : public ::testing::Test
 {
   virtual void SetUp()
   {
@@ -25,17 +25,17 @@ class MapGatewayTest : public ::testing::Test
 
 };
 
-TEST_F(MapGatewayTest, fetchOfNonExistingMap_GivesNull)
+TEST_F(MapDBTest, fetchOfNonExistingMap_GivesNull)
 {
-  MapGateway gateway;
+  MapDB gateway;
   MapPtr map ( gateway.fetch(MapId::Null) );
 
   ASSERT_TRUE(map == nullptr);
 }
 
-TEST_F(MapGatewayTest, fetchExistingMap_givesMap)
+TEST_F(MapDBTest, fetchExistingMap_givesMap)
 {
-  MapGateway gateway;
+  MapDB gateway;
   gateway.load("data/maps.xml");
   MapPtr map (gateway.fetch(MapId::GameStart));
 
@@ -43,27 +43,27 @@ TEST_F(MapGatewayTest, fetchExistingMap_givesMap)
   ASSERT_EQ(map->getId(), MapId::GameStart );
 }
 
-TEST_F(MapGatewayTest, mapHasValidTiles)
+TEST_F(MapDBTest, mapHasValidTiles)
 {
-  MapGateway gateway;
+  MapDB gateway;
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
   EXPECT_EQ(map->getChar(39,27), Engine::instance().getTileDB().getChar(TileType::PlainFloor));
 }
 
-TEST_F(MapGatewayTest, mapHasValidTiles2)
+TEST_F(MapDBTest, mapHasValidTiles2)
 {
-  MapGateway gateway;
+  MapDB gateway;
   gateway.load("data/maps.xml");
   MapPtr map ( gateway.fetch(MapId::GameStart) );
 
   EXPECT_EQ(map->getChar(1,1), Engine::instance().getTileDB().getChar(TileType::Tree));
 }
 
-TEST_F(MapGatewayTest, saveMaps)
+TEST_F(MapDBTest, saveMaps)
 {
-  MapGateway gateway;
+  MapDB gateway;
   gateway.load("data/maps.xml");
   gateway.store("data/maps_saved.xml");
 }

@@ -4,7 +4,7 @@
 #include <memory>
 #include <map>
 #include <map_id.h>
-#include <map_gateway.h>
+#include <map_db.h>
 
 namespace amarlon {
 
@@ -13,7 +13,7 @@ class Actor;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 
-class World : public MapGateway
+class World : public MapDB
 {
 public:
   World(const std::string& mapsFile);
@@ -31,7 +31,7 @@ public:
 private:  
   MapId _currentMap;
   ActorPtr _player;
-  MapGatewayPtr _mapGateway;
+  MapDBPtr _MapDB;
 
   void parsePlayer(rapidxml::xml_document<>& doc);
   void parseCurrentMap(rapidxml::xml_document<>& doc);

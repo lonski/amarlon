@@ -1,4 +1,4 @@
-#include "map_gateway.h"
+#include "map_db.h"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -15,15 +15,15 @@ namespace amarlon {
 using namespace rapidxml;
 using namespace std;
 
-MapGateway::MapGateway()
+MapDB::MapDB()
 {
 }
 
-MapGateway::~MapGateway()
+MapDB::~MapDB()
 {
 }
 
-MapPtr MapGateway::fetch(MapId id)
+MapPtr MapDB::fetch(MapId id)
 {
   MapPtr map;
 
@@ -36,7 +36,7 @@ MapPtr MapGateway::fetch(MapId id)
   return map;
 }
 
-bool MapGateway::load(const string& fn)
+bool MapDB::load(const string& fn)
 {
   ifstream ifs(fn);
 
@@ -56,7 +56,7 @@ bool MapGateway::load(const string& fn)
   return false;
 }
 
-void MapGateway::parseMaps(rapidxml::xml_document<>& doc)
+void MapDB::parseMaps(rapidxml::xml_document<>& doc)
 {
   xml_node<>* maps = doc.first_node("Maps");
   xml_node<>* mapNode = maps ? maps->first_node("Map") : nullptr;
@@ -71,7 +71,7 @@ void MapGateway::parseMaps(rapidxml::xml_document<>& doc)
   }
 }
 
-std::shared_ptr<xml_document<> > MapGateway::serializeMaps()
+std::shared_ptr<xml_document<> > MapDB::serializeMaps()
 {
   std::shared_ptr<xml_document<> > doc(new xml_document<>);
 
@@ -84,7 +84,7 @@ std::shared_ptr<xml_document<> > MapGateway::serializeMaps()
   return doc;
 }
 
-bool MapGateway::store(const string& fn)
+bool MapDB::store(const string& fn)
 {
   ofstream ofs(fn);
   if ( ofs.is_open() )

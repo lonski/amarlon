@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 #include <libtcod.hpp>
-#include "xml/rapidxml.hpp"
-#include "world/tile_type.h"
-#include "data_gateways/descriptions/tile_description.h"
-#include "parsers/tile_parser.h"
+#include <xml/rapidxml.hpp>
+#include <tile_type.h>
+#include <tile_description.h>
+#include <tile_parser.h>
 
 namespace amarlon {
 

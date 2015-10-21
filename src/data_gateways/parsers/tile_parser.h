@@ -1,8 +1,8 @@
 #ifndef TILE_PARSER_H
 #define TILE_PARSER_H
 
-#include "parsers/parser.h"
-#include "descriptions/tile_description.h"
+#include <data_gateways/parsers/parser.h>
+#include <tile_description.h>
 
 namespace amarlon {
 

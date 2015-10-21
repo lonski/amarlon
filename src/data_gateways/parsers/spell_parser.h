@@ -1,7 +1,7 @@
 #ifndef SPELL_PARSER_H
 #define SPELL_PARSER_H
 
-#include <parsers/parser.h>
+#include <data_gateways/parsers/parser.h>
 #include <spell_description.h>
 #include <animation_parser.h>
 

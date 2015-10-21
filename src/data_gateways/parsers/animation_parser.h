@@ -1,7 +1,7 @@
 #ifndef ANIMATION_PARSER_H
 #define ANIMATION_PARSER_H
 
-#include <parsers/parser.h>
+#include <data_gateways/parsers/parser.h>
 #include <animation_description.h>
 
 namespace amarlon {

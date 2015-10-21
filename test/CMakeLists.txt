@@ -17,13 +17,13 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable/destroyable.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/actor_db.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/actor_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/actor_descriptions.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/spell_description.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/map_gateway.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/spell_db.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/tile_db.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/spell_db.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/tile_db.h
+    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/map_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/tile_parser.h

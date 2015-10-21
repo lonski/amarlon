@@ -15,7 +15,7 @@ class Actor;
 class SpellDB;
 class World;
 class SystemCommandExecutor;
-class MapGateway;
+class MapDB;
 class TileDB;
 class ActorDB;
 class Messenger;

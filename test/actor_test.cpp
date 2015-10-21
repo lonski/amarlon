@@ -2,7 +2,7 @@
 #include <actor.h>
 #include <map.h>
 #include <engine.h>
-#include <descriptions/actor_descriptions.h>
+#include <actor_descriptions.h>
 
 namespace amarlon {
 

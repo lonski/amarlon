@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "utils/utils.h"
-#include "data_gateways/tile_db.h"
+#include <utils/utils.h>
+#include <tile_db.h>
 #include <dices.h>
 #include <set>
 #include <thread>
