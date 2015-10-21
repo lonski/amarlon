@@ -51,7 +51,12 @@ int PlayableCharacter::calculateLoadPenalty()
 
 int PlayableCharacter::getBaseAttackBonus()
 {
-  return AttackBonus::get(getClass(), getLevel()) + getTmpAttackModifier();
+  int base = AttackBonus::get(getClass(), getLevel());
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::AttackBonus; } );
+
+  return it != _modifiers.end() ? base + it->Value : base;
 }
 
 int PlayableCharacter::getMeleeAttackBonus()

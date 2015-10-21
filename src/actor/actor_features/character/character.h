@@ -13,6 +13,7 @@
 #include <damage.h>
 #include <item_slot_type.h>
 #include <skill_id.h>
+#include <modifier.h>
 
 namespace amarlon {
 
@@ -90,16 +91,10 @@ public:
   virtual void rest();
 
   /**
-   * @brief Temporary modifiers granted by effects
+   * @brief Character temporary modifiers
    */
-  virtual int getTmpAttackModifier();
-  virtual void setTmpAttackModifier(int bonus);
-  virtual int getTmpArmorClassModifier(DamageType dmgType = DamageType::Physical);
-  virtual void setTmpArmorClassModifier(int bonus, DamageType dmgType = DamageType::Physical);
-  virtual int getTmpSavingThrowModifier(SavingThrows::Type type);
-  virtual void setTmpSavingThrowModifier(SavingThrows::Type type, int modifier);
-  virtual int getTmpMoraleModifier() { return 0; }
-  virtual void setTmpMoraleModifier(int) {}
+  virtual void addModifier(const Modifier& mod);
+  virtual void removeModifier(const Modifier& mod);
 
 protected:
   virtual void setLevel(int level);
@@ -117,11 +112,11 @@ private:
   Race _race;
   int _speed;
   int _movePoints;
-  int _abTempBonus;
   SpellBookPtr _spellbook;
-  std::map<SavingThrows::Type, int> _savingThrowsTmpMods;
-  std::map<DamageType, int> _acTempBonus;
   std::vector<SkillPtr> _skills;
+
+protected:
+  std::vector<Modifier> _modifiers;
 
   friend class Character::Creator;
   friend class CharacterSerializer;

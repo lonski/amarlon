@@ -12,6 +12,8 @@ set(HEADER_FILES
     actor/actor_features/character/monster.h
     actor/actor_features/character/playable_character.h
     actor/actor_features/character/character_factory.h
+    actor/actor_features/character/modifier.h
+    actor/actor_features/character/modifier_type.h
     actor/actor_features/pickable/pickable.h
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
@@ -102,6 +104,7 @@ set(HEADER_FILES
     gui/window/spellbook_window/spell_level_panel.h
     gui/window/spellbook_window/spell_slot_panel.h
     gui/window/spellbook_window/known_spells_panel.h
+    gui/window/character_creation_window/character_creation_window.cpp
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -181,6 +184,7 @@ set(HEADER_FILES
     lua_api/registrations/globals_registrar.h
     lua_api/registrations/skill_registrar.h
     lua_api/registrations/map_registrar.h
+    lua_api/registrations/modifier_registrar.h
     skills/skill.h
     skills/skill_id.h
 )
@@ -266,6 +270,7 @@ set(SOURCE_FILES
     gui/window/spellbook_window/spell_level_panel.cpp
     gui/window/spellbook_window/spell_slot_panel.cpp
     gui/window/spellbook_window/known_spells_panel.cpp
+    gui/window/character_creation_window/character_creation_window.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
@@ -328,6 +333,7 @@ set(SOURCE_FILES
     lua_api/registrations/globals_registrar.cpp
     lua_api/registrations/skill_registrar.cpp
     lua_api/registrations/map_registrar.cpp
+    lua_api/registrations/modifier_registrar.cpp
     skills/skill.cpp
 )
 

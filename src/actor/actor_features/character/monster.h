@@ -28,8 +28,6 @@ public:
   virtual int getMeleeAttackBonus();
   virtual Damage getDamage();
   virtual int getMorale();
-  virtual int getTmpMoraleModifier();
-  virtual void setTmpMoraleModifier(int modifier);
 
   virtual std::string getDescription();
 
@@ -37,7 +35,6 @@ private:
   int _morale;
   int _hpMod;
   Damage _damage;
-  int _tmpMoraleModifier;
 
   friend class Monster::Creator;
   friend class MonsterSerializer;

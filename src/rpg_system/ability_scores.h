@@ -9,12 +9,12 @@ namespace AbilityScore
 {
   enum Type
   {
-    STR,
-    INT,
-    WIS,
-    DEX,
-    CON,
-    CHA
+    STR = 0,
+    INT = 1,
+    WIS = 2,
+    DEX = 3,
+    CON = 4,
+    CHA = 5
   };
   const int MIN_VALUE = 3;
   const int MAX_VALUE = 18;

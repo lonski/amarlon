@@ -11,7 +11,6 @@ namespace amarlon {
 Monster::Monster(int level, int hitPointsBonus)
   : _morale(0)
   , _hpMod(hitPointsBonus)
-  , _tmpMoraleModifier(0)
 {
   setLevel(level);
   setMaxHitPoints( std::max( dices::roll(dices::D8, getLevel() ) + _hpMod, 1 ) );
@@ -56,7 +55,10 @@ int Monster::getBaseAttackBonus()
 
 int Monster::getMeleeAttackBonus()
 {
-  return getBaseAttackBonus() + getTmpAttackModifier();
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::AttackBonus; } );
+
+  return it != _modifiers.end() ? getBaseAttackBonus() + it->Value : getBaseAttackBonus();
 }
 
 Damage Monster::getDamage()
@@ -81,17 +83,10 @@ std::string Monster::getDescription()
 
 int Monster::getMorale()
 {
-  return _morale + _tmpMoraleModifier;
-}
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::MoraleModifier; } );
 
-int Monster::getTmpMoraleModifier()
-{
-  return _tmpMoraleModifier;
-}
-
-void Monster::setTmpMoraleModifier(int modifier)
-{
-  _tmpMoraleModifier = modifier;
+  return it != _modifiers.end() ? _morale + it->Value : _morale;
 }
 
 CharacterPtr Monster::Creator::create(CharacterDescriptionPtr dsc)

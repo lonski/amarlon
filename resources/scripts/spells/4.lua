@@ -1,5 +1,22 @@
 --Spell: Bless
 SPELL_ID = 4
+SPELL_SAVING_THROW = 4
+AB_MODIFIER_TYPE = 0
+MORALE_MODIFIER_TYPE = 1
+
+function getModifiers()
+	
+	abMod = Modifier(1)
+	abMod.Type.generic = AB_MODIFIER_TYPE						
+			
+	stMod = Modifier(1)
+	stMod.Type.savingThrow = SPELL_SAVING_THROW
+	
+	moraleMod = Modifier(1)
+	moraleMod.Type.generic = MORALE_MODIFIER_TYPE
+	
+	return {abMod, stMod, moraleMod}
+end
 
 function onCast(caster, target, spell)
 
@@ -32,12 +49,9 @@ function onCast(caster, target, spell)
 	local function applyModifiers(actor)
 		c = actor:get():character():get()
 		if c ~= nil then
-			SPELL_SAVING_THROW = 4
-
-			c:setAttackModifier( c:getAttackModifier() + 1 )
-			c:setSavingThrowModifier( SPELL_SAVING_THROW, 
-										  c:getSavingThrowModifier(SPELL_SAVING_THROW) + 1 )
-			c:setMoraleModifier( c:getMoraleModifier() + 1 )
+			for k, mod in pairs(getModifiers()) do
+				c:addModifier( mod )
+			end
 		end
 	end
 
@@ -60,12 +74,9 @@ function onCancel(target)
 	local function removeModifiers(actor)
 		c = actor:get():character():get()
 		if c ~= nil then
-			SPELL_SAVING_THROW = 4
-
-			c:setAttackModifier( c:getAttackModifier() - 1 )
-			c:setSavingThrowModifier( SPELL_SAVING_THROW, 
-										  c:getSavingThrowModifier(SPELL_SAVING_THROW) - 1 )
-			c:setMoraleModifier( c:getMoraleModifier() - 1 )
+			for k, mod in pairs(getModifiers()) do
+				c:removeModifier( mod )
+			end
 		end
 	end
 

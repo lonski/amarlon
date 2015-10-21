@@ -26,7 +26,8 @@ public:
     LOAD_SAVE_GAME,
     INPUT,
     SPELLBOOK,
-    QUESTION
+    QUESTION,
+    CHARACTER_CREATION
   };
 
   /**

@@ -10,6 +10,7 @@
 #include <globals_registrar.h>
 #include <skill_registrar.h>
 #include <map_registrar.h>
+#include <modifier_registrar.h>
 
 namespace amarlon { namespace lua_api {
 
@@ -23,6 +24,7 @@ void RegistrationManager::registerAll(lua_State* state)
   AnimationRegistrar().reg(state);
   SkillRegistrar().reg(state);
   MapRegistrar().reg(state);
+  ModifierRegistrar().reg(state);
 
   FreeFunctionRegistrar().reg(state);
   GlobalsRegistrar().reg(state);

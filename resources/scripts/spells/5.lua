@@ -4,6 +4,17 @@ SPELL_ID = 5
 DMG_PHYSICAL = 1
 DMG_MISSILE  = 6
 
+function getModifiers()
+	
+	acMod = Modifier(3)
+	acMod.Type.ac = DMG_PHYSICAL
+	
+	acModMissile = Modifier(6)
+	acModMissile.Type.ac = DMG_MISSILE
+	
+	return { acMod, acModMissile }
+end
+
 function onCast(caster, target, spell)
 	
 	if caster:get():character():get() == nil then return false end
@@ -28,8 +39,9 @@ function onCast(caster, target, spell)
 	local function applyModifiers(actor)
 		c = actor:get():character():get()
 		if c ~= nil then
-			c:setArmorModifier( c:getArmorModifier(DMG_PHYSICAL) + 3, DMG_PHYSICAL )
-			c:setArmorModifier( c:getArmorModifier(DMG_MISSILE)  + 6, DMG_MISSILE  )
+			for k, mod in pairs(getModifiers()) do
+				c:addModifier( mod )
+			end
 		end
 	end
 
@@ -48,8 +60,9 @@ function onCancel(target)
 	local function removeModifiers(actor)
 		c = actor:get():character():get()
 		if c ~= nil then
-			c:setArmorModifier( c:getArmorModifier(DMG_PHYSICAL) - 3, DMG_PHYSICAL )
-			c:setArmorModifier( c:getArmorModifier(DMG_MISSILE)  - 6, DMG_MISSILE  )
+			for k, mod in pairs(getModifiers()) do
+				c:removeModifier( mod )
+			end
 		end
 	end
 

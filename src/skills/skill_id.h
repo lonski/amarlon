@@ -12,9 +12,11 @@ enum class SkillId
   OpenLocks   = 1,
   DisarmTraps = 2,
   Hide        = 3,
-  PickPockets = 4, //TODO - needs NPC's
+  PickPockets = 4,  //TODO - needs NPC's
   SilentMove  = 5,
-  FindTraps   = 6
+  FindTraps   = 6,
+  Darkvision  = 7,  //TODO - passive skill
+  Search      = 8   //TODO - passive skill
 };
 
 static inline std::string SkillId2Str(SkillId t)

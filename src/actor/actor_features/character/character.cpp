@@ -9,6 +9,7 @@
 #include <actor_descriptions.h>
 #include <spell_book.h>
 #include <skill.h>
+#include <algorithm>
 
 namespace amarlon {
 
@@ -24,7 +25,6 @@ Character::Character()
   , _race(Race::NoRace)
   , _speed(0)
   , _movePoints(0)
-  , _abTempBonus(0)
   , _spellbook(new SpellBook)
 {
 }
@@ -178,7 +178,12 @@ Race Character::getRace() const
 
 int Character::getSavingThrow(SavingThrows::Type type)
 {
-  return SavingThrows::get( type, getClass(), getLevel() ) + getTmpSavingThrowModifier(type);
+  int base = SavingThrows::get( type, getClass(), getLevel() );
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [&type](Modifier& mod){ return mod.Type.savingThrow == type; } );
+
+  return it != _modifiers.end() ? base + it->Value : base;
 }
 
 bool Character::rollSavingThrow(SavingThrows::Type type)
@@ -191,14 +196,29 @@ bool Character::rollSavingThrow(SavingThrows::Type type)
   return roll >= getSavingThrow(type);
 }
 
-int Character::getTmpSavingThrowModifier(SavingThrows::Type type)
+void Character::addModifier(const Modifier &mod)
 {
-  return _savingThrowsTmpMods[type];
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(), [&](Modifier& m){ return m.Type == mod.Type;});
+
+  if ( it != _modifiers.end() )
+  {
+    it->Value += mod.Value;
+  }
+  else
+  {
+    _modifiers.push_back( mod );
+  }
 }
 
-void Character::setTmpSavingThrowModifier(SavingThrows::Type type, int modifier)
+void Character::removeModifier(const Modifier &mod)
 {
-  _savingThrowsTmpMods[type] = modifier;
+  auto it = std::find(_modifiers.begin(), _modifiers.end(), mod);
+
+  if ( it != _modifiers.end() )
+  {
+    if ( it->Value == mod.Value ) _modifiers.erase( it );
+    else it->Value -= mod.Value;
+  }
 }
 
 int Character::getSpeed()
@@ -216,32 +236,15 @@ void Character::setMovePoints(int points)
   _movePoints = points;
 }
 
-int Character::getTmpAttackModifier()
-{
-  return _abTempBonus;
-}
-
-void Character::setTmpAttackModifier(int bonus)
-{
-  _abTempBonus = bonus;
-}
-
-int Character::getTmpArmorClassModifier(DamageType dmgType)
-{
-  return _acTempBonus[dmgType];
-}
-
-void Character::setTmpArmorClassModifier(int bonus, DamageType dmgType)
-{
-  _acTempBonus[dmgType] = bonus;
-}
-
 int Character::getArmorClass(DamageType dmgType)
 {
   PickablePtr armor = getEquippedItem(ItemSlotType::Armor);
   int ac = armor ? armor->getArmorClass() : _defaultArmorClass;
 
-  return ac + getTmpArmorClassModifier(dmgType);
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [&](Modifier& mod){ return mod.Type.ac == dmgType; } );
+
+  return it != _modifiers.end() ? ac + it->Value : ac;
 }
 
 std::string Character::getDescription()
