@@ -48,6 +48,7 @@ set(HEADER_FILES
     data_gateways/parsers/map_parser.h
     data_gateways/parsers/animation_parser.h
     data_gateways/parsers/spell_parser.h
+    data_gateways/parsers/skill_parser.h
     data_gateways/serializers/serializer.h
     data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
@@ -69,6 +70,7 @@ set(HEADER_FILES
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
     data_gateways/descriptions/spell_description.h
+    data_gateways/descriptions/skill_description.h
     data_gateways/descriptions/actor_feature_descriptions/pickable_description.h
     data_gateways/descriptions/actor_feature_descriptions/character_description.h
     data_gateways/descriptions/actor_feature_descriptions/ai_description.h
@@ -82,6 +84,7 @@ set(HEADER_FILES
     data_gateways/databases/actor_db.h
     data_gateways/databases/tile_db.h
     data_gateways/databases/spell_db.h
+    data_gateways/databases/skill_db.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h     
@@ -229,6 +232,7 @@ set(SOURCE_FILES
     data_gateways/parsers/tile_parser.cpp
     data_gateways/parsers/map_parser.cpp
     data_gateways/parsers/spell_parser.cpp
+    data_gateways/parsers/skill_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
@@ -249,6 +253,7 @@ set(SOURCE_FILES
     data_gateways/databases/map_db.cpp
     data_gateways/databases/tile_db.cpp
     data_gateways/databases/spell_db.cpp
+    data_gateways/databases/skill_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp

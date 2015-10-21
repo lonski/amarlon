@@ -13,6 +13,7 @@
 #include <monster_ai.h>
 #include <actor_descriptions.h>
 #include <trap.h>
+#include <skill.h>
 
 namespace amarlon {
 
@@ -21,8 +22,21 @@ ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
   ActorPtr actor = Engine::instance().getActorDB().fetch(aId);
   actor->setMap(map);
   actor->setPosition(x,y);
+  actor->applyPassiveSkills();
 
   return actor;
+}
+
+void Actor::applyPassiveSkills()
+{
+  CharacterPtr c = getFeature<Character>();
+  if ( c )
+  {
+    for ( SkillPtr s : c->getSkills([](SkillPtr s){ return s->isPassive(); }))
+    {
+      s->use( shared_from_this(), Target(shared_from_this()) );
+    }
+  }
 }
 
 ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)

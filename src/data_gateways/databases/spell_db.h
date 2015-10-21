@@ -3,6 +3,7 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 #include <spell_parser.h>
 #include <spell_id.h>
 #include <character_classes.h>

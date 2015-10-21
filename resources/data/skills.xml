@@ -1,0 +1,13 @@
+<Skills>
+	<Skill id="1" name="Open locks" targetType="0" passive="0"/>
+	<Skill id="2" name="Disarm/arm traps" targetType="0" passive="0"/>
+	<Skill id="3" name="Hide" targetType="4" passive="0"/>
+	<Skill id="4" name="Pick pockets" targetType="0" passive="0"/>
+	<Skill id="5" name="Silent move" targetType="4" passive="0"/>
+	<Skill id="6" name="Find traps" targetType="6" radius="2" passive="0"/>
+	<Skill id="7" name="Darkvision" passive="1"/>
+	<Skill id="8" name="Dwarf racial" passive="1"/>
+	<Skill id="9" name="Elf racial" passive="1"/>
+	<Skill id="10" name="Halfling racial" passive="1"/>
+	<Skill id="11" name="Human racial" passive="1" />
+</Skills>

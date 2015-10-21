@@ -15,6 +15,7 @@
 #include <window/game_menu_window.h>
 #include <status_effects_manager.h>
 #include <player_ai.h>
+#include <skill_db.h>
 
 namespace amarlon {
 
@@ -49,10 +50,12 @@ void Engine::prologue()
   _spellDB.reset(new SpellDB );
   _tileDB.reset( new TileDB );
   _actorsDB.reset( new ActorDB );
+  _skillsDB.reset(new SkillDB );
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
   getSpellDB().load( _config->get("spells_file") );
+  getSkillDB().load( _config->get("skills_file") );
   getTileDB ().load( _config->get("tiles_file" ) );
   getActorDB().load( _config->get("actors_file") );
   _world.reset( new World( _config->get("maps_file") ) );
@@ -122,6 +125,7 @@ void Engine::epilogue()
   _spellDB.reset();
   _tileDB.reset();
   _actorsDB.reset();
+  _skillsDB.reset();
   _messenger.reset();
   _luaState.reset();
 
@@ -197,6 +201,11 @@ World& Engine::getWorld() const
 SpellDB& Engine::getSpellDB() const
 {
   return *_spellDB;
+}
+
+SkillDB &Engine::getSkillDB() const
+{
+  return *_skillsDB;
 }
 
 Messenger &Engine::getMessenger() const

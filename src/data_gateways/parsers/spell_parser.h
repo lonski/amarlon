@@ -3,7 +3,6 @@
 
 #include <data_gateways/parsers/parser.h>
 #include <spell_description.h>
-#include <animation_parser.h>
 
 namespace amarlon {
 
@@ -14,9 +13,6 @@ public:
   SpellParser(rapidxml::xml_node<>* xmlNode);
 
   SpellDescriptionPtr parseSpellDsc();
-
-private:
-  AnimationParser _animationParser;
 
 };
 

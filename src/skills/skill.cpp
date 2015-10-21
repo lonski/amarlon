@@ -1,12 +1,17 @@
 #include "skill.h"
 #include <engine.h>
+#include <skill_db.h>
 #include <lua_state.h>
+#include <skill_description.h>
+#include <target_type.h>
 
 namespace amarlon {
 
 SkillPtr Skill::create(SkillId id, int level)
 {
-  return SkillPtr(new Skill(id, level));
+  SkillPtr skill = Engine::instance().getSkillDB().fetch(id);
+  skill->_level = level;
+  return skill;
 }
 
 SkillId Skill::getId() const
@@ -26,12 +31,22 @@ int Skill::getLevel() const
 
 std::string Skill::getName() const
 {
-  return SkillId2Str(_id);
+  return _flyweight ? _flyweight->name : "";
 }
 
 TargetType Skill::getTargetType() const
 {
-  return SkillId2TargetType(_id);
+  return _flyweight ? static_cast<TargetType>(_flyweight->target) : TargetType::SELF;
+}
+
+int Skill::getRadius() const
+{
+  return _flyweight ? _flyweight->radius : 0;
+}
+
+bool Skill::isPassive() const
+{
+  return _flyweight ? _flyweight->passive : false;
 }
 
 bool Skill::use(ActorPtr user, Target target)
@@ -67,12 +82,14 @@ bool Skill::operator==(const Skill &rhs) const
 
 SkillPtr Skill::clone() const
 {
-  return SkillPtr(new Skill(_id, _level));
+  SkillPtr skill( new Skill(_id) );
+  skill->_level = _level;
+  return skill;
 }
 
-Skill::Skill(SkillId id, int level)
+Skill::Skill(SkillId id)
   : _id(id)
-  , _level(level)
+  , _level(0)
 {
 }
 

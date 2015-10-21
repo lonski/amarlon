@@ -263,6 +263,16 @@ std::vector<SkillPtr> Character::getSkills() const
   return _skills;
 }
 
+std::vector<SkillPtr> Character::getSkills(std::function<bool (SkillPtr)> filter) const
+{
+  std::vector<SkillPtr> skills;
+  for ( auto s : _skills )
+  {
+    if ( filter(s) ) skills.push_back(s);
+  }
+  return skills;
+}
+
 SkillPtr Character::getSkill(SkillId id) const
 {
   for ( auto s : _skills ) if ( s->getId() == id ) return s;

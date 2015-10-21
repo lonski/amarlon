@@ -199,7 +199,6 @@ private:
   MapWPtr _map;
   FeatureMap _features;
   StatusEffectsManagerPtr _effects;
-
   bool _fovOnly;
   bool _transparent;
   bool _blocks;
@@ -208,11 +207,11 @@ private:
   std::string _description;
   TCODColor _color;
   char _symbol;
-
   std::bitset<1> _flags;
 
   Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
   Actor(const Actor& a);
+  void applyPassiveSkills();
 
   friend class ActorSerializer;
 };

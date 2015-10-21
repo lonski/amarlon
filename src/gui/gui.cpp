@@ -124,6 +124,9 @@ void Gui::setViewList(const std::vector<ColoredString> &items)
 void Gui::setEffectsList(const std::vector<ColoredString> &items)
 {
   _effects->clear();
+  _effects->pushBack(ColoredString("--- Effects: ---", TCODColor::brass));
+  _effects->pushBack(ColoredString(" "));
+
   for(auto e : items)
   {
     _effects->pushBack(e);

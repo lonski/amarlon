@@ -95,7 +95,8 @@ std::vector<ColoredString> StatusEffectsManager::getEffectsStringList() const
 
   for(auto e : _effects )
   {
-    effects.push_back( ColoredString( e->getName(), TCODColor::lightCyan ) );
+    effects.push_back( ColoredString( e->getName(), e->getDuration() != -1 ? TCODColor::lightCyan
+                                                                           : TCODColor::darkerCyan ) );
   }
 
   return effects;

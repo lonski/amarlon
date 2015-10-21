@@ -33,6 +33,7 @@ int CmdUseSkill::execute()
     TargetSelectorPtr selector( TargetSelector::create( skill->getTargetType() ) );
     if ( selector )
     {
+      selector->setRadius( skill->getRadius() );
       MapPtr map = Engine::instance().getWorld().getCurrentMap();
       ActorActionPtr action( new UseSkillAction(skill, selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); })) );
       if ( !Engine::instance().getPlayer()->performAction( action ) )

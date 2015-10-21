@@ -9,8 +9,8 @@ namespace amarlon {
 
 TargetSelector::TargetSelector(const std::string &selectionMessage)
   : _selectionMessage(selectionMessage)
-  , _range(1)
-  , _radius(1)
+  , _range(0)
+  , _radius(0)
 {
 }
 

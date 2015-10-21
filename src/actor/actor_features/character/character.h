@@ -81,6 +81,7 @@ public:
   virtual SpellBookPtr getSpellBook();
   virtual std::string getDescription();
   virtual std::vector<SkillPtr> getSkills() const;
+  virtual std::vector<SkillPtr> getSkills(std::function<bool(SkillPtr)> filter) const;
   virtual SkillPtr getSkill(SkillId id) const;
 
   virtual int getMorale() { return 0; }

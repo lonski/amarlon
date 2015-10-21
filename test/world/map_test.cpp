@@ -13,7 +13,7 @@ class MapTest : public ::testing::Test
   virtual void SetUp()
   {
     Engine::instance().prologue();
-    MapDB.load("data/maps.xml");
+    mapDB.load("data/maps.xml");
   }
 
   virtual void TearDown()
@@ -21,7 +21,7 @@ class MapTest : public ::testing::Test
   }
 
 protected:
-  MapDB MapDB;
+  MapDB mapDB;
 
 };
 
@@ -57,7 +57,7 @@ TEST_F(MapTest, mapIsInFov_computed)
 
 TEST_F(MapTest, addActor)
 {
-  MapPtr map = MapDB.fetch(MapId::GameStart);
+  MapPtr map = mapDB.fetch(MapId::GameStart);
   ActorPtr actor = Actor::create(ActorType::HealthPotion,1,1);
 
   map->addActor(actor);

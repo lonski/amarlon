@@ -2,8 +2,6 @@
 #define SPELL_DESCRIPTION
 
 #include <memory>
-#include <set>
-#include <vector>
 #include <description.h>
 
 namespace amarlon {

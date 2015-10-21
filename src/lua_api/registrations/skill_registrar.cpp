@@ -15,7 +15,10 @@ void SkillRegistrar::reg(lua_State* state)
         .def("getId", &Skill::getId)
         .def("getLevel", &Skill::getLevel)
         .def("getName", &Skill::getName)
+        .def("getRadius", &Skill::getRadius)
+        .def("isPassive", &Skill::isPassive)
   ];
 }
 
 }}
+
