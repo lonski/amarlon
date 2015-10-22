@@ -4,6 +4,7 @@
 #include <world.h>
 #include <aslot_menu_item.h>
 #include <fstream>
+#include <character_creation_window.h>
 
 namespace amarlon { namespace gui {
 
@@ -56,8 +57,10 @@ void GameMenu::fillMenuSlots()
 bool GameMenu::new_game()
 {
   Engine::instance().prologue();
-  Engine::instance().enterGame();
-  return true;
+  Engine::instance().getWindowManager().getWindow<CharacterCreationWindow>().show();
+  //Engine::instance().enterGame();
+
+  return false;
 }
 
 bool GameMenu::save_game()

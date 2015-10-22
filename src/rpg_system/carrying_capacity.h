@@ -28,12 +28,12 @@ namespace CarryingCapacity
     int heavy;
   };
 
-  Data get(int str, Race race);
+  Data get(int str, RaceType race);
 
-  static std::map<Race, std::map<int, Data> > capacityTable =
+  static std::map<RaceType, std::map<int, Data> > capacityTable =
   {
     {
-      Race::Human,
+      RaceType::Human,
       {
         {3,  {25, 60} },
         {4,  {35, 90} },
@@ -54,7 +54,7 @@ namespace CarryingCapacity
       }
     },
     {
-      Race::Dwarf,
+      RaceType::Dwarf,
       {
         {3,  {25, 60} },
         {4,  {35, 90} },
@@ -75,7 +75,7 @@ namespace CarryingCapacity
       }
     },
     {
-      Race::Elf,
+      RaceType::Elf,
       {
         {3,  {25, 60} },
         {4,  {35, 90} },
@@ -96,7 +96,7 @@ namespace CarryingCapacity
       }
     },
     {
-      Race::Halfling,
+      RaceType::Halfling,
       {
         {3,  {20, 40} },
         {4,  {30, 60} },

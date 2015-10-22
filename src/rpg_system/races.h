@@ -5,7 +5,7 @@
 
 namespace amarlon {
 
-enum class Race
+enum class RaceType
 {
   NoRace   = 0,
   Human    = 1,
@@ -17,22 +17,28 @@ enum class Race
   Undead   = 7
 };
 
-static inline std::string Race2Str(Race r)
+static inline std::string Race2Str(RaceType r)
 {
   std::string str = "";
   switch ( r )
   {
-    case Race::Human:    str = "Human";    break;
-    case Race::Dwarf:    str = "Dwarf";    break;
-    case Race::Elf:      str = "Elf";      break;
-    case Race::Halfling: str = "Halfling"; break;
-    case Race::Orc:      str = "Orc";      break;
-    case Race::Goblin:   str = "Goblin";   break;
-    case Race::Undead:   str = "Undead";   break;
+    case RaceType::Human:    str = "Human";    break;
+    case RaceType::Dwarf:    str = "Dwarf";    break;
+    case RaceType::Elf:      str = "Elf";      break;
+    case RaceType::Halfling: str = "Halfling"; break;
+    case RaceType::Orc:      str = "Orc";      break;
+    case RaceType::Goblin:   str = "Goblin";   break;
+    case RaceType::Undead:   str = "Undead";   break;
     default:;
   }
   return str;
 }
+
+inline RaceType operator++(RaceType& x) { return x = (RaceType)(std::underlying_type<RaceType>::type(x) + 1); }
+inline RaceType operator*(RaceType c) {return c;}
+inline RaceType begin(RaceType) {return RaceType::NoRace;}
+inline RaceType end(RaceType)   {return RaceType::Undead;}
+
 
 }
 

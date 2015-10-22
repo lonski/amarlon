@@ -82,5 +82,10 @@ bool SpellBookWindow::exitWindow(TCOD_key_t key)
   return ( (key.vk == TCODK_CHAR && key.c == 'S') || (key.vk == TCODK_ESCAPE) );
 }
 
+void SpellBookWindow::loopUpdate()
+{
+  Engine::instance().render();
+}
+
 }}
 

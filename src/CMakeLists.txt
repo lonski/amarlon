@@ -49,6 +49,7 @@ set(HEADER_FILES
     data_gateways/parsers/animation_parser.h
     data_gateways/parsers/spell_parser.h
     data_gateways/parsers/skill_parser.h
+    data_gateways/parsers/rpg_parser.h
     data_gateways/serializers/serializer.h
     data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
@@ -85,6 +86,7 @@ set(HEADER_FILES
     data_gateways/databases/tile_db.h
     data_gateways/databases/spell_db.h
     data_gateways/databases/skill_db.h
+    data_gateways/databases/rpg_db.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h     
@@ -108,7 +110,8 @@ set(HEADER_FILES
     gui/window/spellbook_window/spell_level_panel.h
     gui/window/spellbook_window/spell_slot_panel.h
     gui/window/spellbook_window/known_spells_panel.h
-    gui/window/character_creation_window/character_creation_window.cpp
+    gui/window/character_creation_window/character_creation_window.h
+    gui/window/character_creation_window/race_selection_panel.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -162,6 +165,7 @@ set(HEADER_FILES
     rpg_system/saving_throws_table.h
     rpg_system/experience_table.h
     rpg_system/races.h
+    rpg_system/race.h
     rpg_system/carrying_capacity.h
     spells/spell.h
     spells/spell_id.h
@@ -234,6 +238,7 @@ set(SOURCE_FILES
     data_gateways/parsers/map_parser.cpp
     data_gateways/parsers/spell_parser.cpp
     data_gateways/parsers/skill_parser.cpp
+    data_gateways/parsers/rpg_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
@@ -255,6 +260,7 @@ set(SOURCE_FILES
     data_gateways/databases/tile_db.cpp
     data_gateways/databases/spell_db.cpp
     data_gateways/databases/skill_db.cpp
+    data_gateways/databases/rpg_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
@@ -278,6 +284,7 @@ set(SOURCE_FILES
     gui/window/spellbook_window/spell_slot_panel.cpp
     gui/window/spellbook_window/known_spells_panel.cpp
     gui/window/character_creation_window/character_creation_window.cpp
+    gui/window/character_creation_window/race_selection_panel.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
@@ -321,6 +328,7 @@ set(SOURCE_FILES
     rpg_system/saving_throws_table.cpp
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
+    rpg_system/race.cpp
     spells/spell.cpp
     spells/spell_book.cpp
     animations/animation.cpp

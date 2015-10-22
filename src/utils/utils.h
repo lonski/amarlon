@@ -76,5 +76,16 @@ bool isBitSet(T& var, int n)
   return (var >> n) & 1;
 }
 
+struct MinMax
+{
+  MinMax(int min_ = 0, int max_ = 0)
+    : min(min_)
+    , max(max_)
+  {}
+
+  int min;
+  int max;
+};
+
 }
 #endif // UTILS_H

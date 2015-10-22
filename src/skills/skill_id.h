@@ -16,7 +16,7 @@ enum class SkillId
   DwarfRacial     = 8,  //TODO - passive skill
   ElfRacial       = 9,  //TODO - passive skill
   HalflingRacial  = 10, //TODO - passive skill
-  HumanRacial     = 10, //TODO - passive skill
+  HumanRacial     = 11, //TODO - passive skill
 };
 
 }

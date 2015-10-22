@@ -23,6 +23,7 @@ struct SkillDescription : Description
   int target;
   int radius;
   bool passive;
+  std::string dsc;
 
 };
 

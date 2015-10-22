@@ -49,8 +49,9 @@ private:
   KnownSpellsPanelPtr _known;
 
 protected:
-  void managePanel(int panel);
-  bool exitWindow(TCOD_key_t key);
+  virtual void managePanel(int panel);
+  virtual bool exitWindow(TCOD_key_t key);
+  virtual void loopUpdate();
 
 };
 

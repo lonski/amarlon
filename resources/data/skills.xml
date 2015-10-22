@@ -6,8 +6,8 @@
 	<Skill id="5" name="Silent move" targetType="4" passive="0"/>
 	<Skill id="6" name="Find traps" targetType="6" radius="2" passive="0"/>
 	<Skill id="7" name="Darkvision" passive="1"/>
-	<Skill id="8" name="Dwarf racial" passive="1"/>
-	<Skill id="9" name="Elf racial" passive="1"/>
-	<Skill id="10" name="Halfling racial" passive="1"/>
-	<Skill id="11" name="Human racial" passive="1" />
+	<Skill id="8" name="Dwarf racial" passive="1" description=" #{999999}Saving throws:#Death +4#Magic wands +4#Paralysis +4#Spells +4#Dragon breath +3"/>
+	<Skill id="9" name="Elf racial" passive="1" description="Immune to ghoul paralyze#Searching +1# #{999999}Saving throws:#Paralysis +1#Magic wands +2#Spells +2" />
+	<Skill id="10" name="Halfling racial" passive="1" description="Range weapons attack bonus +1#Hiding +10#Silent moving +10# #{999999}Saving throws:#Death +4#Magic wands +4#Paralysis +4#Spells +4#Dragon breath +3"/>
+	<Skill id="11" name="Human racial" passive="1" description="Exp +10%%" />
 </Skills>

@@ -23,7 +23,7 @@ Character::Character()
   , _defaultArmorClass(11) //no-armor AC
   , _experience(0)
   , _class(CharacterClass::Monster)
-  , _race(Race::NoRace)
+  , _race(RaceType::NoRace)
   , _speed(0)
   , _movePoints(0)
   , _spellbook(new SpellBook)
@@ -178,7 +178,7 @@ CharacterClass Character::getClass() const
   return _class;
 }
 
-Race Character::getRace() const
+RaceType Character::getRace() const
 {
   return _race;
 }
@@ -257,7 +257,7 @@ int Character::getArmorClass(DamageType dmgType)
 std::string Character::getDescription()
 {
   std::string str = colorToStr(TCODColor::darkerTurquoise, true)
-      + "Class: " + (getRace() == Race::NoRace ? "" : Race2Str(getRace()) + " ")
+      + "Class: " + (getRace() == RaceType::NoRace ? "" : Race2Str(getRace()) + " ")
       + CharacterClass2Str( getClass() ) +"# #"
       + colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "#"
       + colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "#";

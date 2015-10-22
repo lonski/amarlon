@@ -19,6 +19,7 @@ class MapDB;
 class TileDB;
 class ActorDB;
 class SkillDB;
+class RpgDB;
 class Messenger;
 
 namespace lua_api {
@@ -29,6 +30,7 @@ namespace lua_api {
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<SpellDB> SpellDBPtr;
 typedef std::shared_ptr<SkillDB> SkillDBPtr;
+typedef std::shared_ptr<RpgDB> RpgDBPtr;
 typedef std::shared_ptr<World> WorldPtr;
 typedef std::shared_ptr<SystemCommandExecutor> SystemCommandExecutorPtr;
 typedef std::shared_ptr<TileDB> TileDBPtr;
@@ -86,6 +88,7 @@ public:
   ActorDB&           getActorDB()   const;
   SpellDB&           getSpellDB()   const;
   SkillDB&           getSkillDB()   const;
+  RpgDB&             getRpgDB()     const;
   Messenger&         getMessenger() const;
   lua_api::LuaState& getLuaState()  const;
 
@@ -102,6 +105,7 @@ private:
   TileDBPtr _tileDB;
   ActorDBPtr _actorsDB;
   SkillDBPtr _skillsDB;
+  RpgDBPtr _rpgDB;
   MessengerPtr _messenger;
   lua_api::LuaStatePtr _luaState;
 

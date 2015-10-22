@@ -65,7 +65,7 @@ public:
   virtual void modifyExperience(int modifier);
   virtual int getLevel() const;
   virtual CharacterClass getClass() const;
-  virtual Race getRace() const;
+  virtual RaceType getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
   virtual bool rollSavingThrow(SavingThrows::Type type);
 
@@ -111,7 +111,7 @@ private:
   int _defaultArmorClass;
   int _experience;
   CharacterClass _class;
-  Race _race;
+  RaceType _race;
   int _speed;
   int _movePoints;
   SpellBookPtr _spellbook;

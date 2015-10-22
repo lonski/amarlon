@@ -19,7 +19,7 @@ AWindow& AMultiPanelWIndow::show()
 
   while( !TCODConsole::isWindowClosed() )
   {
-    Engine::instance().render();
+    loopUpdate();
     render(*TCODConsole::root);
     TCODConsole::root->flush();
 

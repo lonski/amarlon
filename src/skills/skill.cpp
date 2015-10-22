@@ -49,6 +49,11 @@ bool Skill::isPassive() const
   return _flyweight ? _flyweight->passive : false;
 }
 
+std::string Skill::getDescription() const
+{
+  return _flyweight ? _flyweight->dsc : "";
+}
+
 bool Skill::use(ActorPtr user, Target target)
 {
   bool r = false;

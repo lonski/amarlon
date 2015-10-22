@@ -28,6 +28,7 @@ public:
   TargetType getTargetType() const;
   int getRadius() const;
   bool isPassive() const;
+  std::string getDescription() const;
 
   bool use(ActorPtr user, Target target);
 

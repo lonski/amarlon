@@ -38,7 +38,7 @@ struct CharacterDescription : Description
     , defaultArmorClass(0)
     , experience(0)
     , cClass(CharacterClass::Fighter)
-    , race(Race::NoRace)
+    , race(RaceType::NoRace)
     , speed(0)
   {}
 
@@ -48,7 +48,7 @@ struct CharacterDescription : Description
   int defaultArmorClass;
   int experience;
   CharacterClass cClass;
-  Race race;
+  RaceType race;
   int speed;
   SpellbookDescription spellbook;
   std::vector<SkillDescription> skills;

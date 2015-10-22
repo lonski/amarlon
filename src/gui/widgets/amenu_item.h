@@ -10,7 +10,7 @@ namespace amarlon { namespace gui {
 class AMenuItem : public AWidget
 {
 public:
-  AMenuItem() : _object(nullptr) {}
+  AMenuItem() : _object(nullptr), _rawObject(nullptr) {}
   virtual ~AMenuItem() {}
 
   virtual void select() = 0;
@@ -32,6 +32,7 @@ public:
 
 private:
   std::shared_ptr<void> _object;
+  void* _rawObject;
 
 };
 

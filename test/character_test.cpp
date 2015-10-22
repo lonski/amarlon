@@ -50,7 +50,7 @@ TEST_F(CharacterTest, carryingLoad)
 
   //replace Character feature
   PlayableCharacterDescriptionPtr dsc(new PlayableCharacterDescription);
-  dsc->race = Race::Human;
+  dsc->race = RaceType::Human;
   dsc->abilityScores[AbilityScore::STR] = 10;
   dsc->speed = 40;
 

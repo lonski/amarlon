@@ -23,6 +23,7 @@ protected:
 
   virtual void managePanel(int panel) = 0;
   virtual bool exitWindow(TCOD_key_t key) = 0;
+  virtual void loopUpdate() {}
 
 private:
   void handleKey(TCOD_key_t key);

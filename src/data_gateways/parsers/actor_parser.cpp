@@ -179,7 +179,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
       dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
       dsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
-      dsc->race = (Race)getAttribute<int>(characterNode, "race");
+      dsc->race = (RaceType)getAttribute<int>(characterNode, "race");
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");
 

@@ -2,11 +2,14 @@
 #define CHARACTER_CREATION_WINDOW_H
 
 #include <amultipanel_window.h>
+#include <memory>
 
 namespace amarlon { namespace gui {
 
 class ASubPanel;
+class RaceSelectionPanel;
 typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
+typedef std::shared_ptr<RaceSelectionPanel> RaceSelectionPanelPtr;
 
 class CharacterCreationWindow : public AMultiPanelWIndow
 {
@@ -15,12 +18,15 @@ public:
   virtual ~CharacterCreationWindow();
 
   static WindowId getId() { return AWindow::CHARACTER_CREATION; }
+  virtual AWindow& show();
 
 private:
   enum Panel
   {
-    MAIN
+    CURRENT_STEP
   };
+
+  RaceSelectionPanelPtr _raceSelection;
 
 protected:
   void managePanel(int panel);

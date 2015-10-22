@@ -4,7 +4,7 @@ namespace amarlon {
 
 namespace CarryingCapacity {
 
-  Data get(int str, Race race)
+  Data get(int str, RaceType race)
   {
     return capacityTable[race][str];
   }
