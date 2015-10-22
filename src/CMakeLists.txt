@@ -101,6 +101,7 @@ set(HEADER_FILES
     gui/window/text_window/fixed_size_text_window.h
     gui/window/text_window/resizeable_text_window.h
     gui/window/awindow.h
+    gui/window/amultipanel_window.h
     gui/window/menu_window.h
     gui/window/input_dialog.h
     gui/window/spellbook_window/spellbook_window.h
@@ -264,6 +265,7 @@ set(SOURCE_FILES
     gui/window/game_menu_window.cpp
     gui/window/load_save_game_window.cpp
     gui/window/question_dialog.cpp
+    gui/window/amultipanel_window.cpp
     gui/gui.cpp
     gui/message_box.cpp
     gui/window/pick_up_window.cpp

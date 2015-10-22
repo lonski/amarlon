@@ -31,7 +31,7 @@ public:
 private:  
   MapId _currentMap;
   ActorPtr _player;
-  MapDBPtr _MapDB;
+  MapDBPtr _mapDB;
 
   void parsePlayer(rapidxml::xml_document<>& doc);
   void parseCurrentMap(rapidxml::xml_document<>& doc);

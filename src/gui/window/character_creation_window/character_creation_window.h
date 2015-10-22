@@ -1,11 +1,14 @@
 #ifndef CHARACTER_CREATION_WINDOW_H
 #define CHARACTER_CREATION_WINDOW_H
 
-#include <awindow.h>
+#include <amultipanel_window.h>
 
 namespace amarlon { namespace gui {
 
-class CharacterCreationWindow : public AWindow
+class ASubPanel;
+typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
+
+class CharacterCreationWindow : public AMultiPanelWIndow
 {
 public:
   CharacterCreationWindow();
@@ -13,7 +16,15 @@ public:
 
   static WindowId getId() { return AWindow::CHARACTER_CREATION; }
 
-  virtual AWindow& show();
+private:
+  enum Panel
+  {
+    MAIN
+  };
+
+protected:
+  void managePanel(int panel);
+  bool exitWindow(TCOD_key_t key);
 
 };
 

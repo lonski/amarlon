@@ -40,7 +40,6 @@ When new actor is created with given ID as parameter, then the template will be 
 				<Skill id="4" level="50" />
 				<Skill id="5" level="50" />
 				<Skill id="6" level="50" />
-				<Skill id="7" level="1" />
 			</Skills>
 		</PlayableCharacter>
 		<Wearer>

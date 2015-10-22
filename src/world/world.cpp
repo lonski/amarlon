@@ -12,9 +12,9 @@ using namespace rapidxml;
 namespace amarlon {
 
 World::World(const std::string& mapsFile)
-  : _MapDB( new MapDB )
+  : _mapDB( new MapDB )
 {
-  _MapDB->load( mapsFile );
+  _mapDB->load( mapsFile );
 }
 
 World::~World()
@@ -37,7 +37,7 @@ MapPtr World::fetch(MapId id)
   }
   else
   {
-    map = _MapDB->fetch(id);
+    map = _mapDB->fetch(id);
     _maps.insert( std::make_pair(id, map) );
   }
 

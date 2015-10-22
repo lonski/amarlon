@@ -1,4 +1,6 @@
 #include "character_creation_window.h"
+#include <engine.h>
+#include <asub_panel.h>
 
 namespace amarlon { namespace gui {
 
@@ -10,9 +12,14 @@ CharacterCreationWindow::~CharacterCreationWindow()
 {
 }
 
-AWindow& CharacterCreationWindow::show()
+void CharacterCreationWindow::managePanel(int panel)
 {
-  return *this;
+
+}
+
+bool CharacterCreationWindow::exitWindow(TCOD_key_t key)
+{
+  return key.vk == TCODK_ESCAPE;
 }
 
 }}

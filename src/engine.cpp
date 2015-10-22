@@ -54,13 +54,13 @@ void Engine::prologue()
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
+  getLuaState().registerAPI();
   getSpellDB().load( _config->get("spells_file") );
   getSkillDB().load( _config->get("skills_file") );
   getTileDB ().load( _config->get("tiles_file" ) );
   getActorDB().load( _config->get("actors_file") );
   _world.reset( new World( _config->get("maps_file") ) );
 
-  getLuaState().registerAPI();
 }
 
 void Engine::enterGame(const std::string& savedGameFn)

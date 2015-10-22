@@ -1,7 +1,7 @@
 #ifndef SPELLBOOKWINDOW_H
 #define SPELLBOOKWINDOW_H
 
-#include <awindow.h>
+#include <amultipanel_window.h>
 #include <memory>
 
 namespace amarlon {
@@ -20,7 +20,7 @@ typedef std::shared_ptr<SpellLevelPanel> SpellLevelPanelPtr;
 typedef std::shared_ptr<SpellSlotPanel> SpellSlotPanelPtr;
 typedef std::shared_ptr<KnownSpellsPanel> KnownSpellsPanelPtr;
 
-class SpellBookWindow : public AWindow
+class SpellBookWindow : public AMultiPanelWIndow
 {
 public:
   SpellBookWindow();
@@ -29,7 +29,6 @@ public:
   static WindowId getId() { return AWindow::SPELLBOOK; }
 
   virtual SpellBookWindow& setSpellBook(SpellBookPtr spellbook);
-  virtual AWindow& show();
 
   virtual SpellLevelPanel&  getLevelsPanel();
   virtual SpellSlotPanel&   getSlotsPanel();
@@ -45,16 +44,13 @@ private:
 
   SpellBookPtr _spellbook;
 
-  std::map<Panel, ASubPanelPtr> _panels;
-  Panel _activePanel;
-
   SpellLevelPanelPtr  _levels;
   SpellSlotPanelPtr   _slots;
   KnownSpellsPanelPtr _known;
 
-  void handleKey(TCOD_key_t key);
-  void activateNextPanel();
-  void activatePreviousPanel();
+protected:
+  void managePanel(int panel);
+  bool exitWindow(TCOD_key_t key);
 
 };
 
