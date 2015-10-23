@@ -3,9 +3,10 @@
 #include <die_action.h>
 #include <attack_bonus_table.h>
 #include <experience_table.h>
-
+#include <race.h>
 #include <inventory.h>
 #include <actor_descriptions.h>
+#include <character_class.h>
 
 namespace amarlon {
 
@@ -40,7 +41,7 @@ bool PlayableCharacter::isEqual(ActorFeaturePtr rhs) const
 
 CarryingCapacity::LoadLevel PlayableCharacter::getLoadLevel()
 {
-  CarryingCapacity::Data cData = CarryingCapacity::get(getAbilityScore(AbilityScore::STR), getRace());
+  CarryingCapacity::Data cData = CarryingCapacity::get(getAbilityScore(AbilityScore::STR), getRace()->getType() );
   return getEquipmentWeight() >= cData.heavy ? CarryingCapacity::LoadLevel::Heavy : CarryingCapacity::LoadLevel::Light;
 }
 
@@ -51,7 +52,7 @@ int PlayableCharacter::calculateLoadPenalty()
 
 int PlayableCharacter::getBaseAttackBonus()
 {
-  int base = AttackBonus::get(getClass(), getLevel());
+  int base = AttackBonus::get(getClass()->getType(), getLevel());
 
   auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
                          [](Modifier& mod){ return mod.Type.generic == GenericModifier::AttackBonus; } );
@@ -61,7 +62,7 @@ int PlayableCharacter::getBaseAttackBonus()
 
 int PlayableCharacter::getMeleeAttackBonus()
 {
-  return AttackBonus::get(getClass(), getLevel()) + getModifier(AbilityScore::STR);
+  return AttackBonus::get(getClass()->getType(), getLevel()) + getModifier(AbilityScore::STR);
 }
 
 Damage PlayableCharacter::getDamage()
@@ -91,7 +92,7 @@ void PlayableCharacter::modifyExperience(int modifier)
 
   if ( getLevel() < Experience::MAX_LEVEL )
   {
-    LevelData data = Experience::getLevelData(getClass(), getLevel() + 1);
+    LevelData data = Experience::getLevelData(getClass()->getType(), getLevel() + 1);
     if ( data.expNeeded != 0 && getExperience() >= data.expNeeded)
     {
       advanceLevel(data);

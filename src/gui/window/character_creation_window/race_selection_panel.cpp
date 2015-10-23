@@ -4,7 +4,6 @@
 #include <rpg_db.h>
 #include <aslot_menu_item.h>
 #include <alist.h>
-#include <message_box.h>
 
 namespace amarlon { namespace gui {
 

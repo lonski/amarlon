@@ -8,10 +8,12 @@ namespace amarlon { namespace gui {
 
 class ASubPanel;
 class RaceSelectionPanel;
+class ClassSelectionPanel;
 typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
 typedef std::shared_ptr<RaceSelectionPanel> RaceSelectionPanelPtr;
+typedef std::shared_ptr<ClassSelectionPanel> ClassSelectionPanelPtr;
 
-class CharacterCreationWindow : public AMultiPanelWIndow
+class CharacterCreationWindow : public AWindow
 {
 public:
   CharacterCreationWindow();
@@ -19,18 +21,26 @@ public:
 
   static WindowId getId() { return AWindow::CHARACTER_CREATION; }
   virtual AWindow& show();
+  virtual AWindow& setDefaults();
+
+  void showActivePanel();
 
 private:
   enum Panel
   {
-    CURRENT_STEP
+    RACE_SELECTION,
+    CLASS_SELECTION
   };
 
-  RaceSelectionPanelPtr _raceSelection;
+  std::map<int, ASubPanelPtr> _panels;
+  int _activePanel;
+  bool _enterGame;
 
-protected:
-  void managePanel(int panel);
-  bool exitWindow(TCOD_key_t key);
+  RaceSelectionPanelPtr _raceSelection;
+  ClassSelectionPanelPtr _classSelection;
+
+  void handleKey(TCOD_key_t key);
+  void nextStep();
 
 };
 

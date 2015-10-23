@@ -8,6 +8,7 @@
 #include <target_type.h>
 #include <target.h>
 #include <damage.h>
+#include <item_type.h>
 
 namespace amarlon {
 
@@ -54,7 +55,10 @@ public:
   bool isEquippable();
 
   PickableCategory getCategory() const;
-  void setCategory(const PickableCategory &getCategory);
+  void setCategory(PickableCategory getCategory);
+
+  ItemType getItemType() const;
+  void setItemType(ItemType type);
 
   Damage getDamage() const;
   int getArmorClass() const;
@@ -67,7 +71,6 @@ private:
   bool _stackable;
   int _amount;
   ItemSlotType _itemSlot;
-  PickableCategory _category;  
   int _armorClass;
   int _weight;
   int _price;
@@ -75,6 +78,7 @@ private:
   TargetType _targetType;
   Damage _damage;
   int _scriptId;
+  ItemType _type;
 
   std::string getScriptPath() const;
 

@@ -15,6 +15,7 @@ set(HEADER_FILES
     actor/actor_features/character/modifier.h
     actor/actor_features/character/modifier_type.h
     actor/actor_features/pickable/pickable.h
+    actor/actor_features/pickable/item_type.h
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/destroyable/drop_rule.h
@@ -112,6 +113,7 @@ set(HEADER_FILES
     gui/window/spellbook_window/known_spells_panel.h
     gui/window/character_creation_window/character_creation_window.h
     gui/window/character_creation_window/race_selection_panel.h
+    gui/window/character_creation_window/class_selection_panel.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -160,12 +162,13 @@ set(HEADER_FILES
     world/directions.h
     world/world.h
     rpg_system/ability_scores.h
-    rpg_system/character_classes.h
+    rpg_system/character_class_type.h
     rpg_system/attack_bonus_table.h
     rpg_system/saving_throws_table.h
     rpg_system/experience_table.h
-    rpg_system/races.h
+    rpg_system/race_type.h
     rpg_system/race.h
+    rpg_system/character_class.h
     rpg_system/carrying_capacity.h
     spells/spell.h
     spells/spell_id.h
@@ -285,6 +288,7 @@ set(SOURCE_FILES
     gui/window/spellbook_window/known_spells_panel.cpp
     gui/window/character_creation_window/character_creation_window.cpp
     gui/window/character_creation_window/race_selection_panel.cpp
+    gui/window/character_creation_window/class_selection_panel.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
@@ -328,6 +332,7 @@ set(SOURCE_FILES
     rpg_system/saving_throws_table.cpp
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
+    rpg_system/character_class.cpp
     rpg_system/race.cpp
     spells/spell.cpp
     spells/spell_book.cpp

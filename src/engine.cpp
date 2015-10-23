@@ -49,9 +49,9 @@ void Engine::prologue()
 
   _spellDB.reset(new SpellDB );
   _tileDB.reset( new TileDB );
-  _actorsDB.reset( new ActorDB );
   _skillsDB.reset(new SkillDB );
   _rpgDB.reset( new RpgDB );
+  _actorsDB.reset( new ActorDB );
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
@@ -163,7 +163,7 @@ void Engine::render()
     {
       _gui->setHpBar(0, 1);
       _gui->setExpBar(0, 1);
-      _gui->setPlayerLevel(0);
+      _gui->setPlayerLevel("");
     }
 
     _gui->render();

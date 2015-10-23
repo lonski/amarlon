@@ -6,7 +6,7 @@ namespace amarlon
 namespace Experience
 {
 
-  LevelData getLevelData(CharacterClass charClass, int level)
+  LevelData getLevelData(CharacterClassType charClass, int level)
   {
     return expData[charClass][level];
   }

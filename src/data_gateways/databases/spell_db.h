@@ -6,7 +6,7 @@
 #include <vector>
 #include <spell_parser.h>
 #include <spell_id.h>
-#include <character_classes.h>
+#include <character_class_type.h>
 #include <target_type.h>
 
 namespace amarlon {
@@ -22,7 +22,7 @@ public:
 
   virtual std::string getName(SpellId id);
   virtual int getLevel(SpellId id);
-  virtual CharacterClass getClass(SpellId id);
+  virtual CharacterClassType getClass(SpellId id);
   virtual TargetType getTargetType(SpellId id);
   virtual int getRange(SpellId id);
   virtual int getRadius(SpellId id);

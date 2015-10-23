@@ -36,7 +36,7 @@ std::vector<RacePtr> RpgParser::parseRaces()
           rapidxml::xml_node<>* cNode = pcNode->first_node("Class");
           while ( cNode != nullptr )
           {
-            CharacterClass cId = static_cast<CharacterClass>(getAttribute<int>( cNode, "id" ));
+            CharacterClassType cId = static_cast<CharacterClassType>(getAttribute<int>( cNode, "id" ));
             race->_allowedClasses.push_back( cId );
             cNode = cNode->next_sibling();
           }
@@ -77,6 +77,65 @@ std::vector<RacePtr> RpgParser::parseRaces()
   }
 
   return races;
+}
+
+std::vector<CharacterClassPtr> RpgParser::parseCharacterClasses()
+{
+  std::vector<CharacterClassPtr> classes;
+
+  if ( _xml != nullptr )
+  {
+    rapidxml::xml_node<>* classesNode = _xml->first_node("Classes");
+    if ( classesNode != nullptr )
+    {
+      rapidxml::xml_node<>* classNode = classesNode->first_node("Class");
+      while ( classNode != nullptr )
+      {
+        CharacterClassPtr cClass(new CharacterClass);
+
+        //Parse attributes
+        cClass->_id = static_cast<CharacterClassType>( getAttribute<int>(classNode, "id") );
+        cClass->_name = getAttribute<std::string>(classNode, "name");
+        cClass->_description = getAttribute<std::string>(classNode, "description");
+        cClass->_playable = getAttribute<bool>(classNode, "playable");
+
+        //Parse AbilityScoreRestrictions
+        rapidxml::xml_node<>* asrNode = classNode->first_node("AbilityScoreRestrictions");
+        if (asrNode != nullptr)
+        {
+            rapidxml::xml_node<>* scoreNode = asrNode->first_node("Score");
+            while ( scoreNode != nullptr )
+            {
+              AbilityScore::Type id = static_cast<AbilityScore::Type>(getAttribute<int>(scoreNode, "id"));
+              MinMax vals( getAttribute<int>(scoreNode, "min"), getAttribute<int>(scoreNode, "max") );
+              cClass->_abilityScoreRestrictions[ id ] = vals;
+              scoreNode = scoreNode->next_sibling();
+            }
+        }
+
+        //Parse ItemTypeRestrictions
+        rapidxml::xml_node<>* itrNode = classNode->first_node("ItemTypeRestrictions");
+        if ( itrNode != nullptr )
+        {
+          rapidxml::xml_node<>* onlyNode = itrNode->first_node("Only");
+          while ( onlyNode != nullptr )
+          {
+            ItemType t;
+            t.armor = (ArmorType)getAttribute<int>(onlyNode, "armor");
+            t.weapon = (WeaponType)getAttribute<int>(onlyNode, "weapon");
+            t.category = (PickableCategory)getAttribute<int>(onlyNode, "category");
+            cClass->_itemTypeRestrictions.push_back( ItemTypeRestriction(t) );
+            onlyNode = onlyNode->next_sibling();
+          }
+        }
+
+        classes.push_back(cClass);
+        classNode = classNode->next_sibling();
+      }
+    }
+  }
+
+  return classes;
 }
 
 

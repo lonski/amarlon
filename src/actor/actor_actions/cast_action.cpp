@@ -2,6 +2,7 @@
 #include <actor.h>
 #include <spell.h>
 #include <message_box.h>
+#include <character_class.h>
 
 namespace amarlon {
 
@@ -44,7 +45,7 @@ ActorActionUPtr CastAction::clone()
 bool CastAction::isClassCorrect() const
 {
   CharacterPtr character = _caster->getFeature<Character>();
-  return _spell->getClass() == CharacterClass::NoClass || _spell->getClass() == character->getClass();
+  return _spell->getClass() == CharacterClassType::NoClass || _spell->getClass() == character->getClass()->getType();
 }
 
 bool CastAction::isLevelCorrect() const

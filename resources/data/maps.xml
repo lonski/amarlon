@@ -9,8 +9,6 @@
 		<Actors>
 			<Actor id="2" x="45" y="18"/>
 			<Actor id="25" x="38" y="20">
-				<MonsterAi/>
-				<Monster hitPointsBonus="-1" morale="7" damageDice="1d6" level="1" hitPoints="1" maxHitPoints="1" experience="10" armorClass="11" speed="30" class="1" race="6"/>
 				<Destroyable>
 					<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
 				</Destroyable>

@@ -40,7 +40,6 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
   {
     pickable.reset( new Pickable(pDsc->stackable, pDsc->amount) );
     pickable->_itemSlot = pDsc->itemSlot;
-    pickable->_category = pDsc->category;
     pickable->_armorClass = pDsc->armorClass;
     pickable->_weight = pDsc->weight;
     pickable->_price = pDsc->price;
@@ -48,6 +47,7 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
     pickable->_usesCount = pDsc->uses;
     pickable->_targetType = pDsc->targetType;
     pickable->_scriptId = pDsc->scriptId;
+    pickable->_type = pDsc->type;
   }
 
   return pickable;
@@ -76,16 +76,15 @@ ActorFeaturePtr Pickable::clone()
   PickablePtr cloned( new Pickable(isStackable(), getAmount()) );
 
   cloned->_itemSlot = _itemSlot;
-  cloned->_category = _category;
   cloned->_damage = _damage;
   cloned->_armorClass = _armorClass;
   cloned->_weight = _weight;
   cloned->_price = _price;
   cloned->_usesCount = _usesCount;
   cloned->_targetType = _targetType;
-  cloned->_category = _category;
   cloned->_itemSlot = _itemSlot;
   cloned->_scriptId = _scriptId;
+  cloned->_type = _type;
 
   return cloned;
 }
@@ -103,9 +102,9 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_price == crhs->_price);
     equal &= (_damage == crhs->_damage);
     equal &= (_targetType == crhs->_targetType);
-    equal &= (_category == crhs->_category);
     equal &= (_itemSlot == crhs->_itemSlot);
     equal &= (_scriptId == crhs->_scriptId);
+    equal &= (_type == crhs->_type);
   }
 
   return equal;
@@ -185,12 +184,22 @@ bool Pickable::isEquippable()
 
 PickableCategory Pickable::getCategory() const
 {
-  return _category;
+  return _type.category;
 }
 
-void Pickable::setCategory(const PickableCategory &category)
+void Pickable::setCategory(PickableCategory category)
 {
-  _category = category;
+  _type.category = category;
+}
+
+ItemType Pickable::getItemType() const
+{
+  return _type;
+}
+
+void Pickable::setItemType(ItemType type)
+{
+  _type = type;
 }
 
 Damage Pickable::getDamage() const

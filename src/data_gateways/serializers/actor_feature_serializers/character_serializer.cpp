@@ -5,6 +5,8 @@
 #include <spell.h>
 #include <spell_book.h>
 #include <skill.h>
+#include <race.h>
+#include <character_class.h>
 
 using namespace rapidxml;
 
@@ -28,14 +30,14 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
 {
   if ( characterNode && character && _document )
   {
-    addAttribute    ( characterNode, "level",        character->getLevel()           );
-    addAttribute    ( characterNode, "hitPoints",    character->getHitPoints()       );
-    addAttribute    ( characterNode, "maxHitPoints", character->getMaxHitPoints()    );
-    addAttribute    ( characterNode, "experience",   character->getExperience()      );
-    addAttribute    ( characterNode, "armorClass",   character->_defaultArmorClass   );
-    addAttribute    ( characterNode, "speed",        character->_speed               );
-    addAttributeEnum( characterNode, "class",        character->getClass()           );
-    addAttributeEnum( characterNode, "race",         character->getRace()            );
+    addAttribute    ( characterNode, "level",        character->getLevel()            );
+    addAttribute    ( characterNode, "hitPoints",    character->getHitPoints()        );
+    addAttribute    ( characterNode, "maxHitPoints", character->getMaxHitPoints()     );
+    addAttribute    ( characterNode, "experience",   character->getExperience()       );
+    addAttribute    ( characterNode, "armorClass",   character->_defaultArmorClass    );
+    addAttribute    ( characterNode, "speed",        character->_speed                );
+    addAttributeEnum( characterNode, "class",        character->getClass()->getType() );
+    addAttributeEnum( characterNode, "race",         character->getRace()->getType()  );
 
     serializeSpellbook(characterNode, character);
     serializeSkills(character, characterNode);

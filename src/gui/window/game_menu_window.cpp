@@ -58,9 +58,8 @@ bool GameMenu::new_game()
 {
   Engine::instance().prologue();
   Engine::instance().getWindowManager().getWindow<CharacterCreationWindow>().show();
-  //Engine::instance().enterGame();
 
-  return false;
+  return true;
 }
 
 bool GameMenu::save_game()

@@ -2,7 +2,7 @@
 #define SAVING_THROWS_TABLE_H
 
 #include <map>
-#include <character_classes.h>
+#include <character_class_type.h>
 
 namespace amarlon
 {
@@ -18,12 +18,12 @@ namespace SavingThrows
     Spells = 4
   };
 
-  int get(Type type, CharacterClass charClass, int level);
+  int get(Type type, CharacterClassType charClass, int level);
 
-  static std::map< CharacterClass, std::map< Type, std::map<int, int> > > stTable =
+  static std::map< CharacterClassType, std::map< Type, std::map<int, int> > > stTable =
   {
     {
-      CharacterClass::Fighter,
+      CharacterClassType::Fighter,
       {
         {
           DeathRayOrPoison,
@@ -159,7 +159,7 @@ namespace SavingThrows
     },
 
     {
-      CharacterClass::Thief,
+      CharacterClassType::Thief,
       {
         {
           DeathRayOrPoison,
@@ -295,7 +295,7 @@ namespace SavingThrows
     },
 
     {
-      CharacterClass::MagicUser,
+      CharacterClassType::MagicUser,
       {
         {
           DeathRayOrPoison,
@@ -431,7 +431,7 @@ namespace SavingThrows
     },
 
     {
-      CharacterClass::Cleric,
+      CharacterClassType::Cleric,
       {
         {
           DeathRayOrPoison,

@@ -4,6 +4,7 @@
 #include <playable_character.h>
 #include <engine.h>
 #include <actor_descriptions.h>
+#include <race.h>
 
 namespace amarlon {
 
@@ -72,7 +73,7 @@ TEST_F(CharacterTest, carryingLoad)
   //create heavy item
   ActorPtr armor = Actor::create(ActorType::LeatherArmor);
 
-  CarryingCapacity::Data cData = CarryingCapacity::get(pc_ch->getAbilityScore(AbilityScore::STR), pc_ch->getRace() );
+  CarryingCapacity::Data cData = CarryingCapacity::get(pc_ch->getAbilityScore(AbilityScore::STR), pc_ch->getRace()->getType() );
   int count = (cData.heavy / armor->getFeature<Pickable>()->getWeight()) + 1;
 
   while ( count-- )

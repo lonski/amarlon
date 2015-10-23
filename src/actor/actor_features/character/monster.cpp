@@ -5,6 +5,7 @@
 #include <iostream>
 #include <utils.h>
 #include <actor_descriptions.h>
+#include <race.h>
 
 namespace amarlon {
 
@@ -24,7 +25,9 @@ Monster::~Monster()
 ActorFeaturePtr Monster::clone()
 {
   auto* c = new Monster(*this);
+  c->_damage = _damage;
   cloneBase(c);
+
   return ActorFeaturePtr( c );
 }
 
@@ -50,7 +53,7 @@ CarryingCapacity::LoadLevel Monster::getLoadLevel()
 
 int Monster::getBaseAttackBonus()
 {
-  return AttackBonus::get(CharacterClass::Monster, getLevel() );
+  return AttackBonus::get(CharacterClassType::Monster, getLevel() );
 }
 
 int Monster::getMeleeAttackBonus()

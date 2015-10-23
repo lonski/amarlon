@@ -57,5 +57,43 @@
 				<Skill id="10" level="1" />  <!-- Racial -->
 			</Skills>
 		</Race>
+		<Race id="5" name="Orc" playable="0"/>
+		<Race id="6" name="Goblin" playable="0"/>
+		<Race id="7" name="Undead" playable="0"/>
 	</Races>
+	<Classes>
+		<Class id="1" name="Fighter" playable="1" description="Fighters include soldiers, guardsmen, barbarian warriors, and anyone else for whom fighting is a way of life.  They train in combat, and they generally approach problems head on, weapon drawn.# #Not surprisingly, Fighters are best at fighting of all the classes.   They are also the hardiest, able to take more punishment than any other class.  Although they are not skilled in the ways of magic, Fighters can nonetheless use many magic items, including but not limited to magical weapons and armor.# #The Prime Requisite for Fighters is Strength.">
+			<AbilityScoreRestrictions>
+				<Score id="0" min="9" max="18" /> <!-- STR -->
+			</AbilityScoreRestrictions>
+		</Class>
+		<Class id="2" name="Cleric" playable="1" description="Clerics are those who have devoted themselves to the service of a deity, pantheon or other belief system. Most Clerics spend their time in mundane forms of service such as preaching and ministering in a temple; but there are those who are called to go abroad from the temple and serve their deity in a more direct way, smiting undead monsters and aiding in the battle against evil and chaos.# #Clerics fight about as well as Thieves, but not as well as Fighters.  They are hardier than Thieves, at least at lower levels, as they are accustomed to physical labor that the Thief would deftly avoid.  Clerics can cast spells of divine nature starting at 2nd level, and they have the power to Turn the Undead, that is, to drive away undead monsters by means of faith alone.# #The Prime Requisite for Clerics is Wisdom.">
+			<AbilityScoreRestrictions>
+				<Score id="2" min="9" max="18" /> <!-- WIS -->
+			</AbilityScoreRestrictions>
+			<ItemTypeRestrictions>
+				<Only category="1" weapon="2" /> <!-- Blunt -->
+			</ItemTypeRestrictions>
+		</Class>
+		<Class id="3" name="Magic-User" playable="1" description="Magic-Users are those who seek and use knowledge of the arcane.  They do magic not as the Cleric does, by faith in a greater   power,   but   rather   through   insight   and understanding.# #Magic-Users are the worst of all the classes at fighting; hours spent studying massive tomes of magic do not lead a character to become strong or adept with weapons. They are the least hardy, equal to Thieves at lower levels but quickly falling behind.# #The Prime Requisite   for Magic-Users is Intelligence.">
+			<AbilityScoreRestrictions>
+				<Score id="1" min="9" max="18" /> <!-- INT -->
+			</AbilityScoreRestrictions>
+			<ItemTypeRestrictions>
+				<Only category="1" weapon="3" /> <!-- Dagger -->
+				<Only category="1" weapon="4" /> <!-- Staff -->
+				<Only category="2" armor="1" /> <!-- Cloth -->
+			</ItemTypeRestrictions>
+		</Class>
+		<Class id="4" name="Thief" playable="1" description="Thieves are those who take what they want or need by stealth, disarming traps and picking locks to get to the gold they crave; or “borrowing” money from pockets, beltpouches, etc. right under the nose of the “mark” without the victim ever knowing.# #Thieves fight better than Magic-Users but not as well as Fighters.  Avoidance of honest work leads Thieves to be less hardy than the other classes, though they do pull ahead of the Magic-Users at higher levels.# #The Prime Requisite for Thieves is Dexterity.">
+			<AbilityScoreRestrictions>
+				<Score id="3" min="9" max="18" /> <!-- DEX -->
+			</AbilityScoreRestrictions>
+			<ItemTypeRestrictions>
+				<Only category="2" armor="1" /> <!-- Cloth -->
+				<Only category="2" armor="2" /> <!-- Leather -->
+			</ItemTypeRestrictions>
+		</Class>
+		<Class id="5" name="Monster" playable="0" />
+	</Classes>
 </Rpg>

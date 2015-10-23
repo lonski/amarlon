@@ -1,5 +1,7 @@
 #include "race.h"
 #include <skill.h>
+#include <engine.h>
+#include <rpg_db.h>
 
 namespace amarlon {
 
@@ -7,6 +9,31 @@ Race::Race()
   : _id(RaceType::NoRace)
   , _playable(false)
 {
+}
+
+RacePtr Race::create(RaceType id)
+{
+  return Engine::instance().getRpgDB().getRace(id);
+}
+
+RacePtr Race::clone() const
+{
+  RacePtr cloned(new Race);
+
+  cloned->_id = _id;
+  cloned->_name = _name;
+  cloned->_description = _description;
+  cloned->_playable = _playable;
+  cloned->_abilityScoreRestrictions = _abilityScoreRestrictions;
+  cloned->_allowedClasses = _allowedClasses;
+  for(auto s : _skills) cloned->_skills.push_back( s->clone() );
+
+  return cloned;
+}
+
+bool Race::operator==(const Race &rhs) const
+{
+  return _id == rhs.getType();
 }
 
 RaceType Race::getType() const
@@ -56,7 +83,16 @@ std::string Race::getDescription() const
     dsc += "# #" + headerColor + "Ability score restrictions:# #";
     for ( auto& pair : _abilityScoreRestrictions )
     {
-      dsc += AbilityScore::toStr( pair.first ) + ": min=" + toStr(pair.second.min) + ", max=" + toStr(pair.second.max);
+      dsc += AbilityScore::toStr( pair.first ) + ": ";
+      if ( pair.second.min != AbilityScore::MIN_VALUE )
+      {
+        dsc += "min=" + toStr(pair.second.min);
+      }
+      if ( pair.second.max != AbilityScore::MAX_VALUE )
+      {
+        dsc += "max=" + toStr(pair.second.max);
+      }
+
       dsc += "#";
     }
   }
@@ -64,7 +100,7 @@ std::string Race::getDescription() const
   return dsc;
 }
 
-bool Race::isClassAllowed(CharacterClass c) const
+bool Race::isClassAllowed(CharacterClassType c) const
 {
   return std::find(_allowedClasses.begin(), _allowedClasses.end(), c) != _allowedClasses.end();
 }

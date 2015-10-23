@@ -4,6 +4,7 @@
 #include <playable_character.h>
 #include <attack_bonus_table.h>
 #include <engine.h>
+#include <character_class.h>
 
 const unsigned MARGIN = 2;
 
@@ -55,17 +56,17 @@ void CharacterInfo::update()
     _col1->pushBack(ColoredString("CON : " + toStr(character->getAbilityScore(AbilityScore::CON)) ));
     _col1->pushBack(ColoredString("CHA : " + toStr(character->getAbilityScore(AbilityScore::CHA)) ));
 
-    _col2->pushBack(ColoredString("Class      : " + CharacterClass2Str(character->getClass())));
+    _col2->pushBack(ColoredString("Class      : " + character->getClass()->getName()));
     _col2->pushBack(ColoredString("Level      : " + toStr(character->getLevel()) ));
     _col2->pushBack(ColoredString("Experience : " + toStr(character->getExperience()) ));
     _col2->pushBack(ColoredString(""));
     _col2->pushBack(ColoredString("Saving Throws", TCODColor::darkerAzure));
     _col2->pushBack(ColoredString(""));
-    _col2->pushBack(ColoredString("Death Ray            : " + toStr(character->getSavingThrow(SavingThrows::DeathRayOrPoison)) ));
-    _col2->pushBack(ColoredString("Magic Wands          : " + toStr(character->getSavingThrow(SavingThrows::MagicWands)) ));
-    _col2->pushBack(ColoredString("Paralysis or Petrify : " + toStr(character->getSavingThrow(SavingThrows::ParalysisOrPertrify)) ));
-    _col2->pushBack(ColoredString("Dragon Breath        : " + toStr(character->getSavingThrow(SavingThrows::DragonBreath)) ));
-    _col2->pushBack(ColoredString("Spells               : " + toStr(character->getSavingThrow(SavingThrows::Spells)) ));
+    _col2->pushBack(ColoredString("Death         : " + toStr(character->getSavingThrow(SavingThrows::DeathRayOrPoison)) ));
+    _col2->pushBack(ColoredString("Magic Wands   : " + toStr(character->getSavingThrow(SavingThrows::MagicWands)) ));
+    _col2->pushBack(ColoredString("Paralysis     : " + toStr(character->getSavingThrow(SavingThrows::ParalysisOrPertrify)) ));
+    _col2->pushBack(ColoredString("Dragon Breath : " + toStr(character->getSavingThrow(SavingThrows::DragonBreath)) ));
+    _col2->pushBack(ColoredString("Spells        : " + toStr(character->getSavingThrow(SavingThrows::Spells)) ));
   }
 }
 

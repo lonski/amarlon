@@ -6,6 +6,7 @@
 #include <pickable_category.h>
 #include <item_slot_type.h>
 #include <description.h>
+#include <item_type.h>
 
 namespace amarlon {
 
@@ -16,7 +17,6 @@ struct PickableDescription : Description
     , amount(1)
     , uses(0)
     , itemSlot(ItemSlotType::Null)
-    , category(PickableCategory::Miscellaneous)
     , armorClass(0)
     , weight(0)
     , price(0)
@@ -29,13 +29,13 @@ struct PickableDescription : Description
   int uses;
 
   ItemSlotType itemSlot;
-  PickableCategory category;
   int armorClass;
   int weight;
   int price;
   TargetType targetType;
   Damage damage;
   int scriptId;
+  ItemType type;
 };
 
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;

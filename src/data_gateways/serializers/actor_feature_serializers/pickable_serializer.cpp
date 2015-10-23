@@ -37,8 +37,21 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
     addAttribute    ( _pickableNode, "damage",     std::string(pickable->getDamage()) );
     addAttribute    ( _pickableNode, "uses",       pickable->getUsesCount() );
     addAttributeEnum( _pickableNode, "itemSlot",   pickable->getItemSlot() );
-    addAttributeEnum( _pickableNode, "category",   pickable->getCategory() );
     addAttributeEnum( _pickableNode, "targetType", pickable->getTargetType() );
+
+    ItemType t = pickable->getItemType();
+    if ( t.armor != ArmorType::NoType )
+    {
+      addAttributeEnum( _pickableNode, "armorType", t.armor );
+    }
+    if ( t.weapon != WeaponType::NoType )
+    {
+      addAttributeEnum( _pickableNode, "weaponType", t.weapon );
+    }
+
+    addAttributeEnum( _pickableNode, "category",   t.category );
+
+
   }
 
   return pickable != nullptr;

@@ -2,8 +2,8 @@
 #define CHARACTER_DESCRIPTION
 
 #include <vector>
-#include <character_classes.h>
-#include <races.h>
+#include <character_class_type.h>
+#include <race_type.h>
 #include <ability_scores.h>
 #include <damage.h>
 #include <description.h>
@@ -37,7 +37,7 @@ struct CharacterDescription : Description
     , maxHitPoints(0)
     , defaultArmorClass(0)
     , experience(0)
-    , cClass(CharacterClass::Fighter)
+    , cClass(CharacterClassType::Fighter)
     , race(RaceType::NoRace)
     , speed(0)
   {}
@@ -47,7 +47,7 @@ struct CharacterDescription : Description
   int maxHitPoints;
   int defaultArmorClass;
   int experience;
-  CharacterClass cClass;
+  CharacterClassType cClass;
   RaceType race;
   int speed;
   SpellbookDescription spellbook;

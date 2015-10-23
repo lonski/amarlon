@@ -141,7 +141,6 @@ ActorPtr Actor::clone()
 {
   ActorPtr cloned( new Actor );
   *cloned = *this;
-
   return cloned;
 }
 

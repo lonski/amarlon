@@ -13,7 +13,7 @@ enum class GenericModifier
   MoraleModifier = 1
 };
 
-union ModifierType
+struct ModifierType
 {
   ModifierType()
   {

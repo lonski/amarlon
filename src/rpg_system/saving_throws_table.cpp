@@ -6,7 +6,7 @@ namespace amarlon
 namespace SavingThrows
 {
 
-int get(Type type, CharacterClass charClass, int level)
+int get(Type type, CharacterClassType charClass, int level)
 {
   return stTable[charClass][type][level];
 }

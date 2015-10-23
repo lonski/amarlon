@@ -2,7 +2,7 @@
 #define ATTACK_BONUS_TABLE_H
 
 #include <map>
-#include <character_classes.h>
+#include <character_class_type.h>
 
 namespace amarlon
 {
@@ -10,12 +10,12 @@ namespace amarlon
 namespace AttackBonus
 {
 
-  int get(CharacterClass charClass, int level);
+  int get(CharacterClassType charClass, int level);
 
-  static std::map< CharacterClass, std::map<int, int> > abTable =
+  static std::map< CharacterClassType, std::map<int, int> > abTable =
   {
     {
-      CharacterClass::Fighter,
+      CharacterClassType::Fighter,
       {
       /* Level, AB */
         {0,     0},
@@ -43,7 +43,7 @@ namespace AttackBonus
     },
 
     {
-      CharacterClass::Cleric,
+      CharacterClassType::Cleric,
       {
       /* Level, AB */
         {0,     0},
@@ -71,7 +71,7 @@ namespace AttackBonus
     },
 
     {
-      CharacterClass::Thief,
+      CharacterClassType::Thief,
       {
       /* Level, AB */
         {0,     0},
@@ -99,7 +99,7 @@ namespace AttackBonus
     },
 
     {
-      CharacterClass::MagicUser,
+      CharacterClassType::MagicUser,
       {
       /* Level, AB */
         {0,     0},
@@ -127,7 +127,7 @@ namespace AttackBonus
     },
 
     {
-      CharacterClass::Monster,
+      CharacterClassType::Monster,
       {
       /* Level, AB */
         {0,      0},

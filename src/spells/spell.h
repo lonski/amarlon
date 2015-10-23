@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <target.h>
-#include <character_classes.h>
+#include <character_class_type.h>
 #include <target_type.h>
 #include <spell_description.h>
 #include <spell_id.h>
@@ -29,7 +29,7 @@ public:
 
   virtual SpellId getId() const;
   virtual std::string getName() const;
-  virtual CharacterClass getClass() const;
+  virtual CharacterClassType getClass() const;
   virtual int getLevel() const;
   virtual TargetType getTargetType() const;
   virtual int getRange() const;

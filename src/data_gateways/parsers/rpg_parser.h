@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <race.h>
+#include <character_class.h>
 #include <data_gateways/parsers/parser.h>
 
 namespace amarlon {
@@ -14,6 +15,7 @@ public:
   RpgParser(rapidxml::xml_node<>* xmlNode);
 
   std::vector<RacePtr> parseRaces();
+  std::vector<CharacterClassPtr> parseCharacterClasses();
 
 };
 

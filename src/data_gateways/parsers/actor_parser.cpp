@@ -119,7 +119,6 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
       if ( pickDsc->amount == 0) pickDsc->amount = 1;
       pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
-      pickDsc->category = (PickableCategory)getAttribute<int>(pickableNode, "category");
       pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
       pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       pickDsc->price = getAttribute<int>(pickableNode, "price");
@@ -127,6 +126,21 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
 
       pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
+
+      ItemType t;
+      if ( attributeExists(pickableNode, "armorType") )
+      {
+        t.armor = (ArmorType)getAttribute<int>(pickableNode, "armorType");
+      }
+      if ( attributeExists(pickableNode, "weaponType") )
+      {
+        t.weapon = (WeaponType)getAttribute<int>(pickableNode, "weaponType");
+      }
+
+      t.category = (PickableCategory)getAttribute<int>(pickableNode, "category");
+
+      pickDsc->type = t;
+
     }
   }
 
@@ -178,7 +192,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->hitPoints = getAttribute<int>(characterNode, "hitPoints");
       dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
       dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
-      dsc->cClass = (CharacterClass)getAttribute<int>(characterNode, "class");
+      dsc->cClass = (CharacterClassType)getAttribute<int>(characterNode, "class");
       dsc->race = (RaceType)getAttribute<int>(characterNode, "race");
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");

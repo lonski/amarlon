@@ -2,7 +2,7 @@
 #define CARRYING_CAPACITY_H
 
 #include <map>
-#include <races.h>
+#include <race_type.h>
 
 namespace amarlon {
 

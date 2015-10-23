@@ -62,10 +62,10 @@ int SpellDB::getLevel(SpellId id)
   return it != _spells.end() ? it->second->level : 0;
 }
 
-CharacterClass SpellDB::getClass(SpellId id)
+CharacterClassType SpellDB::getClass(SpellId id)
 {
   auto it = _spells.find(id);
-  return it != _spells.end() ? static_cast<CharacterClass>(it->second->spellClass) : CharacterClass::NoClass;
+  return it != _spells.end() ? static_cast<CharacterClassType>(it->second->spellClass) : CharacterClassType::NoClass;
 }
 
 TargetType SpellDB::getTargetType(SpellId id)

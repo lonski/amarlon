@@ -4,8 +4,8 @@
 #include <map>
 #include <set>
 #include <actor_feature.h>
-#include <races.h>
-#include <character_classes.h>
+#include <race_type.h>
+#include <character_class_type.h>
 #include <ability_scores.h>
 #include <saving_throws_table.h>
 #include <carrying_capacity.h>
@@ -22,8 +22,12 @@ class Pickable;
 class Spell;
 class SpellBook;
 class Skill;
+class Race;
+class CharacterClass;
 struct CharacterDescription;
 typedef std::shared_ptr<Character> CharacterPtr;
+typedef std::shared_ptr<CharacterClass> CharacterClassPtr;
+typedef std::shared_ptr<Race> RacePtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
 typedef std::shared_ptr<Spell> SpellPtr;
 typedef std::shared_ptr<SpellBook> SpellBookPtr;
@@ -64,8 +68,8 @@ public:
   virtual int getExperienceToNextLevel() const;
   virtual void modifyExperience(int modifier);
   virtual int getLevel() const;
-  virtual CharacterClass getClass() const;
-  virtual RaceType getRace() const;
+  virtual CharacterClassPtr getClass() const;
+  virtual RacePtr getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
   virtual bool rollSavingThrow(SavingThrows::Type type);
 
@@ -110,8 +114,8 @@ private:
   int _maxHitPoints;
   int _defaultArmorClass;
   int _experience;
-  CharacterClass _class;
-  RaceType _race;
+  CharacterClassPtr _class;
+  RacePtr _race;
   int _speed;
   int _movePoints;
   SpellBookPtr _spellbook;

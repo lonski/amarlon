@@ -37,7 +37,7 @@ TEST(DamageTest, serialize)
 
 TEST(ExpDataTable, get)
 {
-  Experience::getLevelData(CharacterClass::Fighter, 1);
+  Experience::getLevelData(CharacterClassType::Fighter, 1);
 }
 
 TEST(UtilsTest, color2str)

@@ -2,7 +2,7 @@
 #define EXPERIENCE_TABLE_H
 
 #include <dices.h>
-#include <character_classes.h>
+#include <character_class_type.h>
 #include <map>
 
 namespace amarlon
@@ -46,12 +46,12 @@ namespace Experience
 {
   const int MAX_LEVEL = 20;
 
-  LevelData getLevelData(CharacterClass charClass, int level);
+  LevelData getLevelData(CharacterClassType charClass, int level);
 
-  static std::map<CharacterClass, std::map<int, LevelData> > expData = {
+  static std::map<CharacterClassType, std::map<int, LevelData> > expData = {
     {
       {
-        CharacterClass::Fighter,
+        CharacterClassType::Fighter,
         {
         /*LV             EXP     HitDice       HP  */
           {1,  LevelData{0      ,dices::D8,    0, true} },
@@ -78,7 +78,7 @@ namespace Experience
       },
 
       {
-        CharacterClass::Thief,
+        CharacterClassType::Thief,
         {
         /*LV             EXP     HitDice       HP  */
           {1,  LevelData{0      ,dices::D4,    0, true} },
@@ -105,7 +105,7 @@ namespace Experience
       },
 
       {
-        CharacterClass::Cleric,
+        CharacterClassType::Cleric,
         {
         /*LV             EXP     HitDice       HP        SPELL1 SPELL2 SPELL3 SPELL4 SPELL5 SPELL6   */
           {1,  LevelData{0      ,dices::D6,    0, true, {{1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}} } },
@@ -132,7 +132,7 @@ namespace Experience
       },
 
       {
-        CharacterClass::MagicUser,
+        CharacterClassType::MagicUser,
         {
         /*LV             EXP     HitDice       HP        SPELL1 SPELL2 SPELL3 SPELL4 SPELL5 SPELL6   */
           {1,  LevelData{0      ,dices::D4,    0, true, {{1,1}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}} } },

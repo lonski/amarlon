@@ -11,6 +11,8 @@
 #include <skill.h>
 #include <algorithm>
 #include <experience_table.h>
+#include <rpg_db.h>
+#include <race.h>
 
 namespace amarlon {
 
@@ -22,8 +24,6 @@ Character::Character()
   , _maxHitPoints(0)
   , _defaultArmorClass(11) //no-armor AC
   , _experience(0)
-  , _class(CharacterClass::Monster)
-  , _race(RaceType::NoRace)
   , _speed(0)
   , _movePoints(0)
   , _spellbook(new SpellBook)
@@ -47,8 +47,8 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal &= _level              == crhs->_level;
     //equal &= _maxHitPoints       == crhs->_maxHitPoints; this is random
     equal &= _experience         == crhs->_experience;
-    equal &= _class              == crhs->_class;
-    equal &= _race               == crhs->_race;
+    equal &= *_class              == *(crhs->_class);
+    equal &= *_race               == *(crhs->_race);
     equal &= *_spellbook         == *(crhs->_spellbook);
     equal &= _skills.size() == crhs->_skills.size();
 
@@ -159,7 +159,7 @@ int Character::getExperience() const
 
 int Character::getExperienceToNextLevel() const
 {
-  LevelData data = Experience::getLevelData(getClass(), getLevel() + 1);
+  LevelData data = Experience::getLevelData(getClass()->getType(), getLevel() + 1);
   return data.expNeeded;
 }
 
@@ -173,19 +173,19 @@ int Character::getLevel() const
   return _level;
 }
 
-CharacterClass Character::getClass() const
+CharacterClassPtr Character::getClass() const
 {
   return _class;
 }
 
-RaceType Character::getRace() const
+RacePtr Character::getRace() const
 {
   return _race;
 }
 
 int Character::getSavingThrow(SavingThrows::Type type)
 {
-  int base = SavingThrows::get( type, getClass(), getLevel() );
+  int base = SavingThrows::get( type, getClass()->getType(), getLevel() );
 
   auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
                          [&type](Modifier& mod){ return mod.Type.savingThrow == type; } );
@@ -257,8 +257,8 @@ int Character::getArmorClass(DamageType dmgType)
 std::string Character::getDescription()
 {
   std::string str = colorToStr(TCODColor::darkerTurquoise, true)
-      + "Class: " + (getRace() == RaceType::NoRace ? "" : Race2Str(getRace()) + " ")
-      + CharacterClass2Str( getClass() ) +"# #"
+      + "Class: " + (getRace() == nullptr ? "" : getRace()->getName() + " ")
+      + getClass()->getName() +"# #"
       + colorToStr(TCODColor::darkTurquoise, true) + "AB: +" + toStr( getBaseAttackBonus() ) + "#"
       + colorToStr(TCODColor::darkTurquoise, true) + "AC: " + toStr( getArmorClass() ) + "#";
 
@@ -336,8 +336,8 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
   if ( character != nullptr && dsc != nullptr )
   {
     character->_experience = dsc->experience;
-    character->_class = dsc->cClass;
-    character->_race = dsc->race;
+    character->_class = CharacterClass::create(dsc->cClass);
+    character->_race = Race::create( dsc->race );
     character->_defaultArmorClass = dsc->defaultArmorClass;
     character->_speed = dsc->speed;
     character->_spellbook = SpellBook::create(dsc->spellbook);

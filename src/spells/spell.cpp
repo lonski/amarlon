@@ -90,10 +90,10 @@ std::string Spell::getName() const
   return _flyweight ? _flyweight->name : "No name";
 }
 
-CharacterClass Spell::getClass() const
+CharacterClassType Spell::getClass() const
 {
-  return _flyweight ? static_cast<CharacterClass>(_flyweight->spellClass)
-                    : CharacterClass::NoClass;
+  return _flyweight ? static_cast<CharacterClassType>(_flyweight->spellClass)
+                    : CharacterClassType::NoClass;
 }
 
 int Spell::getLevel() const
