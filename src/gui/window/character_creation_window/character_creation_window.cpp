@@ -8,8 +8,8 @@ namespace amarlon { namespace gui {
 
 CharacterCreationWindow::CharacterCreationWindow()
   : _enterGame(false)
-  , _raceSelection( new RaceSelectionPanel )
-  , _classSelection( new ClassSelectionPanel )
+  , _raceSelection( new RaceSelectionPanel(this) )
+  , _classSelection( new ClassSelectionPanel(this) )
 {
   setHeight( Engine::screenHeight );
   setWidth( Engine::screenWidth );
@@ -31,6 +31,16 @@ void CharacterCreationWindow::showActivePanel()
   _panels [ _activePanel ]->update();
   _panels [ _activePanel ]->selectNext();
   addWidget( _panels [ _activePanel ] );
+}
+
+RaceSelectionPanelPtr CharacterCreationWindow::getRaceSelectionPanel() const
+{
+  return _raceSelection;
+}
+
+ClassSelectionPanelPtr CharacterCreationWindow::getClassSelectionPanel() const
+{
+  return _classSelection;
 }
 
 AWindow &CharacterCreationWindow::show()

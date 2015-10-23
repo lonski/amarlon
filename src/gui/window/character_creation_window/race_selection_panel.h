@@ -4,17 +4,23 @@
 #include <asub_panel.h>
 #include <text_formater.h>
 
-namespace amarlon { namespace gui {
+namespace amarlon {
+
+class Race;
+typedef std::shared_ptr<Race> RacePtr;
+
+namespace gui {
 
 class AMenu;
 class AList;
+class CharacterCreationWindow;
 typedef std::shared_ptr<AList> AListPtr;
 typedef std::shared_ptr<AMenu> AMenuPtr;
 
 class RaceSelectionPanel : public ASubPanel
 {
 public:
-  RaceSelectionPanel();
+  RaceSelectionPanel(CharacterCreationWindow* parent);
 
   virtual void selectNext();
   virtual void selectPrevious();
@@ -22,10 +28,13 @@ public:
   virtual void manage();
   virtual void update();
 
+  RacePtr getSelectedRace() const;
+
 private:
   AMenuPtr _races;
   AListPtr _dsc;
   TextFormater _formater;
+  CharacterCreationWindow* _parent;
 
   void showDescription();
 

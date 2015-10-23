@@ -1,16 +1,19 @@
 #include "race_selection_panel.h"
 #include <amenu.h>
 #include <engine.h>
+#include <race.h>
 #include <rpg_db.h>
 #include <aslot_menu_item.h>
 #include <alist.h>
+#include <character_creation_window.h>
 
 namespace amarlon { namespace gui {
 
-RaceSelectionPanel::RaceSelectionPanel()
+RaceSelectionPanel::RaceSelectionPanel(CharacterCreationWindow *parent)
   : ASubPanel(Engine::screenWidth, Engine::screenHeight)
   , _races(new AMenu )
   , _dsc( new AList )
+  , _parent(parent)
 {
   setPosition(0,0);
   setFrame(true);
@@ -61,6 +64,19 @@ void RaceSelectionPanel::update()
   _dsc->setHeight( Engine::screenHeight - 4 );
   addWidget( _dsc );
 
+}
+
+RacePtr RaceSelectionPanel::getSelectedRace() const
+{
+  RacePtr race;
+
+  auto item = _races->getSelectedItem();
+  if ( item )
+  {
+    race = item->getObject<Race>();
+  }
+
+  return race;
 }
 
 void RaceSelectionPanel::showDescription()

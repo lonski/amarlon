@@ -23,7 +23,9 @@ public:
   virtual AWindow& show();
   virtual AWindow& setDefaults();
 
-  void showActivePanel();
+
+  RaceSelectionPanelPtr getRaceSelectionPanel() const;
+  ClassSelectionPanelPtr getClassSelectionPanel() const;
 
 private:
   enum Panel
@@ -41,6 +43,7 @@ private:
 
   void handleKey(TCOD_key_t key);
   void nextStep();
+  void showActivePanel();
 
 };
 

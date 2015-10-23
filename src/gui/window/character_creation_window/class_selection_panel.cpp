@@ -5,13 +5,16 @@
 #include <aslot_menu_item.h>
 #include <alist.h>
 #include <character_class.h>
+#include <character_creation_window.h>
+#include <race_selection_panel.h>
 
 namespace amarlon { namespace gui {
 
-ClassSelectionPanel::ClassSelectionPanel()
+ClassSelectionPanel::ClassSelectionPanel(CharacterCreationWindow* parent)
   : ASubPanel(Engine::screenWidth, Engine::screenHeight)
   , _classes(new AMenu )
   , _dsc( new AList )
+  , _parent(parent)
 {
   setPosition(0,0);
   setFrame(true);
@@ -37,30 +40,37 @@ void ClassSelectionPanel::manage()
 
 void ClassSelectionPanel::update()
 {
-  removeAllWidgets();
-
-  //Classes menu
-  _classes->removeAllItems();
-  _classes->setPosition(2,2);
-  addWidget( _classes );
-
-  for ( auto c : Engine::instance().getRpgDB().getCharacterClasses() )
+  if ( _parent )
   {
-    if ( c->isPlayable() )
+    RacePtr race = _parent->getRaceSelectionPanel()->getSelectedRace();
+    if ( race )
     {
-      AMenuItemPtr item(new ASlotMenuItem(35,c->getName(),"",""));
-      item->setObject<CharacterClass>(c);
-      _classes->addItem( item );
+      removeAllWidgets();
+
+      //Classes menu
+      _classes->removeAllItems();
+      _classes->setPosition(2,2);
+      addWidget( _classes );
+
+      for ( auto c : Engine::instance().getRpgDB().getCharacterClasses() )
+      {
+        if ( c->isPlayable() && race->isClassAllowed( c->getType() ) )
+        {
+          AMenuItemPtr item(new ASlotMenuItem(35,c->getName(),"",""));
+          item->setObject<CharacterClass>(c);
+          _classes->addItem( item );
+        }
+      }
+
+      //Class description
+      _dsc->clear();
+      _dsc->setPosition( 40, 2 );
+      _dsc->setAutosize(false);
+      _dsc->setWidth( Engine::screenWidth - _dsc->getX() - 4 );
+      _dsc->setHeight( Engine::screenHeight - 4 );
+      addWidget( _dsc );
     }
   }
-
-  //Class description
-  _dsc->clear();
-  _dsc->setPosition( 40, 2 );
-  _dsc->setAutosize(false);
-  _dsc->setWidth( Engine::screenWidth - _dsc->getX() - 4 );
-  _dsc->setHeight( Engine::screenHeight - 4 );
-  addWidget( _dsc );
 
 }
 

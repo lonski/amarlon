@@ -8,13 +8,14 @@ namespace amarlon { namespace gui {
 
 class AMenu;
 class AList;
+class CharacterCreationWindow;
 typedef std::shared_ptr<AList> AListPtr;
 typedef std::shared_ptr<AMenu> AMenuPtr;
 
 class ClassSelectionPanel : public ASubPanel
 {
 public:
-  ClassSelectionPanel();
+  ClassSelectionPanel(CharacterCreationWindow* parent);
 
   virtual void selectNext();
   virtual void selectPrevious();
@@ -26,6 +27,7 @@ private:
   AMenuPtr _classes;
   AListPtr _dsc;
   TextFormater _formater;
+  CharacterCreationWindow* _parent;
 
   void showDescription();
 
