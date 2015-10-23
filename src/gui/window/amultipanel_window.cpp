@@ -6,6 +6,7 @@ namespace amarlon { namespace gui {
 
 
 AMultiPanelWIndow::AMultiPanelWIndow()
+  : _activePanel(0)
 {
 }
 

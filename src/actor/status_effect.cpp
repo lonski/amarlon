@@ -5,7 +5,7 @@
 
 namespace amarlon {
 
-StatusEffect::StatusEffect(const std::string name, const std::string& script, int duration)
+StatusEffect::StatusEffect(const std::string& name, const std::string& script, int duration)
   : _name( name )
   , _script( script )
   , _duration( duration )

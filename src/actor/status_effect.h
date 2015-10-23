@@ -14,7 +14,7 @@ typedef std::shared_ptr<Spell> SpellPtr;
 class StatusEffect
 {
 public:
-  StatusEffect(const std::string name, const std::string& script, int duration);
+  StatusEffect(const std::string& name, const std::string& script, int duration);
 
   bool cancel(Target target);
   int getDuration() const;
