@@ -12,7 +12,8 @@ using namespace rapidxml;
 namespace amarlon {
 
 World::World(const std::string& mapsFile)
-  : _mapDB( new MapDB )
+  : _currentMap(MapId::Null)
+  , _mapDB( new MapDB )
 {
   _mapDB->load( mapsFile );
 }

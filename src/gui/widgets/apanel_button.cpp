@@ -2,7 +2,7 @@
 
 namespace amarlon { namespace gui {
 
-APanelButton::APanelButton(int w, const std::__cxx11::string &label)
+APanelButton::APanelButton(int w, const std::string &label)
   : ASubPanel(w,5)
   , _btn( new ASlotMenuItem(w,label,"",""))
   , _callback( [](){} )

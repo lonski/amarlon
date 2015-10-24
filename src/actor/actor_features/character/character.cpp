@@ -45,12 +45,15 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
   {
     equal  = _defaultArmorClass  == crhs->_defaultArmorClass;
     equal &= _level              == crhs->_level;
-    //equal &= _maxHitPoints       == crhs->_maxHitPoints; this is random
     equal &= _experience         == crhs->_experience;
-    equal &= *_class              == *(crhs->_class);
-    equal &= *_race               == *(crhs->_race);
     equal &= *_spellbook         == *(crhs->_spellbook);
     equal &= _skills.size() == crhs->_skills.size();
+
+    equal &= _class && crhs->_class;
+    if ( equal) equal &= *_class == *(crhs->_class);
+
+    equal &= _race && crhs->_race;
+    if ( equal) equal &= *_race == *(crhs->_race);
 
     if ( equal ) equal &= std::equal(_skills.begin(),
                                      _skills.end(),

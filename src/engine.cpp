@@ -55,7 +55,7 @@ void Engine::prologue()
   _messenger.reset( new Messenger( _gui ) );
   _luaState.reset( new lua_api::LuaState );
 
-  getLuaState().registerAPI();
+  //getLuaState().registerAPI();
   getSpellDB().load( _config->get("spells_file") );
   getSkillDB().load( _config->get("skills_file") );
   getTileDB ().load( _config->get("tiles_file" ) );

@@ -11,7 +11,7 @@ class ActorTest : public ::testing::Test
   virtual void SetUp()
   {
     Engine::instance().prologue();
-    Engine::instance().enterGame();
+    //Engine::instance().enterGame();
   }
 
   virtual void TearDown()

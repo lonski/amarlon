@@ -32,6 +32,7 @@ public:
     //put guy on map
     guy->setPosition( 1,1);
 
+    Engine::instance().getWorld().changeMap( MapId::GameStart );
     map = Engine::instance().getWorld().getCurrentMap();
     map->addActor( guy );
 

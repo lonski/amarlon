@@ -13,7 +13,8 @@
 namespace amarlon { namespace gui {
 
 CharacterCreationWindow::CharacterCreationWindow()
-  : _enterGame(false)
+  : _activePanel(0)
+  , _enterGame(false)
   , _raceSelection( new RaceSelectionPanel(this) )
   , _classSelection( new ClassSelectionPanel(this) )
   , _scoresSelection( new AbilityScoresSelectionPanel(this) )
