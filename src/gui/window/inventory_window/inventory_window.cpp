@@ -87,7 +87,11 @@ void InventoryWindow::handleKey(TCOD_key_t key)
   {
     case TCODK_TAB:
     {
-      activateNextPanel();
+      do
+      {
+        activateNextPanel();
+      }
+      while ( !_panels[ _activePanel ]->isActivable() );
       break;
     }
     case TCODK_DOWN:

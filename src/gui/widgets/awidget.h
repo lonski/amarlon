@@ -28,6 +28,8 @@ public:
   virtual int getY() const;
 
   virtual void setPosition(int x, int y);
+  virtual void setY(int y);
+  virtual void setX(int x);
   virtual void setPosition(PositionFlag position);
 
   virtual int getWidth() const = 0;

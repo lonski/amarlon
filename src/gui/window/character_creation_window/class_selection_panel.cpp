@@ -6,7 +6,6 @@
 #include <alist.h>
 #include <character_class.h>
 #include <character_creation_window.h>
-#include <race_selection_panel.h>
 
 namespace amarlon { namespace gui {
 
@@ -35,14 +34,16 @@ void ClassSelectionPanel::selectPrevious()
 
 void ClassSelectionPanel::manage()
 {
-
 }
 
 void ClassSelectionPanel::update()
 {
   if ( _parent )
   {
-    RacePtr race = _parent->getRaceSelectionPanel()->getSelectedRace();
+    RacePtr race = Engine::instance().
+        getRpgDB().
+        getRace( _parent->getPlayerDsc()->character->race );
+
     if ( race )
     {
       removeAllWidgets();
@@ -72,6 +73,51 @@ void ClassSelectionPanel::update()
     }
   }
 
+}
+
+void ClassSelectionPanel::handleKey(TCOD_key_t key)
+{
+  switch ( key.vk )
+  {
+    case TCODK_DOWN:
+    case TCODK_KP2:
+    {
+      selectNext();
+      break;
+    }
+    case TCODK_UP:
+    case TCODK_KP8:
+    {
+      selectPrevious();
+      break;
+    }
+    case TCODK_ENTER:
+    case TCODK_KPENTER:
+    {
+      setClass();
+      _parent->nextStep();
+      break;
+    }
+    default:;
+  }
+}
+
+CharacterClassPtr ClassSelectionPanel::getSelectedClass() const
+{
+  CharacterClassPtr c;
+
+  auto item = _classes->getSelectedItem();
+  if ( item )
+  {
+    c = item->getObject<CharacterClass>();
+  }
+
+  return c;
+}
+
+void ClassSelectionPanel::setClass()
+{
+  _parent->getPlayerDsc()->character->cClass = getSelectedClass()->getType();
 }
 
 void ClassSelectionPanel::showDescription()

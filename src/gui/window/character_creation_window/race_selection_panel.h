@@ -27,8 +27,7 @@ public:
 
   virtual void manage();
   virtual void update();
-
-  RacePtr getSelectedRace() const;
+  virtual void handleKey(TCOD_key_t key);
 
 private:
   AMenuPtr _races;
@@ -36,7 +35,9 @@ private:
   TextFormater _formater;
   CharacterCreationWindow* _parent;
 
+  RacePtr getSelectedRace() const;
   void showDescription();
+  void setRace();
 
 };
 

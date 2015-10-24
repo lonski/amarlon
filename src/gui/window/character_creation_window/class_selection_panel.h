@@ -4,7 +4,12 @@
 #include <asub_panel.h>
 #include <text_formater.h>
 
-namespace amarlon { namespace gui {
+namespace amarlon {
+
+class CharacterClass;
+typedef std::shared_ptr<CharacterClass> CharacterClassPtr;
+
+namespace gui {
 
 class AMenu;
 class AList;
@@ -22,6 +27,7 @@ public:
 
   virtual void manage();
   virtual void update();
+  virtual void handleKey(TCOD_key_t key);
 
 private:
   AMenuPtr _classes;
@@ -30,6 +36,8 @@ private:
   CharacterCreationWindow* _parent;
 
   void showDescription();
+  CharacterClassPtr getSelectedClass() const;
+  void setClass();
 
 };
 

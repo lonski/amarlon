@@ -69,7 +69,7 @@ KnownSpellsPanel &SpellBookWindow::getKnownSpellsPanel()
 
 void SpellBookWindow::managePanel(int panel)
 {
-  switch( _activePanel)
+  switch( panel)
   {
     case SLOTS: _slots->manage(); break;
     case KNOWN: _known->manage(); break;

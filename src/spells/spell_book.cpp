@@ -26,7 +26,7 @@ SpellBookPtr SpellBook::create(SpellbookDescription dsc)
   return sb;
 }
 
-std::vector<SpellSlotPtr> SpellBook::getSlots(std::function<bool(SpellSlotPtr)> filter)
+std::vector<SpellSlotPtr> SpellBook::getSlots(std::function<bool(SpellSlotPtr)> filter) const
 {
   std::vector<SpellSlotPtr> spells;
   for(auto s : _spellSlots) if ( filter(s) ) spells.push_back(s);
@@ -34,7 +34,7 @@ std::vector<SpellSlotPtr> SpellBook::getSlots(std::function<bool(SpellSlotPtr)> 
   return spells;
 }
 
-std::vector<SpellPtr> SpellBook::getKnownSpells(std::function<bool(SpellPtr)> filter)
+std::vector<SpellPtr> SpellBook::getKnownSpells(std::function<bool(SpellPtr)> filter) const
 {
   std::vector<SpellPtr> spells;
   for(auto s : _knownSpells) if ( filter(s) ) spells.push_back(s);
@@ -59,6 +59,11 @@ void SpellBook::addKnownSpell(SpellPtr spell)
 void SpellBook::addKnownSpell(Spell *spell)
 {
   addKnownSpell( SpellPtr(spell) );
+}
+
+int SpellBook::getSlotCount(int level) const
+{
+  return getSlots([&level](SpellSlotPtr s){ return s->level == level; }).size();
 }
 
 void SpellBook::prepareSpells()

@@ -7,6 +7,7 @@
 #include <inventory.h>
 #include <actor_descriptions.h>
 #include <character_class.h>
+#include <spell_book.h>
 
 namespace amarlon {
 
@@ -96,6 +97,46 @@ void PlayableCharacter::modifyExperience(int modifier)
     if ( data.expNeeded != 0 && getExperience() >= data.expNeeded)
     {
       advanceLevel(data);
+
+      ActorPtr actor = getOwner().lock();
+      if ( actor )
+      {
+        actor->notify(Event(EventId::Actor_LeveledUp));
+      }
+
+      //TODO: maybe popup some window or advance te level manually like BG/NWN?
+    }
+  }
+}
+
+void PlayableCharacter::advanceLevel()
+{
+  advanceLevel( Experience::getLevelData(getClass()->getType(), getLevel() + 1) );
+}
+
+void PlayableCharacter::advanceLevel(LevelData data)
+{
+  setLevel( getLevel() + 1 );
+
+  int hpBonus =  static_cast<int>( data.hitDice ); //always maximum hp
+      hpBonus += data.hpBonus;
+      hpBonus += data.applyConModifier ? getModifier(AbilityScore::CON) : 0;
+
+  setMaxHitPoints( getMaxHitPoints() + std::max(hpBonus, 1) );
+  modifyHitPoints( hpBonus );
+
+  //Add new spell slots
+  if ( !data.spellSlotCount.empty() )
+  {
+    SpellBookPtr sb = getSpellBook();
+    for ( const auto& pair : data.spellSlotCount )
+    {
+      int slotCount = sb->getSlotCount( pair.first );
+      while ( slotCount < pair.second )
+      {
+        sb->addSlot( new SpellSlot( pair.first ) );
+        ++slotCount;
+      }
     }
   }
 }
@@ -103,27 +144,6 @@ void PlayableCharacter::modifyExperience(int modifier)
 int PlayableCharacter::getSpeed()
 {
   return std::max( Character::getSpeed() - calculateLoadPenalty(), 0 );
-}
-
-void PlayableCharacter::advanceLevel(LevelData data)
-{
-  setLevel( getLevel() + 1 );
-
-  int hpBonus =  dices::roll( data.hitDice );
-      hpBonus += data.hpBonus;
-      hpBonus += data.applyConModifier ? getModifier(AbilityScore::CON) : 0;
-
-  setMaxHitPoints( getMaxHitPoints() + std::max(hpBonus, 1) );
-  modifyHitPoints( hpBonus );
-
-  ActorPtr actor = getOwner().lock();
-  if ( actor )
-  {
-    actor->notify(Event(EventId::Actor_LeveledUp));
-  }
-
-  //TODO: maybe popup some window or advance te level manually like BG/NWN?
-  //Apply the spell levels
 }
 
 int PlayableCharacter::getEquipmentWeight()

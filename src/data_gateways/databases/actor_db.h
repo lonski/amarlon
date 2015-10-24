@@ -19,6 +19,7 @@ public:
   ActorDB();
 
   ActorPtr fetch(ActorType type);
+  ActorDescriptionPtr fetchDescription(ActorType type);
 
   /**
    * @brief loads given file, parses xml and creates actor descriptions

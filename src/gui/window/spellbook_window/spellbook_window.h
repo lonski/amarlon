@@ -20,7 +20,7 @@ typedef std::shared_ptr<SpellLevelPanel> SpellLevelPanelPtr;
 typedef std::shared_ptr<SpellSlotPanel> SpellSlotPanelPtr;
 typedef std::shared_ptr<KnownSpellsPanel> KnownSpellsPanelPtr;
 
-class SpellBookWindow : public AMultiPanelWIndow
+class SpellBookWindow : public AMultiPanelWindow
 {
 public:
   SpellBookWindow();

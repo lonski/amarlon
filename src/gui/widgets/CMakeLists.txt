@@ -9,6 +9,8 @@ set(HEADER_FILES
     aslot_menu_item.h
     amenu.h
     asub_panel.h
+    ahorizontal_menu.h
+    apanel_button.h
 )
 
 set(SOURCE_FILES
@@ -20,6 +22,8 @@ set(SOURCE_FILES
     alabel_menu_item.cpp
     aslot_menu_item.cpp
     amenu.cpp
+    ahorizontal_menu.cpp
+    apanel_button.cpp
 )
 
 add_library(amarlon_widgets STATIC ${SOURCE_FILES} ${HEADER_FILES})

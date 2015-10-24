@@ -3,6 +3,12 @@
 #include <asub_panel.h>
 #include <race_selection_panel.h>
 #include <class_selection_panel.h>
+#include <ability_scores_selection_panel.h>
+#include <actor_db.h>
+#include <map_id.h>
+#include <world.h>
+#include <actor.h>
+#include <playable_character.h>
 
 namespace amarlon { namespace gui {
 
@@ -10,6 +16,7 @@ CharacterCreationWindow::CharacterCreationWindow()
   : _enterGame(false)
   , _raceSelection( new RaceSelectionPanel(this) )
   , _classSelection( new ClassSelectionPanel(this) )
+  , _scoresSelection( new AbilityScoresSelectionPanel(this) )
 {
   setHeight( Engine::screenHeight );
   setWidth( Engine::screenWidth );
@@ -19,6 +26,9 @@ CharacterCreationWindow::CharacterCreationWindow()
 
   _classSelection->setPosition(0,0);
   _panels[CLASS_SELECTION] = _classSelection;
+
+  _scoresSelection->setPosition(0,0);
+  _panels[ABILITY_SCORE_SELECTION] = _scoresSelection;
 }
 
 CharacterCreationWindow::~CharacterCreationWindow()
@@ -31,16 +41,6 @@ void CharacterCreationWindow::showActivePanel()
   _panels [ _activePanel ]->update();
   _panels [ _activePanel ]->selectNext();
   addWidget( _panels [ _activePanel ] );
-}
-
-RaceSelectionPanelPtr CharacterCreationWindow::getRaceSelectionPanel() const
-{
-  return _raceSelection;
-}
-
-ClassSelectionPanelPtr CharacterCreationWindow::getClassSelectionPanel() const
-{
-  return _classSelection;
 }
 
 AWindow &CharacterCreationWindow::show()
@@ -56,10 +56,18 @@ AWindow &CharacterCreationWindow::show()
 
     TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
 
-    handleKey(key);
+    _panels[_activePanel]->handleKey(key);
 
     if ( _enterGame )
     {
+      ActorPtr player = Actor::create( _player, false);
+      player->setPosition(42, 28);
+      PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
+      c->advanceLevel();
+
+      Engine::instance().getWorld().changeMap( MapId::GameStart );
+      Engine::instance().getWorld().setPlayer( player );
+
       Engine::instance().enterGame();
       break;
     }
@@ -68,38 +76,13 @@ AWindow &CharacterCreationWindow::show()
   return *this;
 }
 
-AWindow &CharacterCreationWindow::setDefaults()
+AWindow& CharacterCreationWindow::setDefaults()
 {
   _activePanel = RACE_SELECTION;
   _enterGame = false;
+  _player = Engine::instance().getActorDB().fetchDescription( ActorType::Player );
 
   return *this;
-}
-
-void CharacterCreationWindow::handleKey(TCOD_key_t key)
-{
-  switch ( key.vk )
-  {
-    case TCODK_DOWN:
-    case TCODK_KP2:
-    {
-      _panels[_activePanel]->selectNext();
-      break;
-    }
-    case TCODK_UP:
-    case TCODK_KP8:
-    {
-      _panels[_activePanel]->selectPrevious();
-      break;
-    }
-    case TCODK_ENTER:
-    case TCODK_KPENTER:
-    {
-      nextStep();
-      break;
-    }
-    default:;
-  }
 }
 
 void CharacterCreationWindow::nextStep()
@@ -109,9 +92,16 @@ void CharacterCreationWindow::nextStep()
 
   _enterGame = ++cPanel == _panels.end();
 
-  if ( !_enterGame ) _activePanel = cPanel->first;
+  if ( !_enterGame )
+  {
+    _activePanel = cPanel->first;
+    showActivePanel();
+  }
+}
 
-  showActivePanel();
+ActorDescriptionPtr CharacterCreationWindow::getPlayerDsc() const
+{
+  return _player;
 }
 
 }}

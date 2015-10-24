@@ -29,6 +29,12 @@ ActorPtr ActorDB::fetch(ActorType type)
   return actor;
 }
 
+ActorDescriptionPtr ActorDB::fetchDescription(ActorType type)
+{
+  auto it = std::find_if(_descriptions.begin(), _descriptions.end(), [type](ActorDescriptionPtr a){ return a->id == type; });
+  return it != _descriptions.end() ? *it : nullptr;
+}
+
 void ActorDB::load(const string &fn)
 {
   ifstream ifs(fn);

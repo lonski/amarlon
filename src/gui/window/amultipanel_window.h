@@ -9,11 +9,11 @@ namespace amarlon { namespace gui {
 class ASubPanel;
 typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
 
-class AMultiPanelWIndow : public AWindow
+class AMultiPanelWindow : public AWindow
 {
 public:
-  AMultiPanelWIndow();
-  virtual ~AMultiPanelWIndow();
+  AMultiPanelWindow();
+  virtual ~AMultiPanelWindow();
 
   virtual AWindow& show();
 

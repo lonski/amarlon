@@ -34,6 +34,7 @@ public:
 
   /* class specific functions */
   virtual int getAbilityScore(AbilityScore::Type as);
+  virtual void advanceLevel();
 
 private:
   std::map<AbilityScore::Type, int> _abilityScores;

@@ -66,6 +66,33 @@ void RaceSelectionPanel::update()
 
 }
 
+void RaceSelectionPanel::handleKey(TCOD_key_t key)
+{
+  switch ( key.vk )
+  {
+    case TCODK_DOWN:
+    case TCODK_KP2:
+    {
+      selectNext();
+      break;
+    }
+    case TCODK_UP:
+    case TCODK_KP8:
+    {
+      selectPrevious();
+      break;
+    }
+    case TCODK_ENTER:
+    case TCODK_KPENTER:
+    {
+      setRace();
+      _parent->nextStep();
+      break;
+    }
+    default:;
+  }
+}
+
 RacePtr RaceSelectionPanel::getSelectedRace() const
 {
   RacePtr race;
@@ -95,6 +122,11 @@ void RaceSelectionPanel::showDescription()
       }
     }
   }
+}
+
+void RaceSelectionPanel::setRace()
+{
+  _parent->getPlayerDsc()->character->race = getSelectedRace()->getType();
 }
 
 }}

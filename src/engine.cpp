@@ -67,12 +67,7 @@ void Engine::prologue()
 
 void Engine::enterGame(const std::string& savedGameFn)
 {
-  if ( savedGameFn.empty() )
-  {
-    _world->changeMap( MapId::GameStart );
-    _world->setPlayer( Actor::create(ActorType::Player, 42, 28) );
-  }
-  else
+  if ( !savedGameFn.empty() )
   {
     _world->load(savedGameFn);
   }

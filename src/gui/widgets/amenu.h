@@ -18,7 +18,7 @@ public:
   typedef std::vector<AMenuItemPtr>::const_iterator ConstItemsIterator;
   
   AMenu();
-  ~AMenu();
+  virtual ~AMenu();
 
   virtual void addItem(AMenuItemPtr item);
   virtual bool removeItem(AMenuItemPtr item);
@@ -69,12 +69,13 @@ public:
     }
   }
 
-private:
-std::vector<AMenuItemPtr> _items;
-bool _autosize;
+protected:
+  std::vector<AMenuItemPtr> _items;
+  bool _autosize;
   int _width;
   int _height;
 
+private:
   int calculateWidth() const;
   void selectFirst();
   void sortByCategory();

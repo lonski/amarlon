@@ -22,6 +22,7 @@ public:
   virtual bool isActivable() const { return true; }
   virtual void manage() {}
   virtual void update() {}
+  virtual void handleKey(TCOD_key_t) {}
 
   virtual void selectNext() = 0;
   virtual void selectPrevious() = 0;

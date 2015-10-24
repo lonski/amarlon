@@ -2,6 +2,7 @@
 #define CHARACTER_CREATION_WINDOW_H
 
 #include <amultipanel_window.h>
+#include <actor_descriptions.h>
 #include <memory>
 
 namespace amarlon { namespace gui {
@@ -9,7 +10,9 @@ namespace amarlon { namespace gui {
 class ASubPanel;
 class RaceSelectionPanel;
 class ClassSelectionPanel;
+class AbilityScoresSelectionPanel;
 typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
+typedef std::shared_ptr<AbilityScoresSelectionPanel> AbilityScoresSelectionPanelPtr;
 typedef std::shared_ptr<RaceSelectionPanel> RaceSelectionPanelPtr;
 typedef std::shared_ptr<ClassSelectionPanel> ClassSelectionPanelPtr;
 
@@ -23,15 +26,15 @@ public:
   virtual AWindow& show();
   virtual AWindow& setDefaults();
 
-
-  RaceSelectionPanelPtr getRaceSelectionPanel() const;
-  ClassSelectionPanelPtr getClassSelectionPanel() const;
+  void nextStep();
+  ActorDescriptionPtr getPlayerDsc() const;
 
 private:
   enum Panel
   {
     RACE_SELECTION,
-    CLASS_SELECTION
+    CLASS_SELECTION,
+    ABILITY_SCORE_SELECTION
   };
 
   std::map<int, ASubPanelPtr> _panels;
@@ -40,9 +43,10 @@ private:
 
   RaceSelectionPanelPtr _raceSelection;
   ClassSelectionPanelPtr _classSelection;
+  AbilityScoresSelectionPanelPtr _scoresSelection;
 
-  void handleKey(TCOD_key_t key);
-  void nextStep();
+  ActorDescriptionPtr _player;
+
   void showActivePanel();
 
 };

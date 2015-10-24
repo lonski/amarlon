@@ -5,16 +5,16 @@
 namespace amarlon { namespace gui {
 
 
-AMultiPanelWIndow::AMultiPanelWIndow()
+AMultiPanelWindow::AMultiPanelWindow()
   : _activePanel(0)
 {
 }
 
-AMultiPanelWIndow::~AMultiPanelWIndow()
+AMultiPanelWindow::~AMultiPanelWindow()
 {
 }
 
-AWindow& AMultiPanelWIndow::show()
+AWindow& AMultiPanelWindow::show()
 {
   TCOD_key_t key;
 
@@ -34,7 +34,7 @@ AWindow& AMultiPanelWIndow::show()
   return *this;
 }
 
-void AMultiPanelWIndow::handleKey(TCOD_key_t key)
+void AMultiPanelWindow::handleKey(TCOD_key_t key)
 {
   switch ( key.vk )
   {
@@ -85,7 +85,7 @@ void AMultiPanelWIndow::handleKey(TCOD_key_t key)
   }
 }
 
-void AMultiPanelWIndow::activateNextPanel()
+void AMultiPanelWindow::activateNextPanel()
 {
   auto cPanel = _panels.find( _activePanel );
   assert( cPanel != _panels.end());
@@ -98,7 +98,7 @@ void AMultiPanelWIndow::activateNextPanel()
   cPanel->second->activate();
 }
 
-void AMultiPanelWIndow::activatePreviousPanel()
+void AMultiPanelWindow::activatePreviousPanel()
 {
   auto cPanel = _panels.find( _activePanel );
   assert( cPanel != _panels.end());

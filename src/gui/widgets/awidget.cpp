@@ -24,6 +24,16 @@ void AWidget::setPosition(int x, int y)
   _y = y;
 }
 
+void AWidget::setY(int y)
+{
+  _y = y;
+}
+
+void AWidget::setX(int x)
+{
+  _x = x;
+}
+
 void AWidget::setPosition(AWidget::PositionFlag position)
 {
   switch ( position )

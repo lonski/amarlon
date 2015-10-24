@@ -83,6 +83,17 @@ struct MinMax
     , max(max_)
   {}
 
+  void merge(const MinMax& rhs)
+  {
+    min = std::max(min, rhs.min);
+    max = std::min(max, rhs.max);
+  }
+
+  bool allow(int val) const
+  {
+    return val >= min && val <= max;
+  }
+
   int min;
   int max;
 };

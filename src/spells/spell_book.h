@@ -19,14 +19,16 @@ public:
   SpellBook();
   static SpellBookPtr create(SpellbookDescription dsc);
 
-  std::vector<SpellSlotPtr> getSlots(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;});
-  std::vector<SpellPtr> getKnownSpells( std::function<bool(SpellPtr)> filter = [](SpellPtr){return true;} );
+  std::vector<SpellSlotPtr> getSlots(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;}) const;
+  std::vector<SpellPtr> getKnownSpells( std::function<bool(SpellPtr)> filter = [](SpellPtr){return true;} ) const;
 
   void addSlot(SpellSlotPtr slot);
   void addSlot(SpellSlot* slot);
 
   void addKnownSpell(SpellPtr spell);
   void addKnownSpell(Spell* spell);
+
+  int getSlotCount(int level) const;
 
   /**
    * @brief Prepares all spells so they will be ready to cast.
