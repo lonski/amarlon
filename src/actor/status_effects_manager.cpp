@@ -37,6 +37,7 @@ void StatusEffectsManager::remove(StatusEffectPtr effect)
   auto it = std::find(_effects.begin(), _effects.end(),effect);
   if ( it != _effects.end() )
   {
+    effect->cancel(_owner.lock());
     notifyRemove(effect);
     _effects.erase( it );
   }
@@ -50,9 +51,18 @@ void StatusEffectsManager::remove(const std::string& name)
 
   if ( it != _effects.end() )
   {
+    (*it)->cancel(_owner.lock());
     notifyRemove( *it );
     _effects.erase( it );
   }
+}
+
+void StatusEffectsManager::removeAll()
+{
+  for ( auto e : _effects )
+    e->cancel(_owner.lock());
+
+  _effects.clear();
 }
 
 void StatusEffectsManager::tick(int time)
@@ -74,8 +84,6 @@ void StatusEffectsManager::tick(int time)
       notifyRemove(e);
       if ( _owner.lock() && e->cancel(_owner.lock()) )
         _effects.erase(it++);
-      else
-        printf("LOG: failed to cancel effect SpellId=%s",e->getName().c_str());
     }
     else
     {

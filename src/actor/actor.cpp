@@ -69,13 +69,6 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     if (dsc->description)  _description = *(dsc->description);
     if (dsc->visible)      setVisible( *(dsc->visible) );
 
-    //Status Effects
-    _effects.reset( new StatusEffectsManager( shared_from_this() ) );
-    for ( auto e : dsc->statusEffects )
-    {
-      StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
-      getStatusEffects().add( se );
-    }
 
     //Features
     if ( dsc->pickable )    _features[ActorFeature::PICKABLE]    = ActorFeature::create(ActorFeature::PICKABLE,    dsc->pickable);
@@ -91,6 +84,16 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     {
       f.second->setOwner( shared_from_this() );
     }
+
+    //Status Effects
+    _effects->removeAll();
+    for ( auto e : dsc->statusEffects )
+    {
+      StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
+      getStatusEffects().add( se );
+    }
+    applyPassiveSkills();
+
   }
 }
 

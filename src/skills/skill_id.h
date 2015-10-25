@@ -12,8 +12,8 @@ enum class SkillId
   PickPockets     = 4,  //TODO - needs NPC's
   SilentMove      = 5,
   FindTraps       = 6,
-  Darkvision      = 7,  //TODO - passive skill
-  DwarfRacial     = 8,  //TODO - passive skill
+  Darkvision      = 7,
+  DwarfRacial     = 8,
   ElfRacial       = 9,  //TODO - passive skill
   HalflingRacial  = 10, //TODO - passive skill
   HumanRacial     = 11, //TODO - passive skill

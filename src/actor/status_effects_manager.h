@@ -27,6 +27,7 @@ public:
   bool add(StatusEffectPtr effect);
   void remove(StatusEffectPtr effect);
   void remove(const std::string &name);
+  void removeAll();
   void tick(int time = 1);
 
   std::vector<StatusEffectPtr> getEffects() const;
