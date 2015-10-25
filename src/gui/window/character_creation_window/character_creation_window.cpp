@@ -9,6 +9,7 @@
 #include <world.h>
 #include <actor.h>
 #include <playable_character.h>
+#include <thief_skills_selection_panel.h>
 
 namespace amarlon { namespace gui {
 
@@ -18,6 +19,7 @@ CharacterCreationWindow::CharacterCreationWindow()
   , _raceSelection( new RaceSelectionPanel(this) )
   , _classSelection( new ClassSelectionPanel(this) )
   , _scoresSelection( new AbilityScoresSelectionPanel(this) )
+  , _thiefSkillsSelection( new ThiefSkillsSelectionPanel(this) )
 {
   setHeight( Engine::screenHeight );
   setWidth( Engine::screenWidth );
@@ -30,6 +32,9 @@ CharacterCreationWindow::CharacterCreationWindow()
 
   _scoresSelection->setPosition(0,0);
   _panels[ABILITY_SCORE_SELECTION] = _scoresSelection;
+
+  _thiefSkillsSelection->setPosition(0,0);
+  _panels[THIEF_SKILLS_SELECTION] = _thiefSkillsSelection;
 }
 
 CharacterCreationWindow::~CharacterCreationWindow()
@@ -40,7 +45,6 @@ void CharacterCreationWindow::showActivePanel()
 {
   removeAllWidgets();
   _panels [ _activePanel ]->update();
-  _panels [ _activePanel ]->selectNext();
   addWidget( _panels [ _activePanel ] );
 }
 
@@ -91,9 +95,24 @@ void CharacterCreationWindow::nextStep()
   auto cPanel = _panels.find( _activePanel );
   assert( cPanel != _panels.end());
 
-  _enterGame = ++cPanel == _panels.end();
+  ++cPanel;
 
-  if ( !_enterGame )
+  //Skip class-specific panels
+  CharacterClassType cId = getPlayerDsc()->character->cClass;
+  if ( cPanel != _panels.end() )
+  {
+    if ( (cPanel->first == THIEF_SKILLS_SELECTION && cId != CharacterClassType::Thief) )
+    {
+      ++cPanel;
+    }
+  }
+
+  //Proceed with current panel
+  if ( cPanel == _panels.end() )
+  {
+    _enterGame = true;
+  }
+  else
   {
     _activePanel = cPanel->first;
     showActivePanel();

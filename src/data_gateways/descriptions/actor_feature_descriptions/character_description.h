@@ -12,6 +12,10 @@ namespace amarlon {
 
 struct SkillDescription
 {
+  SkillDescription(int id = 0, int level = 0)
+    : id(id)
+    , level(level)
+  {}
   int id;
   int level;
 };

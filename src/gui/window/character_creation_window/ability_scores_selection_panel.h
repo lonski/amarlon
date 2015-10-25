@@ -17,10 +17,8 @@ namespace gui {
 
 class APanelButton;
 class CharacterCreationWindow;
-class ASlotMenuItem;
 class ValueSettingPanel;
 class ALabel;
-typedef std::shared_ptr<ASlotMenuItem> ASlotMenuItemPtr;
 typedef std::shared_ptr<ALabel> ALabelPtr;
 typedef std::shared_ptr<APanelButton> PanelButtonPtr;
 typedef std::shared_ptr<ValueSettingPanel> ValueSettingPanelPtr;
@@ -36,7 +34,6 @@ public:
   virtual void manage();
   virtual void update();
   virtual void handleKey(TCOD_key_t key);
-
 
 private:
   enum Panel

@@ -6,6 +6,7 @@
 #include <aslot_menu_item.h>
 #include <alist.h>
 #include <character_creation_window.h>
+#include <skill.h>
 
 namespace amarlon { namespace gui {
 
@@ -63,6 +64,8 @@ void RaceSelectionPanel::update()
   _dsc->setWidth( Engine::screenWidth - _dsc->getX() - 4 );
   _dsc->setHeight( Engine::screenHeight - 4 );
   addWidget( _dsc );
+
+  selectNext();
 
 }
 
@@ -126,7 +129,21 @@ void RaceSelectionPanel::showDescription()
 
 void RaceSelectionPanel::setRace()
 {
-  _parent->getPlayerDsc()->character->race = getSelectedRace()->getType();
+  auto race = getSelectedRace();
+  if ( race )
+  {
+    PlayableCharacterDescriptionPtr dsc =
+        std::dynamic_pointer_cast<PlayableCharacterDescription>
+        (_parent->getPlayerDsc()->character);
+
+    dsc->race = race->getType();
+    for( auto s : race->getSkills() )
+    {
+      dsc->skills.push_back(
+            SkillDescription( static_cast<int>(s->getId()),
+                              s->getLevel() ) );
+    }
+  }
 }
 
 }}

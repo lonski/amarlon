@@ -51,7 +51,11 @@ SkillPtr CmdUseSkill::getSkill()
 {
   SkillPtr skill;
 
-  auto skills = Engine::instance().getPlayer()->getFeature<Character>()->getSkills();
+  auto skills = Engine::instance().
+      getPlayer()->
+      getFeature<Character>()->
+      getSkills([](SkillPtr s){ return !s->isPassive(); });
+
   if ( !skills.empty() )
   {
     gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();

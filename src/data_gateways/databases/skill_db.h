@@ -21,6 +21,7 @@ public:
   virtual ~SkillDB();
 
   std::string getScript(SkillId id) const;
+  std::string getName(SkillId id) const;
 
   virtual SkillPtr fetch(SkillId id);
   virtual bool load(const std::string& fn);

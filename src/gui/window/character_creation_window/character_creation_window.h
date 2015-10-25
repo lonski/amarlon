@@ -11,7 +11,9 @@ class ASubPanel;
 class RaceSelectionPanel;
 class ClassSelectionPanel;
 class AbilityScoresSelectionPanel;
+class ThiefSkillsSelectionPanel;
 typedef std::shared_ptr<ASubPanel> ASubPanelPtr;
+typedef std::shared_ptr<ThiefSkillsSelectionPanel> ThiefSkillsSelectionPanelPtr;
 typedef std::shared_ptr<AbilityScoresSelectionPanel> AbilityScoresSelectionPanelPtr;
 typedef std::shared_ptr<RaceSelectionPanel> RaceSelectionPanelPtr;
 typedef std::shared_ptr<ClassSelectionPanel> ClassSelectionPanelPtr;
@@ -34,7 +36,8 @@ private:
   {
     RACE_SELECTION,
     CLASS_SELECTION,
-    ABILITY_SCORE_SELECTION
+    ABILITY_SCORE_SELECTION,
+    THIEF_SKILLS_SELECTION
   };
 
   std::map<int, ASubPanelPtr> _panels;
@@ -44,6 +47,7 @@ private:
   RaceSelectionPanelPtr _raceSelection;
   ClassSelectionPanelPtr _classSelection;
   AbilityScoresSelectionPanelPtr _scoresSelection;
+  ThiefSkillsSelectionPanelPtr _thiefSkillsSelection;
 
   ActorDescriptionPtr _player;
 

@@ -50,12 +50,12 @@ void ValueSettingPanel::update()
   _menu->setPosition( getWidth() - (_menu->getWidth() + 2),2);
   addWidget( _menu );
 
-  _nameLabel->setValue(_name);
+  _nameLabel->setValue(_name + ":");
   _nameLabel->setPosition(2,2);
   addWidget( _nameLabel );
 
   _valueLabel->setValue(toStr(_currentValue));
-  _valueLabel->setPosition( _nameLabel->getY() + _nameLabel->getWidth() + 1, 2);
+  _valueLabel->setPosition( _menu->getX() - 3, 2);
   addWidget( _valueLabel );
 
   setValue(_currentValue);

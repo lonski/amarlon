@@ -70,6 +70,8 @@ void ClassSelectionPanel::update()
       _dsc->setWidth( Engine::screenWidth - _dsc->getX() - 4 );
       _dsc->setHeight( Engine::screenHeight - 4 );
       addWidget( _dsc );
+
+      selectNext();
     }
   }
 

@@ -18,6 +18,12 @@ std::string SkillDB::getScript(SkillId id) const
   return "scripts/skills/" + std::to_string( static_cast<int>(id) ) + ".lua";
 }
 
+std::string SkillDB::getName(SkillId id) const
+{
+  auto it = _skills.find(id);
+  return it != _skills.end() ? it->second->name : "NoName";
+}
+
 SkillPtr SkillDB::fetch(SkillId id)
 {
   SkillPtr skill;

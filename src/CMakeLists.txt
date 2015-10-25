@@ -116,6 +116,7 @@ set(HEADER_FILES
     gui/window/character_creation_window/class_selection_panel.h
     gui/window/character_creation_window/ability_scores_selection_panel.h
     gui/window/character_creation_window/value_setting_panel.h
+    gui/window/character_creation_window/thief_skills_selection_panel.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -293,6 +294,7 @@ set(SOURCE_FILES
     gui/window/character_creation_window/class_selection_panel.cpp
     gui/window/character_creation_window/ability_scores_selection_panel.cpp
     gui/window/character_creation_window/value_setting_panel.cpp
+    gui/window/character_creation_window/thief_skills_selection_panel.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
