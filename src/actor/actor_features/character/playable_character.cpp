@@ -8,6 +8,9 @@
 #include <actor_descriptions.h>
 #include <character_class.h>
 #include <spell_book.h>
+#include <engine.h>
+#include <spell_db.h>
+#include <spell.h>
 
 namespace amarlon {
 
@@ -144,6 +147,14 @@ void PlayableCharacter::advanceLevel(LevelData data)
     for ( const auto& pair : data.spellSlotCount )
     {
       int slotCount = sb->getSlotCount( pair.first );
+
+      //New spell level reached
+      if ( slotCount == 0 && pair.second > 0 && getClass()->getType() == CharacterClassType::Cleric )
+      {
+         sb->addKnownSpells(getClass()->getType(), pair.first );
+      }
+
+      //Insert the slots
       while ( slotCount < pair.second )
       {
         sb->addSlot( new SpellSlot( pair.first ) );
@@ -151,6 +162,7 @@ void PlayableCharacter::advanceLevel(LevelData data)
       }
     }
   }
+
 }
 
 int PlayableCharacter::getSpeed()

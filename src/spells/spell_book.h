@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <spell_slot.h>
+#include <character_class_type.h>
 
 namespace amarlon {
 
@@ -27,6 +28,7 @@ public:
 
   void addKnownSpell(SpellPtr spell);
   void addKnownSpell(Spell* spell);
+  void addKnownSpells( CharacterClassType c, int level );
 
   int getSlotCount(int level) const;
 

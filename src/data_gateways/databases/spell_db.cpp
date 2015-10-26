@@ -97,6 +97,19 @@ std::string SpellDB::getScript(SpellId id) const
   return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";
 }
 
+std::vector<SpellPtr> SpellDB::getSpells(std::function<bool (SpellPtr)> filter)
+{
+  std::vector<SpellPtr> spells;
+
+  for ( auto dsc : _spells )
+  {
+    auto s = fetch( static_cast<SpellId>(dsc.second->id) );
+    if ( filter(s) ) spells.push_back(s);
+  }
+
+  return spells;
+}
+
 SpellPtr SpellDB::fetch(SpellId id)
 {
   SpellPtr spell;

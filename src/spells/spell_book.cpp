@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <spell.h>
 #include <actor_descriptions.h>
+#include <engine.h>
+#include <spell_db.h>
 
 namespace amarlon {
 
@@ -59,6 +61,15 @@ void SpellBook::addKnownSpell(SpellPtr spell)
 void SpellBook::addKnownSpell(Spell *spell)
 {
   addKnownSpell( SpellPtr(spell) );
+}
+
+void SpellBook::addKnownSpells(CharacterClassType c, int level)
+{
+  auto spells = Engine::instance().getSpellDB().getSpells([&](SpellPtr s){
+    return s->getClass() == c && s->getLevel() == level;
+  });
+
+  for ( auto s : spells ) addKnownSpell( s );
 }
 
 int SpellBook::getSlotCount(int level) const

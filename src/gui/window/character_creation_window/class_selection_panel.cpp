@@ -6,6 +6,7 @@
 #include <alist.h>
 #include <character_class.h>
 #include <character_creation_window.h>
+#include <spell_id.h>
 
 namespace amarlon { namespace gui {
 
@@ -119,7 +120,21 @@ CharacterClassPtr ClassSelectionPanel::getSelectedClass() const
 
 void ClassSelectionPanel::setClass()
 {
-  _parent->getPlayerDsc()->character->cClass = getSelectedClass()->getType();
+  auto cClass = getSelectedClass();
+  if ( cClass && _parent )
+  {
+    PlayableCharacterDescriptionPtr dsc =
+        std::dynamic_pointer_cast<PlayableCharacterDescription>
+        (_parent->getPlayerDsc()->character);
+
+    dsc->cClass = cClass->getType();
+
+    //Add known spells
+    if ( cClass->getType() == CharacterClassType::MagicUser )
+    {
+      dsc->spellbook.knownSpells.push_back( (int)SpellId::MagicMissile );
+    }
+  }
 }
 
 void ClassSelectionPanel::showDescription()

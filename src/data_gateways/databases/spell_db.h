@@ -29,6 +29,7 @@ public:
   virtual std::string getDescription(SpellId id);
   std::string getScript(SpellId id) const;
 
+  virtual std::vector<SpellPtr> getSpells( std::function<bool(SpellPtr)> filter );
   virtual SpellPtr fetch(SpellId id);
   virtual bool load(const std::string& fn);
 
