@@ -122,7 +122,7 @@ private:
   SpellBookPtr _spellbook;
   std::vector<SkillPtr> _skills;
 
-  SkillPtr getModifiedSkill(const SkillPtr s) const;
+  SkillPtr getModifiedSkill(SkillPtr s) const;
 
 protected:
   std::vector<Modifier> _modifiers;

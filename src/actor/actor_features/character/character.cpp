@@ -312,7 +312,7 @@ SkillPtr Character::getSkill(SkillId id) const
   return skill;
 }
 
-SkillPtr Character::getModifiedSkill(const SkillPtr s) const
+SkillPtr Character::getModifiedSkill(SkillPtr s) const
 {
   SkillPtr skill = s->clone();
 
