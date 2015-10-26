@@ -2,7 +2,6 @@
 #include <actor.h>
 #include <die_action.h>
 #include <utils.h>
-#include <character_factory.h>
 #include <spell.h>
 #include <spell_db.h>
 #include <engine.h>
@@ -13,6 +12,9 @@
 #include <experience_table.h>
 #include <rpg_db.h>
 #include <race.h>
+#include <character_type.h>
+#include <monster.h>
+#include <playable_character.h>
 
 namespace amarlon {
 
@@ -30,10 +32,50 @@ Character::Character()
 {
 }
 
+Character::Character(DescriptionPtr dsc)
+  : _level(0)
+  , _hitPoints(0)
+  , _maxHitPoints(0)
+  , _defaultArmorClass(11) //no-armor AC
+  , _experience(0)
+  , _speed(0)
+  , _movePoints(0)
+  , _spellbook(new SpellBook)
+{
+  CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
+  if ( cDsc != nullptr )
+  {
+    _experience = cDsc->experience;
+    _class = CharacterClass::create(cDsc->cClass);
+    _race = Race::create( cDsc->race );
+    _defaultArmorClass = cDsc->defaultArmorClass;
+    _speed = cDsc->speed;
+    _spellbook = SpellBook::create(cDsc->spellbook);
+
+    for(auto s : cDsc->skills)
+      _skills.push_back( Skill::create( static_cast<SkillId>(s.id),
+                                                   s.level ) );
+    for(auto m : cDsc->modifiers)
+      addModifier( Modifier(m) );
+  }
+}
+
 CharacterPtr Character::create(DescriptionPtr dsc)
 {
-  static CharacterFactory factory;
-  return factory.produce( std::dynamic_pointer_cast<CharacterDescription>(dsc) );
+  CharacterPtr c;
+
+  CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
+  if ( cDsc )
+  {
+    switch (cDsc->type)
+    {
+      case CharacterType::Monster:            c.reset( new Monster(cDsc) ); break;
+      case CharacterType::PlayableCharacter:  c.reset( new PlayableCharacter(cDsc) ); break;
+      default :;
+    }
+  }
+
+  return c;
 }
 
 bool Character::isEqual(ActorFeaturePtr rhs) const
@@ -371,26 +413,6 @@ void Character::cloneBase(Character *c)
   c->_skills.clear();
   c->_modifiers = _modifiers;
   for ( auto s : _skills ) c->_skills.push_back( s->clone() );
-}
-
-void Character::Creator::fillCommonCharacterPart(CharacterPtr character, CharacterDescriptionPtr dsc)
-{
-  if ( character != nullptr && dsc != nullptr )
-  {
-    character->_experience = dsc->experience;
-    character->_class = CharacterClass::create(dsc->cClass);
-    character->_race = Race::create( dsc->race );
-    character->_defaultArmorClass = dsc->defaultArmorClass;
-    character->_speed = dsc->speed;
-    character->_spellbook = SpellBook::create(dsc->spellbook);
-
-    for(auto s : dsc->skills)
-      character->_skills.push_back( Skill::create( static_cast<SkillId>(s.id),
-                                                   s.level ) );
-    for(auto m : dsc->modifiers)
-      character->addModifier( Modifier(m) );
-
-  }
 }
 
 }

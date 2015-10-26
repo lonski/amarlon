@@ -7,6 +7,7 @@
 #include <ability_scores.h>
 #include <damage.h>
 #include <description.h>
+#include <character_type.h>
 
 namespace amarlon {
 
@@ -44,6 +45,7 @@ struct CharacterDescription : Description
     , cClass(CharacterClassType::Fighter)
     , race(RaceType::NoRace)
     , speed(0)
+    , type(CharacterType::NoType)
   {}
 
   int level;
@@ -57,6 +59,7 @@ struct CharacterDescription : Description
   SpellbookDescription spellbook;
   std::vector<SkillDescription> skills;
   std::vector<std::string> modifiers;
+  CharacterType type;
 };
 
 

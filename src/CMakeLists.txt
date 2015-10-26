@@ -11,9 +11,9 @@ set(HEADER_FILES
     actor/actor_features/character/character.h
     actor/actor_features/character/monster.h
     actor/actor_features/character/playable_character.h
-    actor/actor_features/character/character_factory.h
     actor/actor_features/character/modifier.h
     actor/actor_features/character/modifier_type.h
+    actor/actor_features/character/character_type.h
     actor/actor_features/pickable/pickable.h
     actor/actor_features/pickable/item_type.h
     actor/actor_features/pickable/pickable_category.h
@@ -214,7 +214,6 @@ set(SOURCE_FILES
     actor/actor_features/character/character.cpp
     actor/actor_features/character/monster.cpp
     actor/actor_features/character/playable_character.cpp
-    actor/actor_features/character/character_factory.cpp
     actor/actor_features/pickable/pickable.cpp
     actor/actor_features/destroyable/destroyable.cpp
     actor/actor_features/trap/trap.cpp

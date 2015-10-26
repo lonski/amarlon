@@ -9,13 +9,21 @@
 
 namespace amarlon {
 
-Monster::Monster(int level, int hitPointsBonus)
-  : _morale(0)
-  , _hpMod(hitPointsBonus)
+Monster::Monster()
 {
-  setLevel(level);
-  setMaxHitPoints( std::max( dices::roll(dices::D8, getLevel() ) + _hpMod, 1 ) );
-  setHitPoints( getMaxHitPoints() );
+}
+
+Monster::Monster(DescriptionPtr dsc)
+  : Character(dsc)
+{
+  MonsterDescriptionPtr mDsc = std::dynamic_pointer_cast<MonsterDescription>(dsc);
+  if ( mDsc != nullptr )
+  {
+    _morale = mDsc->morale;
+    setLevel( mDsc->level );
+    setMaxHitPoints( (static_cast<int>(dices::D8) * getLevel()) + mDsc->hitPointsBonus );
+    setHitPoints( getMaxHitPoints() );
+  }
 }
 
 Monster::~Monster()
@@ -100,24 +108,6 @@ int Monster::getMorale()
                          [](Modifier& mod){ return mod.Type.generic == GenericModifier::MoraleModifier; } );
 
   return it != _modifiers.end() ? _morale + it->Value : _morale;
-}
-
-CharacterPtr Monster::Creator::create(CharacterDescriptionPtr dsc)
-{
-  MonsterPtr mob = nullptr;
-
-  MonsterDescriptionPtr mobDsc = std::dynamic_pointer_cast<MonsterDescription>(dsc);
-  if ( mobDsc != nullptr )
-  {
-    mob = std::make_shared<Monster>(mobDsc->level, mobDsc->hitPointsBonus);
-
-    mob->_damage = mobDsc->damage;
-    mob->_morale = mobDsc->morale;
-
-    Character::Creator::fillCommonCharacterPart(mob, dsc);
-  }
-
-  return mob;
 }
 
 }

@@ -158,6 +158,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
     if (characterNode != nullptr)
     {
       PlayableCharacterDescriptionPtr pdsc( new PlayableCharacterDescription );
+      pdsc->type = CharacterType::PlayableCharacter;
 
       xml_node<>* attrNode = characterNode->first_node("AbilityScores");
       if ( attrNode != nullptr)
@@ -178,6 +179,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       {
         MonsterDescriptionPtr mdsc( new MonsterDescription );
 
+        mdsc->type = CharacterType::Monster;
         mdsc->hitPointsBonus = getAttribute<int>(characterNode, "hitPointsBonus");
         mdsc->morale = getAttribute<int>(characterNode, "morale");
         mdsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );

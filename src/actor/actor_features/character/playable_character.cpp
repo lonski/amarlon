@@ -18,6 +18,19 @@ PlayableCharacter::PlayableCharacter()
 {
 }
 
+PlayableCharacter::PlayableCharacter(DescriptionPtr dsc)
+  : Character(dsc)
+{
+  PlayableCharacterDescriptionPtr pcDsc = std::dynamic_pointer_cast<PlayableCharacterDescription>(dsc);
+  if ( pcDsc != nullptr )
+  {
+    setHitPoints( pcDsc->hitPoints );
+    setMaxHitPoints( pcDsc->maxHitPoints );
+    setLevel( pcDsc->level );
+    _abilityScores = pcDsc->abilityScores;
+  }
+}
+
 PlayableCharacter::~PlayableCharacter()
 {
 }
@@ -228,26 +241,6 @@ int PlayableCharacter::getAbilityScore(AbilityScore::Type as)
 int PlayableCharacter::getModifier(AbilityScore::Type as)
 {
   return AbilityScore::getModifier( getAbilityScore(as) );
-}
-
-CharacterPtr PlayableCharacter::Creator::create(CharacterDescriptionPtr dsc)
-{
-  PlayableCharacterPtr pc = nullptr;
-
-  PlayableCharacterDescriptionPtr pcDsc = std::dynamic_pointer_cast<PlayableCharacterDescription>(dsc);
-  if ( pcDsc != nullptr )
-  {
-    pc = std::make_shared<PlayableCharacter>();
-
-    pc->setHitPoints( pcDsc->hitPoints );
-    pc->setMaxHitPoints( pcDsc->maxHitPoints );
-    pc->setLevel( pcDsc->level );
-    pc->_abilityScores = pcDsc->abilityScores;
-
-    Character::Creator::fillCommonCharacterPart(pc, dsc);
-  }
-
-  return pc;
 }
 
 }
