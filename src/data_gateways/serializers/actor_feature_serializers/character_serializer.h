@@ -20,11 +20,12 @@ public:
    *  which should be called in each serializer for given Character type
    */
   virtual bool serialize(ActorFeaturePtr af) = 0;
-
+  
 protected:
   void serializeCharacterCommonPart(rapidxml::xml_node<>* characterNode, CharacterPtr character);
   void serializeSpellbook(rapidxml::xml_node<>* characterNode, CharacterPtr character);
   void serializeSkills(CharacterPtr character, rapidxml::xml_node<>* characterNode);
+  void serializeModifiers(CharacterPtr character, rapidxml::xml_node<>* characterNode);
 
 };
 

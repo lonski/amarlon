@@ -92,6 +92,7 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
       StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
       getStatusEffects().add( se );
     }
+
     applyPassiveSkills();
 
   }

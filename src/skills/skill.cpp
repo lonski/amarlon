@@ -29,6 +29,11 @@ int Skill::getLevel() const
   return _level;
 }
 
+void Skill::setLevel(int level)
+{
+  _level = level;
+}
+
 std::string Skill::getName() const
 {
   return _flyweight ? _flyweight->name : "";
@@ -89,6 +94,7 @@ SkillPtr Skill::clone() const
 {
   SkillPtr skill( new Skill(_id) );
   skill->_level = _level;
+  skill->_flyweight = _flyweight;
   return skill;
 }
 

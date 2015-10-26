@@ -63,7 +63,17 @@ int PlayableCharacter::getBaseAttackBonus()
 
 int PlayableCharacter::getMeleeAttackBonus()
 {
-  return AttackBonus::get(getClass()->getType(), getLevel()) + getModifier(AbilityScore::STR);
+  return getBaseAttackBonus() + getModifier(AbilityScore::STR);
+}
+
+int PlayableCharacter::getMissileAttackBonus()
+{
+  int base = getBaseAttackBonus() + getModifier(AbilityScore::DEX);
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::MissileAttackBonus; } );
+
+  return it != _modifiers.end() ? base + it->Value : base;
 }
 
 Damage PlayableCharacter::getDamage()
@@ -80,9 +90,9 @@ Damage PlayableCharacter::getDamage()
   return damage;
 }
 
-void PlayableCharacter::modifyExperience(int modifier)
+int PlayableCharacter::modifyExperience(int modifier)
 {
-  Character::modifyExperience(modifier);
+  modifier = Character::modifyExperience(modifier);
 
   ActorPtr actor = getOwner().lock();
   if ( actor )
@@ -107,6 +117,8 @@ void PlayableCharacter::modifyExperience(int modifier)
       //TODO: maybe popup some window or advance te level manually like BG/NWN?
     }
   }
+
+  return modifier;
 }
 
 void PlayableCharacter::advanceLevel()
@@ -143,7 +155,7 @@ void PlayableCharacter::advanceLevel(LevelData data)
 
 int PlayableCharacter::getSpeed()
 {
-  return std::max( Character::getSpeed() - calculateLoadPenalty(), 0 );
+  return std::max( Character::getSpeed() - calculateLoadPenalty(), 1 );
 }
 
 int PlayableCharacter::getEquipmentWeight()

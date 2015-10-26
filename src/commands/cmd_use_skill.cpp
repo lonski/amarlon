@@ -61,7 +61,9 @@ SkillPtr CmdUseSkill::getSkill()
     gui::MenuWindow& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
                      window . setPosition(gui::AWidget::GAME_SCREEN_CENTER);
                      window . setTitle("Choose skill to use");
-                     window . fill<Skill>( skills, [](SkillPtr s){ return s->getName(); } );
+                     window . fill<Skill>( skills, [](SkillPtr s){
+                       return s->getName();
+                     } );
                      window . show();
 
     if ( auto selected = window.getSelectedItem() )

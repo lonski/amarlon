@@ -24,6 +24,7 @@ public:
   SkillId getId() const;
   std::string getScript() const;
   int getLevel() const;
+  void setLevel(int level);
   std::string getName() const;
   TargetType getTargetType() const;
   int getRadius() const;

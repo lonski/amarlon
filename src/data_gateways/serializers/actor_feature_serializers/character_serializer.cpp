@@ -41,6 +41,23 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
 
     serializeSpellbook(characterNode, character);
     serializeSkills(character, characterNode);
+    serializeModifiers(character, characterNode);
+
+  }
+}
+
+void CharacterSerializer::serializeModifiers(CharacterPtr character, xml_node<>* characterNode)
+{
+  if ( !character->_modifiers.empty() )
+  {
+    xml_node<>* modifiersNode = _document->allocate_node(node_element, "Modifiers");
+    characterNode->append_node(modifiersNode);
+    for ( auto& mod : character->_modifiers )
+    {
+      xml_node<>* modNode = _document->allocate_node(node_element, "Mod");
+      modifiersNode->append_node(modNode);
+      addAttribute(modNode, "val", mod.toString() );
+    }
   }
 }
 

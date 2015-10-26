@@ -28,8 +28,9 @@ public:
   virtual CarryingCapacity::LoadLevel getLoadLevel();
   virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
+  virtual int getMissileAttackBonus();
   virtual Damage getDamage();
-  virtual void modifyExperience(int modifier);
+  virtual int modifyExperience(int modifier);
   virtual int getSpeed();
 
   /* class specific functions */

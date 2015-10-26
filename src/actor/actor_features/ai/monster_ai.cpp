@@ -62,7 +62,7 @@ bool MonsterAi::isEqual(ActorFeaturePtr rhs) const
 }
 
 void MonsterAi::update()
-{  
+{
   ActorPtr owner = getOwner().lock();
   if ( owner && canOperate() )
   {

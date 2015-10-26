@@ -56,6 +56,7 @@ struct CharacterDescription : Description
   int speed;
   SpellbookDescription spellbook;
   std::vector<SkillDescription> skills;
+  std::vector<std::string> modifiers;
 };
 
 

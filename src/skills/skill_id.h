@@ -14,7 +14,7 @@ enum class SkillId
   FindTraps       = 6,
   Darkvision      = 7,
   DwarfRacial     = 8,
-  ElfRacial       = 9,  //TODO - passive skill
+  ElfRacial       = 9,
   HalflingRacial  = 10, //TODO - passive skill
   HumanRacial     = 11, //TODO - passive skill
 };

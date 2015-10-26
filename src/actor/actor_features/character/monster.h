@@ -26,6 +26,7 @@ public:
   virtual CarryingCapacity::LoadLevel getLoadLevel();
   virtual int getBaseAttackBonus();
   virtual int getMeleeAttackBonus();
+  virtual int getMissileAttackBonus();
   virtual Damage getDamage();
   virtual int getMorale();
 

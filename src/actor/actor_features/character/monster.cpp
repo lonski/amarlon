@@ -64,6 +64,16 @@ int Monster::getMeleeAttackBonus()
   return it != _modifiers.end() ? getBaseAttackBonus() + it->Value : getBaseAttackBonus();
 }
 
+int Monster::getMissileAttackBonus()
+{
+  int base = getBaseAttackBonus();
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::MissileAttackBonus; } );
+
+  return it != _modifiers.end() ? base + it->Value : base;
+}
+
 Damage Monster::getDamage()
 {  
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);

@@ -166,9 +166,22 @@ int Character::getExperienceToNextLevel() const
   return data.expNeeded;
 }
 
-void Character::modifyExperience(int modifier)
+int Character::modifyExperience(int modifier)
 {
+  if ( modifier > 0 )
+  {
+    auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                           [](const Modifier& mod){ return mod.Type.generic == GenericModifier::ExperiencePercentBonus; } );
+
+    if ( it != _modifiers.end() )
+    {
+      float bonus = modifier * (it->Value / 100.0f);
+      modifier += static_cast<int>(bonus);
+    }
+  }
+
   _experience += modifier;
+  return modifier;
 }
 
 int Character::getLevel() const
@@ -270,7 +283,7 @@ std::string Character::getDescription()
 
 std::vector<SkillPtr> Character::getSkills() const
 {
-  return _skills;
+  return getSkills([](SkillPtr){return true;});
 }
 
 std::vector<SkillPtr> Character::getSkills(std::function<bool (SkillPtr)> filter) const
@@ -278,15 +291,40 @@ std::vector<SkillPtr> Character::getSkills(std::function<bool (SkillPtr)> filter
   std::vector<SkillPtr> skills;
   for ( auto s : _skills )
   {
-    if ( filter(s) ) skills.push_back(s);
+    if ( filter(s) ) skills.push_back( getModifiedSkill(s) );
   }
   return skills;
 }
 
 SkillPtr Character::getSkill(SkillId id) const
 {
-  for ( auto s : _skills ) if ( s->getId() == id ) return s;
-  return nullptr;
+  SkillPtr skill;
+
+  for ( auto s : _skills )
+  {
+    if ( s->getId() == id )
+    {
+      skill = getModifiedSkill(s);
+      break;
+    }
+  }
+
+  return skill;
+}
+
+SkillPtr Character::getModifiedSkill(const SkillPtr s) const
+{
+  SkillPtr skill = s->clone();
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [&](const Modifier& mod){ return mod.Type.skill == skill->getId(); } );
+
+  if ( it != _modifiers.end() )
+  {
+    skill->setLevel( skill->getLevel() + it->Value );
+  }
+
+  return skill;
 }
 
 void Character::rest()
@@ -331,6 +369,7 @@ void Character::cloneBase(Character *c)
 {
   c->_spellbook = _spellbook->clone();
   c->_skills.clear();
+  c->_modifiers = _modifiers;
   for ( auto s : _skills ) c->_skills.push_back( s->clone() );
 }
 
@@ -344,9 +383,13 @@ void Character::Creator::fillCommonCharacterPart(CharacterPtr character, Charact
     character->_defaultArmorClass = dsc->defaultArmorClass;
     character->_speed = dsc->speed;
     character->_spellbook = SpellBook::create(dsc->spellbook);
+
     for(auto s : dsc->skills)
       character->_skills.push_back( Skill::create( static_cast<SkillId>(s.id),
                                                    s.level ) );
+    for(auto m : dsc->modifiers)
+      character->addModifier( Modifier(m) );
+
   }
 }
 

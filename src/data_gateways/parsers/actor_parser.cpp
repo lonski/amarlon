@@ -242,6 +242,21 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
         }
       }
 
+      //Parse modifiers
+      xml_node<>* modsNode = characterNode->first_node("Modifiers");
+      if ( modsNode )
+      {
+        xml_node<>* modNode = modsNode->first_node("Mod");
+        while( modNode )
+        {
+          if ( attributeExists(modNode, "val") )
+          {
+            dsc->modifiers.push_back( getAttribute<std::string>(modNode, "val") );
+          }
+          modNode = modNode->next_sibling();
+        }
+      }
+
     }
   }
 

@@ -66,7 +66,7 @@ public:
   virtual int takeHeal(Damage heal, ActorPtr healer);
   virtual int getExperience() const;
   virtual int getExperienceToNextLevel() const;
-  virtual void modifyExperience(int modifier);
+  virtual int modifyExperience(int modifier);
   virtual int getLevel() const;
   virtual CharacterClassPtr getClass() const;
   virtual RacePtr getRace() const;
@@ -80,6 +80,7 @@ public:
   virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
   virtual int getBaseAttackBonus() = 0;
   virtual int getMeleeAttackBonus() = 0;
+  virtual int getMissileAttackBonus() = 0;
 
   virtual Damage getDamage() = 0;
   virtual int getArmorClass(DamageType dmgType = DamageType::Physical);
@@ -97,7 +98,7 @@ public:
   virtual void rest();
 
   /**
-   * @brief Character temporary modifiers
+   * @brief Character modifiers
    */
   virtual void addModifier(const Modifier& mod);
   virtual void removeModifier(const Modifier& mod);
@@ -120,6 +121,8 @@ private:
   int _movePoints;
   SpellBookPtr _spellbook;
   std::vector<SkillPtr> _skills;
+
+  SkillPtr getModifiedSkill(const SkillPtr s) const;
 
 protected:
   std::vector<Modifier> _modifiers;
