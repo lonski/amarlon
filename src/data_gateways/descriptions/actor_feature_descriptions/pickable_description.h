@@ -22,6 +22,8 @@ struct PickableDescription : Description
     , price(0)
     , targetType(TargetType::SINGLE_NEIGHBOUR)
     , scriptId(0)
+    , range(0)
+    , radius(0)
   {}
 
   bool stackable;
@@ -36,9 +38,21 @@ struct PickableDescription : Description
   Damage damage;
   int scriptId;
   ItemType type;
+  int range;
+  int radius;
+};
+
+struct ScrollDescription : PickableDescription
+{
+  ScrollDescription()
+    : spellId(0)
+  {}
+
+  int spellId;
 };
 
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
+typedef std::shared_ptr<ScrollDescription> ScrollDescriptionPtr;
 
 }
 

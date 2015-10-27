@@ -54,9 +54,11 @@ TEST_F(CharacterTest, carryingLoad)
   dsc->race = RaceType::Human;
   dsc->abilityScores[AbilityScore::STR] = 10;
   dsc->speed = 40;
+  dsc->type = CharacterType::PlayableCharacter;
 
   PlayableCharacterPtr pc_ch = std::dynamic_pointer_cast<PlayableCharacter>( Character::create(dsc) );
   ziomek->insertFeature( pc_ch );
+  ASSERT_TRUE( pc_ch != nullptr);
 
   //ziomek should have light load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Light );

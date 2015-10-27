@@ -9,8 +9,8 @@ enum class PickableCategory
   Weapon = 1,
   Armor = 2,
   Jewelery = 3,
-  Potions = 4,
-  Scrolls = 5,
+  Potion = 4,
+  Scroll = 5,
   Amunition = 6,
   Wealth = 7
 
@@ -23,8 +23,8 @@ static inline const char* PickableCategory2Str(PickableCategory cat)
           "Weapon",
           "Armor",
           "Jewelery",
-          "Potions",
-          "Scrolls",
+          "Potion",
+          "Scroll",
           "Amunition",
           "Wealth"
           }[(int)cat];

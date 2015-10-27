@@ -23,6 +23,7 @@ public:
   const static ActorFeature::Type featureType;
 
   Pickable(bool stackable = false, int amount = 1);
+  Pickable(DescriptionPtr dsc);
   virtual ~Pickable();
 
   static PickablePtr create(DescriptionPtr dsc);
@@ -43,6 +44,8 @@ public:
   virtual bool isUsable() const;
   virtual int getUsesCount() const;
   virtual TargetType getTargetType() const;
+  virtual int getRange() const;
+  virtual int getRadius() const;
   virtual int getScriptId() const;
 
   int getAmount() const;
@@ -67,6 +70,9 @@ public:
 
   virtual std::string getDescription();
 
+protected:
+  void clone(Pickable* p);
+
 private:
   bool _stackable;
   int _amount;
@@ -79,6 +85,8 @@ private:
   Damage _damage;
   int _scriptId;
   ItemType _type;
+  int _range;
+  int _radius;
 
   std::string getScriptPath() const;
 

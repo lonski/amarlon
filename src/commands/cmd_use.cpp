@@ -30,6 +30,9 @@ int CmdUse::execute()
     PickablePtr pickable = item->getFeature<Pickable>();
     TargetSelector* tSelector = TargetSelector::create(pickable->getTargetType());
 
+    tSelector->setRange( pickable->getRange() );
+    tSelector->setRadius( pickable->getRadius() );
+
     if ( tSelector != nullptr )
     {
       Engine::instance().getPlayer()->performAction( std::make_shared<UseAction>( tSelector->select(), item) );

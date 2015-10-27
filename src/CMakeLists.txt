@@ -14,8 +14,9 @@ set(HEADER_FILES
     actor/actor_features/character/modifier.h
     actor/actor_features/character/modifier_type.h
     actor/actor_features/character/character_type.h
-    actor/actor_features/pickable/pickable.h
     actor/actor_features/pickable/item_type.h
+    actor/actor_features/pickable/pickable.h
+    actor/actor_features/pickable/scroll.h
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/destroyable/drop_rule.h
@@ -215,6 +216,7 @@ set(SOURCE_FILES
     actor/actor_features/character/monster.cpp
     actor/actor_features/character/playable_character.cpp
     actor/actor_features/pickable/pickable.cpp
+    actor/actor_features/pickable/scroll.cpp
     actor/actor_features/destroyable/destroyable.cpp
     actor/actor_features/trap/trap.cpp
     actor/actor.cpp

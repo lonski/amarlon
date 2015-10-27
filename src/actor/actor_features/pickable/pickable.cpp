@@ -9,6 +9,7 @@
 #include <lua_state.h>
 #include <engine.h>
 #include <cstdio>
+#include <scroll.h>
 
 namespace amarlon {
 
@@ -23,7 +24,30 @@ Pickable::Pickable(bool stackable, int amount)
   , _usesCount(0)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
   , _scriptId(0)
+  , _range(0)
+  , _radius(0)
 {
+}
+
+Pickable::Pickable(DescriptionPtr dsc)
+{
+  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
+  if ( pDsc != nullptr )
+  {
+    _stackable = pDsc->stackable;
+    _amount = pDsc->amount;
+    _itemSlot = pDsc->itemSlot;
+    _armorClass = pDsc->armorClass;
+    _weight = pDsc->weight;
+    _price = pDsc->price;
+    _damage = pDsc->damage;
+    _usesCount = pDsc->uses;
+    _targetType = pDsc->targetType;
+    _scriptId = pDsc->scriptId;
+    _type = pDsc->type;
+    _range = pDsc->range;
+    _radius = pDsc->radius;
+  }
 }
 
 Pickable::~Pickable()
@@ -32,25 +56,19 @@ Pickable::~Pickable()
 
 PickablePtr Pickable::create(DescriptionPtr dsc)
 {
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
-  PickablePtr pickable = nullptr;
+  PickablePtr p;
 
-  if ( pDsc != nullptr )
+  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
+  if ( pDsc )
   {
-    pickable.reset( new Pickable(pDsc->stackable, pDsc->amount) );
-    pickable->_itemSlot = pDsc->itemSlot;
-    pickable->_armorClass = pDsc->armorClass;
-    pickable->_weight = pDsc->weight;
-    pickable->_price = pDsc->price;
-    pickable->_damage = pDsc->damage;
-    pickable->_usesCount = pDsc->uses;
-    pickable->_targetType = pDsc->targetType;
-    pickable->_scriptId = pDsc->scriptId;
-    pickable->_type = pDsc->type;
+    switch (pDsc->type.category)
+    {
+      case PickableCategory::Scroll: p.reset( new Scroll(pDsc) ); break;
+      default : p.reset( new Pickable(dsc) );
+    }
   }
 
-  return pickable;
+  return p;
 }
 
 ActorPtr Pickable::spilt(int amount)
@@ -73,18 +91,9 @@ ActorPtr Pickable::spilt(int amount)
 
 ActorFeaturePtr Pickable::clone()
 {
-  PickablePtr cloned( new Pickable(isStackable(), getAmount()) );
+  PickablePtr cloned( new Pickable );
 
-  cloned->_itemSlot = _itemSlot;
-  cloned->_damage = _damage;
-  cloned->_armorClass = _armorClass;
-  cloned->_weight = _weight;
-  cloned->_price = _price;
-  cloned->_usesCount = _usesCount;
-  cloned->_targetType = _targetType;
-  cloned->_itemSlot = _itemSlot;
-  cloned->_scriptId = _scriptId;
-  cloned->_type = _type;
+  clone( cloned.get() );
 
   return cloned;
 }
@@ -113,6 +122,16 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
 TargetType Pickable::getTargetType() const
 {
   return _targetType;
+}
+
+int Pickable::getRange() const
+{
+  return _range;
+}
+
+int Pickable::getRadius() const
+{
+  return _radius;
 }
 
 int Pickable::getScriptId() const
@@ -252,8 +271,27 @@ std::string Pickable::getDescription()
     str += colorToStr(TCODColor::darkTurquoise, true) + "Armor class: " + toStr(getArmorClass()) + "#";
   }
 
-         return str;
+  return str;
+}
+
+void Pickable::clone(Pickable *p)
+{
+  if ( p )
+  {
+    p->_stackable = _stackable;
+    p->_amount = _amount;
+    p->_itemSlot = _itemSlot;
+    p->_damage = _damage;
+    p->_armorClass = _armorClass;
+    p->_weight = _weight;
+    p->_price = _price;
+    p->_usesCount = _usesCount;
+    p->_targetType = _targetType;
+    p->_itemSlot = _itemSlot;
+    p->_scriptId = _scriptId;
+    p->_type = _type;
   }
+}
 
 std::string Pickable::getScriptPath() const
 {

@@ -133,6 +133,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
   MonsterDescriptionPtr mobDsc(new MonsterDescription );  
   mobDsc->level = 123;
   mobDsc->experience = 666;
+  mobDsc->type = CharacterType::Monster;
 
   a1->insertFeature( Character::create(mobDsc) );
 

@@ -109,11 +109,21 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
 
   if ( _xml != nullptr )
   {
-    xml_node<>* pickableNode = _xml->first_node("Pickable");
+    xml_node<>* pickableNode = _xml->first_node("Scroll");
+    if ( pickableNode )
+    {
+      ScrollDescriptionPtr sDsc( new ScrollDescription );
+      sDsc->spellId = getAttribute<int>(pickableNode, "spell");
+      pickDsc = sDsc;
+    }
+    else
+    {
+      pickableNode = _xml->first_node("Pickable");
+      if ( pickableNode ) pickDsc.reset( new PickableDescription );
+    }
+
     if (pickableNode != nullptr)
     {
-      pickDsc.reset( new PickableDescription );
-
       pickDsc->scriptId = getAttribute<int>(pickableNode, "scriptId");
       pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
       pickDsc->amount = getAttribute<int>(pickableNode, "amount");
@@ -123,6 +133,8 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       pickDsc->price = getAttribute<int>(pickableNode, "price");
       pickDsc->uses = getAttribute<int>(pickableNode, "uses");
+      pickDsc->range = getAttribute<int>(pickableNode, "range");
+      pickDsc->radius = getAttribute<int>(pickableNode, "radius");
       pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
 
       pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
