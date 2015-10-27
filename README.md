@@ -17,19 +17,8 @@ Amarlon is a cRPG game made in ASCII graphics. The look is similar to roguelike 
 [![Image1](http://amarlon.eu/gallery_img/mini/amarlon1.png)](http://amarlon.eu/gallery_img/amarlon1.png)
 [![Image2](http://amarlon.eu/gallery_img/mini/amarlon2.png)](http://amarlon.eu/gallery_img/amarlon2.png)
 [![Image3](http://amarlon.eu/gallery_img/mini/insp_item.png)](http://amarlon.eu/gallery_img/insp_item.png)
+[![Image4](http://amarlon.eu/gallery_img/mini/spellbook_1.png)](http://amarlon.eu/gallery_img/spellbook_1.png)
 
 ### Contribution
 
-Would you like to join the project? Then you're warmly welcomed. Feel free to contact me: michal@lonski.pl .
-
-If you'd like to start, but you do not know how or where, here is a few options:
-
-If you do not have experience, here are issues which do not require much knowledge about the existing code or dev experience:
-
-* [Logger implementation](https://github.com/lonski/amarlon/issues/89)
-* [Managing texts translations](https://github.com/lonski/amarlon/issues/77)
-* [Actor effects persistence](https://github.com/lonski/amarlon/issues/94)
-
-If you'd like to get familiar with existing code, then it is good idea to take a look at Unit Tests or write your own tests.
-
-If you'd like to work on some more ambitious issues, take a look on existing ones: https://github.com/lonski/amarlon/issues or contact me.
+Would you like to join the project? Then you're warmly welcomed! Feel free to contact me (michal@lonski.pl) to discuss the details.
