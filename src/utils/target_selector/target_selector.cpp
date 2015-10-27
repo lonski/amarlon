@@ -14,23 +14,23 @@ TargetSelector::TargetSelector(const std::string &selectionMessage)
 {
 }
 
-TargetSelector* TargetSelector::create(TargetType type)
+TargetSelectorPtr TargetSelector::create(TargetType type)
 {
-  TargetSelector* ts = nullptr;
+  TargetSelectorPtr ts;
 
   switch(type)
   {
-    case TargetType::SELF:                    ts = new ExecutorSelector; break;
-    case TargetType::SINGLE_NEIGHBOUR:        ts = new SingleNeighbourSelector; break;
-    case TargetType::SINGLE_RANGE:            ts = new SingleRangeSelector; break;
-    case TargetType::SINGLE_RANGE_PROJECTILE: ts = new SingleRangeProjectileSelector; break;
-    case TargetType::AREA_RANGE_PROJECTILE:   ts = new AreaRangeSelector; break;
-    case TargetType::CASTER_AREA:             ts = new ExecutorAreaSelector; break;
+    case TargetType::SELF:                    ts.reset( new ExecutorSelector ); break;
+    case TargetType::SINGLE_NEIGHBOUR:        ts.reset( new SingleNeighbourSelector); break;
+    case TargetType::SINGLE_RANGE:            ts.reset( new SingleRangeSelector); break;
+    case TargetType::SINGLE_RANGE_PROJECTILE: ts.reset( new SingleRangeProjectileSelector); break;
+    case TargetType::AREA_RANGE_PROJECTILE:   ts.reset( new AreaRangeSelector); break;
+    case TargetType::CASTER_AREA:             ts.reset( new ExecutorAreaSelector); break;
     case TargetType::AREA_RANGE:
     {
       AreaRangeSelector* s = new AreaRangeSelector;
       s->setRenderPath(false);
-      ts = s;
+      ts.reset(s);
       break;
     }
     default:;

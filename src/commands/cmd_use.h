@@ -6,6 +6,9 @@
 
 namespace amarlon {
 
+class Scroll;
+typedef std::shared_ptr<Scroll> ScrollPtr;
+
 class CmdUse : public Command
 {
 public:
@@ -13,10 +16,13 @@ public:
 
   virtual bool accept(TCOD_key_t &key);
   virtual int execute();
-
+  
 private:
   ActorPtr acquireItemToUse();
   std::vector<ActorPtr> getUsableItems();
+  int useItem(ActorPtr item);
+  bool knowSpell(SpellPtr spell);
+  int transcribeScroll(ScrollPtr scroll);
 
 };
 

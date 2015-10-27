@@ -6,6 +6,11 @@
 #include <menu_window.h>
 #include <use_action.h>
 #include <inventory.h>
+#include <scroll.h>
+#include <spell_book.h>
+#include <menu_window.h>
+#include <alabel_menu_item.h>
+#include <transcribe_action.h>
 
 namespace amarlon {
 
@@ -26,9 +31,45 @@ int CmdUse::execute()
   TCODConsole::root->flush();
 
   if (item != nullptr)
-  {    
-    PickablePtr pickable = item->getFeature<Pickable>();
-    TargetSelector* tSelector = TargetSelector::create(pickable->getTargetType());
+  {
+    //For scroll prompt player for action (cast or transcribe)
+    ScrollPtr scroll = item->getFeature<Scroll>();
+    if ( scroll && !knowSpell( scroll->getSpell() ) )
+    {
+      gui::ALabelMenuItemPtr castItem( new gui::ALabelMenuItem("Cast") );
+      gui::ALabelMenuItemPtr transcribeItem( new gui::ALabelMenuItem("Transcribe") );
+
+      auto& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
+            window.addMenuItem( castItem );
+            window.addMenuItem( transcribeItem );
+            window.show();
+
+      if ( window.getSelectedItem() == castItem )
+      {
+        turns = useItem(item);
+      }
+      else
+      {
+        turns = transcribeScroll( scroll );
+      }
+    }
+    else
+    {
+      turns = useItem(item);
+    }
+  }
+
+  return turns;
+}
+
+int CmdUse::useItem(ActorPtr item)
+{
+  int turns = 0;
+
+  PickablePtr pickable = item->getFeature<Pickable>();
+  if ( pickable )
+  {
+    TargetSelectorPtr tSelector = TargetSelector::create(pickable->getTargetType());
 
     tSelector->setRange( pickable->getRange() );
     tSelector->setRadius( pickable->getRadius() );
@@ -37,6 +78,40 @@ int CmdUse::execute()
     {
       Engine::instance().getPlayer()->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
       ++turns;
+    }
+  }
+
+  return turns;
+}
+
+bool CmdUse::knowSpell(SpellPtr spell)
+{
+  bool know = false;
+
+  ActorPtr player = Engine::instance().getPlayer();
+  CharacterPtr c = player->getFeature<Character>();
+  if ( spell && c && c->getSpellBook() )
+  {
+    know = c->getSpellBook()->knowSpell( spell  );
+  }
+
+  return know;
+}
+
+int CmdUse::transcribeScroll(ScrollPtr scroll)
+{
+  int turns = 0;
+
+  if ( scroll )
+  {
+    ActorPtr player = Engine::instance().getPlayer();
+    if ( player->performAction( std::make_shared<TranscribeAction>( scroll ) ) )
+    {
+      turns = 20;
+    }
+    else
+    {
+      gui::msgBox("Failed to transcribe spell.", gui::MsgType::Error );
     }
   }
 

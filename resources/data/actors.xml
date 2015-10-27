@@ -102,7 +102,7 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Blade Trap" id="26" character=" " color="000000" transparent="1" blocks="0" fovOnly="0">
 		<Trap id="1" armed="1" difficulty="20"/>
 	</Actor>
-	<Actor name="Spell: Fireball" id="27" character="?" color="FFFFFF" transparent="1" blocks="0" fovOnly="0">
-		<Scroll spell="3" stackable="1" amount="1" category="5" />
+	<Actor name="Scroll: Fireball" id="27" character="?" color="FFFFFF" transparent="1" blocks="0" fovOnly="0">
+		<Scroll spell="3" stackable="1" amount="1" category="5" uses="1" />
 	</Actor>
 </Actors>

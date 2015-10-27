@@ -1,6 +1,9 @@
 #include "scroll.h"
 #include <spell.h>
 #include <pickable_description.h>
+#include <actor.h>
+#include <character_class.h>
+#include <spell_book.h>
 
 namespace amarlon {
 
@@ -45,7 +48,40 @@ bool Scroll::isEqual(ActorFeaturePtr rhs) const
 
 bool Scroll::use(ActorPtr executor, const Target& target)
 {
-  return _spell->cast(executor, target);
+  if ( _spell )
+  {
+    CharacterPtr c = executor->getFeature<Character>();
+    if ( c && c->getClass() && c->getClass()->getType() == _spell->getClass() )
+    {
+      --_usesCount;
+      return _spell->cast(executor, target);
+    }
+  }
+  return false;
+}
+
+bool Scroll::transcribe(ActorPtr transcriber)
+{
+  bool r = false;
+
+  --_usesCount;
+  if ( _spell )
+  {
+    if ( CharacterPtr c = transcriber->getFeature<Character>() )
+    {
+      if ( SpellBookPtr sb = c->getSpellBook() )
+      {
+        int levelDiff = c->getLevel() - _spell->getLevel();
+        if ( c->abilityRoll( AbilityScore::INT, levelDiff ) )
+        {
+          sb->addKnownSpell( _spell );
+          r = true;
+        }
+      }
+    }
+  }
+
+  return r;
 }
 
 SpellPtr Scroll::getSpell() const

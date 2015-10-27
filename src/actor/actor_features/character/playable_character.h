@@ -26,6 +26,7 @@ public:
   virtual Damage getDamage();
   virtual int modifyExperience(int modifier);
   virtual int getSpeed();
+  virtual bool abilityRoll(AbilityScore::Type as, int extraModifier = 0);
 
   /* class specific functions */
   virtual int getAbilityScore(AbilityScore::Type as);

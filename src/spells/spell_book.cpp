@@ -55,7 +55,8 @@ void SpellBook::addSlot(SpellSlot *slot)
 
 void SpellBook::addKnownSpell(SpellPtr spell)
 {
-  _knownSpells.push_back(spell);
+  auto it = std::find(_knownSpells.begin(), _knownSpells.end(), spell);
+  if ( it == _knownSpells.end() ) _knownSpells.push_back(spell);
 }
 
 void SpellBook::addKnownSpell(Spell *spell)
@@ -70,6 +71,11 @@ void SpellBook::addKnownSpells(CharacterClassType c, int level)
   });
 
   for ( auto s : spells ) addKnownSpell( s );
+}
+
+bool SpellBook::knowSpell(SpellPtr spell)
+{
+  return !getKnownSpells([&](SpellPtr s){ return s == spell; }).empty();
 }
 
 int SpellBook::getSlotCount(int level) const

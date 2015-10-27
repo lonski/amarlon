@@ -39,6 +39,31 @@ namespace AbilityScore
     {18,     3}
   };
 
+  static std::map<int, int> abilityRollTable = {
+    /* Level, Target */
+    { 1,  17 },
+    { 2,  16 },
+    { 3,  16 },
+    { 4,  15 },
+    { 5,  15 },
+    { 6,  14 },
+    { 7,  14 },
+    { 8,  13 },
+    { 9,  13 },
+    { 10, 12 },
+    { 11, 12 },
+    { 12, 11 },
+    { 13, 11 },
+    { 14, 10 },
+    { 15, 10 },
+    { 16,  9 },
+    { 17,  9 },
+    { 18,  8 },
+    { 19,  8 },
+    { 20,  7 },
+  };
+
+  int getAbilityRollTarget(int level);
   int getModifier( int abilityScoreValue );
 
   inline Type operator++(Type& x) { return x = (Type)(std::underlying_type<Type>::type(x) + 1); }

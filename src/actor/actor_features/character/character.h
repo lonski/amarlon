@@ -61,6 +61,7 @@ public:
   virtual RacePtr getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
   virtual bool rollSavingThrow(SavingThrows::Type type);
+  virtual bool abilityRoll(AbilityScore::Type as, int extraModifier = 0) = 0;
 
   virtual int getSpeed();
   virtual int getMovePoints();

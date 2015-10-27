@@ -20,11 +20,14 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   /**
-   * @brief Show dialog for player to choose action:
-   *        - cast spell
-   *        - copy spell to spellbook
+   * @brief Cast the spell. Check if executor (caster) has valid class to do so.
    */
   virtual bool use(ActorPtr executor, const Target& target);
+
+  /**
+   * @brief Transcribes the spell from scroll to transcriber's spellbook
+   */
+  virtual bool transcribe(ActorPtr transcriber);
 
   SpellPtr getSpell() const;
 

@@ -29,6 +29,7 @@ public:
   void addKnownSpell(SpellPtr spell);
   void addKnownSpell(Spell* spell);
   void addKnownSpells( CharacterClassType c, int level );
+  bool knowSpell(SpellPtr spell);
 
   int getSlotCount(int level) const;
 

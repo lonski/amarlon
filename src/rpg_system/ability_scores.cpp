@@ -14,5 +14,17 @@ namespace amarlon { namespace AbilityScore {
     return mod;
   }
 
+  int getAbilityRollTarget(int level)
+  {
+    int t = 0;
+
+    if ( level >= 1 && level <= 20 )
+    {
+      t = abilityRollTable[ level ];
+    }
+
+    return t;
+  }
+
 }}
 

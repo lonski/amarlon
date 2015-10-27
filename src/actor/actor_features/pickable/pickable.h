@@ -72,6 +72,7 @@ public:
 
 protected:
   void clone(Pickable* p);
+  int _usesCount;
 
 private:
   bool _stackable;
@@ -80,7 +81,6 @@ private:
   int _armorClass;
   int _weight;
   int _price;
-  int _usesCount;
   TargetType _targetType;
   Damage _damage;
   int _scriptId;

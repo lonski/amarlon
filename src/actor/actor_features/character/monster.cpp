@@ -111,5 +111,16 @@ int Monster::getMorale()
   return it != _modifiers.end() ? _morale + it->Value : _morale;
 }
 
+bool Monster::abilityRoll(AbilityScore::Type, int extraModifier)
+{
+  int roll = dices::roll(dices::D20);
+  if ( roll != dices::NATURAL_ONE )
+  {
+    int base = roll + extraModifier + 1;
+    return roll == dices::NATURAL_TWENTY || base >= AbilityScore::getAbilityRollTarget( getLevel() );
+  }
+  return false;
+}
+
 }
 

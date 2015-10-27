@@ -22,7 +22,7 @@ public:
   TargetSelector(const std::string& selectionMessage = "");
   virtual ~TargetSelector() {}
 
-  static TargetSelector* create(TargetType type);
+  static TargetSelectorPtr create(TargetType type);
 
   /**
    * @brief set the function wchih will be called each time, target selector updates

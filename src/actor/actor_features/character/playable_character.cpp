@@ -238,6 +238,17 @@ int PlayableCharacter::getAbilityScore(AbilityScore::Type as)
   return _abilityScores[ as ];
 }
 
+bool PlayableCharacter::abilityRoll(AbilityScore::Type as, int extraModifier)
+{
+  int roll = dices::roll(dices::D20);
+  if ( roll != dices::NATURAL_ONE )
+  {
+    int base = roll + getModifier(as) + extraModifier;
+    return  roll == dices::NATURAL_TWENTY || base >= AbilityScore::getAbilityRollTarget( getLevel() );
+  }
+  return false;
+}
+
 int PlayableCharacter::getModifier(AbilityScore::Type as)
 {
   return AbilityScore::getModifier( getAbilityScore(as) );

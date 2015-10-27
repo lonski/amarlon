@@ -23,6 +23,7 @@ public:
   virtual int getMissileAttackBonus();
   virtual Damage getDamage();
   virtual int getMorale();
+  virtual bool abilityRoll(AbilityScore::Type as, int extraModifier = 0);
 
   virtual std::string getDescription();
 
