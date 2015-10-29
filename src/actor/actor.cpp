@@ -69,7 +69,6 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     if (dsc->description)  _description = *(dsc->description);
     if (dsc->visible)      setVisible( *(dsc->visible) );
 
-
     //Features
     if ( dsc->pickable )    _features[ActorFeature::PICKABLE]    = ActorFeature::create(ActorFeature::PICKABLE,    dsc->pickable);
     if ( dsc->character )   _features[ActorFeature::CHARACTER]   = ActorFeature::create(ActorFeature::CHARACTER,   dsc->character);
@@ -86,7 +85,7 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     }
 
     //Status Effects
-    _effects->removeAll();
+    _effects.reset( new StatusEffectsManager( shared_from_this()) );
     for ( auto e : dsc->statusEffects )
     {
       StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
@@ -103,7 +102,6 @@ Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   , _x(x)
   , _y(y)
   , _map(map)
-  , _effects( new StatusEffectsManager )
   , _fovOnly(true)
   , _transparent(false)
   , _blocks(false)
@@ -375,7 +373,7 @@ void Actor::setVisible(bool visible)
 {
   _flags.set(0, visible);
 
-  if ( visible )
+  if ( visible && _effects )
   {
     getStatusEffects().remove( "Invisibility" );
   }
