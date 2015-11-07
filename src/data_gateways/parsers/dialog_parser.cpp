@@ -58,6 +58,7 @@ std::vector<Dialog> DialogParser::parseDialogs()
         {
           Choice c;
           c.id = getAttribute<int>(cNode, "id");
+          c.jump = getAttribute<int>(cNode, "jump");
           c.text = getNodeValue<std::string>(cNode);
           d.choices.push_back(c);
         }

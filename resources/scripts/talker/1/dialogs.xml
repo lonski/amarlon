@@ -2,8 +2,8 @@
 	<dialog id="1">
 		Hello stranger, how can I help you?
 		<choices>
-			<choice id="1" goto="2">I need some awesome weapon to smash the unfaithful!</choice>
-			<choice id="2" goto="3">Give me some beer.</choice>
+			<choice id="1" jump="2">I need some awesome weapon to smash the unfaithful!</choice>
+			<choice id="2" jump="3">Give me some beer.</choice>
 			<choice id="3">Nevermind.</choice>
 		</choices>
 	</dialog>

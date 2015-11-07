@@ -65,6 +65,10 @@ Dialog Talker::talk(ActorPtr talker, const Dialog &dialog, const Choice &choice)
       lua.logError(e);
     }
   }
+  else
+  {
+    if ( choice.jump != 0 ) dialogId = choice.jump;
+  }
 
   return getDialog( dialogId );
 }

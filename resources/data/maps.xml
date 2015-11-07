@@ -45,6 +45,7 @@
 				<Trap id="1" armed="1" difficulty="20" detected="0"/>
 			</Actor>
 			<Actor id="4" x="61" y="33"/>
+			<Actor id="28" x="62" y="33"/>
 			<Actor id="8" x="46" y="34"/>
 			<Actor id="26" x="39" y="20"/>
 		</Actors>

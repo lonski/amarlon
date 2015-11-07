@@ -8,11 +8,13 @@ namespace amarlon {
 
 struct Choice
 {
-  Choice(int id = 0)
+  Choice(int id = 0, int jump = 0)
     : id(id)
+    , jump(jump)
   {}
 
   int id;
+  int jump;
   std::string text;
 
   operator bool() const
@@ -23,7 +25,8 @@ struct Choice
   bool operator==(const Choice& rhs) const
   {
     return rhs.id == id &&
-           rhs.text == text;
+           rhs.text == text &&
+           rhs.jump == jump;
   }
 };
 
