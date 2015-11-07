@@ -8,6 +8,7 @@
 #include <ai.h>
 #include <monster_ai.h>
 #include <status_effects_manager.h>
+#include <talker.h>
 
 namespace amarlon { namespace lua_api {
 
@@ -104,7 +105,13 @@ void ActorRegistrar::reg(lua_State* state)
         .def("get", &MonsterAiPtr::get),
 
       class_<MonsterAi, Ai>("MonsterAi")
-        .def("isHunting", &MonsterAi::isHunting)
+        .def("isHunting", &MonsterAi::isHunting),
+
+      class_<TalkerPtr>("TalkerPtr")
+        .def("get", &TalkerPtr::get),
+
+      class_<Talker>("Talker")
+        .def("getId", &Talker::getId)
 
   ];
 }

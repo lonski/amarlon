@@ -206,6 +206,7 @@ set(HEADER_FILES
     lua_api/registrations/skill_registrar.h
     lua_api/registrations/map_registrar.h
     lua_api/registrations/modifier_registrar.h
+    lua_api/registrations/dialog_registarar.h
     skills/skill.h
     skills/skill_id.h
 )
@@ -372,6 +373,7 @@ set(SOURCE_FILES
     lua_api/registrations/skill_registrar.cpp
     lua_api/registrations/map_registrar.cpp
     lua_api/registrations/modifier_registrar.cpp
+    lua_api/registrations/dialog_registarar.cpp
     skills/skill.cpp
 )
 

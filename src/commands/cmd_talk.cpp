@@ -45,7 +45,7 @@ int CmdTalk::execute()
 std::pair<Dialog, Choice> CmdTalk::display(const Dialog &d)
 {
   //TODO: show window to player and allow answer choosing
-  return std::make_pair(Dialog(), Choice() );
+  return std::make_pair(d, Choice() );
 }
 
 }

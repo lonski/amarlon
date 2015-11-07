@@ -48,4 +48,11 @@ void LuaState::logError(const luabind::error &e) const
   gui::msgBox(str.str(), gui::MsgType::Error);
 }
 
+void LuaState::logError(const std::exception &e) const
+{
+  std::ostringstream str;
+  str << "Error when executing script: \n" << e.what();
+  gui::msgBox(str.str(), gui::MsgType::Error);
+}
+
 }}

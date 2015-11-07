@@ -51,7 +51,7 @@ Dialog Talker::talk(ActorPtr talker, const Dialog &dialog, const Choice &choice)
   {
     try
     {
-      dialogId = luabind::call_function<bool>(
+      dialogId = luabind::call_function<int>(
                       lua()
                     , "onTalk"
                     , talker
@@ -61,6 +61,10 @@ Dialog Talker::talk(ActorPtr talker, const Dialog &dialog, const Choice &choice)
                   );
     }
     catch(luabind::error& e)
+    {
+      lua.logError(e);
+    }
+    catch(std::exception& e)
     {
       lua.logError(e);
     }

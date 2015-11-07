@@ -32,6 +32,7 @@ public:
 
   void registerAPI();
   void logError(const luabind::error& e) const;
+  void logError(const std::exception &e) const;
 
 private:
   lua_State* _state;
