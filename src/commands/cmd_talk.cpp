@@ -4,6 +4,9 @@
 #include <engine.h>
 #include <actor.h>
 #include <dialog.h>
+#include <engine.h>
+#include <window_manager.h>
+#include <talk_window.h>
 
 namespace amarlon {
 
@@ -37,6 +40,8 @@ int CmdTalk::execute()
     }
     while( talk.first.id != -1 );
 
+    Engine::instance().render();
+    TCODConsole::root->flush();
   }
 
   return turns;
@@ -44,8 +49,18 @@ int CmdTalk::execute()
 
 std::pair<Dialog, Choice> CmdTalk::display(const Dialog &d)
 {
-  //TODO: show window to player and allow answer choosing
-  return std::make_pair(d, Choice() );
+  if ( d.id > 0 )
+  {
+    auto& window = Engine::instance()
+                 .getWindowManager()
+                 .getWindow<gui::TalkWindow>();
+
+    window.setDialog(d);
+    window.show();
+
+    return std::make_pair( d, window.getChoice() );
+  }
+  return std::make_pair( d, Choice() );
 }
 
 }

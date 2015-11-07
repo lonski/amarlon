@@ -99,6 +99,42 @@ void Inventory::clear()
   _items->clear();
 }
 
+bool Inventory::modifyGoldAmount(int modifier)
+{
+  bool r = false;
+
+  auto i = items(ActorType::GoldCoin);
+  if ( !i.empty() )
+  {
+    PickablePtr p = i.front()->getFeature<Pickable>();
+    if ( p && p->getAmount() >= modifier )
+    {
+      if ( modifier < 0 )
+        remove( p->spilt( -modifier ) );
+      else
+        p->setAmount( p->getAmount() + modifier );
+
+      r = true;
+    }
+  }
+
+  return r;
+}
+
+int Inventory::getGoldAmount() const
+{
+  int amount = 0;
+
+  auto i = items(ActorType::GoldCoin);
+  if ( !i.empty() )
+  {
+    PickablePtr p = i.front()->getFeature<Pickable>();
+    if ( p ) amount = p->getAmount();
+  }
+
+  return amount;
+}
+
 void Inventory::performActionOnActors(std::function<void(ActorPtr)> fun)
 {
   std::for_each(_items->begin(), _items->end(), fun);
@@ -119,7 +155,7 @@ void Inventory::setSlotCount(const size_t &maxSize)
   _slotCount = maxSize;
 }
 
-std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun)
+std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun) const
 {
   std::vector<ActorPtr> items;
 
@@ -132,6 +168,11 @@ std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun)
   }
 
   return items;
+}
+
+std::vector<ActorPtr> Inventory::items(ActorType type) const
+{
+  return items([&type](ActorPtr a){ return a->getType() == type;});
 }
 
 }

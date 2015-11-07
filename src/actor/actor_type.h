@@ -31,6 +31,7 @@ enum class ActorType
   BladeTrap = 26,
   ScrollFireball = 27,
   Toilet = 28,
+  Beer = 29,
   End
 };
 

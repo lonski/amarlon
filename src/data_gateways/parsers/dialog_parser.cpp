@@ -49,18 +49,21 @@ std::vector<Dialog> DialogParser::parseDialogs()
       Dialog d;
       d.id = getAttribute<int>(dialogNode, "id");
       d.text = getNodeValue<std::string>( dialogNode );
+      trim(d.text);
 
-      rapidxml::xml_node<>* choicesNode = _xml->first_node("choices");
+      rapidxml::xml_node<>* choicesNode = dialogNode->first_node("choices");
       if ( choicesNode != nullptr )
       {
-        rapidxml::xml_node<>* cNode = _xml->first_node("choice");
+        rapidxml::xml_node<>* cNode = choicesNode->first_node("choice");
         while ( cNode != nullptr )
         {
           Choice c;
           c.id = getAttribute<int>(cNode, "id");
           c.jump = getAttribute<int>(cNode, "jump");
           c.text = getNodeValue<std::string>(cNode);
+
           d.choices.push_back(c);
+          cNode = cNode->next_sibling();
         }
       }
 

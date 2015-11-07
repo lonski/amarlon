@@ -31,6 +31,7 @@ protected:
 
   virtual void displayText() = 0;
   virtual void handleKey(TCOD_key_t& key) = 0;
+  virtual bool exitCondition(const TCOD_key_t& key);
 
 };
 

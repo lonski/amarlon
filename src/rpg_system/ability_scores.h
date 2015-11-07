@@ -14,7 +14,8 @@ namespace AbilityScore
     WIS = 2,
     DEX = 3,
     CON = 4,
-    CHA = 5
+    CHA = 5,
+    END = 6
   };
   const int MIN_VALUE = 3;
   const int MAX_VALUE = 18;
@@ -69,7 +70,7 @@ namespace AbilityScore
   inline Type operator++(Type& x) { return x = (Type)(std::underlying_type<Type>::type(x) + 1); }
   inline Type operator*(Type c) {return c;}
   inline Type begin(Type) {return Type::STR;}
-  inline Type end(Type)   {return Type::CHA;}
+  inline Type end(Type)   {return Type::END;}
 
   static std::map< Type, std::string > asString
   {

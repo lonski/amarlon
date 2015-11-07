@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <actor_feature.h>
+#include <actor_type.h>
 
 namespace amarlon {
 
@@ -37,6 +38,9 @@ public:
   bool remove(ActorPtr actor);
   void clear();
 
+  int getGoldAmount() const;
+  bool modifyGoldAmount(int modifier);
+
   size_t size() const;
   bool empty() const;
   size_t slotCount() const;
@@ -45,7 +49,8 @@ public:
   void performActionOnActors(std::function<void(ActorPtr)> fun);
   void sort(std::function<bool(ActorPtr, ActorPtr)> fun);
 
-  std::vector<ActorPtr> items(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
+  std::vector<ActorPtr> items(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;}) const;
+  std::vector<ActorPtr> items(ActorType type) const;
 
 private:
   ActorContainerPtr _items;
