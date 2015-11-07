@@ -1,0 +1,36 @@
+<dialogs>
+	<dialog id="1">
+		<text>Hello stranger, how can I help you?</text>
+		<choices>
+			<choice id="1" goto="2">I need some awesome weapon to smash the unfaithful!</choice>
+			<choice id="2" goto="3">Give me some beer.</choice>
+			<choice id="3">Nevermind.</choice>
+		</choices>
+	</dialog>
+	<dialog id="2">
+		<text>This is an inn, not a weapon shop.</text>
+		<choices>
+			<choice id="1">Ehh..</choice>
+		</choices>
+	</dialog>
+	<dialog id="3">
+		<text>This will be 2gp.</text>
+		<choices>
+			<choice id="1">What? 1gp at most for this rabbit's piss!</choice>
+			<choice id="2">Here you go.</choice>
+		</choices>
+	</dialog>
+	<dialog id="4">
+		<text>Then go away!</text>
+		<choices>
+			<choice id="1">Bye.</choice>
+		</choices>
+	</dialog>	
+	<dialog id="5">
+		<text>Ha! But those rabbits drunk real beer! You're funny guy. Fine, for you - 1gp.</text>
+		<choices>
+			<choice id="1">Here you are.</choice>
+			<choice id="2">Sorry I changed my mind.</choice>
+		</choices>
+	</dialog>	
+</dialogs>

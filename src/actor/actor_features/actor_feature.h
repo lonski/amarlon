@@ -29,6 +29,7 @@ public:
     PICKABLE,
     DESTROYABLE,
     TRAP,
+    TALKER,
     FT_END
   };
 

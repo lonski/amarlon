@@ -22,6 +22,7 @@ set(HEADER_FILES
     actor/actor_features/destroyable/drop_rule.h
     actor/actor_features/trap/trap.h
     actor/actor_features/trap/trap_id.h
+    actor/actor_features/talker/talker.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
@@ -82,6 +83,7 @@ set(HEADER_FILES
     data_gateways/descriptions/actor_feature_descriptions/inventory_description.h
     data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
     data_gateways/descriptions/actor_feature_descriptions/trap_description.h
+    data_gateways/descriptions/actor_feature_descriptions/talker_description.h
     data_gateways/descriptions/description.h
     data_gateways/databases/map_db.h
     data_gateways/databases/actor_db.h
@@ -220,6 +222,7 @@ set(SOURCE_FILES
     actor/actor_features/pickable/scroll.cpp
     actor/actor_features/destroyable/destroyable.cpp
     actor/actor_features/trap/trap.cpp
+    actor/actor_features/talker/talker.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
     actor/status_effect.cpp
