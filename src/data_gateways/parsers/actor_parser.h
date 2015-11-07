@@ -16,6 +16,7 @@ struct OpenableDescription;
 struct WearerDescription;
 struct DestroyableDescription;
 struct TrapDescription;
+struct TalkerDescription;
 
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 typedef std::shared_ptr<InventoryDescription> InventoryDescriptionPtr;
@@ -26,6 +27,7 @@ typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;
 typedef std::shared_ptr<WearerDescription> WearerDescriptionPtr;
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;
 typedef std::shared_ptr<TrapDescription> TrapDescriptionPtr;
+typedef std::shared_ptr<TalkerDescription> TalkerDescriptionPtr;
 
 class ActorParser : public Parser
 {
@@ -44,6 +46,7 @@ private:
   WearerDescriptionPtr      parseWearerDsc();
   DestroyableDescriptionPtr parseDestroyableDsc();
   TrapDescriptionPtr        parseTrapDsc();
+  TalkerDescriptionPtr      parseTalkerDsc();
 
 };
 

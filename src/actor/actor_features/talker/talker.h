@@ -20,6 +20,7 @@ public:
 
   static TalkerPtr create(DescriptionPtr dsc);
   virtual ActorFeature::Type getType();
+  virtual int getId() const;
 
   /**
    * @brief Proceeds a talk between actors.
@@ -43,6 +44,7 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual std::string getScript() const;
+  static std::string getScript(int id);
 
 private:
   int _id;

@@ -53,6 +53,7 @@ set(HEADER_FILES
     data_gateways/parsers/spell_parser.h
     data_gateways/parsers/skill_parser.h
     data_gateways/parsers/rpg_parser.h
+    data_gateways/parsers/dialog_parser.h
     data_gateways/serializers/serializer.h
     data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
@@ -71,6 +72,7 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/player_ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/trap_serializer.h
+    data_gateways/serializers/actor_feature_serializers/talker_serializer.h
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
     data_gateways/descriptions/spell_description.h
@@ -250,6 +252,7 @@ set(SOURCE_FILES
     data_gateways/parsers/spell_parser.cpp
     data_gateways/parsers/skill_parser.cpp
     data_gateways/parsers/rpg_parser.cpp
+    data_gateways/parsers/dialog_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
@@ -266,6 +269,7 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/monster_ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/player_ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/talker_serializer.cpp
     data_gateways/databases/actor_db.cpp
     data_gateways/databases/map_db.cpp
     data_gateways/databases/tile_db.cpp

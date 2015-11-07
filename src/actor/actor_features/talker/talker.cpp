@@ -37,6 +37,11 @@ ActorFeature::Type Talker::getType()
   return Talker::featureType;
 }
 
+int Talker::getId() const
+{
+  return _id;
+}
+
 Dialog Talker::talk(ActorPtr talker, const Dialog &dialog, const Choice &choice)
 {
   int dialogId = -1;
@@ -93,7 +98,12 @@ bool Talker::isEqual(ActorFeaturePtr rhs) const
 
 std::string Talker::getScript() const
 {
-  return "scripts/talker/" + std::to_string(_id) + "/script.lua";
+  return Talker::getScript(_id);
+}
+
+std::string Talker::getScript(int id)
+{
+  return "scripts/talker/" + std::to_string(id) + "/script.lua";
 }
 
 }
