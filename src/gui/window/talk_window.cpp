@@ -5,18 +5,20 @@
 namespace amarlon { namespace gui {
 
 TalkWindow::TalkWindow()
-  : _choices(new AMenu)
+  : FixedSizeTextWindow(Engine::consoleWidth, Engine::bottomPanelHeight)
+  , _choices(new AMenu)
 {
 }
 
 TalkWindow::~TalkWindow()
 {
-
 }
 
 AWindow &TalkWindow::setDefaults()
 {
-  ResizeableTextWindow::setDefaults();
+  FixedSizeTextWindow::setDefaults();
+  setPosition(AWidget::WINDOW_BOTTOM_LEFT);
+  addWidget( _choices );
   setMargin(1);
   _choices->setX(_margin);
 
@@ -25,7 +27,7 @@ AWindow &TalkWindow::setDefaults()
 
 AWindow &TalkWindow::show()
 {
-  setWindowText( _dialog.text );
+  setText( _dialog.text );
 
   _choices->removeAllItems();
   for ( Choice c : _dialog.choices )
@@ -35,7 +37,7 @@ AWindow &TalkWindow::show()
     _choices->addItem(item);
   }
 
-  ResizeableTextWindow::show();
+  FixedSizeTextWindow::show();
   return *this;
 }
 
@@ -60,12 +62,8 @@ Choice TalkWindow::getChoice()
 
 void TalkWindow::displayText()
 {
-  ResizeableTextWindow::displayText();
-  addWidget( _choices );
-  _choices->setY( getHeight() );
-  setHeight( std::max(getHeight() + _choices->getHeight() + 2, Engine::screenHeight / 3) );
-  setWidth( std::max( getWidth(), (int)(Engine::screenWidth * 0.6) ) );
-  setPosition(AWindow::GAME_SCREEN_CENTER);
+  FixedSizeTextWindow::displayText();
+  _choices->setY( _list->getY() + _list->size() + 2 );
 }
 
 void TalkWindow::handleKey(TCOD_key_t& k)

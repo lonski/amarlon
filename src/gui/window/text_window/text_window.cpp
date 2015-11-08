@@ -37,12 +37,12 @@ AWindow& TextWindow::show()
   return *this;
 }
 
-std::string TextWindow::getWindowText() const
+std::string TextWindow::getText() const
 {
   return _text;
 }
 
-TextWindow& TextWindow::setWindowText(const std::string &text)
+TextWindow& TextWindow::setText(const std::string &text)
 {
   _text = text;
   return *this;

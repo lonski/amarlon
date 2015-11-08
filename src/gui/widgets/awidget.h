@@ -16,7 +16,9 @@ public:
   enum PositionFlag
   {
     WINDOW_CENTER,
-    GAME_SCREEN_CENTER
+    GAME_SCREEN_CENTER,
+    GAME_SCREEN_BOTTOM,
+    WINDOW_BOTTOM_LEFT
   };
 
   AWidget();

@@ -1,7 +1,7 @@
 #ifndef TALK_WINDOW_H
 #define TALK_WINDOW_H
 
-#include <resizeable_text_window.h>
+#include <fixed_size_text_window.h>
 #include <dialog.h>
 
 namespace amarlon {
@@ -11,7 +11,7 @@ namespace gui {
 class AMenu;
 typedef std::shared_ptr<AMenu> AMenuPtr;
 
-class TalkWindow : public ResizeableTextWindow
+class TalkWindow : public FixedSizeTextWindow
 {
 public:
   TalkWindow();

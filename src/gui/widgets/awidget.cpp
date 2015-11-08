@@ -44,10 +44,21 @@ void AWidget::setPosition(AWidget::PositionFlag position)
                    Engine::screenHeight / 2 - getHeight() / 2);
       break;
     }
-  case GAME_SCREEN_CENTER:
+    case GAME_SCREEN_CENTER:
     {
       setPosition( Engine::consoleWidth / 2 - getWidth() / 2,
                    Engine::consoleHeight / 2 - getHeight() / 2);
+      break;
+    }
+    case GAME_SCREEN_BOTTOM:
+    {
+      setPosition( Engine::consoleWidth / 2 - getWidth() / 2,
+                   Engine::consoleHeight - getHeight());
+      break;
+    }
+    case WINDOW_BOTTOM_LEFT:
+    {
+      setPosition( 0, Engine::screenHeight - getHeight());
       break;
     }
   }
