@@ -34,12 +34,12 @@ public:
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
-  bool add(ActorPtr actor);
-  bool remove(ActorPtr actor);
+  bool add(ActorPtr actor, bool notify = false);
+  bool remove(ActorPtr actor, bool notify = false);
   void clear();
 
   int getGoldAmount() const;
-  bool modifyGoldAmount(int modifier);
+  bool modifyGoldAmount(int modifier, bool notify = false);
 
   size_t size() const;
   bool empty() const;
@@ -52,11 +52,14 @@ public:
   std::vector<ActorPtr> items(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;}) const;
   std::vector<ActorPtr> items(ActorType type) const;
 
+
 private:
   ActorContainerPtr _items;
   size_t _slotCount;
   bool _pushToFront;
 
+  void notifyAdd(ActorPtr actor);
+  void notifyRemove(ActorPtr actor, int amount);
 
 };
 

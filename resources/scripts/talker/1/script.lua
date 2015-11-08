@@ -20,8 +20,8 @@ function onTalk(talker, npc, dialog, choice)
 		inv = talker:get():inventory():get()
 		gold = inv:getGoldAmount()
 		if gold >= 2 then
-			inv:modifyGoldAmount(-2)
-			inv:add( ActorDB:fetch(BEER) )
+			inv:modifyGoldAmount(-2,true)
+			inv:add( ActorDB:fetch(BEER),true )
 		else
 			ret = 6
 		end
@@ -31,8 +31,8 @@ function onTalk(talker, npc, dialog, choice)
 		inv = talker:get():inventory():get()
 		gold = inv:getGoldAmount()
 		if gold >= 1 then
-			inv:modifyGoldAmount(-1)
-			inv:add( ActorDB:fetch(BEER) )
+			inv:modifyGoldAmount(-1,true)
+			inv:add( ActorDB:fetch(BEER),true )
 		else
 			ret = 6
 		end
