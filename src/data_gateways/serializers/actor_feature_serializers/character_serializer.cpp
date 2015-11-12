@@ -38,6 +38,7 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
     addAttribute    ( characterNode, "speed",        character->_speed                );
     addAttributeEnum( characterNode, "class",        character->getClass()->getType() );
     addAttributeEnum( characterNode, "race",         character->getRace()->getType()  );
+    addAttributeEnum( characterNode, "team",         character->getTeam()             );
 
     serializeSpellbook(characterNode, character);
     serializeSkills(character, characterNode);

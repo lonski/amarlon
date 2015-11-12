@@ -212,6 +212,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->race = (RaceType)getAttribute<int>(characterNode, "race");
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");
+      dsc->team = (relations::Team)getAttribute<int>(characterNode, "team");
 
       //Parse Spellbook
       xml_node<>* spellbookNode = characterNode->first_node("Spellbook");

@@ -242,16 +242,34 @@ bool Actor::sees(ActorPtr actor)
   return false;
 }
 
-bool Actor::isAllyOf(ActorPtr)
+bool Actor::isAllyOf(ActorPtr actor)
 {
-  //TODO: Define relations table and teams
+  if ( actor )
+  {
+    CharacterPtr me = getFeature<Character>();
+    CharacterPtr he = actor->getFeature<Character>();
+    if ( me && he )
+    {
+      return relations::get(me->getTeam(), he->getTeam())
+          == relations::Ally;
+    }
+  }
   return false;
 }
 
-bool Actor::isHostileTo(ActorPtr)
+bool Actor::isHostileTo(ActorPtr actor)
 {
-  //TODO: Define relations table and teams
-  return true;
+  if ( actor )
+  {
+    CharacterPtr me = getFeature<Character>();
+    CharacterPtr he = actor->getFeature<Character>();
+    if ( me && he )
+    {
+      return relations::get(me->getTeam(), he->getTeam())
+          == relations::Hostile;
+    }
+  }
+  return false;
 }
 
 void Actor::interract(ActorPtr actor)

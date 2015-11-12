@@ -8,6 +8,7 @@
 #include <damage.h>
 #include <description.h>
 #include <character_type.h>
+#include <relations.h>
 
 namespace amarlon {
 
@@ -46,6 +47,7 @@ struct CharacterDescription : Description
     , race(RaceType::NoRace)
     , speed(0)
     , type(CharacterType::NoType)
+    , team(relations::Monster)
   {}
 
   int level;
@@ -60,6 +62,7 @@ struct CharacterDescription : Description
   std::vector<SkillDescription> skills;
   std::vector<std::string> modifiers;
   CharacterType type;
+  relations::Team team;
 };
 
 

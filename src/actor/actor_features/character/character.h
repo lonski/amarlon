@@ -14,6 +14,7 @@
 #include <item_slot_type.h>
 #include <skill_id.h>
 #include <modifier.h>
+#include <relations.h>
 
 namespace amarlon {
 
@@ -93,6 +94,9 @@ public:
   virtual void addModifier(const Modifier& mod);
   virtual void removeModifier(const Modifier& mod);
 
+  virtual relations::Team getTeam() const;
+  virtual void setTeam(relations::Team team);
+
 protected:
   virtual void setLevel(int level);
   virtual void setMaxHitPoints(int maxHp);
@@ -111,6 +115,7 @@ private:
   int _movePoints;
   SpellBookPtr _spellbook;
   std::vector<SkillPtr> _skills;
+  relations::Team _team;
 
   SkillPtr getModifiedSkill(SkillPtr s) const;
 

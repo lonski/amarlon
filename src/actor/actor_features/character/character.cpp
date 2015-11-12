@@ -21,14 +21,7 @@ namespace amarlon {
 const ActorFeature::Type Character::featureType = ActorFeature::CHARACTER;
 
 Character::Character()  
-  : _level(0)
-  , _hitPoints(0)
-  , _maxHitPoints(0)
-  , _defaultArmorClass(11) //no-armor AC
-  , _experience(0)
-  , _speed(0)
-  , _movePoints(0)
-  , _spellbook(new SpellBook)
+  : Character(nullptr)
 {
 }
 
@@ -41,6 +34,7 @@ Character::Character(DescriptionPtr dsc)
   , _speed(0)
   , _movePoints(0)
   , _spellbook(new SpellBook)
+  , _team(relations::Monster)
 {
   CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
   if ( cDsc != nullptr )
@@ -50,6 +44,7 @@ Character::Character(DescriptionPtr dsc)
     _race = Race::create( cDsc->race );
     _defaultArmorClass = cDsc->defaultArmorClass;
     _speed = cDsc->speed;
+    _team = cDsc->team;
     _spellbook = SpellBook::create(cDsc->spellbook);
 
     for(auto s : cDsc->skills)
@@ -89,6 +84,7 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal &= _level              == crhs->_level;
     equal &= _experience         == crhs->_experience;
     equal &= *_spellbook         == *(crhs->_spellbook);
+    equal &= _team               == crhs->_team;
     equal &= _skills.size() == crhs->_skills.size();
 
     equal &= _class && crhs->_class;
@@ -286,6 +282,16 @@ void Character::removeModifier(const Modifier &mod)
   }
 }
 
+relations::Team Character::getTeam() const
+{
+  return _team;
+}
+
+void Character::setTeam(relations::Team team)
+{
+  _team = team;
+}
+
 int Character::getSpeed()
 {
   return _speed;
@@ -412,6 +418,7 @@ void Character::cloneBase(Character *c)
   c->_spellbook = _spellbook->clone();
   c->_skills.clear();
   c->_modifiers = _modifiers;
+  c->_team = _team;
   for ( auto s : _skills ) c->_skills.push_back( s->clone() );
 }
 
