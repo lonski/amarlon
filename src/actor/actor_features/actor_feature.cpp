@@ -8,6 +8,7 @@
 #include <inventory.h>
 #include <trap.h>
 #include <actor.h>
+#include <talker.h>
 
 namespace amarlon {
 
@@ -31,6 +32,7 @@ ActorFeaturePtr ActorFeature::create(Type featureType, DescriptionPtr dsc)
       case PICKABLE:    feature = Pickable::create(dsc); break;
       case DESTROYABLE: feature = Destroyable::create(dsc); break;
       case TRAP:        feature = Trap::create(dsc); break;
+      case TALKER:      feature = Talker::create(dsc); break;
       default:;
     }
   }

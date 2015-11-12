@@ -22,9 +22,7 @@ AWindow& TextWindow::show()
   TCOD_key_t key;
   key.vk = TCODK_NONE;
 
-  while( !(key.vk == TCODK_ESCAPE  ) &&
-         !(key.vk == TCODK_ENTER   ) &&
-         !(key.vk == TCODK_KPENTER ) &&
+  while( !exitCondition(key) &&
          !(TCODConsole::isWindowClosed()))
   {  
     displayText();
@@ -39,12 +37,12 @@ AWindow& TextWindow::show()
   return *this;
 }
 
-std::string TextWindow::getWindowText() const
+std::string TextWindow::getText() const
 {
   return _text;
 }
 
-TextWindow& TextWindow::setWindowText(const std::string &text)
+TextWindow& TextWindow::setText(const std::string &text)
 {
   _text = text;
   return *this;
@@ -79,6 +77,13 @@ TextWindow &TextWindow::setMargin(int margin)
   int frame = isFramed() ? 1 : 0;
   _margin = margin + frame;
   return *this;
+}
+
+bool TextWindow::exitCondition(const TCOD_key_t &key)
+{
+  return key.vk == TCODK_ESCAPE  ||
+         key.vk == TCODK_ENTER   ||
+         key.vk == TCODK_KPENTER;
 }
 
 }}

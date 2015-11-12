@@ -27,6 +27,7 @@ set(HEADER_FILES
     actor/actor_features/destroyable/drop_rule.h
     actor/actor_features/trap/trap.h
     actor/actor_features/trap/trap_id.h
+    actor/actor_features/talker/talker.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
@@ -48,6 +49,7 @@ set(HEADER_FILES
     commands/cmd_inspect.h
     commands/cmd_rest.h
     commands/cmd_use_skill.h
+    commands/cmd_talk.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -57,6 +59,7 @@ set(HEADER_FILES
     data_gateways/parsers/spell_parser.h
     data_gateways/parsers/skill_parser.h
     data_gateways/parsers/rpg_parser.h
+    data_gateways/parsers/dialog_parser.h
     data_gateways/serializers/serializer.h
     data_gateways/serializers/animation_serializer.h
     data_gateways/serializers/map_serializer.h
@@ -73,6 +76,7 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
     data_gateways/serializers/actor_feature_serializers/ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/trap_serializer.h
+    data_gateways/serializers/actor_feature_serializers/talker_serializer.h
     data_gateways/descriptions/animation_description.h
     data_gateways/descriptions/actor_descriptions.h
     data_gateways/descriptions/spell_description.h
@@ -85,6 +89,7 @@ set(HEADER_FILES
     data_gateways/descriptions/actor_feature_descriptions/inventory_description.h
     data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
     data_gateways/descriptions/actor_feature_descriptions/trap_description.h
+    data_gateways/descriptions/actor_feature_descriptions/talker_description.h
     data_gateways/descriptions/description.h
     data_gateways/databases/map_db.h
     data_gateways/databases/actor_db.h
@@ -121,6 +126,7 @@ set(HEADER_FILES
     gui/window/character_creation_window/ability_scores_selection_panel.h
     gui/window/character_creation_window/value_setting_panel.h
     gui/window/character_creation_window/thief_skills_selection_panel.h
+    gui/window/talk_window.h
     utils/target_selector/executor_selector.h
     utils/target_selector/single_neighbour_selector.h
     utils/target_selector/single_range_selector.h
@@ -204,6 +210,7 @@ set(HEADER_FILES
     lua_api/registrations/skill_registrar.h
     lua_api/registrations/map_registrar.h
     lua_api/registrations/modifier_registrar.h
+    lua_api/registrations/dialog_registarar.h
     skills/skill.h
     skills/skill_id.h
 )
@@ -227,9 +234,11 @@ set(SOURCE_FILES
     actor/actor_features/pickable/scroll.cpp
     actor/actor_features/destroyable/destroyable.cpp
     actor/actor_features/trap/trap.cpp
+    actor/actor_features/talker/talker.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
     actor/status_effect.cpp
+    commands/cmd_talk.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp
     commands/cmd_fullscreen.cpp
@@ -254,6 +263,7 @@ set(SOURCE_FILES
     data_gateways/parsers/spell_parser.cpp
     data_gateways/parsers/skill_parser.cpp
     data_gateways/parsers/rpg_parser.cpp
+    data_gateways/parsers/dialog_parser.cpp
     data_gateways/serializers/animation_serializer.cpp
     data_gateways/serializers/map_serializer.cpp
     data_gateways/serializers/action_serializer.cpp
@@ -268,6 +278,7 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp
+    data_gateways/serializers/actor_feature_serializers/talker_serializer.cpp
     data_gateways/databases/actor_db.cpp
     data_gateways/databases/map_db.cpp
     data_gateways/databases/tile_db.cpp
@@ -302,6 +313,7 @@ set(SOURCE_FILES
     gui/window/character_creation_window/ability_scores_selection_panel.cpp
     gui/window/character_creation_window/value_setting_panel.cpp
     gui/window/character_creation_window/thief_skills_selection_panel.cpp
+    gui/window/talk_window.cpp
     utils/target_selector/executor_selector.cpp
     utils/target_selector/single_range_projectile_selector.cpp
     utils/target_selector/single_neighbour_selector.cpp
@@ -368,6 +380,7 @@ set(SOURCE_FILES
     lua_api/registrations/skill_registrar.cpp
     lua_api/registrations/map_registrar.cpp
     lua_api/registrations/modifier_registrar.cpp
+    lua_api/registrations/dialog_registarar.cpp
     skills/skill.cpp
 )
 

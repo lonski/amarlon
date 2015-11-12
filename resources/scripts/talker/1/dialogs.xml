@@ -1,0 +1,43 @@
+<dialogs>
+	<dialog id="1">
+		Hello my fellow! I'm Mr Toilet. What do you need?
+		<choices>
+			<choice id="1" jump="2">Uh.. maybe a poo?</choice>
+			<choice id="2" jump="3">Give me some beer.</choice>
+			<choice id="3">Nevermind.</choice>
+		</choices>
+	</dialog>
+	<dialog id="2">
+		Whoo I've got a lot of it. What kind?
+		<choices>
+			<choice id="1">Yy.. aha.. bye.</choice>
+		</choices>
+	</dialog>
+	<dialog id="3">
+		Of course, no problem! It will be 2gp.
+		<choices>
+			<choice id="1">What? 1gp at most for this rabbit's piss!</choice>
+			<choice id="2">Here you go.</choice>
+		</choices>
+	</dialog>
+	<dialog id="4">
+		Sorry, this is high quality pee. 2gp.
+		<choices>
+			<choice id="1">Ok, here you go.</choice>
+			<choice id="2">Bye then.</choice>
+		</choices>
+	</dialog>	
+	<dialog id="5">
+		Ha! But those rabbits drunk real beer! Fine, for you - 1gp.
+		<choices>
+			<choice id="1">Here you are.</choice>
+			<choice id="2">Sorry I changed my mind. Bye.</choice>
+		</choices>
+	</dialog>
+		<dialog id="6">
+		Hm it seems you are broken. No beer for you. Come back with money.
+		<choices>
+			<choice id="1">Eh..</choice>
+		</choices>
+	</dialog>
+</dialogs>

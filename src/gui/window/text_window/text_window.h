@@ -16,8 +16,8 @@ public:
   virtual AWindow& setDefaults();
   static WindowId getId() { return AWindow::TEXT; }
 
-  std::string getWindowText() const;
-  TextWindow& setWindowText(const std::string &text);
+  std::string getText() const;
+  TextWindow& setText(const std::string &text);
   TextWindow& setWindowTitle(const std::string &title);
   TextWindow& setWindowFrameColor(const TCODColor &getFrameColor);
   TextWindow& setCenterGameScreen();
@@ -31,6 +31,7 @@ protected:
 
   virtual void displayText() = 0;
   virtual void handleKey(TCOD_key_t& key) = 0;
+  virtual bool exitCondition(const TCOD_key_t& key);
 
 };
 

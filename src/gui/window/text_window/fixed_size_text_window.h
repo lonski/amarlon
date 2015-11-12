@@ -12,19 +12,18 @@ namespace amarlon { namespace gui {
 class FixedSizeTextWindow : public TextWindow
 {
   friend class WindowManager;
-  FixedSizeTextWindow(int w=50, int h=40);
 
 public:
   virtual AWindow& setDefaults();
   static  WindowId getId() { return AWindow::FIXED_SIZE_TEXT; }
 
-  virtual AWindow& setText(std::string text);
+  virtual TextWindow& setText(std::string text);
 
 protected:
+  FixedSizeTextWindow(int w=50, int h=40);
   virtual void displayText();
   virtual void handleKey(TCOD_key_t&);
 
-private:
   TextFormater _formater;
   AListPtr _list;
   unsigned _lineCount;

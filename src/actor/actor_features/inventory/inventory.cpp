@@ -67,7 +67,33 @@ bool Inventory::isEqual(ActorFeaturePtr rhs) const
   return equal;
 }
 
-bool Inventory::add(ActorPtr actor)
+void Inventory::notifyRemove(ActorPtr actor, int amount)
+{
+  ActorPtr owner = getOwner().lock();
+  if ( owner )
+  {
+    std::string item = actor->getName();
+    if ( amount > 1 ) item += " (" + toStr(amount) + ")";
+    owner->notify( Event( EventId::Item_Removed, {{"item", item}} ) );
+  }
+}
+
+void Inventory::notifyAdd(ActorPtr actor)
+{
+  ActorPtr owner = getOwner().lock();
+  if ( owner )
+  {
+    std::string item = actor->getName();
+
+    PickablePtr p = actor->getFeature<Pickable>();
+    if ( p && p->isStackable() && p->getAmount() > 1 )
+      item += " (" + toStr(p->getAmount()) + ")";
+
+    owner->notify( Event( EventId::Item_Added, {{"item", item}} ) );
+  }
+}
+
+bool Inventory::add(ActorPtr actor, bool notify)
 {
   _items->push_back(actor);
 
@@ -76,12 +102,17 @@ bool Inventory::add(ActorPtr actor)
     _items->remove( actor );
     return false;
   }
+
+  if ( notify ) notifyAdd(actor);
+
   return true;
 }
 
-bool Inventory::remove(ActorPtr actor)
+bool Inventory::remove(ActorPtr actor, bool notify)
 {
-  return _items->remove(actor);
+  bool r = _items->remove(actor);
+  if ( r && notify ) notifyRemove(actor, 1);
+  return r;
 }
 
 size_t Inventory::size() const
@@ -97,6 +128,48 @@ bool Inventory::empty() const
 void Inventory::clear()
 {
   _items->clear();
+}
+
+bool Inventory::modifyGoldAmount(int modifier, bool notify)
+{
+  bool r = false;
+
+  auto i = items(ActorType::GoldCoin);
+  if ( !i.empty() )
+  {
+    PickablePtr p = i.front()->getFeature<Pickable>();
+    if ( p && p->getAmount() >= modifier )
+    {
+      if ( modifier < 0 )
+      {
+        remove( p->spilt( -modifier ) );
+        if ( notify ) notifyRemove(i.front(), -modifier);
+      }
+      else
+      {
+        p->setAmount( p->getAmount() + modifier );
+        if ( notify ) notifyAdd(i.front());
+      }
+
+      r = true;
+    }
+  }
+
+  return r;
+}
+
+int Inventory::getGoldAmount() const
+{
+  int amount = 0;
+
+  auto i = items(ActorType::GoldCoin);
+  if ( !i.empty() )
+  {
+    PickablePtr p = i.front()->getFeature<Pickable>();
+    if ( p ) amount = p->getAmount();
+  }
+
+  return amount;
 }
 
 void Inventory::performActionOnActors(std::function<void(ActorPtr)> fun)
@@ -119,7 +192,7 @@ void Inventory::setSlotCount(const size_t &maxSize)
   _slotCount = maxSize;
 }
 
-std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun)
+std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun) const
 {
   std::vector<ActorPtr> items;
 
@@ -132,6 +205,11 @@ std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun)
   }
 
   return items;
+}
+
+std::vector<ActorPtr> Inventory::items(ActorType type) const
+{
+  return items([&type](ActorPtr a){ return a->getType() == type;});
 }
 
 }

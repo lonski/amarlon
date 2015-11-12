@@ -26,6 +26,7 @@ enum class CommandId
   Inspect,
   Rest,
   UseSkill,
+  Talk,
   End
 };
 

@@ -216,6 +216,28 @@ void Messenger::onNotify(Subject *subject, Event event)
           sprintf(msg, format, actor->getName().c_str());
         }
         break;
+        case EventId::Item_Added:
+        {
+          if ( actor->getType() == ActorType::Player )
+          {
+            color = TCODColor::gold;
+            const char* format = "Earned %s.";
+
+            sprintf(msg, format, event.params["item"].c_str());
+          }
+        }
+        break;
+        case EventId::Item_Removed:
+        {
+          if ( actor->getType() == ActorType::Player )
+          {
+            color = TCODColor::grey;
+            const char* format = "%s dissapeard.";
+
+            sprintf(msg, format, event.params["item"].c_str());
+          }
+        }
+        break;
 
         default:;
       }

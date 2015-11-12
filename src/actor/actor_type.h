@@ -30,6 +30,8 @@ enum class ActorType
   Goblin = 25,
   BladeTrap = 26,
   ScrollFireball = 27,
+  Toilet = 28,
+  Beer = 29,
   End
 };
 

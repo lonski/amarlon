@@ -45,7 +45,8 @@ bool Target::operator==(const Target &rhs) const
 {
   return x == rhs.x &&
          y == rhs.y &&
-      std::equal(actors.begin(), actors.end(), rhs.actors.begin() );
+         actors.size() == rhs.actors.size() &&
+         std::equal(actors.begin(), actors.end(), rhs.actors.begin() );
 }
 
 bool Target::operator!=(const Target &rhs) const

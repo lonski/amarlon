@@ -36,7 +36,7 @@ AWindow& FixedSizeTextWindow::setDefaults()
   return *this;
 }
 
-AWindow& FixedSizeTextWindow::setText(std::string text)
+TextWindow& FixedSizeTextWindow::setText(std::string text)
 {
   _allLines = _formater.format(text, _lineWidth);
   return *this;

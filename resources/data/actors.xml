@@ -105,4 +105,10 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Scroll: Fireball" id="27" character="?" color="FFFFFF" transparent="1" blocks="0" fovOnly="0">
 		<Scroll spell="3" stackable="1" amount="1" category="5" uses="1" />
 	</Actor>
+	<Actor name="Toilet" id="28" character="o" color="4D2600" transparent="1" blocks="0" fovOnly="0">
+		<Talker id="1"/>
+	</Actor>
+	<Actor name="Beer" id="29" character="!" color="B36B00" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="4"/>
+	</Actor>
 </Actors>

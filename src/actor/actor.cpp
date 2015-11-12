@@ -77,6 +77,7 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     if ( dsc->inventory )   _features[ActorFeature::INVENTORY]   = ActorFeature::create(ActorFeature::INVENTORY,   dsc->inventory);
     if ( dsc->destroyable ) _features[ActorFeature::DESTROYABLE] = ActorFeature::create(ActorFeature::DESTROYABLE, dsc->destroyable);
     if ( dsc->trap )        _features[ActorFeature::TRAP]        = ActorFeature::create(ActorFeature::TRAP,        dsc->trap);
+    if ( dsc->talker )      _features[ActorFeature::TALKER]      = ActorFeature::create(ActorFeature::TALKER,      dsc->talker);
 
     for (auto f : _features)
     {

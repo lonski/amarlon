@@ -8,6 +8,9 @@
 #include <ai.h>
 #include <status_effects_manager.h>
 #include <iterator_policy.hpp>
+#include <talker.h>
+#include <inventory.h>
+#include <actor_db.h>
 
 namespace amarlon { namespace lua_api {
 
@@ -16,6 +19,9 @@ void ActorRegistrar::reg(lua_State* state)
   using namespace luabind;
   module( state )
   [
+      class_<ActorDB>("ActorDB")
+        .def("fetch", &ActorDB::fetch),
+
       class_<ActorPtr>("ActorPtr")
         .def(constructor<>())
         .def("get", &ActorPtr::get),
@@ -46,6 +52,7 @@ void ActorRegistrar::reg(lua_State* state)
         .def("trap", (TrapPtr(Actor::*)()const)&Actor::getFeature)
         .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature)
         .def("ai", (AiPtr(Actor::*)()const)&Actor::getFeature)
+        .def("inventory", (InventoryPtr(Actor::*)()const)&Actor::getFeature)
         .def("getMap", &Actor::getMap)
         .def("isInFov", &Actor::isInFov)
         .def("isHostileTo", &Actor::isHostileTo),
@@ -58,6 +65,7 @@ void ActorRegistrar::reg(lua_State* state)
         .def("takeHeal", &Character::takeHeal )
         .def("takeDamage", &Character::takeDamage )
         .def("rollSavingThrow", &Character::rollSavingThrow )
+        .def("abilityRoll", &Character::abilityRoll )
         .def("getArmorClass", &Character::getArmorClass )
         .def("addModifier", &Character::addModifier)
         .def("removeModifier", &Character::removeModifier),
@@ -103,6 +111,22 @@ void ActorRegistrar::reg(lua_State* state)
         .def("getEnemiesInFov", &Ai::getEnemiesInFov)
         .def("isHunting", &Ai::isHunting)
         .def("setTarget", (void(Ai::*)(ActorPtr))&Ai::setTarget )
+        .def("setSneaking", &Ai::setSneaking ),
+
+      class_<TalkerPtr>("TalkerPtr")
+        .def("get", &TalkerPtr::get),
+
+      class_<Talker>("Talker")
+        .def("getId", &Talker::getId),
+
+      class_<InventoryPtr>("InventoryPtr")
+        .def("get", &InventoryPtr::get),
+
+      class_<Inventory>("Inventory")
+        .def("add", &Inventory::add)
+        .def("remove", &Inventory::remove)
+        .def("getGoldAmount", &Inventory::getGoldAmount)
+        .def("modifyGoldAmount", &Inventory::modifyGoldAmount)
 
   ];
 }

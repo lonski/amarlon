@@ -2,6 +2,7 @@
 #include <utils/xml_utils.h>
 #include <utils/utils.h>
 #include <actor_descriptions.h>
+#include <dialog_parser.h>
 
 namespace amarlon {
 
@@ -73,6 +74,7 @@ ActorDescriptionPtr ActorParser::parseDescription()
     actorDsc->inventory = parseInventoryDsc();
     actorDsc->destroyable = parseDestroyableDsc();
     actorDsc->trap = parseTrapDsc();
+    actorDsc->talker = parseTalkerDsc();
   }
 
   return actorDsc;
@@ -404,6 +406,26 @@ TrapDescriptionPtr ActorParser::parseTrapDsc()
       tDsc->detected = getAttribute<bool>( trapNode, "detected" );
       tDsc->difficulty = getAttribute<int>( trapNode, "difficulty" );
       tDsc->id = getAttribute<int>( trapNode, "id" );
+    }
+  }
+
+  return tDsc;
+}
+
+TalkerDescriptionPtr ActorParser::parseTalkerDsc()
+{
+  TalkerDescriptionPtr tDsc;
+
+  if (_xml != nullptr)
+  {
+    xml_node<>* tNode = _xml->first_node("Talker");
+    if (tNode != nullptr)
+    {
+      tDsc.reset( new TalkerDescription );
+      tDsc->id = getAttribute<int>( tNode, "id" );
+
+      DialogParser parser;
+      tDsc->dialogs = parser.parse( tDsc->id );
     }
   }
 

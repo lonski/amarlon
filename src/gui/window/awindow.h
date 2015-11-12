@@ -27,7 +27,8 @@ public:
     INPUT,
     SPELLBOOK,
     QUESTION,
-    CHARACTER_CREATION
+    CHARACTER_CREATION,
+    TALK_WINDOW
   };
 
   /**

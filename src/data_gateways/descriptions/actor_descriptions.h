@@ -10,6 +10,7 @@
 #include <inventory_description.h>
 #include <destroyable_description.h>
 #include <trap_description.h>
+#include <talker_description.h>
 
 #include <experimental/optional>
 
@@ -50,6 +51,7 @@ struct ActorDescription : Description
   InventoryDescriptionPtr inventory;
   DestroyableDescriptionPtr destroyable;
   TrapDescriptionPtr trap;
+  TalkerDescriptionPtr talker;
 
 };
 

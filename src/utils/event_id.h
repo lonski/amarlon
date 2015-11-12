@@ -27,7 +27,9 @@ enum class EventId
   TrapDisarmed,
   TrapArmed,
   Actor_Hidden,
-  Actor_CancelHidden
+  Actor_CancelHidden,
+  Item_Removed,
+  Item_Added
 
 };
 
