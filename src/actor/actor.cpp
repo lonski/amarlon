@@ -458,7 +458,6 @@ bool Actor::performAction(ActorActionPtr action)
 {
   AiPtr ai = getFeature<Ai>();
   return ai ? ai->performAction(action) : false;
-//  return action ? action->perform( shared_from_this() ) : false;
 }
 
 void Actor::render(TCODConsole *console)

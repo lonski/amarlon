@@ -21,6 +21,7 @@ Monster::Monster(DescriptionPtr dsc)
   {
     _morale = mDsc->morale;
     _hpMod = mDsc->hitPointsBonus;
+    _damage = mDsc->damage;
     setLevel( mDsc->level );    
     setMaxHitPoints( (static_cast<int>(dices::D8) * getLevel()) + mDsc->hitPointsBonus );
     setHitPoints( getMaxHitPoints() );
