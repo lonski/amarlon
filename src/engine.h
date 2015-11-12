@@ -77,8 +77,9 @@ public:
   bool isRunning() const;
 
   void render();
+  void flush();
   void update();
-  int processInput();
+  void processInput();
 
   gui::Gui&           getGui() const;
   gui::WindowManager& getWindowManager() const;
@@ -93,6 +94,8 @@ public:
   lua_api::LuaState& getLuaState()  const;
 
   const ActorPtr getPlayer() const;
+  TCOD_key_t getLastInput() const;
+
 
 private:
   gui::GuiPtr _gui;
@@ -111,8 +114,11 @@ private:
 
   bool _quit;
   bool _running;
+  TCOD_key_t _lastInput;
 
   std::vector<ColoredString> getActorsBenethPlayersFeet();
+  int updatePlayerControlledActors(MapPtr map);
+  void updateNonPlayerControlledActors(MapPtr map);
 
 };
 

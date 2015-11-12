@@ -4,7 +4,6 @@
 #include <world.h>
 #include <map.h>
 #include <engine.h>
-#include <monster_ai.h>
 #include <message_box.h>
 
 namespace amarlon {
@@ -16,7 +15,7 @@ CmdRest::CmdRest()
 {
 }
 
-bool CmdRest::accept(TCOD_key_t &key)
+bool CmdRest::accept(const TCOD_key_t& key)
 {
   return key.vk == TCODK_CHAR && key.c == 'R';
 }
@@ -26,8 +25,9 @@ int CmdRest::execute()
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
 
   auto mobs = map->getActors([](ActorPtr a){
-                auto mob = a->getFeature<MonsterAi>();
-                return mob && (a->isInFov() || mob->isHunting());
+                auto mob = a->getFeature<Ai>();
+                return mob && mob->getAiType() == AiType::MonsterAi &&
+                       (a->isInFov() || mob->isHunting());
               });
 
   if ( !mobs.empty() )

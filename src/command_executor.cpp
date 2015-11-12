@@ -12,7 +12,7 @@ CommandExecutor::CommandExecutor()
   }
 }
 
-int CommandExecutor::execute(TCOD_key_t &key)
+int CommandExecutor::execute(const TCOD_key_t& key)
 {
   for (auto c : _commands)
   {
@@ -22,7 +22,7 @@ int CommandExecutor::execute(TCOD_key_t &key)
     }
   }
 
-  return -1;
+  return 0;
 }
 
 SystemCommandExecutor::SystemCommandExecutor()
@@ -34,7 +34,7 @@ SystemCommandExecutor::SystemCommandExecutor()
   }
 }
 
-int SystemCommandExecutor::execute(TCOD_key_t &key)
+int SystemCommandExecutor::execute(const TCOD_key_t& key)
 {
   for (auto c : _commands)
   {
@@ -44,7 +44,7 @@ int SystemCommandExecutor::execute(TCOD_key_t &key)
     }
   }
 
-  return -1;
+  return 0;
 }
 
 }

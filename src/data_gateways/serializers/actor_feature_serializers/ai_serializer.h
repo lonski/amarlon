@@ -16,7 +16,7 @@ public:
   AiSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~AiSerializer();
 
-  virtual bool serialize(ActorFeaturePtr af) = 0;
+  virtual bool serialize(ActorFeaturePtr af);
 
 };
 

@@ -2,6 +2,7 @@
 #include <lua_state.h>
 #include <message_box.h>
 #include <dices.h>
+#include <utils.h>
 
 namespace amarlon {
 
@@ -26,7 +27,8 @@ void FreeFunctionRegistrar::reg(lua_State* state)
       def("log", &log),
       def("msg", &msg),
       def("rollDice",  (int(*)(dices::Dice))&dices::roll ),
-      def("rollDiceN", (int(*)(dices::Dice, int))&dices::roll )
+      def("rollDiceN", (int(*)(dices::Dice, int))&dices::roll ),
+      def("calculateDistance", (float(*)(ActorPtr, ActorPtr))&calculateDistance )
 
   ];
 }

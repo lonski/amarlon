@@ -16,7 +16,7 @@ CmdCast::CmdCast()
 {
 }
 
-bool CmdCast::accept(TCOD_key_t &key)
+bool CmdCast::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'C' );
 }

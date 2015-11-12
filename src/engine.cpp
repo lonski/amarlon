@@ -14,7 +14,6 @@
 #include <lua_state.h>
 #include <window/game_menu_window.h>
 #include <status_effects_manager.h>
-#include <player_ai.h>
 #include <skill_db.h>
 #include <rpg_db.h>
 
@@ -165,31 +164,47 @@ void Engine::render()
   }
 }
 
+void Engine::flush()
+{
+  TCODConsole::root->flush();
+}
+
 void Engine::update()
 {
   MapPtr map = getWorld().getCurrentMap();
   if ( map )
   {
-    for ( auto actor : map->getActors() )
+    int turns = updatePlayerControlledActors(map);
+    while( turns-- )
     {
-      actor->update();
+      updateNonPlayerControlledActors(map);
     }
   }
 }
 
-int Engine::processInput()
+int Engine::updatePlayerControlledActors(MapPtr map)
 {
-  TCOD_key_t key;
-  TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL, true);
-
-  int ret = _sysCmdExecutor->execute(key);
-  if ( ret == -1 && getPlayer() )
+  int turns = 0;
+  for ( auto playerControlled : map->getActors([](ActorPtr a){ return a->isPlayerControlled(); }) )
   {
-    PlayerAiPtr ai = getPlayer()->getFeature<PlayerAi>();
-    if ( ai ) ret = ai->processInput(key);
+    turns = std::max( turns, playerControlled->update() );
   }
 
-  return std::max(ret, 0);
+  return turns;
+}
+
+void Engine::updateNonPlayerControlledActors(MapPtr map)
+{
+  for ( auto nonPlayer : map->getActors([](ActorPtr a){ return !a->isPlayerControlled(); }) )
+  {
+    nonPlayer->update();
+  }
+}
+
+void Engine::processInput()
+{
+  TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&_lastInput,NULL, true);
+  _sysCmdExecutor->execute(_lastInput);
 }
 
 gui::Gui& Engine::getGui() const
@@ -235,6 +250,11 @@ lua_api::LuaState &Engine::getLuaState() const
 const ActorPtr Engine::getPlayer() const
 {
   return getWorld().getPlayer();
+}
+
+TCOD_key_t Engine::getLastInput() const
+{
+  return _lastInput;
 }
 
 TileDB &Engine::getTileDB() const

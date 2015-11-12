@@ -14,7 +14,7 @@ CmdOpen::CmdOpen()
 {
 }
 
-bool CmdOpen::accept(TCOD_key_t &key)
+bool CmdOpen::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'o' );
 }

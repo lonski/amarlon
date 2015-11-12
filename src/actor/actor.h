@@ -115,8 +115,10 @@ public:
   /**
    * @brief Allows player to take its turn. Ticks the time
    *        - updates AI and updates the effects status
+   * @return Amount of turns the update took.
+   *         Usable only for PLAYER_CONTROLLED actors
    */
-  void update();
+  int update();
 
   /**
    * @brief Checks if the Character actor feature for alive status
@@ -192,6 +194,13 @@ public:
    * @brief Draws actor symbol on console
    */
   virtual void render(TCODConsole* console);
+
+  /**
+   * @brief True if this actor handles player input.
+   *        In specific, has AI and this AI is in state of
+   *        PLAYER_CONTROL
+   */
+  bool isPlayerControlled() const;
 
 private:
   ActorType _id;

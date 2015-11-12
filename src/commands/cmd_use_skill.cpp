@@ -16,7 +16,7 @@ CmdUseSkill::CmdUseSkill()
 {
 }
 
-bool CmdUseSkill::accept(TCOD_key_t &key)
+bool CmdUseSkill::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'U' );
 }

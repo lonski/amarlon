@@ -12,7 +12,7 @@ function onUse(user, target, skill)
 			for i=0, actors:size() - 1 do
 				actor = actors:at(i):get()
 				if actor:isInFov() and actor:isHostileTo(user) then
-					mob = actor:monster():get()
+					mob = actor:ai():get()
 					if nil ~= mob then
 						if mob:isHunting() then
 							isNoticed = true

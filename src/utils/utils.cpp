@@ -47,7 +47,7 @@ TCODColor strToColor(const std::string &str)
   return col;
 }
 
-bool handleDirectionKey(TCOD_key_t &key, int &dx, int &dy)
+bool handleDirectionKey(const TCOD_key_t& key, int &dx, int &dy)
 {
   bool handled = true;
 
@@ -149,6 +149,14 @@ TCODPath* calculatePath(Target start, Target end)
     return path;
   }
   return nullptr;
+}
+
+float calculateDistance(amarlon::ActorPtr a1, amarlon::ActorPtr a2)
+{
+  int dx = a1->getX() - a2->getX();
+  int dy = a1->getY() - a2->getY();
+
+  return sqrtf( dx*dx + dy*dy );
 }
 
 }

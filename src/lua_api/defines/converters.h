@@ -11,6 +11,7 @@
 #include <skill_id.h>
 #include <luabind/detail/policy.hpp>
 #include <modifier_type.h>
+#include <fsm_state_type.h>
 
 /**
   * Use this mactro for quick luabind converter creating for an Enum Class
@@ -47,6 +48,7 @@ namespace luabind
     LUABIND_DEFINE_ENUMCLASS(amarlon::TrapId)
     LUABIND_DEFINE_ENUMCLASS(amarlon::SkillId)
     LUABIND_DEFINE_ENUMCLASS(amarlon::GenericModifier)
+    LUABIND_DEFINE_ENUMCLASS(amarlon::FSMStateType)
 
     //Converter for TCODColor
     template <>

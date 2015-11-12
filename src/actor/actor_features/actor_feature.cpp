@@ -57,8 +57,9 @@ std::string ActorFeature::getDescription()
   return "";
 }
 
-void ActorFeature::update()
+int ActorFeature::update()
 {
+  return 0;
 }
 
 }

@@ -20,9 +20,10 @@ std::vector<std::string> explode(const std::string& str, char ch);
 std::string tolowers(const std::string& str);
 std::string colorToStr(TCODColor color, bool braces = false);
 TCODColor strToColor(const std::string& str);
-bool handleDirectionKey(TCOD_key_t &key, int& dx, int& dy);
+bool handleDirectionKey(const TCOD_key_t& key, int& dx, int& dy);
 std::string getItemNameAndAmount(ActorPtr a);
 float calculateDistance(int ox, int oy, int tx, int ty);
+float calculateDistance(ActorPtr a1, ActorPtr a2);
 TCODPath *calculatePath(Target start, Target end );
 
 static inline std::string &ltrim(std::string &s) {

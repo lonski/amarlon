@@ -21,6 +21,12 @@ class ActorTest : public ::testing::Test
 
 };
 
+TEST_F(ActorTest, playerControlled)
+{
+  ActorPtr p = Actor::create(ActorType::Player);
+  ASSERT_TRUE( p->isPlayerControlled() );
+}
+
 TEST_F(ActorTest, actorEqual)
 {
   std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );

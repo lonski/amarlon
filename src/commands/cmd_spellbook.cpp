@@ -11,7 +11,7 @@ CmdSpellbook::CmdSpellbook()
 {
 }
 
-bool CmdSpellbook::accept(TCOD_key_t &key)
+bool CmdSpellbook::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'S' );
 }

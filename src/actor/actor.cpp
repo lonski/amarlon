@@ -10,7 +10,6 @@
 #include <status_effects_manager.h>
 #include <status_effect.h>
 #include <world.h>
-#include <monster_ai.h>
 #include <actor_descriptions.h>
 #include <trap.h>
 #include <skill.h>
@@ -133,10 +132,18 @@ void Actor::morph(ActorType newType)
   }
 }
 
-void Actor::update()
+int Actor::update()
 {
-  for ( auto afPair : _features ) afPair.second->update();
+  int turns = 0;
+
+  for ( auto afPair : _features )
+  {
+    turns = std::max(turns, afPair.second->update());
+  }
+
   _effects->tick();
+
+  return turns;
 }
 
 ActorPtr Actor::clone()
@@ -234,16 +241,16 @@ bool Actor::sees(ActorPtr actor)
   return false;
 }
 
-bool Actor::isAllyOf(ActorPtr actor)
+bool Actor::isAllyOf(ActorPtr)
 {
-  AiPtr ai = getFeature<Ai>();
-  return ai && ai->isAllyOf(actor);
+  //TODO: Define relations table and teams
+  return false;
 }
 
-bool Actor::isHostileTo(ActorPtr actor)
+bool Actor::isHostileTo(ActorPtr)
 {
-  AiPtr ai = getFeature<Ai>();
-  return ai && ai->isHostileTo(actor);
+  //TODO: Define relations table and teams
+  return true;
 }
 
 void Actor::interract(ActorPtr actor)
@@ -459,6 +466,19 @@ void Actor::render(TCODConsole *console)
                                 getY(),
                                 trap->isArmed() ? TCODColor::red : TCODColor::desaturatedRed );
   }
+}
+
+bool Actor::isPlayerControlled() const
+{
+  bool r = false;
+
+  AiPtr ai = getFeature<Ai>();
+  if ( ai )
+  {
+    r = ai->getCurrentState() == FSMStateType::PLAYER_CONTROLLED;
+  }
+
+  return r;
 }
 
 }

@@ -11,7 +11,7 @@ CmdInspect::CmdInspect()
 {
 }
 
-bool CmdInspect::accept(TCOD_key_t &key)
+bool CmdInspect::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'i' );
 }

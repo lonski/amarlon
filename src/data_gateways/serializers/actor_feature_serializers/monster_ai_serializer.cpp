@@ -1,5 +1,4 @@
 #include "monster_ai_serializer.h"
-#include <monster_ai.h>
 #include <xml_utils.h>
 
 using namespace rapidxml;
@@ -25,7 +24,9 @@ bool MonsterAiSerializer::serialize(ActorFeaturePtr af)
   MonsterAiPtr mobAi = std::dynamic_pointer_cast<MonsterAi>(af);
   if ( mobAi && _document && _xml )
   {
-    _xml->append_node( createNode( _document, "MonsterAi", "") );
+    auto aiNode = createNode( _document, "MonsterAi", "");
+    _xml->append_node( aiNode );
+    addAttribute( aiNode, "script", mobAi->_scriptId );
   }
 
   return mobAi != nullptr;

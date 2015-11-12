@@ -6,8 +6,8 @@
 #include <openable.h>
 #include <trap.h>
 #include <ai.h>
-#include <monster_ai.h>
 #include <status_effects_manager.h>
+#include <iterator_policy.hpp>
 
 namespace amarlon { namespace lua_api {
 
@@ -46,7 +46,6 @@ void ActorRegistrar::reg(lua_State* state)
         .def("trap", (TrapPtr(Actor::*)()const)&Actor::getFeature)
         .def("openable", (OpenablePtr(Actor::*)()const)&Actor::getFeature)
         .def("ai", (AiPtr(Actor::*)()const)&Actor::getFeature)
-        .def("monster", (MonsterAiPtr(Actor::*)()const)&Actor::getFeature)
         .def("getMap", &Actor::getMap)
         .def("isInFov", &Actor::isInFov)
         .def("isHostileTo", &Actor::isHostileTo),
@@ -98,13 +97,12 @@ void ActorRegistrar::reg(lua_State* state)
         .def("setHiding", &Ai::setHiding )
         .def("canOperate", &Ai::canOperate )
         .def("isSneaking", &Ai::isSneaking )
-        .def("setSneaking", &Ai::setSneaking ),
-
-      class_<MonsterAiPtr>("MonsterAiPtr")
-        .def("get", &MonsterAiPtr::get),
-
-      class_<MonsterAi, Ai>("MonsterAi")
-        .def("isHunting", &MonsterAi::isHunting)
+        .def("setSneaking", &Ai::setSneaking )
+        .def("changeState", &Ai::changeState )
+        .def("getCurrentState", &Ai::getCurrentState)
+        .def("getEnemiesInFov", &Ai::getEnemiesInFov)
+        .def("isHunting", &Ai::isHunting)
+        .def("setTarget", (void(Ai::*)(ActorPtr))&Ai::setTarget )
 
   ];
 }

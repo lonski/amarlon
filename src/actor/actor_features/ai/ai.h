@@ -5,30 +5,37 @@
 #include <actor_feature.h>
 #include <bitset>
 #include <ai_type.h>
+#include <fsm_state_type.h>
+#include <target.h>
 
 namespace amarlon {
 
 class Ai;
 class ActorAction;
 struct AiDescription;
+class FSM;
 typedef std::shared_ptr<Ai> AiPtr;
+typedef std::shared_ptr<FSM> FSMPtr;
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
+typedef std::vector<ActorPtr> ActorVector;
 
 class Ai : public ActorFeature
 {
 public:
   const static ActorFeature::Type featureType;
   virtual ActorFeature::Type getType() { return featureType; }
-  virtual AiType getAiType() const = 0;
+  virtual AiType getAiType() const;
 
   Ai();
   Ai(DescriptionPtr dsc);
   virtual ~Ai() {}
 
   static AiPtr create(DescriptionPtr dsc);
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
+  virtual ActorFeaturePtr clone();
 
-  virtual void update() = 0;
+  virtual int update();
   virtual bool performAction(ActorActionPtr action);
 
   virtual bool isSleeping() const;
@@ -40,21 +47,47 @@ public:
   virtual bool isSneaking() const;
   virtual void setSneaking(bool sneaking);
 
+  virtual bool changeState(FSMStateType type);
+  virtual FSMStateType getCurrentState() const;
+
   /**
    * @brief Checks if AI is not sleeping, not paralyzed etc
    *        And can perform actions.
    */
   virtual bool canOperate() const;
 
-  virtual bool isHostileTo(ActorPtr actor) const = 0;
-  virtual bool isAllyOf(ActorPtr actor) const = 0;
+  /**
+   * @brief Associated script path
+   */
+  std::string getScript() const;
+
+  /**
+   * @brief Current target of actions (in most cases choosen enemy)
+   */
+  void setTarget(Target target);
+  void setTarget(ActorPtr actor);
+  Target getTarget() const;
+
+  ActorVector getEnemiesInFov() const;
+
+  virtual int getTrackingTurns() const;
+  virtual void setTrackingTurns(int turns);
+
+  bool isHunting() const;
 
 protected:
   std::bitset<3> _flags;
+  FSMPtr _fsm;
+  int _scriptId;
+  Target _currentTarget;
+  int _trackCount;
+  AiType _type;
 
-  void cloneBase(AiPtr ai);
+  void executeScript();
   void updateHidingStatus(ActorActionPtr action);
   void updateSneakingStatus(ActorActionPtr action);
+
+  friend class AiSerializer;
 
 
 };

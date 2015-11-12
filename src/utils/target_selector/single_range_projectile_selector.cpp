@@ -29,7 +29,7 @@ Target SingleRangeProjectileSelector::select(std::function<bool (ActorPtr)> filt
   auto actors = _map->getActors([&](ActorPtr a){ return calculateDistance(a->getX(), a->getY(), tStart.x, tStart.y) <= getRange() &&
                                                         a->isAlive() &&
                                                         _map->isInFov(a->getX(), a->getY() ) &&
-                                                        a->getType() != ActorType::Player &&
+                                                        !a->isPlayerControlled() &&
                                                         filterFun(a); });
   auto aIter = actors.begin();
 

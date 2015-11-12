@@ -7,7 +7,7 @@ CmdGameMenu::CmdGameMenu()
 {
 }
 
-bool CmdGameMenu::accept(TCOD_key_t &key)
+bool CmdGameMenu::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_ESCAPE );
 }

@@ -18,7 +18,7 @@ CmdUse::CmdUse()
 {
 }
 
-bool CmdUse::accept(TCOD_key_t &key)
+bool CmdUse::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'u' );
 }

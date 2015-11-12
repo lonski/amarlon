@@ -14,7 +14,7 @@ CmdClose::CmdClose()
 {
 }
 
-bool CmdClose::accept(TCOD_key_t &key)
+bool CmdClose::accept(const TCOD_key_t& key)
 {
   return ( key.vk == TCODK_CHAR && key.c == 'c' );
 }

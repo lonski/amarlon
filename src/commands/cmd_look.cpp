@@ -7,7 +7,7 @@
 
 namespace amarlon {
 
-bool CmdLook::accept(TCOD_key_t &key)
+bool CmdLook::accept(const TCOD_key_t& key)
 {
     return key.vk == TCODK_CHAR && key.c == 'l';
 }

@@ -283,20 +283,21 @@ AiDescriptionPtr ActorParser::parseAiDsc()
 
   if ( _xml != nullptr )
   {
-    xml_node<>* mobAiNode = _xml->first_node("MonsterAi");
-    if (mobAiNode != nullptr)
+    xml_node<>* aiNode = _xml->first_node("MonsterAi");
+    if (aiNode != nullptr)
     {
       aiDsc.reset( new AiDescription );
       aiDsc->type = AiType::MonsterAi;
     }
-    else
+    else if ( (aiNode = _xml->first_node("PlayerAi")) )
     {
-      xml_node<>* pAiNode = _xml->first_node("PlayerAi");
-      if (pAiNode != nullptr)
-      {
-        aiDsc.reset( new AiDescription );
-        aiDsc->type = AiType::PlayerAi;
-      }
+      aiDsc.reset( new AiDescription );
+      aiDsc->type = AiType::PlayerAi;
+    }
+
+    if ( aiNode )
+    {
+      aiDsc->script = getAttribute<int>(aiNode, "script");
     }
   }
 

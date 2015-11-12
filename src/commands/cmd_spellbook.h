@@ -9,7 +9,7 @@ class CmdSpellbook : public Command
 {
 public:
   CmdSpellbook();
-  virtual bool accept(TCOD_key_t &key);
+  virtual bool accept(const TCOD_key_t& key);
   virtual int execute();
 
 };

@@ -16,16 +16,17 @@ namespace amarlon {
 const ActorFeature::Type Pickable::featureType = ActorFeature::PICKABLE;
 
 Pickable::Pickable(bool stackable, int amount)
-  : _stackable(stackable)
+  : _usesCount(0)
+  , _stackable(stackable)
   , _amount(amount)
+  , _itemSlot(ItemSlotType::Null)
   , _armorClass(0)
   , _weight(0)
   , _price(0)
-  , _usesCount(0)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
   , _scriptId(0)
   , _range(0)
-  , _radius(0)
+  , _radius(0)  
 {
 }
 

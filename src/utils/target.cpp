@@ -11,9 +11,14 @@ Target::Target(std::vector<ActorPtr> actors_, uint32_t x_, uint32_t y_)
 
 Target::Target(ActorPtr actor_)
   : actors( {actor_ } )
-  , x( actor_->getX() )
-  , y( actor_->getY() )
+  , x(0)
+  , y(0)
 {
+  if ( actor_ )
+  {
+    x = actor_->getX();
+    y = actor_->getY();
+  }
 }
 
 Target::Target(uint32_t x_, uint32_t y_)

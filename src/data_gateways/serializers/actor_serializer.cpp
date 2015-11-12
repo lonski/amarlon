@@ -9,7 +9,6 @@
 #include <monster_serializer.h>
 #include <playable_character_serializer.h>
 #include <monster_ai_serializer.h>
-#include <player_ai_serializer.h>
 #include <openable_serializer.h>
 #include <status_effects_manager.h>
 #include <status_effect.h>
@@ -34,10 +33,9 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   _afSerializers.push_back( std::make_shared<WearerSerializer>() );
   _afSerializers.push_back( std::make_shared<MonsterSerializer>() );
   _afSerializers.push_back( std::make_shared<PlayableCharacterSerializer>() );
-  _afSerializers.push_back( std::make_shared<MonsterAiSerializer>() );
   _afSerializers.push_back( std::make_shared<OpenableSerializer>() );
   _afSerializers.push_back( std::make_shared<TrapSerializer>() );
-  _afSerializers.push_back( std::make_shared<PlayerAiSerializer>() );
+  _afSerializers.push_back( std::make_shared<AiSerializer>() );
 }
 
 ActorSerializer::~ActorSerializer()

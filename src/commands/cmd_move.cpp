@@ -13,7 +13,7 @@ CmdMoveOrAttack::CmdMoveOrAttack()
 {
 }
 
-bool CmdMoveOrAttack::accept(TCOD_key_t &key)
+bool CmdMoveOrAttack::accept(const TCOD_key_t& key)
 {
   _dx = 0;
   _dy = 0;

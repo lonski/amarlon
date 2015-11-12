@@ -42,7 +42,7 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs) const = 0;
   virtual ActorFeature::Type getType() = 0;
   virtual std::string getDescription();
-  virtual void update();
+  virtual int update();
 
 protected:
   ActorWPtr _owner;

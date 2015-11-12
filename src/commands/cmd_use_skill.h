@@ -14,7 +14,7 @@ class CmdUseSkill : public Command
 public:
   CmdUseSkill();
 
-  virtual bool accept(TCOD_key_t &key);
+  virtual bool accept(const TCOD_key_t& key);
   virtual int execute();
 
 private:

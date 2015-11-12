@@ -9,7 +9,7 @@ class CmdLook : public Command
 {
 public:
   CmdLook() = default;
-  virtual bool accept(TCOD_key_t &key);
+  virtual bool accept(const TCOD_key_t& key);
   virtual int execute();
 
 };
