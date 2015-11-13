@@ -2,6 +2,7 @@
 #define MOVE_TO_TARGET_H
 
 #include <fsm_state.h>
+#include <libtcod.hpp>
 
 namespace amarlon {
 
@@ -16,6 +17,9 @@ public:
 
   virtual FSMStateType getType() const;
   virtual int update(Ai* ai);
+
+private:
+  std::unique_ptr<TCODPath> _path;
 
 };
 

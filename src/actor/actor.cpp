@@ -139,7 +139,8 @@ int Actor::update()
 
   for ( auto afPair : _features )
   {
-    turns = std::max(turns, afPair.second->update());
+    if ( afPair.second )
+      turns = std::max(turns, afPair.second->update());
   }
 
   _effects->tick();
@@ -458,6 +459,11 @@ bool Actor::performAction(ActorActionPtr action)
 {
   AiPtr ai = getFeature<Ai>();
   return ai ? ai->performAction(action) : false;
+}
+
+bool Actor::performAction(ActorAction *action)
+{
+  return performAction( ActorActionPtr(action) );
 }
 
 void Actor::render(TCODConsole *console)

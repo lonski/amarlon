@@ -153,10 +153,14 @@ TCODPath* calculatePath(Target start, Target end)
 
 float calculateDistance(amarlon::ActorPtr a1, amarlon::ActorPtr a2)
 {
-  int dx = a1->getX() - a2->getX();
-  int dy = a1->getY() - a2->getY();
+  if ( a1 && a2 )
+  {
+    int dx = a1->getX() - a2->getX();
+    int dy = a1->getY() - a2->getY();
 
-  return sqrtf( dx*dx + dy*dy );
+    return sqrtf( dx*dx + dy*dy );
+  }
+  return 0;
 }
 
 }

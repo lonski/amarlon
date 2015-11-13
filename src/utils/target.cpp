@@ -31,14 +31,15 @@ Target::Target()
   , y(0)
 {}
 
-ActorPtr Target::firstActor(std::function<bool (ActorPtr)> *filter) const
+ActorPtr Target::firstActor() const
 {
-  if ( filter )
-  {
-    auto it = std::find_if(actors.begin(), actors.end(), *filter);
-    return it != actors.end() ? *it : nullptr;
-  }
-  return actors.empty() ? nullptr : actors.front();
+  return firstActor( [](ActorPtr){ return true;} );
+}
+
+ActorPtr Target::firstActor(std::function<bool(ActorPtr)> filter) const
+{
+  auto it = std::find_if(actors.begin(), actors.end(), filter);
+  return it != actors.end() ? *it : nullptr;
 }
 
 bool Target::operator==(const Target &rhs) const

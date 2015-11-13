@@ -16,7 +16,6 @@ function onUpdate(actor)
 
   ai = actor:get():ai():get()
   enemies = ai:getEnemiesInFov()
-  enemy = ActorPtr()
 
   --=== FUNCTIONS ===--
 
@@ -40,30 +39,38 @@ function onUpdate(actor)
 
   local function chooseTarget()    
     if enemies:size() > 1 then
-      enemy = getClosestEnemy()
+      ai:setTarget( getClosestEnemy() )
     elseif enemies:size() > 0 then
-      enemy = enemies:at(0)
+      ai:setTarget( enemies:at(0) )
     end
-    
-    ai:setTarget( enemy )
   end
 
-  local function getRange(enemy)
-    return calculateDistance(actor, enemy)
+  local function getEnemyDistance()
+    return calculateDistance(actor, ai:getTarget():getFirstActor())
+  end
+
+  local function isTracking()
+    return ai:getCurrentState() == STATE_MOVE_TO_TARGET and ai:hasTarget()
   end
 
   --=== LOGIC ===--
 
-  if isEnemySpotted() then
-
+  if isEnemySpotted() or isTracking() then
+  
     chooseTarget()
 
-    if getRange(enemy) > RANGE_CLOSE then
-      ai:changeState( STATE_MOVE_TO_TARGET )
+    if ai:hasTarget() then
+    
+      if getEnemyDistance() > RANGE_CLOSE then
+        ai:changeState( STATE_MOVE_TO_TARGET )
+      else
+        ai:changeState( STATE_MELEE_ATTACK )
+      end
+      
     else
-      ai:changeState( STATE_MELEE_ATTACK )
+      ai:changeState( STATE_IDLE )
     end
-
+    
   else
     ai:changeState( STATE_IDLE )
   end

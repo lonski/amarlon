@@ -189,6 +189,7 @@ public:
    * @return True if action has been performed successfully
    */
   bool performAction(ActorActionPtr action);
+  bool performAction(ActorAction* action);
 
   /**
    * @brief Draws actor symbol on console

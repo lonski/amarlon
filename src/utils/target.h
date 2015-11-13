@@ -18,7 +18,8 @@ struct Target
   Target(uint32_t x_, uint32_t y_ );
   Target();
 
-  ActorPtr firstActor(std::function<bool(ActorPtr)>* filter = nullptr) const;
+  ActorPtr firstActor(std::function<bool(ActorPtr)> filter) const;
+  ActorPtr firstActor() const;
 
   bool operator==(const Target& rhs) const;
   bool operator!=(const Target& rhs) const;

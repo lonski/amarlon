@@ -257,6 +257,11 @@ Target Ai::getTarget() const
   return _currentTarget;
 }
 
+bool Ai::hasTarget() const
+{
+  return getTarget() != Target();
+}
+
 ActorVector Ai::getEnemiesInFov() const
 {
   ActorVector enemies;

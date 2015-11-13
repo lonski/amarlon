@@ -15,6 +15,7 @@ void TargetRegistrar::reg(lua_State* state)
         .def_readwrite("x", &Target::x)
         .def_readwrite("y", &Target::y)
         .def_readwrite("actors", &Target::actors, return_stl_iterator)
+        .def("getFirstActor", (ActorPtr(Target::*)()const)&Target::firstActor )
   ];
 }
 
