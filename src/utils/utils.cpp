@@ -4,6 +4,7 @@
 #include <engine.h>
 #include <map.h>
 #include <world.h>
+#include <direct_path.h>
 
 namespace amarlon {
 
@@ -161,6 +162,19 @@ float calculateDistance(amarlon::ActorPtr a1, amarlon::ActorPtr a2)
     return sqrtf( dx*dx + dy*dy );
   }
   return 0;
+}
+
+DirectPathPtr calculateDirectPath(Target start, Target end)
+{
+  MapPtr map = Engine::instance().getWorld().getCurrentMap();
+  if ( start && end && map )
+  {
+    DirectPathPtr path( new DirectPath(map) );
+    path->compute( start.x, start.y, end.x, end.y );
+
+    return path;
+  }
+  return nullptr;
 }
 
 }

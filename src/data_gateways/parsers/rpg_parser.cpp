@@ -123,6 +123,7 @@ std::vector<CharacterClassPtr> RpgParser::parseCharacterClasses()
             ItemType t;
             t.armor = (ArmorType)getAttribute<int>(onlyNode, "armor");
             t.weapon = (WeaponType)getAttribute<int>(onlyNode, "weapon");
+            t.amunition = (AmunitionType)getAttribute<int>(onlyNode, "amunition");
             t.category = (PickableCategory)getAttribute<int>(onlyNode, "category");
             cClass->_itemTypeRestrictions.push_back( ItemTypeRestriction(t) );
             onlyNode = onlyNode->next_sibling();

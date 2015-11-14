@@ -152,6 +152,8 @@ set(HEADER_FILES
     utils/event_id.h
     utils/observer.h
     utils/subject.h
+    utils/direct_path.h
+    utils/key.h
     world/map.h
     world/map_id.h
     world/tile_type.h
@@ -174,6 +176,7 @@ set(HEADER_FILES
     actor/actor_actions/die_action.h
     actor/actor_actions/cast_action.h
     actor/actor_actions/use_skill_action.h
+    actor/actor_actions/shot_action.h
     world/directions.h
     world/world.h
     rpg_system/ability_scores.h
@@ -334,6 +337,7 @@ set(SOURCE_FILES
     utils/actor_container.cpp
     utils/target.cpp
     utils/subject.cpp
+    utils/direct_path.cpp
     world/map.cpp
     world/tile.cpp
     command_executor.cpp
@@ -354,6 +358,7 @@ set(SOURCE_FILES
     actor/actor_actions/die_action.cpp
     actor/actor_actions/cast_action.cpp
     actor/actor_actions/use_skill_action.cpp
+    actor/actor_actions/shot_action.cpp
     world/world.cpp
     rpg_system/ability_scores.cpp
     rpg_system/attack_bonus_table.cpp

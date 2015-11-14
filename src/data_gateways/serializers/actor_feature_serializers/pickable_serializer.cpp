@@ -63,6 +63,10 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
     {
       addAttributeEnum( _pickableNode, "weaponType", t.weapon );
     }
+    if ( t.amunition != AmunitionType::NoType )
+    {
+      addAttributeEnum( _pickableNode, "amunitionType", t.amunition );
+    }
 
     addAttributeEnum( _pickableNode, "category",   t.category );
 

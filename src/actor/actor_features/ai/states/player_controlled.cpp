@@ -2,6 +2,7 @@
 #include <command_executor.h>
 #include <ai.h>
 #include <engine.h>
+#include <key.h>
 
 namespace amarlon {
 
@@ -20,9 +21,12 @@ FSMStateType PlayerControlled::getType() const
 
 int PlayerControlled::update(Ai* ai)
 {
-  if ( ai )
+  TCOD_key_t lastKey = Engine::instance().getLastInput();
+  if ( ai && lastKey.vk != TCODK_NONE )
   {
-    return _cmdExecutor->execute( Engine::instance().getLastInput() );
+    Engine::instance().setLastInput( Key() );
+    int r = _cmdExecutor->execute( lastKey );
+    return r;
   }
   return 0;
 }

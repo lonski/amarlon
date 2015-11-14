@@ -37,8 +37,9 @@ int CmdCast::execute()
        selector->setRange( spell->getRange() );
        selector->setRadius( spell->getRadius() );
        MapPtr map = Engine::instance().getWorld().getCurrentMap();
-       ActorActionPtr action( new CastAction(spell, selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); })) );
-       if ( !Engine::instance().getPlayer()->performAction( action ) )
+       Target target = selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); });
+
+       if ( !Engine::instance().getPlayer()->performAction( new CastAction(spell, target) ) )
        {
          gui::msgBox("Failed to cast spell!", gui::MsgType::Warning);
        }

@@ -95,7 +95,7 @@ public:
 
   const ActorPtr getPlayer() const;
   TCOD_key_t getLastInput() const;
-
+  void setLastInput(TCOD_key_t key);
 
 private:
   gui::GuiPtr _gui;

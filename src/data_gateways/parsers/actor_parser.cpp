@@ -150,6 +150,10 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       {
         t.weapon = (WeaponType)getAttribute<int>(pickableNode, "weaponType");
       }
+      if ( attributeExists(pickableNode, "amunitionType") )
+      {
+        t.amunition = (AmunitionType)getAttribute<int>(pickableNode, "amunitionType");
+      }
 
       t.category = (PickableCategory)getAttribute<int>(pickableNode, "category");
 

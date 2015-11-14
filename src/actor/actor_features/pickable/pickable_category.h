@@ -13,7 +13,6 @@ enum class PickableCategory
   Scroll = 5,
   Amunition = 6,
   Wealth = 7
-
 };
 
 static inline const char* PickableCategory2Str(PickableCategory cat)

@@ -111,4 +111,10 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Beer" id="29" character="!" color="B36B00" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="1" category="4"/>
 	</Actor>
+	<Actor name="Arrow" id="30" character="/" color="663300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="6" amunitionType="1" itemSlot="12"/>
+	</Actor>
+	<Actor name="Short bow" id="31" character="}" color="663300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="1" weaponType="5" range="10" itemSlot="7" amunitionType="1"/>
+	</Actor>
 </Actors>

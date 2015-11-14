@@ -14,7 +14,8 @@ enum class WeaponType
   Sword  = 1,
   Blunt  = 2,
   Dagger = 3,
-  Staff  = 4
+  Staff  = 4,
+  Bow    = 5
 };
 
 static inline const char* WeaponType2Str(WeaponType t)
@@ -24,7 +25,8 @@ static inline const char* WeaponType2Str(WeaponType t)
           "Sword",
           "Blunt",
           "Dagger",
-          "Staff"
+          "Staff",
+          "Bow"
           }[(int)t];
 }
 
@@ -44,6 +46,20 @@ static inline const char* ArmorType2Str(ArmorType t)
           }[(int)t];
 }
 
+enum class AmunitionType
+{
+  NoType  = 0,
+  Arrow   = 1
+};
+
+static inline const char* AmunitionType2Str(AmunitionType t)
+{
+  return (const char *[]){
+          "NoType",
+          "Arrow"
+          }[(int)t];
+}
+
 struct ItemType
 {
   ItemType()
@@ -55,12 +71,14 @@ struct ItemType
   {
     return category == rhs.category &&
            weapon == rhs.weapon &&
-           armor == rhs.armor;
+           armor == rhs.armor &&
+           amunition == rhs.amunition;
   }
 
   PickableCategory category;
   WeaponType weapon;
   ArmorType armor;
+  AmunitionType amunition;
 };
 
 class ItemTypeRestriction
@@ -94,6 +112,11 @@ public:
     else if ( _type.weapon != WeaponType::NoType )
     {
       dsc += WeaponType2Str(_type.weapon);
+      dsc += " type " + cat + "s";
+    }
+    else if ( _type.amunition != AmunitionType::NoType )
+    {
+      dsc += AmunitionType2Str(_type.amunition);
       dsc += " type " + cat + "s";
     }
 

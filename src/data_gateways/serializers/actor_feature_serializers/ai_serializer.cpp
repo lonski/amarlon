@@ -31,12 +31,15 @@ bool AiSerializer::serialize(ActorFeaturePtr af)
     {
       aiNode = createNode( _document, "MonsterAi", "");
     }
-    else if ( ai->getAiType() == AiType::MonsterAi )
+    else if ( ai->getAiType() == AiType::PlayerAi )
     {
       aiNode = createNode( _document, "PlayerAi", "");
     }
-    _xml->append_node( aiNode );
-    addAttribute( aiNode, "script", ai->_scriptId );
+    if ( aiNode )
+    {
+      _xml->append_node( aiNode );
+      addAttribute( aiNode, "script", ai->_scriptId );
+    }
   }
 
   return ai != nullptr;

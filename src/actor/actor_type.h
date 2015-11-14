@@ -32,6 +32,8 @@ enum class ActorType
   ScrollFireball = 27,
   Toilet = 28,
   Beer = 29,
+  Arrow = 30,
+  ShortBow = 31,
   End
 };
 

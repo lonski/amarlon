@@ -13,8 +13,10 @@
 
 namespace amarlon {
 
+class DirectPath;
 class Actor;
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<DirectPath> DirectPathPtr;
 
 std::vector<std::string> explode(const std::string& str, char ch);
 std::string tolowers(const std::string& str);
@@ -25,6 +27,7 @@ std::string getItemNameAndAmount(ActorPtr a);
 float calculateDistance(int ox, int oy, int tx, int ty);
 float calculateDistance(ActorPtr a1, ActorPtr a2);
 TCODPath *calculatePath(Target start, Target end );
+DirectPathPtr calculateDirectPath(Target start, Target end);
 
 static inline std::string &ltrim(std::string &s) {
         s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));

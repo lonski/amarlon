@@ -3,6 +3,7 @@
 #include <engine.h>
 #include <world.h>
 #include <map.h>
+#include <direct_path.h>
 
 namespace amarlon {
 
@@ -56,16 +57,17 @@ void renderPath(Target start, Target end)
 {
   if ( start && end )
   {
-    TCODPath* path = calculatePath(start, end);
+    //TCODPath* path = calculatePath(start, end);
+    DirectPathPtr path = calculateDirectPath(start, end);
 
     while( path && !path->isEmpty() )
     {
       int x(0), y(0);
-      path->walk(&x, &y, true);
+      path->walk(&x, &y);
       setTile(x, y, '*', TCODColor::lighterRed);
     }
 
-    delete path;
+    //delete path;
     setTile(end.x, end.y, 'x', TCODColor::red);
   }
 }

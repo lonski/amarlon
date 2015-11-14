@@ -20,11 +20,9 @@ enum class ItemSlotType
   LeftRing = 9,
   RightRing = 10,
   Cloak = 11,
-  Arrows = 12,
-  Bolts = 13,
-  Bullets = 14,
+  Amunition = 12,
 
-  End = 15
+  End = 13
 };
 
 inline ItemSlotType operator++(ItemSlotType& x) { return x = (ItemSlotType)(std::underlying_type<ItemSlotType>::type(x) + 1); }
@@ -49,8 +47,6 @@ static inline const char* ItemSlotType2Str(ItemSlotType slot)
           "Right ring",
           "Cloak",
           "Arrows",
-          "Bolts",
-          "Bullets",
 
           "Invalid-End"
           }[(int)slot];

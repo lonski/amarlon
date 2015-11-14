@@ -124,7 +124,7 @@ TEST_F(ActorTest, actorEqual_different_pickable)
   ASSERT_TRUE( *a1 == *a2 );
 
   PickablePtr p = a1->getFeature<Pickable>();
-  p->setItemSlot(ItemSlotType::Bullets);
+  p->setItemSlot(ItemSlotType::Amunition);
 
   ASSERT_FALSE( *a1 == *a2 );
 }

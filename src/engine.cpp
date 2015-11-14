@@ -257,6 +257,11 @@ TCOD_key_t Engine::getLastInput() const
   return _lastInput;
 }
 
+void Engine::setLastInput(TCOD_key_t key)
+{
+  _lastInput = key;
+}
+
 TileDB &Engine::getTileDB() const
 {
   return *_tileDB;
