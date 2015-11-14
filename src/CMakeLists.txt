@@ -154,6 +154,7 @@ set(HEADER_FILES
     utils/subject.h
     utils/direct_path.h
     utils/key.h
+    utils/point.h
     world/map.h
     world/map_id.h
     world/tile_type.h

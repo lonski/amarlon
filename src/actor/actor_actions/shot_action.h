@@ -3,11 +3,14 @@
 
 #include <memory>
 #include <actor_action.h>
+#include <point.h>
 
 namespace amarlon {
 
 class Pickable;
+class DirectPath;
 typedef std::shared_ptr<Pickable> PickablePtr;
+typedef std::shared_ptr<DirectPath> DirectPathPtr;
 
 class ShotAction : public ActorAction
 {
@@ -27,6 +30,12 @@ private:
     bool isReadyToShot();
     bool isTargetCorrect();
     int calculateAttackBonusModifier();
+    DirectPathPtr calculatePath();
+    ActorPtr getTarget(const Point& p);
+    void tryDropMissile(ActorPtr missile, const Point& p);
+    ActorPtr pickOneMissile();
+    bool rangeAttack(ActorPtr actor);
+    void renderMissile(const Point& prev, const Point& current, ActorPtr missile);
 
 };
 

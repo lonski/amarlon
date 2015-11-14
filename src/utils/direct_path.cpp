@@ -9,7 +9,7 @@ DirectPath::DirectPath(MapPtr map)
   _current = _points.end();
 }
 
-bool DirectPath::compute(int ox, int oy, int tx, int ty)
+bool DirectPath::compute(int ox, int oy, int tx, int ty, bool force)
 {
   bool r = false;
 
@@ -27,7 +27,9 @@ bool DirectPath::compute(int ox, int oy, int tx, int ty)
     ox += dx != 0 ? stepDx : 0;
     oy += dy != 0 ? stepDy : 0;
 
-    if ( _map->isTransparent(ox, oy) || (ox == tx && oy == ty) )
+    if ( _map->isTransparent(ox, oy) ||
+         (ox == tx && oy == ty)      ||
+         force )
     {
       _points.push_back(Point(ox, oy));
     }
@@ -63,6 +65,25 @@ bool DirectPath::walk(int* x, int* y)
   }
 
   return r;
+}
+
+Point DirectPath::walk()
+{
+  Point p;
+  walk(&p.x, &p.y);
+  return p;
+}
+
+Point DirectPath::current() const
+{
+  return _current != _points.end() ? *_current : Point();
+}
+
+Point DirectPath::previous() const
+{
+  auto prev = _current;
+  std::advance(prev, -1);
+  return prev != _points.end() ? *prev : Point();
 }
 
 }

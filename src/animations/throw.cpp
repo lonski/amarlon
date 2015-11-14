@@ -4,6 +4,7 @@
 #include <thread>
 #include <utils.h>
 #include <console_utils.h>
+#include <direct_path.h>
 
 namespace amarlon { namespace animation {
 
@@ -26,24 +27,23 @@ void Throw::run()
   Target start  = getStartLocation();
   Target stop = getEndLocation();
 
-  TCODPath* path = calculatePath(start, stop);
+  DirectPathPtr path = calculateDirectPath(start, stop);
   while( path && !path->isEmpty() )
   {
-    int x(0), y(0);
-    path->walk(&x, &y, true);
+    Point p = path->walk();
+    if ( p.isNonZero() )
+    {
+      Engine::instance().render();
+      TCODConsole::root->flush();
+      setTile(p, _ch, _color);
 
-    Engine::instance().render();
-    TCODConsole::root->flush();
-    setTile(x, y, _ch, _color);
-
-    console.flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+      console.flush();
+      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    }
   }
 
   Engine::instance().render();
   console.flush();
-
-  delete path;
 }
 
 Type Throw::getType() const

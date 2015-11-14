@@ -29,7 +29,8 @@ enum class EventId
   Actor_Hidden,
   Actor_CancelHidden,
   Item_Removed,
-  Item_Added
+  Item_Added,
+  Actor_Dodged
 
 };
 

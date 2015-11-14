@@ -381,6 +381,11 @@ void Actor::setPosition(int x, int y)
   if ( map ) map->addActor( shared_from_this() );
 }
 
+void Actor::setPosition(const Point &p)
+{
+  setPosition(p.x, p.y);
+}
+
 MapPtr Actor::getMap() const
 {
   return _map.lock();

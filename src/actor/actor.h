@@ -16,6 +16,7 @@
 #include <inventory.h>
 #include <subject.h>
 #include <bitset>
+#include <point.h>
 
 namespace amarlon {
 
@@ -99,6 +100,7 @@ public:
    *        (if the map is set)
    */
   void setPosition(int x, int y);
+  void setPosition(const Point& p);
 
   /**
    * @brief Builds a string actor's description from all ActorFeatures

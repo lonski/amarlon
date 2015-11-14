@@ -53,6 +53,11 @@ void setTile(uint32_t x, uint32_t y, char c, TCODColor color)
   TCODConsole::root->setCharForeground(x,y,color);
 }
 
+void setTile(const Point &p, char c, TCODColor color)
+{
+  setTile(p.x, p.y, c, color);
+}
+
 void renderPath(Target start, Target end)
 {
   if ( start && end )
@@ -79,6 +84,7 @@ void highlightCell(uint32_t x, uint32_t y)
   TCODConsole::root->setCharForeground(x, y, TCODColor::lerp(fgcol, TCODColor::yellow, 0.6));
   TCODConsole::root->setCharBackground(x, y, TCODColor::lerp(bgcol, TCODColor::yellow, 0.1));
 }
+
 
 }
 

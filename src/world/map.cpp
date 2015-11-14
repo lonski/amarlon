@@ -38,6 +38,11 @@ bool Map::isExplored(int x, int y)
   return getTile(x,y).isExplored();
 }
 
+bool Map::isExplored(const Point &p)
+{
+  return isExplored(p.x, p.y);
+}
+
 bool Map::isInFov(int x, int y)
 {
   bool inFov = _codMap.isInFov(x,y);
@@ -47,6 +52,11 @@ bool Map::isInFov(int x, int y)
   return inFov;
 }
 
+bool Map::isInFov(const Point &p)
+{
+  return isInFov(p.x, p.y);
+}
+
 bool Map::isBlocked(int x, int y)
 {
   ActorPtr actor = getTile(x,y).top();
@@ -54,9 +64,19 @@ bool Map::isBlocked(int x, int y)
   return !_codMap.isWalkable(x,y) || actorBlocks;
 }
 
+bool Map::isBlocked(const Point &p)
+{
+  return isBlocked(p.x, p.y);
+}
+
 bool Map::isTransparent(int x, int y) const
 {
   return _codMap.isTransparent(x,y);
+}
+
+bool Map::isTransparent(const Point &p) const
+{
+  return isTransparent(p.x, p.y);
 }
 
 void Map::addActor(ActorPtr actor)
@@ -80,6 +100,11 @@ std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)
 {
   Tile& tile = getTile(x, y);
   return tile.getActors( filterFun ).toVector();
+}
+
+std::vector<ActorPtr> Map::getActors(const Point &p, std::function<bool (ActorPtr)> filterFun)
+{
+  return getActors(p.x, p.y, filterFun);
 }
 
 std::vector<ActorPtr> Map::getActors(int x, int y, int radius, std::function<bool (ActorPtr)> filterFun)

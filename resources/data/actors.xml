@@ -33,7 +33,15 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Wearer>
 			<ItemSlot type="3">
 				<Equipped id="20"/>
-			</ItemSlot>			
+			</ItemSlot>
+			<ItemSlot type="12">
+				<Equipped id="20">
+					<Pickable stackable="1" amount="20" category="6" amunitionType="1" itemSlot="12"/>
+				</Equipped>
+			</ItemSlot>	
+			<ItemSlot type="7">
+				<Equipped id="31"/>
+			</ItemSlot>
 		</Wearer>
 		<Inventory maxSize="20">
 			<Content id="23"/>			

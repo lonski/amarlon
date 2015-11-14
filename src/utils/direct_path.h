@@ -3,32 +3,33 @@
 
 #include <memory>
 #include <list>
+#include <point.h>
 
 namespace amarlon {
 
 class Map;
 typedef std::shared_ptr<Map> MapPtr;
 
-struct Point
-{
-  Point(int x = 0, int y = 0)
-    : x(x)
-    , y(y)
-  {
-  }
 
-  int x;
-  int y;
-};
 
 class DirectPath
 {
 public:
   DirectPath(MapPtr map);
 
-  bool compute(int ox, int oy, int tx, int ty);
+  /**
+   * @brief Calculatec the points to move from (ox,oy) to (tx, ty)
+   * @param force - if true calculates the path no mater if its blocked or not.
+   *        If false, the computation end when non transparent tile is on the way.
+   * @return
+   */
+  bool compute(int ox, int oy, int tx, int ty, bool force = false);
+
   bool isEmpty() const;
   bool walk(int* x, int* y);
+  Point walk();
+  Point current() const;
+  Point previous() const;
 
 private:
   MapPtr _map;

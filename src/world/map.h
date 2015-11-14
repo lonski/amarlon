@@ -9,6 +9,7 @@
 #include <libtcod.hpp>
 #include <map_id.h>
 #include <directions.h>
+#include <point.h>
 
 namespace amarlon {
 
@@ -37,14 +38,19 @@ public:
   virtual MapPtr clone();
 
   virtual bool isExplored(int x, int y);
+  virtual bool isExplored(const Point& p);
   virtual bool isInFov(int x, int y);
+  virtual bool isInFov(const Point& p);
   virtual bool isBlocked(int x, int y);
+  virtual bool isBlocked(const Point& p);
   virtual bool isTransparent(int x, int y) const;
+  virtual bool isTransparent(const Point& p) const;
 
   virtual void addActor(ActorPtr actor);
   virtual  bool removeActor(ActorPtr toRemove);
   virtual ActorPtr getFirstActor(int x, int y);
   virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
+  virtual std::vector<ActorPtr> getActors(const Point& p, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
   virtual std::vector<ActorPtr> getActors(int x, int y, int radius, std::function<bool(ActorPtr)> filterFun);
   virtual std::vector<ActorPtr> getActors(int x, int y, int radius);
   virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)> filterFun);

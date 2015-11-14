@@ -26,6 +26,29 @@ void Messenger::onNotify(Subject *subject, Event event)
 
   if ( actor && actor->isInFov() )
   {
+    switch( event.id )
+    {
+      case EventId::Actor_Missed:
+      {
+        color = TCODColor::darkerYellow;
+        const char* format = "%s missed %s.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             tolowers(event.params["target"]).c_str() );
+      }
+      break;
+      case EventId::Actor_Dodged:
+      {
+        color = TCODColor::darkerYellow;
+        const char* format = "%s dodged %s's attack.";
+
+        sprintf(msg, format, actor->getName().c_str(),
+                             tolowers(event.params["attacker"]).c_str() );
+      }
+      break;
+      default:;
+    }
+
     if ( actor->isAlive() )
     {
       switch( event.id )
@@ -79,15 +102,6 @@ void Messenger::onNotify(Subject *subject, Event event)
             sprintf(msg,format, actor->getName().c_str(),
                                 character->getLevel() );
           }
-        }
-        break;
-        case EventId::Actor_Missed:
-        {
-          color = TCODColor::darkerYellow;
-          const char* format = "%s missed %s.";
-
-          sprintf(msg, format, actor->getName().c_str(),
-                               tolowers(event.params["target"]).c_str() );
         }
         break;
         case EventId::Actor_Pick:
