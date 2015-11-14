@@ -49,8 +49,9 @@ bool ShotAction::perform(ActorPtr performer)
             tryDropMissile(missile, currentPoint);
             break;
           }
+          //else: actor dodged; continue along the path
         }
-        else
+        else //non-alive object hit
         {
           tryDropMissile(missile, previousPoint );
           break;
@@ -94,8 +95,20 @@ bool ShotAction::rangeAttack(ActorPtr actor)
 
 void ShotAction::renderMissile(const Point& prev, const Point& current, ActorPtr missile)
 {
+  //determine the symbol
+  int dx = current.x - prev.x;
+  int dy = current.y - prev.y;
+
+  char c = '-';
+  if( (dx > 0 && dy > 0) || (dx < 0 && dy < 0) )
+    c = '\\';
+  else if( (dx < 0 && dy > 0) || (dx > 0 && dy < 0) )
+    c = '/';
+  else if ( dx == 0 )
+    c = '|';
+
   Engine::instance().render();
-  setTile(current, missile->getSymbol(), missile->getColor());
+  setTile(current, c, missile->getColor());
   TCODConsole::root->flush();
 }
 
@@ -152,7 +165,8 @@ int ShotAction::calculateAttackBonusModifier()
   int distance = calculateDistance(_performer, _target);
   if ( distance > CLOSE_RANGE )
   {
-    float relativeDistance = distance / getWeapon()->getRange();
+    int range = getWeapon()->getRange();
+    float relativeDistance = distance / (range > 0 ? range : 1);
 
     if ( relativeDistance < 0.5 )
       modifier = SHORT;
@@ -191,15 +205,23 @@ bool ShotAction::isReadyToShot()
 PickablePtr ShotAction::getWeapon()
 {
   WearerPtr wearer = _performer->getFeature<Wearer>();
-  ActorPtr weaponActor = wearer->equipped( ItemSlotType::MainHand );
-  return weaponActor ? weaponActor->getFeature<Pickable>() : nullptr;
+  if ( wearer )
+  {
+    ActorPtr weaponActor = wearer->equipped( ItemSlotType::MainHand );
+    return weaponActor ? weaponActor->getFeature<Pickable>() : nullptr;
+  }
+  return nullptr;
 }
 
 PickablePtr ShotAction::getAmunition()
 {
   WearerPtr wearer = _performer->getFeature<Wearer>();
-  ActorPtr amunitionActor = wearer->equipped( ItemSlotType::Amunition );
-  return amunitionActor ? amunitionActor->getFeature<Pickable>() : nullptr;
+  if (wearer)
+  {
+    ActorPtr amunitionActor = wearer->equipped( ItemSlotType::Amunition );
+    return amunitionActor ? amunitionActor->getFeature<Pickable>() : nullptr;
+  }
+  return nullptr;
 }
 
 ActorActionUPtr ShotAction::clone()

@@ -7,6 +7,7 @@ set(HEADER_FILES
     actor/actor_features/ai/states/idle.h
     actor/actor_features/ai/states/melee_attack.h
     actor/actor_features/ai/states/player_controlled.h
+    actor/actor_features/ai/states/range_attack.h
     actor/actor_features/ai/ai.h
     actor/actor_features/openable/openable.h
     actor/actor_features/wearer/item_slot_type.h
@@ -227,6 +228,7 @@ set(SOURCE_FILES
     actor/actor_features/ai/states/idle.cpp
     actor/actor_features/ai/states/melee_attack.cpp
     actor/actor_features/ai/states/player_controlled.cpp
+    actor/actor_features/ai/states/range_attack.cpp
     actor/actor_features/ai/ai.cpp
     actor/actor_features/openable/openable.cpp
     actor/actor_features/wearer/wearer.cpp

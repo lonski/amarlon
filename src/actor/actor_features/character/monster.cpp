@@ -6,6 +6,7 @@
 #include <utils.h>
 #include <actor_descriptions.h>
 #include <race.h>
+#include <actor.h>
 
 namespace amarlon {
 
@@ -89,7 +90,15 @@ Damage Monster::getDamage()
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    return weapon->getDamage();
+    if ( weapon->getItemType().weapon == WeaponType::Bow ) //take missile damage
+    {
+      PickablePtr amunition = getEquippedItem(ItemSlotType::Amunition);
+      return amunition ? amunition->getDamage() : Damage();
+    }
+    else
+    {
+      return weapon->getDamage();
+    }
   }
 
   return _damage;

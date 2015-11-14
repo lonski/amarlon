@@ -3,6 +3,7 @@
 #include <idle.h>
 #include <melee_attack.h>
 #include <player_controlled.h>
+#include <range_attack.h>
 
 namespace amarlon {
 
@@ -24,6 +25,7 @@ FSMStatePtr FSMState::create(FSMStateType type)
     case FSMStateType::IDLE: s.reset( new state::Idle ); break;
     case FSMStateType::MELEE_ATTACK: s.reset( new state::MeleeAttack ); break;
     case FSMStateType::PLAYER_CONTROLLED: s.reset( new state::PlayerControlled ); break;
+    case FSMStateType::ATTACK_RANGE: s.reset( new state::RangeAttack ); break;
     default:;
   }
 

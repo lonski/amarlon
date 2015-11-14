@@ -99,9 +99,18 @@ Damage PlayableCharacter::getDamage()
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    damage = weapon->getDamage();
+    if ( weapon->getItemType().weapon == WeaponType::Bow ) //take missile damage
+    {
+      PickablePtr amunition = getEquippedItem(ItemSlotType::Amunition);
+      damage = amunition ? amunition->getDamage() : Damage();
+      damage.value += getModifier( AbilityScore::DEX );
+    }
+    else //melee weapon
+    {
+      damage = weapon->getDamage();
+      damage.value += getModifier( AbilityScore::STR );
+    }
   }
-  damage.value += getModifier( AbilityScore::STR );
 
   return damage;
 }
