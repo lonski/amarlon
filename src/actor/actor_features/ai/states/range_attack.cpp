@@ -14,12 +14,12 @@ FSMStateType RangeAttack::getType() const
   return FSMStateType::ATTACK_RANGE;
 }
 
-int RangeAttack::update(Ai *ai)
+int RangeAttack::update()
 {
-  if ( ai )
+  if ( _ai )
   {
-    ActorPtr enemy = ai->getTarget().firstActor();
-    ActorPtr me = ai->getOwner().lock();
+    ActorPtr enemy = _ai->getTarget().firstActor();
+    ActorPtr me = _ai->getOwner().lock();
 
     if ( me && enemy )
     {
@@ -29,5 +29,32 @@ int RangeAttack::update(Ai *ai)
 
   return 0;
 }
+
+bool RangeAttack::canEnter()
+{
+  bool canEnter = false;
+  if ( _ai && _ai->getOwner().lock() )
+  {
+    ActorPtr actor = _ai->getOwner().lock();
+    WearerPtr wearer = actor->getFeature<Wearer>();
+    if ( wearer )
+    {
+      ActorPtr weaponActor = wearer->equipped( ItemSlotType::MainHand );
+      ActorPtr amunitionActor = wearer->equipped( ItemSlotType::Amunition );
+      if ( weaponActor && amunitionActor )
+      {
+        PickablePtr weapon = weaponActor->getFeature<Pickable>();
+        PickablePtr amunition = amunitionActor->getFeature<Pickable>();
+
+        canEnter =  weapon    &&
+                    amunition &&
+                    amunition->getAmount() > 0 &&
+                    amunition->getItemType().amunition == weapon->getItemType().amunition;
+      }
+    }
+  }
+  return canEnter;
+}
+
 
 }}

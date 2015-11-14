@@ -14,12 +14,12 @@ FSMStateType MeleeAttack::getType() const
   return FSMStateType::MELEE_ATTACK;
 }
 
-int MeleeAttack::update(Ai *ai)
+int MeleeAttack::update()
 {
-  if ( ai )
+  if ( _ai )
   {
-    ActorPtr enemy = ai->getTarget().firstActor();
-    ActorPtr me = ai->getOwner().lock();
+    ActorPtr enemy = _ai->getTarget().firstActor();
+    ActorPtr me = _ai->getOwner().lock();
 
     if ( me && enemy )
     {
@@ -28,6 +28,11 @@ int MeleeAttack::update(Ai *ai)
   }
 
   return 0;
+}
+
+bool MeleeAttack::canEnter()
+{
+  return true;
 }
 
 }}

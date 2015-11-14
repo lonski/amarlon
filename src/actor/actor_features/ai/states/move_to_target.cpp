@@ -18,12 +18,12 @@ FSMStateType MoveToTarget::getType() const
   return FSMStateType::MOVE_TO_TARGET;
 }
 
-int MoveToTarget::update(Ai *ai)
+int MoveToTarget::update()
 {
-  if ( ai )
+  if ( _ai )
   {
-    ActorPtr enemy = ai->getTarget().firstActor();
-    ActorPtr me = ai->getOwner().lock();
+    ActorPtr enemy = _ai->getTarget().firstActor();
+    ActorPtr me = _ai->getOwner().lock();
     if ( me && enemy )
     {
       if ( me->sees(enemy) )
@@ -38,11 +38,16 @@ int MoveToTarget::update(Ai *ai)
       }
       else
       {
-        ai->setTarget(nullptr);
+        _ai->setTarget(nullptr);
       }
     }
   }
   return 0;
+}
+
+bool MoveToTarget::canEnter()
+{
+  return true;
 }
 
 }}

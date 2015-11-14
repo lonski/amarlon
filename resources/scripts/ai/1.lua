@@ -62,7 +62,11 @@ function onUpdate(actor)
     if ai:hasTarget() then
     
       if getEnemyDistance() > RANGE_CLOSE then
-        ai:changeState( STATE_ATTACK_RANGE )
+
+        if (rollDice(100) > 80) or (not ai:changeState(STATE_ATTACK_RANGE) ) then
+          ai:changeState( STATE_MOVE_TO_TARGET )
+        end
+
       else
         ai:changeState( STATE_MELEE_ATTACK )
       end

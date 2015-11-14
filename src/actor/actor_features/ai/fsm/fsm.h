@@ -14,15 +14,16 @@ typedef std::shared_ptr<FSMState> FSMStatePtr;
 class FSM
 {
 public:
-  FSM();
+  FSM(Ai *ai);
 
-  int update(Ai* ai);
+  int update();
 
   FSMStatePtr getCurrentState() const;
   void addState(FSMStatePtr state);
   bool changeState(FSMStateType newState);
 
 private:
+  Ai* _ai;
   FSMStatePtr _currentState;
   std::map<FSMStateType, FSMStatePtr> _states;
 

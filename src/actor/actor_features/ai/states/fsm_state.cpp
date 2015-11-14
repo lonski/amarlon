@@ -8,6 +8,7 @@
 namespace amarlon {
 
 FSMState::FSMState()
+  : _ai(nullptr)
 {
 }
 
@@ -30,6 +31,11 @@ FSMStatePtr FSMState::create(FSMStateType type)
   }
 
   return s;
+}
+
+void FSMState::setAi(Ai *ai)
+{
+  _ai = ai;
 }
 
 }

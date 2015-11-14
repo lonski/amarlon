@@ -115,14 +115,23 @@ ActorPtr Wearer::unequip(ItemSlotType slot)
 
   if (r)
   {
-    if (!_equippedItems->remove(r))
-    {
-      throw std::logic_error("Item equipped in slot, but not present in container!");
-    }
+    _equippedItems->remove(r);
     _itemSlots[slot] = nullptr;
   }
 
   return r;
+}
+
+ActorPtr Wearer::unequip(ActorPtr actor)
+{
+  for (const auto& p : _itemSlots)
+  {
+    if ( p.second == actor )
+    {
+      return unequip(p.first);
+    }
+  }
+  return actor;
 }
 
 bool Wearer::isEquipped(ItemSlotType slot) const

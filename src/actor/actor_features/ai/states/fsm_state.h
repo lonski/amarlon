@@ -19,7 +19,14 @@ public:
   static FSMStatePtr create(FSMStateType type);
 
   virtual FSMStateType getType() const = 0;
-  virtual int update(Ai* ai) = 0;
+  virtual int update() = 0;
+  virtual bool canEnter() = 0;
+  virtual void onEnter() {}
+  virtual void onExit() {}
+  virtual void setAi(Ai* ai);
+
+protected:
+  Ai* _ai;
 
 };
 

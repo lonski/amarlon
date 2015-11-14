@@ -14,9 +14,14 @@ FSMStateType Idle::getType() const
   return FSMStateType::IDLE;
 }
 
-int Idle::update(Ai*)
+int Idle::update()
 {
   return 0;
+}
+
+bool Idle::canEnter()
+{
+  return true;
 }
 
 }}

@@ -15,7 +15,8 @@ public:
   RangeAttack();
 
   virtual FSMStateType getType() const;
-  virtual int update(Ai* ai);
+  virtual int update();
+  virtual bool canEnter();
 
 };
 

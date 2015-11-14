@@ -135,7 +135,12 @@ void ShotAction::tryDropMissile(ActorPtr missile, const Point &p)
 
 ActorPtr ShotAction::pickOneMissile()
 {
-  return getAmunition()->spilt(1);
+  ActorPtr missile = getAmunition()->spilt(1);
+  if ( WearerPtr wearer = _performer->getFeature<Wearer>() )
+  {
+    wearer->unequip(missile);
+  }
+  return missile;
 }
 
 DirectPathPtr ShotAction::calculatePath()

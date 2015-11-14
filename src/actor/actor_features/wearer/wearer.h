@@ -28,6 +28,7 @@ public:
 
   bool equip(ActorPtr item);
   ActorPtr unequip(ItemSlotType slot);
+  ActorPtr unequip(ActorPtr actor);
   bool isEquipped(ItemSlotType slot) const;
   ActorPtr equipped(ItemSlotType slot) const;
   bool hasSlot(ItemSlotType slot) const;

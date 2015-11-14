@@ -19,16 +19,22 @@ FSMStateType PlayerControlled::getType() const
   return FSMStateType::PLAYER_CONTROLLED;
 }
 
-int PlayerControlled::update(Ai* ai)
+int PlayerControlled::update()
 {
   TCOD_key_t lastKey = Engine::instance().getLastInput();
-  if ( ai && lastKey.vk != TCODK_NONE )
+  if ( lastKey.vk != TCODK_NONE )
   {
     Engine::instance().setLastInput( Key() );
     int r = _cmdExecutor->execute( lastKey );
     return r;
   }
   return 0;
+}
+
+bool PlayerControlled::canEnter()
+{
+  return true; // consider allowing entering only
+               // if there is no character controlled by player
 }
 
 }}

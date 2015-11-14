@@ -22,7 +22,7 @@ Ai::Ai()
 }
 
 Ai::Ai(DescriptionPtr /*dsc*/)
-  : _fsm( new FSM )
+  : _fsm( new FSM(this) )
   , _scriptId(0)
   , _trackCount(0)
   , _type(AiType::Null)
@@ -91,7 +91,7 @@ int Ai::update()
   if ( canOperate() )
   {
     executeScript();
-    if ( _fsm ) turns = _fsm->update(this);
+    if ( _fsm ) turns = _fsm->update();
   }
 
   return turns;

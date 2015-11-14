@@ -36,7 +36,7 @@ When new actor is created with given ID as parameter, then the template will be 
 			</ItemSlot>
 			<ItemSlot type="12">
 				<Equipped id="30">
-					<Pickable stackable="1" amount="20" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+					<Pickable stackable="1" amount="2" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
 				</Equipped>
 			</ItemSlot>	
 			<ItemSlot type="7">

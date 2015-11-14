@@ -6,9 +6,39 @@
 #include <thread>
 #include <experience_table.h>
 #include <damage.h>
+#include <actor_container.h>
+#include <engine.h>
+#include <actor_db.h>
+#include <actor.h>
 
 namespace amarlon {
 
+
+TEST(ActorContainerTest, removeStacked)
+{
+  Engine::instance().prologue();
+
+  //create 10 arrows
+  ActorPtr arrows = Engine::instance().getActorDB().fetch(ActorType::Arrow);
+  PickablePtr p = arrows->getFeature<Pickable>();
+  p->setAmount(10);
+
+  //create container
+  ActorContainer container;
+
+  //add arrows to container
+  container.push_back(arrows);
+
+  EXPECT_EQ(container.size(), (size_t)1 );
+
+  //remove 1 arrow
+  container.remove( p->spilt(9) );
+
+  EXPECT_EQ(container.size(), (size_t)1 );
+
+  container.remove( p->spilt(1) );
+  EXPECT_EQ(container.size(), (size_t)0 );
+}
 
 TEST(DamageTest, parseValid)
 {
