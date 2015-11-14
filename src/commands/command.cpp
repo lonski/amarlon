@@ -14,6 +14,7 @@
 #include "cmd_rest.h"
 #include "cmd_use_skill.h"
 #include "cmd_talk.h"
+#include "cmd_shot.h"
 
 #include "cmd_fullscreen.h"
 #include "cmd_game_menu.h"
@@ -41,6 +42,7 @@ CommandPtr Command::create(CommandId cmd)
     case CommandId::Rest:       c.reset( new CmdRest         ); break;
     case CommandId::UseSkill:   c.reset( new CmdUseSkill     ); break;
     case CommandId::Talk:       c.reset( new CmdTalk         ); break;
+    case CommandId::Shot:       c.reset( new CmdShot         ); break;
 
     default: break;
   }

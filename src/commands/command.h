@@ -27,6 +27,7 @@ enum class CommandId
   Rest,
   UseSkill,
   Talk,
+  Shot,
   End
 };
 

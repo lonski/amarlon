@@ -64,7 +64,19 @@ void BodyManager::fillBodySlots()
         ASlotMenuItemPtr slotMenuItem( new ASlotMenuItem( getWidth() - 2*MARGIN ) );
         slotMenuItem->setProperty<int>( "ItemSlotType", static_cast<int>(slot) );
         slotMenuItem->setName( ItemSlotType2Str(slot) );
-        slotMenuItem->setValue( eItem ? eItem->getName() : "" );
+
+        if ( eItem )
+        {
+          std::string itemName = eItem->getName();
+          PickablePtr pickable = eItem->getFeature<Pickable>();
+          if ( pickable && pickable->getAmount() > 1 )
+            itemName += " [" + toStr(pickable->getAmount()) + "]";
+          slotMenuItem->setValue( itemName );
+        }
+        else
+        {
+          slotMenuItem->setValue( "" );
+        }
 
         _bodyMenu->addItem( slotMenuItem );
       }

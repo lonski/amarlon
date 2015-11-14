@@ -52,6 +52,7 @@ set(HEADER_FILES
     commands/cmd_rest.h
     commands/cmd_use_skill.h
     commands/cmd_talk.h
+    commands/cmd_shot.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -264,6 +265,7 @@ set(SOURCE_FILES
     commands/cmd_inspect.cpp
     commands/cmd_rest.cpp
     commands/cmd_use_skill.cpp
+    commands/cmd_shot.cpp
     data_gateways/parsers/animation_parser.cpp
     data_gateways/parsers/actor_parser.cpp
     data_gateways/parsers/tile_parser.cpp

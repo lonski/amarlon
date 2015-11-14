@@ -115,6 +115,8 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_itemSlot == crhs->_itemSlot);
     equal &= (_scriptId == crhs->_scriptId);
     equal &= (_type == crhs->_type);
+    equal &= (_radius == crhs->_radius);
+    equal &= (_range == crhs->_range);
   }
 
   return equal;
@@ -271,6 +273,14 @@ std::string Pickable::getDescription()
   {
     str += colorToStr(TCODColor::darkTurquoise, true) + "Armor class: " + toStr(getArmorClass()) + "#";
   }
+  if ( getRange() != 0 )
+  {
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Range: " + toStr(getRange()) + "#";
+  }
+  if ( getRadius() != 0 )
+  {
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Radius: " + toStr(getRadius()) + "#";
+  }
 
   return str;
 }
@@ -291,6 +301,8 @@ void Pickable::clone(Pickable *p)
     p->_itemSlot = _itemSlot;
     p->_scriptId = _scriptId;
     p->_type = _type;
+    p->_range = _range;
+    p->_radius = _radius;
   }
 }
 
