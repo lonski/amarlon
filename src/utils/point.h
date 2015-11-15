@@ -18,6 +18,17 @@ struct Point
   {
     return x != 0 && y != 0;
   }
+
+  bool operator==(const Point& rhs)
+  {
+    return x == rhs.x && y == rhs.y;
+  }
+
+  bool operator!=(const Point& rhs)
+  {
+    return !operator ==(rhs);
+  }
+
 };
 
 }

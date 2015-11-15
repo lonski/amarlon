@@ -1,5 +1,6 @@
 #include "direct_path.h"
 #include <map.h>
+#include <cmath>
 
 namespace amarlon {
 
@@ -11,32 +12,51 @@ DirectPath::DirectPath(MapPtr map)
 
 bool DirectPath::compute(int ox, int oy, int tx, int ty, bool force)
 {
-  bool r = false;
+  bool r = true;
+
+  Point point(ox, oy);
+  Point endPoint(tx, ty);
 
   _points.clear();
-  _points.push_back(Point(ox, oy));
+  _points.push_back(point);
 
-  while ( ox != tx || oy != ty )
-  {
-    int dx = tx - ox;
-    int dy = ty - oy;
+  float dx = tx - ox;
+  float dy = ty - oy;
+  float tg = dx != 0 ? dy/dx : 0;
 
-    int stepDx = (dx > 0 ? 1:-1);
-    int stepDy = (dy > 0 ? 1:-1);
-
-    ox += dx != 0 ? stepDx : 0;
-    oy += dy != 0 ? stepDy : 0;
-
-    if ( _map->isTransparent(ox, oy) ||
-         (ox == tx && oy == ty)      ||
-         force )
+  if ( dx != 0 && dy != 0 && std::abs(dy) > std::abs(dx) )
+  {//always increment y
+   //calculate x
+   int last = static_cast<float>(point.y) / tg;
+   while( point != endPoint)
+   {
+     oy < ty ? ++point.y : --point.y;
+     int cx = (static_cast<float>(point.y) / tg);
+     point.x += (cx - last);
+     last = cx;
+     _points.push_back(point);
+   }
+  }
+  else if ( dx != 0 && dy != 0 && std::abs(dy) < std::abs(dx) )
+  {//always interment x
+   //calculate y
+    int last = static_cast<float>(point.x) * tg;
+    while( point != endPoint)
     {
-      _points.push_back(Point(ox, oy));
+      ox < tx ? ++point.x : --point.x;
+      int cy = (static_cast<float>(point.x) * tg);
+      point.y += (cy - last);
+      last = cy;
+      _points.push_back(point);
     }
-    else //failed to calculate path
+  }
+  else //stright line
+  {
+    while( point != endPoint)
     {
-      r = false;
-      break;
+      if ( ox != tx ) ox < tx ? ++point.x : --point.x;
+      if ( oy != ty ) oy < ty ? ++point.y : --point.y;
+      _points.push_back(point);
     }
   }
 

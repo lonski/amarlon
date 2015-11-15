@@ -27,7 +27,7 @@ int CmdShot::execute()
     {
       if ( PickablePtr weapon = weaponActor->getFeature<Pickable>() )
       {
-        SingleRangeProjectileSelector selector("Choose target to shot..");
+        SingleRangeProjectileSelector selector("Press [TAB] to change target. Press [ESC] to cancel.");
         selector.setRange( weapon->getRange() * 2 );
         selector.setRadius( weapon->getRange() * 2 );
         Target target = selector.select();

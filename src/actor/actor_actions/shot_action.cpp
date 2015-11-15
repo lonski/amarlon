@@ -87,7 +87,7 @@ bool ShotAction::rangeAttack(ActorPtr actor)
 
   if ( !hit )
   {
-    actor->notify(Event(EventId::Actor_Dodged,{{"attacker",_performer->getName()}}));
+    _performer->notify(Event(EventId::Actor_Missed,{{"target",actor->getName()}}));
   }
 
   return hit;
