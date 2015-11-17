@@ -13,6 +13,14 @@
 
 namespace amarlon {
 
+TEST(PointTest, operator_minus)
+{
+  Point p1(10, 5);
+  Point p2(2, 1);
+  Point dp = p1 - p2;
+  EXPECT_EQ(dp.x, p1.x - p2.x);
+  EXPECT_EQ(dp.y, p1.y - p2.y);
+}
 
 TEST(ActorContainerTest, removeStacked)
 {

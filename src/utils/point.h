@@ -19,14 +19,24 @@ struct Point
     return x != 0 && y != 0;
   }
 
-  bool operator==(const Point& rhs)
+  bool operator==(const Point& rhs) const
   {
     return x == rhs.x && y == rhs.y;
   }
 
-  bool operator!=(const Point& rhs)
+  bool operator!=(const Point& rhs) const
   {
     return !operator ==(rhs);
+  }
+
+  Point operator-(const Point& point) const
+  {
+    return Point( x - point.x, y - point.y );
+  }
+
+  Point operator+(const Point& point) const
+  {
+    return Point( x + point.x, y + point.y );
   }
 
 };

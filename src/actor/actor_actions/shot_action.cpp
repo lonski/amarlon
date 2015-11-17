@@ -147,8 +147,8 @@ DirectPathPtr ShotAction::calculatePath()
 {
   DirectPathPtr path(new DirectPath( _performer->getMap() ) );
 
-  path->compute(_performer->getX(), _performer->getY(),
-                _target->getX(), _target->getY(), true);
+  path->compute( Point(_performer->getX(), _performer->getY()),
+                 Point(_target->getX(), _target->getY()), true);
 
   return path;
 }

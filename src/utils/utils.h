@@ -10,6 +10,7 @@
 #include <memory>
 #include "libtcod.hpp"
 #include <target.h>
+#include <point.h>
 
 namespace amarlon {
 
@@ -28,6 +29,7 @@ float calculateDistance(int ox, int oy, int tx, int ty);
 float calculateDistance(ActorPtr a1, ActorPtr a2);
 TCODPath *calculatePath(Target start, Target end );
 DirectPathPtr calculateDirectPath(Target start, Target end);
+float tangens(const Point& p1, const Point& p2);
 
 static inline std::string &ltrim(std::string &s) {
         s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));

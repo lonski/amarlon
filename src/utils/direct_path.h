@@ -23,7 +23,7 @@ public:
    *        If false, the computation end when non transparent tile is on the way.
    * @return
    */
-  bool compute(int ox, int oy, int tx, int ty, bool force = false);
+  bool compute(const Point& start, const Point& end, bool force = false);
 
   bool isEmpty() const;
   bool walk(int* x, int* y);
@@ -35,6 +35,10 @@ private:
   MapPtr _map;
   std::list<Point> _points;
   std::list<Point>::iterator _current;
+
+  float _tg;
+
+  Point calculateNextPoint(const Point &previous, const Point &end);
 
 };
 

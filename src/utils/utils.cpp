@@ -170,11 +170,17 @@ DirectPathPtr calculateDirectPath(Target start, Target end)
   if ( start && end && map )
   {
     DirectPathPtr path( new DirectPath(map) );
-    path->compute( start.x, start.y, end.x, end.y );
+    path->compute( Point(start.x, start.y), Point(end.x, end.y) );
 
     return path;
   }
   return nullptr;
+}
+
+float tangens(const Point &p1, const Point &p2)
+{
+  Point dp = p2 - p1;
+  return dp.x != 0 ? (float)dp.y/(float)dp.x : 0.0f;
 }
 
 }
