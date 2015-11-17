@@ -34,7 +34,7 @@ public:
 private:
   MapPtr _map;
   std::list<Point> _points;
-  std::list<Point>::iterator _current;
+  std::list<Point>::iterator _position;
 
   float _tg;
 

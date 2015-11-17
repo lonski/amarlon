@@ -9,7 +9,7 @@ DirectPath::DirectPath(MapPtr map)
   : _map(map)
   , _tg(0.0f)
 {
-  _current = _points.end();
+  _position = _points.end();
 }
 
 bool DirectPath::compute(const Point& start, const Point& end, bool force)
@@ -24,6 +24,7 @@ bool DirectPath::compute(const Point& start, const Point& end, bool force)
   while( current != end )
   {
     current = calculateNextPoint(current, end);
+
     if ( _map->isTransparent(current) ||
          current == end ||
          force )
@@ -33,11 +34,12 @@ bool DirectPath::compute(const Point& start, const Point& end, bool force)
     else
     {
       r = false;
+      _points.clear();
       break;
     }
   }
 
-  _current = _points.begin();
+  _position = _points.begin();
 
   return r;
 }
@@ -73,12 +75,12 @@ bool DirectPath::isEmpty() const
 
 bool DirectPath::walk(int* x, int* y)
 {
-  bool r = ++_current != _points.end();
+  bool r = ++_position != _points.end();
 
   if ( r )
   {
-    *x = _current->x;
-    *y = _current->y;
+    *x = _position->x;
+    *y = _position->y;
   }
   else
   {
@@ -97,12 +99,12 @@ Point DirectPath::walk()
 
 Point DirectPath::current() const
 {
-  return _current != _points.end() ? *_current : Point();
+  return _position != _points.end() ? *_position : Point();
 }
 
 Point DirectPath::previous() const
 {
-  auto prev = _current;
+  auto prev = _position;
   std::advance(prev, -1);
   return prev != _points.end() ? *prev : Point();
 }
