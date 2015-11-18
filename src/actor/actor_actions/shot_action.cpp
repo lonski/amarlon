@@ -30,33 +30,44 @@ bool ShotAction::perform(ActorPtr performer)
     success = true;
     ActorPtr missile = pickOneMissile();
     DirectPathPtr path = calculatePath();
+    path->extrapolate(5);
 
+    Point previousPoint = path->current();
     while ( !path->isEmpty() )
     {
       Point currentPoint = path->walk();
-      Point previousPoint = path->previous();
 
       renderMissile(previousPoint, currentPoint, missile);
       std::this_thread::sleep_for(std::chrono::milliseconds(40));
 
-      if ( currentPoint.isNonZero() && map->isBlocked(currentPoint)  ) //obstacle on the path
+      //end of path
+      if ( path->isEmpty() && previousPoint.isNonZero() && !map->isBlocked(previousPoint) )
+      {
+
+        dropMissile(missile, previousPoint, 100);
+        break;
+      }
+      else
+      //obstacle on the path
+      if ( currentPoint.isNonZero() && map->isBlocked(currentPoint)  )
       {
         ActorPtr hitActor = getTarget(currentPoint);
         if ( hitActor )
         {
           if ( rangeAttack(hitActor) )
           {
-            tryDropMissile(missile, currentPoint);
+            dropMissile(missile, currentPoint, 60);
             break;
           }
           //else: actor dodged; continue along the path
         }
         else //non-alive object hit
         {
-          tryDropMissile(missile, previousPoint );
+          dropMissile(missile, previousPoint, 40 );
           break;
         }
       }
+      previousPoint = currentPoint;
     }
   }
 
@@ -121,11 +132,11 @@ ActorPtr ShotAction::getTarget(const Point& p)
   return actors.empty() ? nullptr : actors.front();
 }
 
-void ShotAction::tryDropMissile(ActorPtr missile, const Point &p)
+void ShotAction::dropMissile(ActorPtr missile, const Point &p, int chance = 100)
 {
   if ( p.isNonZero() &&
        missile       &&
-       dices::roll(dices::D100) > 50 ) //50% to destroy the missile
+       dices::roll(dices::D100) > (100 - chance) )
   {
     MapPtr map = _performer->getMap();
     missile->setPosition(p);

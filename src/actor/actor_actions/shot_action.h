@@ -32,7 +32,7 @@ private:
     int calculateAttackBonusModifier();
     DirectPathPtr calculatePath();
     ActorPtr getTarget(const Point& p);
-    void tryDropMissile(ActorPtr missile, const Point& p);
+    void dropMissile(ActorPtr missile, const Point& p, int chance);
     ActorPtr pickOneMissile();
     bool rangeAttack(ActorPtr actor);
     void renderMissile(const Point& prev, const Point& current, ActorPtr missile);

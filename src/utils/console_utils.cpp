@@ -64,7 +64,6 @@ void renderPath(Target start, Target end)
   {
     //TCODPath* path = calculatePath(start, end);
     DirectPathPtr path = calculateDirectPath(start, end);
-
     while( path && !path->isEmpty() )
     {
       int x(0), y(0);

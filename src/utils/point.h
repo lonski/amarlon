@@ -29,17 +29,51 @@ struct Point
     return !operator ==(rhs);
   }
 
-  Point operator-(const Point& point) const
+  Point& operator-=(const Point& point)
   {
-    return Point( x - point.x, y - point.y );
+    x -= point.x;
+    y -= point.y;
+    return *this;
   }
 
-  Point operator+(const Point& point) const
+  Point& operator+=(const Point& point)
   {
-    return Point( x + point.x, y + point.y );
+    x += point.x;
+    y += point.y;
+    return *this;
+  }
+
+  Point& operator*=(int factor)
+  {
+    x *= factor;
+    y *= factor;
+    return *this;
   }
 
 };
+
+static inline Point operator-(Point l, Point r)
+{
+  l -= r;
+  return l;
+}
+
+static inline Point operator+(Point l, Point r)
+{
+  l += r;
+  return l;
+}
+
+static inline Point operator*(Point p, int f)
+{
+    p *= f;
+    return p;
+}
+
+static inline Point operator*(int f, Point p)
+{
+    return p * f;
+}
 
 }
 

@@ -44,6 +44,28 @@ bool DirectPath::compute(const Point& start, const Point& end, bool force)
   return r;
 }
 
+void DirectPath::extrapolate(int count)
+{
+  if ( _points.size() > 1 )
+  {
+    auto iter = _points.end();
+    std::advance(iter, -1);
+    Point point = *iter;
+
+    Point start = *_points.begin();
+    Point dp = start - point;
+    float distance = sqrtf( dp.x*dp.x + dp.y*dp.y );
+    if ( distance < count ) dp = dp * std::max( count - distance, 1.0f);
+    Point mirroredEnd( point.x - dp.x, point.y - dp.y);
+
+    while ( count-- && point != mirroredEnd )
+    {
+      point = calculateNextPoint(point, mirroredEnd);
+      _points.push_back(point);
+    }
+  }
+}
+
 Point DirectPath::calculateNextPoint(const Point& previous, const Point& end)
 {
   Point dp = end - previous;

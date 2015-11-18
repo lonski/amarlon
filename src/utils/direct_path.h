@@ -25,6 +25,8 @@ public:
    */
   bool compute(const Point& start, const Point& end, bool force = false);
 
+  void extrapolate(int count);
+
   bool isEmpty() const;
   bool walk(int* x, int* y);
   Point walk();
