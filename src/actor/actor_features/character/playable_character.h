@@ -19,30 +19,13 @@ public:
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   /* overriden functions */
-  virtual CarryingCapacity::LoadLevel getLoadLevel();
-  virtual int getBaseAttackBonus();
-  virtual int getMeleeAttackBonus();
-  virtual int getMissileAttackBonus();
-  virtual Damage getDamage();
   virtual int modifyExperience(int modifier);
-  virtual int getSpeed();
-  virtual bool abilityRoll(AbilityScore::Type as, int extraModifier = 0);
 
   /* class specific functions */
-  virtual int getAbilityScore(AbilityScore::Type as);
   virtual void advanceLevel();
 
 private:
-  std::map<AbilityScore::Type, int> _abilityScores;
-
-  int getModifier(AbilityScore::Type as);
   void advanceLevel(LevelData data);
-
-  int getEquipmentWeight();
-  int calculateInventoryItemsWeight();
-  int calculateWearedItemsWeight();
-
-  int calculateLoadPenalty();
 
 };
 

@@ -6,7 +6,7 @@ namespace amarlon {
 enum class CharacterType
 {
   NoType,
-  Monster,
+  Generic,
   PlayableCharacter
 };
 

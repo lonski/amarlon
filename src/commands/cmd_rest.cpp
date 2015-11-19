@@ -23,11 +23,12 @@ bool CmdRest::accept(const TCOD_key_t& key)
 int CmdRest::execute()
 {
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
+  ActorPtr player = Engine::instance().getPlayer();
 
-  auto mobs = map->getActors([](ActorPtr a){
+  auto mobs = map->getActors([&](ActorPtr a){
                 auto mob = a->getFeature<Ai>();
-                return mob && mob->getAiType() == AiType::MonsterAi &&
-                       (a->isInFov() || mob->isHunting());
+                ActorPtr target = mob ? mob->getTarget().firstActor() : nullptr;
+                return mob && target == player && mob->isHunting();
               });
 
   if ( !mobs.empty() )

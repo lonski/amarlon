@@ -99,7 +99,7 @@ int Ai::update()
 
 void Ai::executeScript()
 {
-  if ( getAiType() == AiType::MonsterAi && _scriptId == 0) _scriptId = 1;
+  if ( getAiType() == AiType::GenericAi && _scriptId == 0) _scriptId = 1;
 
   if ( _scriptId > 0 )
   {

@@ -16,16 +16,14 @@ public:
   CharacterSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~CharacterSerializer();
 
-  /** Character is an abstract class - here is just common serialization in protected section
-   *  which should be called in each serializer for given Character type
-   */
-  virtual bool serialize(ActorFeaturePtr af) = 0;
+  virtual bool serialize(ActorFeaturePtr af);
   
 protected:
   void serializeCharacterCommonPart(rapidxml::xml_node<>* characterNode, CharacterPtr character);
   void serializeSpellbook(rapidxml::xml_node<>* characterNode, CharacterPtr character);
   void serializeSkills(CharacterPtr character, rapidxml::xml_node<>* characterNode);
   void serializeModifiers(CharacterPtr character, rapidxml::xml_node<>* characterNode);
+  void serializeAbilityScores(CharacterPtr character, rapidxml::xml_node<>* characterNode);
 
 };
 

@@ -28,8 +28,8 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Destroyable/>
 	</Actor>	
 	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" experience="25" class="1" race="5" armorClass="11" hitPointsBonus="0" damage="1d8+0#1" morale="8" speed="40" team="0"/>
-		<MonsterAi/>
+		<Character level="1" experience="25" class="1" race="5" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="0"/>
+		<Ai script="1"/>
 		<Wearer>
 			<ItemSlot type="3">
 				<Equipped id="20"/>
@@ -100,8 +100,8 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
-		<Monster level="1" experience="10" class="1" race="6" armorClass="11" hitPointsBonus="-1" damage="1d6+0#1" morale="7" speed="30" team="0"/>
-		<MonsterAi/>
+		<Character level="1" experience="10" class="1" race="6" armorClass="11" maxHitPoints="7" damage="1d6+0#1" morale="7" speed="30" team="0"/>
+		<Ai script="1"/>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
 		</Destroyable>

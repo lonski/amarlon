@@ -1,7 +1,6 @@
 #include "monster_move_action.h"
 #include <actor.h>
 #include <character.h>
-#include <monster.h>
 #include <engine.h>
 
 namespace amarlon {

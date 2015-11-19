@@ -20,7 +20,7 @@
 						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
 					</Content>		
 					<Content id="30" x="0" y="0">
-						<Pickable stackable="1" amount="20" category="6" amunitionType="1" itemSlot="12"/>
+						<Pickable stackable="1" amount="20" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
 					</Content>
 					<Content id="31" x="0" y="0"/>
 				</Inventory>

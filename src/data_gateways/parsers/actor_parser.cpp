@@ -171,38 +171,23 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
 
   if ( _xml != nullptr )
   {
-    //playable character parsing
-    xml_node<>* characterNode = _xml->first_node("PlayableCharacter");
-    if (characterNode != nullptr)
+    //character parsing
+    xml_node<>* characterNode = _xml->first_node("Character");
+    if ( characterNode != nullptr )
     {
-      PlayableCharacterDescriptionPtr pdsc( new PlayableCharacterDescription );
-      pdsc->type = CharacterType::PlayableCharacter;
-
-      xml_node<>* attrNode = characterNode->first_node("AbilityScores");
-      if ( attrNode != nullptr)
-      {
-        for ( AbilityScore::Type as : AbilityScore::Type() )
-        {
-          pdsc->abilityScores[as] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
-        }
-      }
-
-      dsc = pdsc;
+      dsc.reset( new CharacterDescription );
+      dsc->type = CharacterType::Generic;
     }
     else
     {
-      //monster character parsing
-      characterNode = _xml->first_node("Monster");
-      if ( characterNode != nullptr )
+      //playable character parsing
+      characterNode = _xml->first_node("PlayableCharacter");
+      if (characterNode != nullptr)
       {
-        MonsterDescriptionPtr mdsc( new MonsterDescription );
+        PlayableCharacterDescriptionPtr pdsc( new PlayableCharacterDescription );
+        pdsc->type = CharacterType::PlayableCharacter;
 
-        mdsc->type = CharacterType::Monster;
-        mdsc->hitPointsBonus = getAttribute<int>(characterNode, "hitPointsBonus");
-        mdsc->morale = getAttribute<int>(characterNode, "morale");
-        mdsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );
-
-        dsc = mdsc;
+        dsc = pdsc;
       }
     }
 
@@ -217,6 +202,8 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       dsc->experience = getAttribute<int>(characterNode, "experience");
       dsc->speed = getAttribute<int>(characterNode, "speed");
       dsc->team = (relations::Team)getAttribute<int>(characterNode, "team");
+      dsc->morale = getAttribute<int>(characterNode, "morale");
+      dsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );
 
       //Parse Spellbook
       xml_node<>* spellbookNode = characterNode->first_node("Spellbook");
@@ -278,6 +265,16 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
         }
       }
 
+      //Parse AbilitzScores
+      xml_node<>* attrNode = characterNode->first_node("AbilityScores");
+      if ( attrNode != nullptr)
+      {
+        for ( AbilityScore::Type as : AbilityScore::Type() )
+        {
+          dsc->abilityScores[as] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
+        }
+      }
+
     }
   }
 
@@ -290,11 +287,11 @@ AiDescriptionPtr ActorParser::parseAiDsc()
 
   if ( _xml != nullptr )
   {
-    xml_node<>* aiNode = _xml->first_node("MonsterAi");
+    xml_node<>* aiNode = _xml->first_node("Ai");
     if (aiNode != nullptr)
     {
       aiDsc.reset( new AiDescription );
-      aiDsc->type = AiType::MonsterAi;
+      aiDsc->type = AiType::GenericAi;
     }
     else if ( (aiNode = _xml->first_node("PlayerAi")) )
     {

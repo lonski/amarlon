@@ -27,9 +27,9 @@ bool AiSerializer::serialize(ActorFeaturePtr af)
   {
     rapidxml::xml_node<>* aiNode = nullptr;
 
-    if ( ai->getAiType() == AiType::MonsterAi )
+    if ( ai->getAiType() == AiType::GenericAi )
     {
-      aiNode = createNode( _document, "MonsterAi", "");
+      aiNode = createNode( _document, "Ai", "");
     }
     else if ( ai->getAiType() == AiType::PlayerAi )
     {

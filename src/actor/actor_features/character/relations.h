@@ -16,15 +16,17 @@ enum Team
 {
   Monster,
   NPC,
-  Player
+  Player,
+  PcHostileNPC
 };
 
 static std::vector< std::vector<Type> > table = {
-  /*         |    Monster | NPC     | Player | */
-  /* ------------------------------------------*/
-  /* Monster |*/ {Neutral,  Hostile,  Hostile },
-  /* NPC     |*/ {Hostile,  Neutral,  Neutral },
-  /* Player  |*/ {Hostile,  Neutral,  Ally    }
+  /*               |    Monster | NPC     | Player |  PcHostileNPC */
+  /* --------------------------------------------------------------*/
+  /* Monster       |*/ {Neutral,  Hostile,  Hostile, Hostile },
+  /* NPC           |*/ {Hostile,  Neutral,  Neutral, Neutral },
+  /* Player        |*/ {Hostile,  Neutral,  Ally,    Hostile },
+  /* PcHostileNPC  |*/ {Hostile,  Neutral,  Hostile, Ally    },
 };
 
 Type get(Team t1, Team t2);

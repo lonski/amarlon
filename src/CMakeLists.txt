@@ -1,5 +1,4 @@
 set(HEADER_FILES
-    test.h
     actor/actor_features/ai/fsm/fsm.h
     actor/actor_features/ai/fsm/fsm_state_type.h
     actor/actor_features/ai/states/fsm_state.h
@@ -9,13 +8,13 @@ set(HEADER_FILES
     actor/actor_features/ai/states/player_controlled.h
     actor/actor_features/ai/states/range_attack.h
     actor/actor_features/ai/ai.h
+    actor/actor_features/ai/ai_type.h
     actor/actor_features/openable/openable.h
     actor/actor_features/wearer/item_slot_type.h
     actor/actor_features/wearer/wearer.h
     actor/actor_features/actor_feature.h
     actor/actor_features/inventory/inventory.h
     actor/actor_features/character/character.h
-    actor/actor_features/character/monster.h
     actor/actor_features/character/playable_character.h
     actor/actor_features/character/modifier.h
     actor/actor_features/character/modifier_type.h
@@ -75,7 +74,6 @@ set(HEADER_FILES
     data_gateways/serializers/actor_feature_serializers/wearer_serializer.h
     data_gateways/serializers/actor_feature_serializers/openable_serializer.h
     data_gateways/serializers/actor_feature_serializers/character_serializer.h
-    data_gateways/serializers/actor_feature_serializers/monster_serializer.h
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
     data_gateways/serializers/actor_feature_serializers/ai_serializer.h
     data_gateways/serializers/actor_feature_serializers/trap_serializer.h
@@ -236,7 +234,6 @@ set(SOURCE_FILES
     actor/actor_features/actor_feature.cpp
     actor/actor_features/inventory/inventory.cpp
     actor/actor_features/character/character.cpp
-    actor/actor_features/character/monster.cpp
     actor/actor_features/character/playable_character.cpp
     actor/actor_features/character/relations.cpp
     actor/actor_features/pickable/pickable.cpp
@@ -284,7 +281,6 @@ set(SOURCE_FILES
     data_gateways/serializers/actor_feature_serializers/wearer_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/openable_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/character_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/monster_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/ai_serializer.cpp
     data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp

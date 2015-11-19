@@ -26,6 +26,19 @@ CharacterSerializer::~CharacterSerializer()
 {
 }
 
+bool CharacterSerializer::serialize(ActorFeaturePtr af)
+{
+  CharacterPtr c = std::dynamic_pointer_cast<Character>(af);
+  if ( c && _document && _xml )
+  {
+    xml_node<>* _cNode = _document->allocate_node(node_element, "Character");
+    _xml->append_node( _cNode );
+
+    serializeCharacterCommonPart(_cNode, c);
+  }
+  return c != nullptr;
+}
+
 void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode, CharacterPtr character)
 {
   if ( characterNode && character && _document )
@@ -36,14 +49,27 @@ void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode
     addAttribute    ( characterNode, "experience",   character->getExperience()       );
     addAttribute    ( characterNode, "armorClass",   character->_defaultArmorClass    );
     addAttribute    ( characterNode, "speed",        character->_speed                );
+    addAttribute    ( characterNode, "damage",       std::string(character->_damage)  );
     addAttributeEnum( characterNode, "class",        character->getClass()->getType() );
     addAttributeEnum( characterNode, "race",         character->getRace()->getType()  );
     addAttributeEnum( characterNode, "team",         character->getTeam()             );
+    addAttributeEnum( characterNode, "morale",       character->getMorale()           );
 
     serializeSpellbook(characterNode, character);
     serializeSkills(character, characterNode);
     serializeModifiers(character, characterNode);
+    serializeAbilityScores(character, characterNode);
+  }
+}
 
+void CharacterSerializer::serializeAbilityScores(CharacterPtr character, rapidxml::xml_node<>* characterNode)
+{
+  xml_node<>* _asNode = _document->allocate_node(node_element, "AbilityScores");
+  characterNode->append_node( _asNode );
+
+  for ( AbilityScore::Type as : AbilityScore::Type() )
+  {
+    addAttribute( _asNode, AbilityScore::toStr(as), character->getAbilityScore(as) );
   }
 }
 

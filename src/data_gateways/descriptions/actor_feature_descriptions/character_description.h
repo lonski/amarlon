@@ -48,6 +48,7 @@ struct CharacterDescription : Description
     , speed(0)
     , type(CharacterType::NoType)
     , team(relations::Monster)
+    , morale(0)
   {}
 
   int level;
@@ -63,28 +64,17 @@ struct CharacterDescription : Description
   std::vector<std::string> modifiers;
   CharacterType type;
   relations::Team team;
+  std::map<AbilityScore::Type, int> abilityScores;
+  int morale;
+  Damage damage;
 };
 
 
 struct PlayableCharacterDescription : CharacterDescription
 {
-  std::map<AbilityScore::Type, int> abilityScores;
-};
-
-struct MonsterDescription : CharacterDescription
-{
-  MonsterDescription()
-    : hitPointsBonus(0)
-    , morale(0)
-  {}
-
-  int hitPointsBonus;
-  int morale;
-  Damage damage;
 };
 
 typedef std::shared_ptr<SpellbookDescription> SpellbookDescriptionPtr;
-typedef std::shared_ptr<MonsterDescription> MonsterDescriptionPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescriptionPtr;
 

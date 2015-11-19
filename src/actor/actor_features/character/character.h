@@ -42,10 +42,12 @@ public:
   virtual ActorFeature::Type getType() { return featureType; }
 
   Character();
+  virtual ~Character();
   Character(DescriptionPtr dsc);
   static CharacterPtr create(DescriptionPtr dsc);
 
   virtual bool isEqual(ActorFeaturePtr rhs) const;
+  virtual ActorFeaturePtr clone();
 
   virtual bool isAlive() const;
   virtual int getHitPoints() const;
@@ -62,26 +64,28 @@ public:
   virtual RacePtr getRace() const;
   virtual int getSavingThrow(SavingThrows::Type type);
   virtual bool rollSavingThrow(SavingThrows::Type type);
-  virtual bool abilityRoll(AbilityScore::Type as, int extraModifier = 0) = 0;
+  virtual bool abilityRoll(AbilityScore::Type as, int extraModifier = 0);
 
   virtual int getSpeed();
   virtual int getMovePoints();
   virtual void setMovePoints(int points);
 
-  virtual CarryingCapacity::LoadLevel getLoadLevel() = 0;
-  virtual int getBaseAttackBonus() = 0;
-  virtual int getMeleeAttackBonus() = 0;
-  virtual int getMissileAttackBonus() = 0;
+  virtual CarryingCapacity::LoadLevel getLoadLevel();
+  virtual int getBaseAttackBonus();
+  virtual int getMeleeAttackBonus();
+  virtual int getMissileAttackBonus();
 
-  virtual Damage getDamage() = 0;
+  virtual Damage getDamage();
   virtual int getArmorClass(DamageType dmgType = DamageType::Physical);
   virtual SpellBookPtr getSpellBook();
   virtual std::string getDescription();
   virtual std::vector<SkillPtr> getSkills() const;
   virtual std::vector<SkillPtr> getSkills(std::function<bool(SkillPtr)> filter) const;
   virtual SkillPtr getSkill(SkillId id) const;
+  virtual int getAbilityScore(AbilityScore::Type as);
+  int getModifier(AbilityScore::Type as);
 
-  virtual int getMorale() { return 0; }
+  virtual int getMorale();
 
   /**
    * @brief Restores character HP and spells.
@@ -116,8 +120,15 @@ private:
   SpellBookPtr _spellbook;
   std::vector<SkillPtr> _skills;
   relations::Team _team;
+  std::map<AbilityScore::Type, int> _abilityScores;
+  int _morale;
+  Damage _damage;
 
   SkillPtr getModifiedSkill(SkillPtr s) const;
+  int getEquipmentWeight();
+  int calculateInventoryItemsWeight();
+  int calculateWearedItemsWeight();
+  int calculateLoadPenalty();
 
 protected:
   std::vector<Modifier> _modifiers;

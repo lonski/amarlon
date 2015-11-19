@@ -95,7 +95,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   ActorPtr ca2c = ca1c->clone();
 
   AiDescriptionPtr dsc = std::make_shared<AiDescription>();
-  dsc->type = AiType::MonsterAi;
+  dsc->type = AiType::GenericAi;
   ca1c->insertFeature( Ai::create( dsc ));
   c1->add(ca1c);
   c2->add(ca2c);
@@ -136,10 +136,10 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
   ASSERT_TRUE( *a1 == *a2 );
 
-  MonsterDescriptionPtr mobDsc(new MonsterDescription );  
+  CharacterDescriptionPtr mobDsc(new CharacterDescription );
   mobDsc->level = 123;
   mobDsc->experience = 666;
-  mobDsc->type = CharacterType::Monster;
+  mobDsc->type = CharacterType::Generic;
 
   a1->insertFeature( Character::create(mobDsc) );
 

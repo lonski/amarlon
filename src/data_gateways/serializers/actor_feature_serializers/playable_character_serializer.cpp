@@ -29,14 +29,6 @@ bool PlayableCharacterSerializer::serialize(ActorFeaturePtr af)
     xml_node<>* _pcNode = _document->allocate_node(node_element, "PlayableCharacter");
     _xml->append_node( _pcNode );
 
-    xml_node<>* _asNode = _document->allocate_node(node_element, "AbilityScores");
-    _pcNode->append_node( _asNode );
-
-    for ( AbilityScore::Type as : AbilityScore::Type() )
-    {
-      addAttribute( _asNode, AbilityScore::toStr(as), pc->getAbilityScore(as) );
-    }
-
     CharacterSerializer::serializeCharacterCommonPart(_pcNode, pc);
   }
   return pc != nullptr;

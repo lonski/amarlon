@@ -1,7 +1,6 @@
 #include "playable_character.h"
 #include <actor.h>
 #include <die_action.h>
-#include <attack_bonus_table.h>
 #include <experience_table.h>
 #include <race.h>
 #include <inventory.h>
@@ -21,14 +20,6 @@ PlayableCharacter::PlayableCharacter()
 PlayableCharacter::PlayableCharacter(DescriptionPtr dsc)
   : Character(dsc)
 {
-  PlayableCharacterDescriptionPtr pcDsc = std::dynamic_pointer_cast<PlayableCharacterDescription>(dsc);
-  if ( pcDsc != nullptr )
-  {
-    setHitPoints( pcDsc->hitPoints );
-    setMaxHitPoints( pcDsc->maxHitPoints );
-    setLevel( pcDsc->level );
-    _abilityScores = pcDsc->abilityScores;
-  }
 }
 
 PlayableCharacter::~PlayableCharacter()
@@ -50,69 +41,9 @@ bool PlayableCharacter::isEqual(ActorFeaturePtr rhs) const
   if (crhs != nullptr)
   {
     equal = Character::isEqual( rhs );
-    equal &= std::equal(_abilityScores.begin(), _abilityScores.end(), crhs->_abilityScores.begin());
   }
 
   return equal;
-}
-
-CarryingCapacity::LoadLevel PlayableCharacter::getLoadLevel()
-{
-  CarryingCapacity::Data cData = CarryingCapacity::get(getAbilityScore(AbilityScore::STR), getRace()->getType() );
-  return getEquipmentWeight() >= cData.heavy ? CarryingCapacity::LoadLevel::Heavy : CarryingCapacity::LoadLevel::Light;
-}
-
-int PlayableCharacter::calculateLoadPenalty()
-{
-  return getLoadLevel() == CarryingCapacity::LoadLevel::Heavy ? CarryingCapacity::HEAVY_LOAD_SPEED_PENALTY : 0;
-}
-
-int PlayableCharacter::getBaseAttackBonus()
-{
-  int base = AttackBonus::get(getClass()->getType(), getLevel());
-
-  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
-                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::AttackBonus; } );
-
-  return it != _modifiers.end() ? base + it->Value : base;
-}
-
-int PlayableCharacter::getMeleeAttackBonus()
-{
-  return getBaseAttackBonus() + getModifier(AbilityScore::STR);
-}
-
-int PlayableCharacter::getMissileAttackBonus()
-{
-  int base = getBaseAttackBonus() + getModifier(AbilityScore::DEX);
-
-  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
-                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::MissileAttackBonus; } );
-
-  return it != _modifiers.end() ? base + it->Value : base;
-}
-
-Damage PlayableCharacter::getDamage()
-{
-  Damage damage;
-
-  PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
-  if ( weapon )
-  {
-    if ( weapon->getItemType().weapon == WeaponType::Bow ) //take missile damage
-    {
-      PickablePtr amunition = getEquippedItem(ItemSlotType::Amunition);
-      damage = amunition ? amunition->getDamage() : Damage();
-      damage.value += getModifier( AbilityScore::DEX );
-    }
-    else //melee weapon
-    {
-      damage = weapon->getDamage();
-      damage.value += getModifier( AbilityScore::STR );
-    }
-  }
-
-  return damage;
 }
 
 int PlayableCharacter::modifyExperience(int modifier)
@@ -185,82 +116,6 @@ void PlayableCharacter::advanceLevel(LevelData data)
     }
   }
 
-}
-
-int PlayableCharacter::getSpeed()
-{
-  return std::max( Character::getSpeed() - calculateLoadPenalty(), 1 );
-}
-
-int PlayableCharacter::getEquipmentWeight()
-{
-  int weight = 0;
-
-  ActorPtr owner = getOwner().lock();
-  if ( owner )
-  {
-    weight += calculateInventoryItemsWeight();
-    weight += calculateWearedItemsWeight();
-  }
-
-  return weight;
-}
-
-int PlayableCharacter::calculateInventoryItemsWeight()
-{
-  int weight = 0;
-
-  InventoryPtr inventory = getOwner().lock()->getFeature<Inventory>();
-  if ( inventory )
-  {
-    for ( ActorPtr i : inventory->items() )
-    {
-      weight += i->getFeature<Pickable>()->getWeight();
-    }
-  }
-
-  return weight;
-}
-
-int PlayableCharacter::calculateWearedItemsWeight()
-{
-  int weight = 0;
-
-  WearerPtr wearer = getOwner().lock()->getFeature<Wearer>();
-  if ( wearer )
-  {
-    for ( auto slot : ItemSlotType() )
-    {
-      ActorPtr item = wearer->equipped(slot);
-      if ( item )
-      {
-        weight = item->getFeature<Pickable>()->getWeight();
-      }
-    }
-  }
-
-  return weight;
-}
-
-int PlayableCharacter::getAbilityScore(AbilityScore::Type as)
-{
-  return _abilityScores[ as ];
-}
-
-bool PlayableCharacter::abilityRoll(AbilityScore::Type as, int extraModifier)
-{
-  int roll = dices::roll(dices::D20);
-  if ( roll != dices::NATURAL_ONE )
-  {
-    int base = roll + getModifier(as) + extraModifier;
-    return  roll == dices::NATURAL_TWENTY || base >= AbilityScore::getAbilityRollTarget( getLevel() );
-  }
-  return false;
-}
-
-int PlayableCharacter::getModifier(AbilityScore::Type as)
-{
-  return AbilityScore::getModifier( getAbilityScore(as) );
 }
 
 }

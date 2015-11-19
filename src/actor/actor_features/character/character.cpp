@@ -13,7 +13,7 @@
 #include <rpg_db.h>
 #include <race.h>
 #include <character_type.h>
-#include <monster.h>
+#include <attack_bonus_table.h>
 #include <playable_character.h>
 
 namespace amarlon {
@@ -22,6 +22,10 @@ const ActorFeature::Type Character::featureType = ActorFeature::CHARACTER;
 
 Character::Character()  
   : Character(nullptr)
+{
+}
+
+Character::~Character()
 {
 }
 
@@ -35,6 +39,7 @@ Character::Character(DescriptionPtr dsc)
   , _movePoints(0)
   , _spellbook(new SpellBook)
   , _team(relations::Monster)
+  , _morale(0)
 {
   CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
   if ( cDsc != nullptr )
@@ -46,10 +51,30 @@ Character::Character(DescriptionPtr dsc)
     _speed = cDsc->speed;
     _team = cDsc->team;
     _spellbook = SpellBook::create(cDsc->spellbook);
+    _morale = cDsc->morale;
+    _damage = cDsc->damage;
+
+    _abilityScores = cDsc->abilityScores;
+    //roll ability scores if not defined
+    for ( auto as : AbilityScore::Type() )
+    {
+      if ( _abilityScores[as] == 0 )
+      {
+        MinMax constrains = _race->getAbilityScoreRestriction( as );
+        int roll = 0;
+        while ( !constrains.allow( roll ) ) roll = dices::roll(dices::D6, 3);
+        _abilityScores[as] = roll;
+      }
+    }
 
     for(auto s : cDsc->skills)
       _skills.push_back( Skill::create( static_cast<SkillId>(s.id),
                                                    s.level ) );
+
+    setLevel( cDsc->level );
+    setMaxHitPoints( cDsc->maxHitPoints );
+    cDsc->hitPoints > 0 ? setHitPoints( cDsc->hitPoints ) : setHitPoints( getMaxHitPoints() );
+
     for(auto m : cDsc->modifiers)
       addModifier( Modifier(m) );
   }
@@ -64,7 +89,7 @@ CharacterPtr Character::create(DescriptionPtr dsc)
   {
     switch (cDsc->type)
     {
-      case CharacterType::Monster:            c.reset( new Monster(cDsc) ); break;
+      case CharacterType::Generic:            c.reset( new Character(cDsc) ); break;
       case CharacterType::PlayableCharacter:  c.reset( new PlayableCharacter(cDsc) ); break;
       default :;
     }
@@ -83,8 +108,10 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal  = _defaultArmorClass  == crhs->_defaultArmorClass;
     equal &= _level              == crhs->_level;
     equal &= _experience         == crhs->_experience;
+    equal &= _morale             == crhs->_morale;
     equal &= *_spellbook         == *(crhs->_spellbook);
     equal &= _team               == crhs->_team;
+    equal &= _damage             == crhs->_damage;
     equal &= _skills.size() == crhs->_skills.size();
 
     equal &= _class && crhs->_class;
@@ -97,9 +124,20 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
                                      _skills.end(),
                                      crhs->_skills.begin(),
                                      [](SkillPtr a, SkillPtr b){ return *a == *b;});
+
+    if ( equal ) equal &= std::equal(_abilityScores.begin(),
+                                     _abilityScores.end(),
+                                     crhs->_abilityScores.begin());
   }
 
   return equal;
+}
+
+ActorFeaturePtr Character::clone()
+{
+  Character* c = new Character(*this);
+  cloneBase(c);
+  return ActorFeaturePtr( c );
 }
 
 bool Character::isAlive() const
@@ -294,7 +332,7 @@ void Character::setTeam(relations::Team team)
 
 int Character::getSpeed()
 {
-  return _speed;
+  return std::max( _speed - calculateLoadPenalty(), 1 );
 }
 
 int Character::getMovePoints()
@@ -305,6 +343,60 @@ int Character::getMovePoints()
 void Character::setMovePoints(int points)
 {
   _movePoints = points;
+}
+
+CarryingCapacity::LoadLevel Character::getLoadLevel()
+{
+  CarryingCapacity::Data cData = CarryingCapacity::get(getAbilityScore(AbilityScore::STR), getRace()->getType() );
+  return getEquipmentWeight() >= cData.heavy ? CarryingCapacity::LoadLevel::Heavy : CarryingCapacity::LoadLevel::Light;
+}
+
+int Character::getBaseAttackBonus()
+{
+  int base = AttackBonus::get(getClass()->getType(), getLevel());
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::AttackBonus; } );
+
+  return it != _modifiers.end() ? base + it->Value : base;
+}
+
+int Character::getMeleeAttackBonus()
+{
+  return getBaseAttackBonus() + getModifier(AbilityScore::STR);
+}
+
+int Character::getMissileAttackBonus()
+{
+  int base = getBaseAttackBonus() + getModifier(AbilityScore::DEX);
+
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::MissileAttackBonus; } );
+
+  return it != _modifiers.end() ? base + it->Value : base;
+}
+
+Damage Character::getDamage()
+{
+  Damage damage = _damage;
+
+  PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
+  if ( weapon )
+  {
+    if ( weapon->getItemType().weapon == WeaponType::Bow ) //take missile damage
+    {
+      PickablePtr amunition = getEquippedItem(ItemSlotType::Amunition);
+      damage = amunition ? amunition->getDamage() : Damage();
+      damage.value += getModifier( AbilityScore::DEX );
+    }
+    else //melee weapon
+    {
+      damage = weapon->getDamage();
+      damage.value += getModifier( AbilityScore::STR );
+    }
+  }
+
+  return damage;
 }
 
 int Character::getArmorClass(DamageType dmgType)
@@ -358,6 +450,11 @@ SkillPtr Character::getSkill(SkillId id) const
   }
 
   return skill;
+}
+
+int Character::getAbilityScore(AbilityScore::Type as)
+{
+  return _abilityScores[ as ];
 }
 
 SkillPtr Character::getModifiedSkill(SkillPtr s) const
@@ -416,10 +513,93 @@ PickablePtr Character::getEquippedItem(ItemSlotType slot)
 void Character::cloneBase(Character *c)
 {
   c->_spellbook = _spellbook->clone();
-  c->_skills.clear();
   c->_modifiers = _modifiers;
   c->_team = _team;
+  c->_morale = _morale;
+  c->_abilityScores = _abilityScores;
+  c->_damage = _damage;
+  c->_skills.clear();
   for ( auto s : _skills ) c->_skills.push_back( s->clone() );
+}
+
+
+bool Character::abilityRoll(AbilityScore::Type as, int extraModifier)
+{
+  int roll = dices::roll(dices::D20);
+  if ( roll != dices::NATURAL_ONE )
+  {
+    int base = roll + getModifier(as) + extraModifier;
+    return  roll == dices::NATURAL_TWENTY || base >= AbilityScore::getAbilityRollTarget( getLevel() );
+  }
+  return false;
+}
+
+int Character::getModifier(AbilityScore::Type as)
+{
+  return AbilityScore::getModifier( getAbilityScore(as) );
+}
+
+int Character::getMorale()
+{
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
+                         [](Modifier& mod){ return mod.Type.generic == GenericModifier::MoraleModifier; } );
+
+  return it != _modifiers.end() ? _morale + it->Value : _morale;
+}
+
+int Character::getEquipmentWeight()
+{
+  int weight = 0;
+
+  ActorPtr owner = getOwner().lock();
+  if ( owner )
+  {
+    weight += calculateInventoryItemsWeight();
+    weight += calculateWearedItemsWeight();
+  }
+
+  return weight;
+}
+
+int Character::calculateInventoryItemsWeight()
+{
+  int weight = 0;
+
+  InventoryPtr inventory = getOwner().lock()->getFeature<Inventory>();
+  if ( inventory )
+  {
+    for ( ActorPtr i : inventory->items() )
+    {
+      weight += i->getFeature<Pickable>()->getWeight();
+    }
+  }
+
+  return weight;
+}
+
+int Character::calculateWearedItemsWeight()
+{
+  int weight = 0;
+
+  WearerPtr wearer = getOwner().lock()->getFeature<Wearer>();
+  if ( wearer )
+  {
+    for ( auto slot : ItemSlotType() )
+    {
+      ActorPtr item = wearer->equipped(slot);
+      if ( item )
+      {
+        weight = item->getFeature<Pickable>()->getWeight();
+      }
+    }
+  }
+
+  return weight;
+}
+
+int Character::calculateLoadPenalty()
+{
+  return getLoadLevel() == CarryingCapacity::LoadLevel::Heavy ? CarryingCapacity::HEAVY_LOAD_SPEED_PENALTY : 0;
 }
 
 }

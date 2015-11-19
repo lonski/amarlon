@@ -6,7 +6,7 @@ namespace amarlon {
 enum class AiType
 {
   Null = 0,
-  MonsterAi = 1,
+  GenericAi = 1,
   PlayerAi = 2
 };
 

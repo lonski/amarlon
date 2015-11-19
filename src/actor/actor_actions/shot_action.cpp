@@ -43,7 +43,6 @@ bool ShotAction::perform(ActorPtr performer)
       //end of path
       if ( path->isEmpty() && previousPoint.isNonZero() && !map->isBlocked(previousPoint) )
       {
-
         dropMissile(missile, previousPoint, 100);
         break;
       }
