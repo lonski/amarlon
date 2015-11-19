@@ -60,7 +60,7 @@ Character::Character(DescriptionPtr dsc)
     {
       if ( _abilityScores[as] == 0 )
       {
-        MinMax constrains = _race->getAbilityScoreRestriction( as );
+        MinMax constrains = _race ? _race->getAbilityScoreRestriction( as ) : MinMax();
         int roll = 0;
         while ( !constrains.allow( roll ) ) roll = dices::roll(dices::D6, 3);
         _abilityScores[as] = roll;
@@ -125,9 +125,10 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
                                      crhs->_skills.begin(),
                                      [](SkillPtr a, SkillPtr b){ return *a == *b;});
 
-    if ( equal ) equal &= std::equal(_abilityScores.begin(),
-                                     _abilityScores.end(),
-                                     crhs->_abilityScores.begin());
+    //Ability Scores may be random per instance
+    //    if ( equal ) equal &= std::equal(_abilityScores.begin(),
+    //                                     _abilityScores.end(),
+    //                                     crhs->_abilityScores.begin());
   }
 
   return equal;

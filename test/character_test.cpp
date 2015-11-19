@@ -43,7 +43,7 @@ void clearBody(ActorPtr actor)
 
 TEST_F(CharacterTest, carryingLoad)
 {
-  ActorPtr ziomek = Actor::create(ActorType::Player);
+  ActorPtr ziomek = Actor::create(ActorType::Orc);
 
   //clear all items carried by ziomek
   clearBody(ziomek);
@@ -56,7 +56,7 @@ TEST_F(CharacterTest, carryingLoad)
   dsc->speed = 40;
   dsc->type = CharacterType::PlayableCharacter;
 
-  PlayableCharacterPtr pc_ch = std::dynamic_pointer_cast<PlayableCharacter>( Character::create(dsc) );
+  CharacterPtr pc_ch = std::dynamic_pointer_cast<Character>( Character::create(dsc) );
   ziomek->insertFeature( pc_ch );
   ASSERT_TRUE( pc_ch != nullptr);
 
