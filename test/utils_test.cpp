@@ -13,6 +13,18 @@
 
 namespace amarlon {
 
+TEST(DamageTest, operators)
+{
+  Damage d1("1d4+1#1");
+  Damage d2("1d6+1#1");
+
+  EXPECT_TRUE( d1 < d2 );
+  EXPECT_TRUE( d1.toInt() < d2.toInt() ) << "D1: " << d1.toInt() << " D2: " << d2.toInt();
+
+  EXPECT_TRUE( d2 > d1 );
+  EXPECT_TRUE( d2.toInt() > d1.toInt() );
+}
+
 TEST(PointTest, operator_minus)
 {
   Point p1(10, 5);

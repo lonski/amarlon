@@ -197,7 +197,6 @@ bool Actor::operator==(const Actor &rhs) const
   equal &= rhs._blocks == _blocks;
   equal &= rhs._priority == _priority;
   equal &= rhs._name == _name;
-  equal &= rhs._description == _description;
   equal &= rhs._color == _color;
   equal &= rhs._symbol == _symbol;
 

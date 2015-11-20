@@ -16,6 +16,11 @@ enum class WeaponType
   Dagger = 3,
   Staff  = 4,
   Bow    = 5
+  /* When adding new types here
+   * remember to fill
+   * ItemType::isMeleeWeapon()
+   * ItemType::isRangeWeapon()
+   */
 };
 
 static inline const char* WeaponType2Str(WeaponType t)
@@ -79,6 +84,20 @@ struct ItemType
   WeaponType weapon;
   ArmorType armor;
   AmunitionType amunition;
+
+  bool isMeleeWeapon() const
+  {
+    return weapon == WeaponType::Blunt  ||
+           weapon == WeaponType::Dagger ||
+           weapon == WeaponType::Staff  ||
+           weapon == WeaponType::Sword;
+
+  }
+
+  bool isRangeWeapon() const
+  {
+    return weapon == WeaponType::Bow;
+  }
 };
 
 class ItemTypeRestriction

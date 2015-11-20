@@ -44,7 +44,9 @@ When new actor is created with given ID as parameter, then the template will be 
 			</ItemSlot>
 		</Wearer>
 		<Inventory maxSize="20">
-			<Content id="23"/>			
+			<Content id="23"/>
+			<Content id="24"/>
+			<Content id="33"/>
 		</Inventory>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
@@ -96,7 +98,7 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="1" amount="1" category="4"/>
 	</Actor>
 	<Actor name="Dagger" id="24" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2"/>
+		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2" weaponType="3"/>
 		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
@@ -152,5 +154,9 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Ai script="1"/>
 		<Destroyable/>
 		<Description>Some weird dwarf wandering around.</Description>
+	</Actor>
+	<Actor name="Short sword" id="33" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d6+0#1" armorClass="0" weight="3" price="6" weaponType="1"/>
+		<Description>In essence, this weapon is a smaller version of the longsword but longer than a dagger or dirk, having many of the same parts including a generally double-edged blade, cross-guard, grip, and pommel.</Description>
 	</Actor>
 </Actors>

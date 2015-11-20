@@ -182,6 +182,15 @@ void Inventory::sort(std::function<bool(ActorPtr, ActorPtr)> fun)
   _items->sort(fun);
 }
 
+void Inventory::sort(std::function<bool (PickablePtr, PickablePtr)> fun)
+{
+  sort([&fun](ActorPtr l, ActorPtr r){
+    PickablePtr pl = l ? l->getFeature<Pickable>() : nullptr;
+    PickablePtr pr = r ? r->getFeature<Pickable>() : nullptr;
+    return fun(pl, pr);
+  });
+}
+
 size_t Inventory::slotCount() const
 {
   return _slotCount;
@@ -205,6 +214,14 @@ std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun) 
   }
 
   return items;
+}
+
+std::vector<ActorPtr> Inventory::items(std::function<bool (PickablePtr)> filterFun) const
+{
+  return items([&filterFun](ActorPtr a){
+    PickablePtr p = a ? a->getFeature<Pickable>() : nullptr;
+    return p ? filterFun(p) : false;
+  });
 }
 
 std::vector<ActorPtr> Inventory::items(ActorType type) const

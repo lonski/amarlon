@@ -26,8 +26,11 @@ struct Damage
 
   bool operator==(const Damage& rhs) const;
   bool operator!=(const Damage& rhs) const;
+  bool operator>(const Damage& rhs) const;
+  bool operator<(const Damage& rhs) const;
   operator std::string() const;
   std::string toStr() const;
+  int toInt() const;
 
 private:
   void parse(const std::string& str);

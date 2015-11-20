@@ -12,9 +12,11 @@ namespace amarlon {
 class Actor;
 class Inventory;
 class ActorContainer;
+class Pickable;
 struct Description;
 typedef std::shared_ptr<Description> DescriptionPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<Pickable> PickablePtr;
 typedef std::shared_ptr<Inventory> InventoryPtr;
 typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 
@@ -48,8 +50,10 @@ public:
 
   void performActionOnActors(std::function<void(ActorPtr)> fun);
   void sort(std::function<bool(ActorPtr, ActorPtr)> fun);
+  void sort(std::function<bool(PickablePtr, PickablePtr)> fun);
 
   std::vector<ActorPtr> items(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;}) const;
+  std::vector<ActorPtr> items(std::function<bool(PickablePtr)> filterFun) const;
   std::vector<ActorPtr> items(ActorType type) const;
 
 

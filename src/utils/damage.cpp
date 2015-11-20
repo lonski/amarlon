@@ -34,6 +34,16 @@ bool Damage::operator!=(const Damage &rhs) const
   return !(*this == rhs);
 }
 
+bool Damage::operator>(const Damage &rhs) const
+{
+  return toInt() > rhs.toInt();
+}
+
+bool Damage::operator<(const Damage &rhs) const
+{
+  return toInt() < rhs.toInt();
+}
+
 Damage::operator std::string() const
 {
   return toStr();
@@ -49,6 +59,11 @@ std::string Damage::toStr() const
          std::to_string(value) +                  // 5
          "#" +                                    // #
       std::to_string(static_cast<int>(type));     // 0
+}
+
+int Damage::toInt() const
+{
+  return static_cast<int>(dice) * diceCount + value;
 }
 
 void Damage::parse(const std::string &str)

@@ -34,6 +34,8 @@ enum class ActorType
   Beer = 29,
   Arrow = 30,
   ShortBow = 31,
+  Tero = 32,
+  ShortSword = 33,
   End
 };
 
