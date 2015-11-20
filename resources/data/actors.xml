@@ -125,4 +125,32 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Short bow" id="31" character="}" color="663300" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" category="1" weaponType="5" range="10" itemSlot="7" amunitionType="1"/>
 	</Actor>
+	<Actor name="Tero" id="32" character="@" color="ccff99" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="30" class="2" race="2" maxHitPoints="12" speed="40" team="1" morale="8">
+			<AbilityScores STR="16" INT="10" WIS="16" DEX="10" CON="18" CHA="8"/>
+			<Spellbook>
+				<Slots>
+					<Slot level="1" prepared="1" spell="1"/>
+					<Slot level="1" prepared="1" spell="1"/>
+					<Slot level="2" prepared="1" spell="4"/>
+				</Slots>
+				<Known>
+					<Spell id="1"/>
+					<Spell id="4"/>
+				</Known>
+			</Spellbook>
+		</Character>
+		<Wearer>
+			<ItemSlot type="3">
+				<Equipped id="20"/>
+			</ItemSlot>
+			<ItemSlot type="7">
+				<Equipped id="24"/>
+			</ItemSlot>
+		</Wearer>
+		<Talker id="2"/>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Description>Some weird dwarf wandering around.</Description>
+	</Actor>
 </Actors>

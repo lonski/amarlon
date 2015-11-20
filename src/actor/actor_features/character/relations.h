@@ -14,10 +14,10 @@ enum Type
 
 enum Team
 {
-  Monster,
-  NPC,
-  Player,
-  PcHostileNPC
+  Monster      = 0,
+  NPC          = 1,
+  Player       = 2,
+  PcHostileNPC = 3
 };
 
 static std::vector< std::vector<Type> > table = {

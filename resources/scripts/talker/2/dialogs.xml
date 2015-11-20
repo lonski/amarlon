@@ -1,0 +1,15 @@
+<dialogs>
+	<dialog id="1">
+		Good day. Have you seen a grey rock?
+		<choices>
+			<choice id="1" jump="2">Sure, a lot!</choice>
+			<choice id="3">Nevermind.</choice>
+		</choices>
+	</dialog>
+	<dialog id="2">
+		I can not find any..
+		<choices>
+			<choice id="1">Good luck then..</choice>
+		</choices>
+	</dialog>
+</dialogs>
