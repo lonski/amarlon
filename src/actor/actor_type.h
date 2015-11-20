@@ -36,6 +36,7 @@ enum class ActorType
   ShortBow = 31,
   Tero = 32,
   ShortSword = 33,
+  Arrow_P1 = 34,
   End
 };
 

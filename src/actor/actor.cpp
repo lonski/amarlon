@@ -509,5 +509,17 @@ bool Actor::isPlayerControlled() const
   return r;
 }
 
+std::string Actor::debug()
+{
+  std::string d;
+  d += "======="+getName()+"=======\n";
+  for (auto f : _features)
+  {
+    d += f.second->debug();
+  }
+  d += "########################\n";
+  return d;
+}
+
 }
 

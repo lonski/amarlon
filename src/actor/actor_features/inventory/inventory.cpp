@@ -229,5 +229,17 @@ std::vector<ActorPtr> Inventory::items(ActorType type) const
   return items([&type](ActorPtr a){ return a->getType() == type;});
 }
 
+std::string Inventory::debug()
+{
+  std::string d = "-----INVENTORY-----\n";
+  for(auto item : *_items)
+  {
+    PickablePtr p = item ? item->getFeature<Pickable>() : nullptr;
+    d += item->getName() + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + "\n";
+  }
+  d.append("-------------------\n");
+  return d;
+}
+
 }
 

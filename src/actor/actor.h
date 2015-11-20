@@ -205,6 +205,8 @@ public:
    */
   bool isPlayerControlled() const;
 
+  std::string debug();
+
 private:
   ActorType _id;
   int _x, _y;

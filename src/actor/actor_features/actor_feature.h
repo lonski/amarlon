@@ -44,6 +44,7 @@ public:
   virtual ActorFeature::Type getType() = 0;
   virtual std::string getDescription();
   virtual int update();
+  virtual std::string debug() { return ""; }
 
 protected:
   ActorWPtr _owner;

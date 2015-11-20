@@ -156,5 +156,21 @@ bool Wearer::hasSlot(ItemSlotType slot) const
   return (_itemSlots.find(slot) != _itemSlots.end());
 }
 
+std::string Wearer::debug()
+{
+  std::string d = "-----WEARER-----\n";
+  for(auto slot : _itemSlots)
+  {
+    ActorPtr eq = equipped(slot.first);
+    PickablePtr p = eq ? eq->getFeature<Pickable>() : nullptr;
+    d += ItemSlotType2Str(slot.first);
+    d +=  ": "
+        + (eq ? eq->getName() : "<none>")
+        + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + "\n";
+  }
+  d.append("----------------\n");
+  return d;
+}
+
 }
 

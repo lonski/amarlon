@@ -19,12 +19,13 @@ public:
 
   }
 
-
 };
 
-TEST_F(PickableTest, nothing)
+TEST_F(PickableTest, equality)
 {
-
+  PickablePtr p1 = Actor::create(ActorType::Arrow)->getFeature<Pickable>();
+  PickablePtr p2 = Actor::create(ActorType::Arrow_P1)->getFeature<Pickable>();
+  EXPECT_FALSE( p1->isEqual(p2) );
 }
 
 

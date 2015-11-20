@@ -33,6 +33,8 @@ public:
   ActorPtr equipped(ItemSlotType slot) const;
   bool hasSlot(ItemSlotType slot) const;
 
+  virtual std::string debug();
+
 private:
   std::map<ItemSlotType, ActorPtr> _itemSlots;
   ActorContainerPtr _equippedItems;

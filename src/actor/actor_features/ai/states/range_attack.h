@@ -28,6 +28,9 @@ public:
 private:
   std::vector<ActorPtr> getWeapons();
   std::vector<ActorPtr> getAmunition(PickablePtr weapon);
+  void chooseWeapon();
+  void equip();
+  bool isOutOfAmmo();
 
   ActorPtr _weapon;
   ActorPtr _amunition;

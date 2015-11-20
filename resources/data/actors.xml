@@ -47,6 +47,12 @@ When new actor is created with given ID as parameter, then the template will be 
 			<Content id="23"/>
 			<Content id="24"/>
 			<Content id="33"/>
+			<Content id="30">
+				<Pickable stackable="1" amount="2" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+			</Content>
+			<Content id="34">
+				<Pickable stackable="1" amount="1" category="6" amunitionType="1" itemSlot="12" damage="1d6+1#6"/>
+			</Content>
 		</Inventory>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
@@ -158,5 +164,8 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Short sword" id="33" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d6+0#1" armorClass="0" weight="3" price="6" weaponType="1"/>
 		<Description>In essence, this weapon is a smaller version of the longsword but longer than a dagger or dirk, having many of the same parts including a generally double-edged blade, cross-guard, grip, and pommel.</Description>
+	</Actor>
+	<Actor name="Arrow +1" id="34" character="/" color="cd8500" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="6" amunitionType="1" itemSlot="12" damage="1d6+1#6"/>
 	</Actor>
 </Actors>
