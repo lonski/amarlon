@@ -10,7 +10,12 @@ namespace amarlon { namespace gui {
 class AMenuItem : public AWidget
 {
 public:
-  AMenuItem() : _object(nullptr), _rawObject(nullptr) {}
+  AMenuItem()
+    : _object(nullptr)
+    , _rawObject(nullptr)
+    , _callBack([](){})
+  {}
+
   virtual ~AMenuItem() {}
 
   virtual void select() = 0;
@@ -30,9 +35,20 @@ public:
   template<typename T> void setObject(std::shared_ptr<T> t);
   template<typename T> std::shared_ptr<T> getObject();
 
+  virtual void setCallback( std::function<void()> fun )
+  {
+    _callBack = fun;
+  }
+
+  virtual void executeCallback()
+  {
+    _callBack();
+  }
+
 private:
   std::shared_ptr<void> _object;
   void* _rawObject;
+  std::function<void()> _callBack;
 
 };
 

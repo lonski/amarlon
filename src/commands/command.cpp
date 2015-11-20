@@ -27,7 +27,7 @@ CommandPtr Command::create(CommandId cmd)
 
   switch(cmd)
   {
-    case CommandId::Move:       c.reset( new CmdMoveOrAttack ); break;
+    case CommandId::Move:       c.reset( new CmdMove ); break;
     case CommandId::Open:       c.reset( new CmdOpen         ); break;
     case CommandId::Inventory:  c.reset( new CmdInventory    ); break;
     case CommandId::Pick:       c.reset( new CmdPick         ); break;

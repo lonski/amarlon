@@ -196,15 +196,18 @@ int Character::takeHeal(Damage heal, ActorPtr healer)
   return healed;
 }
 
-int Character::takeDamage(Damage dmg, ActorPtr attacker)
+void Character::turnHostileTo(ActorPtr attacker)
 {
-  //change relation
   CharacterPtr attackerCh = attacker ? attacker->getFeature<Character>() : nullptr;
-  if ( attackerCh && attackerCh->getTeam() == relations::Player
-       && getTeam() == relations::NPC )
+  if ( attackerCh && attackerCh->getTeam() == relations::Player )
   {
     setTeam(relations::PcHostileNPC);
   }
+}
+
+int Character::takeDamage(Damage dmg, ActorPtr attacker)
+{
+  turnHostileTo(attacker);
 
   //TODO: handle damage resists
   int roll = dmg.roll();

@@ -100,6 +100,7 @@ public:
 
   virtual relations::Team getTeam() const;
   virtual void setTeam(relations::Team team);
+  void turnHostileTo(ActorPtr attacker);
 
 protected:
   virtual void setLevel(int level);

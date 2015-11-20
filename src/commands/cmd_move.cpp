@@ -3,36 +3,59 @@
 #include <map.h>
 #include <move_action.h>
 #include <attack_action.h>
+#include <talker.h>
 #include <engine.h>
+#include <window_manager.h>
+#include <menu_window.h>
+#include <alabel_menu_item.h>
+#include <message_box.h>
+#include <character.h>
 
 namespace amarlon {
 
-CmdMoveOrAttack::CmdMoveOrAttack()
+CmdMove::CmdMove()
   : _dx(0)
   , _dy(0)
 {
 }
 
-bool CmdMoveOrAttack::accept(const TCOD_key_t& key)
+bool CmdMove::accept(const TCOD_key_t& key)
 {
   _dx = 0;
   _dy = 0;
   return handleDirectionKey(key, _dx, _dy);
 }
 
-int CmdMoveOrAttack::execute()
+int CmdMove::execute()
 {
+  ActorPtr player = Engine::instance().getPlayer();
+
   //if MoveAction failed then path is blocked
-  if ( !Engine::instance().getPlayer()->performAction( std::make_shared<MoveAction>(_dx, _dy) ) )
+  if ( player && !player->performAction( new MoveAction(_dx, _dy) ) )
   {
-    Engine::instance().getPlayer()->performAction( std::make_shared<AttackAction>( getActorToAttack() ));
+    ActorPtr actor = getActorOnPath();
+    if ( actor )
+    {
+      //attack hostile actor
+      if ( actor->isHostileTo(player) )
+      {
+        player->performAction( new AttackAction(actor) );
+      }
+      //ask to attack non hostile actor
+      else if ( gui::questionBox("Are you sure you want to attack "+actor->getName()+"?",
+                                 gui::MsgType::Info) == gui::QuestionDialog::Response::YES )
+      {
+        actor->getFeature<Character>()->turnHostileTo(player);
+        player->performAction( new AttackAction(actor) );
+      }
+    }
   }
   return 1;
 }
 
-ActorPtr CmdMoveOrAttack::getActorToAttack()
+ActorPtr CmdMove::getActorOnPath()
 {
-  ActorPtr toAttack;
+  ActorPtr actor;
   MapPtr map = Engine::instance().getPlayer()->getMap();
 
   if ( map )
@@ -48,14 +71,14 @@ ActorPtr CmdMoveOrAttack::getActorToAttack()
     auto targets = map->getActors(targetX, targetY, filterFun);
     if ( !targets.empty() )
     {
-      toAttack = targets.front();
+      actor = targets.front();
     }
   }
 
-  return toAttack;
+  return actor;
 }
 
-void CmdMoveOrAttack::setDirection(int dx, int dy)
+void CmdMove::setDirection(int dx, int dy)
 {
   if (dx > 0) _dx = 1;
   else if (dx < 0) _dx = -1;

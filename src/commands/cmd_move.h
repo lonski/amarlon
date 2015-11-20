@@ -5,10 +5,10 @@
 
 namespace amarlon {
 
-class CmdMoveOrAttack : public Command
+class CmdMove : public Command
 {
 public:
-  CmdMoveOrAttack();
+  CmdMove();
   virtual bool accept(const TCOD_key_t& key);
   virtual int execute();
 
@@ -18,7 +18,9 @@ private:
   int _dx;
   int _dy;
 
-  ActorPtr getActorToAttack();
+  ActorPtr getActorOnPath();
+  void talkAction(ActorPtr actor);
+
 };
 
 }

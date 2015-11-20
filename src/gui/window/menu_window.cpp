@@ -51,6 +51,9 @@ AWindow& MenuWindow::show()
     _menu->deselect();
   }
 
+  auto item = getSelectedItem();
+  if ( item ) item->executeCallback();
+
   return *this;
 }
 
@@ -74,6 +77,8 @@ AWindow &MenuWindow::setDefaults()
   setHeight(2);
   setWidth(40);
   setFrame(true);
+
+  setPosition(AWidget::GAME_SCREEN_CENTER);
 
   return *this;
 }
