@@ -13,9 +13,9 @@ UseAction::~UseAction()
 {
 }
 
-bool UseAction::perform(ActorPtr performer)
+ActorActionResult UseAction::perform(ActorPtr performer)
 {
-  bool used = false;
+  ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
 
   PickablePtr pickable = _toUse->getFeature<Pickable>();
@@ -26,10 +26,10 @@ bool UseAction::perform(ActorPtr performer)
       removeUsedItemFromInventory();
     }
 
-    used = true;
+    r = ActorActionResult::Ok;
   }
 
-  return used;
+  return r;
 }
 
 void UseAction::removeUsedItemFromInventory()

@@ -51,7 +51,7 @@ void MeleeAttack::onEnter()
       std::vector<ActorPtr> weapons = getWeapons();
       for ( ActorPtr w : weapons )
       {
-        if ( me->performAction(new EquipAction(w)) )
+        if ( me->performAction(new EquipAction(w)) == ActorActionResult::Ok )
         {
           break;
         }

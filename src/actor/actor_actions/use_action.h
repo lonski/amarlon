@@ -14,7 +14,7 @@ public:
     UseAction(const Target& target, ActorPtr toUse);
     virtual ~UseAction();
 
-    virtual bool perform(ActorPtr performer);
+    virtual ActorActionResult perform(ActorPtr performer);
     virtual ActorActionUPtr clone();
 
 private:

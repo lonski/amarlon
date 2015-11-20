@@ -17,6 +17,7 @@
 #include <subject.h>
 #include <bitset>
 #include <point.h>
+#include <actor_action_result.h>
 
 namespace amarlon {
 
@@ -190,8 +191,8 @@ public:
    * @param Action to be performed
    * @return True if action has been performed successfully
    */
-  bool performAction(ActorActionPtr action);
-  bool performAction(ActorAction* action);
+  ActorActionResult performAction(ActorActionPtr action);
+  ActorActionResult performAction(ActorAction* action);
 
   /**
    * @brief Draws actor symbol on console

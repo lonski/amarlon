@@ -6,7 +6,6 @@ namespace amarlon{
 
 EquipAction::EquipAction(ActorPtr toEquip)
   : _toEquip(toEquip)
-  , _result(EquipResult::Nok)
 {
 }
 
@@ -14,10 +13,10 @@ EquipAction::~EquipAction()
 {
 }
 
-bool EquipAction::perform(ActorPtr performer)
+ActorActionResult EquipAction::perform(ActorPtr performer)
 {
   _performer = performer;
-  _result = EquipResult::Nok;
+  ActorActionResult r = ActorActionResult::Nok;
 
   WearerPtr wearer = _performer->getFeature<Wearer>();
   if ( wearer )
@@ -30,28 +29,27 @@ bool EquipAction::perform(ActorPtr performer)
         if ( wearer->equip(_toEquip) )
         {
           removeFromInventory();
-          _result = EquipResult::Ok;
+          r = ActorActionResult::Ok;
         }
       }
       else
       {
-        _result = EquipResult::AlreadyEquiped;
+        r = ActorActionResult::AlreadyEquiped;
       }
     }
     else
     {
-      _result = EquipResult::NoProperSlot;
+      r = ActorActionResult::NoProperSlot;
     }
   }
 
-  return _result == EquipResult::Ok;
+  return r;
 }
 
 ActorActionUPtr EquipAction::clone()
 {
   EquipActionUPtr cloned = std::make_unique<EquipAction>(_toEquip);
   cloned->_performer = _performer;
-  cloned->_result = _result;
 
   return std::move(cloned);
 }
@@ -76,11 +74,6 @@ void EquipAction::removeFromInventory()
   {
     container->remove(_toEquip);
   }
-}
-
-EquipResult EquipAction::getResult() const
-{
-  return _result;
 }
 
 }

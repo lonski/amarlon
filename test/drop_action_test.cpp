@@ -53,7 +53,7 @@ TEST_F(DropActionTest, dropOnMap)
   for ( ActorPtr a : items )
   {
     EXPECT_EQ( map->getActors( guy->getX(), guy->getY()).size(), (size_t)1 );
-    EXPECT_TRUE( guy->performAction( std::make_shared<DropAction>(a) ) );
+    EXPECT_TRUE( guy->performAction( new DropAction(a) ) == ActorActionResult::Ok );
     EXPECT_EQ( map->getActors( guy->getX(), guy->getY()).size(), (size_t)2 );
     map->removeActor( a );
   }
@@ -64,17 +64,17 @@ TEST_F(DropActionTest, dropGoblinCorpse)
   //kill a goblin on map to generate corpse
   ActorPtr goblin = Actor::create(ActorType::Goblin, 1, 2 );
   map->addActor( goblin );
-  goblin->performAction( std::make_shared<DieAction>() );
+  goblin->performAction( new DieAction );
 
   //pickup the corpse
   guy->setPosition( 1, 2 );
-  EXPECT_TRUE( guy->performAction( std::make_shared<PickUpAction>(goblin) ) );
+  EXPECT_TRUE( guy->performAction( new PickUpAction(goblin) ) == ActorActionResult::Ok );
 
   guy->setPosition( 11, 11 );
 
   //drop it
   EXPECT_EQ( map->getActors( guy->getX(), guy->getY()).size(), (size_t)1 );
-  EXPECT_TRUE( guy->performAction( std::make_shared<DropAction>(goblin) ) );
+  EXPECT_TRUE( guy->performAction( new DropAction(goblin) ) == ActorActionResult::Ok );
   EXPECT_EQ( map->getActors( guy->getX(), guy->getY()).size(), (size_t)2 );
 
 }

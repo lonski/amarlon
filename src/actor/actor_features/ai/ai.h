@@ -7,6 +7,7 @@
 #include <ai_type.h>
 #include <fsm_state_type.h>
 #include <target.h>
+#include <actor_action_result.h>
 
 namespace amarlon {
 
@@ -36,7 +37,7 @@ public:
   virtual ActorFeaturePtr clone();
 
   virtual int update();
-  virtual bool performAction(ActorActionPtr action);
+  virtual ActorActionResult performAction(ActorActionPtr action);
 
   virtual bool isSleeping() const;
   virtual void wakeUp();

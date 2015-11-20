@@ -22,7 +22,7 @@ ActorActionUPtr DieAction::clone()
   return std::move(cloned);
 }
 
-bool DieAction::perform(ActorPtr performer)
+ActorActionResult DieAction::perform(ActorPtr performer)
 {
   _performer = performer;
 
@@ -40,7 +40,7 @@ bool DieAction::perform(ActorPtr performer)
     _performer->morph(ActorType::Corpse);
   }
 
-  return _performer != nullptr;
+  return _performer != nullptr ? ActorActionResult::Ok : ActorActionResult::Nok;
 }
 
 void DieAction::dropItemsFromBody()

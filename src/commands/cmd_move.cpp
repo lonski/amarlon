@@ -31,7 +31,7 @@ int CmdMove::execute()
   ActorPtr player = Engine::instance().getPlayer();
 
   //if MoveAction failed then path is blocked
-  if ( player && !player->performAction( new MoveAction(_dx, _dy) ) )
+  if ( player && player->performAction( new MoveAction(_dx, _dy) ) != ActorActionResult::Ok )
   {
     ActorPtr actor = getActorOnPath();
     if ( actor )

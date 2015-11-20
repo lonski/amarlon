@@ -14,9 +14,9 @@ MoveAction::~MoveAction()
 {
 }
 
-bool MoveAction::perform(ActorPtr performer)
+ActorActionResult MoveAction::perform(ActorPtr performer)
 {
-  bool moved = false;
+  ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
 
   if ( _performer )
@@ -27,7 +27,7 @@ bool MoveAction::perform(ActorPtr performer)
     MapPtr map = performer->getMap();
     if ( map )
     {
-      moved = true;
+      r = ActorActionResult::Ok;
       if ( newX < 0 )
       {
         map->onExit(Direction::West, performer);
@@ -52,14 +52,14 @@ bool MoveAction::perform(ActorPtr performer)
         }
         else
         {
-          moved = false;
+          r = ActorActionResult::Nok;
         }
       }
 
     }
   }
 
-  return moved;
+  return r;
 }
 
 ActorActionUPtr MoveAction::clone()

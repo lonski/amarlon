@@ -13,9 +13,9 @@ OpenAction::~OpenAction()
 {
 }
 
-bool OpenAction::perform(ActorPtr performer)
+ActorActionResult OpenAction::perform(ActorPtr performer)
 {
-  bool opened = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( _toOpen )
   {
@@ -29,12 +29,12 @@ bool OpenAction::perform(ActorPtr performer)
         {
           map->updateTile( _toOpen->getX(), _toOpen->getY() );
         }
-        opened = true;
+        r = ActorActionResult::Ok;
       }
     }
   }
 
-  return opened;
+  return r;
 }
 
 ActorActionUPtr OpenAction::clone()

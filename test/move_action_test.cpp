@@ -27,7 +27,7 @@ public:
 TEST_F(MoveActionTest, actorWithoutMap)
 {
   ActorPtr orc = Actor::create(ActorType::Orc);
-  EXPECT_FALSE(orc->performAction( std::make_shared<MoveAction>(1, 1)));
+  EXPECT_FALSE(orc->performAction(new MoveAction(1, 1)) == ActorActionResult::Ok);
 }
 
 }

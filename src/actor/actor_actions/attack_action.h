@@ -12,7 +12,7 @@ public:
     AttackAction(ActorPtr target);
     virtual ~AttackAction();
 
-    virtual bool perform(ActorPtr performer);
+    virtual ActorActionResult perform(ActorPtr performer);
     virtual ActorActionUPtr clone();
 
 private:

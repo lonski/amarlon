@@ -25,7 +25,7 @@ public:
    * @return True if picked up successfully. If performer has no container, or there is
    *         no space left, then false.
    */
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 private:
@@ -34,8 +34,8 @@ private:
   ActorPtr _performer;
   std::function<void(ActorPtr)> _removeAction;
 
-  bool pickUpAll();
-  bool pickUpAmount();
+  ActorActionResult pickUpAll();
+  ActorActionResult pickUpAmount();
 
 };
 

@@ -5,14 +5,12 @@ namespace amarlon {
 
 UnEquipAction::UnEquipAction(ActorPtr toUnEquip)
   : _toUnEquip(toUnEquip)
-  , _result(UnEquipResult::Nok)
   , _slot(ItemSlotType::Null)
 {
 }
 
 UnEquipAction::UnEquipAction(ItemSlotType slot)
-  : _result(UnEquipResult::Nok)
-  , _slot(slot)
+  : _slot(slot)
 {
 }
 
@@ -21,9 +19,9 @@ UnEquipAction::~UnEquipAction()
 {
 }
 
-bool UnEquipAction::perform(ActorPtr performer)
+ActorActionResult UnEquipAction::perform(ActorPtr performer)
 {
-  _result = UnEquipResult::Nok;
+  ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
   aquireItemSlotType();
 
@@ -36,21 +34,21 @@ bool UnEquipAction::perform(ActorPtr performer)
       InventoryPtr inventory = performer->getFeature<Inventory>();
       if ( inventory && inventory->add(unequipped) )
       {
-        _result = UnEquipResult::Ok;
+        r = ActorActionResult::Ok;
       }
       else
       {
         wearer->equip(unequipped);
-        _result = UnEquipResult::InventoryFull;
+        r = ActorActionResult::InventoryFull;
       }
     }
     else
     {
-      _result = UnEquipResult::NotEquipped;
+      r = ActorActionResult::NotEquipped;
     }
   }
 
-  return _result == UnEquipResult::Ok;
+  return r;
 }
 
 ActorActionUPtr UnEquipAction::clone()
@@ -58,7 +56,6 @@ ActorActionUPtr UnEquipAction::clone()
   UnEquipActionUPtr cloned = std::make_unique<UnEquipAction>(_toUnEquip);
   cloned->_slot = _slot;
   cloned->_performer = _performer;
-  cloned->_result = _result;
 
   return std::move(cloned);
 }
@@ -73,11 +70,6 @@ void UnEquipAction::aquireItemSlotType()
       _slot = pickable->getItemSlot();
     }
   }
-}
-
-UnEquipResult UnEquipAction::getResult() const
-{
-  return _result;
 }
 
 }

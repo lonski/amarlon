@@ -14,9 +14,9 @@ PickUpAction::~PickUpAction()
 {
 }
 
-bool PickUpAction::perform(ActorPtr performer)
+ActorActionResult PickUpAction::perform(ActorPtr performer)
 {
-  bool picked = false;
+  ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
 
   PickablePtr pickable = _toPick->getFeature<Pickable>();
@@ -24,20 +24,20 @@ bool PickUpAction::perform(ActorPtr performer)
   {
     if ( pickable->isStackable() && _amount < pickable->getAmount() )
     {
-      picked = pickUpAmount();
+      r = pickUpAmount();
     }
     else
     {
-      picked = pickUpAll();
+      r = pickUpAll();
     }
   }
 
-  if ( picked )
+  if ( r == ActorActionResult::Ok )
   {
     _performer->notify(Event(EventId::Actor_Pick,{{"name", _toPick->getName()}}));
   }
 
-  return picked;
+  return r;
 }
 
 ActorActionUPtr PickUpAction::clone()
@@ -48,36 +48,36 @@ ActorActionUPtr PickUpAction::clone()
   return std::move(cloned);
 }
 
-bool PickUpAction::pickUpAmount()
+ActorActionResult PickUpAction::pickUpAmount()
 {
-  bool picked = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   PickablePtr pickable = _toPick->getFeature<Pickable>();
   ActorPtr splitedItem = pickable->spilt(_amount);
 
   if ( _performer->getFeature<Inventory>()->add(splitedItem) )
   {
-    picked = true;
+    r = ActorActionResult::Ok;
   }
   else //can't pickup - rollback
   {
     pickable->setAmount( pickable->getAmount() + _amount );
   }
 
-  return picked;
+  return r;
 }
 
-bool PickUpAction::pickUpAll()
+ActorActionResult PickUpAction::pickUpAll()
 {
-  bool picked = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( _performer->getFeature<Inventory>()->add(_toPick) )
   {
     _removeAction(_toPick);
-    picked = true;
+    r = ActorActionResult::Ok;
   }
 
-  return picked;
+  return r;
 }
 
 }

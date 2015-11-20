@@ -16,10 +16,10 @@ CastAction::~CastAction()
 {
 }
 
-bool CastAction::perform(ActorPtr caster)
+ActorActionResult CastAction::perform(ActorPtr caster)
 {
   _caster = caster;
-  bool success = false;
+  ActorActionResult result = ActorActionResult::Nok;
 
   if ( _caster && _spell )
   {
@@ -27,11 +27,11 @@ bool CastAction::perform(ActorPtr caster)
     if ( character )
     {
       _spell->cast(_caster, _target);
-      success = true; //Casting action succedded, even if the spell failed
+      result = ActorActionResult::Ok; //Casting action succedded, even if the spell failed
     }
   }
 
-  return success;
+  return result;
 }
 
 ActorActionUPtr CastAction::clone()

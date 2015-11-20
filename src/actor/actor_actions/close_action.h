@@ -12,7 +12,7 @@ public:
   CloseAction(ActorPtr toClose);
   virtual ~CloseAction();
 
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 private:

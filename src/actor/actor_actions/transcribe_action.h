@@ -16,7 +16,7 @@ public:
     TranscribeAction(ScrollPtr scroll);
     virtual ~TranscribeAction();
 
-    virtual bool perform(ActorPtr performer);
+    virtual ActorActionResult perform(ActorPtr performer);
     virtual ActorActionUPtr clone();
 
 private:

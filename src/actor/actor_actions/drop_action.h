@@ -20,7 +20,7 @@ public:
    * @brief If whole item is dropped, then item is also removed from the performer's inventory
    * @return True if dropped successfully.
    */
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 private:

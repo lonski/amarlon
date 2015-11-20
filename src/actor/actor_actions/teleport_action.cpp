@@ -17,7 +17,7 @@ TeleportAction::~TeleportAction()
 {
 }
 
-bool TeleportAction::perform(ActorPtr performer)
+ActorActionResult TeleportAction::perform(ActorPtr performer)
 {  
   removeFromCurrentMap(performer);
   performer->setPosition(_x, _y);
@@ -32,7 +32,7 @@ bool TeleportAction::perform(ActorPtr performer)
     TCODConsole::root->flush();
   }
 
-  return true;
+  return ActorActionResult::Ok;
 }
 
 ActorActionUPtr TeleportAction::clone()

@@ -20,7 +20,7 @@ public:
    *        If move outside map borders, then Map::onExit is called with proper direction
    * @return True if path was not blocked, false otherwise
    */
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 protected:

@@ -2,6 +2,7 @@
 #define ACTOR_ACTION
 
 #include <memory>
+#include <actor_action_result.h>
 
 namespace amarlon{
 
@@ -20,7 +21,7 @@ public:
   ActorAction() = default;
   virtual ~ActorAction() {}
 
-  virtual bool perform(ActorPtr performer) = 0;
+  virtual ActorActionResult perform(ActorPtr performer) = 0;
   virtual ActorActionUPtr clone() = 0;
 
 };

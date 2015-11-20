@@ -13,17 +13,18 @@ UseSkillAction::~UseSkillAction()
 {
 }
 
-bool UseSkillAction::perform(ActorPtr user)
+ActorActionResult UseSkillAction::perform(ActorPtr user)
 {
   _user = user;
-  bool success = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( _user && _skill )
   {
-    success = _skill->use(_user, _target);
+    r = _skill->use(_user, _target) ? ActorActionResult::Ok
+                                    : ActorActionResult::Nok;
   }
 
-  return success;
+  return r;
 }
 
 ActorActionUPtr UseSkillAction::clone()

@@ -17,10 +17,10 @@ MonsterMoveAction::~MonsterMoveAction()
 {
 }
 
-bool MonsterMoveAction::perform(ActorPtr performer)
+ActorActionResult MonsterMoveAction::perform(ActorPtr performer)
 {
   _performer = performer;
-  bool result = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( _performer )
   {
@@ -34,20 +34,20 @@ bool MonsterMoveAction::perform(ActorPtr performer)
 
       while ( mob->getMovePoints() >= _moveCost )
       {
-        result = doMove(mob);
+        r = doMove(mob);
       }
 
     }
   }
 
-  return result;
+  return r;
 }
 
-bool MonsterMoveAction::doMove(CharacterPtr mob)
+ActorActionResult MonsterMoveAction::doMove(CharacterPtr mob)
 {
   mob->setMovePoints( mob->getMovePoints() - _moveCost );
 
-  bool result = MoveAction::perform(_performer);
+  ActorActionResult result = MoveAction::perform(_performer);
 
   AiPtr ai = _performer->getFeature<Ai>();
   if ( ai && mob->getMovePoints() >= _moveCost ) //check if extra move

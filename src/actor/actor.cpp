@@ -459,13 +459,14 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
   return overwriten;
 }
 
-bool Actor::performAction(ActorActionPtr action)
+ActorActionResult Actor::performAction(ActorActionPtr action)
 {
   AiPtr ai = getFeature<Ai>();
-  return ai ? ai->performAction(action) : false;
+  return ai ? ai->performAction(action)
+            : ActorActionResult::Nok;
 }
 
-bool Actor::performAction(ActorAction *action)
+ActorActionResult Actor::performAction(ActorAction *action)
 {
   return performAction( ActorActionPtr(action) );
 }

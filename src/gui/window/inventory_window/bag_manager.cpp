@@ -96,14 +96,15 @@ void BagManager::manage()
 
 void BagManager::equip(ActorPtr item)
 {
-  EquipActionPtr equipAction = std::make_shared<EquipAction>(item);
-  Engine::instance().getPlayer()->performAction( equipAction );
+  ActorPtr player = Engine::instance().getPlayer();
+  ActorActionResult r = player->performAction( new EquipAction(item) );
 
-  switch( equipAction->getResult() )
+  switch( r )
   {
-    case EquipResult::AlreadyEquiped:
+    case ActorActionResult::AlreadyEquiped:
       { //try to unequip, and then equip again
-        if ( Engine::instance().getPlayer()->performAction( std::make_shared<UnEquipAction>( item->getFeature<Pickable>()->getItemSlot() )))
+        if ( player->performAction( new UnEquipAction( item->getFeature<Pickable>()->getItemSlot() ))
+             == ActorActionResult::Ok )
         {
           equip( item );
         }
@@ -114,11 +115,11 @@ void BagManager::equip(ActorPtr item)
       }
       break;
 
-    case EquipResult::NoProperSlot:
+    case ActorActionResult::NoProperSlot:
       msgBox( "You haven't got appropriate slot to equip this item.", gui::MsgType::Error);
       break;
 
-    case EquipResult::Nok:
+    case ActorActionResult::Nok:
       msgBox( "Cannot equip item!", gui::MsgType::Error );
       break;
 

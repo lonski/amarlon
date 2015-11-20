@@ -15,9 +15,9 @@ DropAction::~DropAction()
 {
 }
 
-bool DropAction::perform(ActorPtr performer)
+ActorActionResult DropAction::perform(ActorPtr performer)
 {
-  bool dropped = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( _toDrop )
   {
@@ -27,17 +27,17 @@ bool DropAction::perform(ActorPtr performer)
     if ( pickable->isStackable() && _amount < pickable->getAmount() )
     {
       dropOnMap( pickable->spilt(_amount) );
-      dropped = true;
+      r = ActorActionResult::Ok;
     }
     else
     {
       dropOnMap(_toDrop);
       _performer->getFeature<Inventory>()->remove(_toDrop);
-      dropped = true;
+      r = ActorActionResult::Ok;
     }
   }
 
-  return dropped;
+  return r;
 }
 
 ActorActionUPtr DropAction::clone()

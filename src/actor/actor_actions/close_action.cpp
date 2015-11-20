@@ -14,9 +14,9 @@ CloseAction::~CloseAction()
 {
 }
 
-bool CloseAction::perform(ActorPtr performer)
+ActorActionResult CloseAction::perform(ActorPtr performer)
 {
-  bool closed = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( _toClose )
   {
@@ -30,12 +30,12 @@ bool CloseAction::perform(ActorPtr performer)
         {
           map->updateTile( _toClose->getX(), _toClose->getY() );
         }
-        closed = true;
+        r = ActorActionResult::Ok;
       }
     }
   }
 
-  return closed;
+  return r;
 }
 
 ActorActionUPtr CloseAction::clone()

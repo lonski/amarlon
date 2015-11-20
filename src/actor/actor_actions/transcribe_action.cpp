@@ -14,21 +14,22 @@ TranscribeAction::~TranscribeAction()
 {
 }
 
-bool TranscribeAction::perform(ActorPtr performer)
+ActorActionResult TranscribeAction::perform(ActorPtr performer)
 {
-  bool transcribed = false;
+  ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
 
   if ( _scroll != nullptr )
   {
-    transcribed = _scroll->transcribe(_performer);
+    r = _scroll->transcribe(_performer) ? ActorActionResult::Ok
+                                        : ActorActionResult::Nok;
     if ( _scroll->getUsesCount() == 0 )
     {
       removeTranscribedScrollFromInventory();
     }
   }
 
-  return transcribed;
+  return r;
 }
 
 ActorActionUPtr TranscribeAction::clone()

@@ -28,6 +28,7 @@ int CmdCast::execute()
 
   Engine::instance().render();
   TCODConsole::root->flush();
+  ActorPtr player = Engine::instance().getPlayer();
 
   if ( spell )
   {
@@ -39,7 +40,7 @@ int CmdCast::execute()
        MapPtr map = Engine::instance().getWorld().getCurrentMap();
        Target target = selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); });
 
-       if ( !Engine::instance().getPlayer()->performAction( new CastAction(spell, target) ) )
+       if ( player->performAction( new CastAction(spell, target) ) != ActorActionResult::Ok )
        {
          gui::msgBox("Failed to cast spell!", gui::MsgType::Warning);
        }

@@ -16,7 +16,7 @@ public:
     CastAction(SpellPtr spell, Target target);
     virtual ~CastAction();
 
-    virtual bool perform(ActorPtr caster);
+    virtual ActorActionResult perform(ActorPtr caster);
     virtual ActorActionUPtr clone();
 
 private:

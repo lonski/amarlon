@@ -29,14 +29,18 @@ int CmdUseSkill::execute()
   {
     Engine::instance().render();
     TCODConsole::root->flush();
+    ActorPtr player = Engine::instance().getPlayer();
 
     TargetSelectorPtr selector( TargetSelector::create( skill->getTargetType() ) );
     if ( selector )
     {
       selector->setRadius( skill->getRadius() );
       MapPtr map = Engine::instance().getWorld().getCurrentMap();
-      ActorActionPtr action( new UseSkillAction(skill, selector->select([&](ActorPtr a){ return map->isInFov(a->getX(), a->getY()); })) );
-      if ( !Engine::instance().getPlayer()->performAction( action ) )
+      ActorActionPtr action(
+            new UseSkillAction(skill, selector->select([&](ActorPtr a){
+                                 return map->isInFov(a->getX(), a->getY());
+                               })) );
+      if ( player->performAction( action ) != ActorActionResult::Ok )
       {
         gui::msgBox(skill->getName() + " failed!", gui::MsgType::Warning);
       }

@@ -105,7 +105,7 @@ int CmdUse::transcribeScroll(ScrollPtr scroll)
   if ( scroll )
   {
     ActorPtr player = Engine::instance().getPlayer();
-    if ( player->performAction( std::make_shared<TranscribeAction>( scroll ) ) )
+    if ( player->performAction( new TranscribeAction(scroll) ) == ActorActionResult::Ok )
     {
       turns = 20;
     }

@@ -16,7 +16,7 @@ public:
     UseSkillAction(SkillPtr skill, Target target);
     virtual ~UseSkillAction();
 
-    virtual bool perform(ActorPtr user);
+    virtual ActorActionResult perform(ActorPtr user);
     virtual ActorActionUPtr clone();
 
 private:

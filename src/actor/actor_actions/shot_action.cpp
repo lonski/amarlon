@@ -19,15 +19,15 @@ ShotAction::~ShotAction()
 {
 }
 
-bool ShotAction::perform(ActorPtr performer)
+ActorActionResult ShotAction::perform(ActorPtr performer)
 {
   _performer = performer;
   MapPtr map = _performer->getMap();
-  bool success = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( isTargetCorrect() && isReadyToShot() && map )
   {
-    success = true;
+    r = ActorActionResult::Ok;
     ActorPtr missile = pickOneMissile();
     DirectPathPtr path = calculatePath();
     path->extrapolate(5);
@@ -69,8 +69,16 @@ bool ShotAction::perform(ActorPtr performer)
       previousPoint = currentPoint;
     }
   }
+  else if ( !isTargetCorrect() )
+  {
+    r = ActorActionResult::IncorrectTarget;
+  }
+  else if( !isReadyToShot() )
+  {
+    r = ActorActionResult::ItemsMissing;
+  }
 
-  return success;
+  return r;
 }
 
 bool ShotAction::rangeAttack(ActorPtr actor)

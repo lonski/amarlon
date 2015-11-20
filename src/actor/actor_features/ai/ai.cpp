@@ -132,9 +132,9 @@ FSMStateType Ai::getCurrentState() const
   return _fsm->getCurrentState()->getType();
 }
 
-bool Ai::performAction(ActorActionPtr action)
+ActorActionResult Ai::performAction(ActorActionPtr action)
 {
-  bool r = false;
+  ActorActionResult r = ActorActionResult::Nok;
 
   if ( action )
   {
@@ -157,7 +157,8 @@ void Ai::updateSneakingStatus(ActorActionPtr action)
     {
       if ( CharacterPtr c = owner->getFeature<Character>() )
       {
-        remainSneaking = UseSkillAction( c->getSkill(SkillId::SilentMove), Target(owner)).perform( owner );
+        remainSneaking = UseSkillAction( c->getSkill(SkillId::SilentMove), Target(owner))
+            .perform( owner ) == ActorActionResult::Ok;
       }
     }
 
@@ -177,7 +178,8 @@ void Ai::updateHidingStatus(ActorActionPtr action)
     {
       if ( CharacterPtr c = owner->getFeature<Character>() )
       {
-        remainHidden = UseSkillAction( c->getSkill(SkillId::Hide), Target(owner)).perform( owner );
+        remainHidden = UseSkillAction( c->getSkill(SkillId::Hide), Target(owner))
+            .perform( owner ) == ActorActionResult::Ok;
       }
     }
 

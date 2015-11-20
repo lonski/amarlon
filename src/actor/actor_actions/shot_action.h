@@ -18,7 +18,7 @@ public:
     ShotAction(ActorPtr target);
     virtual ~ShotAction();
 
-    virtual bool perform(ActorPtr performer);
+    virtual ActorActionResult perform(ActorPtr performer);
     virtual ActorActionUPtr clone();
 
 private:

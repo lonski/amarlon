@@ -7,14 +7,6 @@
 
 namespace amarlon {
 
-enum class UnEquipResult
-{
-  Ok,
-  InventoryFull,
-  NotEquipped,
-  Nok
-};
-
 class UnEquipAction : public ActorAction
 {
 public:
@@ -22,14 +14,12 @@ public:
   UnEquipAction(ItemSlotType slot);
   virtual ~UnEquipAction();
 
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
-  UnEquipResult getResult() const;
 
 private:
   ActorPtr _toUnEquip;
   ActorPtr _performer;
-  UnEquipResult _result;
   ItemSlotType _slot;
 
   void aquireItemSlotType();

@@ -86,23 +86,22 @@ void BodyManager::fillBodySlots()
 
 bool BodyManager::unequipItem(ItemSlotType slot)
 {
-  UnEquipActionPtr action = std::make_shared<UnEquipAction>(slot);
-  Engine::instance().getPlayer()->performAction( action );
+  ActorPtr player = Engine::instance().getPlayer();
+  ActorActionResult r = player->performAction( new UnEquipAction(slot) );
 
-  UnEquipResult status = action->getResult();
-  switch ( status )
+  switch ( r )
   {
-    case UnEquipResult::InventoryFull:
+    case ActorActionResult::InventoryFull:
       msgBox("Item cannot be unequipped:#Not enough space in inventory", gui::MsgType::Error);
       break;
 
-    case UnEquipResult::Nok:
+    case ActorActionResult::Nok:
       msgBox("Item cannot be unequipped!", gui::MsgType::Error);
       break;
     default:;
   }
 
-  return status == UnEquipResult::Ok;
+  return r == ActorActionResult::Ok;
 }
 
 ActorPtr BodyManager::chooseItemToEquip(ItemSlotType slot)
@@ -144,25 +143,24 @@ std::vector<ActorPtr > BodyManager::getEquipableItemsList(ItemSlotType slot)
 
 bool BodyManager::equipItem(ActorPtr toEquip)
 {
-  EquipActionPtr action = std::make_shared<EquipAction>(toEquip);
-  Engine::instance().getPlayer()->performAction( action );
-  EquipResult result = action->getResult();
+  ActorPtr player = Engine::instance().getPlayer();
+  ActorActionResult r = player->performAction( new EquipAction(toEquip) );
 
-  switch(result)
+  switch(r)
   {
-    case EquipResult::Nok:
+    case ActorActionResult::Nok:
       msgBox( "Cannot equip item!", gui::MsgType::Error );
       break;
-    case EquipResult::AlreadyEquiped:
+    case ActorActionResult::AlreadyEquiped:
       msgBox( "Another item is already equipped on this slot!", gui::MsgType::Error );
       break;
-    case EquipResult::NoProperSlot:
+    case ActorActionResult::NoProperSlot:
       msgBox( "There is no proper slot to equip this item!", gui::MsgType::Error );
       break;
     default:;
   }
 
-  return result == EquipResult::Ok;
+  return r == ActorActionResult::Ok;
 }
 
 void BodyManager::selectNext()

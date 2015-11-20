@@ -14,13 +14,13 @@ public:
   MonsterMoveAction(int dx, int dy);
   virtual ~MonsterMoveAction();
 
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
 private:
   int _moveCost;
 
-  bool doMove(CharacterPtr mob);
+  ActorActionResult doMove(CharacterPtr mob);
 
 };
 

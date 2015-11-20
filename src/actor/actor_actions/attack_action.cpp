@@ -14,10 +14,10 @@ AttackAction::~AttackAction()
 {
 }
 
-bool AttackAction::perform(ActorPtr performer)
+ActorActionResult AttackAction::perform(ActorPtr performer)
 {
   _performer = performer;
-  bool success = false;
+  ActorActionResult result = ActorActionResult::Nok;
 
   if ( _performer && _target )
   {
@@ -26,7 +26,7 @@ bool AttackAction::perform(ActorPtr performer)
 
     if ( attacker && attacked && attacker != attacked)
     {
-      success = true;
+      result = ActorActionResult::Ok;
       bool hit = false;
       int dieRoll = dices::roll( dices::D20 );
 
@@ -49,7 +49,7 @@ bool AttackAction::perform(ActorPtr performer)
     }
   }
 
-  return success;
+  return result;
 }
 
 ActorActionUPtr AttackAction::clone()

@@ -99,7 +99,8 @@ void PickUpWindow::choose()
   if ( ActorPtr toPick = getSelectedActor() )
   {
     int amount = getAmountToPickUp(toPick);
-    if ( _picker->performAction( std::make_shared<PickUpAction>(toPick, amount, _removeFun )))
+    if ( _picker->performAction(new PickUpAction(toPick, amount, _removeFun ))
+         == ActorActionResult::Ok )
     {
       _afterPickUpAction( toPick->getName(), amount );
       fillMenuWithItems();

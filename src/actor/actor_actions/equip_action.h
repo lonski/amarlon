@@ -7,28 +7,18 @@
 
 namespace amarlon {
 
-enum class EquipResult
-{
-  Ok,
-  AlreadyEquiped,
-  NoProperSlot,
-  Nok
-};
-
 class EquipAction : public ActorAction
 {
 public:
   EquipAction(ActorPtr toEquip);
   virtual ~EquipAction();
 
-  virtual bool perform(ActorPtr performer);
+  virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
-  EquipResult getResult() const;
 
 private:
   ActorPtr _toEquip;
   ActorPtr _performer;
-  EquipResult _result;
 
   ItemSlotType aquireItemSlotType();
   void removeFromInventory();
