@@ -47,11 +47,11 @@ void AbilityScoresSelectionPanel::update()
   {
     _race = Engine::instance().
         getRpgDB().
-        getRace( _parent->getPlayerDsc()->character->race );
+        getRace( _parent->getCharacterDsc()->race );
 
     _class = Engine::instance().
         getRpgDB().
-        getCharacterClass( _parent->getPlayerDsc()->character->cClass );
+        getCharacterClass( _parent->getCharacterDsc()->cClass );
 
     if ( _race && _class )
     {
@@ -207,12 +207,10 @@ void AbilityScoresSelectionPanel::next()
 
 void AbilityScoresSelectionPanel::setScores()
 {
-  PlayableCharacterDescriptionPtr d =
-      std::dynamic_pointer_cast<PlayableCharacterDescription>
-      (_parent->getPlayerDsc()->character);
-
-  for ( auto as : AbilityScore::Type() )
-    d->abilityScores[as] = getValue(as);
+  PlayableCharacterDescriptionPtr d = _parent->getCharacterDsc();
+  if ( d )
+    for ( auto as : AbilityScore::Type() )
+      d->abilityScores[as] = getValue(as);
 }
 
 int AbilityScoresSelectionPanel::getValue(AbilityScore::Type as)

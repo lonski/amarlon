@@ -49,6 +49,55 @@ ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
   return actor;
 }
 
+void Actor::upgrade(ActorDescriptionPtr dsc)
+{
+//  if ( dsc )
+//  {
+//    //Base fields
+//    _id = dsc->id;
+
+//    if (dsc->x)            _x = *(dsc->x);
+//    if (dsc->y)            _y = *(dsc->y);
+//    if (dsc->name)         _name = *(dsc->name);
+//    if (dsc->symbol)       _symbol = *(dsc->symbol);
+//    if (dsc->color)        _color = *(dsc->color);
+//    if (dsc->blocks)       _blocks = *(dsc->blocks);
+//    if (dsc->fovOnly)      _fovOnly = *(dsc->fovOnly);
+//    if (dsc->transparent)  _transparent = *(dsc->transparent);
+//    if (dsc->tilePriority) _priority = *(dsc->tilePriority);
+//    if (dsc->description)  _description = *(dsc->description);
+//    if (dsc->visible)      setVisible( *(dsc->visible) );
+
+//    //Features
+//    if ( dsc->pickable )
+//    {
+//      auto it = _features.find( ActorFeature::PICKABLE );
+//      if ( it != _features.end() )
+//      {
+//        (*it)->upgrade(dsc->pickable);
+//      }
+//      else
+//      {
+//        _features[ActorFeature::PICKABLE] = ActorFeature::create(ActorFeature::PICKABLE, dsc->pickable);
+//      }
+//    }
+
+//    if ( dsc->character )   _features[ActorFeature::CHARACTER]   = ActorFeature::create(ActorFeature::CHARACTER,   dsc->character);
+//    if ( dsc->ai )          _features[ActorFeature::AI]          = ActorFeature::create(ActorFeature::AI,          dsc->ai);
+//    if ( dsc->openable )    _features[ActorFeature::OPENABLE]    = ActorFeature::create(ActorFeature::OPENABLE,    dsc->openable);
+//    if ( dsc->wearer )      _features[ActorFeature::WEARER]      = ActorFeature::create(ActorFeature::WEARER,      dsc->wearer);
+//    if ( dsc->inventory )   _features[ActorFeature::INVENTORY]   = ActorFeature::create(ActorFeature::INVENTORY,   dsc->inventory);
+//    if ( dsc->destroyable ) _features[ActorFeature::DESTROYABLE] = ActorFeature::create(ActorFeature::DESTROYABLE, dsc->destroyable);
+//    if ( dsc->trap )        _features[ActorFeature::TRAP]        = ActorFeature::create(ActorFeature::TRAP,        dsc->trap);
+//    if ( dsc->talker )      _features[ActorFeature::TALKER]      = ActorFeature::create(ActorFeature::TALKER,      dsc->talker);
+
+//    for (auto f : _features)
+//    {
+//      f.second->setOwner( shared_from_this() );
+//    }
+//  }
+}
+
 void Actor::deserialize(ActorDescriptionPtr dsc)
 {
   if ( dsc )
@@ -69,19 +118,14 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     if (dsc->visible)      setVisible( *(dsc->visible) );
 
     //Features
-    if ( dsc->pickable )    _features[ActorFeature::PICKABLE]    = ActorFeature::create(ActorFeature::PICKABLE,    dsc->pickable);
-    if ( dsc->character )   _features[ActorFeature::CHARACTER]   = ActorFeature::create(ActorFeature::CHARACTER,   dsc->character);
-    if ( dsc->ai )          _features[ActorFeature::AI]          = ActorFeature::create(ActorFeature::AI,          dsc->ai);
-    if ( dsc->openable )    _features[ActorFeature::OPENABLE]    = ActorFeature::create(ActorFeature::OPENABLE,    dsc->openable);
-    if ( dsc->wearer )      _features[ActorFeature::WEARER]      = ActorFeature::create(ActorFeature::WEARER,      dsc->wearer);
-    if ( dsc->inventory )   _features[ActorFeature::INVENTORY]   = ActorFeature::create(ActorFeature::INVENTORY,   dsc->inventory);
-    if ( dsc->destroyable ) _features[ActorFeature::DESTROYABLE] = ActorFeature::create(ActorFeature::DESTROYABLE, dsc->destroyable);
-    if ( dsc->trap )        _features[ActorFeature::TRAP]        = ActorFeature::create(ActorFeature::TRAP,        dsc->trap);
-    if ( dsc->talker )      _features[ActorFeature::TALKER]      = ActorFeature::create(ActorFeature::TALKER,      dsc->talker);
-
-    for (auto f : _features)
+    for ( auto& f : dsc->features )
     {
-      f.second->setOwner( shared_from_this() );
+      if ( f.second )
+      {
+        auto feat = ActorFeature::create(f.first, f.second);
+        feat->setOwner( shared_from_this() );
+        _features[ f.first ] = feat;
+      }
     }
 
     //Status Effects

@@ -30,6 +30,7 @@ public:
 
   void nextStep();
   ActorDescriptionPtr getPlayerDsc() const;
+  PlayableCharacterDescriptionPtr getCharacterDsc() const;
 
 private:
   enum Panel

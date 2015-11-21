@@ -98,7 +98,7 @@ void CharacterCreationWindow::nextStep()
   ++cPanel;
 
   //Skip class-specific panels
-  CharacterClassType cId = getPlayerDsc()->character->cClass;
+  CharacterClassType cId = getCharacterDsc()->cClass;
   if ( cPanel != _panels.end() )
   {
     if ( (cPanel->first == THIEF_SKILLS_SELECTION && cId != CharacterClassType::Thief) )
@@ -122,6 +122,13 @@ void CharacterCreationWindow::nextStep()
 ActorDescriptionPtr CharacterCreationWindow::getPlayerDsc() const
 {
   return _player;
+}
+
+PlayableCharacterDescriptionPtr CharacterCreationWindow::getCharacterDsc() const
+{
+  auto& f = getPlayerDsc()->features;
+  auto it = f.find(ActorFeature::CHARACTER);
+  return it != f.end() ? std::dynamic_pointer_cast<PlayableCharacterDescription>(it->second) : nullptr;
 }
 
 }}

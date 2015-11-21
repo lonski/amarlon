@@ -66,15 +66,15 @@ ActorDescriptionPtr ActorParser::parseDescription()
     }
 
     //Parse Actor Features
-    actorDsc->pickable = parsePickableDsc();
-    actorDsc->character = parseCharacterDsc();
-    actorDsc->ai = parseAiDsc();
-    actorDsc->openable = parseOpenableDsc();
-    actorDsc->wearer = parseWearerDsc();
-    actorDsc->inventory = parseInventoryDsc();
-    actorDsc->destroyable = parseDestroyableDsc();
-    actorDsc->trap = parseTrapDsc();
-    actorDsc->talker = parseTalkerDsc();
+    actorDsc->features[ ActorFeature::PICKABLE ] = parsePickableDsc();
+    actorDsc->features[ ActorFeature::CHARACTER ] = parseCharacterDsc();
+    actorDsc->features[ ActorFeature::AI ] = parseAiDsc();
+    actorDsc->features[ ActorFeature::OPENABLE ] = parseOpenableDsc();
+    actorDsc->features[ ActorFeature::WEARER ] = parseWearerDsc();
+    actorDsc->features[ ActorFeature::INVENTORY ] = parseInventoryDsc();
+    actorDsc->features[ ActorFeature::DESTROYABLE ] = parseDestroyableDsc();
+    actorDsc->features[ ActorFeature::TRAP ] = parseTrapDsc();
+    actorDsc->features[ ActorFeature::TALKER ] = parseTalkerDsc();
   }
 
   return actorDsc;

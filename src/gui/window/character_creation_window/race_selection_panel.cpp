@@ -134,14 +134,17 @@ void RaceSelectionPanel::setRace()
   {
     PlayableCharacterDescriptionPtr dsc =
         std::dynamic_pointer_cast<PlayableCharacterDescription>
-        (_parent->getPlayerDsc()->character);
+        (_parent->getPlayerDsc()->features[ActorFeature::CHARACTER]);
 
-    dsc->race = race->getType();
-    for( auto s : race->getSkills() )
+    if ( dsc )
     {
-      dsc->skills.push_back(
-            SkillDescription( static_cast<int>(s->getId()),
-                              s->getLevel() ) );
+      dsc->race = race->getType();
+      for( auto s : race->getSkills() )
+      {
+        dsc->skills.push_back(
+              SkillDescription( static_cast<int>(s->getId()),
+                                s->getLevel() ) );
+      }
     }
   }
 }

@@ -49,6 +49,13 @@ public:
   static ActorPtr create(ActorDescriptionPtr dsc, bool prototyped = true);
 
   /**
+   * @brief Upgrades the content of actor according to the description structures.
+   *        Changes only the data contained in this description, all other
+   *        remain unchanged.
+   */
+  void upgrade(ActorDescriptionPtr dsc);
+
+  /**
    * @brief Overrides actor's content with content from given description structure.
    */
   void deserialize(ActorDescriptionPtr dsc);

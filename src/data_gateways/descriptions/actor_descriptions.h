@@ -1,6 +1,7 @@
 #ifndef ACTORDESCRIPTIONS_H
 #define ACTORDESCRIPTIONS_H
 
+#include <map>
 #include <description.h>
 #include <pickable_description.h>
 #include <character_description.h>
@@ -11,7 +12,7 @@
 #include <destroyable_description.h>
 #include <trap_description.h>
 #include <talker_description.h>
-
+#include <actor_feature.h>
 #include <experimental/optional>
 
 namespace amarlon {
@@ -43,15 +44,7 @@ struct ActorDescription : Description
   std::experimental::optional<std::string> description;
   std::vector<StatusEffectDsc> statusEffects;
 
-  PickableDescriptionPtr pickable;
-  CharacterDescriptionPtr character;
-  AiDescriptionPtr ai;
-  OpenableDescriptionPtr openable;
-  WearerDescriptionPtr wearer;
-  InventoryDescriptionPtr inventory;
-  DestroyableDescriptionPtr destroyable;
-  TrapDescriptionPtr trap;
-  TalkerDescriptionPtr talker;
+  std::map<ActorFeature::Type, DescriptionPtr> features;
 
 };
 

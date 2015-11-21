@@ -198,16 +198,16 @@ void ThiefSkillsSelectionPanel::setSkills()
 {
   if ( _parent )
   {
-    PlayableCharacterDescriptionPtr dsc =
-        std::dynamic_pointer_cast<PlayableCharacterDescription>
-        (_parent->getPlayerDsc()->character);
-
-    dsc->skills.push_back( SkillDescription( (int)SkillId::OpenLocks,   getValue(OpenLocks)) );
-    dsc->skills.push_back( SkillDescription( (int)SkillId::DisarmTraps, getValue(DisarmTraps)) );
-    dsc->skills.push_back( SkillDescription( (int)SkillId::Hide,        getValue(Hide)) );
-    dsc->skills.push_back( SkillDescription( (int)SkillId::PickPockets, getValue(PickPockets)) );
-    dsc->skills.push_back( SkillDescription( (int)SkillId::SilentMove,  getValue(SilentMove)) );
-    dsc->skills.push_back( SkillDescription( (int)SkillId::FindTraps,   getValue(FindTraps)) );
+    PlayableCharacterDescriptionPtr dsc = _parent->getCharacterDsc();
+    if ( dsc )
+    {
+      dsc->skills.push_back( SkillDescription( (int)SkillId::OpenLocks,   getValue(OpenLocks)) );
+      dsc->skills.push_back( SkillDescription( (int)SkillId::DisarmTraps, getValue(DisarmTraps)) );
+      dsc->skills.push_back( SkillDescription( (int)SkillId::Hide,        getValue(Hide)) );
+      dsc->skills.push_back( SkillDescription( (int)SkillId::PickPockets, getValue(PickPockets)) );
+      dsc->skills.push_back( SkillDescription( (int)SkillId::SilentMove,  getValue(SilentMove)) );
+      dsc->skills.push_back( SkillDescription( (int)SkillId::FindTraps,   getValue(FindTraps)) );
+    }
   }
 }
 
