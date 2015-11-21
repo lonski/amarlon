@@ -49,7 +49,7 @@ Damage::operator std::string() const
   return toStr();
 }
 
-std::string Damage::toStr() const
+std::string Damage::toStr(bool displaySafe) const
 {
   // Example format: "1d4+5#0"
   return std::to_string(diceCount) +              // 1
@@ -57,7 +57,7 @@ std::string Damage::toStr() const
          std::to_string(static_cast<int>(dice)) + // 4
          "+" +                                    // +
          std::to_string(value) +                  // 5
-         "#" +                                    // #
+         ( displaySafe ? "$" : "#" ) +            // #
       std::to_string(static_cast<int>(type));     // 0
 }
 

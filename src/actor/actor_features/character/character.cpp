@@ -226,22 +226,24 @@ void Character::turnHostileTo(ActorPtr attacker)
   }
 }
 
-std::string Character::debug()
+std::string Character::debug(const std::string& linebreak = "\n")
 {
-  std::string d = "-----CHARACTER-----\n";
+  std::string d = " " + linebreak + "-----CHARACTER-----"+linebreak;
 
-  d += "Level = " + toStr(_level);
-  d += "HP = " + toStr(_hitPoints) + "/" + toStr(_maxHitPoints);
-  d += "Base AC = " + toStr(_defaultArmorClass);
-  d += "Experience = " + toStr(_experience);
-  d += "Speed = " + toStr(getSpeed());
-  d += "Team = " + toStr((int)_team);
-  d += "Morale = " + toStr(_morale);
+  d += "Level = " + toStr(_level) + linebreak;
+  d += "HP = " + toStr(_hitPoints) + "/" + toStr(_maxHitPoints)  + linebreak;
+  d += "Base AC = " + toStr(_defaultArmorClass)  + linebreak;
+  d += "Experience = " + toStr(_experience)  + linebreak;
+  d += "Speed = " + toStr(getSpeed())  + linebreak;
+  d += "Team = " + toStr((int)_team)  + linebreak;
+  d += "Morale = " + toStr(_morale)  + linebreak;
+  d += "Bare hands damage = " + _damage.toStr(true)  + linebreak;
+  d += "Damage = " + getDamage().toStr(true)  + linebreak;
   for ( auto& kv : _abilityScores )
   {
-    d += AbilityScore::toStr(kv.first) + " = " + toStr(kv.second);
+    d += AbilityScore::toStr(kv.first) + " = " + toStr(kv.second)  + linebreak;
   }
-  d.append("----------------\n");
+  d.append("----------------" + linebreak);
   return d;
 }
 

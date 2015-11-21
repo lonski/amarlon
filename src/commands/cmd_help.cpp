@@ -3,8 +3,6 @@
 #include <iomanip>
 #include <resizeable_text_window.h>
 #include <engine.h>
-#include <actor.h>
-#include <playable_character.h>
 
 namespace amarlon {
 
@@ -40,10 +38,6 @@ int CmdHelp::execute()
 //                    .setWindowTitle("Help")
 //                    .setWindowText( ss.str() )
 //                    .show();
-
-  auto player = Engine::instance().getPlayer();
-  PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
-  c->advanceLevel();
 
   return 0;
 }

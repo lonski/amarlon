@@ -44,7 +44,7 @@ public:
   virtual ActorFeature::Type getType() = 0;
   virtual std::string getDescription();
   virtual int update();
-  virtual std::string debug() { return ""; }
+  virtual std::string debug(const std::string& = "\n") { return ""; }
   virtual void upgrade(DescriptionPtr) = 0;
 
 protected:

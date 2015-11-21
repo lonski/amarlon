@@ -517,18 +517,18 @@ bool Actor::isPlayerControlled() const
   return r;
 }
 
-std::string Actor::debug()
+std::string Actor::debug(const std::string& linebreak)
 {
   std::string d;
-  d += "======="+getName()+"=======\n";
-  d += "IsAlive = "; d += (isAlive() ? "True\n" : "False\n");
-  d += "IsPlayerControlled = "; d += (isPlayerControlled() ? "True\n" : "False\n");
-  d += "~~~~~~~FEATURES~~~~~~~\n";
+  d += "======="+getName()+"=======" + linebreak;
+  d += "IsAlive = "; d += (isAlive() ? "True"+linebreak : "False"+linebreak);
+  d += "IsPlayerControlled = "; d += (isPlayerControlled() ? "True"+linebreak : "False"+linebreak);
+  d += " " + linebreak + "~~~~~~~FEATURES~~~~~~~"+linebreak+" "+linebreak;
   for (auto f : _features)
   {
-    if ( f.second ) d += f.second->debug();
+    if ( f.second ) d += f.second->debug(linebreak);
   }
-  d += "########################\n";
+  d += "########################"+linebreak;
   return d;
 }
 

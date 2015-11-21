@@ -28,6 +28,7 @@ enum class CommandId
   UseSkill,
   Talk,
   Shot,
+  Debug,
   End
 };
 

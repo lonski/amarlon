@@ -29,7 +29,7 @@ struct Damage
   bool operator>(const Damage& rhs) const;
   bool operator<(const Damage& rhs) const;
   operator std::string() const;
-  std::string toStr() const;
+  std::string toStr(bool displaySafe = false) const;
   int toInt() const;
 
 private:

@@ -150,9 +150,9 @@ bool Wearer::hasSlot(ItemSlotType slot) const
   return (_itemSlots.find(slot) != _itemSlots.end());
 }
 
-std::string Wearer::debug()
+std::string Wearer::debug(const std::string &linebreak)
 {
-  std::string d = "-----WEARER-----\n";
+  std::string d = " " + linebreak + "-----WEARER-----"+linebreak;
   for(auto slot : _itemSlots)
   {
     ActorPtr eq = equipped(slot.first);
@@ -160,9 +160,9 @@ std::string Wearer::debug()
     d += ItemSlotType2Str(slot.first);
     d +=  ": "
         + (eq ? eq->getName() : "<none>")
-        + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + "\n";
+        + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + linebreak;
   }
-  d.append("----------------\n");
+  d.append("----------------"+linebreak);
   return d;
 }
 

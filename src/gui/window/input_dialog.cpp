@@ -12,7 +12,7 @@ InputDialog::InputDialog()
 
 AWindow &InputDialog::setDefaults()
 {
-  _title = "Enter the name";
+  setTitle("Enter the name");
   _input = "";
 
   return *this;
@@ -81,7 +81,7 @@ void InputDialog::renderFrame()
 {
   _console->setDefaultForeground(TCODColor(200,180,50));
   _console->printFrame(0, 0, _console->getWidth(), _console->getHeight(), true, TCOD_BKGND_DEFAULT,
-                      _title.empty() ? NULL : _title.c_str() );
+                      getTitle().empty() ? NULL : getTitle().c_str() );
 }
 
 void InputDialog::renderInput()

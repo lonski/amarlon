@@ -83,6 +83,13 @@ ActorFeaturePtr Ai::clone()
 int Ai::update()
 {
   int turns = 0;
+
+  ActorPtr tgt = getTarget().firstActor();
+  if ( tgt && ( !tgt->isVisible() || !tgt->isAlive() ) )
+  {
+    clearTarget();
+  }
+
   if ( canOperate() )
   {
     executeScript();
@@ -259,6 +266,11 @@ bool Ai::hasTarget() const
   return getTarget() != Target();
 }
 
+void Ai::clearTarget()
+{
+  setTarget( Target() );
+}
+
 ActorVector Ai::getEnemiesInFov() const
 {
   ActorVector enemies;
@@ -267,8 +279,9 @@ ActorVector Ai::getEnemiesInFov() const
   MapPtr map = owner ? owner->getMap() : nullptr;
   if ( owner && map && owner->isInFov() )
   {
-    enemies = map->getActors([&](ActorPtr a){ return a->isAlive() &&
-                                                     a->isInFov() &&
+    enemies = map->getActors([&](ActorPtr a){ return a->isAlive()   &&
+                                                     a->isInFov()   &&
+                                                     a->isVisible() &&
                                                      a->isHostileTo(owner); });
   }
 

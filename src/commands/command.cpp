@@ -18,6 +18,7 @@
 
 #include "cmd_fullscreen.h"
 #include "cmd_game_menu.h"
+#include "cmd_debug.h"
 
 namespace amarlon {
 
@@ -58,6 +59,7 @@ CommandPtr Command::createSystemCommand(CommandId cmd)
   {
     case CommandId::FullScreen: c.reset( new CmdFullscreen   ); break;
     case CommandId::GameMenu:   c.reset( new CmdGameMenu     ); break;
+    case CommandId::Debug:      c.reset( new CmdDebug        ); break;
 
     default: break;
   }

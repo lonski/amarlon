@@ -207,7 +207,7 @@ public:
    */
   bool isPlayerControlled() const;
 
-  std::string debug();
+  std::string debug(const std::string& linebreak = "\n");
   void printDebug();
 
 private:

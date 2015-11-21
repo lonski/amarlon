@@ -69,6 +69,7 @@ public:
   void setTarget(ActorPtr actor);
   Target getTarget() const;
   bool hasTarget() const;
+  void clearTarget();
 
   ActorVector getEnemiesInFov() const;
 

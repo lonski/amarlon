@@ -52,6 +52,7 @@ set(HEADER_FILES
     commands/cmd_use_skill.h
     commands/cmd_talk.h
     commands/cmd_shot.h
+    commands/cmd_debug.h
     data_gateways/descriptions/tile_description.h
     data_gateways/parsers/parser.h
     data_gateways/parsers/tile_parser.h
@@ -244,6 +245,7 @@ set(SOURCE_FILES
     actor/actor.cpp
     actor/status_effects_manager.cpp
     actor/status_effect.cpp
+    commands/cmd_debug.cpp
     commands/cmd_talk.cpp
     commands/cmd_help.cpp
     commands/cmd_close.cpp

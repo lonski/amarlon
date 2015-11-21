@@ -29,7 +29,6 @@ public:
   virtual void setHeight(int height);
 
 private:
-  std::string _title;
   std::shared_ptr<TCODConsole> _console;
 
   std::string _input;

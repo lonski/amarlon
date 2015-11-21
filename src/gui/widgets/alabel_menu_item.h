@@ -14,7 +14,7 @@ class ALabelMenuItem : public AMenuItem
 {
 public:
   ALabelMenuItem();
-  ALabelMenuItem(const std::string& text);
+  ALabelMenuItem(const std::string& text, std::function<void()> cback = [](){});
 
   virtual void render(TCODConsole& console);
 

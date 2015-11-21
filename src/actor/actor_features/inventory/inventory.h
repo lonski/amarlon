@@ -57,7 +57,7 @@ public:
   std::vector<ActorPtr> items(std::function<bool(PickablePtr)> filterFun) const;
   std::vector<ActorPtr> items(ActorType type) const;
 
-  virtual std::string debug();
+  virtual std::string debug(const std::string& linebreak = "\n");
 
 private:
   ActorContainerPtr _items;

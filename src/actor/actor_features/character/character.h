@@ -103,7 +103,7 @@ public:
   virtual void setTeam(relations::Team team);
   void turnHostileTo(ActorPtr attacker);
 
-  virtual std::string debug();
+  virtual std::string debug(const std::string &linebreak);
 
 protected:
   virtual void setLevel(int level);

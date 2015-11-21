@@ -228,15 +228,15 @@ std::vector<ActorPtr> Inventory::items(ActorType type) const
   return items([&type](ActorPtr a){ return a->getType() == type;});
 }
 
-std::string Inventory::debug()
+std::string Inventory::debug(const std::string &linebreak)
 {
-  std::string d = "-----INVENTORY-----\n";
+  std::string d = " " + linebreak + "-----INVENTORY-----" +linebreak;
   for(auto item : *_items)
   {
     PickablePtr p = item ? item->getFeature<Pickable>() : nullptr;
-    d += item->getName() + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + "\n";
+    d += item->getName() + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + linebreak;
   }
-  d.append("-------------------\n");
+  d.append("-------------------"+linebreak);
   return d;
 }
 

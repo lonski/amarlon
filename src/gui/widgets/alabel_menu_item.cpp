@@ -10,12 +10,13 @@ ALabelMenuItem::ALabelMenuItem()
   setColor(TCODColor::lightChartreuse);
 }
 
-ALabelMenuItem::ALabelMenuItem(const std::string &text)
+ALabelMenuItem::ALabelMenuItem(const std::string &text, std::function<void()> cback)
   : _label(new ALabel)
   , _selected(false)
 {
   setValue(text);
   setColor(TCODColor::lightChartreuse);
+  setCallback(cback);
 }
 
 void ALabelMenuItem::render(TCODConsole &console)
