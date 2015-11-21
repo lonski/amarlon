@@ -9,6 +9,7 @@
 #include <description.h>
 #include <character_type.h>
 #include <relations.h>
+#include <experimental/optional>
 
 namespace amarlon {
 
@@ -37,36 +38,23 @@ struct SpellbookDescription
 
 struct CharacterDescription : Description
 {
-  CharacterDescription()
-    : level(0)
-    , hitPoints(0)
-    , maxHitPoints(0)
-    , defaultArmorClass(0)
-    , experience(0)
-    , cClass(CharacterClassType::Fighter)
-    , race(RaceType::NoRace)
-    , speed(0)
-    , type(CharacterType::NoType)
-    , team(relations::Monster)
-    , morale(0)
-  {}
+  std::experimental::optional<int> level;
+  std::experimental::optional<int> hitPoints;
+  std::experimental::optional<int> maxHitPoints;
+  std::experimental::optional<int> defaultArmorClass;
+  std::experimental::optional<int> experience;
+  std::experimental::optional<CharacterClassType> cClass;
+  std::experimental::optional<RaceType> race;
+  std::experimental::optional<int> speed;
+  std::experimental::optional<CharacterType> type;
+  std::experimental::optional<relations::Team> team;
+  std::experimental::optional<int> morale;
+  std::experimental::optional<Damage> damage;
+  std::experimental::optional<SpellbookDescription> spellbook;
 
-  int level;
-  int hitPoints;
-  int maxHitPoints;
-  int defaultArmorClass;
-  int experience;
-  CharacterClassType cClass;
-  RaceType race;
-  int speed;
-  SpellbookDescription spellbook;
   std::vector<SkillDescription> skills;
   std::vector<std::string> modifiers;
-  CharacterType type;
-  relations::Team team;
   std::map<AbilityScore::Type, int> abilityScores;
-  int morale;
-  Damage damage;
 };
 
 

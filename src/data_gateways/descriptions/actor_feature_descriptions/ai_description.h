@@ -3,18 +3,14 @@
 
 #include <description.h>
 #include <ai_type.h>
+#include <experimental/optional>
 
 namespace amarlon {
 
 struct AiDescription : Description
 {
-  AiDescription()
-    : type(AiType::Null)
-    , script(0)
-  {}
-
-  AiType type;
-  int script;
+  std::experimental::optional<AiType> type;
+  std::experimental::optional<int> script;
 };
 
 typedef std::shared_ptr<AiDescription> AiDescriptionPtr;

@@ -27,9 +27,10 @@ public:
 
   const static ActorFeature::Type featureType;
 
-  Inventory(size_t slotCount);
+  Inventory(DescriptionPtr dsc = nullptr);
   virtual ~Inventory();
   static InventoryPtr create(DescriptionPtr dsc);
+  virtual void upgrade(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType() { return featureType; }
 

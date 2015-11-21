@@ -22,8 +22,6 @@ When new actor is created with given ID as parameter, then the template will be 
 			<ItemSlot type="10"/>
 			<ItemSlot type="11"/>
 			<ItemSlot type="12"/>
-			<ItemSlot type="13"/>
-			<ItemSlot type="14"/>			
 		</Wearer>
 		<Destroyable/>
 	</Actor>	
@@ -36,7 +34,7 @@ When new actor is created with given ID as parameter, then the template will be 
 			</ItemSlot>
 			<ItemSlot type="12">
 				<Equipped id="30">
-					<Pickable stackable="1" amount="2" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+					<Pickable amount="2"/>
 				</Equipped>
 			</ItemSlot>	
 			<ItemSlot type="7">
@@ -48,10 +46,10 @@ When new actor is created with given ID as parameter, then the template will be 
 			<Content id="24"/>
 			<Content id="33"/>
 			<Content id="30">
-				<Pickable stackable="1" amount="2" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+				<Pickable amount="2"/>
 			</Content>
 			<Content id="34">
-				<Pickable stackable="1" amount="1" category="6" amunitionType="1" itemSlot="12" damage="1d6+1#6"/>
+				<Pickable amount="1"/>
 			</Content>
 		</Inventory>
 		<Destroyable>
@@ -73,38 +71,38 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Table" id="10" character="10" color="906030" transparent="1" blocks="1" fovOnly="0"/>
 	<Actor name="Worktop" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
 	<Actor name="Bootle of wine" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="4"/>
+		<Pickable stackable="1" amount="1" category="5"/>
 	</Actor>
 	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
-		<Pickable scriptId="1" stackable="1" amount="1" category="4" uses="1" targetType="4"/>
+		<Pickable scriptId="1" stackable="1" amount="1" category="5" uses="1" targetType="4"/>
 	</Actor>
 	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="0"/>
+		<Pickable stackable="0" amount="1" category="1"/>
 	</Actor>
 	<Actor name="Corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="0"/>
+		<Pickable stackable="0" amount="1" category="1"/>
 	</Actor>
 	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
 		<Pickable scriptId="2" stackable="0" amount="1" uses="-1" targetType="0"/>
 	</Actor>
 	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="6" category="2"/>
+		<Pickable stackable="0" amount="1" itemSlot="6" category="3"/>
 	</Actor>
 	<Actor name="Belt of hill giant strength" id="19" character="[" color="FFCC66" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="4" category="2"/>
+		<Pickable stackable="0" amount="1" itemSlot="4" category="3"/>
 	</Actor>
 	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" itemSlot="3" category="2" armorClass="13" weight="15" price="20"/>
+		<Pickable stackable="0" amount="1" itemSlot="3" category="3" armorClass="13" weight="15" price="20"/>
 		<Description>Leather armor is made up of multiple overlapping pieces of leather, boiled to increase their natural toughness and then deliberately stitched together. Although not as sturdy as metal armor, the flexibility it allows wearers makes it among the most widely used types of armor.</Description>
 	</Actor>	
 	<Actor name="Gold coin" id="22" character="$" color="E2B227" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="7"/>
+		<Pickable stackable="1" amount="1" category="8"/>
 	</Actor>
 	<Actor name="Black Ale" id="23" character="!" color="808080" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="4"/>
+		<Pickable stackable="1" amount="1" category="5"/>
 	</Actor>
 	<Actor name="Dagger" id="24" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2" weaponType="3"/>
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2" weaponType="3"/>
 		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
 	</Actor>
 	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
@@ -119,19 +117,19 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Trap id="1" armed="1" difficulty="20"/>
 	</Actor>
 	<Actor name="Scroll: Fireball" id="27" character="?" color="FFFFFF" transparent="1" blocks="0" fovOnly="0">
-		<Scroll spell="3" stackable="1" amount="1" category="5" uses="1" />
+		<Scroll spell="3" stackable="1" amount="1" category="6" uses="1" />
 	</Actor>
 	<Actor name="Toilet" id="28" character="o" color="4D2600" transparent="1" blocks="0" fovOnly="0">
 		<Talker id="1"/>
 	</Actor>
 	<Actor name="Beer" id="29" character="!" color="B36B00" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="4"/>
+		<Pickable stackable="1" amount="1" category="5"/>
 	</Actor>
 	<Actor name="Arrow" id="30" character="/" color="cd8500" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+		<Pickable stackable="1" amount="1" category="7" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
 	</Actor>
 	<Actor name="Short bow" id="31" character="}" color="663300" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="1" weaponType="5" range="10" itemSlot="7" amunitionType="1"/>
+		<Pickable stackable="0" amount="1" category="2" weaponType="5" range="10" itemSlot="7" amunitionType="1"/>
 	</Actor>
 	<Actor name="Tero" id="32" character="@" color="ccff99" transparent="1" blocks="1" fovOnly="1">
 		<Character level="1" experience="30" class="2" race="2" maxHitPoints="12" speed="40" team="1" morale="8">
@@ -162,10 +160,10 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Description>Some weird dwarf wandering around.</Description>
 	</Actor>
 	<Actor name="Short sword" id="33" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="0" amount="1" category="1" itemSlot="7" damage="1d6+0#1" armorClass="0" weight="3" price="6" weaponType="1"/>
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d6+0#1" armorClass="0" weight="3" price="6" weaponType="1"/>
 		<Description>In essence, this weapon is a smaller version of the longsword but longer than a dagger or dirk, having many of the same parts including a generally double-edged blade, cross-guard, grip, and pommel.</Description>
 	</Actor>
 	<Actor name="Arrow +1" id="34" character="/" color="cd8500" transparent="1" blocks="0" fovOnly="0">
-		<Pickable stackable="1" amount="1" category="6" amunitionType="1" itemSlot="12" damage="1d6+1#6"/>
+		<Pickable stackable="1" amount="1" category="7" amunitionType="1" itemSlot="12" damage="1d6+1#6"/>
 	</Actor>
 </Actors>

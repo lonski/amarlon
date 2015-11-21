@@ -21,6 +21,10 @@ bool StatusEffect::cancel(Target target)
     lua_api::LuaState& lua = Engine::instance().getLuaState();
     if ( lua.execute( _script ) )
     {
+      target.actors.erase( std::remove_if(target.actors.begin(), target.actors.end(),[](ActorPtr a){
+                             return a == nullptr;
+                           }));
+
       try
       {
         success = luabind::call_function<bool>(

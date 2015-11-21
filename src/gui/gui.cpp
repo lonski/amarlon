@@ -74,6 +74,7 @@ void Gui::setupLogPanel()
   _log->setPosition(2,1);
 
   APanelPtr logPanel( new APanel(logConWidth, logConHeight) );
+  logPanel->setTitle("Log");
   logPanel->setPosition(0, Engine::screenHeight - logConHeight);
   logPanel->addWidget(_log);
 
@@ -86,6 +87,7 @@ void Gui::setupViewPanel()
   _viewList->setPosition(2, 1);
 
   APanelPtr viewPanel( new APanel(viewConWidth, viewConHeight) );
+  viewPanel->setTitle("Items on ground");
   viewPanel->setPosition(logConWidth, Engine::screenHeight - viewConHeight);
   viewPanel->addWidget(_viewList);
 

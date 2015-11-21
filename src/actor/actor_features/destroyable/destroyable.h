@@ -17,6 +17,7 @@ public:
   const static ActorFeature::Type featureType;
 
   static DestroyablePtr create(DescriptionPtr dsc);
+  virtual void upgrade(DescriptionPtr dsc);
 
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
@@ -25,7 +26,7 @@ public:
   void destroy();
   const std::vector<DropRule> getDropRules() const;
 
-  Destroyable();
+  Destroyable(DescriptionPtr dsc = nullptr);
   ~Destroyable();
 
 private:

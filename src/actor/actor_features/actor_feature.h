@@ -45,6 +45,7 @@ public:
   virtual std::string getDescription();
   virtual int update();
   virtual std::string debug() { return ""; }
+  virtual void upgrade(DescriptionPtr) = 0;
 
 protected:
   ActorWPtr _owner;

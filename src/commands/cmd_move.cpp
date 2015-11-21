@@ -34,7 +34,7 @@ int CmdMove::execute()
   if ( player && player->performAction( new MoveAction(_dx, _dy) ) != ActorActionResult::Ok )
   {
     ActorPtr actor = getActorOnPath();
-    if ( actor )
+    if ( actor && actor != player )
     {
       //attack hostile actor
       if ( actor->isHostileTo(player) )

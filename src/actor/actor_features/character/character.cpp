@@ -41,40 +41,61 @@ Character::Character(DescriptionPtr dsc)
   , _team(relations::Monster)
   , _morale(0)
 {
+  upgrade(dsc);
+
+  //roll ability scores if not defined
+  for ( auto as : AbilityScore::Type() )
+  {
+    if ( _abilityScores[as] == 0 )
+    {
+      MinMax constrains = _race ? _race->getAbilityScoreRestriction( as ) : MinMax();
+      int roll = 0;
+      while ( !constrains.allow( roll ) ) roll = dices::roll(dices::D6, 3);
+      _abilityScores[as] = roll;
+    }
+  }
+}
+
+void Character::upgrade(DescriptionPtr dsc)
+{
   CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
   if ( cDsc != nullptr )
   {
-    _experience = cDsc->experience;
-    _class = CharacterClass::create(cDsc->cClass);
-    _race = Race::create( cDsc->race );
-    _defaultArmorClass = cDsc->defaultArmorClass;
-    _speed = cDsc->speed;
-    _team = cDsc->team;
-    _spellbook = SpellBook::create(cDsc->spellbook);
-    _morale = cDsc->morale;
-    _damage = cDsc->damage;
+    if ( cDsc->experience)         _experience = *cDsc->experience;
+    if ( cDsc->cClass )            _class = CharacterClass::create(*cDsc->cClass);
+    if ( cDsc->race )              _race = Race::create( *cDsc->race );
+    if ( cDsc->defaultArmorClass ) _defaultArmorClass = *cDsc->defaultArmorClass;
+    if ( cDsc->speed )             _speed = *cDsc->speed;
+    if ( cDsc->team )              _team = *cDsc->team;
+    if ( cDsc->spellbook)          _spellbook = SpellBook::create(*cDsc->spellbook);
+    if ( cDsc->morale)             _morale = *cDsc->morale;
+    if ( cDsc->damage)             _damage = *cDsc->damage;
+    if ( cDsc->level )             _level = *cDsc->level;
+    if ( cDsc->maxHitPoints )      _maxHitPoints = *cDsc->maxHitPoints;
+    if ( cDsc->hitPoints )         _hitPoints = *cDsc->hitPoints; else setHitPoints( getMaxHitPoints() );
 
-    _abilityScores = cDsc->abilityScores;
-    //roll ability scores if not defined
-    for ( auto as : AbilityScore::Type() )
+    //upgrade the ability scores
+    for ( auto kv : cDsc->abilityScores )
     {
-      if ( _abilityScores[as] == 0 )
-      {
-        MinMax constrains = _race ? _race->getAbilityScoreRestriction( as ) : MinMax();
-        int roll = 0;
-        while ( !constrains.allow( roll ) ) roll = dices::roll(dices::D6, 3);
-        _abilityScores[as] = roll;
-      }
+      _abilityScores[kv.first] = kv.second;
     }
 
+    //upgrade skills
     for(auto s : cDsc->skills)
-      _skills.push_back( Skill::create( static_cast<SkillId>(s.id),
-                                                   s.level ) );
+    {
+      SkillPtr skill = Skill::create( static_cast<SkillId>(s.id), s.level );
 
-    setLevel( cDsc->level );
-    setMaxHitPoints( cDsc->maxHitPoints );
-    cDsc->hitPoints > 0 ? setHitPoints( cDsc->hitPoints ) : setHitPoints( getMaxHitPoints() );
+      //remove if already exists
+      auto it = std::find_if(_skills.begin(), _skills.end(), [&](SkillPtr sk){
+        return sk->getId() == skill->getId();
+      });
+      if ( it != _skills.end() ) _skills.erase(it);
 
+      //insert the skill
+      _skills.push_back( skill );
+    }
+
+    //add modifiers
     for(auto m : cDsc->modifiers)
       addModifier( Modifier(m) );
   }
@@ -85,9 +106,9 @@ CharacterPtr Character::create(DescriptionPtr dsc)
   CharacterPtr c;
 
   CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
-  if ( cDsc )
+  if ( cDsc && cDsc->type )
   {
-    switch (cDsc->type)
+    switch (*cDsc->type)
     {
       case CharacterType::Generic:            c.reset( new Character(cDsc) ); break;
       case CharacterType::PlayableCharacter:  c.reset( new PlayableCharacter(cDsc) ); break;

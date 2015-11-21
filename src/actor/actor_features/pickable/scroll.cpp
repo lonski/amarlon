@@ -7,11 +7,6 @@
 
 namespace amarlon {
 
-Scroll::Scroll(bool stackable, int amount)
-  : Pickable(stackable, amount)
-{
-}
-
 Scroll::Scroll(DescriptionPtr dsc)
   : Pickable(dsc)
 {

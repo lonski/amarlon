@@ -3,17 +3,14 @@
 
 #include <description.h>
 #include <dialog.h>
+#include <experimental/optional>
 
 namespace amarlon
 {
 
 struct TalkerDescription : Description
 {
-  TalkerDescription()
-    : id(0)
-  {}
-
-  int id;
+  std::experimental::optional<int> id;
   std::vector<Dialog> dialogs;
 };
 

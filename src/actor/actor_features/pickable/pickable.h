@@ -22,8 +22,8 @@ class Pickable : public ActorFeature
 public:
   const static ActorFeature::Type featureType;
 
-  Pickable(bool stackable = false, int amount = 1);
-  Pickable(DescriptionPtr dsc);
+  Pickable(DescriptionPtr dsc = nullptr);
+  virtual void upgrade(DescriptionPtr dsc);
   virtual ~Pickable();
 
   static PickablePtr create(DescriptionPtr dsc);

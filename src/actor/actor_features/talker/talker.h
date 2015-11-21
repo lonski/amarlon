@@ -15,10 +15,11 @@ class Talker : public ActorFeature
 public:
   const static ActorFeature::Type featureType;
 
-  Talker();
+  Talker(DescriptionPtr dsc = nullptr);
   virtual ~Talker();
 
   static TalkerPtr create(DescriptionPtr dsc);
+  virtual void upgrade(DescriptionPtr dsc);
   virtual ActorFeature::Type getType();
   virtual int getId() const;
 

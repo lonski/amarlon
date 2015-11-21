@@ -15,10 +15,32 @@ namespace amarlon {
 
 const ActorFeature::Type Pickable::featureType = ActorFeature::PICKABLE;
 
-Pickable::Pickable(bool stackable, int amount)
+void Pickable::upgrade(DescriptionPtr dsc)
+{
+  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
+  if ( pDsc != nullptr )
+  {
+    if (pDsc->stackable)  _stackable  = *(pDsc->stackable);
+    if (pDsc->amount)     _amount     = *(pDsc->amount);
+    if (pDsc->itemSlot)   _itemSlot   = *(pDsc->itemSlot);
+    if (pDsc->armorClass) _armorClass = *(pDsc->armorClass);
+    if (pDsc->weight)     _weight     = *(pDsc->weight);
+    if (pDsc->price)      _price      = *(pDsc->price);
+    if (pDsc->damage)     _damage     = *(pDsc->damage);
+    if (pDsc->uses)       _usesCount  = *(pDsc->uses);
+    if (pDsc->targetType) _targetType = *(pDsc->targetType);
+    if (pDsc->scriptId)   _scriptId   = *(pDsc->scriptId);
+    if (pDsc->range)      _range      = *(pDsc->range);
+    if (pDsc->radius)     _radius     = *(pDsc->radius);
+
+    _type.merge( pDsc->type );
+  }
+}
+
+Pickable::Pickable(DescriptionPtr dsc)
   : _usesCount(0)
-  , _stackable(stackable)
-  , _amount(amount)
+  , _stackable(false)
+  , _amount(1)
   , _itemSlot(ItemSlotType::Null)
   , _armorClass(0)
   , _weight(0)
@@ -26,29 +48,9 @@ Pickable::Pickable(bool stackable, int amount)
   , _targetType(TargetType::SINGLE_NEIGHBOUR)
   , _scriptId(0)
   , _range(0)
-  , _radius(0)  
+  , _radius(0)
 {
-}
-
-Pickable::Pickable(DescriptionPtr dsc)
-{
-  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
-  if ( pDsc != nullptr )
-  {
-    _stackable = pDsc->stackable;
-    _amount = pDsc->amount;
-    _itemSlot = pDsc->itemSlot;
-    _armorClass = pDsc->armorClass;
-    _weight = pDsc->weight;
-    _price = pDsc->price;
-    _damage = pDsc->damage;
-    _usesCount = pDsc->uses;
-    _targetType = pDsc->targetType;
-    _scriptId = pDsc->scriptId;
-    _type = pDsc->type;
-    _range = pDsc->range;
-    _radius = pDsc->radius;
-  }
+  upgrade(dsc);
 }
 
 Pickable::~Pickable()

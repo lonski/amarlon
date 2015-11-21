@@ -2,24 +2,17 @@
 #define OPENABLE_DESCRIPTION
 
 #include <description.h>
+#include <experimental/optional>
 
 namespace amarlon {
 
 struct OpenableDescription : Description
 {
-  OpenableDescription()
-    : lockId(0)
-    , locked(false)
-    , scriptId(0)
-    , closed(false)
-    , lockLevel(0)
-  {}
-
-  int lockId;
-  bool locked;
-  int scriptId;
-  bool closed;
-  int lockLevel;
+  std::experimental::optional<int>  lockId;
+  std::experimental::optional<bool> locked;
+  std::experimental::optional<int>  scriptId;
+  std::experimental::optional<bool> closed;
+  std::experimental::optional<int>  lockLevel;
 };
 
 typedef std::shared_ptr<OpenableDescription> OpenableDescriptionPtr;

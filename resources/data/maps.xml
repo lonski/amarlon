@@ -16,11 +16,9 @@
 			<Actor id="6" x="41" y="28">
 				<Inventory maxSize="5">
 					<Content id="13" x="0" y="0"/>
-					<Content id="14" x="0" y="0">
-						<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
-					</Content>		
+					<Content id="14" x="0" y="0"/>	
 					<Content id="30" x="0" y="0">
-						<Pickable stackable="1" amount="20" category="6" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+						<Pickable amount="20"/>
 					</Content>
 					<Content id="31" x="0" y="0"/>
 				</Inventory>
@@ -35,18 +33,14 @@
 			<Actor id="7" x="42" y="30"/>
 			<Actor id="13" x="41" y="32"/>
 			<Actor id="8" x="46" y="32"/>
-			<Actor id="12" x="41" y="33">
-				<Pickable stackable="1" amount="1" itemSlot="0" category="4" armorClass="0" weight="0" price="0" damageDice="0d0"/>
-			</Actor>
-			<Actor id="14" x="41" y="33">
-				<Pickable stackable="0" amount="1" itemSlot="0" category="0" armorClass="0" weight="0" price="0" damageDice="0d0"/>
-			</Actor>
+			<Actor id="12" x="41" y="33"/>
+			<Actor id="14" x="41" y="33"/>
 			<Actor id="3" x="44" y="33">
-				<Openable scriptId="1" lockId="1" locked="1" closed="1" lockLevel="80"/>
+				<Openable lockId="1" locked="1" lockLevel="80"/>
 			</Actor>
 			<Actor id="10" x="46" y="33"/>
 			<Actor id="3" x="48" y="33">
-				<Trap id="1" armed="1" difficulty="20" detected="0"/>
+				<Trap id="1" difficulty="20" detected="0" armed="1"/>
 			</Actor>
 			<Actor id="4" x="61" y="33"/>
 			<Actor id="28" x="62" y="33"/>

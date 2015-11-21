@@ -72,6 +72,14 @@ struct ItemType
     memset(this, 0, sizeof(ItemType));
   }
 
+  void merge(const ItemType& rhs)
+  {
+    if ( rhs.category != PickableCategory::NoCategory ) category = rhs.category;
+    if ( rhs.weapon != WeaponType::NoType ) weapon = rhs.weapon;
+    if ( rhs.armor != ArmorType::NoType ) armor = rhs.armor;
+    if ( rhs.amunition != AmunitionType::NoType ) amunition = rhs.amunition;
+  }
+
   bool operator==(const ItemType& rhs) const
   {
     return category == rhs.category &&
@@ -79,11 +87,6 @@ struct ItemType
            armor == rhs.armor &&
            amunition == rhs.amunition;
   }
-
-  PickableCategory category;
-  WeaponType weapon;
-  ArmorType armor;
-  AmunitionType amunition;
 
   bool isMeleeWeapon() const
   {
@@ -98,6 +101,11 @@ struct ItemType
   {
     return weapon == WeaponType::Bow;
   }
+
+  PickableCategory category;
+  WeaponType weapon;
+  ArmorType armor;
+  AmunitionType amunition;
 };
 
 class ItemTypeRestriction

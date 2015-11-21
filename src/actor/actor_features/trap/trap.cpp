@@ -8,12 +8,13 @@ namespace amarlon {
 
 const ActorFeature::Type Trap::featureType = ActorFeature::TRAP;
 
-Trap::Trap()
+Trap::Trap(DescriptionPtr dsc)
   : _id(TrapId::Null)
   , _armed(false)
   , _difficulty(0)
   , _detected(false)
 {
+  upgrade(dsc);
 }
 
 Trap::~Trap()
@@ -22,17 +23,19 @@ Trap::~Trap()
 
 TrapPtr Trap::create(DescriptionPtr dsc)
 {
-  TrapPtr trap;
+  return TrapPtr( new Trap(dsc) );
+}
+
+void Trap::upgrade(DescriptionPtr dsc)
+{
   TrapDescriptionPtr tDsc = std::dynamic_pointer_cast<TrapDescription>(dsc);
   if ( tDsc )
   {
-    trap.reset(new Trap);
-    trap->_armed = tDsc->armed;
-    trap->_difficulty = tDsc->difficulty;
-    trap->_id = static_cast<TrapId>(tDsc->id);
-    trap->_detected = tDsc->detected;
+    if (tDsc->armed)     _armed = *tDsc->armed;
+    if (tDsc->difficulty) _difficulty = *tDsc->difficulty;
+    if (tDsc->id)         _id = static_cast<TrapId>(*tDsc->id);
+    if (tDsc->detected)   _detected = *tDsc->detected;
   }
-  return trap;
 }
 
 ActorFeature::Type Trap::getType()

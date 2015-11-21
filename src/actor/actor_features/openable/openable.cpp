@@ -10,13 +10,27 @@ namespace amarlon {
 
 const ActorFeature::Type Openable::featureType = ActorFeature::OPENABLE;
 
-Openable::Openable()
+Openable::Openable(DescriptionPtr dsc)
   : _locked(false)
   , _lockId(0)
   , _lockLevel(0)
   , _scriptId(0)
   , _closed(false)
 {
+  upgrade(dsc);
+}
+
+void Openable::upgrade(DescriptionPtr dsc)
+{
+  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
+  if ( oDsc )
+  {
+    if ( oDsc->lockId )    _lockId    = *oDsc->lockId;
+    if ( oDsc->lockLevel ) _lockLevel = *oDsc->lockLevel;
+    if ( oDsc->locked )    _locked    = *oDsc->locked;
+    if ( oDsc->scriptId )  _scriptId  = *oDsc->scriptId;
+    if ( oDsc->closed )    _closed    = *oDsc->closed;
+  }
 }
 
 Openable::~Openable()
@@ -25,19 +39,7 @@ Openable::~Openable()
 
 OpenablePtr Openable::create(DescriptionPtr dsc)
 {
-  OpenablePtr openable(new Openable);
-
-  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
-  if ( oDsc )
-  {
-    openable->_lockId = oDsc->lockId;
-    openable->_lockLevel = oDsc->lockLevel;
-    openable->_locked = oDsc->locked;
-    openable->_scriptId = oDsc->scriptId;
-    openable->_closed = oDsc->closed;
-  }
-
-  return openable;
+  return OpenablePtr(new Openable(dsc));
 }
 
 ActorFeature::Type Openable::getType()

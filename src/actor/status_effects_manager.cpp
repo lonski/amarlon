@@ -10,6 +10,11 @@ StatusEffectsManager::StatusEffectsManager(ActorPtr owner)
 {
 }
 
+StatusEffectsManager::~StatusEffectsManager()
+{
+  removeAll();
+}
+
 bool StatusEffectsManager::add(StatusEffectPtr effect)
 {
   bool r = false;
@@ -32,18 +37,32 @@ bool StatusEffectsManager::add(StatusEffectPtr effect)
   return r;
 }
 
-void StatusEffectsManager::remove(StatusEffectPtr effect)
+void StatusEffectsManager::remove(StatusEffectPtr effect, bool notify)
 {
   auto it = std::find(_effects.begin(), _effects.end(),effect);
   if ( it != _effects.end() )
   {
     effect->cancel(_owner.lock());
-    notifyRemove(effect);
+    if(notify) notifyRemove(effect);
     _effects.erase( it );
   }
 }
 
-void StatusEffectsManager::remove(const std::string& name)
+void StatusEffectsManager::remove(std::function<bool (StatusEffectPtr)> cmp, bool notify)
+{
+  auto it = std::find_if(_effects.begin(),
+                         _effects.end(),
+                         cmp);
+
+  if ( it != _effects.end() )
+  {
+    (*it)->cancel(_owner.lock());
+    if(notify) notifyRemove( *it );
+    _effects.erase( it );
+  }
+}
+
+void StatusEffectsManager::remove(const std::string& name, bool notify)
 {
   auto it = std::find_if(_effects.begin(),
                          _effects.end(),
@@ -52,7 +71,7 @@ void StatusEffectsManager::remove(const std::string& name)
   if ( it != _effects.end() )
   {
     (*it)->cancel(_owner.lock());
-    notifyRemove( *it );
+    if(notify) notifyRemove( *it );
     _effects.erase( it );
   }
 }

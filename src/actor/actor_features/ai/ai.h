@@ -28,8 +28,8 @@ public:
   virtual ActorFeature::Type getType() { return featureType; }
   virtual AiType getAiType() const;
 
-  Ai();
-  Ai(DescriptionPtr dsc);
+  Ai(DescriptionPtr dsc = nullptr);
+  virtual void upgrade(DescriptionPtr dsc);
   virtual ~Ai() {}
 
   static AiPtr create(DescriptionPtr dsc);

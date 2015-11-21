@@ -17,9 +17,10 @@ class Wearer : public ActorFeature
 public:
   const static ActorFeature::Type featureType;
 
-  Wearer();
+  Wearer(DescriptionPtr dsc = nullptr);
   virtual ~Wearer() {}
   static WearerPtr create(DescriptionPtr dsc);
+  virtual void upgrade(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType() { return featureType; }
 
@@ -39,7 +40,7 @@ private:
   std::map<ItemSlotType, ActorPtr> _itemSlots;
   ActorContainerPtr _equippedItems;
 
-  static void assignItemsToSlots(WearerPtr wearer);
+  void assignItemsToSlots();
 
 };
 

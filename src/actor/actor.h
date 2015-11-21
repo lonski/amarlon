@@ -49,16 +49,10 @@ public:
   static ActorPtr create(ActorDescriptionPtr dsc, bool prototyped = true);
 
   /**
-   * @brief Upgrades the content of actor according to the description structures.
-   *        Changes only the data contained in this description, all other
-   *        remain unchanged.
+   * @brief Overrides actor's content with content from given description structure.
+   *        Fuills only changed data. All other data remain unchanged.
    */
   void upgrade(ActorDescriptionPtr dsc);
-
-  /**
-   * @brief Overrides actor's content with content from given description structure.
-   */
-  void deserialize(ActorDescriptionPtr dsc);
   ~Actor();
 
   ActorPtr clone();  
@@ -214,6 +208,7 @@ public:
   bool isPlayerControlled() const;
 
   std::string debug();
+  void printDebug();
 
 private:
   ActorType _id;

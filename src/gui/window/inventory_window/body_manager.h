@@ -30,6 +30,7 @@ private:
   bool equipItem(ActorPtr toEquip);
   std::vector<ActorPtr> getEquipableItemsList(ItemSlotType slot);
   bool unequipItem(ItemSlotType slot);
+  std::string getSlotValueForItem(ActorPtr item);
 
 };
 

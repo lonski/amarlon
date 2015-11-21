@@ -18,7 +18,8 @@ public:
 
   const static ActorFeature::Type featureType;  
 
-  Openable();
+  Openable(DescriptionPtr dsc = nullptr);
+  virtual void upgrade(DescriptionPtr dsc);
   virtual ~Openable();
 
   static OpenablePtr create(DescriptionPtr dsc);

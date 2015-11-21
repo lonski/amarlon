@@ -8,9 +8,10 @@ namespace amarlon {
 
 const ActorFeature::Type Talker::featureType = ActorFeature::TALKER;
 
-Talker::Talker()
+Talker::Talker(DescriptionPtr dsc)
   : _id(0)
 {
+  upgrade(dsc);
 }
 
 Talker::~Talker()
@@ -19,17 +20,17 @@ Talker::~Talker()
 
 TalkerPtr Talker::create(DescriptionPtr dsc)
 {
-  TalkerPtr talker;
-  TalkerDescriptionPtr tDsc = std::dynamic_pointer_cast<TalkerDescription>(dsc);
+  return TalkerPtr(new Talker(dsc));
+}
 
+void Talker::upgrade(DescriptionPtr dsc)
+{
+  TalkerDescriptionPtr tDsc = std::dynamic_pointer_cast<TalkerDescription>(dsc);
   if ( tDsc )
   {
-    talker.reset( new Talker );
-    talker->_id = tDsc->id;
-    talker->_dialogs = tDsc->dialogs;
+    if ( tDsc->id ) _id = *tDsc->id;
+    _dialogs.insert( _dialogs.begin(), tDsc->dialogs.begin(), tDsc->dialogs.end());
   }
-
-  return talker;
 }
 
 ActorFeature::Type Talker::getType()

@@ -44,6 +44,7 @@ public:
   Character();
   virtual ~Character();
   Character(DescriptionPtr dsc);
+  virtual void upgrade(DescriptionPtr dsc);
   static CharacterPtr create(DescriptionPtr dsc);
 
   virtual bool isEqual(ActorFeaturePtr rhs) const;

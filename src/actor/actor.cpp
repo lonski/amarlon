@@ -33,6 +33,12 @@ void Actor::applyPassiveSkills()
   {
     for ( SkillPtr s : c->getSkills([](SkillPtr s){ return s->isPassive(); }))
     {
+      //remove if already applied
+      _effects->remove( [&](StatusEffectPtr se){
+        return se->getScript() == s->getScript();
+      }, false);
+
+      //apply
       s->use( shared_from_this(), Target(shared_from_this()) );
     }
   }
@@ -44,61 +50,12 @@ ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
   if ( dsc )
   {
     actor = prototyped ? create(dsc->id) : ActorPtr(new Actor);
-    actor->deserialize(dsc);
+    actor->upgrade(dsc);
   }
   return actor;
 }
 
 void Actor::upgrade(ActorDescriptionPtr dsc)
-{
-//  if ( dsc )
-//  {
-//    //Base fields
-//    _id = dsc->id;
-
-//    if (dsc->x)            _x = *(dsc->x);
-//    if (dsc->y)            _y = *(dsc->y);
-//    if (dsc->name)         _name = *(dsc->name);
-//    if (dsc->symbol)       _symbol = *(dsc->symbol);
-//    if (dsc->color)        _color = *(dsc->color);
-//    if (dsc->blocks)       _blocks = *(dsc->blocks);
-//    if (dsc->fovOnly)      _fovOnly = *(dsc->fovOnly);
-//    if (dsc->transparent)  _transparent = *(dsc->transparent);
-//    if (dsc->tilePriority) _priority = *(dsc->tilePriority);
-//    if (dsc->description)  _description = *(dsc->description);
-//    if (dsc->visible)      setVisible( *(dsc->visible) );
-
-//    //Features
-//    if ( dsc->pickable )
-//    {
-//      auto it = _features.find( ActorFeature::PICKABLE );
-//      if ( it != _features.end() )
-//      {
-//        (*it)->upgrade(dsc->pickable);
-//      }
-//      else
-//      {
-//        _features[ActorFeature::PICKABLE] = ActorFeature::create(ActorFeature::PICKABLE, dsc->pickable);
-//      }
-//    }
-
-//    if ( dsc->character )   _features[ActorFeature::CHARACTER]   = ActorFeature::create(ActorFeature::CHARACTER,   dsc->character);
-//    if ( dsc->ai )          _features[ActorFeature::AI]          = ActorFeature::create(ActorFeature::AI,          dsc->ai);
-//    if ( dsc->openable )    _features[ActorFeature::OPENABLE]    = ActorFeature::create(ActorFeature::OPENABLE,    dsc->openable);
-//    if ( dsc->wearer )      _features[ActorFeature::WEARER]      = ActorFeature::create(ActorFeature::WEARER,      dsc->wearer);
-//    if ( dsc->inventory )   _features[ActorFeature::INVENTORY]   = ActorFeature::create(ActorFeature::INVENTORY,   dsc->inventory);
-//    if ( dsc->destroyable ) _features[ActorFeature::DESTROYABLE] = ActorFeature::create(ActorFeature::DESTROYABLE, dsc->destroyable);
-//    if ( dsc->trap )        _features[ActorFeature::TRAP]        = ActorFeature::create(ActorFeature::TRAP,        dsc->trap);
-//    if ( dsc->talker )      _features[ActorFeature::TALKER]      = ActorFeature::create(ActorFeature::TALKER,      dsc->talker);
-
-//    for (auto f : _features)
-//    {
-//      f.second->setOwner( shared_from_this() );
-//    }
-//  }
-}
-
-void Actor::deserialize(ActorDescriptionPtr dsc)
 {
   if ( dsc )
   {
@@ -118,18 +75,26 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     if (dsc->visible)      setVisible( *(dsc->visible) );
 
     //Features
-    for ( auto& f : dsc->features )
+    for (auto& f : dsc->features )
     {
       if ( f.second )
       {
-        auto feat = ActorFeature::create(f.first, f.second);
-        feat->setOwner( shared_from_this() );
-        _features[ f.first ] = feat;
+        auto it = _features.find( f.first );
+        if ( it != _features.end() )
+        {
+          it->second->upgrade( f.second );
+        }
+        else
+        {
+          auto feat = ActorFeature::create(f.first, f.second);
+          feat->setOwner( shared_from_this() );
+          _features[ f.first ] = feat;
+        }
       }
     }
 
     //Status Effects
-    _effects.reset( new StatusEffectsManager( shared_from_this()) );
+    if ( !_effects ) _effects.reset( new StatusEffectsManager( shared_from_this()) );
     for ( auto e : dsc->statusEffects )
     {
       StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
@@ -137,7 +102,6 @@ void Actor::deserialize(ActorDescriptionPtr dsc)
     }
 
     applyPassiveSkills();
-
   }
 }
 
@@ -235,7 +199,6 @@ bool Actor::operator==(const Actor &rhs) const
 
   equal &= ( getType() == rhs.getType() );
   equal &= ( _features.size() == rhs._features.size() );
-
   equal &= rhs._fovOnly == _fovOnly;
   equal &= rhs._transparent == _transparent;
   equal &= rhs._blocks == _blocks;
@@ -558,12 +521,20 @@ std::string Actor::debug()
 {
   std::string d;
   d += "======="+getName()+"=======\n";
+  d += "IsAlive = "; d += (isAlive() ? "True\n" : "False\n");
+  d += "IsPlayerControlled = "; d += (isPlayerControlled() ? "True\n" : "False\n");
+  d += "~~~~~~~FEATURES~~~~~~~\n";
   for (auto f : _features)
   {
-    d += f.second->debug();
+    if ( f.second ) d += f.second->debug();
   }
   d += "########################\n";
   return d;
+}
+
+void Actor::printDebug()
+{
+  printf("%s",debug().c_str());
 }
 
 }

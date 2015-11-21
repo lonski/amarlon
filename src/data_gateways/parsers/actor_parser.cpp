@@ -90,7 +90,7 @@ InventoryDescriptionPtr ActorParser::parseInventoryDsc()
     if ( invNode != nullptr)
     {
       contDsc.reset( new InventoryDescription );
-      contDsc->maxSize = getAttribute<int>(invNode, "maxSize");
+      if ( attributeExists(invNode, "maxSize")) contDsc->maxSize = getAttribute<int>(invNode, "maxSize");
       ActorParser parser;
       xml_node<>* contentNode = invNode->first_node("Content");
       while ( contentNode != nullptr)
@@ -115,7 +115,8 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
     if ( pickableNode )
     {
       ScrollDescriptionPtr sDsc( new ScrollDescription );
-      sDsc->spellId = getAttribute<int>(pickableNode, "spell");
+      if ( attributeExists( pickableNode, "spell") )
+        sDsc->spellId = getAttribute<int>(pickableNode, "spell");
       pickDsc = sDsc;
     }
     else
@@ -126,20 +127,18 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
 
     if (pickableNode != nullptr)
     {
-      pickDsc->scriptId = getAttribute<int>(pickableNode, "scriptId");
-      pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
-      pickDsc->amount = getAttribute<int>(pickableNode, "amount");
-      if ( pickDsc->amount == 0) pickDsc->amount = 1;
-      pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
-      pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
-      pickDsc->weight = getAttribute<int>(pickableNode, "weight");
-      pickDsc->price = getAttribute<int>(pickableNode, "price");
-      pickDsc->uses = getAttribute<int>(pickableNode, "uses");
-      pickDsc->range = getAttribute<int>(pickableNode, "range");
-      pickDsc->radius = getAttribute<int>(pickableNode, "radius");
-      pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
-
-      pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
+      if ( attributeExists( pickableNode, "scriptId") )   pickDsc->scriptId = getAttribute<int>(pickableNode, "scriptId");
+      if ( attributeExists( pickableNode, "stackable") )  pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
+      if ( attributeExists( pickableNode, "amount") )     pickDsc->amount = getAttribute<int>(pickableNode, "amount");
+      if ( attributeExists( pickableNode, "itemSlot") )   pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
+      if ( attributeExists( pickableNode, "armorClass") ) pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
+      if ( attributeExists( pickableNode, "weight") )     pickDsc->weight = getAttribute<int>(pickableNode, "weight");
+      if ( attributeExists( pickableNode, "price") )      pickDsc->price = getAttribute<int>(pickableNode, "price");
+      if ( attributeExists( pickableNode, "uses") )       pickDsc->uses = getAttribute<int>(pickableNode, "uses");
+      if ( attributeExists( pickableNode, "range") )      pickDsc->range = getAttribute<int>(pickableNode, "range");
+      if ( attributeExists( pickableNode, "radius") )     pickDsc->radius = getAttribute<int>(pickableNode, "radius");
+      if ( attributeExists( pickableNode, "targetType") ) pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
+      if ( attributeExists( pickableNode, "damage") )     pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
 
       ItemType t;
       if ( attributeExists(pickableNode, "armorType") )
@@ -193,22 +192,23 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
 
     if ( dsc && characterNode )
     {
-      dsc->level = getAttribute<int>(characterNode, "level");
-      dsc->hitPoints = getAttribute<int>(characterNode, "hitPoints");
-      dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
-      dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
-      dsc->cClass = (CharacterClassType)getAttribute<int>(characterNode, "class");
-      dsc->race = (RaceType)getAttribute<int>(characterNode, "race");
-      dsc->experience = getAttribute<int>(characterNode, "experience");
-      dsc->speed = getAttribute<int>(characterNode, "speed");
-      dsc->team = (relations::Team)getAttribute<int>(characterNode, "team");
-      dsc->morale = getAttribute<int>(characterNode, "morale");
-      dsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );
+      if ( attributeExists(characterNode, "level") )        dsc->level = getAttribute<int>(characterNode, "level");
+      if ( attributeExists(characterNode, "hitPoints") )    dsc->hitPoints = getAttribute<int>(characterNode, "hitPoints");
+      if ( attributeExists(characterNode, "maxHitPoints") ) dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
+      if ( attributeExists(characterNode, "armorClass") )   dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
+      if ( attributeExists(characterNode, "class") )        dsc->cClass = (CharacterClassType)getAttribute<int>(characterNode, "class");
+      if ( attributeExists(characterNode, "race") )         dsc->race = (RaceType)getAttribute<int>(characterNode, "race");
+      if ( attributeExists(characterNode, "experience") )   dsc->experience = getAttribute<int>(characterNode, "experience");
+      if ( attributeExists(characterNode, "speed") )        dsc->speed = getAttribute<int>(characterNode, "speed");
+      if ( attributeExists(characterNode, "team") )         dsc->team = (relations::Team)getAttribute<int>(characterNode, "team");
+      if ( attributeExists(characterNode, "morale") )       dsc->morale = getAttribute<int>(characterNode, "morale");
+      if ( attributeExists(characterNode, "damage") )       dsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );
 
       //Parse Spellbook
       xml_node<>* spellbookNode = characterNode->first_node("Spellbook");
       if ( spellbookNode )
       {
+        SpellbookDescription spellbook;
         xml_node<>* slotsNode = spellbookNode->first_node("Slots");
         if ( slotsNode )
         {
@@ -219,7 +219,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
             slot.level = getAttribute<int>(slotNode, "level");
             slot.prepared = getAttribute<bool>(slotNode, "prepared");
             slot.spell = getAttribute<int>(slotNode, "spell");
-            dsc->spellbook.spellSlots.push_back(slot);
+            spellbook.spellSlots.push_back(slot);
             slotNode = slotNode->next_sibling();
           }
         }
@@ -229,10 +229,12 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
           xml_node<>* kNode = knownNode->first_node("Spell");
           while( kNode )
           {
-            dsc->spellbook.knownSpells.push_back( getAttribute<int>(kNode, "id") );
+            spellbook.knownSpells.push_back( getAttribute<int>(kNode, "id") );
             kNode = kNode->next_sibling();
           }
         }
+
+        dsc->spellbook = spellbook;
       }
 
       //Parse skills
@@ -271,7 +273,10 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       {
         for ( AbilityScore::Type as : AbilityScore::Type() )
         {
-          dsc->abilityScores[as] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
+          if ( attributeExists(attrNode, AbilityScore::toStr(as)))
+          {
+            dsc->abilityScores[as] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
+          }
         }
       }
 
@@ -301,7 +306,7 @@ AiDescriptionPtr ActorParser::parseAiDsc()
 
     if ( aiNode )
     {
-      aiDsc->script = getAttribute<int>(aiNode, "script");
+      if (attributeExists(aiNode, "script") ) aiDsc->script = getAttribute<int>(aiNode, "script");
     }
   }
 
@@ -318,11 +323,11 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
     if ( openableNode )
     {
       opDsc.reset( new OpenableDescription );
-      opDsc->lockId = getAttribute<int>(openableNode, "lockId");
-      opDsc->locked = getAttribute<bool>(openableNode, "locked");
-      opDsc->lockLevel = getAttribute<int>(openableNode, "lockLevel");
-      opDsc->scriptId = getAttribute<int>(openableNode, "scriptId");
-      opDsc->closed = getAttribute<bool>(openableNode, "closed");
+      if (attributeExists(openableNode,"lockId"))    opDsc->lockId = getAttribute<int>(openableNode, "lockId");
+      if (attributeExists(openableNode,"locked"))    opDsc->locked = getAttribute<bool>(openableNode, "locked");
+      if (attributeExists(openableNode,"lockLevel")) opDsc->lockLevel = getAttribute<int>(openableNode, "lockLevel");
+      if (attributeExists(openableNode,"scriptId"))  opDsc->scriptId = getAttribute<int>(openableNode, "scriptId");
+      if (attributeExists(openableNode,"closed"))    opDsc->closed = getAttribute<bool>(openableNode, "closed");
     }
   }
 
@@ -404,10 +409,10 @@ TrapDescriptionPtr ActorParser::parseTrapDsc()
     if (trapNode != nullptr)
     {
       tDsc.reset( new TrapDescription );
-      tDsc->armed = getAttribute<bool>( trapNode, "armed" );
-      tDsc->detected = getAttribute<bool>( trapNode, "detected" );
-      tDsc->difficulty = getAttribute<int>( trapNode, "difficulty" );
-      tDsc->id = getAttribute<int>( trapNode, "id" );
+      if ( attributeExists(trapNode,"armed") )      tDsc->armed = getAttribute<bool>( trapNode, "armed" );
+      if ( attributeExists(trapNode,"detected") )   tDsc->detected = getAttribute<bool>( trapNode, "detected" );
+      if ( attributeExists(trapNode,"difficulty") ) tDsc->difficulty = getAttribute<int>( trapNode, "difficulty" );
+      if ( attributeExists(trapNode,"id") )         tDsc->id = getAttribute<int>( trapNode, "id" );
     }
   }
 
@@ -424,10 +429,10 @@ TalkerDescriptionPtr ActorParser::parseTalkerDsc()
     if (tNode != nullptr)
     {
       tDsc.reset( new TalkerDescription );
-      tDsc->id = getAttribute<int>( tNode, "id" );
+      if ( attributeExists(tNode,"id") ) tDsc->id = getAttribute<int>( tNode, "id" );
 
       DialogParser parser;
-      tDsc->dialogs = parser.parse( tDsc->id );
+      tDsc->dialogs = parser.parse( *tDsc->id );
     }
   }
 

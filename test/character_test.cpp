@@ -83,7 +83,7 @@ TEST_F(CharacterTest, carryingLoad)
 
   //ziomek should have heavy load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Heavy );
-  ASSERT_EQ( pc_ch->getSpeed(), dsc->speed - 10 );
+  ASSERT_EQ( pc_ch->getSpeed(), *dsc->speed - 10 );
 
 }
 

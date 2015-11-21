@@ -9,51 +9,45 @@ namespace amarlon {
 
 const ActorFeature::Type Wearer::featureType = ActorFeature::WEARER;
 
-Wearer::Wearer()
+Wearer::Wearer(DescriptionPtr dsc)
   : _equippedItems( new ActorContainer )
 {
+  upgrade(dsc);
+  if ( _equippedItems ) assignItemsToSlots();
 }
 
 WearerPtr Wearer::create(DescriptionPtr dsc)
 {
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */  
-  WearerPtr w = nullptr;
-  WearerDescriptionPtr wearerDsc = std::dynamic_pointer_cast<WearerDescription>(dsc);
+  return WearerPtr(new Wearer(dsc));
+}
 
+void Wearer::upgrade(DescriptionPtr dsc)
+{
+  WearerDescriptionPtr wearerDsc = std::dynamic_pointer_cast<WearerDescription>(dsc);
   if ( wearerDsc != nullptr )
   {
-    w.reset( new Wearer );
-
-    std::for_each(wearerDsc->itemSlots.begin(), wearerDsc->itemSlots.end(), [&](ItemSlotType slot)
+    for ( auto slot : wearerDsc->itemSlots )
     {
-      w->_itemSlots[slot] = nullptr;
-    });
+      _itemSlots.insert( std::make_pair(slot, nullptr) );
+    }
 
     for ( auto aDsc : wearerDsc->eqItems )
     {
-      w->_equippedItems->push_back( Actor::create(aDsc) );
+      _equippedItems->push_back( Actor::create(aDsc) );
     }
-
-    if ( w->_equippedItems )
-    {
-      assignItemsToSlots( w );
-    }
-
   };
-
-  return w;
 }
 
-void Wearer::assignItemsToSlots(WearerPtr wearer)
+void Wearer::assignItemsToSlots()
 {
-  std::vector<ActorPtr> toEquip = wearer->_equippedItems->toVector();
-  std::for_each(toEquip.begin(), toEquip.end(), [&](ActorPtr a)
+  for ( ActorPtr a : _equippedItems->toVector() )
   {
-    if ( a && a->hasFeature<Pickable>())
+    PickablePtr pickable = a ? a->getFeature<Pickable>() : nullptr;
+    if ( pickable && hasSlot( pickable->getItemSlot() ))
     {
-      wearer->_itemSlots[ a->getFeature<Pickable>()->getItemSlot() ] = a;
+      _itemSlots[ pickable->getItemSlot() ] = a;
     }
-  });
+  }
 }
 
 ActorFeaturePtr Wearer::clone()
@@ -66,7 +60,7 @@ ActorFeaturePtr Wearer::clone()
   }
 
   cloned->_equippedItems = _equippedItems->clone();
-  assignItemsToSlots(cloned);
+  cloned->assignItemsToSlots();
 
   return cloned;
 }

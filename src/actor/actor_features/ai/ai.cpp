@@ -16,17 +16,21 @@ namespace amarlon {
 
 const ActorFeature::Type Ai::featureType = ActorFeature::AI;
 
-Ai::Ai()
-  : Ai(nullptr)
-{
-}
-
-Ai::Ai(DescriptionPtr /*dsc*/)
+Ai::Ai(DescriptionPtr dsc)
   : _fsm( new FSM(this) )
   , _scriptId(0)
   , _trackCount(0)
   , _type(AiType::Null)
 {
+  upgrade(dsc);
+  if ( getAiType() == AiType::PlayerAi )
+  {
+    changeState( FSMStateType::PLAYER_CONTROLLED );
+  }
+  else
+  {
+    changeState( FSMStateType::IDLE );
+  }
 }
 
 AiType Ai::getAiType() const
@@ -34,28 +38,19 @@ AiType Ai::getAiType() const
   return _type;
 }
 
-AiPtr Ai::create(DescriptionPtr dsc)
+void Ai::upgrade(DescriptionPtr dsc)
 {
-  AiPtr ai;
-
   AiDescriptionPtr aDsc = std::dynamic_pointer_cast<AiDescription>(dsc);
   if ( aDsc )
   {
-    ai.reset( new Ai );
-    ai->_scriptId = aDsc->script;
-    ai->_type = aDsc->type;
-
-    if ( ai->getAiType() == AiType::PlayerAi )
-    {
-      ai->changeState( FSMStateType::PLAYER_CONTROLLED );
-    }
-    else
-    {
-      ai->changeState( FSMStateType::IDLE );
-    }
+    if ( aDsc->script )_scriptId = *aDsc->script;
+    if ( aDsc->type )   _type    = *aDsc->type;
   }
+}
 
-  return ai;
+AiPtr Ai::create(DescriptionPtr dsc)
+{
+  return AiPtr( new Ai(dsc) );
 }
 
 bool Ai::isEqual(ActorFeaturePtr rhs) const

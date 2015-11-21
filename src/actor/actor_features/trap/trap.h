@@ -19,10 +19,11 @@ class Trap : public ActorFeature
 public:
   const static ActorFeature::Type featureType;
 
-  Trap();
+  Trap(DescriptionPtr dsc = nullptr);
   virtual ~Trap();
 
   static TrapPtr create(DescriptionPtr dsc);
+  virtual void upgrade(DescriptionPtr dsc);
 
   virtual ActorFeature::Type getType();
   virtual TrapId getId() const;

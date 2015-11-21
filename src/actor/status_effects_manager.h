@@ -11,8 +11,12 @@
 namespace amarlon {
 
 class Actor;
+class Skill;
+class Spell;
 class StatusEffectsManager;
 class StatusEffect;
+typedef std::shared_ptr<Skill> SkillPtr;
+typedef std::shared_ptr<Spell> SpellPtr;
 typedef std::shared_ptr<StatusEffectsManager> StatusEffectsManagerPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::weak_ptr<Actor> ActorWPtr;
@@ -22,11 +26,14 @@ class StatusEffectsManager
 {
 public:
   StatusEffectsManager(ActorPtr owner = nullptr);
+  ~StatusEffectsManager();
   StatusEffectsManagerPtr clone();
 
   bool add(StatusEffectPtr effect);
-  void remove(StatusEffectPtr effect);
-  void remove(const std::string &name);
+  void remove(StatusEffectPtr effect, bool notify = true);
+  void remove(const std::string &name, bool notify = true);
+  void remove(std::function<bool(StatusEffectPtr)> cmp,
+              bool notify = true);
   void removeAll();
   void tick(int time = 1);
 

@@ -4,6 +4,7 @@
 #include <description.h>
 #include <actor_type.h>
 #include <vector>
+#include <experimental/optional>
 
 namespace amarlon {
 
@@ -12,9 +13,7 @@ typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 
 struct InventoryDescription : Description
 {
-  InventoryDescription() : maxSize(0) {}
-
-  size_t maxSize;
+  std::experimental::optional<size_t> maxSize;
   std::vector<ActorDescriptionPtr> content;
 };
 

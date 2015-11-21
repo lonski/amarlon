@@ -10,11 +10,12 @@ namespace amarlon {
 
 const ActorFeature::Type Inventory::featureType = ActorFeature::INVENTORY;
 
-Inventory::Inventory(size_t maxSize)
+Inventory::Inventory(DescriptionPtr dsc)
   : _items( new ActorContainer )
-  , _slotCount(maxSize)
+  , _slotCount(0)
   , _pushToFront(false)
 {
+  upgrade(dsc);
 }
 
 Inventory::~Inventory()
@@ -22,32 +23,30 @@ Inventory::~Inventory()
 }
 
 InventoryPtr Inventory::create(DescriptionPtr dsc)
-{  
-  /* REMEBER TO UPDATE CLONE, WHEN ADDING NEW ELEMENTS */
-  InventoryPtr cont;
-  InventoryDescriptionPtr contDsc = std::dynamic_pointer_cast<InventoryDescription>(dsc);
+{
+  return InventoryPtr( new Inventory(dsc) );
+}
 
+void Inventory::upgrade(DescriptionPtr dsc)
+{
+  InventoryDescriptionPtr contDsc = std::dynamic_pointer_cast<InventoryDescription>(dsc);
   if ( contDsc != nullptr )
   {
-    cont.reset( new Inventory(contDsc->maxSize) );
-
+    if ( contDsc->maxSize ) setSlotCount( *contDsc->maxSize );
     std::for_each(contDsc->content.begin(), contDsc->content.end(), [&](ActorDescriptionPtr aDsc)
     {
       if ( aDsc )
       {
-        ActorPtr a = Actor::create(aDsc->id);
-        a->deserialize( aDsc );
-        cont->add( a );
+        add( Actor::create(aDsc, true) );
       }
     });
   }
-
-  return cont;
 }
 
 ActorFeaturePtr Inventory::clone()
 {
-  InventoryPtr cloned( new Inventory( _slotCount ) );
+  InventoryPtr cloned( new Inventory );
+  cloned->_slotCount = _slotCount;
   cloned->_items = _items->clone();
 
   return cloned;

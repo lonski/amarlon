@@ -7,39 +7,26 @@
 #include <item_slot_type.h>
 #include <description.h>
 #include <item_type.h>
+#include <experimental/optional>
 
 namespace amarlon {
 
 struct PickableDescription : Description
 {
-  PickableDescription()
-    : stackable(false)
-    , amount(1)
-    , uses(0)
-    , itemSlot(ItemSlotType::Null)
-    , armorClass(0)
-    , weight(0)
-    , price(0)
-    , targetType(TargetType::SINGLE_NEIGHBOUR)
-    , scriptId(0)
-    , range(0)
-    , radius(0)
-  {}
+  std::experimental::optional<bool> stackable;
+  std::experimental::optional<int> amount;
+  std::experimental::optional<int> uses;
+  std::experimental::optional<ItemSlotType> itemSlot;
+  std::experimental::optional<int> armorClass;
+  std::experimental::optional<int> weight;
+  std::experimental::optional<int> price;
+  std::experimental::optional<TargetType> targetType;
+  std::experimental::optional<Damage> damage;
+  std::experimental::optional<int> scriptId;
+  std::experimental::optional<int> range;
+  std::experimental::optional<int> radius;
 
-  bool stackable;
-  int amount;
-  int uses;
-
-  ItemSlotType itemSlot;
-  int armorClass;
-  int weight;
-  int price;
-  TargetType targetType;
-  Damage damage;
-  int scriptId;
   ItemType type;
-  int range;
-  int radius;
 };
 
 struct ScrollDescription : PickableDescription

@@ -9,8 +9,9 @@ namespace amarlon {
 
 const ActorFeature::Type Destroyable::featureType = ActorFeature::DESTROYABLE;
 
-Destroyable::Destroyable()
+Destroyable::Destroyable(DescriptionPtr dsc)
 {
+  upgrade(dsc);
 }
 
 Destroyable::~Destroyable()
@@ -19,15 +20,16 @@ Destroyable::~Destroyable()
 
 DestroyablePtr Destroyable::create(DescriptionPtr dsc)
 {
-  DestroyablePtr destroyable(new Destroyable);
+  return DestroyablePtr( new Destroyable(dsc) );
+}
 
+void Destroyable::upgrade(DescriptionPtr dsc)
+{
   DestroyableDescriptionPtr destrDsc = std::dynamic_pointer_cast<DestroyableDescription>( dsc );
   if ( destrDsc )
   {
-    destroyable->_dropRules = destrDsc->dropRules;
+    _dropRules.insert(_dropRules.end(), destrDsc->dropRules.begin(), destrDsc->dropRules.end());
   }
-
-  return destroyable;
 }
 
 ActorFeaturePtr Destroyable::clone()

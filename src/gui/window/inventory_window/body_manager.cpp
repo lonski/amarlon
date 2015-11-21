@@ -42,10 +42,20 @@ void BodyManager::manage()
       ActorPtr toEquip = chooseItemToEquip(slot);
       if ( toEquip && equipItem(toEquip) )
       {
-        item->setValue( toEquip->getName() );
+        item->setValue( getSlotValueForItem(toEquip) );
       }
     }
   }
+}
+
+std::string BodyManager::getSlotValueForItem(ActorPtr item)
+{
+  std::string itemName = item->getName();
+  PickablePtr pickable = item->getFeature<Pickable>();
+  if ( pickable && pickable->getAmount() > 1 )
+    itemName += " [" + toStr(pickable->getAmount()) + "]";
+
+  return itemName;
 }
 
 void BodyManager::fillBodySlots()
@@ -67,11 +77,7 @@ void BodyManager::fillBodySlots()
 
         if ( eItem )
         {
-          std::string itemName = eItem->getName();
-          PickablePtr pickable = eItem->getFeature<Pickable>();
-          if ( pickable && pickable->getAmount() > 1 )
-            itemName += " [" + toStr(pickable->getAmount()) + "]";
-          slotMenuItem->setValue( itemName );
+          slotMenuItem->setValue( getSlotValueForItem(eItem) );
         }
         else
         {

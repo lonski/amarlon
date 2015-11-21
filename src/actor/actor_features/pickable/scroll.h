@@ -12,8 +12,7 @@ typedef std::shared_ptr<Spell> SpellPtr;
 class Scroll : public Pickable
 {
 public:
-  Scroll(bool stackable = true, int amount = 1);
-  Scroll(DescriptionPtr dsc);
+  Scroll(DescriptionPtr dsc = nullptr);
   virtual ~Scroll();
 
   virtual ActorFeaturePtr clone();

@@ -50,8 +50,11 @@ TEST_F(ActorTest, actorEqual_different_container)
   std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
   std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
 
-  InventoryPtr c1( new Inventory(10) );
-  InventoryPtr c2( new Inventory(10) );
+  InventoryDescriptionPtr iDsc(new InventoryDescription);
+  iDsc->maxSize = 10;
+
+  InventoryPtr c1( new Inventory(iDsc) );
+  InventoryPtr c2( new Inventory(iDsc) );
 
   a1->insertFeature(c1);
   a2->insertFeature(c2);
