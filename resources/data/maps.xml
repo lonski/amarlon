@@ -8,6 +8,7 @@
 		</OnExit>
 		<Actors>
 			<Actor id="2" x="45" y="18"/>
+			<Actor id="35" x="35" y="40"/>
 			<Actor id="25" x="38" y="20">
 				<Destroyable>
 					<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>

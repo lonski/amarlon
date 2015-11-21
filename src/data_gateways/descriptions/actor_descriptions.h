@@ -31,6 +31,7 @@ struct ActorDescription : Description
   {}
 
   ActorType id;
+  std::experimental::optional<ActorType> prototype;
   std::experimental::optional<int> x;
   std::experimental::optional<int> y;
   std::experimental::optional<std::string> name;

@@ -26,6 +26,17 @@ ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
   return actor;
 }
 
+ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
+{
+  ActorPtr actor;
+  if ( dsc )
+  {
+    actor = prototyped ? create(dsc->id) : ActorPtr(new Actor);
+    actor->upgrade(dsc);
+  }
+  return actor;
+}
+
 void Actor::applyPassiveSkills()
 {
   CharacterPtr c = getFeature<Character>();
@@ -42,17 +53,6 @@ void Actor::applyPassiveSkills()
       s->use( shared_from_this(), Target(shared_from_this()) );
     }
   }
-}
-
-ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
-{
-  ActorPtr actor;
-  if ( dsc )
-  {
-    actor = prototyped ? create(dsc->id) : ActorPtr(new Actor);
-    actor->upgrade(dsc);
-  }
-  return actor;
 }
 
 void Actor::upgrade(ActorDescriptionPtr dsc)

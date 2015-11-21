@@ -103,6 +103,8 @@ public:
   virtual void setTeam(relations::Team team);
   void turnHostileTo(ActorPtr attacker);
 
+  virtual std::string debug();
+
 protected:
   virtual void setLevel(int level);
   virtual void setMaxHitPoints(int maxHp);

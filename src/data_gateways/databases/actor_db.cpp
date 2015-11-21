@@ -23,7 +23,15 @@ ActorPtr ActorDB::fetch(ActorType type)
   auto it = std::find_if(_descriptions.begin(), _descriptions.end(), [type](ActorDescriptionPtr a){ return a->id == type; });
   if (it != _descriptions.end())
   {
-    actor = Actor::create(*it, false);
+    if ( (*it)->prototype )
+    {
+      actor = Actor::create(*(*it)->prototype);
+      actor->upgrade(*it);
+    }
+    else
+    {
+      actor = Actor::create(*it, false);
+    }
   }
 
   return actor;

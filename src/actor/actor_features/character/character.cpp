@@ -226,6 +226,25 @@ void Character::turnHostileTo(ActorPtr attacker)
   }
 }
 
+std::string Character::debug()
+{
+  std::string d = "-----CHARACTER-----\n";
+
+  d += "Level = " + toStr(_level);
+  d += "HP = " + toStr(_hitPoints) + "/" + toStr(_maxHitPoints);
+  d += "Base AC = " + toStr(_defaultArmorClass);
+  d += "Experience = " + toStr(_experience);
+  d += "Speed = " + toStr(getSpeed());
+  d += "Team = " + toStr((int)_team);
+  d += "Morale = " + toStr(_morale);
+  for ( auto& kv : _abilityScores )
+  {
+    d += AbilityScore::toStr(kv.first) + " = " + toStr(kv.second);
+  }
+  d.append("----------------\n");
+  return d;
+}
+
 int Character::takeDamage(Damage dmg, ActorPtr attacker)
 {
   turnHostileTo(attacker);
