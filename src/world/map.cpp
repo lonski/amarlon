@@ -7,6 +7,8 @@
 #include <libtcod.hpp>
 #include <tile.h>
 #include <actor_container.h>
+#include <map_description.h>
+#include <teleport_action.h>
 
 namespace amarlon {
 
@@ -16,12 +18,48 @@ Map::Map(u32 width, u32 height, MapId id)
   : _id(id)
   , _width(width)
   , _height(height)
-  , _codMap(width, height)
+  , _codMap( new TCODMap(width, height) )
 {
-  for (u32 y = 0; y < height; ++y)
+  allocateTiles();
+}
+
+void Map::deserialize(MapDescriptionPtr dsc)
+{
+  if( dsc )
+  {
+    _id = static_cast<MapId>(dsc->id);
+    _width = static_cast<u32>(dsc->width);
+    _height = static_cast<u32>(dsc->height);
+    _codMap.reset( new TCODMap(_width, _height) );
+
+    allocateTiles();
+    if ( !dsc->binaryTiles.empty() )
+    {
+      deserializeTiles( {dsc->binaryTiles.begin(), dsc->binaryTiles.end()} );
+
+      for ( ActorDescriptionPtr aDsc : dsc->actors )
+      {
+        addActor( Actor::create(aDsc) );
+      }
+
+      for ( MapActionDescriptionPtr acDsc : dsc->actions )
+      {
+        _exitActions[ static_cast<Direction>(acDsc->direction) ]
+            = std::make_shared<TeleportAction>( static_cast<MapId>(acDsc->teleport_MapId),
+                                               acDsc->teleport_x,
+                                               acDsc->teleport_y);
+      }
+    }
+  }
+}
+
+void Map::allocateTiles()
+{
+  _tiles.clear();
+  for (u32 y = 0; y < _height; ++y)
   {
     TileRow row;
-    for(u32 x = 0; x < width; ++x)
+    for(u32 x = 0; x < _width; ++x)
     {
       row.push_back(Tile());
     }
@@ -45,7 +83,7 @@ bool Map::isExplored(const Point &p)
 
 bool Map::isInFov(int x, int y)
 {
-  bool inFov = _codMap.isInFov(x,y);
+  bool inFov = _codMap->isInFov(x,y);
 
   if (inFov) getTile(x,y).setExplored(true);
 
@@ -61,7 +99,7 @@ bool Map::isBlocked(int x, int y)
 {
   ActorPtr actor = getTile(x,y).top();
   bool actorBlocks = actor ? actor->isBlocking() : false;
-  return !_codMap.isWalkable(x,y) || actorBlocks;
+  return !_codMap->isWalkable(x,y) || actorBlocks;
 }
 
 bool Map::isBlocked(const Point &p)
@@ -71,7 +109,7 @@ bool Map::isBlocked(const Point &p)
 
 bool Map::isTransparent(int x, int y) const
 {
-  return _codMap.isTransparent(x,y);
+  return _codMap->isTransparent(x,y);
 }
 
 bool Map::isTransparent(const Point &p) const
@@ -213,17 +251,17 @@ void Map::updateTile(u32 x, u32 y)
   bool walkable    = tile.isWalkable();
   bool transparent = actor ? actor->isTransparent(): tile.isTransparent();
 
-  _codMap.setProperties( x, y, transparent, walkable );
+  _codMap->setProperties( x, y, transparent, walkable );
 }
 
 void Map::computeFov(int x, int y, int radius)
 {
-  _codMap.computeFov(x,y,radius);
+  _codMap->computeFov(x,y,radius);
 }
 
 TCODMap& Map::getCODMap()
 {
-  return _codMap;
+  return *_codMap;
 }
 
 void Map::deserializeTiles(std::vector<unsigned char> tiles)

@@ -4,8 +4,7 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QKeyEvent>
-#include "actor/actor_type.h"
-#include "data_gateways/map_gateway.h"
+#include <memory>
 
 namespace Ui {
 class MapEditor;
@@ -13,13 +12,19 @@ class MapEditor;
 
 class QTableWidgetItem;
 
+
+struct MapData
+{
+
+};
+
 struct ActorData
 {
-  amarlon::ActorType id;
+  int id;
   int x;
   int y;
 
-  ActorData(amarlon::ActorType id = amarlon::ActorType::Null, int x = 0, int y = 0)
+  ActorData(int id = 0, int x = 0, int y = 0)
     : id(id)
     , x(x)
     , y(y)
@@ -47,7 +52,7 @@ private slots:
   void on_aList_itemClicked(QListWidgetItem *item);
 
 private:
-  std::shared_ptr<amarlon::Map> currentMap;
+  std::shared_ptr< MapData > currentMap;
   std::vector< ActorData > _actors;
   Ui::MapEditor *ui;
   int cols;

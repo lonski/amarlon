@@ -21,68 +21,57 @@ MapParser::MapParser(rapidxml::xml_node<> *xmlNode)
 {
 }
 
-MapPtr MapParser::parse()
+MapDescriptionPtr MapParser::parseDescription()
 {
-  _map.reset();
-
+  MapDescriptionPtr mDsc;
   if ( _xml )
   {
-    int x = getAttribute<int>(_xml, "width");
-    int y = getAttribute<int>(_xml, "height");
-    MapId id = static_cast<MapId>(getAttribute<int>(_xml, "id"));
+    mDsc.reset( new MapDescription );
+
+    mDsc->width = getAttribute<int>(_xml, "width");
+    mDsc->height = getAttribute<int>(_xml, "height");
+    mDsc->id = getAttribute<int>(_xml, "id");
     std::string tilesInStr = getNodeValue<std::string>( _xml->first_node("Tiles") );
+    if ( !tilesInStr.empty()) mDsc->binaryTiles = base64_decode( tilesInStr );
 
-    if ( !tilesInStr.empty())
+    //Parse Actors
+    rapidxml::xml_node<>* actorsRoot = _xml->first_node("Actors");
+    if (actorsRoot != nullptr)
     {
-      _map.reset( new Map(x, y, id) );
-      std::string decoded_tiles = base64_decode( tilesInStr );
-      _map->deserializeTiles( std::vector<unsigned char>{decoded_tiles.begin(), decoded_tiles.end()} );
-
-      parseActors();
-    }
-
-    parseActions();
-  }
-  _map->updateTiles();
-  return _map;
-}
-
-void MapParser::parseActions()
-{
-  rapidxml::xml_node<>* onExitNode = _xml->first_node("OnExit");
-  if ( onExitNode != nullptr )
-  {
-    rapidxml::xml_node<>* directionNode = onExitNode->first_node("Direction");
-    while ( directionNode != nullptr )
-    {
-      Direction dir = static_cast<Direction>( getAttribute<int>(directionNode, "id") );
-      rapidxml::xml_node<>* teleportNode = directionNode->first_node("Teleport");
-      if ( teleportNode != nullptr )
+      rapidxml::xml_node<>* actorNode = actorsRoot->first_node("Actor");
+      while ( actorNode != nullptr )
       {
-        MapId mapId = static_cast<MapId>( getAttribute<int>(teleportNode, "mapId") );
-        int x = getAttribute<int>(teleportNode, "x");
-        int y = getAttribute<int>(teleportNode, "y");
-        _map->_exitActions[dir] = std::make_shared<TeleportAction>(mapId, x, y);
+        _actorParser->setSource( actorNode );
+        mDsc->actors.push_back( _actorParser->parseDescription() );
+        actorNode = actorNode->next_sibling();
       }
-
-      directionNode = directionNode->next_sibling();
     }
-  }
-}
 
-void MapParser::parseActors()
-{
-  rapidxml::xml_node<>* actorsRoot = _xml->first_node("Actors");
-  if (actorsRoot != nullptr)
-  {
-    rapidxml::xml_node<>* actorNode = actorsRoot->first_node("Actor");
-    while ( actorNode != nullptr )
+    //Parse Actions
+    rapidxml::xml_node<>* onExitNode = _xml->first_node("OnExit");
+    if ( onExitNode != nullptr )
     {
-      _actorParser->setSource( actorNode );
-      _map->addActor( Actor::create(_actorParser->parseDescription()) );
-      actorNode = actorNode->next_sibling();
+      rapidxml::xml_node<>* directionNode = onExitNode->first_node("Direction");
+      while ( directionNode != nullptr )
+      {
+        MapActionDescriptionPtr aDsc(new MapActionDescription);
+        aDsc->direction = getAttribute<int>(directionNode, "id");
+
+        rapidxml::xml_node<>* teleportNode = directionNode->first_node("Teleport");
+        if ( teleportNode != nullptr )
+        {
+          aDsc->teleport_MapId = getAttribute<int>(teleportNode, "mapId");
+          aDsc->teleport_x = getAttribute<int>(teleportNode, "x");
+          aDsc->teleport_y = getAttribute<int>(teleportNode, "y");
+          mDsc->actions.push_back( aDsc );
+        }
+
+        directionNode = directionNode->next_sibling();
+      }
     }
+
   }
+  return mDsc;
 }
 
 }

@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <data_gateways/parsers/parser.h>
+#include <map_description.h>
 
 namespace amarlon {
 
@@ -19,14 +20,10 @@ public:
   MapParser();
   MapParser(rapidxml::xml_node<>* xmlNode);
 
-  MapPtr parse();
+  MapDescriptionPtr parseDescription();
 
 private:
   ActorParserPtr _actorParser;
-  MapPtr _map;
-
-  void parseActors();
-  void parseActions();
 
 };
 

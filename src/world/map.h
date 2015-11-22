@@ -19,7 +19,9 @@ class Actor;
 class ActorAction;
 class Map;
 struct Tile;
+struct MapDescription;
 
+typedef std::shared_ptr<MapDescription> MapDescriptionPtr;
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::shared_ptr<Map> MapPtr;
@@ -32,7 +34,9 @@ public:
   typedef std::vector< std::vector<Tile> > TileMatrix;
   typedef std::vector<Tile> TileRow;
 
-  Map(u32 width, u32 height, MapId id = MapId::Null);
+  Map(u32 width = 100, u32 height = 60, MapId id = MapId::Null);
+  virtual void deserializeTiles(std::vector<unsigned char> tiles);
+  std::vector<unsigned char> serializeTiles();
   virtual ~Map();
 
   virtual MapPtr clone();
@@ -63,8 +67,6 @@ public:
 
   virtual void computeFov(int x, int y, int radius);
   virtual TCODMap& getCODMap();
-  virtual void deserializeTiles(std::vector<unsigned char> tiles);
-  std::vector<unsigned char> serializeTiles();
 
   virtual TCODColor getColor(u32 x, u32 y);
   virtual char getChar(u32 x, u32 y);
@@ -80,17 +82,19 @@ public:
 
   friend class MapParser;
 
+  void deserialize(MapDescriptionPtr dsc);
 private:
   MapId _id;
   u32 _width, _height;
   TileMatrix _tiles;
-  TCODMap _codMap;
+  std::shared_ptr<TCODMap> _codMap;
   std::map<Direction, ActorActionPtr> _exitActions;
 
   Tile& getTile(u32 x, u32 y);
   void dateMapCoords(u32 x, u32 y);
   void renderTile(u32 x, u32 y, TCODConsole *console);
   void validateMapCoords(u32 x, u32 y);
+  void allocateTiles();
 
 };
 

@@ -93,6 +93,7 @@ set(HEADER_FILES
     data_gateways/descriptions/actor_feature_descriptions/trap_description.h
     data_gateways/descriptions/actor_feature_descriptions/talker_description.h
     data_gateways/descriptions/description.h
+    data_gateways/descriptions/map_description.h
     data_gateways/databases/map_db.h
     data_gateways/databases/actor_db.h
     data_gateways/databases/tile_db.h

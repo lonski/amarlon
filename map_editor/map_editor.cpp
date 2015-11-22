@@ -7,11 +7,8 @@
 #include <QDebug>
 #include "ui_map_editor.h"
 #include "xml/rapidxml_print.hpp"
-#include "world/map.h"
-#include "actor/actor.h"
 
 using namespace rapidxml;
-using namespace amarlon;
 
 MapEditor::MapEditor(QWidget *parent)
   : QMainWindow(parent)
@@ -167,47 +164,47 @@ void MapEditor::on_actionLoad_triggered()
 
   _actors.clear();
 
-  Map::Tiles.loadTiles(dir.toStdString() + "/tiles.xml");
-  Map::Gateway.loadMaps(dir.toStdString() + "/maps.xml");
-  Actor::DB.loadActors(dir.toStdString() + "/actors.xml");
+//  Map::Tiles.loadTiles(dir.toStdString() + "/tiles.xml");
+//  Map::Gateway.loadMaps(dir.toStdString() + "/maps.xml");
+//  Actor::DB.loadActors(dir.toStdString() + "/actors.xml");
 
-  ui->aType->clear();
-  for (int aT = (int)ActorType::Null; aT != (int)ActorType::End; ++aT)
-  {
-    ui->aType->addItem( Actor::DB.getName((ActorType)aT).c_str() );
-  }
+//  ui->aType->clear();
+//  for (int aT = (int)ActorType::Null; aT != (int)ActorType::End; ++aT)
+//  {
+//    ui->aType->addItem( Actor::DB.getName((ActorType)aT).c_str() );
+//  }
 
-  currentMap = Map::Gateway.fetch(MapId::GameStart);
+//  currentMap = Map::Gateway.fetch(MapId::GameStart);
 
-  std::string mapStr = currentMap->tilesToStr();
+//  std::string mapStr = currentMap->tilesToStr();
 
-  int y = 0;
-  int x = 0;
-  for (auto it = mapStr.begin(); it != mapStr.end(); ++it)
-  {
-    if (*it == '\n')
-    {
-      ++y;
-      x = 0;
-    }
-    else
-    {
-      ui->map->setItem(y, x, new QTableWidgetItem( QString( *it ) ));
-      ++x;
-    }
-  }
+//  int y = 0;
+//  int x = 0;
+//  for (auto it = mapStr.begin(); it != mapStr.end(); ++it)
+//  {
+//    if (*it == '\n')
+//    {
+//      ++y;
+//      x = 0;
+//    }
+//    else
+//    {
+//      ui->map->setItem(y, x, new QTableWidgetItem( QString( *it ) ));
+//      ++x;
+//    }
+//  }
 
-  std::vector<ActorPtr> actors = currentMap->getActors(nullptr);
-  for ( auto a = actors.begin();
-        a != actors.end();
-        ++a)
-  {
-    ActorPtr cA = *a;
-    _actors.push_back( ActorData(cA->getId(), cA->getX(), cA->getY()) );
+//  std::vector<ActorPtr> actors = currentMap->getActors(nullptr);
+//  for ( auto a = actors.begin();
+//        a != actors.end();
+//        ++a)
+//  {
+//    ActorPtr cA = *a;
+//    _actors.push_back( ActorData(cA->getId(), cA->getX(), cA->getY()) );
 
-    QTableWidgetItem* cMapGridItem = ui->map->item(cA->getY(), cA->getX());
-    cMapGridItem->setBackgroundColor(Qt::red);
-  }
+//    QTableWidgetItem* cMapGridItem = ui->map->item(cA->getY(), cA->getX());
+//    cMapGridItem->setBackgroundColor(Qt::red);
+//  }
 
 }
 
@@ -218,7 +215,7 @@ void MapEditor::on_saveActor_clicked()
     ActorData data;
     data.x = ui->posX->value();
     data.y = ui->posY->value();
-    data.id = (ActorType)ui->aType->currentIndex();
+    data.id = ui->aType->currentIndex();
 
     _actors.push_back(data);
 

@@ -64,7 +64,10 @@ void MapDB::parseMaps(rapidxml::xml_document<>& doc)
   while(mapNode != nullptr)
   {
     _mapParser.setSource( mapNode );
-    MapPtr map = _mapParser.parse();
+
+    MapPtr map( new Map );
+    map->deserialize( _mapParser.parseDescription() );
+
     if ( map ) _maps[ map->getId() ] = map;
 
     mapNode = mapNode->next_sibling();
