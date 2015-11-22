@@ -1,17 +1,15 @@
 #ifndef TILE_DESCRIPTION_H
 #define TILE_DESCRIPTION_H
 
-#include <libtcod.hpp>
 #include <description.h>
-#include <tile_type.h>
 
 namespace amarlon {
 
 struct TileDescription : Description
 {
-  TileType type;
+  int type;
   char character;
-  TCODColor color;
+  std::string color;
   bool walkable;
   bool transparent;
 };

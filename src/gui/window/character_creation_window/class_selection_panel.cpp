@@ -43,7 +43,7 @@ void ClassSelectionPanel::update()
   {
     RacePtr race = Engine::instance().
         getRpgDB().
-        getRace( *_parent->getCharacterDsc()->race );
+        getRace( (RaceType)*_parent->getCharacterDsc()->race );
 
     if ( race )
     {
@@ -126,7 +126,7 @@ void ClassSelectionPanel::setClass()
     PlayableCharacterDescriptionPtr dsc = _parent->getCharacterDsc();
     if ( dsc )
     {
-      dsc->cClass = cClass->getType();
+      dsc->cClass = (int)cClass->getType();
 
       //Add known spells
       dsc->spellbook = SpellbookDescription();

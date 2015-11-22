@@ -21,7 +21,7 @@ AnimationPtr Animation::create(AnimationDescriptionPtr dsc)
 
 AnimationPtr Animation::create(AnimationDescription dsc)
 {
-  AnimationPtr a = create(dsc.type);
+  AnimationPtr a = create( static_cast<animation::Type>(dsc.type) );
 
   if ( a ) a->load( dsc.params );
 

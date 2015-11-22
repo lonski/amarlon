@@ -22,13 +22,13 @@ void Pickable::upgrade(DescriptionPtr dsc)
   {
     if (pDsc->stackable)  _stackable  = *(pDsc->stackable);
     if (pDsc->amount)     _amount     = *(pDsc->amount);
-    if (pDsc->itemSlot)   _itemSlot   = *(pDsc->itemSlot);
+    if (pDsc->itemSlot)   _itemSlot   = (ItemSlotType)(*pDsc->itemSlot);
     if (pDsc->armorClass) _armorClass = *(pDsc->armorClass);
     if (pDsc->weight)     _weight     = *(pDsc->weight);
     if (pDsc->price)      _price      = *(pDsc->price);
     if (pDsc->damage)     _damage     = *(pDsc->damage);
     if (pDsc->uses)       _usesCount  = *(pDsc->uses);
-    if (pDsc->targetType) _targetType = *(pDsc->targetType);
+    if (pDsc->targetType) _targetType = (TargetType)(*pDsc->targetType);
     if (pDsc->scriptId)   _scriptId   = *(pDsc->scriptId);
     if (pDsc->range)      _range      = *(pDsc->range);
     if (pDsc->radius)     _radius     = *(pDsc->radius);

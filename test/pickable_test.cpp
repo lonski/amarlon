@@ -44,7 +44,7 @@ TEST_F(PickableTest, upgrade)
 
   //create pickable dsc with only amount changed
   PickableDescriptionPtr pDsc(new PickableDescription);
-  pDsc->itemSlot = ItemSlotType::Armor;
+  pDsc->itemSlot = (int)ItemSlotType::Armor;
 
   //and apply it to the coin
   coin->upgrade( pDsc );

@@ -5,6 +5,7 @@
 #include <engine.h>
 #include <actor_descriptions.h>
 #include <race.h>
+#include <character_type.h>
 
 namespace amarlon {
 
@@ -51,10 +52,10 @@ TEST_F(CharacterTest, carryingLoad)
 
   //replace Character feature
   PlayableCharacterDescriptionPtr dsc(new PlayableCharacterDescription);
-  dsc->race = RaceType::Human;
+  dsc->race = (int)RaceType::Human;
   dsc->abilityScores[AbilityScore::STR] = 10;
   dsc->speed = 40;
-  dsc->type = CharacterType::PlayableCharacter;
+  dsc->type = (int)CharacterType::PlayableCharacter;
 
   CharacterPtr pc_ch = std::dynamic_pointer_cast<Character>( Character::create(dsc) );
   ziomek->insertFeature( pc_ch );

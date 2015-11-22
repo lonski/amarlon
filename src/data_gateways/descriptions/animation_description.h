@@ -2,11 +2,9 @@
 #define ANIMATION_DESCRIPTION
 
 #include <memory>
-#include <animation_type.h>
-#include <description.h>
-#include <libtcod.hpp>
 #include <map>
 #include <string>
+#include <description.h>
 
 namespace amarlon {
 
@@ -16,11 +14,11 @@ typedef std::shared_ptr<AnimationDescription> AnimationDescriptionPtr;
 struct AnimationDescription : Description
 {
   AnimationDescription()
-    : type(animation::Type::Null)
+    : type(0)
   {
   }
 
-  animation::Type type;
+  int type;
   std::map<std::string, std::string> params;
 };
 

@@ -7,6 +7,7 @@
 #include <alist.h>
 #include <character_creation_window.h>
 #include <skill.h>
+#include <actor_feature.h>
 
 namespace amarlon { namespace gui {
 
@@ -138,7 +139,7 @@ void RaceSelectionPanel::setRace()
 
     if ( dsc )
     {
-      dsc->race = race->getType();
+      dsc->race = (int)race->getType();
       for( auto s : race->getSkills() )
       {
         dsc->skills.push_back(

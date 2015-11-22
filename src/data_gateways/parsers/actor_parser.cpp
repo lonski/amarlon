@@ -3,6 +3,7 @@
 #include <utils/utils.h>
 #include <actor_descriptions.h>
 #include <dialog_parser.h>
+#include <ability_scores.h>
 
 namespace amarlon {
 
@@ -26,10 +27,9 @@ ActorDescriptionPtr ActorParser::parseDescription()
   {
     actorDsc.reset( new ActorDescription );
 
-    actorDsc->id = (ActorType)getAttribute<int>(_xml, "id");
-
+    if ( attributeExists(_xml, "id") )           actorDsc->id           = getAttribute<int>(_xml, "id");
     if ( attributeExists(_xml, "name") )         actorDsc->name         = getAttribute<std::string>(_xml, "name");
-    if ( attributeExists(_xml, "prototype") )    actorDsc->prototype    = (ActorType)getAttribute<int>(_xml, "prototype");
+    if ( attributeExists(_xml, "prototype") )    actorDsc->prototype    = getAttribute<int>(_xml, "prototype");
     if ( attributeExists(_xml, "x") )            actorDsc->x            = getAttribute<int>(_xml, "x");
     if ( attributeExists(_xml, "y") )            actorDsc->y            = getAttribute<int>(_xml, "y");
     if ( attributeExists(_xml, "blocks") )       actorDsc->blocks       = getAttribute<bool>(_xml, "blocks");
@@ -37,7 +37,7 @@ ActorDescriptionPtr ActorParser::parseDescription()
     if ( attributeExists(_xml, "fovOnly") )      actorDsc->fovOnly      = getAttribute<bool>(_xml, "fovOnly");
     if ( attributeExists(_xml, "transparent") )  actorDsc->transparent  = getAttribute<bool>(_xml, "transparent");
     if ( attributeExists(_xml, "tilePriority") ) actorDsc->tilePriority = getAttribute<int>(_xml, "tilePriority");
-    if ( attributeExists(_xml, "color") )        actorDsc->color        = strToColor( getAttribute<std::string>(_xml, "color") );
+    if ( attributeExists(_xml, "color") )        actorDsc->color        = getAttribute<std::string>(_xml, "color");
 
     if ( xml_node<>* dNode = _xml->first_node("Description") ) actorDsc->description = getNodeValue<std::string>(dNode);
 
@@ -66,16 +66,31 @@ ActorDescriptionPtr ActorParser::parseDescription()
       }
     }
 
+    enum
+    {
+      FT_NULL,
+      AI,
+      OPENABLE,
+      WEARER,
+      INVENTORY,
+      CHARACTER,
+      PICKABLE,
+      DESTROYABLE,
+      TRAP,
+      TALKER,
+      FT_END
+    };
+
     //Parse Actor Features
-    actorDsc->features[ ActorFeature::PICKABLE ] = parsePickableDsc();
-    actorDsc->features[ ActorFeature::CHARACTER ] = parseCharacterDsc();
-    actorDsc->features[ ActorFeature::AI ] = parseAiDsc();
-    actorDsc->features[ ActorFeature::OPENABLE ] = parseOpenableDsc();
-    actorDsc->features[ ActorFeature::WEARER ] = parseWearerDsc();
-    actorDsc->features[ ActorFeature::INVENTORY ] = parseInventoryDsc();
-    actorDsc->features[ ActorFeature::DESTROYABLE ] = parseDestroyableDsc();
-    actorDsc->features[ ActorFeature::TRAP ] = parseTrapDsc();
-    actorDsc->features[ ActorFeature::TALKER ] = parseTalkerDsc();
+    actorDsc->features[ PICKABLE    ] = parsePickableDsc();
+    actorDsc->features[ CHARACTER   ] = parseCharacterDsc();
+    actorDsc->features[ AI          ] = parseAiDsc();
+    actorDsc->features[ OPENABLE    ] = parseOpenableDsc();
+    actorDsc->features[ WEARER      ] = parseWearerDsc();
+    actorDsc->features[ INVENTORY   ] = parseInventoryDsc();
+    actorDsc->features[ DESTROYABLE ] = parseDestroyableDsc();
+    actorDsc->features[ TRAP        ] = parseTrapDsc();
+    actorDsc->features[ TALKER      ] = parseTalkerDsc();
   }
 
   return actorDsc;
@@ -131,15 +146,15 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( attributeExists( pickableNode, "scriptId") )   pickDsc->scriptId = getAttribute<int>(pickableNode, "scriptId");
       if ( attributeExists( pickableNode, "stackable") )  pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
       if ( attributeExists( pickableNode, "amount") )     pickDsc->amount = getAttribute<int>(pickableNode, "amount");
-      if ( attributeExists( pickableNode, "itemSlot") )   pickDsc->itemSlot = (ItemSlotType)getAttribute<int>(pickableNode, "itemSlot");
+      if ( attributeExists( pickableNode, "itemSlot") )   pickDsc->itemSlot = getAttribute<int>(pickableNode, "itemSlot");
       if ( attributeExists( pickableNode, "armorClass") ) pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
       if ( attributeExists( pickableNode, "weight") )     pickDsc->weight = getAttribute<int>(pickableNode, "weight");
       if ( attributeExists( pickableNode, "price") )      pickDsc->price = getAttribute<int>(pickableNode, "price");
       if ( attributeExists( pickableNode, "uses") )       pickDsc->uses = getAttribute<int>(pickableNode, "uses");
       if ( attributeExists( pickableNode, "range") )      pickDsc->range = getAttribute<int>(pickableNode, "range");
       if ( attributeExists( pickableNode, "radius") )     pickDsc->radius = getAttribute<int>(pickableNode, "radius");
-      if ( attributeExists( pickableNode, "targetType") ) pickDsc->targetType = (TargetType)getAttribute<int>(pickableNode, "targetType");
-      if ( attributeExists( pickableNode, "damage") )     pickDsc->damage = Damage( getAttribute<std::string>(pickableNode, "damage") );
+      if ( attributeExists( pickableNode, "targetType") ) pickDsc->targetType = getAttribute<int>(pickableNode, "targetType");
+      if ( attributeExists( pickableNode, "damage") )     pickDsc->damage = getAttribute<std::string>(pickableNode, "damage");
 
       ItemType t;
       if ( attributeExists(pickableNode, "armorType") )
@@ -176,7 +191,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
     if ( characterNode != nullptr )
     {
       dsc.reset( new CharacterDescription );
-      dsc->type = CharacterType::Generic;
+      dsc->type = 1;//CharacterType::Generic
     }
     else
     {
@@ -185,7 +200,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       if (characterNode != nullptr)
       {
         PlayableCharacterDescriptionPtr pdsc( new PlayableCharacterDescription );
-        pdsc->type = CharacterType::PlayableCharacter;
+        pdsc->type = 2; //CharacterType::PlayableCharacter;
 
         dsc = pdsc;
       }
@@ -197,13 +212,13 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       if ( attributeExists(characterNode, "hitPoints") )    dsc->hitPoints = getAttribute<int>(characterNode, "hitPoints");
       if ( attributeExists(characterNode, "maxHitPoints") ) dsc->maxHitPoints = getAttribute<int>(characterNode, "maxHitPoints");
       if ( attributeExists(characterNode, "armorClass") )   dsc->defaultArmorClass = getAttribute<int>(characterNode, "armorClass");
-      if ( attributeExists(characterNode, "class") )        dsc->cClass = (CharacterClassType)getAttribute<int>(characterNode, "class");
-      if ( attributeExists(characterNode, "race") )         dsc->race = (RaceType)getAttribute<int>(characterNode, "race");
+      if ( attributeExists(characterNode, "class") )        dsc->cClass = getAttribute<int>(characterNode, "class");
+      if ( attributeExists(characterNode, "race") )         dsc->race = getAttribute<int>(characterNode, "race");
       if ( attributeExists(characterNode, "experience") )   dsc->experience = getAttribute<int>(characterNode, "experience");
       if ( attributeExists(characterNode, "speed") )        dsc->speed = getAttribute<int>(characterNode, "speed");
-      if ( attributeExists(characterNode, "team") )         dsc->team = (relations::Team)getAttribute<int>(characterNode, "team");
+      if ( attributeExists(characterNode, "team") )         dsc->team = getAttribute<int>(characterNode, "team");
       if ( attributeExists(characterNode, "morale") )       dsc->morale = getAttribute<int>(characterNode, "morale");
-      if ( attributeExists(characterNode, "damage") )       dsc->damage = Damage( getAttribute<std::string>(characterNode, "damage") );
+      if ( attributeExists(characterNode, "damage") )       dsc->damage = getAttribute<std::string>(characterNode, "damage");
 
       //Parse Spellbook
       xml_node<>* spellbookNode = characterNode->first_node("Spellbook");
@@ -276,7 +291,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
         {
           if ( attributeExists(attrNode, AbilityScore::toStr(as)))
           {
-            dsc->abilityScores[as] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
+            dsc->abilityScores[ (int)as ] = getAttribute<int>(attrNode, AbilityScore::toStr(as));
           }
         }
       }
@@ -297,12 +312,12 @@ AiDescriptionPtr ActorParser::parseAiDsc()
     if (aiNode != nullptr)
     {
       aiDsc.reset( new AiDescription );
-      aiDsc->type = AiType::GenericAi;
+      aiDsc->type = 1; //generic ai
     }
     else if ( (aiNode = _xml->first_node("PlayerAi")) )
     {
       aiDsc.reset( new AiDescription );
-      aiDsc->type = AiType::PlayerAi;
+      aiDsc->type = 2; //player ai
     }
 
     if ( aiNode )

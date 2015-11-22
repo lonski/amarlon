@@ -27,7 +27,7 @@ char TileDB::getChar(TileType type)
 
 TCODColor TileDB::getColor(TileType type)
 {
-  return get<TCODColor>(type, &TileDescription::color, TCODColor::white);
+  return strToColor( get<std::string>(type, &TileDescription::color, "ffffff") );
 }
 
 bool TileDB::isWalkable(TileType type)
@@ -67,7 +67,7 @@ void TileDB::parseTiles(vector<char>& dataToParse)
     _tileParser.setSource( tileNode );
 
     std::unique_ptr<TileDescription> tileDsc( _tileParser.parseTileDsc() );
-    if ( tileDsc ) _tiles[ tileDsc->type ] = *tileDsc;
+    if ( tileDsc ) _tiles[ static_cast<TileType>(tileDsc->type) ] = *tileDsc;
 
     tileNode = tileNode->next_sibling();
   }

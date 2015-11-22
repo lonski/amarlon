@@ -62,11 +62,13 @@ void Character::upgrade(DescriptionPtr dsc)
   if ( cDsc != nullptr )
   {
     if ( cDsc->experience)         _experience = *cDsc->experience;
-    if ( cDsc->cClass )            _class = CharacterClass::create(*cDsc->cClass);
-    if ( cDsc->race )              _race = Race::create( *cDsc->race );
+    if ( cDsc->cClass )
+      _class = CharacterClass::create( static_cast<CharacterClassType>(*cDsc->cClass) );
+    if ( cDsc->race )
+      _race = Race::create( static_cast<RaceType>(*cDsc->race) );
     if ( cDsc->defaultArmorClass ) _defaultArmorClass = *cDsc->defaultArmorClass;
     if ( cDsc->speed )             _speed = *cDsc->speed;
-    if ( cDsc->team )              _team = *cDsc->team;
+    if ( cDsc->team )              _team = static_cast<relations::Team>(*cDsc->team);
     if ( cDsc->spellbook)          _spellbook = SpellBook::create(*cDsc->spellbook);
     if ( cDsc->morale)             _morale = *cDsc->morale;
     if ( cDsc->damage)             _damage = *cDsc->damage;
@@ -77,7 +79,7 @@ void Character::upgrade(DescriptionPtr dsc)
     //upgrade the ability scores
     for ( auto kv : cDsc->abilityScores )
     {
-      _abilityScores[kv.first] = kv.second;
+      _abilityScores[ static_cast<AbilityScore::Type>(kv.first) ] = kv.second;
     }
 
     //upgrade skills
@@ -108,7 +110,7 @@ CharacterPtr Character::create(DescriptionPtr dsc)
   CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
   if ( cDsc && cDsc->type )
   {
-    switch (*cDsc->type)
+    switch ( (CharacterType)*cDsc->type)
     {
       case CharacterType::Generic:            c.reset( new Character(cDsc) ); break;
       case CharacterType::PlayableCharacter:  c.reset( new PlayableCharacter(cDsc) ); break;

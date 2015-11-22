@@ -5,9 +5,9 @@ namespace amarlon {
 
 enum class CharacterType
 {
-  NoType,
-  Generic,
-  PlayableCharacter
+  NoType = 0,
+  Generic = 1,
+  PlayableCharacter = 2
 };
 
 }

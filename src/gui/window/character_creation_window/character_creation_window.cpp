@@ -98,7 +98,7 @@ void CharacterCreationWindow::nextStep()
   ++cPanel;
 
   //Skip class-specific panels
-  CharacterClassType cId = *getCharacterDsc()->cClass;
+  CharacterClassType cId = (CharacterClassType)*getCharacterDsc()->cClass;
   if ( cPanel != _panels.end() )
   {
     if ( (cPanel->first == THIEF_SKILLS_SELECTION && cId != CharacterClassType::Thief) )

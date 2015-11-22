@@ -43,8 +43,8 @@ void Ai::upgrade(DescriptionPtr dsc)
   AiDescriptionPtr aDsc = std::dynamic_pointer_cast<AiDescription>(dsc);
   if ( aDsc )
   {
-    if ( aDsc->script )_scriptId = *aDsc->script;
-    if ( aDsc->type )   _type    = *aDsc->type;
+    if ( aDsc->script ) _scriptId = *aDsc->script;
+    if ( aDsc->type )   _type    = static_cast<AiType>(*aDsc->type);
   }
 }
 

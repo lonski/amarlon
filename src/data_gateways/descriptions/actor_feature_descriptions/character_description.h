@@ -1,14 +1,9 @@
 #ifndef CHARACTER_DESCRIPTION
 #define CHARACTER_DESCRIPTION
 
+#include <map>
 #include <vector>
-#include <character_class_type.h>
-#include <race_type.h>
-#include <ability_scores.h>
-#include <damage.h>
 #include <description.h>
-#include <character_type.h>
-#include <relations.h>
 #include <experimental/optional>
 
 namespace amarlon {
@@ -43,18 +38,18 @@ struct CharacterDescription : Description
   std::experimental::optional<int> maxHitPoints;
   std::experimental::optional<int> defaultArmorClass;
   std::experimental::optional<int> experience;
-  std::experimental::optional<CharacterClassType> cClass;
-  std::experimental::optional<RaceType> race;
+  std::experimental::optional<int> cClass;
+  std::experimental::optional<int> race;
   std::experimental::optional<int> speed;
-  std::experimental::optional<CharacterType> type;
-  std::experimental::optional<relations::Team> team;
+  std::experimental::optional<int> type;
+  std::experimental::optional<int> team;
   std::experimental::optional<int> morale;
-  std::experimental::optional<Damage> damage;
+  std::experimental::optional<std::string> damage;
   std::experimental::optional<SpellbookDescription> spellbook;
 
   std::vector<SkillDescription> skills;
   std::vector<std::string> modifiers;
-  std::map<AbilityScore::Type, int> abilityScores;
+  std::map<int, int> abilityScores;
 };
 
 

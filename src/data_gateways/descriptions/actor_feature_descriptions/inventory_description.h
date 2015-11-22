@@ -2,7 +2,6 @@
 #define INVENTORY_DESCRIPTION
 
 #include <description.h>
-#include <actor_type.h>
 #include <vector>
 #include <experimental/optional>
 

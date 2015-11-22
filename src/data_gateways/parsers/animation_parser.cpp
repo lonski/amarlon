@@ -17,7 +17,7 @@ AnimationDescriptionPtr AnimationParser::parseAnimationDsc()
   {
     animDsc.reset( new AnimationDescription );
 
-    animDsc->type = (animation::Type)getAttribute<int>(_xml, "type");
+    animDsc->type = getAttribute<int>(_xml, "type");
 
     rapidxml::xml_node<>* pNode = _xml->first_node("P");
     while( pNode )

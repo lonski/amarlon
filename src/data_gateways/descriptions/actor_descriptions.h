@@ -2,7 +2,10 @@
 #define ACTORDESCRIPTIONS_H
 
 #include <map>
+#include <experimental/optional>
+
 #include <description.h>
+
 #include <pickable_description.h>
 #include <character_description.h>
 #include <ai_description.h>
@@ -12,8 +15,6 @@
 #include <destroyable_description.h>
 #include <trap_description.h>
 #include <talker_description.h>
-#include <actor_feature.h>
-#include <experimental/optional>
 
 namespace amarlon {
 
@@ -26,17 +27,13 @@ struct StatusEffectDsc
 
 struct ActorDescription : Description
 {
-  ActorDescription()
-    : id(ActorType::Null)
-  {}
-
-  ActorType id;
-  std::experimental::optional<ActorType> prototype;
+  std::experimental::optional<int> id;
+  std::experimental::optional<int> prototype;
   std::experimental::optional<int> x;
   std::experimental::optional<int> y;
   std::experimental::optional<std::string> name;
   std::experimental::optional<unsigned char> symbol;
-  std::experimental::optional<TCODColor> color;
+  std::experimental::optional<std::string> color;
   std::experimental::optional<bool> blocks;
   std::experimental::optional<bool> fovOnly;
   std::experimental::optional<bool> transparent;
@@ -45,7 +42,7 @@ struct ActorDescription : Description
   std::experimental::optional<std::string> description;
   std::vector<StatusEffectDsc> statusEffects;
 
-  std::map<ActorFeature::Type, DescriptionPtr> features;
+  std::map<int, DescriptionPtr> features;
 
 };
 

@@ -47,11 +47,11 @@ void AbilityScoresSelectionPanel::update()
   {
     _race = Engine::instance().
         getRpgDB().
-        getRace( *_parent->getCharacterDsc()->race );
+        getRace( (RaceType)*_parent->getCharacterDsc()->race );
 
     _class = Engine::instance().
         getRpgDB().
-        getCharacterClass( *_parent->getCharacterDsc()->cClass );
+        getCharacterClass( (CharacterClassType)*_parent->getCharacterDsc()->cClass );
 
     if ( _race && _class )
     {

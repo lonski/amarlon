@@ -31,7 +31,8 @@ ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
   ActorPtr actor;
   if ( dsc )
   {
-    actor = prototyped ? create(dsc->id) : ActorPtr(new Actor);
+    actor = prototyped ? create( static_cast<ActorType>(*dsc->id))
+                       : ActorPtr(new Actor);
     actor->upgrade(dsc);
   }
   return actor;
@@ -60,13 +61,12 @@ void Actor::upgrade(ActorDescriptionPtr dsc)
   if ( dsc )
   {
     //Base fields
-    _id = dsc->id;
-
+    if (dsc->id)           _id = static_cast<ActorType>(*dsc->id);
     if (dsc->x)            _x = *(dsc->x);
     if (dsc->y)            _y = *(dsc->y);
     if (dsc->name)         _name = *(dsc->name);
     if (dsc->symbol)       _symbol = *(dsc->symbol);
-    if (dsc->color)        _color = *(dsc->color);
+    if (dsc->color)        _color = strToColor(*dsc->color);
     if (dsc->blocks)       _blocks = *(dsc->blocks);
     if (dsc->fovOnly)      _fovOnly = *(dsc->fovOnly);
     if (dsc->transparent)  _transparent = *(dsc->transparent);
@@ -79,16 +79,17 @@ void Actor::upgrade(ActorDescriptionPtr dsc)
     {
       if ( f.second )
       {
-        auto it = _features.find( f.first );
+        ActorFeature::Type f_type = static_cast<ActorFeature::Type>(f.first);
+        auto it = _features.find( f_type );
         if ( it != _features.end() )
         {
           it->second->upgrade( f.second );
         }
         else
         {
-          auto feat = ActorFeature::create(f.first, f.second);
+          auto feat = ActorFeature::create( f_type, f.second);
           feat->setOwner( shared_from_this() );
-          _features[ f.first ] = feat;
+          _features[ f_type ] = feat;
         }
       }
     }
