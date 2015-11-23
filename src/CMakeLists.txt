@@ -25,7 +25,6 @@ set(HEADER_FILES
     actor/actor_features/pickable/scroll.h
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
-    actor/actor_features/destroyable/drop_rule.h
     actor/actor_features/trap/trap.h
     actor/actor_features/trap/trap_id.h
     actor/actor_features/talker/talker.h
@@ -92,6 +91,8 @@ set(HEADER_FILES
     data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
     data_gateways/descriptions/actor_feature_descriptions/trap_description.h
     data_gateways/descriptions/actor_feature_descriptions/talker_description.h
+    data_gateways/descriptions/actor_feature_descriptions/dialog.h
+    data_gateways/descriptions/actor_feature_descriptions/drop_rule.h
     data_gateways/descriptions/description.h
     data_gateways/descriptions/map_description.h
     data_gateways/databases/map_db.h

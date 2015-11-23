@@ -3,7 +3,6 @@
 
 #include <description.h>
 #include <vector>
-#include <item_slot_type.h>
 
 namespace amarlon {
 
@@ -12,7 +11,7 @@ typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 
 struct WearerDescription : Description
 {
-  std::vector<ItemSlotType> itemSlots;
+  std::vector<int> itemSlots;
   std::vector<ActorDescriptionPtr> eqItems;
 };
 

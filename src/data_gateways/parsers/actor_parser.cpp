@@ -155,25 +155,10 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( attributeExists( pickableNode, "radius") )     pickDsc->radius = getAttribute<int>(pickableNode, "radius");
       if ( attributeExists( pickableNode, "targetType") ) pickDsc->targetType = getAttribute<int>(pickableNode, "targetType");
       if ( attributeExists( pickableNode, "damage") )     pickDsc->damage = getAttribute<std::string>(pickableNode, "damage");
-
-      ItemType t;
-      if ( attributeExists(pickableNode, "armorType") )
-      {
-        t.armor = (ArmorType)getAttribute<int>(pickableNode, "armorType");
-      }
-      if ( attributeExists(pickableNode, "weaponType") )
-      {
-        t.weapon = (WeaponType)getAttribute<int>(pickableNode, "weaponType");
-      }
-      if ( attributeExists(pickableNode, "amunitionType") )
-      {
-        t.amunition = (AmunitionType)getAttribute<int>(pickableNode, "amunitionType");
-      }
-
-      t.category = (PickableCategory)getAttribute<int>(pickableNode, "category");
-
-      pickDsc->type = t;
-
+      if ( attributeExists( pickableNode, "armorType") )     pickDsc->armorType = getAttribute<int>(pickableNode, "armorType");
+      if ( attributeExists( pickableNode, "weaponType") )    pickDsc->weaponType = getAttribute<int>(pickableNode, "weaponType");
+      if ( attributeExists( pickableNode, "amunitionType") ) pickDsc->amunitionType = getAttribute<int>(pickableNode, "amunitionType");
+      if ( attributeExists( pickableNode, "category") )      pickDsc->category = getAttribute<int>(pickableNode, "category");
     }
   }
 
@@ -365,7 +350,7 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
       xml_node<>* itemSlotNode = wearerNode->first_node("ItemSlot");
       while (itemSlotNode != nullptr)
       {
-        ItemSlotType slot = (ItemSlotType)getAttribute<int>(itemSlotNode, "type");
+        int slot = getAttribute<int>(itemSlotNode, "type");
         wrDsc->itemSlots.push_back(slot);
 
         xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");

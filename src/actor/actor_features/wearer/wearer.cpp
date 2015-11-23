@@ -28,7 +28,7 @@ void Wearer::upgrade(DescriptionPtr dsc)
   {
     for ( auto slot : wearerDsc->itemSlots )
     {
-      _itemSlots.insert( std::make_pair(slot, nullptr) );
+      _itemSlots.insert( std::make_pair((ItemSlotType)slot, nullptr) );
     }
 
     for ( auto aDsc : wearerDsc->eqItems )

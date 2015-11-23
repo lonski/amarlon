@@ -2,7 +2,6 @@
 #define PICKABLE_DESCRIPTION
 
 #include <description.h>
-#include <item_type.h>
 #include <experimental/optional>
 
 namespace amarlon {
@@ -21,8 +20,11 @@ struct PickableDescription : Description
   std::experimental::optional<int> scriptId;
   std::experimental::optional<int> range;
   std::experimental::optional<int> radius;
+  std::experimental::optional<int> armorType;
+  std::experimental::optional<int> weaponType;
+  std::experimental::optional<int> amunitionType;
+  std::experimental::optional<int> category;
 
-  ItemType type;
 };
 
 struct ScrollDescription : PickableDescription

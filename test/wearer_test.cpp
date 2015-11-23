@@ -20,8 +20,8 @@ public:
     Engine::instance().prologue();
 
     WearerDescriptionPtr dsc(new WearerDescription);
-    dsc->itemSlots.push_back(ItemSlotType::Armor);
-    dsc->itemSlots.push_back(ItemSlotType::Boots);
+    dsc->itemSlots.push_back((int)ItemSlotType::Armor);
+    dsc->itemSlots.push_back((int)ItemSlotType::Boots);
 
     wearer = Wearer::create(dsc);
   }
@@ -81,8 +81,8 @@ TEST_F(WearerTest, unequip_item)
 TEST_F(WearerTest, clone_wearer)
 {
   WearerDescriptionPtr dsc(new WearerDescription);
-  dsc->itemSlots.push_back(ItemSlotType::LeftRing);
-  dsc->itemSlots.push_back(ItemSlotType::Offhand);
+  dsc->itemSlots.push_back((int)ItemSlotType::LeftRing);
+  dsc->itemSlots.push_back((int)ItemSlotType::Offhand);
 
   WearerPtr w1 = Wearer::create(dsc);
   WearerPtr wcloned = std::dynamic_pointer_cast<Wearer>(w1->clone());
@@ -108,8 +108,8 @@ TEST_F(WearerTest, compare_test)
   ASSERT_FALSE( w1->isEqual(w2) );
 
   WearerDescriptionPtr dsc(new WearerDescription);
-  dsc->itemSlots.push_back(ItemSlotType::Armor);
-  dsc->itemSlots.push_back(ItemSlotType::Boots);
+  dsc->itemSlots.push_back((int)ItemSlotType::Armor);
+  dsc->itemSlots.push_back((int)ItemSlotType::Boots);
 
   w1 = Wearer::create(dsc);
   w2 = Wearer::create(dsc);

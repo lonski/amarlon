@@ -32,8 +32,10 @@ void Pickable::upgrade(DescriptionPtr dsc)
     if (pDsc->scriptId)   _scriptId   = *(pDsc->scriptId);
     if (pDsc->range)      _range      = *(pDsc->range);
     if (pDsc->radius)     _radius     = *(pDsc->radius);
-
-    _type.merge( pDsc->type );
+    if (pDsc->armorType)      _type.armor     = (ArmorType)*(pDsc->armorType);
+    if (pDsc->weaponType)     _type.weapon    = (WeaponType)*(pDsc->weaponType);
+    if (pDsc->amunitionType)  _type.amunition = (AmunitionType)*(pDsc->amunitionType);
+    if (pDsc->category)       _type.category  = (PickableCategory)*(pDsc->category);
   }
 }
 
@@ -64,7 +66,8 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
   PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
   if ( pDsc )
   {
-    switch (pDsc->type.category)
+    PickableCategory cat = (PickableCategory)*pDsc->category;
+    switch ( cat )
     {
       case PickableCategory::Scroll: p.reset( new Scroll(pDsc) ); break;
       default : p.reset( new Pickable(dsc) );
