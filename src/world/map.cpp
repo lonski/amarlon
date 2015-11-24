@@ -9,6 +9,7 @@
 #include <actor_container.h>
 #include <map_description.h>
 #include <teleport_action.h>
+#include <base64.h>
 
 namespace amarlon {
 
@@ -35,7 +36,8 @@ void Map::deserialize(MapDescriptionPtr dsc)
     allocateTiles();
     if ( !dsc->binaryTiles.empty() )
     {
-      deserializeTiles( {dsc->binaryTiles.begin(), dsc->binaryTiles.end()} );
+      std::string s_tiles = base64_decode( dsc->binaryTiles );
+      deserializeTiles( {s_tiles.begin(), s_tiles.end()} );
 
       for ( ActorDescriptionPtr aDsc : dsc->actors )
       {
@@ -286,7 +288,7 @@ void Map::deserializeTiles(std::vector<unsigned char> tiles)
   }
 }
 
-std::vector<unsigned char> Map::serializeTiles()
+std::string Map::serializeTiles()
 {
   std::vector<unsigned char> v;
 
@@ -302,7 +304,7 @@ std::vector<unsigned char> Map::serializeTiles()
     }
   }
 
-  return v;
+  return base64_encode(reinterpret_cast<const unsigned char*>(&v[0]), v.size());
 }
 
 TCODColor Map::getColor(u32 x, u32 y)

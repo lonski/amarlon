@@ -16,13 +16,13 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/item_slot_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable/destroyable.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/actor_db.h
+    ${PROJECT_SOURCE_DIR}/src/databases/actor_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/actor_descriptions.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/description.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/spell_description.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/spell_db.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/tile_db.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/databases/map_db.h
+    ${PROJECT_SOURCE_DIR}/src/databases/spell_db.h
+    ${PROJECT_SOURCE_DIR}/src/databases/tile_db.h
+    ${PROJECT_SOURCE_DIR}/src/databases/map_db.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h
     ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/tile_parser.h
@@ -93,6 +93,6 @@ set(SOURCE_FILES
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1 -DTESTING=1")
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(ut_amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${LUABIND_LIBRARIES})
+target_link_libraries(ut_amarlon amarlon_core amarlon_widgets data_gateway ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${LUABIND_LIBRARIES})
 
 add_custom_command(TARGET ut_amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ut_amarlon>)

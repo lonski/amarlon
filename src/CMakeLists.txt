@@ -52,55 +52,6 @@ set(HEADER_FILES
     commands/cmd_talk.h
     commands/cmd_shot.h
     commands/cmd_debug.h
-    data_gateways/descriptions/tile_description.h
-    data_gateways/parsers/parser.h
-    data_gateways/parsers/tile_parser.h
-    data_gateways/parsers/actor_parser.h
-    data_gateways/parsers/map_parser.h
-    data_gateways/parsers/animation_parser.h
-    data_gateways/parsers/spell_parser.h
-    data_gateways/parsers/skill_parser.h
-    data_gateways/parsers/rpg_parser.h
-    data_gateways/parsers/dialog_parser.h
-    data_gateways/serializers/serializer.h
-    data_gateways/serializers/animation_serializer.h
-    data_gateways/serializers/map_serializer.h
-    data_gateways/serializers/action_serializer.h
-    data_gateways/serializers/actor_serializer.h
-    data_gateways/serializers/actor_feature_serializers/actor_feature_serializer.h
-    data_gateways/serializers/actor_feature_serializers/pickable_serializer.h
-    data_gateways/serializers/actor_feature_serializers/destroyable_serializer.h
-    data_gateways/serializers/actor_feature_serializers/inventory_serializer.h
-    data_gateways/serializers/actor_feature_serializers/wearer_serializer.h
-    data_gateways/serializers/actor_feature_serializers/openable_serializer.h
-    data_gateways/serializers/actor_feature_serializers/character_serializer.h
-    data_gateways/serializers/actor_feature_serializers/playable_character_serializer.h
-    data_gateways/serializers/actor_feature_serializers/ai_serializer.h
-    data_gateways/serializers/actor_feature_serializers/trap_serializer.h
-    data_gateways/serializers/actor_feature_serializers/talker_serializer.h
-    data_gateways/descriptions/animation_description.h
-    data_gateways/descriptions/actor_descriptions.h
-    data_gateways/descriptions/spell_description.h
-    data_gateways/descriptions/skill_description.h
-    data_gateways/descriptions/actor_feature_descriptions/pickable_description.h
-    data_gateways/descriptions/actor_feature_descriptions/character_description.h
-    data_gateways/descriptions/actor_feature_descriptions/ai_description.h
-    data_gateways/descriptions/actor_feature_descriptions/openable_description.h
-    data_gateways/descriptions/actor_feature_descriptions/wearer_description.h
-    data_gateways/descriptions/actor_feature_descriptions/inventory_description.h
-    data_gateways/descriptions/actor_feature_descriptions/destroyable_description.h
-    data_gateways/descriptions/actor_feature_descriptions/trap_description.h
-    data_gateways/descriptions/actor_feature_descriptions/talker_description.h
-    data_gateways/descriptions/actor_feature_descriptions/dialog.h
-    data_gateways/descriptions/actor_feature_descriptions/drop_rule.h
-    data_gateways/descriptions/description.h
-    data_gateways/descriptions/map_description.h
-    data_gateways/databases/map_db.h
-    data_gateways/databases/actor_db.h
-    data_gateways/databases/tile_db.h
-    data_gateways/databases/spell_db.h
-    data_gateways/databases/skill_db.h
-    data_gateways/databases/rpg_db.h
     gui/window/inventory_window/bag_manager.h
     gui/window/inventory_window/body_manager.h
     gui/window/inventory_window/inventory_window.h     
@@ -221,6 +172,12 @@ set(HEADER_FILES
     lua_api/registrations/dialog_registarar.h
     skills/skill.h
     skills/skill_id.h
+    databases/map_db.h
+    databases/actor_db.h
+    databases/tile_db.h
+    databases/spell_db.h
+    databases/skill_db.h
+    databases/rpg_db.h
 )
 
 set(SOURCE_FILES
@@ -267,34 +224,6 @@ set(SOURCE_FILES
     commands/cmd_rest.cpp
     commands/cmd_use_skill.cpp
     commands/cmd_shot.cpp
-    data_gateways/parsers/animation_parser.cpp
-    data_gateways/parsers/actor_parser.cpp
-    data_gateways/parsers/tile_parser.cpp
-    data_gateways/parsers/map_parser.cpp
-    data_gateways/parsers/spell_parser.cpp
-    data_gateways/parsers/skill_parser.cpp
-    data_gateways/parsers/rpg_parser.cpp
-    data_gateways/parsers/dialog_parser.cpp
-    data_gateways/serializers/animation_serializer.cpp
-    data_gateways/serializers/map_serializer.cpp
-    data_gateways/serializers/action_serializer.cpp
-    data_gateways/serializers/actor_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/pickable_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/destroyable_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/inventory_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/wearer_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/openable_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/character_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/playable_character_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/ai_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/trap_serializer.cpp
-    data_gateways/serializers/actor_feature_serializers/talker_serializer.cpp
-    data_gateways/databases/actor_db.cpp
-    data_gateways/databases/map_db.cpp
-    data_gateways/databases/tile_db.cpp
-    data_gateways/databases/spell_db.cpp
-    data_gateways/databases/skill_db.cpp
-    data_gateways/databases/rpg_db.cpp
     gui/window/inventory_window/bag_manager.cpp
     gui/window/inventory_window/body_manager.cpp
     gui/window/inventory_window/inventory_window.cpp
@@ -393,6 +322,12 @@ set(SOURCE_FILES
     lua_api/registrations/map_registrar.cpp
     lua_api/registrations/modifier_registrar.cpp
     lua_api/registrations/dialog_registarar.cpp
+    databases/actor_db.cpp
+    databases/map_db.cpp
+    databases/tile_db.cpp
+    databases/spell_db.cpp
+    databases/skill_db.cpp
+    databases/rpg_db.cpp
     skills/skill.cpp
 )
 
@@ -400,6 +335,6 @@ add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_executable(amarlon main.cpp)
-target_link_libraries(amarlon amarlon_core amarlon_widgets ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
+target_link_libraries(amarlon amarlon_core amarlon_widgets data_gateway ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)

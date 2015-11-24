@@ -36,7 +36,7 @@ public:
 
   Map(u32 width = 100, u32 height = 60, MapId id = MapId::Null);
   virtual void deserializeTiles(std::vector<unsigned char> tiles);
-  std::vector<unsigned char> serializeTiles();
+  std::string serializeTiles();
   virtual ~Map();
 
   virtual MapPtr clone();

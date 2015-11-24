@@ -53,11 +53,7 @@ void MapSerializer::serializeAttributes()
   addAttribute(_mapNode, "height", _map->getHeight());
   addAttribute(_mapNode,  "width", _map->getWidth());
   addAttributeEnum(_mapNode, "id", _map->getId());
-
-  auto tiles = _map->serializeTiles();
-  std::string encodedTiles = base64_encode(reinterpret_cast<const unsigned char*>(&tiles[0]), tiles.size());
-
-  _mapNode->append_node( createNode(_document, "Tiles", encodedTiles) );
+  _mapNode->append_node( createNode(_document, "Tiles", _map->serializeTiles()) );
 
 }
 

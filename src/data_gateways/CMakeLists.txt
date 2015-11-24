@@ -1,0 +1,73 @@
+set(HEADER_FILES
+    descriptions/tile_description.h
+    parsers/parser.h
+    parsers/tile_parser.h
+    parsers/actor_parser.h
+    parsers/map_parser.h
+    parsers/animation_parser.h
+    parsers/spell_parser.h
+    parsers/skill_parser.h
+    parsers/rpg_parser.h
+    parsers/dialog_parser.h
+    serializers/serializer.h
+    serializers/animation_serializer.h
+    serializers/map_serializer.h
+    serializers/action_serializer.h
+    serializers/actor_serializer.h
+    serializers/actor_feature_serializers/actor_feature_serializer.h
+    serializers/actor_feature_serializers/pickable_serializer.h
+    serializers/actor_feature_serializers/destroyable_serializer.h
+    serializers/actor_feature_serializers/inventory_serializer.h
+    serializers/actor_feature_serializers/wearer_serializer.h
+    serializers/actor_feature_serializers/openable_serializer.h
+    serializers/actor_feature_serializers/character_serializer.h
+    serializers/actor_feature_serializers/playable_character_serializer.h
+    serializers/actor_feature_serializers/ai_serializer.h
+    serializers/actor_feature_serializers/trap_serializer.h
+    serializers/actor_feature_serializers/talker_serializer.h
+    descriptions/animation_description.h
+    descriptions/actor_descriptions.h
+    descriptions/spell_description.h
+    descriptions/skill_description.h
+    descriptions/actor_feature_descriptions/pickable_description.h
+    descriptions/actor_feature_descriptions/character_description.h
+    descriptions/actor_feature_descriptions/ai_description.h
+    descriptions/actor_feature_descriptions/openable_description.h
+    descriptions/actor_feature_descriptions/wearer_description.h
+    descriptions/actor_feature_descriptions/inventory_description.h
+    descriptions/actor_feature_descriptions/destroyable_description.h
+    descriptions/actor_feature_descriptions/trap_description.h
+    descriptions/actor_feature_descriptions/talker_description.h
+    descriptions/actor_feature_descriptions/dialog.h
+    descriptions/actor_feature_descriptions/drop_rule.h
+    descriptions/description.h
+    descriptions/map_description.h
+)
+
+set(SOURCE_FILES
+    parsers/animation_parser.cpp
+    parsers/actor_parser.cpp
+    parsers/tile_parser.cpp
+    parsers/map_parser.cpp
+    parsers/spell_parser.cpp
+    parsers/skill_parser.cpp
+    parsers/rpg_parser.cpp
+    parsers/dialog_parser.cpp
+    serializers/animation_serializer.cpp
+    serializers/map_serializer.cpp
+    serializers/action_serializer.cpp
+    serializers/actor_serializer.cpp
+    serializers/actor_feature_serializers/pickable_serializer.cpp
+    serializers/actor_feature_serializers/destroyable_serializer.cpp
+    serializers/actor_feature_serializers/inventory_serializer.cpp
+    serializers/actor_feature_serializers/wearer_serializer.cpp
+    serializers/actor_feature_serializers/openable_serializer.cpp
+    serializers/actor_feature_serializers/character_serializer.cpp
+    serializers/actor_feature_serializers/playable_character_serializer.cpp
+    serializers/actor_feature_serializers/ai_serializer.cpp
+    serializers/actor_feature_serializers/trap_serializer.cpp
+    serializers/actor_feature_serializers/talker_serializer.cpp
+)
+
+add_library(data_gateway STATIC ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(data_gateway)
