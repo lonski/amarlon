@@ -2,7 +2,7 @@
 #define MAP_PARSER_H
 
 #include <memory>
-#include <data_gateways/parsers/parser.h>
+#include <persistence/parsers/parser.h>
 #include <map_description.h>
 
 namespace amarlon {

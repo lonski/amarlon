@@ -31,6 +31,7 @@ public:
   virtual ~Inventory();
   static InventoryPtr create(DescriptionPtr dsc);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
 
   virtual ActorFeature::Type getType() { return featureType; }
 

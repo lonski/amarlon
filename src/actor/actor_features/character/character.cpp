@@ -103,6 +103,77 @@ void Character::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Character::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  CharacterDescriptionPtr dsc;
+  CharacterPtr cmpChr = std::dynamic_pointer_cast<Character>(cmp);
+
+  dsc.reset( new CharacterDescription );
+  toDescriptionStruct( dsc, cmpChr );
+
+  return dsc;
+}
+
+void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cmp)
+{
+  if ( dsc )
+  {
+    if ( cmp )
+    {
+      if ( cmp->_level != _level ) dsc->level = _level;
+      if ( cmp->_hitPoints != _hitPoints ) dsc->hitPoints = _hitPoints;
+      if ( cmp->_maxHitPoints != _maxHitPoints ) dsc->maxHitPoints = _maxHitPoints;
+      if ( cmp->_defaultArmorClass != _defaultArmorClass ) dsc->defaultArmorClass = _defaultArmorClass;
+      if ( cmp->_experience != _experience ) dsc->experience = _experience;
+      if ( cmp->_class->getType() != _class->getType() ) dsc->cClass = static_cast<int>(_class->getType());
+      if ( cmp->_race->getType() != _race->getType() ) dsc->race = static_cast<int>(_race->getType());
+      if ( cmp->_speed != _speed ) dsc->speed = _speed;
+      if ( cmp->_team != _team ) dsc->team = static_cast<int>(_team);
+      if ( cmp->_morale != _morale ) dsc->morale = _morale;
+      if ( cmp->_damage != _damage ) dsc->damage = _damage.toStr();
+      if ( cmp->_spellbook != _spellbook ) dsc->spellbook = *_spellbook->toDescriptionStruct();
+
+      for (Modifier& mod : _modifiers)
+        dsc->modifiers.push_back( mod.toString() );
+
+      for ( auto& kv : _abilityScores )
+        if ( cmp->_abilityScores[kv.first] != _abilityScores[kv.first] )
+          dsc->abilityScores[ (int)kv.first ] = kv.second;
+
+      for ( SkillPtr sk : _skills )
+        dsc->skills.push_back( *sk->toDescriptionStruct() );
+
+      dsc->type = static_cast<int>(CharacterType::Generic);
+    }
+    else
+    {
+      dsc->level = _level;
+      dsc->hitPoints = _hitPoints;
+      dsc->maxHitPoints = _maxHitPoints;
+      dsc->defaultArmorClass = _defaultArmorClass;
+      dsc->experience = _experience;
+      dsc->cClass = static_cast<int>(_class->getType());
+      dsc->race = static_cast<int>(_race->getType());
+      dsc->speed = _speed;
+      dsc->type = static_cast<int>(CharacterType::Generic);
+      dsc->team = static_cast<int>(_team);
+      dsc->morale = _morale;
+      dsc->damage = _damage.toStr();
+      dsc->spellbook = *_spellbook->toDescriptionStruct();
+
+      for (Modifier& mod : _modifiers)
+        dsc->modifiers.push_back( mod.toString() );
+
+      for ( auto& kv : _abilityScores )
+        dsc->abilityScores[ (int)kv.first ] = kv.second;
+
+      for ( SkillPtr sk : _skills )
+        dsc->skills.push_back( *sk->toDescriptionStruct() );
+
+    }
+  }
+}
+
 CharacterPtr Character::create(DescriptionPtr dsc)
 {
   CharacterPtr c;

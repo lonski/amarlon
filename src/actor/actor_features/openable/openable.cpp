@@ -33,6 +33,31 @@ void Openable::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Openable::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  OpenableDescriptionPtr dsc(new OpenableDescription);
+  OpenablePtr cmpO = std::dynamic_pointer_cast<Openable>(cmp);
+
+  if ( cmpO )
+  {
+    if ( _lockId != cmpO->_lockId )       dsc->lockId = _lockId;
+    if ( _locked != cmpO->_locked )       dsc->locked = _locked;
+    if ( _scriptId != cmpO->_scriptId )   dsc->scriptId = _scriptId;
+    if ( _closed != cmpO->_closed )       dsc->closed = _closed;
+    if ( _lockLevel != cmpO->_lockLevel ) dsc->lockLevel = _lockLevel;
+  }
+  else
+  {
+    dsc->lockId = _lockId;
+    dsc->locked = _locked;
+    dsc->scriptId = _scriptId;
+    dsc->closed = _closed;
+    dsc->lockLevel = _lockLevel;
+  }
+
+  return dsc;
+}
+
 Openable::~Openable()
 {
 }

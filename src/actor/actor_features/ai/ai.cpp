@@ -48,6 +48,25 @@ void Ai::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Ai::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  AiDescriptionPtr dsc(new AiDescription);
+  AiPtr cmpAi = std::dynamic_pointer_cast<Ai>(cmp);
+
+  if ( cmpAi )
+  {
+    if ( _scriptId != cmpAi->_scriptId ) dsc->script = _scriptId;
+    if ( _type != cmpAi->_type ) dsc->type = static_cast<int>(_type);
+  }
+  else
+  {
+    dsc->script = _scriptId;
+    dsc->type = static_cast<int>(_type);
+  }
+
+  return dsc;
+}
+
 AiPtr Ai::create(DescriptionPtr dsc)
 {
   return AiPtr( new Ai(dsc) );

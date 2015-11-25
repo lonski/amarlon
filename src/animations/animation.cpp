@@ -14,20 +14,6 @@ Animation::~Animation()
 {
 }
 
-AnimationPtr Animation::create(AnimationDescriptionPtr dsc)
-{
-  return dsc ? create(*dsc) : AnimationPtr();
-}
-
-AnimationPtr Animation::create(AnimationDescription dsc)
-{
-  AnimationPtr a = create( static_cast<animation::Type>(dsc.type) );
-
-  if ( a ) a->load( dsc.params );
-
-  return a;
-}
-
 AnimationPtr Animation::create(Type type)
 {
   AnimationPtr a;

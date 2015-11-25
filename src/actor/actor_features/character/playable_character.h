@@ -13,6 +13,7 @@ public:
 
   PlayableCharacter();
   PlayableCharacter(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   ~PlayableCharacter();
 
   virtual ActorFeaturePtr clone();

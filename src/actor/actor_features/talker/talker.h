@@ -20,6 +20,7 @@ public:
 
   static TalkerPtr create(DescriptionPtr dsc);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   virtual ActorFeature::Type getType();
   virtual int getId() const;
 

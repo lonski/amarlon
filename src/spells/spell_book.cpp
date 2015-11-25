@@ -28,6 +28,20 @@ SpellBookPtr SpellBook::create(SpellbookDescription dsc)
   return sb;
 }
 
+SpellbookDescriptionPtr SpellBook::toDescriptionStruct()
+{
+  SpellbookDescriptionPtr dsc(new SpellbookDescription);
+  for ( SpellPtr ks : _knownSpells )
+  {
+    dsc->knownSpells.push_back( (int)ks->getId() );
+  }
+  for ( SpellSlotPtr ss : _spellSlots  )
+  {
+    dsc->spellSlots.push_back( *ss->toDescriptionStruct() );
+  }
+  return dsc;
+}
+
 std::vector<SpellSlotPtr> SpellBook::getSlots(std::function<bool(SpellSlotPtr)> filter) const
 {
   std::vector<SpellSlotPtr> spells;
@@ -93,7 +107,7 @@ bool SpellBook::operator==(const SpellBook &rhs)
   bool e = true;
   e &= _knownSpells.size() == rhs._knownSpells.size();
   e &= std::equal(_knownSpells.begin(), _knownSpells.end(), rhs._knownSpells.begin());
-
+  e &= std::equal(_spellSlots.begin(), _spellSlots.end(), rhs._spellSlots.begin());
   return e;
 }
 

@@ -106,6 +106,46 @@ void Actor::upgrade(ActorDescriptionPtr dsc)
   }
 }
 
+ActorDescriptionPtr Actor::toDescriptionStruct()
+{
+  ActorDescriptionPtr dsc( new ActorDescription );
+  ActorPtr base = Actor::create( _id );
+
+  dsc->id = static_cast<int>( _id );
+  dsc->x = _x;
+  dsc->y = _y;
+  if ( _fovOnly     != base->_fovOnly )     dsc->fovOnly = _fovOnly;
+  if ( _transparent != base->_transparent ) dsc->transparent = _transparent;
+  if ( _blocks      != base->_blocks )      dsc->blocks = _blocks;
+  if ( _priority    != base->_priority )    dsc->tilePriority = _priority;
+  if ( _color       != base->_color )       dsc->color = colorToStr(_color);
+  if ( _symbol      != base->_symbol )      dsc->symbol = _symbol;
+  if ( _name        != base->_name )        dsc->name = _name;
+  if ( isVisible()  != base->isVisible() )  dsc->visible = isVisible();
+  if ( _description != base->_description ) dsc->description = _description;
+
+  for ( StatusEffectPtr se : _effects->getEffects() )
+  {
+    StatusEffectDsc seDsc;
+    seDsc.name     = se->getName();
+    seDsc.script   = se->getScript();
+    seDsc.duration = se->getDuration();
+
+    dsc->statusEffects.push_back( seDsc );
+  }
+
+  for ( auto& kv : _features )
+  {
+    if ( kv.second )
+    {
+      DescriptionPtr fDsc = kv.second->toDescriptionStruct( base->getFeature(kv.first) );
+      if ( fDsc ) dsc->features[ (int)kv.first ] = fDsc;
+    }
+  }
+
+  return dsc;
+}
+
 Actor::Actor(ActorType aId, int x, int y, MapPtr map)
   : _id(aId)
   , _x(x)

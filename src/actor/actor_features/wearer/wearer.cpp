@@ -38,6 +38,19 @@ void Wearer::upgrade(DescriptionPtr dsc)
   };
 }
 
+DescriptionPtr Wearer::toDescriptionStruct(ActorFeaturePtr)
+{
+  WearerDescriptionPtr dsc(new WearerDescription);
+
+  for ( auto& kv : _itemSlots )
+    dsc->itemSlots.push_back((int)kv.first);
+
+  for (ActorPtr a : *_equippedItems)
+    dsc->eqItems.push_back(a->toDescriptionStruct());
+
+  return dsc;
+}
+
 void Wearer::assignItemsToSlots()
 {
   for ( ActorPtr a : _equippedItems->toVector() )

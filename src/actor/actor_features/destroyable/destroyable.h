@@ -18,6 +18,7 @@ public:
 
   static DestroyablePtr create(DescriptionPtr dsc);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
 
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;

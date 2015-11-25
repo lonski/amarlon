@@ -7,7 +7,7 @@
 #include <xml/rapidxml.hpp>
 #include <xml/rapidxml_print.hpp>
 #include <world/map_id.h>
-#include <data_gateways/parsers/map_parser.h>
+#include <persistence/parsers/map_parser.h>
 
 namespace amarlon {
 

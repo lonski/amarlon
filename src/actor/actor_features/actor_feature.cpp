@@ -64,5 +64,11 @@ int ActorFeature::update()
   return 0;
 }
 
+DescriptionPtr ActorFeature::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  throw std::logic_error("ActorFeature::toDescriptionStruct not implemented!");
+  return nullptr;
+}
+
 }
 

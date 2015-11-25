@@ -1,7 +1,7 @@
 #ifndef SPELL_PARSER_H
 #define SPELL_PARSER_H
 
-#include <data_gateways/parsers/parser.h>
+#include <persistence/parsers/parser.h>
 #include <spell_description.h>
 
 namespace amarlon {

@@ -13,12 +13,14 @@ class SpellBook;
 struct SpellbookDescription;
 typedef std::shared_ptr<Spell> SpellPtr;
 typedef std::shared_ptr<SpellBook> SpellBookPtr;
+typedef std::shared_ptr<SpellbookDescription> SpellbookDescriptionPtr;
 
 class SpellBook
 {
 public:
   SpellBook();
   static SpellBookPtr create(SpellbookDescription dsc);
+  SpellbookDescriptionPtr toDescriptionStruct();
 
   std::vector<SpellSlotPtr> getSlots(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;}) const;
   std::vector<SpellPtr> getKnownSpells( std::function<bool(SpellPtr)> filter = [](SpellPtr){return true;} ) const;

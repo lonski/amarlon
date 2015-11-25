@@ -10,6 +10,7 @@
 #include <engine.h>
 #include <spell_db.h>
 #include <spell.h>
+#include <character_type.h>
 
 namespace amarlon {
 
@@ -20,6 +21,18 @@ PlayableCharacter::PlayableCharacter()
 PlayableCharacter::PlayableCharacter(DescriptionPtr dsc)
   : Character(dsc)
 {
+}
+
+DescriptionPtr PlayableCharacter::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  CharacterDescriptionPtr dsc;
+  CharacterPtr cmpChr = std::dynamic_pointer_cast<PlayableCharacter>(cmp);
+
+  dsc.reset( new PlayableCharacterDescription );
+  Character::toDescriptionStruct( dsc, cmpChr );
+  dsc->type = static_cast<int>(CharacterType::PlayableCharacter);
+
+  return dsc;
 }
 
 PlayableCharacter::~PlayableCharacter()

@@ -4,13 +4,11 @@ set(HEADER_FILES
     parsers/tile_parser.h
     parsers/actor_parser.h
     parsers/map_parser.h
-    parsers/animation_parser.h
     parsers/spell_parser.h
     parsers/skill_parser.h
     parsers/rpg_parser.h
     parsers/dialog_parser.h
     serializers/serializer.h
-    serializers/animation_serializer.h
     serializers/map_serializer.h
     serializers/action_serializer.h
     serializers/actor_serializer.h
@@ -25,7 +23,6 @@ set(HEADER_FILES
     serializers/actor_feature_serializers/ai_serializer.h
     serializers/actor_feature_serializers/trap_serializer.h
     serializers/actor_feature_serializers/talker_serializer.h
-    descriptions/animation_description.h
     descriptions/actor_descriptions.h
     descriptions/spell_description.h
     descriptions/skill_description.h
@@ -42,10 +39,11 @@ set(HEADER_FILES
     descriptions/actor_feature_descriptions/drop_rule.h
     descriptions/description.h
     descriptions/map_description.h
+    descriptions/actor_action_description.h
+    descriptions/spellbook_description.h
 )
 
 set(SOURCE_FILES
-    parsers/animation_parser.cpp
     parsers/actor_parser.cpp
     parsers/tile_parser.cpp
     parsers/map_parser.cpp
@@ -53,7 +51,6 @@ set(SOURCE_FILES
     parsers/skill_parser.cpp
     parsers/rpg_parser.cpp
     parsers/dialog_parser.cpp
-    serializers/animation_serializer.cpp
     serializers/map_serializer.cpp
     serializers/action_serializer.cpp
     serializers/actor_serializer.cpp
@@ -69,5 +66,5 @@ set(SOURCE_FILES
     serializers/actor_feature_serializers/talker_serializer.cpp
 )
 
-add_library(data_gateway STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(data_gateway)
+add_library(persistence STATIC ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(persistence)

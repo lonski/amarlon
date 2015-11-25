@@ -52,8 +52,8 @@ MapDescriptionPtr MapParser::parseDescription()
       rapidxml::xml_node<>* directionNode = onExitNode->first_node("Direction");
       while ( directionNode != nullptr )
       {
-        MapActionDescriptionPtr aDsc(new MapActionDescription);
-        aDsc->direction = getAttribute<int>(directionNode, "id");
+        ActorActionDescriptionPtr aDsc(new ActorActionDescription);
+        int direction = getAttribute<int>(directionNode, "id");
 
         rapidxml::xml_node<>* teleportNode = directionNode->first_node("Teleport");
         if ( teleportNode != nullptr )
@@ -61,7 +61,7 @@ MapDescriptionPtr MapParser::parseDescription()
           aDsc->teleport_MapId = getAttribute<int>(teleportNode, "mapId");
           aDsc->teleport_x = getAttribute<int>(teleportNode, "x");
           aDsc->teleport_y = getAttribute<int>(teleportNode, "y");
-          mDsc->actions.push_back( aDsc );
+          mDsc->actions[ direction ] = aDsc;
         }
 
         directionNode = directionNode->next_sibling();

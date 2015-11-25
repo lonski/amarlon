@@ -43,6 +43,19 @@ void Inventory::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Inventory::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  InventoryDescriptionPtr dsc(new InventoryDescription);
+
+  dsc->maxSize = _slotCount;
+  for ( ActorPtr a : *_items )
+  {
+    dsc->content.push_back( a->toDescriptionStruct() );
+  }
+
+  return dsc;
+}
+
 ActorFeaturePtr Inventory::clone()
 {
   InventoryPtr cloned( new Inventory );

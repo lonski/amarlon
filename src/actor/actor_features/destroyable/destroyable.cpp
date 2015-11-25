@@ -32,6 +32,15 @@ void Destroyable::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Destroyable::toDescriptionStruct(ActorFeaturePtr)
+{
+  DestroyableDescriptionPtr dsc(new DestroyableDescription);
+
+  dsc->dropRules = _dropRules;
+
+  return dsc;
+}
+
 ActorFeaturePtr Destroyable::clone()
 {
   DestroyablePtr cloned(new Destroyable);

@@ -35,54 +35,55 @@ public:
   typedef std::vector<Tile> TileRow;
 
   Map(u32 width = 100, u32 height = 60, MapId id = MapId::Null);
-  virtual void deserializeTiles(std::vector<unsigned char> tiles);
+  void deserializeTiles(std::vector<unsigned char> tiles);
   std::string serializeTiles();
-  virtual ~Map();
+  void deserialize(MapDescriptionPtr dsc);
+  MapDescriptionPtr toDescriptionStruct();
+  ~Map();
 
-  virtual MapPtr clone();
+  MapPtr clone();
 
-  virtual bool isExplored(int x, int y);
-  virtual bool isExplored(const Point& p);
-  virtual bool isInFov(int x, int y);
-  virtual bool isInFov(const Point& p);
-  virtual bool isBlocked(int x, int y);
-  virtual bool isBlocked(const Point& p);
-  virtual bool isTransparent(int x, int y) const;
-  virtual bool isTransparent(const Point& p) const;
+  bool isExplored(int x, int y);
+  bool isExplored(const Point& p);
+  bool isInFov(int x, int y);
+  bool isInFov(const Point& p);
+  bool isBlocked(int x, int y);
+  bool isBlocked(const Point& p);
+  bool isTransparent(int x, int y) const;
+  bool isTransparent(const Point& p) const;
 
-  virtual void addActor(ActorPtr actor);
-  virtual  bool removeActor(ActorPtr toRemove);
-  virtual ActorPtr getFirstActor(int x, int y);
-  virtual std::vector<ActorPtr> getActors(int x, int y, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
-  virtual std::vector<ActorPtr> getActors(const Point& p, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
-  virtual std::vector<ActorPtr> getActors(int x, int y, int radius, std::function<bool(ActorPtr)> filterFun);
-  virtual std::vector<ActorPtr> getActors(int x, int y, int radius);
-  virtual std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)> filterFun);
-  virtual std::vector<ActorPtr> getActors();
-  virtual void performActionOnActors(std::function<void(ActorPtr)> func);
+  void addActor(ActorPtr actor);
+  bool removeActor(ActorPtr toRemove);
+  ActorPtr getFirstActor(int x, int y);
+  std::vector<ActorPtr> getActors(int x, int y, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
+  std::vector<ActorPtr> getActors(const Point& p, std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;});
+  std::vector<ActorPtr> getActors(int x, int y, int radius, std::function<bool(ActorPtr)> filterFun);
+  std::vector<ActorPtr> getActors(int x, int y, int radius);
+  std::vector<ActorPtr> getActors(std::function<bool(ActorPtr)> filterFun);
+  std::vector<ActorPtr> getActors();
+  void performActionOnActors(std::function<void(ActorPtr)> func);
 
-  virtual void render(TCODConsole* console);
-  virtual void updateTile(u32 x, u32 y);
+  void render(TCODConsole* console);
+  void updateTile(u32 x, u32 y);
   void updateTiles();
 
-  virtual void computeFov(int x, int y, int radius);
-  virtual TCODMap& getCODMap();
+  void computeFov(int x, int y, int radius);
+  TCODMap& getCODMap();
 
-  virtual TCODColor getColor(u32 x, u32 y);
-  virtual char getChar(u32 x, u32 y);
-  virtual u32 getWidth() const;
-  virtual void setWidth(const u32 &width);
-  virtual u32 getHeight() const;
-  virtual void setHeight(const u32 &height);
-  virtual MapId getId() const;
-  virtual void setId(const MapId &id);
+  TCODColor getColor(u32 x, u32 y);
+  char getChar(u32 x, u32 y);
+  u32 getWidth() const;
+  void setWidth(const u32 &width);
+  u32 getHeight() const;
+  void setHeight(const u32 &height);
+  MapId getId() const;
+  void setId(const MapId &id);
 
-  virtual void onExit(Direction direction, ActorPtr exiter);
-  virtual const std::map<Direction, ActorActionPtr> getExitActions() const;
+  void onExit(Direction direction, ActorPtr exiter);
+  const std::map<Direction, ActorActionPtr> getExitActions() const;
 
   friend class MapParser;
 
-  void deserialize(MapDescriptionPtr dsc);
 private:
   MapId _id;
   u32 _width, _height;

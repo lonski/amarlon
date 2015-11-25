@@ -17,15 +17,15 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/wearer/wearer.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/destroyable/destroyable.h
     ${PROJECT_SOURCE_DIR}/src/databases/actor_db.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/actor_descriptions.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/description.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/descriptions/spell_description.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/descriptions/actor_descriptions.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/descriptions/description.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/descriptions/spell_description.h
     ${PROJECT_SOURCE_DIR}/src/databases/spell_db.h
     ${PROJECT_SOURCE_DIR}/src/databases/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/databases/map_db.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/actor_parser.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/parser.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/tile_parser.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/parsers/actor_parser.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/parsers/parser.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/parsers/tile_parser.h
     ${PROJECT_SOURCE_DIR}/src/world/map.h
     ${PROJECT_SOURCE_DIR}/src/world/map_id.h
     ${PROJECT_SOURCE_DIR}/src/world/tile_type.h
@@ -63,9 +63,9 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/utils/target_selector/single_range_selector.h
     ${PROJECT_SOURCE_DIR}/src/utils/configuration.h
     ${PROJECT_SOURCE_DIR}/src/utils/damage.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/parsers/map_parser.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/serializer.h
-    ${PROJECT_SOURCE_DIR}/src/data_gateways/serializers/map_serializer.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/parsers/map_parser.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/serializers/serializer.h
+    ${PROJECT_SOURCE_DIR}/src/persistence/serializers/map_serializer.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_actions/actor_action.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_actions/move_action.h
     ${PROJECT_SOURCE_DIR}/src/rpg_system/saving_throws_table.h
@@ -93,6 +93,6 @@ set(SOURCE_FILES
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1 -DTESTING=1")
 
 add_executable(ut_amarlon ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(ut_amarlon amarlon_core amarlon_widgets data_gateway ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${LUABIND_LIBRARIES})
+target_link_libraries(ut_amarlon amarlon_core amarlon_widgets persistence ${TCOD_LIBRARIES} ${GTEST_LIBRARIES} ${LUABIND_LIBRARIES})
 
 add_custom_command(TARGET ut_amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ut_amarlon>)

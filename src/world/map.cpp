@@ -44,15 +44,42 @@ void Map::deserialize(MapDescriptionPtr dsc)
         addActor( Actor::create(aDsc) );
       }
 
-      for ( MapActionDescriptionPtr acDsc : dsc->actions )
+      for ( auto& kv : dsc->actions )
       {
-        _exitActions[ static_cast<Direction>(acDsc->direction) ]
-            = std::make_shared<TeleportAction>( static_cast<MapId>(acDsc->teleport_MapId),
+        Direction dir = static_cast<Direction>(kv.first);
+        ActorActionDescriptionPtr acDsc = kv.second;
+        //TODO: generalize for all ActorActions
+        //      probably it needs ActorAction::create(ActorActionDescription*) method
+        _exitActions[ dir ] = std::make_shared<TeleportAction>(
+                                               static_cast<MapId>(acDsc->teleport_MapId),
                                                acDsc->teleport_x,
                                                acDsc->teleport_y);
       }
     }
   }
+}
+
+MapDescriptionPtr Map::toDescriptionStruct()
+{
+  MapDescriptionPtr dsc( new MapDescription );
+
+  dsc->id          = static_cast<int>( _id );
+  dsc->width       = static_cast<int>( _width );
+  dsc->height      = static_cast<int>( _height );
+  dsc->binaryTiles = serializeTiles();
+
+  for ( auto& kv : _exitActions )
+  {
+    ActorActionDescriptionPtr aDsc = kv.second->toDescriptionStruct();
+    if ( aDsc ) dsc->actions[ (int)kv.first ] = aDsc;
+  }
+
+  for ( ActorPtr actor : getActors() )
+  {
+    dsc->actors.push_back( actor->toDescriptionStruct() );
+  }
+
+  return dsc;
 }
 
 void Map::allocateTiles()

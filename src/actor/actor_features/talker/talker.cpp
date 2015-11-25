@@ -33,6 +33,16 @@ void Talker::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Talker::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  TalkerDescriptionPtr dsc(new TalkerDescription);
+
+  dsc->id = _id;
+  dsc->dialogs = _dialogs;
+
+  return dsc;
+}
+
 ActorFeature::Type Talker::getType()
 {
   return Talker::featureType;

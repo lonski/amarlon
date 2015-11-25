@@ -5,10 +5,11 @@
 #include <vector>
 #include <description.h>
 #include <experimental/optional>
+#include <spellbook_description.h>
 
 namespace amarlon {
 
-struct SkillDescription
+struct SkillDescription : Description
 {
   SkillDescription(int id = 0, int level = 0)
     : id(id)
@@ -16,19 +17,6 @@ struct SkillDescription
   {}
   int id;
   int level;
-};
-
-struct SpellSlotDescription
-{
-  int level;
-  int spell;
-  bool prepared;
-};
-
-struct SpellbookDescription
-{
-  std::vector<SpellSlotDescription> spellSlots;
-  std::vector<int> knownSpells;
 };
 
 struct CharacterDescription : Description

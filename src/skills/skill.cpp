@@ -59,6 +59,18 @@ std::string Skill::getDescription() const
   return _flyweight ? _flyweight->dsc : "";
 }
 
+SkillDescriptionPtr Skill::toDescriptionStruct()
+{
+  SkillDescriptionPtr dsc(new SkillDescription);
+  dsc->id = (int)_id;
+  dsc->name = getName();
+  dsc->dsc = getDescription();
+  dsc->passive = isPassive();
+  dsc->target = (int)getTargetType();
+
+  return dsc;
+}
+
 bool Skill::use(ActorPtr user, Target target)
 {
   bool r = false;

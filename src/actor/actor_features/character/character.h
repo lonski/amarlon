@@ -45,6 +45,7 @@ public:
   virtual ~Character();
   Character(DescriptionPtr dsc);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   static CharacterPtr create(DescriptionPtr dsc);
 
   virtual bool isEqual(ActorFeaturePtr rhs) const;
@@ -110,6 +111,7 @@ protected:
   virtual void setMaxHitPoints(int maxHp);
   PickablePtr getEquippedItem(ItemSlotType slot);
   void cloneBase(Character* c);
+  virtual void toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cmp = nullptr);
 
 private:
   int _level;

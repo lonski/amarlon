@@ -13,6 +13,7 @@ class Scroll : public Pickable
 {
 public:
   Scroll(DescriptionPtr dsc = nullptr);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   virtual ~Scroll();
 
   virtual ActorFeaturePtr clone();

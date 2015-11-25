@@ -17,6 +17,31 @@ Scroll::Scroll(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Scroll::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  ScrollDescriptionPtr dsc(new ScrollDescription);
+  ScrollPtr cmpP = std::dynamic_pointer_cast<Scroll>(cmp);
+
+  Pickable::toDescriptionStruct(dsc, cmpP);
+
+  if ( cmpP )
+  {
+    if ( _spell )
+    {
+      if ( cmpP->_spell->getId() != _spell->getId() ) dsc->spellId = (int)_spell->getId();
+    }
+  }
+  else
+  {
+    if ( _spell )
+    {
+      dsc->spellId = (int)_spell->getId();
+    }
+  }
+
+  return dsc;
+}
+
 Scroll::~Scroll()
 {
 }

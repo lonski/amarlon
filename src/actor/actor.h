@@ -53,6 +53,7 @@ public:
    *        Fuills only changed data. All other data remain unchanged.
    */
   void upgrade(ActorDescriptionPtr dsc);
+  ActorDescriptionPtr toDescriptionStruct();
   ~Actor();
 
   ActorPtr clone();  
@@ -198,7 +199,7 @@ public:
   /**
    * @brief Draws actor symbol on console
    */
-  virtual void render(TCODConsole* console);
+  void render(TCODConsole* console);
 
   /**
    * @brief True if this actor handles player input.

@@ -2,7 +2,7 @@
 #define SKILL_PARSER_H
 
 #include <memory>
-#include <data_gateways/parsers/parser.h>
+#include <persistence/parsers/parser.h>
 
 namespace amarlon {
 

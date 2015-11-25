@@ -1,7 +1,7 @@
 #ifndef DIALOG_SERIALIZER_H
 #define DIALOG_SERIALIZER_H
 
-#include <data_gateways/parsers/parser.h>
+#include <persistence/parsers/parser.h>
 #include <dialog.h>
 
 namespace amarlon {

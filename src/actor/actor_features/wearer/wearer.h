@@ -21,6 +21,7 @@ public:
   virtual ~Wearer() {}
   static WearerPtr create(DescriptionPtr dsc);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
 
   virtual ActorFeature::Type getType() { return featureType; }
 

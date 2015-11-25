@@ -38,6 +38,29 @@ void Trap::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Trap::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  TrapDescriptionPtr dsc(new TrapDescription);
+  TrapPtr cmpT = std::dynamic_pointer_cast<Trap>(cmp);
+
+  if ( cmpT )
+  {
+    if ( _armed != cmpT->_armed ) dsc->armed = _armed;
+    if ( _id != cmpT->_id ) dsc->id = (int)_id;
+    if ( _difficulty != cmpT->_difficulty ) dsc->difficulty = _difficulty;
+    if ( _detected != cmpT->_detected ) dsc->detected = _detected;
+  }
+  else
+  {
+    dsc->armed = _armed;
+    dsc->id = (int)_id;
+    dsc->difficulty = _difficulty;
+    dsc->detected = _detected;
+  }
+
+  return dsc;
+}
+
 ActorFeature::Type Trap::getType()
 {
   return ActorFeature::TRAP;

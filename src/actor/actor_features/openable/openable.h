@@ -20,6 +20,7 @@ public:
 
   Openable(DescriptionPtr dsc = nullptr);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   virtual ~Openable();
 
   static OpenablePtr create(DescriptionPtr dsc);

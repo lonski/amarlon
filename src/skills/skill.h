@@ -30,6 +30,7 @@ public:
   int getRadius() const;
   bool isPassive() const;
   std::string getDescription() const;
+  SkillDescriptionPtr toDescriptionStruct();
 
   bool use(ActorPtr user, Target target);
 

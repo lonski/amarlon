@@ -1,10 +1,10 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
+#include <map>
 #include <target.h>
 #include <memory>
 #include <libtcod.hpp>
-#include <animation_description.h>
 #include <animation_type.h>
 
 namespace amarlon {
@@ -22,8 +22,6 @@ public:
   Animation();
   virtual ~Animation();
 
-  static AnimationPtr create(AnimationDescriptionPtr dsc);
-  static AnimationPtr create(AnimationDescription dsc);
   static AnimationPtr create(Type type);
   virtual AnimationPtr clone() = 0;
   virtual void run() = 0;

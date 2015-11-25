@@ -14,7 +14,9 @@ namespace amarlon {
 
 class Actor;
 class Pickable;
-typedef std::shared_ptr<Actor>    ActorPtr;
+struct PickableDescription;
+typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;
+typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::shared_ptr<Pickable> PickablePtr;
 
 class Pickable : public ActorFeature
@@ -24,6 +26,7 @@ public:
 
   Pickable(DescriptionPtr dsc = nullptr);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   virtual ~Pickable();
 
   static PickablePtr create(DescriptionPtr dsc);
@@ -71,6 +74,7 @@ public:
   virtual std::string getDescription();
 
 protected:
+  void toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP = nullptr);
   void clone(Pickable* p);
   int _usesCount;
 

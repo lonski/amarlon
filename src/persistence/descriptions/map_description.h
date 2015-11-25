@@ -2,23 +2,15 @@
 #define MAP_DESCRIPTION
 
 #include <vector>
+#include <map>
 #include <memory>
 #include <description.h>
+#include <actor_action_description.h>
 
 namespace amarlon {
 
 struct ActorDescription;
-
-struct MapActionDescription
-{
-  int direction;
-  int teleport_MapId;
-  int teleport_x;
-  int teleport_y;
-};
-
 typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
-typedef std::shared_ptr<MapActionDescription> MapActionDescriptionPtr;
 
 struct MapDescription : Description
 {
@@ -27,7 +19,7 @@ struct MapDescription : Description
   int height;
   std::string binaryTiles;
   std::vector<ActorDescriptionPtr> actors;
-  std::vector<MapActionDescriptionPtr> actions;
+  std::map<int /*direction*/, ActorActionDescriptionPtr> actions;
 };
 
 typedef std::shared_ptr<MapDescription> MapDescriptionPtr;

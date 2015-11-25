@@ -30,6 +30,7 @@ public:
 
   Ai(DescriptionPtr dsc = nullptr);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   virtual ~Ai() {}
 
   static AiPtr create(DescriptionPtr dsc);

@@ -8,6 +8,8 @@ namespace amarlon{
 
 class Actor;
 class ActorAction;
+struct ActorActionDescription;
+typedef std::shared_ptr<ActorActionDescription> ActorActionDescriptionPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
 typedef std::unique_ptr<ActorAction> ActorActionUPtr;
@@ -23,6 +25,12 @@ public:
 
   virtual ActorActionResult perform(ActorPtr performer) = 0;
   virtual ActorActionUPtr clone() = 0;
+
+  virtual ActorActionDescriptionPtr toDescriptionStruct()
+  {
+    throw std::logic_error("ActorAction::toDescriptionStruct not implemented!");
+    return nullptr;
+  }
 
 };
 

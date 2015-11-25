@@ -39,6 +39,58 @@ void Pickable::upgrade(DescriptionPtr dsc)
   }
 }
 
+DescriptionPtr Pickable::toDescriptionStruct(ActorFeaturePtr cmp)
+{
+  PickableDescriptionPtr dsc(new PickableDescription);
+  PickablePtr cmpP = std::dynamic_pointer_cast<Pickable>(cmp);
+
+  toDescriptionStruct(dsc, cmpP);
+
+  return dsc;
+}
+
+void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
+{
+  if ( cmpP )
+  {
+    if ( _stackable != cmpP->_stackable ) dsc->stackable = _stackable;
+    if ( _stackable != cmpP->_stackable ) dsc->amount = _amount;
+    if ( _usesCount != cmpP->_usesCount ) dsc->uses = _usesCount;
+    if ( _itemSlot != cmpP->_itemSlot )   dsc->itemSlot = (int)_itemSlot;
+    if ( _armorClass != cmpP->_armorClass ) dsc->armorClass = _armorClass;
+    if ( _weight != cmpP->_weight ) dsc->weight = _weight;
+    if ( _price != cmpP->_price ) dsc->price = _price;
+    if ( _targetType != cmpP->_targetType ) dsc->targetType = (int)_targetType;
+    if ( _damage != cmpP->_damage ) dsc->damage = _damage.toStr();
+    if ( _scriptId != cmpP->_scriptId ) dsc->scriptId = _scriptId;
+    if ( _range != cmpP->_range ) dsc->range = _range;
+    if ( _radius != cmpP->_radius ) dsc->radius = _radius;
+    if ( _type.armor != cmpP->_type.armor ) dsc->armorType = (int)_type.armor;
+    if ( _type.weapon != cmpP->_type.weapon ) dsc->weaponType = (int)_type.weapon;
+    if ( _type.amunition != cmpP->_type.amunition ) dsc->amunitionType = (int)_type.amunition;
+    if ( _type.category != cmpP->_type.category ) dsc->category = (int)_type.category;
+  }
+  else
+  {
+    dsc->stackable = _stackable;
+    dsc->amount = _amount;
+    dsc->uses = _usesCount;
+    dsc->itemSlot = (int)_itemSlot;
+    dsc->armorClass = _armorClass;
+    dsc->weight = _weight;
+    dsc->price = _price;
+    dsc->targetType = (int)_targetType;
+    dsc->damage = _damage.toStr();
+    dsc->scriptId = _scriptId;
+    dsc->range = _range;
+    dsc->radius = _radius;
+    dsc->armorType = (int)_type.armor;
+    dsc->weaponType = (int)_type.weapon;
+    dsc->amunitionType = (int)_type.amunition;
+    dsc->category = (int)_type.category;
+  }
+}
+
 Pickable::Pickable(DescriptionPtr dsc)
   : _usesCount(0)
   , _stackable(false)

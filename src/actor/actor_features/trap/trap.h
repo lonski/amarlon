@@ -24,6 +24,7 @@ public:
 
   static TrapPtr create(DescriptionPtr dsc);
   virtual void upgrade(DescriptionPtr dsc);
+  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
 
   virtual ActorFeature::Type getType();
   virtual TrapId getId() const;
