@@ -118,7 +118,7 @@ PickablePtr Pickable::create(DescriptionPtr dsc)
   PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
   if ( pDsc )
   {    
-    if ( pDsc->category && *pDsc->category == PickableCategory::Scroll )
+    if ( pDsc->category && *pDsc->category == (int)PickableCategory::Scroll )
     {
       p.reset( new Scroll(pDsc) );
     }
