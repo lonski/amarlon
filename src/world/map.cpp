@@ -38,6 +38,7 @@ void Map::deserialize(MapDescriptionPtr dsc)
     {
       std::string s_tiles = base64_decode( dsc->binaryTiles );
       deserializeTiles( {s_tiles.begin(), s_tiles.end()} );
+      updateTiles();
 
       for ( ActorDescriptionPtr aDsc : dsc->actors )
       {
@@ -290,7 +291,7 @@ void Map::computeFov(int x, int y, int radius)
 
 TCODMap& Map::getCODMap()
 {
-  return *_codMap;
+  return _codMap;
 }
 
 void Map::deserializeTiles(std::vector<unsigned char> tiles)
