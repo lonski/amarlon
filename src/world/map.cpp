@@ -47,7 +47,7 @@ void Map::deserialize(MapDescriptionPtr dsc)
       for ( auto& kv : dsc->actions )
       {
         Direction dir = static_cast<Direction>(kv.first);
-        ActorActionDescriptionPtr acDsc = kv.second;
+        ActorActionDescriptionPtr acDsc = std::dynamic_pointer_cast<ActorActionDescription>(kv.second);
         //TODO: generalize for all ActorActions
         //      probably it needs ActorAction::create(ActorActionDescription*) method
         _exitActions[ dir ] = std::make_shared<TeleportAction>(
@@ -70,7 +70,7 @@ MapDescriptionPtr Map::toDescriptionStruct()
 
   for ( auto& kv : _exitActions )
   {
-    ActorActionDescriptionPtr aDsc = kv.second->toDescriptionStruct();
+    DescriptionPtr aDsc = kv.second->toDescriptionStruct();
     if ( aDsc ) dsc->actions[ (int)kv.first ] = aDsc;
   }
 

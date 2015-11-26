@@ -23,6 +23,7 @@ public:
 private:
   rapidxml::xml_node<>* _actorNode;
   std::vector<ActorFeatureSerializerPtr> _afSerializers;
+  std::vector<SerializerPtr> _featureSerializers;
 
 };
 

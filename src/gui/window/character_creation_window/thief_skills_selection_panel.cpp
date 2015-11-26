@@ -198,7 +198,7 @@ void ThiefSkillsSelectionPanel::setSkills()
 {
   if ( _parent )
   {
-    PlayableCharacterDescriptionPtr dsc = _parent->getCharacterDsc();
+    CharacterDescriptionPtr dsc = _parent->getCharacterDsc();
     if ( dsc )
     {
       dsc->skills.push_back( SkillDescription( (int)SkillId::OpenLocks,   getValue(OpenLocks)) );

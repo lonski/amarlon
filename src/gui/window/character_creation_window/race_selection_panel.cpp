@@ -133,8 +133,8 @@ void RaceSelectionPanel::setRace()
   auto race = getSelectedRace();
   if ( race )
   {
-    PlayableCharacterDescriptionPtr dsc =
-        std::dynamic_pointer_cast<PlayableCharacterDescription>
+    CharacterDescriptionPtr dsc =
+        std::dynamic_pointer_cast<CharacterDescription>
         (_parent->getPlayerDsc()->features[ActorFeature::CHARACTER]);
 
     if ( dsc )

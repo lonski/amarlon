@@ -1,9 +1,13 @@
 #ifndef SERIALIZER_H
 #define SERIALIZER_H
 
+#include <memory>
 #include "xml/rapidxml.hpp"
 
 namespace amarlon {
+
+struct Description;
+typedef std::shared_ptr<Description> DescriptionPtr;
 
 class Serializer
 {
@@ -31,10 +35,14 @@ public:
     _xml = xmlNode;
   }
 
+  virtual bool serialize(DescriptionPtr dsc) {}
+
 protected:
   rapidxml::xml_document<>* _document;
   rapidxml::xml_node<>* _xml;
 };
+
+typedef std::shared_ptr<Serializer> SerializerPtr;
 
 }
 

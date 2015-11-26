@@ -2,10 +2,11 @@
 #define ACTOR_ACTION_DESCRIPTION
 
 #include <memory>
+#include <description.h>
 
 namespace amarlon {
 
-struct ActorActionDescription
+struct ActorActionDescription : Description
 {
   int teleport_MapId;
   int teleport_x;

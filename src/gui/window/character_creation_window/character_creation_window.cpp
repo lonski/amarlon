@@ -124,11 +124,11 @@ ActorDescriptionPtr CharacterCreationWindow::getPlayerDsc() const
   return _player;
 }
 
-PlayableCharacterDescriptionPtr CharacterCreationWindow::getCharacterDsc() const
+CharacterDescriptionPtr CharacterCreationWindow::getCharacterDsc() const
 {
   auto& f = getPlayerDsc()->features;
   auto it = f.find(ActorFeature::CHARACTER);
-  return it != f.end() ? std::dynamic_pointer_cast<PlayableCharacterDescription>(it->second) : nullptr;
+  return it != f.end() ? std::dynamic_pointer_cast<CharacterDescription>(it->second) : nullptr;
 }
 
 }}

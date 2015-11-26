@@ -207,7 +207,7 @@ void AbilityScoresSelectionPanel::next()
 
 void AbilityScoresSelectionPanel::setScores()
 {
-  PlayableCharacterDescriptionPtr d = _parent->getCharacterDsc();
+  CharacterDescriptionPtr d = _parent->getCharacterDsc();
   if ( d )
     for ( auto as : AbilityScore::Type() )
       d->abilityScores[as] = getValue(as);

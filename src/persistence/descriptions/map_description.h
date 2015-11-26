@@ -19,7 +19,7 @@ struct MapDescription : Description
   int height;
   std::string binaryTiles;
   std::vector<ActorDescriptionPtr> actors;
-  std::map<int /*direction*/, ActorActionDescriptionPtr> actions;
+  std::map<int /*direction*/, DescriptionPtr> actions;
 };
 
 typedef std::shared_ptr<MapDescription> MapDescriptionPtr;

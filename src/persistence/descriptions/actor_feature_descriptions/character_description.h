@@ -40,14 +40,8 @@ struct CharacterDescription : Description
   std::map<int, int> abilityScores;
 };
 
-
-struct PlayableCharacterDescription : CharacterDescription
-{
-};
-
 typedef std::shared_ptr<SpellbookDescription> SpellbookDescriptionPtr;
 typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
-typedef std::shared_ptr<PlayableCharacterDescription> PlayableCharacterDescriptionPtr;
 
 }
 

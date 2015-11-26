@@ -20,7 +20,7 @@ public:
   virtual int getX() const;
   virtual int getY() const;
 
-  virtual ActorActionDescriptionPtr toDescriptionStruct();
+  virtual DescriptionPtr toDescriptionStruct();
 
 private:
   MapId _map;

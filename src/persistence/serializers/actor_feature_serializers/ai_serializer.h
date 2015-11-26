@@ -2,21 +2,21 @@
 #define AI_SERIALIZER_H
 
 #include <memory>
-#include <actor_feature_serializer.h>
+#include <serializer.h>
 
 namespace amarlon {
 
 class Ai;
 typedef std::shared_ptr<Ai> AiPtr;
 
-class AiSerializer : public ActorFeatureSerializer
+class AiSerializer : public Serializer
 {
 public:
   AiSerializer();
   AiSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~AiSerializer();
 
-  virtual bool serialize(ActorFeaturePtr af);
+  virtual bool serialize(DescriptionPtr dsc);
 
 };
 

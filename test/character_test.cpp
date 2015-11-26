@@ -51,7 +51,7 @@ TEST_F(CharacterTest, carryingLoad)
   clearInventory(ziomek);
 
   //replace Character feature
-  PlayableCharacterDescriptionPtr dsc(new PlayableCharacterDescription);
+  CharacterDescriptionPtr dsc(new CharacterDescription);
   dsc->race = (int)RaceType::Human;
   dsc->abilityScores[AbilityScore::STR] = 10;
   dsc->speed = 40;

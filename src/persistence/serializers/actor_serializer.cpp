@@ -34,7 +34,8 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   _afSerializers.push_back( std::make_shared<CharacterSerializer>() );
   _afSerializers.push_back( std::make_shared<OpenableSerializer>() );
   _afSerializers.push_back( std::make_shared<TrapSerializer>() );
-  _afSerializers.push_back( std::make_shared<AiSerializer>() );
+
+  _featureSerializers.push_back( std::make_shared<AiSerializer>() );
 }
 
 ActorSerializer::~ActorSerializer()
@@ -85,6 +86,11 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
       {
         serializer->setDestination(_document, _actorNode);
         if ( serializer->serialize(afPair.second) ) break;
+      }
+      for ( auto serializer : _featureSerializers )
+      {
+        serializer->setDestination(_document, _actorNode);
+        if ( serializer->serialize(afPair.second->toDescriptionStruct()) ) break;
       }
     }
   }

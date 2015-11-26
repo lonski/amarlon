@@ -16,7 +16,7 @@ public:
   ActionSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* parentNode);
   ~ActionSerializer();
 
-  bool serialize(ActorActionPtr action);
+  virtual bool serialize(DescriptionPtr dsc);
 
 };
 

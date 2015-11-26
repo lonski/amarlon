@@ -184,10 +184,8 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       characterNode = _xml->first_node("PlayableCharacter");
       if (characterNode != nullptr)
       {
-        PlayableCharacterDescriptionPtr pdsc( new PlayableCharacterDescription );
-        pdsc->type = 2; //CharacterType::PlayableCharacter;
-
-        dsc = pdsc;
+        dsc.reset( new CharacterDescription );
+        dsc->type = 2; //CharacterType::PlayableCharacter;
       }
     }
 

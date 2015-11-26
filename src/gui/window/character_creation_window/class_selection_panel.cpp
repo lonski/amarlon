@@ -123,7 +123,7 @@ void ClassSelectionPanel::setClass()
   auto cClass = getSelectedClass();
   if ( cClass && _parent )
   {
-    PlayableCharacterDescriptionPtr dsc = _parent->getCharacterDsc();
+    CharacterDescriptionPtr dsc = _parent->getCharacterDsc();
     if ( dsc )
     {
       dsc->cClass = (int)cClass->getType();

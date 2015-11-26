@@ -56,7 +56,7 @@ int TeleportAction::getY() const
   return _y;
 }
 
-ActorActionDescriptionPtr TeleportAction::toDescriptionStruct()
+DescriptionPtr TeleportAction::toDescriptionStruct()
 {
   ActorActionDescriptionPtr aDsc( new ActorActionDescription );
   aDsc->teleport_MapId = static_cast<int>(_map);

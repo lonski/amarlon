@@ -28,7 +28,7 @@ DescriptionPtr PlayableCharacter::toDescriptionStruct(ActorFeaturePtr cmp)
   CharacterDescriptionPtr dsc;
   CharacterPtr cmpChr = std::dynamic_pointer_cast<PlayableCharacter>(cmp);
 
-  dsc.reset( new PlayableCharacterDescription );
+  dsc.reset( new CharacterDescription );
   Character::toDescriptionStruct( dsc, cmpChr );
   dsc->type = static_cast<int>(CharacterType::PlayableCharacter);
 

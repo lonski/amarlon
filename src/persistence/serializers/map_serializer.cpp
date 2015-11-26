@@ -6,6 +6,7 @@
 #include <actor.h>
 #include <iostream>
 #include <libtcod.hpp>
+#include <actor_action.h>
 #include <base64.h>
 
 using namespace rapidxml;
@@ -69,7 +70,7 @@ void MapSerializer::serializeExitActions()
     addAttributeEnum( directionNode, "id", pair.first );
 
     _actionSerializer.setDestination(_document, directionNode);
-    _actionSerializer.serialize(pair.second);
+    _actionSerializer.serialize( pair.second->toDescriptionStruct() );
   }
 }
 
