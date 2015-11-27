@@ -2,6 +2,7 @@
 #include <openable.h>
 #include <utils.h>
 #include <xml_utils.h>
+#include <openable_description.h>
 
 using namespace rapidxml;
 
@@ -13,7 +14,7 @@ OpenableSerializer::OpenableSerializer()
 }
 
 OpenableSerializer::OpenableSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -21,23 +22,24 @@ OpenableSerializer::~OpenableSerializer()
 {
 }
 
-bool OpenableSerializer::serialize(ActorFeaturePtr af)
+bool OpenableSerializer::serialize(DescriptionPtr dsc)
 {
-  OpenablePtr openable = std::dynamic_pointer_cast<Openable>(af);
-  if ( openable && _xml && _document )
+  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
+  if ( oDsc && _xml && _document )
   {
     xml_node<>* openableNode = _document->allocate_node(node_element, "Openable");
     _xml->append_node( openableNode );
 
-    addAttribute( openableNode, "lockId",   openable->getLockId() );
-    addAttribute( openableNode, "locked",   static_cast<int>(openable->isLocked()) );
-    addAttribute( openableNode, "lockLevel", static_cast<int>(openable->getLockLevel()) );
-    addAttribute( openableNode, "scriptId", static_cast<int>(openable->getScriptId()) );
-    addAttribute( openableNode, "closed",   static_cast<int>(openable->isClosed()) );
+    if ( oDsc->lockId ) addAttribute( openableNode, "lockId",   *oDsc->lockId );
+    if ( oDsc->locked ) addAttribute( openableNode, "locked",   (int)*oDsc->locked );
+    if ( oDsc->lockLevel ) addAttribute( openableNode, "lockLevel", *oDsc->lockLevel );
+    if ( oDsc->scriptId ) addAttribute( openableNode, "scriptId", *oDsc->scriptId );
+    if ( oDsc->closed ) addAttribute( openableNode, "closed",   (int)*oDsc->closed );
     return true;
   }
   return false;
 }
+
 
 }
 
