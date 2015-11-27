@@ -1,5 +1,5 @@
 #include "talker_serializer.h"
-#include <talker.h>
+#include <talker_description.h>
 #include <utils.h>
 #include <xml_utils.h>
 
@@ -13,7 +13,7 @@ TalkerSerializer::TalkerSerializer()
 }
 
 TalkerSerializer::TalkerSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -21,15 +21,15 @@ TalkerSerializer::~TalkerSerializer()
 {
 }
 
-bool TalkerSerializer::serialize(ActorFeaturePtr af)
+bool TalkerSerializer::serialize(DescriptionPtr dsc)
 {
-  TalkerPtr talker = std::dynamic_pointer_cast<Talker>(af);
-  if ( talker && _xml && _document )
+  TalkerDescriptionPtr tDsc = std::dynamic_pointer_cast<TalkerDescription>(dsc);
+  if ( tDsc && _xml && _document && tDsc->id )
   {
     xml_node<>* tNode = _document->allocate_node(node_element, "Talker");
     _xml->append_node( tNode );
 
-    addAttribute( tNode, "id", talker->getId() );
+    addAttribute( tNode, "id", *tDsc->id );
     return true;
   }
   return false;

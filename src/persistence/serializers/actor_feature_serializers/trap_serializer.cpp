@@ -1,5 +1,5 @@
 #include "trap_serializer.h"
-#include <trap.h>
+#include <trap_description.h>
 #include <utils.h>
 #include <xml_utils.h>
 
@@ -13,7 +13,7 @@ TrapSerializer::TrapSerializer()
 }
 
 TrapSerializer::TrapSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -21,18 +21,18 @@ TrapSerializer::~TrapSerializer()
 {
 }
 
-bool TrapSerializer::serialize(ActorFeaturePtr af)
+bool TrapSerializer::serialize(DescriptionPtr dsc)
 {
-  TrapPtr trap = std::dynamic_pointer_cast<Trap>(af);
-  if ( trap && _xml && _document )
+  TrapDescriptionPtr tDsc = std::dynamic_pointer_cast<TrapDescription>(dsc);
+  if ( tDsc && _xml && _document )
   {
     xml_node<>* trapNode = _document->allocate_node(node_element, "Trap");
     _xml->append_node( trapNode );
 
-    addAttribute( trapNode, "id",      static_cast<int>(trap->getId()) );
-    addAttribute( trapNode, "armed",      static_cast<int>(trap->isArmed()) );
-    addAttribute( trapNode, "detected",      static_cast<int>(trap->isDetected()) );
-    addAttribute( trapNode, "difficulty", trap->getDifficulty() );
+    if ( tDsc->id )         addAttribute( trapNode, "id",         *tDsc->id );
+    if ( tDsc->armed )      addAttribute( trapNode, "armed",      (int)*tDsc->armed );
+    if ( tDsc->detected )   addAttribute( trapNode, "detected",   (int)*tDsc->detected );
+    if ( tDsc->difficulty ) addAttribute( trapNode, "difficulty", *tDsc->difficulty );
     return true;
   }
   return false;

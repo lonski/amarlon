@@ -5,7 +5,6 @@
 #include <wearer_serializer.h>
 #include <status_effects_manager.h>
 #include <status_effect.h>
-#include <trap_serializer.h>
 
 #include <ai_serializer.h>
 #include <character_serializer.h>
@@ -13,6 +12,8 @@
 #include <inventory_serializer.h>
 #include <openable_serializer.h>
 #include <pickable_serializer.h>
+#include <talker_serializer.h>
+#include <trap_serializer.h>
 
 using namespace rapidxml;
 
@@ -28,8 +29,9 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   , _actorNode(nullptr)
 {
   _afSerializers.push_back( std::make_shared<WearerSerializer>() );
-  _afSerializers.push_back( std::make_shared<TrapSerializer>() );
 
+  _featureSerializers.push_back( std::make_shared<TrapSerializer>() );
+  _featureSerializers.push_back( std::make_shared<TalkerSerializer>() );
   _featureSerializers.push_back( std::make_shared<PickableSerializer>() );
   _featureSerializers.push_back( std::make_shared<OpenableSerializer>() );
   _featureSerializers.push_back( std::make_shared<InventorySerializer>() );

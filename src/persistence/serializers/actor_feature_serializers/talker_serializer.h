@@ -1,22 +1,18 @@
 #ifndef TALKER_SERIALIZER_H
 #define TALKER_SERIALIZER_H
 
-#include <memory>
-#include <actor_feature_serializer.h>
+#include <serializer.h>
 
 namespace amarlon {
 
-class Talker;
-typedef std::shared_ptr<Talker> TalkerPtr;
-
-class TalkerSerializer : public ActorFeatureSerializer
+class TalkerSerializer : public Serializer
 {
 public:
   TalkerSerializer();
   TalkerSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~TalkerSerializer();
 
-  virtual bool serialize(ActorFeaturePtr af);
+  virtual bool serialize(DescriptionPtr dsc);
 
 };
 
