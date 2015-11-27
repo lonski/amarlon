@@ -1,5 +1,5 @@
 #include "destroyable_serializer.h"
-#include <destroyable.h>
+#include <destroyable_description.h>
 #include <utils.h>
 #include <xml_utils.h>
 
@@ -12,7 +12,7 @@ DestroyableSerializer::DestroyableSerializer()
 }
 
 DestroyableSerializer::DestroyableSerializer(xml_document<> *document, xml_node<> *xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -20,16 +20,15 @@ DestroyableSerializer::~DestroyableSerializer()
 {
 }
 
-bool DestroyableSerializer::serialize(ActorFeaturePtr af)
+bool DestroyableSerializer::serialize(DescriptionPtr dsc)
 {
-  DestroyablePtr destr = std::dynamic_pointer_cast<Destroyable>(af);
-  if ( destr && _document && _xml )
+  DestroyableDescriptionPtr dDsc = std::dynamic_pointer_cast<DestroyableDescription>(dsc);
+  if ( dDsc && _document && _xml )
   {
     xml_node<>* _destrNode = _document->allocate_node(node_element, "Destroyable");
     _xml->append_node( _destrNode );
 
-
-    for ( DropRule rule : destr->getDropRules() )
+    for ( DropRule rule : dDsc->dropRules )
     {
       xml_node<>* ruleNode = _document->allocate_node(node_element, "DropRule");
       _destrNode->append_node( ruleNode );
@@ -42,7 +41,8 @@ bool DestroyableSerializer::serialize(ActorFeaturePtr af)
 
   }
 
-  return destr != nullptr;
+  return dDsc != nullptr;
+
 }
 
 }
