@@ -49,6 +49,12 @@ bool MapSerializer::serialize(MapPtr map)
   return serialized;
 }
 
+bool MapSerializer::serialize(DescriptionPtr)
+{
+  //todo
+  return true;
+}
+
 void MapSerializer::serializeAttributes()
 {
   addAttribute(_mapNode, "height", _map->getHeight());

@@ -35,7 +35,7 @@ public:
     _xml = xmlNode;
   }
 
-  virtual bool serialize(DescriptionPtr dsc) {}
+  virtual bool serialize(DescriptionPtr) = 0;
 
 protected:
   rapidxml::xml_document<>* _document;

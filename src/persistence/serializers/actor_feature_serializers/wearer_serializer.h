@@ -1,30 +1,18 @@
 #ifndef WEARER_SERIALIZER_H
 #define WEARER_SERIALIZER_H
 
-#include <memory>
-#include <actor_feature_serializer.h>
-#include <item_slot_type.h>
+#include <serializer.h>
 
 namespace amarlon {
 
-class Wearer;
-typedef std::shared_ptr<Wearer> WearerPtr;
-
-class WearerSerializer : public ActorFeatureSerializer
+class WearerSerializer : public Serializer
 {
 public:
   WearerSerializer();
   WearerSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~WearerSerializer();
 
-  virtual bool serialize(ActorFeaturePtr af);
-
-private:
-  rapidxml::xml_node<>* _wearerNode;
-  WearerPtr _wearer;
-
-  void serializeItemSlots();
-  void serializeEquippedItem(ItemSlotType slot, rapidxml::xml_node<>* slotNode);
+  virtual bool serialize(DescriptionPtr dsc);
 
 };
 

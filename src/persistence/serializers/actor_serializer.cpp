@@ -2,7 +2,6 @@
 #include <utils.h>
 #include <xml_utils.h>
 #include <actor.h>
-#include <wearer_serializer.h>
 #include <status_effects_manager.h>
 #include <status_effect.h>
 
@@ -14,6 +13,7 @@
 #include <pickable_serializer.h>
 #include <talker_serializer.h>
 #include <trap_serializer.h>
+#include <wearer_serializer.h>
 
 using namespace rapidxml;
 
@@ -28,8 +28,7 @@ ActorSerializer::ActorSerializer(xml_document<>* document, xml_node<>* xmlNode)
   : Serializer(document, xmlNode)
   , _actorNode(nullptr)
 {
-  _afSerializers.push_back( std::make_shared<WearerSerializer>() );
-
+  _featureSerializers.push_back( std::make_shared<WearerSerializer>() );
   _featureSerializers.push_back( std::make_shared<TrapSerializer>() );
   _featureSerializers.push_back( std::make_shared<TalkerSerializer>() );
   _featureSerializers.push_back( std::make_shared<PickableSerializer>() );
@@ -84,11 +83,6 @@ bool ActorSerializer::serialize(ActorPtr actor, const char* nodeName)
     //Serialize ActorFeatures
     for ( const auto& afPair : actor->_features )
     {
-      for ( auto serializer : _afSerializers )
-      {
-        serializer->setDestination(_document, _actorNode);
-        if ( serializer->serialize(afPair.second) ) break;
-      }
       for ( auto serializer : _featureSerializers )
       {
         serializer->setDestination(_document, _actorNode);

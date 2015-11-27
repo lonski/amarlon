@@ -1,5 +1,6 @@
 #include "wearer_serializer.h"
-#include <wearer.h>
+#include <wearer_description.h>
+#include <actor_descriptions.h>
 #include <actor_serializer.h>
 #include <utils.h>
 #include <xml_utils.h>
@@ -14,8 +15,7 @@ WearerSerializer::WearerSerializer()
 }
 
 WearerSerializer::WearerSerializer(xml_document<> *document, xml_node<> *xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
-  , _wearerNode(nullptr)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -23,43 +23,29 @@ WearerSerializer::~WearerSerializer()
 {
 }
 
-bool WearerSerializer::serialize(ActorFeaturePtr af)
+bool WearerSerializer::serialize(DescriptionPtr dsc)
 {
-  _wearer = std::dynamic_pointer_cast<Wearer>(af);
-  if ( _wearer && _document && _xml )
+  WearerDescriptionPtr wDsc = std::dynamic_pointer_cast<WearerDescription>(dsc);
+  if ( wDsc && _document && _xml )
   {
-    _wearerNode = _document->allocate_node(node_element, "Wearer");
-    _xml->append_node( _wearerNode );
+    xml_node<>* wearerNode = _document->allocate_node(node_element, "Wearer");
+    _xml->append_node( wearerNode );
 
-    serializeItemSlots();
-  }
-
-  return _wearer != nullptr;
-}
-
-void WearerSerializer::serializeItemSlots()
-{
-  for ( auto slot : ItemSlotType() )
-  {
-    if ( _wearer->hasSlot(slot) )
+    for ( auto slot : wDsc->itemSlots )
     {
-      xml_node<>* _slotNode = _document->allocate_node(node_element, "ItemSlot");
-      _wearerNode->append_node( _slotNode );
+      xml_node<>* slotNode = _document->allocate_node(node_element, "ItemSlot");
+      wearerNode->append_node( slotNode );
+      addAttribute( slotNode, "type", slot );
+    }
 
-      addAttributeEnum( _slotNode, "type", slot );
-      serializeEquippedItem(slot, _slotNode);
+    ActorSerializer actorSerializer(_document, wearerNode);
+    for ( auto a : wDsc->eqItems )
+    {
+      actorSerializer.serialize( a );
     }
   }
-}
 
-void WearerSerializer::serializeEquippedItem(ItemSlotType slot, xml_node<>* slotNode)
-{
-  ActorPtr equipped = _wearer->equipped(slot);
-  if ( equipped )
-  {
-    ActorSerializer actorSerializer(_document, slotNode);
-    actorSerializer.serialize(equipped, "Equipped");
-  }
+  return wDsc != nullptr;
 }
 
 }

@@ -29,28 +29,25 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Character level="1" experience="25" class="1" race="5" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="0"/>
 		<Ai script="1"/>
 		<Wearer>
-			<ItemSlot type="3">
-				<Equipped id="20"/>
-			</ItemSlot>
-			<ItemSlot type="12">
-				<Equipped id="30">
-					<Pickable amount="2"/>
-				</Equipped>
-			</ItemSlot>	
-			<ItemSlot type="7">
-				<Equipped id="31"/>
-			</ItemSlot>
+			<ItemSlot type="3"/>
+			<ItemSlot type="12"/>
+			<ItemSlot type="7"/>
+			<Actor id="20"/>
+			<Actor id="30">
+				<Pickable amount="2"/>
+			</Actor>
+			<Actor id="31"/>
 		</Wearer>
 		<Inventory maxSize="20">
-			<Content id="23"/>
-			<Content id="24"/>
-			<Content id="33"/>
-			<Content id="30">
+			<Actor id="23"/>
+			<Actor id="24"/>
+			<Actor id="33"/>
+			<Actor id="30">
 				<Pickable amount="2"/>
-			</Content>
-			<Content id="34">
+			</Actor>
+			<Actor id="34">
 				<Pickable amount="1"/>
-			</Content>
+			</Actor>
 		</Inventory>
 		<Destroyable>
 			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
@@ -147,12 +144,10 @@ When new actor is created with given ID as parameter, then the template will be 
 			</Spellbook>
 		</Character>
 		<Wearer>
-			<ItemSlot type="3">
-				<Equipped id="20"/>
-			</ItemSlot>
-			<ItemSlot type="7">
-				<Equipped id="24"/>
-			</ItemSlot>
+			<ItemSlot type="3"/>
+			<ItemSlot type="7"/>
+			<Actor id="20"/>
+			<Actor id="24"/>
 		</Wearer>
 		<Talker id="2"/>
 		<Ai script="1"/>

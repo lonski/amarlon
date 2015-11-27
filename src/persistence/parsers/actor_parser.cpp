@@ -350,16 +350,16 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
       {
         int slot = getAttribute<int>(itemSlotNode, "type");
         wrDsc->itemSlots.push_back(slot);
-
-        xml_node<>* equippedNode = itemSlotNode->first_node("Equipped");
-        if (equippedNode != nullptr)
-        {
-          parser.setSource(equippedNode);
-          wrDsc->eqItems.push_back(parser.parseDescription());
-        }
-
         itemSlotNode = itemSlotNode->next_sibling();
       }
+
+      xml_node<>* equippedNode = wearerNode->first_node("Actor");
+      while (equippedNode != nullptr)
+      {
+        parser.setSource(equippedNode);
+        wrDsc->eqItems.push_back(parser.parseDescription());
+      }
+
     }
   }
 

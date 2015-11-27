@@ -16,12 +16,12 @@
 			</Actor>
 			<Actor id="6" x="41" y="28">
 				<Inventory maxSize="5">
-					<Content id="13" x="0" y="0"/>
-					<Content id="14" x="0" y="0"/>	
-					<Content id="30" x="0" y="0">
+					<Actor id="13" x="0" y="0"/>
+					<Actor id="14" x="0" y="0"/>	
+					<Actor id="30" x="0" y="0">
 						<Pickable amount="20"/>
-					</Content>
-					<Content id="31" x="0" y="0"/>
+					</Actor>
+					<Actor id="31" x="0" y="0"/>
 				</Inventory>
 			</Actor>
 			<Actor id="16" x="41" y="29"/>

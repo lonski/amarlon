@@ -19,6 +19,7 @@ public:
   virtual ~MapSerializer();
 
   virtual bool serialize(MapPtr map);
+  virtual bool serialize(DescriptionPtr);
 
   void serializeActors();
   void serializeAttributes();
