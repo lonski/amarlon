@@ -1,8 +1,10 @@
 #include "inventory_serializer.h"
 #include <inventory.h>
-#include <actor_serializer.h>
 #include <utils.h>
 #include <xml_utils.h>
+#include <inventory_description.h>
+#include <actor_serializer.h>
+#include <actor_descriptions.h>
 
 using namespace rapidxml;
 
@@ -14,7 +16,7 @@ InventorySerializer::InventorySerializer()
 }
 
 InventorySerializer::InventorySerializer(xml_document<> *document, xml_node<> *xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -22,23 +24,23 @@ InventorySerializer::~InventorySerializer()
 {
 }
 
-bool InventorySerializer::serialize(ActorFeaturePtr af)
+bool InventorySerializer::serialize(DescriptionPtr dsc)
 {
-  InventoryPtr container = std::dynamic_pointer_cast<Inventory>(af);
-  if ( container && _document && _xml )
+  InventoryDescriptionPtr iDsc = std::dynamic_pointer_cast<InventoryDescription>(dsc);
+  if ( iDsc && _document && _xml )
   {
     xml_node<>* _containerNode = _document->allocate_node(node_element, "Inventory");
     _xml->append_node( _containerNode );
-    addAttribute( _containerNode, "maxSize", container->slotCount() );
+    if ( iDsc->maxSize ) addAttribute( _containerNode, "maxSize", *iDsc->maxSize );
 
     ActorSerializer actorSerializer(_document, _containerNode);
-    for ( ActorPtr content : container->items() )
+    for ( ActorDescriptionPtr content : iDsc->content )
     {
-      actorSerializer.serialize(content, "Content");
+      actorSerializer.serialize(content);
     }
   }
 
-  return container != nullptr;
+  return iDsc != nullptr;
 }
 
 }

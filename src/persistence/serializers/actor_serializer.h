@@ -19,6 +19,7 @@ public:
   virtual ~ActorSerializer();
 
   virtual bool serialize(ActorPtr actor, const char* nodeName = "Actor" );
+  virtual bool serialize(DescriptionPtr dsc);
 
 private:
   rapidxml::xml_node<>* _actorNode;

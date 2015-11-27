@@ -1,7 +1,6 @@
 #ifndef DESTROYABLE_SERIALIZER_H
 #define DESTROYABLE_SERIALIZER_H
 
-#include <memory>
 #include <serializer.h>
 
 namespace amarlon {

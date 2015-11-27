@@ -108,7 +108,7 @@ InventoryDescriptionPtr ActorParser::parseInventoryDsc()
       contDsc.reset( new InventoryDescription );
       if ( attributeExists(invNode, "maxSize")) contDsc->maxSize = getAttribute<int>(invNode, "maxSize");
       ActorParser parser;
-      xml_node<>* contentNode = invNode->first_node("Content");
+      xml_node<>* contentNode = invNode->first_node("Actor");
       while ( contentNode != nullptr)
       {
         parser.setSource(contentNode);
