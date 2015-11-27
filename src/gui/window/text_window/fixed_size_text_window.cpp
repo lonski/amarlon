@@ -42,6 +42,20 @@ TextWindow& FixedSizeTextWindow::setText(std::string text)
   return *this;
 }
 
+void FixedSizeTextWindow::setWidth(int width)
+{
+  TextWindow::setWidth(width);
+  if ( _list ) _list->setWidth(getWidth() - 2*MARGIN);
+  _lineWidth = getWidth() - 2*MARGIN;
+}
+
+void FixedSizeTextWindow::setHeight(int height)
+{
+  TextWindow::setHeight(height);
+  if ( _list ) _list->setHeight(getHeight() - 2*MARGIN);
+  _lineCount = getHeight() - 2*MARGIN;
+}
+
 void FixedSizeTextWindow::displayText()
 {
   _list->clear();

@@ -85,7 +85,7 @@ void Character::upgrade(DescriptionPtr dsc)
     //upgrade skills
     for(auto s : cDsc->skills)
     {
-      SkillPtr skill = Skill::create( static_cast<SkillId>(s.id), s.level );
+      SkillPtr skill = Skill::create( static_cast<SkillId>(s.first), s.second );
 
       //remove if already exists
       auto it = std::find_if(_skills.begin(), _skills.end(), [&](SkillPtr sk){
@@ -141,7 +141,7 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
           dsc->abilityScores[ (int)kv.first ] = kv.second;
 
       for ( SkillPtr sk : _skills )
-        dsc->skills.push_back( *sk->toDescriptionStruct() );
+        dsc->skills.push_back( std::make_pair((int)sk->getId(), sk->getLevel()) );
 
       dsc->type = static_cast<int>(CharacterType::Generic);
     }
@@ -168,7 +168,7 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
         dsc->abilityScores[ (int)kv.first ] = kv.second;
 
       for ( SkillPtr sk : _skills )
-        dsc->skills.push_back( *sk->toDescriptionStruct() );
+        dsc->skills.push_back( std::make_pair((int)sk->getId(), sk->getLevel()) );
 
     }
   }
@@ -312,11 +312,18 @@ std::string Character::debug(const std::string& linebreak = "\n")
   d += "Morale = " + toStr(_morale)  + linebreak;
   d += "Bare hands damage = " + _damage.toStr(true)  + linebreak;
   d += "Damage = " + getDamage().toStr(true)  + linebreak;
+  d += " >>> Ability Scores" + linebreak;
   for ( auto& kv : _abilityScores )
   {
     d += AbilityScore::toStr(kv.first) + " = " + toStr(kv.second)  + linebreak;
   }
-  d.append("----------------" + linebreak);
+  d += " >>> Skills" + linebreak;
+  for ( SkillPtr skill : _skills )
+  {
+    d+= "Skill " + skill->getName() + "ID=" + toStr( (int)skill->getId() ) + " Level=" + toStr(skill->getLevel()) + linebreak;
+  }
+  d += "----------------" + linebreak;
+
   return d;
 }
 

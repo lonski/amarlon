@@ -291,7 +291,7 @@ void Map::computeFov(int x, int y, int radius)
 
 TCODMap& Map::getCODMap()
 {
-  return _codMap;
+  return *_codMap;
 }
 
 void Map::deserializeTiles(std::vector<unsigned char> tiles)

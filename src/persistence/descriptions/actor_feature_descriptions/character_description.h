@@ -9,16 +9,6 @@
 
 namespace amarlon {
 
-struct SkillDescription : Description
-{
-  SkillDescription(int id = 0, int level = 0)
-    : id(id)
-    , level(level)
-  {}
-  int id;
-  int level;
-};
-
 struct CharacterDescription : Description
 {
   std::experimental::optional<int> level;
@@ -35,7 +25,7 @@ struct CharacterDescription : Description
   std::experimental::optional<std::string> damage;
   std::experimental::optional<SpellbookDescription> spellbook;
 
-  std::vector<SkillDescription> skills;
+  std::vector< std::pair<int,int> > skills;
   std::vector<std::string> modifiers;
   std::map<int, int> abilityScores;
 };

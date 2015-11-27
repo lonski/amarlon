@@ -201,12 +201,12 @@ void ThiefSkillsSelectionPanel::setSkills()
     CharacterDescriptionPtr dsc = _parent->getCharacterDsc();
     if ( dsc )
     {
-      dsc->skills.push_back( SkillDescription( (int)SkillId::OpenLocks,   getValue(OpenLocks)) );
-      dsc->skills.push_back( SkillDescription( (int)SkillId::DisarmTraps, getValue(DisarmTraps)) );
-      dsc->skills.push_back( SkillDescription( (int)SkillId::Hide,        getValue(Hide)) );
-      dsc->skills.push_back( SkillDescription( (int)SkillId::PickPockets, getValue(PickPockets)) );
-      dsc->skills.push_back( SkillDescription( (int)SkillId::SilentMove,  getValue(SilentMove)) );
-      dsc->skills.push_back( SkillDescription( (int)SkillId::FindTraps,   getValue(FindTraps)) );
+      dsc->skills.push_back( std::make_pair( (int)SkillId::OpenLocks,   getValue(OpenLocks)) );
+      dsc->skills.push_back( std::make_pair( (int)SkillId::DisarmTraps, getValue(DisarmTraps)) );
+      dsc->skills.push_back( std::make_pair( (int)SkillId::Hide,        getValue(Hide)) );
+      dsc->skills.push_back( std::make_pair( (int)SkillId::PickPockets, getValue(PickPockets)) );
+      dsc->skills.push_back( std::make_pair( (int)SkillId::SilentMove,  getValue(SilentMove)) );
+      dsc->skills.push_back( std::make_pair( (int)SkillId::FindTraps,   getValue(FindTraps)) );
     }
   }
 }

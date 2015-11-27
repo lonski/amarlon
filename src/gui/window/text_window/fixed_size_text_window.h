@@ -18,6 +18,8 @@ public:
   static  WindowId getId() { return AWindow::FIXED_SIZE_TEXT; }
 
   virtual TextWindow& setText(std::string text);
+  virtual void setWidth(int width);
+  virtual void setHeight(int height);
 
 protected:
   FixedSizeTextWindow(int w=50, int h=40);

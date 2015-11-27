@@ -143,8 +143,7 @@ void RaceSelectionPanel::setRace()
       for( auto s : race->getSkills() )
       {
         dsc->skills.push_back(
-              SkillDescription( static_cast<int>(s->getId()),
-                                s->getLevel() ) );
+              std::make_pair( static_cast<int>(s->getId()), s->getLevel() ) );
       }
     }
   }

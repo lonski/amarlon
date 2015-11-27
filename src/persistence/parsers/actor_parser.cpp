@@ -243,9 +243,9 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
         xml_node<>* skillNode = skillsNode->first_node("Skill");
         while( skillNode )
         {
-          SkillDescription s;
-          s.id = getAttribute<int>(skillNode, "id");
-          s.level = getAttribute<int>(skillNode, "level");
+          std::pair<int, int> s;
+          s.first = getAttribute<int>(skillNode, "id");
+          s.second = getAttribute<int>(skillNode, "level");
           dsc->skills.push_back(s);
           skillNode = skillNode->next_sibling();
         }

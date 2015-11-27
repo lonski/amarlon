@@ -1,12 +1,6 @@
 #include "character_serializer.h"
 #include <xml_utils.h>
-#include <character.h>
-#include <utils.h>
-#include <spell.h>
-#include <spell_book.h>
-#include <skill.h>
-#include <race.h>
-#include <character_class.h>
+#include <character_description.h>
 
 using namespace rapidxml;
 
@@ -18,7 +12,7 @@ CharacterSerializer::CharacterSerializer()
 }
 
 CharacterSerializer::CharacterSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -26,104 +20,121 @@ CharacterSerializer::~CharacterSerializer()
 {
 }
 
-bool CharacterSerializer::serialize(ActorFeaturePtr af)
+bool CharacterSerializer::serialize(DescriptionPtr dsc)
 {
-  CharacterPtr c = std::dynamic_pointer_cast<Character>(af);
-  if ( c && _document && _xml )
+  bool serialized = false;
+  CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
+  if ( cDsc )
   {
-    xml_node<>* _cNode = _document->allocate_node(node_element, "Character");
-    _xml->append_node( _cNode );
+    xml_node<>* cNode = nullptr;
 
-    serializeCharacterCommonPart(_cNode, c);
+    if ( cDsc->type && cDsc->type == 2 )
+    {
+      cNode = _document->allocate_node(node_element, "PlayableCharacter");
+    }
+    else
+    {
+      cNode = _document->allocate_node(node_element, "Character");
+    }
+    _xml->append_node( cNode );
+
+    if ( cDsc->level )             addAttribute( cNode, "level",        *cDsc->level             );
+    if ( cDsc->hitPoints )         addAttribute( cNode, "hitPoints",    *cDsc->hitPoints         );
+    if ( cDsc->maxHitPoints )      addAttribute( cNode, "maxHitPoints", *cDsc->maxHitPoints      );
+    if ( cDsc->defaultArmorClass ) addAttribute( cNode, "experience",   *cDsc->defaultArmorClass );
+    if ( cDsc->speed )             addAttribute( cNode, "speed",        *cDsc->speed             );
+    if ( cDsc->damage )            addAttribute( cNode, "damage",       *cDsc->damage            );
+    if ( cDsc->cClass )            addAttribute( cNode, "class",        *cDsc->cClass            );
+    if ( cDsc->race )              addAttribute( cNode, "race",         *cDsc->race              );
+    if ( cDsc->team )              addAttribute( cNode, "team",         *cDsc->team              );
+    if ( cDsc->morale )            addAttribute( cNode, "morale",       *cDsc->morale            );
+
+    serializeAbilityScores(cDsc, cNode);
+    serializeModifiers(cDsc, cNode);
+    serializeSkills(cDsc, cNode);
+    serializeSpellbook(cDsc, cNode);
+
+    serialized = true;
   }
-  return c != nullptr;
+  return serialized;
 }
 
-void CharacterSerializer::serializeCharacterCommonPart(xml_node<>* characterNode, CharacterPtr character)
-{
-  if ( characterNode && character && _document )
-  {
-    addAttribute    ( characterNode, "level",        character->getLevel()            );
-    addAttribute    ( characterNode, "hitPoints",    character->getHitPoints()        );
-    addAttribute    ( characterNode, "maxHitPoints", character->getMaxHitPoints()     );
-    addAttribute    ( characterNode, "experience",   character->getExperience()       );
-    addAttribute    ( characterNode, "armorClass",   character->_defaultArmorClass    );
-    addAttribute    ( characterNode, "speed",        character->_speed                );
-    addAttribute    ( characterNode, "damage",       std::string(character->_damage)  );
-    addAttributeEnum( characterNode, "class",        character->getClass()->getType() );
-    addAttributeEnum( characterNode, "race",         character->getRace()->getType()  );
-    addAttributeEnum( characterNode, "team",         character->getTeam()             );
-    addAttributeEnum( characterNode, "morale",       character->getMorale()           );
-
-    serializeSpellbook(characterNode, character);
-    serializeSkills(character, characterNode);
-    serializeModifiers(character, characterNode);
-    serializeAbilityScores(character, characterNode);
-  }
-}
-
-void CharacterSerializer::serializeAbilityScores(CharacterPtr character, rapidxml::xml_node<>* characterNode)
+void CharacterSerializer::serializeAbilityScores(CharacterDescriptionPtr dsc, rapidxml::xml_node<>* characterNode)
 {
   xml_node<>* _asNode = _document->allocate_node(node_element, "AbilityScores");
   characterNode->append_node( _asNode );
 
-  for ( AbilityScore::Type as : AbilityScore::Type() )
+  static std::vector< std::string > asString
   {
-    addAttribute( _asNode, AbilityScore::toStr(as), character->getAbilityScore(as) );
+    "STR",
+    "INT",
+    "WIS",
+    "DEX",
+    "CON",
+    "CHA"
+  };
+
+  for ( auto& kv : dsc->abilityScores )
+  {
+    addAttribute( _asNode, asString[kv.first], kv.second );
   }
 }
 
-void CharacterSerializer::serializeModifiers(CharacterPtr character, xml_node<>* characterNode)
+void CharacterSerializer::serializeModifiers(CharacterDescriptionPtr dsc, xml_node<>* characterNode)
 {
-  if ( !character->_modifiers.empty() )
+  if ( !dsc->modifiers.empty() )
   {
     xml_node<>* modifiersNode = _document->allocate_node(node_element, "Modifiers");
     characterNode->append_node(modifiersNode);
-    for ( auto& mod : character->_modifiers )
+    for ( auto& mod : dsc->modifiers )
     {
       xml_node<>* modNode = _document->allocate_node(node_element, "Mod");
       modifiersNode->append_node(modNode);
-      addAttribute(modNode, "val", mod.toString() );
+      addAttribute(modNode, "val", mod );
     }
   }
 }
 
-void CharacterSerializer::serializeSkills(CharacterPtr character, xml_node<>* characterNode)
+void CharacterSerializer::serializeSkills(CharacterDescriptionPtr dsc, xml_node<>* characterNode)
 {
   xml_node<>* skillsNode = _document->allocate_node(node_element, "Skills");
   characterNode->append_node(skillsNode);
-  for ( auto s : character->_skills)
+
+  for ( auto s : dsc->skills)
   {
     xml_node<>* skillNode = _document->allocate_node(node_element, "Skill");
     skillsNode->append_node(skillNode);
-    addAttributeEnum(skillNode, "id", s->getId());
-    addAttribute(skillNode, "level", s->getLevel());
+    addAttribute(skillNode, "id", s.first);
+    addAttribute(skillNode, "level", s.second);
   }
 }
 
-void CharacterSerializer::serializeSpellbook(xml_node<>* characterNode, CharacterPtr character)
+void CharacterSerializer::serializeSpellbook(CharacterDescriptionPtr dsc, xml_node<>* characterNode)
 {
-  xml_node<>* spellbookNode = _document->allocate_node(node_element, "Spellbook");
-  characterNode->append_node(spellbookNode);
-
-  xml_node<>* slotsNode = _document->allocate_node(node_element, "Slots");
-  spellbookNode->append_node(slotsNode);
-  for ( auto slot : character->_spellbook->getSlots() )
+  if ( dsc->spellbook )
   {
-    xml_node<>* slotNode = _document->allocate_node(node_element, "Slot");
-    slotsNode->append_node(slotNode);
-    addAttribute(slotNode,"level",slot->level);
-    addAttribute(slotNode,"prepared",(int)slot->isPrepared);
-    if ( slot->spell ) addAttribute(slotNode,"spell",(int)slot->spell->getId());
-  }
+    xml_node<>* spellbookNode = _document->allocate_node(node_element, "Spellbook");
+    characterNode->append_node(spellbookNode);
 
-  xml_node<>* knownNode = _document->allocate_node(node_element, "Known");
-  spellbookNode->append_node(knownNode);
-  for ( auto spell : character->_spellbook->getKnownSpells() )
-  {
-    xml_node<>* spellNode = _document->allocate_node(node_element, "Spell");
-    knownNode->append_node(spellNode);
-    addAttribute(spellNode,"id",(int)spell->getId());
+    xml_node<>* slotsNode = _document->allocate_node(node_element, "Slots");
+    spellbookNode->append_node(slotsNode);
+    for ( auto slot : (*dsc->spellbook).spellSlots )
+    {
+      xml_node<>* slotNode = _document->allocate_node(node_element, "Slot");
+      slotsNode->append_node(slotNode);
+      addAttribute(slotNode,"level",slot.level);
+      addAttribute(slotNode,"prepared",(int)slot.prepared);
+      if ( slot.spell > 0 ) addAttribute(slotNode,"spell",slot.spell);
+    }
+
+    xml_node<>* knownNode = _document->allocate_node(node_element, "Known");
+    spellbookNode->append_node(knownNode);
+    for ( auto ks : (*dsc->spellbook).knownSpells )
+    {
+      xml_node<>* spellNode = _document->allocate_node(node_element, "Spell");
+      knownNode->append_node(spellNode);
+      addAttribute(spellNode,"id",ks);
+    }
   }
 }
 

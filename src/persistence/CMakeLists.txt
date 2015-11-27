@@ -19,7 +19,6 @@ set(HEADER_FILES
     serializers/actor_feature_serializers/wearer_serializer.h
     serializers/actor_feature_serializers/openable_serializer.h
     serializers/actor_feature_serializers/character_serializer.h
-    serializers/actor_feature_serializers/playable_character_serializer.h
     serializers/actor_feature_serializers/ai_serializer.h
     serializers/actor_feature_serializers/trap_serializer.h
     serializers/actor_feature_serializers/talker_serializer.h
@@ -60,7 +59,6 @@ set(SOURCE_FILES
     serializers/actor_feature_serializers/wearer_serializer.cpp
     serializers/actor_feature_serializers/openable_serializer.cpp
     serializers/actor_feature_serializers/character_serializer.cpp
-    serializers/actor_feature_serializers/playable_character_serializer.cpp
     serializers/actor_feature_serializers/ai_serializer.cpp
     serializers/actor_feature_serializers/trap_serializer.cpp
     serializers/actor_feature_serializers/talker_serializer.cpp

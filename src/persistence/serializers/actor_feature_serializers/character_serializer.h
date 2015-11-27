@@ -2,28 +2,27 @@
 #define CHARACTER_SERIALIZER_H
 
 #include <memory>
-#include <actor_feature_serializer.h>
+#include <serializer.h>
 
 namespace amarlon {
 
-class Character;
-typedef std::shared_ptr<Character> CharacterPtr;
+struct CharacterDescription;
+typedef std::shared_ptr<CharacterDescription> CharacterDescriptionPtr;
 
-class CharacterSerializer : public ActorFeatureSerializer
+class CharacterSerializer : public Serializer
 {
 public:
   CharacterSerializer();
   CharacterSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~CharacterSerializer();
 
-  virtual bool serialize(ActorFeaturePtr af);
+  virtual bool serialize(DescriptionPtr dsc);
   
 protected:
-  void serializeCharacterCommonPart(rapidxml::xml_node<>* characterNode, CharacterPtr character);
-  void serializeSpellbook(rapidxml::xml_node<>* characterNode, CharacterPtr character);
-  void serializeSkills(CharacterPtr character, rapidxml::xml_node<>* characterNode);
-  void serializeModifiers(CharacterPtr character, rapidxml::xml_node<>* characterNode);
-  void serializeAbilityScores(CharacterPtr character, rapidxml::xml_node<>* characterNode);
+  void serializeSpellbook(CharacterDescriptionPtr dsc, rapidxml::xml_node<>* characterNode);
+  void serializeSkills(CharacterDescriptionPtr dsc, rapidxml::xml_node<>* characterNode);
+  void serializeModifiers(CharacterDescriptionPtr dsc, rapidxml::xml_node<>* characterNode);
+  void serializeAbilityScores(CharacterDescriptionPtr dsc, rapidxml::xml_node<>* characterNode);
 
 };
 
