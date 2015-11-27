@@ -1,18 +1,18 @@
 #ifndef PICKABLE_SERIALIZER_H
 #define PICKABLE_SERIALIZER_H
 
-#include <actor_feature_serializer.h>
+#include <serializer.h>
 
 namespace amarlon {
 
-class PickableSerializer : public ActorFeatureSerializer
+class PickableSerializer : public Serializer
 {
 public:
   PickableSerializer();
   PickableSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~PickableSerializer();
 
-  virtual bool serialize(ActorFeaturePtr af);
+  virtual bool serialize(DescriptionPtr dsc);
 
 };
 

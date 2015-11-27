@@ -1,9 +1,7 @@
 #include "pickable_serializer.h"
-#include <pickable.h>
+#include <pickable_description.h>
 #include <utils.h>
 #include <xml_utils.h>
-#include <scroll.h>
-#include <spell.h>
 
 using namespace rapidxml;
 
@@ -14,7 +12,7 @@ PickableSerializer::PickableSerializer()
 }
 
 PickableSerializer::PickableSerializer(rapidxml::xml_document<> *document, rapidxml::xml_node<> *xmlNode)
-  : ActorFeatureSerializer(document, xmlNode)
+  : Serializer(document, xmlNode)
 {
 }
 
@@ -22,17 +20,17 @@ PickableSerializer::~PickableSerializer()
 {
 }
 
-bool PickableSerializer::serialize(ActorFeaturePtr af)
+bool PickableSerializer::serialize(DescriptionPtr dsc)
 {
-  PickablePtr pickable = std::dynamic_pointer_cast<Pickable>(af);
-  if ( pickable && _document && _xml )
+  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
+  if ( pDsc && _document && _xml )
   {
     xml_node<>* _pickableNode = nullptr;
 
-    if ( ScrollPtr scroll = std::dynamic_pointer_cast<Scroll>(af) )
+    if ( ScrollDescriptionPtr sDsc = std::dynamic_pointer_cast<ScrollDescription>(dsc) )
     {
       _pickableNode = _document->allocate_node(node_element, "Scroll");
-      addAttribute( _pickableNode, "spell", static_cast<int>(scroll->getSpell()->getId()) );
+      addAttribute( _pickableNode, "spell", sDsc->spellId );
     }
     else
     {
@@ -41,39 +39,25 @@ bool PickableSerializer::serialize(ActorFeaturePtr af)
 
     _xml->append_node( _pickableNode );
 
-    addAttribute    ( _pickableNode, "scriptId",   pickable->getScriptId() );
-    addAttribute    ( _pickableNode, "stackable",  static_cast<int>(pickable->isStackable()) );
-    addAttribute    ( _pickableNode, "amount",     pickable->getAmount() );
-    addAttribute    ( _pickableNode, "armorClass", pickable->getArmorClass() );
-    addAttribute    ( _pickableNode, "weight",     pickable->getWeight() );
-    addAttribute    ( _pickableNode, "price",      pickable->getPrice() );
-    addAttribute    ( _pickableNode, "damage",     std::string(pickable->getDamage()) );
-    addAttribute    ( _pickableNode, "uses",       pickable->getUsesCount() );
-    addAttribute    ( _pickableNode, "range",       pickable->getRange() );
-    addAttribute    ( _pickableNode, "radius",       pickable->getRadius() );
-    addAttributeEnum( _pickableNode, "itemSlot",   pickable->getItemSlot() );
-    addAttributeEnum( _pickableNode, "targetType", pickable->getTargetType() );
-
-    ItemType t = pickable->getItemType();
-    if ( t.armor != ArmorType::NoType )
-    {
-      addAttributeEnum( _pickableNode, "armorType", t.armor );
-    }
-    if ( t.weapon != WeaponType::NoType )
-    {
-      addAttributeEnum( _pickableNode, "weaponType", t.weapon );
-    }
-    if ( t.amunition != AmunitionType::NoType )
-    {
-      addAttributeEnum( _pickableNode, "amunitionType", t.amunition );
-    }
-
-    addAttributeEnum( _pickableNode, "category",   t.category );
-
-
+    if ( pDsc->scriptId )      addAttribute( _pickableNode, "scriptId",   *pDsc->scriptId );
+    if ( pDsc->stackable )     addAttribute( _pickableNode, "stackable",  *pDsc->stackable );
+    if ( pDsc->amount )        addAttribute( _pickableNode, "amount",     *pDsc->amount );
+    if ( pDsc->armorClass )    addAttribute( _pickableNode, "armorClass", *pDsc->armorClass );
+    if ( pDsc->weight )        addAttribute( _pickableNode, "weight",     *pDsc->weight );
+    if ( pDsc->price )         addAttribute( _pickableNode, "price",      *pDsc->price );
+    if ( pDsc->damage )        addAttribute( _pickableNode, "damage",     *pDsc->damage );
+    if ( pDsc->uses )          addAttribute( _pickableNode, "uses",       *pDsc->uses );
+    if ( pDsc->range )         addAttribute( _pickableNode, "range",      *pDsc->range );
+    if ( pDsc->radius )        addAttribute( _pickableNode, "radius",     *pDsc->radius );
+    if ( pDsc->itemSlot )      addAttribute( _pickableNode, "itemSlot",   *pDsc->itemSlot );
+    if ( pDsc->targetType )    addAttribute( _pickableNode, "targetType", *pDsc->targetType );
+    if ( pDsc->armorType )     addAttribute( _pickableNode, "armorType",     *pDsc->armorType );
+    if ( pDsc->weaponType )    addAttribute( _pickableNode, "weaponType",    *pDsc->weaponType );
+    if ( pDsc->amunitionType ) addAttribute( _pickableNode, "amunitionType", *pDsc->amunitionType );
+    if ( pDsc->category )      addAttribute( _pickableNode, "category",      *pDsc->category );
   }
 
-  return pickable != nullptr;
+  return pDsc != nullptr;
 }
 
 }
