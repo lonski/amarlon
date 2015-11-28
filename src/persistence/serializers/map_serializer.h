@@ -8,9 +8,6 @@
 
 namespace amarlon {
 
-class Map;
-typedef std::shared_ptr<Map> MapPtr;
-
 class MapSerializer : public Serializer
 {
 public:
@@ -18,18 +15,12 @@ public:
   MapSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~MapSerializer();
 
-  virtual bool serialize(MapPtr map);
-  virtual bool serialize(DescriptionPtr);
+  virtual bool serialize(DescriptionPtr dsc);
 
-  void serializeActors();
-  void serializeAttributes();
 private:
   ActionSerializer _actionSerializer;
   ActorSerializer _actorSerializer;
-  rapidxml::xml_node<>* _mapNode;
-  MapPtr _map;
 
-  void serializeExitActions();
 
 };
 

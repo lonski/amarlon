@@ -82,7 +82,10 @@ std::shared_ptr<xml_document<> > MapDB::serializeMaps()
   doc->append_node(mapsNode);
 
   MapSerializer _mapSerializer(doc.get(), mapsNode);
-  for (auto m : _maps) _mapSerializer.serialize( m.second );
+  for (auto m : _maps)
+  {
+    if (m.second) _mapSerializer.serialize( m.second->toDescriptionStruct() );
+  }
 
   return doc;
 }

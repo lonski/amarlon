@@ -1,14 +1,9 @@
 #include "map_serializer.h"
 #include <string>
-#include <world/map.h>
 #include <utils.h>
 #include <xml_utils.h>
-#include <actor.h>
-#include <iostream>
-#include <libtcod.hpp>
-#include <actor_action.h>
-#include <base64.h>
 #include <actor_descriptions.h>
+#include <map_description.h>
 
 using namespace rapidxml;
 using namespace std;
@@ -16,13 +11,12 @@ using namespace std;
 namespace amarlon {
 
 MapSerializer::MapSerializer()
-  : _mapNode(nullptr)
+  : MapSerializer(nullptr, nullptr)
 {
 }
 
 MapSerializer::MapSerializer(rapidxml::xml_document<> *document, rapidxml::xml_node<> *xmlNode)
   : Serializer(document, xmlNode)
-  , _mapNode(nullptr)
 {
 }
 
@@ -30,67 +24,45 @@ MapSerializer::~MapSerializer()
 {
 }
 
-bool MapSerializer::serialize(MapPtr map)
+bool MapSerializer::serialize(DescriptionPtr dsc)
 {
-  bool serialized = false;
-  _map = map;
-
-  if ( _xml && _document && _map )
+  MapDescriptionPtr mDsc = std::dynamic_pointer_cast<MapDescription>(dsc);
+  if ( mDsc )
   {
-    _mapNode = _document->allocate_node(node_element, "Map");
+    rapidxml::xml_node<>* _mapNode = _document->allocate_node(node_element, "Map");
     _xml->append_node(_mapNode);
 
-    serializeAttributes();
-    serializeExitActions();
-    serializeActors();
+    addAttribute(_mapNode, "height", mDsc->height );
+    addAttribute(_mapNode,  "width", mDsc->width );
+    addAttributeEnum(_mapNode, "id", mDsc->id );
+    _mapNode->append_node( createNode(_document, "Tiles", mDsc->binaryTiles) );
 
-    serialized = true;
+    xml_node<>* actorsNode = createNode(_document, "Actors", "");
+    _mapNode->append_node( actorsNode );
+
+    _actorSerializer.setDestination(_document, actorsNode);
+    for ( auto a : mDsc->actors )
+    {
+      _actorSerializer.serialize(a);
+    }
+
+    xml_node<>* exitActionsNode = createNode(_document, "OnExit", "");
+    _mapNode->append_node( exitActionsNode );
+
+    for ( auto& kv : mDsc->actions )
+    {
+      xml_node<>* directionNode = createNode(_document, "Direction", "");
+
+      exitActionsNode->append_node(directionNode);
+      addAttributeEnum( directionNode, "id", kv.first );
+
+      _actionSerializer.setDestination(_document, directionNode);
+      _actionSerializer.serialize( kv.second );
+    }
+
+    return true;
   }
-
-  return serialized;
-}
-
-bool MapSerializer::serialize(DescriptionPtr)
-{
-  //todo
-  return true;
-}
-
-void MapSerializer::serializeAttributes()
-{
-  addAttribute(_mapNode, "height", _map->getHeight());
-  addAttribute(_mapNode,  "width", _map->getWidth());
-  addAttributeEnum(_mapNode, "id", _map->getId());
-  _mapNode->append_node( createNode(_document, "Tiles", _map->serializeTiles()) );
-
-}
-
-void MapSerializer::serializeExitActions()
-{
-  xml_node<>* exitActionsNode = createNode(_document, "OnExit", "");
-  _mapNode->append_node( exitActionsNode );
-
-  for ( const auto& pair : _map->getExitActions() )
-  {
-    xml_node<>* directionNode = createNode(_document, "Direction", "");
-    exitActionsNode->append_node(directionNode);
-    addAttributeEnum( directionNode, "id", pair.first );
-
-    _actionSerializer.setDestination(_document, directionNode);
-    _actionSerializer.serialize( pair.second->toDescriptionStruct() );
-  }
-}
-
-void MapSerializer::serializeActors()
-{
-  xml_node<>* actorsNode = createNode(_document, "Actors", "");
-  _mapNode->append_node( actorsNode );
-
-  _actorSerializer.setDestination(_document, actorsNode);
-  for ( ActorPtr actor : _map->getActors() )
-  {
-    _actorSerializer.serialize(actor->toDescriptionStruct());
-  }
+  return false;
 }
 
 }
