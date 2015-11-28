@@ -125,8 +125,8 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
       if ( cmp->_maxHitPoints != _maxHitPoints ) dsc->maxHitPoints = _maxHitPoints;
       if ( cmp->_defaultArmorClass != _defaultArmorClass ) dsc->defaultArmorClass = _defaultArmorClass;
       if ( cmp->_experience != _experience ) dsc->experience = _experience;
-      if ( cmp->_class->getType() != _class->getType() ) dsc->cClass = static_cast<int>(_class->getType());
-      if ( cmp->_race->getType() != _race->getType() ) dsc->race = static_cast<int>(_race->getType());
+      /*if ( cmp->_class->getType() != _class->getType() )*/ dsc->cClass = static_cast<int>(_class->getType());
+      /*if ( cmp->_race->getType() != _race->getType() )*/ dsc->race = static_cast<int>(_race->getType());
       if ( cmp->_speed != _speed ) dsc->speed = _speed;
       if ( cmp->_team != _team ) dsc->team = static_cast<int>(_team);
       if ( cmp->_morale != _morale ) dsc->morale = _morale;

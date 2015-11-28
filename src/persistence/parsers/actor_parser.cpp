@@ -358,6 +358,7 @@ WearerDescriptionPtr ActorParser::parseWearerDsc()
       {
         parser.setSource(equippedNode);
         wrDsc->eqItems.push_back(parser.parseDescription());
+        equippedNode = equippedNode->next_sibling();
       }
 
     }

@@ -1,10 +1,8 @@
 #ifndef ACTOR_SERIALIZER_H
 #define ACTOR_SERIALIZER_H
 
-#include <memory>
 #include <vector>
 #include <serializer.h>
-#include <actor_feature_serializer.h>
 
 namespace amarlon {
 
@@ -18,7 +16,6 @@ public:
   ActorSerializer(rapidxml::xml_document<>* document, rapidxml::xml_node<>* xmlNode);
   virtual ~ActorSerializer();
 
-  virtual bool serialize(ActorPtr actor, const char* nodeName = "Actor" );
   virtual bool serialize(DescriptionPtr dsc);
 
 private:

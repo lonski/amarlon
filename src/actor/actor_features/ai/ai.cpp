@@ -322,5 +322,22 @@ bool Ai::isHunting() const
   return _trackCount > 0 && getOwner().lock()->isAlive();
 }
 
+std::string Ai::debug(const std::string &linebreak)
+{
+  std::string d = " " + linebreak + "-----AI-----"+linebreak;
+
+  d += "Type = " + toStr((int)_type) + linebreak;
+  d += "Script = " + toStr(_scriptId) + linebreak;
+  d += "TrackCount = " + toStr(_trackCount) + linebreak;
+
+  d += "Current state = " + toStr((int)getCurrentState()) + linebreak;
+  ActorPtr tA = _currentTarget.firstActor();
+  if ( tA ) d+= "Target = " + tA->getName() + linebreak;
+
+  d += "----------------" + linebreak;
+
+  return d;
+}
+
 }
 

@@ -8,6 +8,7 @@
 #include <libtcod.hpp>
 #include <actor_action.h>
 #include <base64.h>
+#include <actor_descriptions.h>
 
 using namespace rapidxml;
 using namespace std;
@@ -88,7 +89,7 @@ void MapSerializer::serializeActors()
   _actorSerializer.setDestination(_document, actorsNode);
   for ( ActorPtr actor : _map->getActors() )
   {
-    _actorSerializer.serialize(actor);
+    _actorSerializer.serialize(actor->toDescriptionStruct());
   }
 }
 

@@ -5,6 +5,7 @@
 #include <actor_serializer.h>
 #include <actor_parser.h>
 #include <actor.h>
+#include <actor_descriptions.h>
 #include <utils/xml_utils.h>
 
 using namespace rapidxml;
@@ -57,9 +58,13 @@ const ActorPtr World::getPlayer()
 
 void World::setPlayer(ActorPtr player)
 {
-  if ( _player ) getCurrentMap()->removeActor( _player );
-  _player = player;
-  getCurrentMap()->addActor( _player );
+  if ( player )
+  {
+    if ( _player ) getCurrentMap()->removeActor( _player );
+    _player = player;
+    getCurrentMap()->addActor( _player );
+  }
+  else throw std::logic_error("Cant set null player!");
 }
 
 bool World::store(const std::string &fn)
@@ -77,7 +82,7 @@ bool World::store(const std::string &fn)
 
     //save Player
     ActorSerializer actorSerializer(doc.get(), saveNode);
-    actorSerializer.serialize(_player, "Player");
+    actorSerializer.serialize(_player->toDescriptionStruct());
 
     //save current Map
     xml_node<>* cMapNode = doc->allocate_node(node_element, "CurrentMap");
@@ -119,15 +124,14 @@ bool World::load(const std::string& fn)
 void World::parsePlayer(rapidxml::xml_document<> &doc)
 {
   xml_node<>* save = doc.first_node("Save");
-  xml_node<>* playerNode = save ? save->first_node("Player") : nullptr;
+  xml_node<>* playerNode = save ? save->first_node("Actor") : nullptr;
 
   if(playerNode != nullptr)
   {
     ActorParser parser(playerNode);
-    _player = Actor::create( parser.parseDescription(), false );
+    _player = Actor::create( parser.parseDescription() );
+    getCurrentMap()->addActor( _player );
   }
-
-  getCurrentMap()->addActor( _player );
 }
 
 void World::parseCurrentMap(rapidxml::xml_document<> &doc)

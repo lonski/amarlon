@@ -79,6 +79,8 @@ public:
 
   bool isHunting() const;
 
+  virtual std::string debug(const std::string &linebreak);
+
 protected:
   std::bitset<3> _flags;
   FSMPtr _fsm;
@@ -90,9 +92,6 @@ protected:
   void executeScript();
   void updateHidingStatus(ActorActionPtr action);
   void updateSneakingStatus(ActorActionPtr action);
-
-  friend class AiSerializer;
-
 
 };
 

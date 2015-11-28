@@ -38,7 +38,6 @@ void Map::deserialize(MapDescriptionPtr dsc)
     {
       std::string s_tiles = base64_decode( dsc->binaryTiles );
       deserializeTiles( {s_tiles.begin(), s_tiles.end()} );
-      updateTiles();
 
       for ( ActorDescriptionPtr aDsc : dsc->actors )
       {
@@ -56,6 +55,7 @@ void Map::deserialize(MapDescriptionPtr dsc)
                                                acDsc->teleport_x,
                                                acDsc->teleport_y);
       }
+      updateTiles();
     }
   }
 }

@@ -26,13 +26,16 @@ bool TrapSerializer::serialize(DescriptionPtr dsc)
   TrapDescriptionPtr tDsc = std::dynamic_pointer_cast<TrapDescription>(dsc);
   if ( tDsc && _xml && _document )
   {
-    xml_node<>* trapNode = _document->allocate_node(node_element, "Trap");
-    _xml->append_node( trapNode );
+    if ( tDsc->any() )
+    {
+      xml_node<>* trapNode = _document->allocate_node(node_element, "Trap");
+      _xml->append_node( trapNode );
 
-    if ( tDsc->id )         addAttribute( trapNode, "id",         *tDsc->id );
-    if ( tDsc->armed )      addAttribute( trapNode, "armed",      (int)*tDsc->armed );
-    if ( tDsc->detected )   addAttribute( trapNode, "detected",   (int)*tDsc->detected );
-    if ( tDsc->difficulty ) addAttribute( trapNode, "difficulty", *tDsc->difficulty );
+      if ( tDsc->id )         addAttribute( trapNode, "id",         *tDsc->id );
+      if ( tDsc->armed )      addAttribute( trapNode, "armed",      (int)*tDsc->armed );
+      if ( tDsc->detected )   addAttribute( trapNode, "detected",   (int)*tDsc->detected );
+      if ( tDsc->difficulty ) addAttribute( trapNode, "difficulty", *tDsc->difficulty );
+    }
     return true;
   }
   return false;

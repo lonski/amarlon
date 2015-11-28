@@ -12,6 +12,11 @@ struct TrapDescription : Description
   std::experimental::optional<int>  id;
   std::experimental::optional<int>  difficulty;
   std::experimental::optional<bool> detected;
+
+  bool any()
+  {
+    return id || armed || detected || difficulty;
+  }
 };
 
 typedef std::shared_ptr<TrapDescription> TrapDescriptionPtr;
