@@ -1,6 +1,7 @@
 #include "character_class.h"
 #include <engine.h>
 #include <rpg_db.h>
+#include <character_class_description.h>
 
 namespace amarlon {
 
@@ -13,6 +14,28 @@ CharacterClass::CharacterClass()
 CharacterClassPtr CharacterClass::create(CharacterClassType type)
 {
   return Engine::instance().getRpgDB().getCharacterClass(type);
+}
+
+CharacterClassPtr CharacterClass::create(CharacterClassDescriptionPtr dsc)
+{
+  CharacterClassPtr cc;
+  if ( dsc )
+  {
+    cc.reset(new CharacterClass);
+    cc->_id = static_cast<CharacterClassType>(dsc->id);
+    cc->_name = dsc->name;
+    cc->_description = dsc->description;
+    cc->_playable = dsc->playable;
+
+    for ( auto asr : dsc->abilityScoreRestrictions )
+      cc->_abilityScoreRestrictions[ static_cast<AbilityScore::Type>(asr.first) ]
+          = asr.second;
+
+    for ( auto itd : dsc->itemTypeRestrictions )
+      cc->_itemTypeRestrictions.push_back( ItemTypeRestriction( ItemType(itd) ) );
+
+  }
+  return cc;
 }
 
 CharacterClassPtr CharacterClass::clone() const

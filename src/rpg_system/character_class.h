@@ -10,13 +10,16 @@
 namespace amarlon {
 
 class CharacterClass;
+struct CharacterClassDescription;
 typedef std::shared_ptr<CharacterClass> CharacterClassPtr;
+typedef std::shared_ptr<CharacterClassDescription> CharacterClassDescriptionPtr;
 
 class CharacterClass
 {
 public:
   CharacterClass();
   static CharacterClassPtr create(CharacterClassType type);
+  static CharacterClassPtr create(CharacterClassDescriptionPtr dsc);
   CharacterClassPtr clone() const;
   bool operator==(const CharacterClass& rhs) const;
 

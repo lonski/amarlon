@@ -40,6 +40,9 @@ set(HEADER_FILES
     descriptions/map_description.h
     descriptions/actor_action_description.h
     descriptions/spellbook_description.h
+    descriptions/race_description.h
+    descriptions/item_type_description.h
+    descriptions/character_class_description.h
 )
 
 set(SOURCE_FILES
@@ -64,5 +67,5 @@ set(SOURCE_FILES
     serializers/actor_feature_serializers/talker_serializer.cpp
 )
 
-add_library(persistence STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(persistence SHARED ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(persistence)

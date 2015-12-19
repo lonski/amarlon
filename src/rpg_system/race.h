@@ -14,6 +14,8 @@ namespace amarlon {
 
 class Skill;
 class Race;
+struct RaceDescription;
+typedef std::shared_ptr<RaceDescription> RaceDescriptionPtr;
 typedef std::shared_ptr<Race> RacePtr;
 typedef std::shared_ptr<Skill> SkillPtr;
 
@@ -22,6 +24,7 @@ class Race
 public:
   Race();
   static RacePtr create(RaceType id);
+  static RacePtr create(RaceDescriptionPtr dsc);
   RacePtr clone() const;
   bool operator==(const Race& rhs) const;
 

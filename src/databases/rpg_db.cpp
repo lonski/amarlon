@@ -56,10 +56,15 @@ bool RpgDB::load(const std::string &fn)
     if ( root != nullptr )
     {
       _parser.setSource( root );
-      _races = _parser.parseRaces();
-      _classes = _parser.parseCharacterClasses();
-    }
 
+      _races.clear();
+      for (auto rd : _parser.parseRaces() )
+        _races.push_back( Race::create(rd) );
+
+      _classes.clear();
+      for ( auto cd : _parser.parseCharacterClasses() )
+        _classes.push_back(CharacterClass::create(cd));
+    }
     return true;
   }
   return false;

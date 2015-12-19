@@ -5,6 +5,7 @@
 #include <string>
 #include <pickable_category.h>
 #include <utils.h>
+#include <item_type_description.h>
 
 namespace amarlon {
 
@@ -70,6 +71,14 @@ struct ItemType
   ItemType()
   {
     memset(this, 0, sizeof(ItemType));
+  }
+
+  ItemType(ItemTypeDescription dsc)
+  {
+    if ( dsc.amunitionType ) amunition = (AmunitionType)*dsc.amunitionType;
+    if ( dsc.armorType )     armor     = (ArmorType)*dsc.armorType;
+    if ( dsc.category )      category  = (PickableCategory)*dsc.category;
+    if ( dsc.weaponType )    weapon    = (WeaponType)*dsc.weaponType;
   }
 
   void merge(const ItemType& rhs)

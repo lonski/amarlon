@@ -2,6 +2,7 @@
 #include <skill.h>
 #include <engine.h>
 #include <rpg_db.h>
+#include <race_description.h>
 
 namespace amarlon {
 
@@ -14,6 +15,32 @@ Race::Race()
 RacePtr Race::create(RaceType id)
 {
   return Engine::instance().getRpgDB().getRace(id);
+}
+
+RacePtr Race::create(RaceDescriptionPtr dsc)
+{
+  RacePtr race;
+  if ( dsc  )
+  {
+    race.reset( new Race );
+    race->_id = static_cast<RaceType>(dsc->id);
+    race->_name = dsc->name;
+    race->_description = dsc->description;
+    race->_playable = dsc->playable;
+
+    for ( auto ac : dsc->possibleClasses )
+      race->_allowedClasses.push_back(
+            static_cast<CharacterClassType>(ac) );
+
+    for ( auto ps : dsc->skills )
+      race->_skills.push_back(
+            Skill::create( static_cast<SkillId>(ps.first), ps.second) );
+
+    for ( auto asr : dsc->abilityScoreRestrictions )
+      race->_abilityScoreRestrictions[ static_cast<AbilityScore::Type>(asr.first) ]
+          = asr.second;
+  }
+  return race;
 }
 
 RacePtr Race::clone() const
