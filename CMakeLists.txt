@@ -8,14 +8,21 @@ include(amarlon_macros)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -g -O2 -Wall -Wextra -Wformat-security -pipe")
 
+#Lib TCod
 find_package(tcod HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${TCOD_INCLUDE_DIRS})
 
+#Lib Lua
 find_package(lua HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${LUA_INCLUDE_DIRS})
 
+#Lib Luabind
 find_package(luabind09 HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${LUABIND_INCLUDE_DIRS})
+
+#Lib Protobuf
+find_package(protobuf HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
+include_directories(${PROTOBUF_INCLUDE_DIRS})
 
 header_dirs("${PROJECT_SOURCE_DIR}/src" AMARLON_HEADER_DIRS)
 
