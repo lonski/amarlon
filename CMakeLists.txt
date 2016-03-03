@@ -24,9 +24,10 @@ include_directories(${LUABIND_INCLUDE_DIRS})
 find_package(protobuf HINTS "${PROJECT_SOURCE_DIR}" REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 
+header_dirs("${PROJECT_SOURCE_DIR}/protobuf/src" PROTOBUF_HEADER_DIRS)
 header_dirs("${PROJECT_SOURCE_DIR}/src" AMARLON_HEADER_DIRS)
 
-include_directories(${AMARLON_HEADER_DIRS})
+include_directories(${AMARLON_HEADER_DIRS} ${PROTOBUF_HEADER_DIRS})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
@@ -34,5 +35,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
 add_subdirectory(src)
 add_subdirectory(src/gui/widgets)
 add_subdirectory(src/persistence)
+add_subdirectory(protobuf/src)
 add_subdirectory(test)
 #add_subdirectory(map_editor)
