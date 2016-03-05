@@ -22,7 +22,7 @@ public:
   bool isWalkable(TileType type);
   bool isTransparent(TileType type);
 
-  void load(const std::string &fn);
+  bool load(const std::string &fn);
 
 private:
   TileParser _tileParser;

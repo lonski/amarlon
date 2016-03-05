@@ -45,7 +45,7 @@ ActorDescriptionPtr ActorDB::fetchDescription(ActorType type)
   return it != _descriptions.end() ? *it : nullptr;
 }
 
-void ActorDB::load(const string &fn)
+bool ActorDB::load(const string &fn)
 {
   ifstream ifs(fn);
 
@@ -56,7 +56,9 @@ void ActorDB::load(const string &fn)
     buffer.push_back('\0');
 
     parseActors(buffer);
+    return true;
   }
+  return false;
 }
 
 void ActorDB::parseActors(std::vector<char>& dataToParse)

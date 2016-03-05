@@ -16,7 +16,8 @@ enum class WeaponType
   Blunt  = 2,
   Dagger = 3,
   Staff  = 4,
-  Bow    = 5
+  Bow    = 5,
+  INVALID
   /* When adding new types here
    * remember to fill
    * ItemType::isMeleeWeapon()
@@ -26,6 +27,8 @@ enum class WeaponType
 
 static inline const char* WeaponType2Str(WeaponType t)
 {
+  if ( (unsigned)t >= (unsigned)WeaponType::INVALID ) return "INVALID";
+
   return (const char *[]){
           "NoType",
           "Sword",
@@ -40,11 +43,14 @@ enum class ArmorType
 {
   NoType  = 0,
   Cloth   = 1,
-  Leather = 2
+  Leather = 2,
+  INVALID
 };
 
 static inline const char* ArmorType2Str(ArmorType t)
 {
+  if ( (unsigned)t >= (unsigned)ArmorType::INVALID ) return "INVALID";
+
   return (const char *[]){
           "NoType",
           "Cloth",
@@ -55,11 +61,14 @@ static inline const char* ArmorType2Str(ArmorType t)
 enum class AmunitionType
 {
   NoType  = 0,
-  Arrow   = 1
+  Arrow   = 1,
+  INVALID
 };
 
 static inline const char* AmunitionType2Str(AmunitionType t)
 {
+  if ( (unsigned)t >= (unsigned)AmunitionType::INVALID ) return "INVALID";
+
   return (const char *[]){
           "NoType",
           "Arrow"
@@ -75,6 +84,7 @@ struct ItemType
 
   ItemType(ItemTypeDescription dsc)
   {
+    memset(this, 0, sizeof(ItemType));
     if ( dsc.amunitionType ) amunition = (AmunitionType)*dsc.amunitionType;
     if ( dsc.armorType )     armor     = (ArmorType)*dsc.armorType;
     if ( dsc.category )      category  = (PickableCategory)*dsc.category;

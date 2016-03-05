@@ -9,101 +9,32 @@ namespace amarlon {
 
 SpellDB::SpellDB()
 {
+
 }
 
 SpellDB::~SpellDB()
 {
+
 }
 
 bool SpellDB::load(const std::string &fn)
 {
   std::ifstream ifs(fn);
-
-  if (ifs.is_open())
+  if ( ifs.is_open() )
   {
-    std::vector<char> buf;
-    buf.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-    buf.push_back('\0');
-    parseSpells(buf);
-
+    _spells.ParseFromIstream(&ifs);
     return true;
   }
   return false;
-}
-
-void SpellDB::parseSpells(std::vector<char> &buf)
-{
-  rapidxml::xml_document<> doc;
-  doc.parse<0>(&buf[0]);
-
-  rapidxml::xml_node<>* spells    = doc.first_node("Spells");
-  rapidxml::xml_node<>* spellNode = spells ? spells->first_node("Spell") : nullptr;
-
-  while(spellNode != nullptr)
-  {
-    _spellParser.setSource( spellNode );
-    SpellDescriptionPtr dsc = _spellParser.parseSpellDsc();
-    if ( dsc ) _spells[ static_cast<SpellId>(dsc->id) ] = dsc;
-
-    spellNode = spellNode->next_sibling();
-  }
-
-}
-
-std::string amarlon::SpellDB::getName(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? it->second->name : "";
-}
-
-int SpellDB::getLevel(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? it->second->level : 0;
-}
-
-CharacterClassType SpellDB::getClass(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? static_cast<CharacterClassType>(it->second->spellClass) : CharacterClassType::NoClass;
-}
-
-TargetType SpellDB::getTargetType(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? static_cast<TargetType>(it->second->targetType) : TargetType::SELF;
-}
-
-int SpellDB::getRange(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? it->second->range : 0;
-}
-
-int SpellDB::getRadius(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? it->second->radius : 0;
-}
-
-std::string SpellDB::getDescription(SpellId id)
-{
-  auto it = _spells.find(id);
-  return it != _spells.end() ? it->second->description : "";
-}
-
-std::string SpellDB::getScript(SpellId id) const
-{
-  return "scripts/spells/" + std::to_string( static_cast<int>(id) ) + ".lua";
 }
 
 std::vector<SpellPtr> SpellDB::getSpells(std::function<bool (SpellPtr)> filter)
 {
   std::vector<SpellPtr> spells;
 
-  for ( auto dsc : _spells )
+  for ( auto it = _spells.spell().begin(); it != _spells.spell().end(); ++it )
   {
-    auto s = fetch( static_cast<SpellId>(dsc.second->id) );
+    SpellPtr s = fetch( static_cast<SpellId>(it->id()) );
     if ( filter(s) ) spells.push_back(s);
   }
 
@@ -112,16 +43,18 @@ std::vector<SpellPtr> SpellDB::getSpells(std::function<bool (SpellPtr)> filter)
 
 SpellPtr SpellDB::fetch(SpellId id)
 {
-  SpellPtr spell;
-
   if ( id != SpellId::Null )
   {
-    spell.reset(new Spell(id));
-    auto it = _spells.find(id);
-    spell->_flyweight = it != _spells.end() ? it->second : nullptr;
+    for ( auto it = _spells.spell().begin(); it != _spells.spell().end(); ++it )
+    {
+      if ( static_cast<SpellId>(it->id()) == id)
+      {
+        return SpellPtr( new Spell(&(*it)) );
+      }
+    }
   }
 
-  return spell;
+  return nullptr;
 }
 
 }

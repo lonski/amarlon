@@ -12,12 +12,7 @@ void SpellDBRegistrar::reg(lua_State* state)
   module( state )
   [
       class_<SpellDB>("SpellDB")
-        .def("getName",       &SpellDB::getName)
-        .def("getLevel",      &SpellDB::getLevel)
-        .def("getRange",      &SpellDB::getRange)
-        .def("getClass",      &SpellDB::getClass)
-        .def("getTargetType", &SpellDB::getTargetType)
-        .def("getRadius",     &SpellDB::getRadius),
+        .def("fetch",         &SpellDB::fetch),
 
       class_<SpellPtr>("SpellPtr")
         .def("get", &SpellPtr::get),

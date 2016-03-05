@@ -171,6 +171,13 @@ class SpellData : public ::google::protobuf::Message {
   ::google::protobuf::int32 radius() const;
   void set_radius(::google::protobuf::int32 value);
 
+  // optional int32 range = 9 [default = 0];
+  bool has_range() const;
+  void clear_range();
+  static const int kRangeFieldNumber = 9;
+  ::google::protobuf::int32 range() const;
+  void set_range(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:amarlon.SpellData)
  private:
   inline void set_has_id();
@@ -189,6 +196,8 @@ class SpellData : public ::google::protobuf::Message {
   inline void clear_has_passive();
   inline void set_has_radius();
   inline void clear_has_radius();
+  inline void set_has_range();
+  inline void clear_has_range();
 
   // helper for ByteSize()
   int RequiredFieldsByteSizeFallback() const;
@@ -204,6 +213,7 @@ class SpellData : public ::google::protobuf::Message {
   ::google::protobuf::internal::ArenaStringPtr description_;
   bool passive_;
   ::google::protobuf::int32 radius_;
+  ::google::protobuf::int32 range_;
   friend void  protobuf_AddDesc_spell_2eproto();
   friend void protobuf_AssignDesc_spell_2eproto();
   friend void protobuf_ShutdownFile_spell_2eproto();
@@ -559,6 +569,30 @@ inline void SpellData::set_radius(::google::protobuf::int32 value) {
   set_has_radius();
   radius_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.radius)
+}
+
+// optional int32 range = 9 [default = 0];
+inline bool SpellData::has_range() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void SpellData::set_has_range() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void SpellData::clear_has_range() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void SpellData::clear_range() {
+  range_ = 0;
+  clear_has_range();
+}
+inline ::google::protobuf::int32 SpellData::range() const {
+  // @@protoc_insertion_point(field_get:amarlon.SpellData.range)
+  return range_;
+}
+inline void SpellData::set_range(::google::protobuf::int32 value) {
+  set_has_range();
+  range_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.SpellData.range)
 }
 
 // -------------------------------------------------------------------

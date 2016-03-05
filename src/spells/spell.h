@@ -5,25 +5,23 @@
 #include <target.h>
 #include <character_class_type.h>
 #include <target_type.h>
-#include <spell_description.h>
 #include <spell_id.h>
+#include <spell.pb.h>
 
 namespace amarlon {
 
 class Actor;
 class Spell;
-typedef std::shared_ptr<Actor>  ActorPtr;
-typedef std::shared_ptr<Spell>  SpellPtr;
+class SpellData;
+typedef std::shared_ptr<Actor> ActorPtr;
+typedef std::shared_ptr<Spell> SpellPtr;
 
 class Spell
 {
 public:
-
-  virtual ~Spell();
-
+  Spell(const SpellData* data = nullptr);
   static SpellPtr create(SpellId id);
-
-  virtual SpellPtr clone();
+  virtual ~Spell();
 
   virtual bool cast(ActorPtr caster, Target target);
 
@@ -37,16 +35,16 @@ public:
   virtual std::string getDescription() const;
   std::string getScript() const;
 
+  bool isInitialized() const;
+
   bool operator==(const Spell& rhs);
 
 private:
-  SpellId _id;
-  SpellDescriptionPtr _flyweight;
+  const SpellData* _data;
 
-  Spell(SpellId id);
+  Spell(const Spell& spell) = delete;
+  Spell& operator=(const Spell& spell) = delete;
 
-  friend class SpellSerializer;
-  friend class SpellDB;
 };
 
 }

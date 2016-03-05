@@ -38,7 +38,7 @@ void protobuf_AssignDesc_spell_2eproto() {
       "spell.proto");
   GOOGLE_CHECK(file != NULL);
   SpellData_descriptor_ = file->message_type(0);
-  static const int SpellData_offsets_[8] = {
+  static const int SpellData_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, level_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, char_class_),
@@ -47,6 +47,7 @@ void protobuf_AssignDesc_spell_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, description_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, passive_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, radius_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, range_),
   };
   SpellData_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -108,12 +109,13 @@ void protobuf_AddDesc_spell_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013spell.proto\022\007amarlon\"\235\001\n\tSpellData\022\n\n\002"
+    "\n\013spell.proto\022\007amarlon\"\257\001\n\tSpellData\022\n\n\002"
     "id\030\001 \002(\005\022\r\n\005level\030\002 \002(\005\022\022\n\nchar_class\030\003 "
     "\002(\005\022\023\n\013target_type\030\004 \002(\005\022\014\n\004name\030\005 \002(\t\022\023"
     "\n\013description\030\006 \002(\t\022\026\n\007passive\030\007 \001(\010:\005fa"
-    "lse\022\021\n\006radius\030\010 \001(\005:\0010\"/\n\nSpellsData\022!\n\005"
-    "spell\030\001 \003(\0132\022.amarlon.SpellData", 231);
+    "lse\022\021\n\006radius\030\010 \001(\005:\0010\022\020\n\005range\030\t \001(\005:\0010"
+    "\"/\n\nSpellsData\022!\n\005spell\030\001 \003(\0132\022.amarlon."
+    "SpellData", 249);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "spell.proto", &protobuf_RegisterTypes);
   SpellData::default_instance_ = new SpellData();
@@ -151,6 +153,7 @@ const int SpellData::kNameFieldNumber;
 const int SpellData::kDescriptionFieldNumber;
 const int SpellData::kPassiveFieldNumber;
 const int SpellData::kRadiusFieldNumber;
+const int SpellData::kRangeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 SpellData::SpellData()
@@ -181,6 +184,7 @@ void SpellData::SharedCtor() {
   description_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   passive_ = false;
   radius_ = 0;
+  range_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -240,6 +244,7 @@ void SpellData::Clear() {
       description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
+  range_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -379,6 +384,21 @@ bool SpellData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(72)) goto parse_range;
+        break;
+      }
+
+      // optional int32 range = 9 [default = 0];
+      case 9: {
+        if (tag == 72) {
+         parse_range:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &range_)));
+          set_has_range();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -458,6 +478,11 @@ void SpellData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->radius(), output);
   }
 
+  // optional int32 range = 9 [default = 0];
+  if (has_range()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->range(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -518,6 +543,11 @@ void SpellData::SerializeWithCachedSizes(
   // optional int32 radius = 8 [default = 0];
   if (has_radius()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->radius(), target);
+  }
+
+  // optional int32 range = 9 [default = 0];
+  if (has_range()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->range(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -626,6 +656,13 @@ int SpellData::ByteSize() const {
     }
 
   }
+  // optional int32 range = 9 [default = 0];
+  if (has_range()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->range());
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -679,6 +716,11 @@ void SpellData::MergeFrom(const SpellData& from) {
       set_radius(from.radius());
     }
   }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_range()) {
+      set_range(from.range());
+    }
+  }
   if (from._internal_metadata_.have_unknown_fields()) {
     mutable_unknown_fields()->MergeFrom(from.unknown_fields());
   }
@@ -715,6 +757,7 @@ void SpellData::InternalSwap(SpellData* other) {
   description_.Swap(&other->description_);
   std::swap(passive_, other->passive_);
   std::swap(radius_, other->radius_);
+  std::swap(range_, other->range_);
   std::swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -979,6 +1022,30 @@ void SpellData::clear_radius() {
   set_has_radius();
   radius_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.radius)
+}
+
+// optional int32 range = 9 [default = 0];
+bool SpellData::has_range() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+void SpellData::set_has_range() {
+  _has_bits_[0] |= 0x00000100u;
+}
+void SpellData::clear_has_range() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+void SpellData::clear_range() {
+  range_ = 0;
+  clear_has_range();
+}
+ ::google::protobuf::int32 SpellData::range() const {
+  // @@protoc_insertion_point(field_get:amarlon.SpellData.range)
+  return range_;
+}
+ void SpellData::set_range(::google::protobuf::int32 value) {
+  set_has_range();
+  range_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.SpellData.range)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

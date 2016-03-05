@@ -25,7 +25,7 @@ public:
    * @brief loads given file, parses xml and creates actor descriptions
    * @param path to file to be loaded
    */
-  void load(const std::string& fn);
+  bool load(const std::string& fn);
 
 private:
   std::vector<ActorDescriptionPtr> _descriptions;

@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package amarlon;
+
+message TileData {
+	required int32  id        = 1;
+	required string name      = 2;
+  required string character = 3;
+  required string color     = 4;
+  required bool transparent = 5;
+  required bool walkable    = 6;
+}
+
+message TilesData {
+	repeated TileData tile = 1;
+}

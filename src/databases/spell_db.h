@@ -4,10 +4,10 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include <spell_parser.h>
 #include <spell_id.h>
 #include <character_class_type.h>
 #include <target_type.h>
+#include <spell.pb.h>
 
 namespace amarlon {
 
@@ -20,24 +20,12 @@ public:
   SpellDB();
   virtual ~SpellDB();
 
-  virtual std::string getName(SpellId id);
-  virtual int getLevel(SpellId id);
-  virtual CharacterClassType getClass(SpellId id);
-  virtual TargetType getTargetType(SpellId id);
-  virtual int getRange(SpellId id);
-  virtual int getRadius(SpellId id);
-  virtual std::string getDescription(SpellId id);
-  std::string getScript(SpellId id) const;
-
-  virtual std::vector<SpellPtr> getSpells( std::function<bool(SpellPtr)> filter );
+  virtual std::vector<SpellPtr> getSpells(std::function<bool (SpellPtr)> filter );
   virtual SpellPtr fetch(SpellId id);
   virtual bool load(const std::string& fn);
 
 protected:
-  SpellParser _spellParser;
-  std::map<SpellId, SpellDescriptionPtr> _spells;
-
-  void parseSpells(std::vector<char> &buf);
+  SpellsData _spells;
 
 };
 

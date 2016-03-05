@@ -97,7 +97,7 @@ std::string CharacterClass::getDescription() const
   if ( !_itemTypeRestrictions.empty() )
   {
     dsc += "# #" + headerColor + "Can use only:# #";
-    for (auto r : _itemTypeRestrictions )
+    for (const ItemTypeRestriction& r : _itemTypeRestrictions )
     {
       dsc += r.toString() + "#";
     }

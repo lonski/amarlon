@@ -40,7 +40,7 @@ bool TileDB::isTransparent(TileType type)
   return get<bool>(type, &TileDescription::transparent, false);
 }
 
-void TileDB::load(const string& fn)
+bool TileDB::load(const string& fn)
 {
   ifstream ifs(fn);
 
@@ -51,7 +51,10 @@ void TileDB::load(const string& fn)
     buffer.push_back('\0');
 
     parseTiles(buffer);
+    return true;
   }
+
+  return false;
 }
 
 void TileDB::parseTiles(vector<char>& dataToParse)

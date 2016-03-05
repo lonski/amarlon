@@ -3,18 +3,15 @@
 #include <actor.h>
 #include <animation.h>
 #include <engine.h>
-#include <spell_db.h>
 #include <lua_state.h>
 #include <spell_book.h>
+#include <spell_db.h>
+#include <google/protobuf/util/message_differencer.h>
 
 namespace amarlon {
 
-Spell::Spell(SpellId id)
-  : _id(id)
-{
-}
-
-Spell::~Spell()
+Spell::Spell(const SpellData* data)
+  : _data(data)
 {
 }
 
@@ -23,11 +20,8 @@ SpellPtr Spell::create(SpellId id)
   return Engine::instance().getSpellDB().fetch(id);
 }
 
-SpellPtr Spell::clone()
+Spell::~Spell()
 {
-  SpellPtr s(new Spell(_id));
-  s->_flyweight = _flyweight;
-  return s;
 }
 
 bool Spell::cast(ActorPtr caster, Target target)
@@ -67,7 +61,7 @@ bool Spell::cast(ActorPtr caster, Target target)
                     getSlots([&](SpellSlotPtr s){
                       return s->spell &&
                              s->isPrepared &&
-                             s->spell->getId() == _id;
+                             s->spell->getId() == getId();
                     });
 
       if ( !sSlots.empty() )
@@ -82,46 +76,46 @@ bool Spell::cast(ActorPtr caster, Target target)
 
 SpellId Spell::getId() const
 {
-  return _id;
+  return _data ? static_cast<SpellId>(_data->id()) : SpellId::Null;
 }
 
 std::string Spell::getName() const
 {
-  return _flyweight ? _flyweight->name : "No name";
+  return _data ? _data->name() : "No name";
 }
 
 CharacterClassType Spell::getClass() const
 {
-  return _flyweight ? static_cast<CharacterClassType>(_flyweight->spellClass)
+  return _data ? static_cast<CharacterClassType>(_data->char_class())
                     : CharacterClassType::NoClass;
 }
 
 int Spell::getLevel() const
 {
-  return _flyweight ? _flyweight->level : 0;
+  return _data ? _data->level() : 0;
 }
 
 TargetType Spell::getTargetType() const
 {
-  return _flyweight ? static_cast<TargetType>(_flyweight->targetType)
+  return _data ? static_cast<TargetType>(_data->target_type())
                     : TargetType::SELF;
 }
 
 int Spell::getRange() const
 {
-  return _flyweight ? _flyweight->range : 0;
+  return _data ? _data->range() : 0;
 }
 
 int Spell::getRadius() const
 {
-  return _flyweight ? _flyweight->radius : 0;
+  return _data ? _data->radius() : 0;
 }
 
 std::string Spell::getDescription() const
 {
   std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
 
-  str += _flyweight ? _flyweight->description : "";
+  str += _data ? _data->description() : "";
 
   str += colorToStr(TCODColor::darkTurquoise, true) + "Class : " + CharacterClass2Str( getClass() ) + "#";
   str += colorToStr(TCODColor::darkTurquoise, true) + "Level : " + toStr(getLevel()) + "#";
@@ -132,13 +126,21 @@ std::string Spell::getDescription() const
 }
 
 bool Spell::operator==(const Spell &rhs)
-{
-  return _id == rhs._id;
+{  
+  if ( _data != nullptr && rhs._data != nullptr )
+    return google::protobuf::util::MessageDifferencer::Equals(*_data, *rhs._data);
+
+  return _data == rhs._data;
 }
 
 std::string Spell::getScript() const
 {
-  return Engine::instance().getSpellDB().getScript(_id);
+  return _data ? "scripts/spells/" + std::to_string( static_cast<int>(_data->id()) ) + ".lua" : "";
+}
+
+bool Spell::isInitialized() const
+{
+  return _data != nullptr;
 }
 
 }

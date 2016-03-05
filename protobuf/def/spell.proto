@@ -11,6 +11,7 @@ message SpellData {
 	required string description = 6;
 	optional bool   passive     = 7 [default = false];
 	optional int32  radius      = 8 [default = 0];
+  optional int32  range       = 9 [default = 0];
 }
 
 message SpellsData {

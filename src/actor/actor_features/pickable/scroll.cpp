@@ -51,7 +51,7 @@ ActorFeaturePtr Scroll::clone()
   ScrollPtr cloned( new Scroll );
 
   Pickable::clone( cloned.get() );
-  cloned->_spell = _spell->clone();
+  cloned->_spell = _spell;
 
   return cloned;
 }

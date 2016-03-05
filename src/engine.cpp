@@ -55,11 +55,12 @@ void Engine::prologue()
   _luaState.reset( new lua_api::LuaState );
 
   getLuaState().registerAPI();
-  getSpellDB().load( _config->get("spells_file") );
-  getSkillDB().load( _config->get("skills_file") );
-  getTileDB ().load( _config->get("tiles_file" ) );
-  getRpgDB().load( _config->get("rpg_file") );
-  getActorDB().load( _config->get("actors_file") );
+  if ( !getSpellDB().load( _config->get("spells_file") ) ) throw amarlon_exeption("Failed to load spells DB.");
+  if ( !getSkillDB().load( _config->get("skills_file") ) ) throw amarlon_exeption("Failed to load skills DB.");
+  if ( !getTileDB ().load( _config->get("tiles_file" ) ) ) throw amarlon_exeption("Failed to load tiles DB.");
+  if ( !getRpgDB().load(   _config->get("rpg_file"   ) ) ) throw amarlon_exeption("Failed to load rpg DB.");
+  if ( !getActorDB().load( _config->get("actors_file") ) ) throw amarlon_exeption("Failed to load actors DB.");
+
   _world.reset( new World( _config->get("maps_file") ) );
 
 }
