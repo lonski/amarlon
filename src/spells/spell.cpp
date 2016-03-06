@@ -10,14 +10,35 @@
 
 namespace amarlon {
 
-Spell::Spell(const SpellData* data)
-  : _data(data)
+Spell::Spell(const SpellData& data)
 {
+  _data.CopyFrom(data);
+}
+
+Spell::Spell(const Spell& spell)
+{
+  _data.CopyFrom(spell._data);
 }
 
 SpellPtr Spell::create(SpellId id)
 {
   return Engine::instance().getSpellDB().fetch(id);
+}
+
+SpellPtr Spell::clone() const
+{
+  return SpellPtr(new Spell(*this));
+}
+
+Spell& Spell::operator=(const Spell& spell)
+{
+  if ( this != &spell )  _data.CopyFrom(spell._data);
+  return *this;
+}
+
+bool Spell::operator==(const Spell &rhs)
+{
+  return google::protobuf::util::MessageDifferencer::Equals(_data, rhs._data);
 }
 
 Spell::~Spell()
@@ -76,46 +97,44 @@ bool Spell::cast(ActorPtr caster, Target target)
 
 SpellId Spell::getId() const
 {
-  return _data ? static_cast<SpellId>(_data->id()) : SpellId::Null;
+  return static_cast<SpellId>(_data.id());
 }
 
 std::string Spell::getName() const
 {
-  return _data ? _data->name() : "No name";
+  return _data.name();
 }
 
 CharacterClassType Spell::getClass() const
 {
-  return _data ? static_cast<CharacterClassType>(_data->char_class())
-                    : CharacterClassType::NoClass;
+  return static_cast<CharacterClassType>(_data.char_class());
 }
 
 int Spell::getLevel() const
 {
-  return _data ? _data->level() : 0;
+  return _data.level();
 }
 
 TargetType Spell::getTargetType() const
 {
-  return _data ? static_cast<TargetType>(_data->target_type())
-                    : TargetType::SELF;
+  return static_cast<TargetType>(_data.target_type());
 }
 
 int Spell::getRange() const
 {
-  return _data ? _data->range() : 0;
+  return _data.range();
 }
 
 int Spell::getRadius() const
 {
-  return _data ? _data->radius() : 0;
+  return _data.radius();
 }
 
 std::string Spell::getDescription() const
 {
   std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
 
-  str += _data ? _data->description() : "";
+  str += _data.description();
 
   str += colorToStr(TCODColor::darkTurquoise, true) + "Class : " + CharacterClass2Str( getClass() ) + "#";
   str += colorToStr(TCODColor::darkTurquoise, true) + "Level : " + toStr(getLevel()) + "#";
@@ -125,22 +144,9 @@ std::string Spell::getDescription() const
   return str;
 }
 
-bool Spell::operator==(const Spell &rhs)
-{  
-  if ( _data != nullptr && rhs._data != nullptr )
-    return google::protobuf::util::MessageDifferencer::Equals(*_data, *rhs._data);
-
-  return _data == rhs._data;
-}
-
 std::string Spell::getScript() const
 {
-  return _data ? "scripts/spells/" + std::to_string( static_cast<int>(_data->id()) ) + ".lua" : "";
-}
-
-bool Spell::isInitialized() const
-{
-  return _data != nullptr;
+  return "scripts/spells/" + std::to_string( static_cast<int>(_data.id()) ) + ".lua";
 }
 
 }

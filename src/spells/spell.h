@@ -19,8 +19,14 @@ typedef std::shared_ptr<Spell> SpellPtr;
 class Spell
 {
 public:
-  Spell(const SpellData* data = nullptr);
+  Spell(const SpellData& data);
+  Spell(const Spell& spell);
   static SpellPtr create(SpellId id);
+
+  SpellPtr clone() const;
+  Spell& operator=(const Spell& spell);
+  bool operator==(const Spell& rhs);
+
   virtual ~Spell();
 
   virtual bool cast(ActorPtr caster, Target target);
@@ -35,15 +41,8 @@ public:
   virtual std::string getDescription() const;
   std::string getScript() const;
 
-  bool isInitialized() const;
-
-  bool operator==(const Spell& rhs);
-
 private:
-  const SpellData* _data;
-
-  Spell(const Spell& spell) = delete;
-  Spell& operator=(const Spell& spell) = delete;
+  SpellData _data;
 
 };
 

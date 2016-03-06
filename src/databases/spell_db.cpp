@@ -22,7 +22,16 @@ bool SpellDB::load(const std::string &fn)
   std::ifstream ifs(fn);
   if ( ifs.is_open() )
   {
-    _spells.ParseFromIstream(&ifs);
+    _spells.clear();
+
+    SpellsData spells;
+    spells.ParseFromIstream(&ifs);
+
+    for ( auto it = spells.spell().begin(); it != spells.spell().end(); ++it )
+    {
+      _spells[ static_cast<SpellId>(it->id()) ] = SpellPtr(new Spell(*it));
+    }
+
     return true;
   }
   return false;
@@ -32,10 +41,9 @@ std::vector<SpellPtr> SpellDB::getSpells(std::function<bool (SpellPtr)> filter)
 {
   std::vector<SpellPtr> spells;
 
-  for ( auto it = _spells.spell().begin(); it != _spells.spell().end(); ++it )
+  for ( const auto& kv : _spells )
   {
-    SpellPtr s = fetch( static_cast<SpellId>(it->id()) );
-    if ( filter(s) ) spells.push_back(s);
+    if ( filter(kv.second) ) spells.push_back( kv.second->clone() );
   }
 
   return spells;
@@ -45,13 +53,8 @@ SpellPtr SpellDB::fetch(SpellId id)
 {
   if ( id != SpellId::Null )
   {
-    for ( auto it = _spells.spell().begin(); it != _spells.spell().end(); ++it )
-    {
-      if ( static_cast<SpellId>(it->id()) == id)
-      {
-        return SpellPtr( new Spell(&(*it)) );
-      }
-    }
+    auto it = _spells.find(id);
+    if ( it != _spells.end() ) return it->second->clone();
   }
 
   return nullptr;

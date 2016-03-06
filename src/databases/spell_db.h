@@ -25,7 +25,7 @@ public:
   virtual bool load(const std::string& fn);
 
 protected:
-  SpellsData _spells;
+  std::map<SpellId, SpellPtr> _spells;
 
 };
 
