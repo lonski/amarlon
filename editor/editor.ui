@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>269</width>
-    <height>241</height>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,19 @@
       </property>
       <property name="text">
        <string>Spells Editor</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Skills Editor</string>
       </property>
      </widget>
     </item>
@@ -62,7 +75,7 @@
      <x>0</x>
      <y>0</y>
      <width>269</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

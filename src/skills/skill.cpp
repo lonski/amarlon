@@ -2,73 +2,85 @@
 #include <engine.h>
 #include <skill_db.h>
 #include <lua_state.h>
-#include <skill_description.h>
 #include <target_type.h>
+#include <google/protobuf/util/message_differencer.h>
 
 namespace amarlon {
 
-SkillPtr Skill::create(SkillId id, int level)
+Skill::Skill(const SkillData &data)
 {
-  SkillPtr skill = Engine::instance().getSkillDB().fetch(id);
-  skill->_level = level;
-  return skill;
+  _data.CopyFrom(data);
+}
+
+Skill::Skill(const Skill& skill)
+{
+  *this = skill;
+}
+
+SkillPtr Skill::create(SkillId id)
+{
+  return Engine::instance().getSkillDB().fetch(id);
+}
+
+SkillPtr Skill::clone() const
+{
+  return SkillPtr( new Skill(*this) );
+}
+
+Skill &Skill::operator=(const Skill &skill)
+{
+  if ( this != &skill )  _data.CopyFrom(skill._data);
+  return *this;
+}
+
+bool Skill::operator==(const Skill &rhs)
+{
+  return google::protobuf::util::MessageDifferencer::Equals(_data, rhs._data);
 }
 
 SkillId Skill::getId() const
 {
-  return _id;
+  return static_cast<SkillId>(_data.id());
 }
 
 std::string Skill::getScript() const
 {
-  return "scripts/skills/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  return "scripts/skills/" + std::to_string( static_cast<int>( _data.id() ) ) + ".lua";
 }
 
 int Skill::getLevel() const
 {
-  return _level;
+  return _data.level();
 }
 
 void Skill::setLevel(int level)
 {
-  _level = level;
+  _data.set_level(level);
 }
 
 std::string Skill::getName() const
 {
-  return _flyweight ? _flyweight->name : "";
+  return _data.name();
 }
 
 TargetType Skill::getTargetType() const
 {
-  return _flyweight ? static_cast<TargetType>(_flyweight->target) : TargetType::SELF;
+  return static_cast<TargetType>(_data.target_type());
 }
 
 int Skill::getRadius() const
 {
-  return _flyweight ? _flyweight->radius : 0;
+  return _data.radius();
 }
 
 bool Skill::isPassive() const
 {
-  return _flyweight ? _flyweight->passive : false;
+  return _data.passive();
 }
 
 std::string Skill::getDescription() const
 {
-  return _flyweight ? _flyweight->dsc : "";
-}
-
-SkillDescriptionPtr Skill::toDescriptionStruct()
-{
-  SkillDescriptionPtr dsc(new SkillDescription);
-  dsc->id = (int)_id;
-  dsc->name = getName();
-  dsc->dsc = getDescription();
-  dsc->passive = isPassive();
-  dsc->target = (int)getTargetType();
-
-  return dsc;
+  return _data.description();
 }
 
 bool Skill::use(ActorPtr user, Target target)
@@ -95,25 +107,6 @@ bool Skill::use(ActorPtr user, Target target)
   }
 
   return r;
-}
-
-bool Skill::operator==(const Skill &rhs) const
-{
-  return _id == rhs._id && _level == rhs._level;
-}
-
-SkillPtr Skill::clone() const
-{
-  SkillPtr skill( new Skill(_id) );
-  skill->_level = _level;
-  skill->_flyweight = _flyweight;
-  return skill;
-}
-
-Skill::Skill(SkillId id)
-  : _id(id)
-  , _level(0)
-{
 }
 
 }

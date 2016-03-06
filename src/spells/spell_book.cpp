@@ -114,8 +114,8 @@ bool SpellBook::operator==(const SpellBook &rhs)
 SpellBookPtr SpellBook::clone()
 {
   SpellBookPtr sb(new SpellBook);
-  for ( auto s : _spellSlots ) sb->addSlot( new SpellSlot(*s) );
-  for ( auto s : _knownSpells ) sb->addKnownSpell( Spell::create(s->getId()) );
+  for ( auto s : _spellSlots ) sb->addSlot( s->clone() );
+  for ( auto s : _knownSpells ) sb->addKnownSpell( s->clone() );
 
   return sb;
 }

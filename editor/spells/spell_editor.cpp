@@ -9,7 +9,8 @@
 
 SpellEditor::SpellEditor(QWidget *parent) :
   QMainWindow(parent),
-  ui(new Ui::spell_editor)
+  ui(new Ui::spell_editor),
+  _editDlg(this)
 {
   ui->setupUi(this);
   move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -97,9 +98,17 @@ void SpellEditor::on_actionNew_triggered()
 
 void SpellEditor::on_actionSpellNew_triggered()
 {
-  _editDlg.setSpell( _spellsData.add_spell() );
-  _editDlg.exec();
-  populate();
+  amarlon::SpellData* spell = new amarlon::SpellData;
+  _editDlg.setSpell( spell );
+  if ( _editDlg.exec() == QDialog::Accepted )
+  {
+    _spellsData.mutable_spell()->AddAllocated(spell);
+    populate();
+  }
+  else
+  {
+    delete spell;
+  }
 }
 
 void SpellEditor::on_sTable_cellDoubleClicked(int row, int /*column*/)

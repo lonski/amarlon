@@ -85,7 +85,8 @@ void Character::upgrade(DescriptionPtr dsc)
     //upgrade skills
     for(auto s : cDsc->skills)
     {
-      SkillPtr skill = Skill::create( static_cast<SkillId>(s.first), s.second );
+      SkillPtr skill = Skill::create( static_cast<SkillId>(s.first) );
+      skill->setLevel(s.second);
 
       //remove if already exists
       auto it = std::find_if(_skills.begin(), _skills.end(), [&](SkillPtr sk){

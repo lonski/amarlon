@@ -53,14 +53,6 @@ class TileData : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
   static const ::google::protobuf::Descriptor* descriptor();
   static const TileData& default_instance();
 
@@ -105,15 +97,13 @@ class TileData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
-  bool has_id() const;
+  // optional int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
   ::google::protobuf::int32 id() const;
   void set_id(::google::protobuf::int32 value);
 
-  // required string name = 2;
-  bool has_name() const;
+  // optional string name = 2;
   void clear_name();
   static const int kNameFieldNumber = 2;
   const ::std::string& name() const;
@@ -124,8 +114,7 @@ class TileData : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // required string character = 3;
-  bool has_character() const;
+  // optional string character = 3;
   void clear_character();
   static const int kCharacterFieldNumber = 3;
   const ::std::string& character() const;
@@ -136,8 +125,7 @@ class TileData : public ::google::protobuf::Message {
   ::std::string* release_character();
   void set_allocated_character(::std::string* character);
 
-  // required string color = 4;
-  bool has_color() const;
+  // optional string color = 4;
   void clear_color();
   static const int kColorFieldNumber = 4;
   const ::std::string& color() const;
@@ -148,15 +136,13 @@ class TileData : public ::google::protobuf::Message {
   ::std::string* release_color();
   void set_allocated_color(::std::string* color);
 
-  // required bool transparent = 5;
-  bool has_transparent() const;
+  // optional bool transparent = 5;
   void clear_transparent();
   static const int kTransparentFieldNumber = 5;
   bool transparent() const;
   void set_transparent(bool value);
 
-  // required bool walkable = 6;
-  bool has_walkable() const;
+  // optional bool walkable = 6;
   void clear_walkable();
   static const int kWalkableFieldNumber = 6;
   bool walkable() const;
@@ -164,31 +150,16 @@ class TileData : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:amarlon.TileData)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
-  inline void set_has_name();
-  inline void clear_has_name();
-  inline void set_has_character();
-  inline void clear_has_character();
-  inline void set_has_color();
-  inline void clear_has_color();
-  inline void set_has_transparent();
-  inline void clear_has_transparent();
-  inline void set_has_walkable();
-  inline void clear_has_walkable();
-
-  // helper for ByteSize()
-  int RequiredFieldsByteSizeFallback() const;
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
+  bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr character_;
   ::google::protobuf::internal::ArenaStringPtr color_;
   ::google::protobuf::int32 id_;
   bool transparent_;
   bool walkable_;
+  mutable int _cached_size_;
   friend void  protobuf_AddDesc_tile_2eproto();
   friend void protobuf_AssignDesc_tile_2eproto();
   friend void protobuf_ShutdownFile_tile_2eproto();
@@ -208,14 +179,6 @@ class TilesData : public ::google::protobuf::Message {
   inline TilesData& operator=(const TilesData& from) {
     CopyFrom(from);
     return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
@@ -278,9 +241,9 @@ class TilesData : public ::google::protobuf::Message {
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
+  bool _is_default_instance_;
   ::google::protobuf::RepeatedPtrField< ::amarlon::TileData > tile_;
+  mutable int _cached_size_;
   friend void  protobuf_AddDesc_tile_2eproto();
   friend void protobuf_AssignDesc_tile_2eproto();
   friend void protobuf_ShutdownFile_tile_2eproto();
@@ -296,233 +259,173 @@ class TilesData : public ::google::protobuf::Message {
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
 // TileData
 
-// required int32 id = 1;
-inline bool TileData::has_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void TileData::set_has_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void TileData::clear_has_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
+// optional int32 id = 1;
 inline void TileData::clear_id() {
   id_ = 0;
-  clear_has_id();
 }
 inline ::google::protobuf::int32 TileData::id() const {
   // @@protoc_insertion_point(field_get:amarlon.TileData.id)
   return id_;
 }
 inline void TileData::set_id(::google::protobuf::int32 value) {
-  set_has_id();
+  
   id_ = value;
   // @@protoc_insertion_point(field_set:amarlon.TileData.id)
 }
 
-// required string name = 2;
-inline bool TileData::has_name() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void TileData::set_has_name() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void TileData::clear_has_name() {
-  _has_bits_[0] &= ~0x00000002u;
-}
+// optional string name = 2;
 inline void TileData::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_name();
 }
 inline const ::std::string& TileData::name() const {
   // @@protoc_insertion_point(field_get:amarlon.TileData.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void TileData::set_name(const ::std::string& value) {
-  set_has_name();
+  
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:amarlon.TileData.name)
 }
 inline void TileData::set_name(const char* value) {
-  set_has_name();
+  
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:amarlon.TileData.name)
 }
 inline void TileData::set_name(const char* value, size_t size) {
-  set_has_name();
+  
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.name)
 }
 inline ::std::string* TileData::mutable_name() {
-  set_has_name();
+  
   // @@protoc_insertion_point(field_mutable:amarlon.TileData.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* TileData::release_name() {
-  clear_has_name();
+  
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void TileData::set_allocated_name(::std::string* name) {
   if (name != NULL) {
-    set_has_name();
+    
   } else {
-    clear_has_name();
+    
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.name)
 }
 
-// required string character = 3;
-inline bool TileData::has_character() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void TileData::set_has_character() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void TileData::clear_has_character() {
-  _has_bits_[0] &= ~0x00000004u;
-}
+// optional string character = 3;
 inline void TileData::clear_character() {
   character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_character();
 }
 inline const ::std::string& TileData::character() const {
   // @@protoc_insertion_point(field_get:amarlon.TileData.character)
   return character_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void TileData::set_character(const ::std::string& value) {
-  set_has_character();
+  
   character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:amarlon.TileData.character)
 }
 inline void TileData::set_character(const char* value) {
-  set_has_character();
+  
   character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:amarlon.TileData.character)
 }
 inline void TileData::set_character(const char* value, size_t size) {
-  set_has_character();
+  
   character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.character)
 }
 inline ::std::string* TileData::mutable_character() {
-  set_has_character();
+  
   // @@protoc_insertion_point(field_mutable:amarlon.TileData.character)
   return character_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* TileData::release_character() {
-  clear_has_character();
+  
   return character_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void TileData::set_allocated_character(::std::string* character) {
   if (character != NULL) {
-    set_has_character();
+    
   } else {
-    clear_has_character();
+    
   }
   character_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), character);
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.character)
 }
 
-// required string color = 4;
-inline bool TileData::has_color() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void TileData::set_has_color() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void TileData::clear_has_color() {
-  _has_bits_[0] &= ~0x00000008u;
-}
+// optional string color = 4;
 inline void TileData::clear_color() {
   color_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_color();
 }
 inline const ::std::string& TileData::color() const {
   // @@protoc_insertion_point(field_get:amarlon.TileData.color)
   return color_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void TileData::set_color(const ::std::string& value) {
-  set_has_color();
+  
   color_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:amarlon.TileData.color)
 }
 inline void TileData::set_color(const char* value) {
-  set_has_color();
+  
   color_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:amarlon.TileData.color)
 }
 inline void TileData::set_color(const char* value, size_t size) {
-  set_has_color();
+  
   color_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.color)
 }
 inline ::std::string* TileData::mutable_color() {
-  set_has_color();
+  
   // @@protoc_insertion_point(field_mutable:amarlon.TileData.color)
   return color_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* TileData::release_color() {
-  clear_has_color();
+  
   return color_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void TileData::set_allocated_color(::std::string* color) {
   if (color != NULL) {
-    set_has_color();
+    
   } else {
-    clear_has_color();
+    
   }
   color_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), color);
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.color)
 }
 
-// required bool transparent = 5;
-inline bool TileData::has_transparent() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void TileData::set_has_transparent() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void TileData::clear_has_transparent() {
-  _has_bits_[0] &= ~0x00000010u;
-}
+// optional bool transparent = 5;
 inline void TileData::clear_transparent() {
   transparent_ = false;
-  clear_has_transparent();
 }
 inline bool TileData::transparent() const {
   // @@protoc_insertion_point(field_get:amarlon.TileData.transparent)
   return transparent_;
 }
 inline void TileData::set_transparent(bool value) {
-  set_has_transparent();
+  
   transparent_ = value;
   // @@protoc_insertion_point(field_set:amarlon.TileData.transparent)
 }
 
-// required bool walkable = 6;
-inline bool TileData::has_walkable() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void TileData::set_has_walkable() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void TileData::clear_has_walkable() {
-  _has_bits_[0] &= ~0x00000020u;
-}
+// optional bool walkable = 6;
 inline void TileData::clear_walkable() {
   walkable_ = false;
-  clear_has_walkable();
 }
 inline bool TileData::walkable() const {
   // @@protoc_insertion_point(field_get:amarlon.TileData.walkable)
   return walkable_;
 }
 inline void TileData::set_walkable(bool value) {
-  set_has_walkable();
+  
   walkable_ = value;
   // @@protoc_insertion_point(field_set:amarlon.TileData.walkable)
 }

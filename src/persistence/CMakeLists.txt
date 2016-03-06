@@ -5,7 +5,6 @@ set(HEADER_FILES
     parsers/actor_parser.h
     parsers/map_parser.h
     parsers/spell_parser.h
-    parsers/skill_parser.h
     parsers/rpg_parser.h
     parsers/dialog_parser.h
     serializers/serializer.h
@@ -24,7 +23,6 @@ set(HEADER_FILES
     serializers/actor_feature_serializers/talker_serializer.h
     descriptions/actor_descriptions.h
     descriptions/spell_description.h
-    descriptions/skill_description.h
     descriptions/actor_feature_descriptions/pickable_description.h
     descriptions/actor_feature_descriptions/character_description.h
     descriptions/actor_feature_descriptions/ai_description.h
@@ -50,7 +48,6 @@ set(SOURCE_FILES
     parsers/tile_parser.cpp
     parsers/map_parser.cpp
     parsers/spell_parser.cpp
-    parsers/skill_parser.cpp
     parsers/rpg_parser.cpp
     parsers/dialog_parser.cpp
     serializers/map_serializer.cpp

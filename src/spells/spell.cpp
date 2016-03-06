@@ -17,7 +17,7 @@ Spell::Spell(const SpellData& data)
 
 Spell::Spell(const Spell& spell)
 {
-  _data.CopyFrom(spell._data);
+  *this = spell;
 }
 
 SpellPtr Spell::create(SpellId id)
@@ -82,7 +82,7 @@ bool Spell::cast(ActorPtr caster, Target target)
                     getSlots([&](SpellSlotPtr s){
                       return s->spell &&
                              s->isPrepared &&
-                             s->spell->getId() == getId();
+                             *s->spell == *this;
                     });
 
       if ( !sSlots.empty() )

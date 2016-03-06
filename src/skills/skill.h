@@ -6,20 +6,25 @@
 #include <skill_id.h>
 #include <target_type.h>
 #include <target.h>
+#include <skill.pb.h>
 
 namespace amarlon {
 
 class Skill;
 class Actor;
-struct SkillDescription;
-typedef std::shared_ptr<SkillDescription> SkillDescriptionPtr;
 typedef std::shared_ptr<Skill> SkillPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
 
 class Skill
 {
 public:
-  static SkillPtr create(SkillId id, int level = 0);
+  Skill(const SkillData& data);
+  Skill(const Skill& skill);
+  static SkillPtr create(SkillId id);
+
+  SkillPtr clone() const;
+  Skill& operator=(const Skill& skill);
+  bool operator==(const Skill& rhs);
 
   SkillId getId() const;
   std::string getScript() const;
@@ -30,21 +35,12 @@ public:
   int getRadius() const;
   bool isPassive() const;
   std::string getDescription() const;
-  SkillDescriptionPtr toDescriptionStruct();
 
   bool use(ActorPtr user, Target target);
 
-  bool operator==(const Skill& rhs) const;
-  SkillPtr clone() const;
-
 private:
-  SkillId _id;
-  int _level;
-  SkillDescriptionPtr _flyweight;
+  SkillData _data;
 
-  Skill(SkillId id);
-
-  friend class SkillDB;
 };
 
 }

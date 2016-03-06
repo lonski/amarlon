@@ -29,3 +29,8 @@ void editor::on_pushButton_3_clicked()
 {
   //_actorsEditor.show();
 }
+
+void editor::on_pushButton_4_clicked()
+{
+  _skillsEditor.show();
+}

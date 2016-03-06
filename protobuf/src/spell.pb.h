@@ -53,14 +53,6 @@ class SpellData : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
   static const ::google::protobuf::Descriptor* descriptor();
   static const SpellData& default_instance();
 
@@ -105,36 +97,31 @@ class SpellData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
-  bool has_id() const;
+  // optional int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
   ::google::protobuf::int32 id() const;
   void set_id(::google::protobuf::int32 value);
 
-  // required int32 level = 2;
-  bool has_level() const;
+  // optional int32 level = 2;
   void clear_level();
   static const int kLevelFieldNumber = 2;
   ::google::protobuf::int32 level() const;
   void set_level(::google::protobuf::int32 value);
 
-  // required int32 char_class = 3;
-  bool has_char_class() const;
+  // optional int32 char_class = 3;
   void clear_char_class();
   static const int kCharClassFieldNumber = 3;
   ::google::protobuf::int32 char_class() const;
   void set_char_class(::google::protobuf::int32 value);
 
-  // required int32 target_type = 4;
-  bool has_target_type() const;
+  // optional int32 target_type = 4;
   void clear_target_type();
   static const int kTargetTypeFieldNumber = 4;
   ::google::protobuf::int32 target_type() const;
   void set_target_type(::google::protobuf::int32 value);
 
-  // required string name = 5;
-  bool has_name() const;
+  // optional string name = 5;
   void clear_name();
   static const int kNameFieldNumber = 5;
   const ::std::string& name() const;
@@ -145,8 +132,7 @@ class SpellData : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // required string description = 6;
-  bool has_description() const;
+  // optional string description = 6;
   void clear_description();
   static const int kDescriptionFieldNumber = 6;
   const ::std::string& description() const;
@@ -157,22 +143,19 @@ class SpellData : public ::google::protobuf::Message {
   ::std::string* release_description();
   void set_allocated_description(::std::string* description);
 
-  // optional bool passive = 7 [default = false];
-  bool has_passive() const;
+  // optional bool passive = 7;
   void clear_passive();
   static const int kPassiveFieldNumber = 7;
   bool passive() const;
   void set_passive(bool value);
 
-  // optional int32 radius = 8 [default = 0];
-  bool has_radius() const;
+  // optional int32 radius = 8;
   void clear_radius();
   static const int kRadiusFieldNumber = 8;
   ::google::protobuf::int32 radius() const;
   void set_radius(::google::protobuf::int32 value);
 
-  // optional int32 range = 9 [default = 0];
-  bool has_range() const;
+  // optional int32 range = 9;
   void clear_range();
   static const int kRangeFieldNumber = 9;
   ::google::protobuf::int32 range() const;
@@ -180,31 +163,9 @@ class SpellData : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:amarlon.SpellData)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
-  inline void set_has_level();
-  inline void clear_has_level();
-  inline void set_has_char_class();
-  inline void clear_has_char_class();
-  inline void set_has_target_type();
-  inline void clear_has_target_type();
-  inline void set_has_name();
-  inline void clear_has_name();
-  inline void set_has_description();
-  inline void clear_has_description();
-  inline void set_has_passive();
-  inline void clear_has_passive();
-  inline void set_has_radius();
-  inline void clear_has_radius();
-  inline void set_has_range();
-  inline void clear_has_range();
-
-  // helper for ByteSize()
-  int RequiredFieldsByteSizeFallback() const;
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
+  bool _is_default_instance_;
   ::google::protobuf::int32 id_;
   ::google::protobuf::int32 level_;
   ::google::protobuf::int32 char_class_;
@@ -214,6 +175,7 @@ class SpellData : public ::google::protobuf::Message {
   bool passive_;
   ::google::protobuf::int32 radius_;
   ::google::protobuf::int32 range_;
+  mutable int _cached_size_;
   friend void  protobuf_AddDesc_spell_2eproto();
   friend void protobuf_AssignDesc_spell_2eproto();
   friend void protobuf_ShutdownFile_spell_2eproto();
@@ -233,14 +195,6 @@ class SpellsData : public ::google::protobuf::Message {
   inline SpellsData& operator=(const SpellsData& from) {
     CopyFrom(from);
     return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
@@ -303,9 +257,9 @@ class SpellsData : public ::google::protobuf::Message {
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
+  bool _is_default_instance_;
   ::google::protobuf::RepeatedPtrField< ::amarlon::SpellData > spell_;
+  mutable int _cached_size_;
   friend void  protobuf_AddDesc_spell_2eproto();
   friend void protobuf_AssignDesc_spell_2eproto();
   friend void protobuf_ShutdownFile_spell_2eproto();
@@ -321,276 +275,186 @@ class SpellsData : public ::google::protobuf::Message {
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
 // SpellData
 
-// required int32 id = 1;
-inline bool SpellData::has_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void SpellData::set_has_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void SpellData::clear_has_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
+// optional int32 id = 1;
 inline void SpellData::clear_id() {
   id_ = 0;
-  clear_has_id();
 }
 inline ::google::protobuf::int32 SpellData::id() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.id)
   return id_;
 }
 inline void SpellData::set_id(::google::protobuf::int32 value) {
-  set_has_id();
+  
   id_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.id)
 }
 
-// required int32 level = 2;
-inline bool SpellData::has_level() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void SpellData::set_has_level() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void SpellData::clear_has_level() {
-  _has_bits_[0] &= ~0x00000002u;
-}
+// optional int32 level = 2;
 inline void SpellData::clear_level() {
   level_ = 0;
-  clear_has_level();
 }
 inline ::google::protobuf::int32 SpellData::level() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.level)
   return level_;
 }
 inline void SpellData::set_level(::google::protobuf::int32 value) {
-  set_has_level();
+  
   level_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.level)
 }
 
-// required int32 char_class = 3;
-inline bool SpellData::has_char_class() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void SpellData::set_has_char_class() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void SpellData::clear_has_char_class() {
-  _has_bits_[0] &= ~0x00000004u;
-}
+// optional int32 char_class = 3;
 inline void SpellData::clear_char_class() {
   char_class_ = 0;
-  clear_has_char_class();
 }
 inline ::google::protobuf::int32 SpellData::char_class() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.char_class)
   return char_class_;
 }
 inline void SpellData::set_char_class(::google::protobuf::int32 value) {
-  set_has_char_class();
+  
   char_class_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.char_class)
 }
 
-// required int32 target_type = 4;
-inline bool SpellData::has_target_type() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void SpellData::set_has_target_type() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void SpellData::clear_has_target_type() {
-  _has_bits_[0] &= ~0x00000008u;
-}
+// optional int32 target_type = 4;
 inline void SpellData::clear_target_type() {
   target_type_ = 0;
-  clear_has_target_type();
 }
 inline ::google::protobuf::int32 SpellData::target_type() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.target_type)
   return target_type_;
 }
 inline void SpellData::set_target_type(::google::protobuf::int32 value) {
-  set_has_target_type();
+  
   target_type_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.target_type)
 }
 
-// required string name = 5;
-inline bool SpellData::has_name() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void SpellData::set_has_name() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void SpellData::clear_has_name() {
-  _has_bits_[0] &= ~0x00000010u;
-}
+// optional string name = 5;
 inline void SpellData::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_name();
 }
 inline const ::std::string& SpellData::name() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void SpellData::set_name(const ::std::string& value) {
-  set_has_name();
+  
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:amarlon.SpellData.name)
 }
 inline void SpellData::set_name(const char* value) {
-  set_has_name();
+  
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:amarlon.SpellData.name)
 }
 inline void SpellData::set_name(const char* value, size_t size) {
-  set_has_name();
+  
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:amarlon.SpellData.name)
 }
 inline ::std::string* SpellData::mutable_name() {
-  set_has_name();
+  
   // @@protoc_insertion_point(field_mutable:amarlon.SpellData.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* SpellData::release_name() {
-  clear_has_name();
+  
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void SpellData::set_allocated_name(::std::string* name) {
   if (name != NULL) {
-    set_has_name();
+    
   } else {
-    clear_has_name();
+    
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
   // @@protoc_insertion_point(field_set_allocated:amarlon.SpellData.name)
 }
 
-// required string description = 6;
-inline bool SpellData::has_description() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void SpellData::set_has_description() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void SpellData::clear_has_description() {
-  _has_bits_[0] &= ~0x00000020u;
-}
+// optional string description = 6;
 inline void SpellData::clear_description() {
   description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_description();
 }
 inline const ::std::string& SpellData::description() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.description)
   return description_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void SpellData::set_description(const ::std::string& value) {
-  set_has_description();
+  
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:amarlon.SpellData.description)
 }
 inline void SpellData::set_description(const char* value) {
-  set_has_description();
+  
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:amarlon.SpellData.description)
 }
 inline void SpellData::set_description(const char* value, size_t size) {
-  set_has_description();
+  
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:amarlon.SpellData.description)
 }
 inline ::std::string* SpellData::mutable_description() {
-  set_has_description();
+  
   // @@protoc_insertion_point(field_mutable:amarlon.SpellData.description)
   return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* SpellData::release_description() {
-  clear_has_description();
+  
   return description_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void SpellData::set_allocated_description(::std::string* description) {
   if (description != NULL) {
-    set_has_description();
+    
   } else {
-    clear_has_description();
+    
   }
   description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
   // @@protoc_insertion_point(field_set_allocated:amarlon.SpellData.description)
 }
 
-// optional bool passive = 7 [default = false];
-inline bool SpellData::has_passive() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void SpellData::set_has_passive() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void SpellData::clear_has_passive() {
-  _has_bits_[0] &= ~0x00000040u;
-}
+// optional bool passive = 7;
 inline void SpellData::clear_passive() {
   passive_ = false;
-  clear_has_passive();
 }
 inline bool SpellData::passive() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.passive)
   return passive_;
 }
 inline void SpellData::set_passive(bool value) {
-  set_has_passive();
+  
   passive_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.passive)
 }
 
-// optional int32 radius = 8 [default = 0];
-inline bool SpellData::has_radius() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void SpellData::set_has_radius() {
-  _has_bits_[0] |= 0x00000080u;
-}
-inline void SpellData::clear_has_radius() {
-  _has_bits_[0] &= ~0x00000080u;
-}
+// optional int32 radius = 8;
 inline void SpellData::clear_radius() {
   radius_ = 0;
-  clear_has_radius();
 }
 inline ::google::protobuf::int32 SpellData::radius() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.radius)
   return radius_;
 }
 inline void SpellData::set_radius(::google::protobuf::int32 value) {
-  set_has_radius();
+  
   radius_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.radius)
 }
 
-// optional int32 range = 9 [default = 0];
-inline bool SpellData::has_range() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
-}
-inline void SpellData::set_has_range() {
-  _has_bits_[0] |= 0x00000100u;
-}
-inline void SpellData::clear_has_range() {
-  _has_bits_[0] &= ~0x00000100u;
-}
+// optional int32 range = 9;
 inline void SpellData::clear_range() {
   range_ = 0;
-  clear_has_range();
 }
 inline ::google::protobuf::int32 SpellData::range() const {
   // @@protoc_insertion_point(field_get:amarlon.SpellData.range)
   return range_;
 }
 inline void SpellData::set_range(::google::protobuf::int32 value) {
-  set_has_range();
+  
   range_ = value;
   // @@protoc_insertion_point(field_set:amarlon.SpellData.range)
 }

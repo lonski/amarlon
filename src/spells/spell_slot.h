@@ -8,7 +8,9 @@
 namespace amarlon {
 
 class Spell;
+struct SpellSlot;
 typedef std::shared_ptr<Spell> SpellPtr;
+typedef std::shared_ptr<SpellSlot> SpellSlotPtr;
 
 struct SpellSlot
 {
@@ -17,6 +19,16 @@ struct SpellSlot
     , isPrepared(prepared)
     , spell(s)
   {}
+
+  SpellSlot(const SpellSlot& slot)
+  {
+    *this = slot;
+  }
+
+  SpellSlotPtr clone() const
+  {
+    return SpellSlotPtr( new SpellSlot(*this) );
+  }
 
   SpellSlotDescriptionPtr toDescriptionStruct()
   {
@@ -28,7 +40,14 @@ struct SpellSlot
     return dsc;
   }
 
-  bool operator ==(const SpellSlot& rhs) const
+  SpellSlot& operator=(const SpellSlot& rhs)
+  {
+    level = rhs.level;
+    isPrepared = rhs.isPrepared;
+    spell = rhs.spell ? rhs.spell->clone() : nullptr;
+  }
+
+  bool operator==(const SpellSlot& rhs) const
   {
     return level == rhs.level &&
            isPrepared == rhs.isPrepared &&
@@ -60,12 +79,7 @@ struct SpellSlot
     isPrepared = false;
     spell = nullptr;
   }
-
-private:
-
 };
-
-typedef std::shared_ptr<SpellSlot> SpellSlotPtr;
 
 }
 

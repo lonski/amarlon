@@ -15,10 +15,11 @@ CONFIG += c++14
 SOURCES += main.cpp\
         editor.cpp \
     spells/spell_editor.cpp \
+    spells/spell_edit.cpp \
     ../protobuf/src/spell.pb.cc \
+    ../protobuf/src/skill.pb.cc \
     ../protobuf/src/tile.pb.cc \
     #../protobuf/src/actors.pb.cc \
-    spells/spell_edit.cpp \
     tiles/tiles_editor.cpp \
     tiles/tile_edit_dlg.cpp \
     #actors/actors_editor.cpp \
@@ -32,10 +33,13 @@ SOURCES += main.cpp\
     #actors/drop_rule_edit_dlg.cpp \
     #actors/inventory_edit_dlg.cpp \
     #actors/character_edit_dlg.cpp
+    skills/skill_editor.cpp \
+    skills/skill_edit.cpp
 
 HEADERS  += editor.h \
     spells/spell_editor.h \
     ../protobuf/src/spell.pb.h \
+    ../protobuf/src/skill.pb.h \
     ../protobuf/src/tile.pb.h \
     #../protobuf/src/actors.pb.h \
     spells/spell_edit.h \
@@ -53,6 +57,8 @@ HEADERS  += editor.h \
     #actors/drop_rule_edit_dlg.h \
     #actors/inventory_edit_dlg.h \
     #actors/character_edit_dlg.h
+    skills/skill_editor.h \
+    skills/skill_edit.h
 
 FORMS    += editor.ui \
     spells/spell_editor.ui \
@@ -70,6 +76,8 @@ FORMS    += editor.ui \
     #actors/drop_rule_edit_dlg.ui \
     #actors/inventory_edit_dlg.ui \
     #actors/character_edit_dlg.ui
+    skills/skill_editor.ui \
+    skills/skill_edit.ui
 
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lprotobuf
 
@@ -78,10 +86,12 @@ INCLUDEPATH += $$PWD/../protobuf
 #INCLUDEPATH += actors
 INCLUDEPATH += tiles
 INCLUDEPATH += spells
+INCLUDEPATH += skills
 INCLUDEPATH += $$PWD/../protobuf/src
 DEPENDPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../protobuf
 DEPENDPATH += $$PWD/../protobuf/src
 DEPENDPATH += spells
+DEPENDPATH += skills
 #DEPENDPATH += actors
 DEPENDPATH += tiles

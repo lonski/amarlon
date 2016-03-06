@@ -112,8 +112,7 @@ void ActorRegistrar::reg(lua_State* state)
         .def("isHunting", &Ai::isHunting)
         .def("setTarget", (void(Ai::*)(ActorPtr))&Ai::setTarget )
         .def("hasTarget", &Ai::hasTarget )
-        .def("getTarget", &Ai::getTarget )
-        .def("setSneaking", &Ai::setSneaking ),
+        .def("getTarget", &Ai::getTarget ),
 
       class_<TalkerPtr>("TalkerPtr")
         .def("get", &TalkerPtr::get),

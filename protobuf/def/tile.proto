@@ -1,14 +1,14 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package amarlon;
 
 message TileData {
-	required int32  id        = 1;
-	required string name      = 2;
-  required string character = 3;
-  required string color     = 4;
-  required bool transparent = 5;
-  required bool walkable    = 6;
+  int32  id        = 1;
+  string name      = 2;
+  string character = 3;
+  string color     = 4;
+  bool transparent = 5;
+  bool walkable    = 6;
 }
 
 message TilesData {

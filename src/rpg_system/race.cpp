@@ -33,8 +33,11 @@ RacePtr Race::create(RaceDescriptionPtr dsc)
             static_cast<CharacterClassType>(ac) );
 
     for ( auto ps : dsc->skills )
-      race->_skills.push_back(
-            Skill::create( static_cast<SkillId>(ps.first), ps.second) );
+    {
+      SkillPtr skill = Skill::create(static_cast<SkillId>(ps.first));
+      skill->setLevel(ps.second);
+      race->_skills.push_back( skill );
+    }
 
     for ( auto asr : dsc->abilityScoreRestrictions )
       race->_abilityScoreRestrictions[ static_cast<AbilityScore::Type>(asr.first) ]

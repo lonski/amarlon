@@ -1,6 +1,5 @@
 #include "skill_db.h"
 #include <fstream>
-#include <skill_description.h>
 #include <skill.h>
 
 namespace amarlon {
@@ -13,63 +12,35 @@ SkillDB::~SkillDB()
 {
 }
 
-std::string SkillDB::getScript(SkillId id) const
-{
-  return "scripts/skills/" + std::to_string( static_cast<int>(id) ) + ".lua";
-}
-
-std::string SkillDB::getName(SkillId id) const
-{
-  auto it = _skills.find(id);
-  return it != _skills.end() ? it->second->name : "NoName";
-}
-
 SkillPtr SkillDB::fetch(SkillId id)
 {
-  SkillPtr skill;
-
   if ( id != SkillId::Null )
   {
-    skill.reset(new Skill(id));
     auto it = _skills.find(id);
-    skill->_flyweight = it != _skills.end() ? it->second : nullptr;
+    if ( it != _skills.end() ) return it->second->clone();
   }
 
-  return skill;
+  return nullptr;
 }
 
 bool SkillDB::load(const std::string &fn)
 {
   std::ifstream ifs(fn);
-
-  if (ifs.is_open())
+  if ( ifs.is_open() )
   {
-    std::vector<char> buf;
-    buf.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-    buf.push_back('\0');
-    parseSkills(buf);
+    _skills.clear();
+
+    SkillsData skills;
+    skills.ParseFromIstream(&ifs);
+
+    for ( auto it = skills.skill().begin(); it != skills.skill().end(); ++it )
+    {
+      _skills[ static_cast<SkillId>(it->id()) ] = SkillPtr(new Skill(*it));
+    }
 
     return true;
   }
   return false;
-}
-
-void SkillDB::parseSkills(std::vector<char> &buf)
-{
-  rapidxml::xml_document<> doc;
-  doc.parse<0>(&buf[0]);
-
-  rapidxml::xml_node<>* skills    = doc.first_node("Skills");
-  rapidxml::xml_node<>* skillNode = skills ? skills->first_node("Skill") : nullptr;
-
-  while(skillNode != nullptr)
-  {
-    _parser.setSource( skillNode );
-    SkillDescriptionPtr dsc = _parser.parseSkillDsc();
-    if ( dsc ) _skills[ static_cast<SkillId>(dsc->id) ] = dsc;
-
-    skillNode = skillNode->next_sibling();
-  }
 }
 
 }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <spell_editor.h>
 #include <tiles_editor.h>
+#include <skill_editor.h>
 //#include <actors/actors_editor.h>
 
 namespace Ui {
@@ -23,9 +24,12 @@ private slots:
   void on_pushButton_2_clicked();
   void on_pushButton_3_clicked();
 
+  void on_pushButton_4_clicked();
+
 private:
   Ui::editor *ui;
   SpellEditor _spellsEditor;
+  SkillEditor _skillsEditor;
   TilesEditor _tilesEditor;
   //ActorsEditor _actorsEditor;
 };

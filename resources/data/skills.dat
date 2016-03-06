@@ -1,0 +1,18 @@
+
+:
+Open locks
+:Disarm/arm traps
+
+0:Hide
+:Pick pockets
+0:Silent move
+(0:
+Find traps
+0:
+Darkvision
+m0:Dwarf racialBW#{999999}Saving throws:#Death +4#Magic wands +4#Paralysis +4#Spells +4#Dragon breath +3
+x	0:
+Elf racialBdImmune to ghoul paralyze#Searching +1# #{999999}Saving throws:#Paralysis +1#Magic wands +2#Spells +2
+­
+0:Halfling racialB“Range weapons attack bonus +1#Hiding +10#Silent moving +10# #{999999}Saving throws:#Death +4#Magic wands +4#Paralysis +4#Spells +4#Dragon breath +3
+0:Human racialB	Exp +10%%

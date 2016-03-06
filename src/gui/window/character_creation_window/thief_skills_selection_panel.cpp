@@ -6,6 +6,7 @@
 #include <character_creation_window.h>
 #include <skill_db.h>
 #include <value_setting_panel.h>
+#include <skill.h>
 
 namespace amarlon { namespace gui {
 
@@ -121,12 +122,12 @@ void ThiefSkillsSelectionPanel::addContinueButton()
 
 void ThiefSkillsSelectionPanel::addValuePanels()
 {
-  addValuePanel( Engine::instance().getSkillDB().getName( SkillId::OpenLocks )   ,OpenLocks,   18);
-  addValuePanel( Engine::instance().getSkillDB().getName( SkillId::DisarmTraps ) ,DisarmTraps, 24);
-  addValuePanel( Engine::instance().getSkillDB().getName( SkillId::Hide )        ,Hide,        30);
-  addValuePanel( Engine::instance().getSkillDB().getName( SkillId::PickPockets ) ,PickPockets, 36);
-  addValuePanel( Engine::instance().getSkillDB().getName( SkillId::SilentMove )  ,SilentMove,  42);
-  addValuePanel( Engine::instance().getSkillDB().getName( SkillId::FindTraps )   ,FindTraps,   48);
+  addValuePanel( Engine::instance().getSkillDB().fetch(SkillId::OpenLocks)->getName()   ,OpenLocks,   18);
+  addValuePanel( Engine::instance().getSkillDB().fetch(SkillId::DisarmTraps)->getName() ,DisarmTraps, 24);
+  addValuePanel( Engine::instance().getSkillDB().fetch(SkillId::Hide)->getName()        ,Hide,        30);
+  addValuePanel( Engine::instance().getSkillDB().fetch(SkillId::PickPockets)->getName() ,PickPockets, 36);
+  addValuePanel( Engine::instance().getSkillDB().fetch(SkillId::SilentMove)->getName()  ,SilentMove,  42);
+  addValuePanel( Engine::instance().getSkillDB().fetch(SkillId::FindTraps)->getName()   ,FindTraps,   48);
 }
 
 void ThiefSkillsSelectionPanel::activateNextPanel()
