@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <fstream>
 #include <QDesktopWidget>
+#include <QDebug>
 
 TilesEditor::TilesEditor(QWidget *parent) :
   QMainWindow(parent),
@@ -45,7 +46,7 @@ void TilesEditor::populate()
   clear();
 
   ui->tTable->setRowCount(0);
-  ui->tTable->setColumnCount(6);
+  ui->tTable->setColumnCount(5);
   ui->tTable->setHorizontalHeaderItem(0,new QTableWidgetItem("ID"));
   ui->tTable->setHorizontalHeaderItem(1,new QTableWidgetItem("Name"));
   ui->tTable->setHorizontalHeaderItem(2,new QTableWidgetItem("Character"));

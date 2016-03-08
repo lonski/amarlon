@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <tile_type.h>
 #include <libtcod.hpp>
+#include <tile.pb.h>
 
 namespace amarlon {
 
@@ -14,12 +15,7 @@ class Map;
 class Actor;
 typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
-
-struct SerializedTile
-{
-  uint8_t type;
-  uint8_t flags;
-};
+typedef std::shared_ptr<TileData> TileDataPtr;
 
 struct Tile
 {
@@ -27,8 +23,12 @@ struct Tile
   constexpr static int defaultItemRenderPriority = 20;
 
   Tile();
+  Tile(const TileState& state);
   Tile(const Tile& tile);
   Tile& operator=(const Tile& rhs);
+
+  void setState(const TileState& state);
+  const TileState& getState() const;
 
   void addActor(ActorPtr actor);
   bool removeActor(ActorPtr actor);
@@ -55,14 +55,11 @@ struct Tile
    */
   ActorPtr top(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
 
-  std::vector<unsigned char> serialize();
-  void deserialize(const SerializedTile& t);
-
 private:
-  ActorContainerPtr _actors;
-  uint8_t _flags;
-  TileType _type;
+  TileDataPtr _data;
+  TileState   _state;
 
+  ActorContainerPtr _actors;
 };
 
 }

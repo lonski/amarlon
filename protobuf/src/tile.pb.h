@@ -37,6 +37,7 @@ void protobuf_AssignDesc_tile_2eproto();
 void protobuf_ShutdownFile_tile_2eproto();
 
 class TileData;
+class TileState;
 class TilesData;
 
 // ===================================================================
@@ -114,16 +115,11 @@ class TileData : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // optional string character = 3;
-  void clear_character();
-  static const int kCharacterFieldNumber = 3;
-  const ::std::string& character() const;
-  void set_character(const ::std::string& value);
-  void set_character(const char* value);
-  void set_character(const char* value, size_t size);
-  ::std::string* mutable_character();
-  ::std::string* release_character();
-  void set_allocated_character(::std::string* character);
+  // optional bool transparent = 3;
+  void clear_transparent();
+  static const int kTransparentFieldNumber = 3;
+  bool transparent() const;
+  void set_transparent(bool value);
 
   // optional string color = 4;
   void clear_color();
@@ -136,17 +132,22 @@ class TileData : public ::google::protobuf::Message {
   ::std::string* release_color();
   void set_allocated_color(::std::string* color);
 
-  // optional bool transparent = 5;
-  void clear_transparent();
-  static const int kTransparentFieldNumber = 5;
-  bool transparent() const;
-  void set_transparent(bool value);
-
-  // optional bool walkable = 6;
+  // optional bool walkable = 5;
   void clear_walkable();
-  static const int kWalkableFieldNumber = 6;
+  static const int kWalkableFieldNumber = 5;
   bool walkable() const;
   void set_walkable(bool value);
+
+  // optional string character = 6;
+  void clear_character();
+  static const int kCharacterFieldNumber = 6;
+  const ::std::string& character() const;
+  void set_character(const ::std::string& value);
+  void set_character(const char* value);
+  void set_character(const char* value, size_t size);
+  ::std::string* mutable_character();
+  ::std::string* release_character();
+  void set_allocated_character(::std::string* character);
 
   // @@protoc_insertion_point(class_scope:amarlon.TileData)
  private:
@@ -154,11 +155,11 @@ class TileData : public ::google::protobuf::Message {
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
-  ::google::protobuf::internal::ArenaStringPtr character_;
-  ::google::protobuf::internal::ArenaStringPtr color_;
   ::google::protobuf::int32 id_;
   bool transparent_;
   bool walkable_;
+  ::google::protobuf::internal::ArenaStringPtr color_;
+  ::google::protobuf::internal::ArenaStringPtr character_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_tile_2eproto();
   friend void protobuf_AssignDesc_tile_2eproto();
@@ -251,6 +252,91 @@ class TilesData : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static TilesData* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class TileState : public ::google::protobuf::Message {
+ public:
+  TileState();
+  virtual ~TileState();
+
+  TileState(const TileState& from);
+
+  inline TileState& operator=(const TileState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TileState& default_instance();
+
+  void Swap(TileState* other);
+
+  // implements Message ----------------------------------------------
+
+  inline TileState* New() const { return New(NULL); }
+
+  TileState* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TileState& from);
+  void MergeFrom(const TileState& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(TileState* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::google::protobuf::int32 type() const;
+  void set_type(::google::protobuf::int32 value);
+
+  // optional fixed32 flags = 2;
+  void clear_flags();
+  static const int kFlagsFieldNumber = 2;
+  ::google::protobuf::uint32 flags() const;
+  void set_flags(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:amarlon.TileState)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::int32 type_;
+  ::google::protobuf::uint32 flags_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_tile_2eproto();
+  friend void protobuf_AssignDesc_tile_2eproto();
+  friend void protobuf_ShutdownFile_tile_2eproto();
+
+  void InitAsDefaultInstance();
+  static TileState* default_instance_;
+};
 // ===================================================================
 
 
@@ -316,47 +402,18 @@ inline void TileData::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.name)
 }
 
-// optional string character = 3;
-inline void TileData::clear_character() {
-  character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// optional bool transparent = 3;
+inline void TileData::clear_transparent() {
+  transparent_ = false;
 }
-inline const ::std::string& TileData::character() const {
-  // @@protoc_insertion_point(field_get:amarlon.TileData.character)
-  return character_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline bool TileData::transparent() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileData.transparent)
+  return transparent_;
 }
-inline void TileData::set_character(const ::std::string& value) {
+inline void TileData::set_transparent(bool value) {
   
-  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:amarlon.TileData.character)
-}
-inline void TileData::set_character(const char* value) {
-  
-  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:amarlon.TileData.character)
-}
-inline void TileData::set_character(const char* value, size_t size) {
-  
-  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.character)
-}
-inline ::std::string* TileData::mutable_character() {
-  
-  // @@protoc_insertion_point(field_mutable:amarlon.TileData.character)
-  return character_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* TileData::release_character() {
-  
-  return character_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void TileData::set_allocated_character(::std::string* character) {
-  if (character != NULL) {
-    
-  } else {
-    
-  }
-  character_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), character);
-  // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.character)
+  transparent_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.TileData.transparent)
 }
 
 // optional string color = 4;
@@ -402,21 +459,7 @@ inline void TileData::set_allocated_color(::std::string* color) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.color)
 }
 
-// optional bool transparent = 5;
-inline void TileData::clear_transparent() {
-  transparent_ = false;
-}
-inline bool TileData::transparent() const {
-  // @@protoc_insertion_point(field_get:amarlon.TileData.transparent)
-  return transparent_;
-}
-inline void TileData::set_transparent(bool value) {
-  
-  transparent_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.TileData.transparent)
-}
-
-// optional bool walkable = 6;
+// optional bool walkable = 5;
 inline void TileData::clear_walkable() {
   walkable_ = false;
 }
@@ -428,6 +471,49 @@ inline void TileData::set_walkable(bool value) {
   
   walkable_ = value;
   // @@protoc_insertion_point(field_set:amarlon.TileData.walkable)
+}
+
+// optional string character = 6;
+inline void TileData::clear_character() {
+  character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& TileData::character() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileData.character)
+  return character_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TileData::set_character(const ::std::string& value) {
+  
+  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:amarlon.TileData.character)
+}
+inline void TileData::set_character(const char* value) {
+  
+  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:amarlon.TileData.character)
+}
+inline void TileData::set_character(const char* value, size_t size) {
+  
+  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.character)
+}
+inline ::std::string* TileData::mutable_character() {
+  
+  // @@protoc_insertion_point(field_mutable:amarlon.TileData.character)
+  return character_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TileData::release_character() {
+  
+  return character_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TileData::set_allocated_character(::std::string* character) {
+  if (character != NULL) {
+    
+  } else {
+    
+  }
+  character_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), character);
+  // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.character)
 }
 
 // -------------------------------------------------------------------
@@ -464,7 +550,41 @@ TilesData::tile() const {
   return tile_;
 }
 
+// -------------------------------------------------------------------
+
+// TileState
+
+// optional int32 type = 1;
+inline void TileState::clear_type() {
+  type_ = 0;
+}
+inline ::google::protobuf::int32 TileState::type() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileState.type)
+  return type_;
+}
+inline void TileState::set_type(::google::protobuf::int32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.TileState.type)
+}
+
+// optional fixed32 flags = 2;
+inline void TileState::clear_flags() {
+  flags_ = 0u;
+}
+inline ::google::protobuf::uint32 TileState::flags() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileState.flags)
+  return flags_;
+}
+inline void TileState::set_flags(::google::protobuf::uint32 value) {
+  
+  flags_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.TileState.flags)
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

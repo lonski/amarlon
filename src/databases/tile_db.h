@@ -2,36 +2,31 @@
 #define TILEDB_H
 
 #include <map>
-#include <string>
-#include <vector>
-#include <libtcod.hpp>
-#include <xml/rapidxml.hpp>
 #include <tile_type.h>
-#include <tile_description.h>
-#include <tile_parser.h>
+#include <tile.pb.h>
 
 namespace amarlon {
 
+typedef std::shared_ptr<TileData> TileDataPtr;
 class TileDB
 {
 public:
   TileDB();
 
-  char getChar(TileType type);
-  TCODColor getColor(TileType type);
-  bool isWalkable(TileType type);
-  bool isTransparent(TileType type);
+  /**
+   * @brief Returns pointer to TileData owned by DB
+   */
+  TileDataPtr fetch_flyweight(TileType type);
+
+  /**
+   * @brief Returns copy of TileData of given type
+   */
+  TileDataPtr fetch(TileType type);
 
   bool load(const std::string &fn);
 
 private:
-  TileParser _tileParser;
-  std::map<TileType, TileDescription> _tiles;
-
-  void parseTiles(std::vector<char>& dataToParse);
-
-  template<typename T>
-  T get(TileType type, T TileDescription::*field, T defValue);
+  std::map<TileType, TileDataPtr> _tiles;
 
 };
 

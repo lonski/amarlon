@@ -1,11 +1,15 @@
 set(HEADER_FILES
     spell.pb.h
     skill.pb.h
+    tile.pb.h
+    actor.pb.h
 )
 
 set(SOURCE_FILES
     spell.pb.cc
     skill.pb.cc
+    tile.pb.cc
+    actor.pb.cc
 )
 
 add_library(proto_data SHARED ${SOURCE_FILES} ${HEADER_FILES})

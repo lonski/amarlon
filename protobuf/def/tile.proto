@@ -5,12 +5,17 @@ package amarlon;
 message TileData {
   int32  id        = 1;
   string name      = 2;
-  string character = 3;
+  bool transparent = 3;
   string color     = 4;
-  bool transparent = 5;
-  bool walkable    = 6;
+  bool walkable    = 5;
+  string character = 6;
 }
 
 message TilesData {
 	repeated TileData tile = 1;
+}
+
+message TileState {
+  int32 type    = 1;
+  fixed32 flags = 2;
 }

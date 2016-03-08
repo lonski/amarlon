@@ -17,6 +17,7 @@ SOURCES += main.cpp\
     spells/spell_editor.cpp \
     spells/spell_edit.cpp \
     ../protobuf/src/spell.pb.cc \
+    ../protobuf/src/actor.pb.cc \
     ../protobuf/src/skill.pb.cc \
     ../protobuf/src/tile.pb.cc \
     #../protobuf/src/actors.pb.cc \
@@ -40,6 +41,7 @@ HEADERS  += editor.h \
     spells/spell_editor.h \
     ../protobuf/src/spell.pb.h \
     ../protobuf/src/skill.pb.h \
+    ../protobuf/src/actor.pb.h \
     ../protobuf/src/tile.pb.h \
     #../protobuf/src/actors.pb.h \
     spells/spell_edit.h \

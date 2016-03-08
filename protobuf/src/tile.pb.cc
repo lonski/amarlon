@@ -27,6 +27,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* TilesData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   TilesData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* TileState_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  TileState_reflection_ = NULL;
 
 }  // namespace
 
@@ -41,10 +44,10 @@ void protobuf_AssignDesc_tile_2eproto() {
   static const int TileData_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, character_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, color_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, transparent_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, color_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, walkable_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileData, character_),
   };
   TileData_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -72,6 +75,22 @@ void protobuf_AssignDesc_tile_2eproto() {
       sizeof(TilesData),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TilesData, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TilesData, _is_default_instance_));
+  TileState_descriptor_ = file->message_type(2);
+  static const int TileState_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileState, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileState, flags_),
+  };
+  TileState_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      TileState_descriptor_,
+      TileState::default_instance_,
+      TileState_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(TileState),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileState, _internal_metadata_),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TileState, _is_default_instance_));
 }
 
 namespace {
@@ -88,6 +107,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
       TileData_descriptor_, &TileData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       TilesData_descriptor_, &TilesData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      TileState_descriptor_, &TileState::default_instance());
 }
 
 }  // namespace
@@ -97,6 +118,8 @@ void protobuf_ShutdownFile_tile_2eproto() {
   delete TileData_reflection_;
   delete TilesData::default_instance_;
   delete TilesData_reflection_;
+  delete TileState::default_instance_;
+  delete TileState_reflection_;
 }
 
 void protobuf_AddDesc_tile_2eproto() {
@@ -107,16 +130,19 @@ void protobuf_AddDesc_tile_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\ntile.proto\022\007amarlon\"m\n\010TileData\022\n\n\002id\030"
-    "\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\021\n\tcharacter\030\003 \001(\t\022\r"
-    "\n\005color\030\004 \001(\t\022\023\n\013transparent\030\005 \001(\010\022\020\n\010wa"
-    "lkable\030\006 \001(\010\",\n\tTilesData\022\037\n\004tile\030\001 \003(\0132"
-    "\021.amarlon.TileDatab\006proto3", 186);
+    "\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\023\n\013transparent\030\003 \001(\010"
+    "\022\r\n\005color\030\004 \001(\t\022\020\n\010walkable\030\005 \001(\010\022\021\n\tcha"
+    "racter\030\006 \001(\t\",\n\tTilesData\022\037\n\004tile\030\001 \003(\0132"
+    "\021.amarlon.TileData\"(\n\tTileState\022\014\n\004type\030"
+    "\001 \001(\005\022\r\n\005flags\030\002 \001(\007b\006proto3", 228);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "tile.proto", &protobuf_RegisterTypes);
   TileData::default_instance_ = new TileData();
   TilesData::default_instance_ = new TilesData();
+  TileState::default_instance_ = new TileState();
   TileData::default_instance_->InitAsDefaultInstance();
   TilesData::default_instance_->InitAsDefaultInstance();
+  TileState::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_tile_2eproto);
 }
 
@@ -142,10 +168,10 @@ static void MergeFromFail(int line) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int TileData::kIdFieldNumber;
 const int TileData::kNameFieldNumber;
-const int TileData::kCharacterFieldNumber;
-const int TileData::kColorFieldNumber;
 const int TileData::kTransparentFieldNumber;
+const int TileData::kColorFieldNumber;
 const int TileData::kWalkableFieldNumber;
+const int TileData::kCharacterFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 TileData::TileData()
@@ -172,10 +198,10 @@ void TileData::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  character_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  color_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   transparent_ = false;
+  color_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   walkable_ = false;
+  character_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 TileData::~TileData() {
@@ -185,8 +211,8 @@ TileData::~TileData() {
 
 void TileData::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  character_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   color_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  character_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
   }
 }
@@ -227,8 +253,8 @@ void TileData::Clear() {
 
   ZR_(id_, walkable_);
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   color_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -272,20 +298,18 @@ bool TileData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_character;
+        if (input->ExpectTag(24)) goto parse_transparent;
         break;
       }
 
-      // optional string character = 3;
+      // optional bool transparent = 3;
       case 3: {
-        if (tag == 26) {
-         parse_character:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_character()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->character().data(), this->character().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "amarlon.TileData.character"));
+        if (tag == 24) {
+         parse_transparent:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &transparent_)));
+
         } else {
           goto handle_unusual;
         }
@@ -306,33 +330,35 @@ bool TileData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_transparent;
+        if (input->ExpectTag(40)) goto parse_walkable;
         break;
       }
 
-      // optional bool transparent = 5;
+      // optional bool walkable = 5;
       case 5: {
         if (tag == 40) {
-         parse_transparent:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &transparent_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(48)) goto parse_walkable;
-        break;
-      }
-
-      // optional bool walkable = 6;
-      case 6: {
-        if (tag == 48) {
          parse_walkable:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &walkable_)));
 
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(50)) goto parse_character;
+        break;
+      }
+
+      // optional string character = 6;
+      case 6: {
+        if (tag == 50) {
+         parse_character:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_character()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->character().data(), this->character().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "amarlon.TileData.character"));
         } else {
           goto handle_unusual;
         }
@@ -379,14 +405,9 @@ void TileData::SerializeWithCachedSizes(
       2, this->name(), output);
   }
 
-  // optional string character = 3;
-  if (this->character().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->character().data(), this->character().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.TileData.character");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      3, this->character(), output);
+  // optional bool transparent = 3;
+  if (this->transparent() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->transparent(), output);
   }
 
   // optional string color = 4;
@@ -399,14 +420,19 @@ void TileData::SerializeWithCachedSizes(
       4, this->color(), output);
   }
 
-  // optional bool transparent = 5;
-  if (this->transparent() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->transparent(), output);
+  // optional bool walkable = 5;
+  if (this->walkable() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->walkable(), output);
   }
 
-  // optional bool walkable = 6;
-  if (this->walkable() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(6, this->walkable(), output);
+  // optional string character = 6;
+  if (this->character().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->character().data(), this->character().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "amarlon.TileData.character");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->character(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:amarlon.TileData)
@@ -431,15 +457,9 @@ void TileData::SerializeWithCachedSizes(
         2, this->name(), target);
   }
 
-  // optional string character = 3;
-  if (this->character().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->character().data(), this->character().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.TileData.character");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->character(), target);
+  // optional bool transparent = 3;
+  if (this->transparent() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->transparent(), target);
   }
 
   // optional string color = 4;
@@ -453,14 +473,20 @@ void TileData::SerializeWithCachedSizes(
         4, this->color(), target);
   }
 
-  // optional bool transparent = 5;
-  if (this->transparent() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->transparent(), target);
+  // optional bool walkable = 5;
+  if (this->walkable() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->walkable(), target);
   }
 
-  // optional bool walkable = 6;
-  if (this->walkable() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(6, this->walkable(), target);
+  // optional string character = 6;
+  if (this->character().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->character().data(), this->character().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "amarlon.TileData.character");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->character(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:amarlon.TileData)
@@ -484,11 +510,9 @@ int TileData::ByteSize() const {
         this->name());
   }
 
-  // optional string character = 3;
-  if (this->character().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->character());
+  // optional bool transparent = 3;
+  if (this->transparent() != 0) {
+    total_size += 1 + 1;
   }
 
   // optional string color = 4;
@@ -498,14 +522,16 @@ int TileData::ByteSize() const {
         this->color());
   }
 
-  // optional bool transparent = 5;
-  if (this->transparent() != 0) {
+  // optional bool walkable = 5;
+  if (this->walkable() != 0) {
     total_size += 1 + 1;
   }
 
-  // optional bool walkable = 6;
-  if (this->walkable() != 0) {
-    total_size += 1 + 1;
+  // optional string character = 6;
+  if (this->character().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->character());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -535,19 +561,19 @@ void TileData::MergeFrom(const TileData& from) {
 
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  if (from.character().size() > 0) {
-
-    character_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.character_);
+  if (from.transparent() != 0) {
+    set_transparent(from.transparent());
   }
   if (from.color().size() > 0) {
 
     color_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.color_);
   }
-  if (from.transparent() != 0) {
-    set_transparent(from.transparent());
-  }
   if (from.walkable() != 0) {
     set_walkable(from.walkable());
+  }
+  if (from.character().size() > 0) {
+
+    character_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.character_);
   }
 }
 
@@ -575,10 +601,10 @@ void TileData::Swap(TileData* other) {
 void TileData::InternalSwap(TileData* other) {
   std::swap(id_, other->id_);
   name_.Swap(&other->name_);
-  character_.Swap(&other->character_);
-  color_.Swap(&other->color_);
   std::swap(transparent_, other->transparent_);
+  color_.Swap(&other->color_);
   std::swap(walkable_, other->walkable_);
+  character_.Swap(&other->character_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -651,47 +677,18 @@ void TileData::clear_name() {
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.name)
 }
 
-// optional string character = 3;
-void TileData::clear_character() {
-  character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// optional bool transparent = 3;
+void TileData::clear_transparent() {
+  transparent_ = false;
 }
- const ::std::string& TileData::character() const {
-  // @@protoc_insertion_point(field_get:amarlon.TileData.character)
-  return character_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+ bool TileData::transparent() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileData.transparent)
+  return transparent_;
 }
- void TileData::set_character(const ::std::string& value) {
+ void TileData::set_transparent(bool value) {
   
-  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:amarlon.TileData.character)
-}
- void TileData::set_character(const char* value) {
-  
-  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:amarlon.TileData.character)
-}
- void TileData::set_character(const char* value, size_t size) {
-  
-  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.character)
-}
- ::std::string* TileData::mutable_character() {
-  
-  // @@protoc_insertion_point(field_mutable:amarlon.TileData.character)
-  return character_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* TileData::release_character() {
-  
-  return character_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void TileData::set_allocated_character(::std::string* character) {
-  if (character != NULL) {
-    
-  } else {
-    
-  }
-  character_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), character);
-  // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.character)
+  transparent_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.TileData.transparent)
 }
 
 // optional string color = 4;
@@ -737,21 +734,7 @@ void TileData::clear_color() {
   // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.color)
 }
 
-// optional bool transparent = 5;
-void TileData::clear_transparent() {
-  transparent_ = false;
-}
- bool TileData::transparent() const {
-  // @@protoc_insertion_point(field_get:amarlon.TileData.transparent)
-  return transparent_;
-}
- void TileData::set_transparent(bool value) {
-  
-  transparent_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.TileData.transparent)
-}
-
-// optional bool walkable = 6;
+// optional bool walkable = 5;
 void TileData::clear_walkable() {
   walkable_ = false;
 }
@@ -763,6 +746,49 @@ void TileData::clear_walkable() {
   
   walkable_ = value;
   // @@protoc_insertion_point(field_set:amarlon.TileData.walkable)
+}
+
+// optional string character = 6;
+void TileData::clear_character() {
+  character_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ const ::std::string& TileData::character() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileData.character)
+  return character_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void TileData::set_character(const ::std::string& value) {
+  
+  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:amarlon.TileData.character)
+}
+ void TileData::set_character(const char* value) {
+  
+  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:amarlon.TileData.character)
+}
+ void TileData::set_character(const char* value, size_t size) {
+  
+  character_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:amarlon.TileData.character)
+}
+ ::std::string* TileData::mutable_character() {
+  
+  // @@protoc_insertion_point(field_mutable:amarlon.TileData.character)
+  return character_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* TileData::release_character() {
+  
+  return character_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void TileData::set_allocated_character(::std::string* character) {
+  if (character != NULL) {
+    
+  } else {
+    
+  }
+  character_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), character);
+  // @@protoc_insertion_point(field_set_allocated:amarlon.TileData.character)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1008,6 +1034,294 @@ const ::google::protobuf::RepeatedPtrField< ::amarlon::TileData >&
 TilesData::tile() const {
   // @@protoc_insertion_point(field_list:amarlon.TilesData.tile)
   return tile_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int TileState::kTypeFieldNumber;
+const int TileState::kFlagsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+TileState::TileState()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:amarlon.TileState)
+}
+
+void TileState::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+TileState::TileState(const TileState& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:amarlon.TileState)
+}
+
+void TileState::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  type_ = 0;
+  flags_ = 0u;
+}
+
+TileState::~TileState() {
+  // @@protoc_insertion_point(destructor:amarlon.TileState)
+  SharedDtor();
+}
+
+void TileState::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void TileState::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* TileState::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return TileState_descriptor_;
+}
+
+const TileState& TileState::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_tile_2eproto();
+  return *default_instance_;
+}
+
+TileState* TileState::default_instance_ = NULL;
+
+TileState* TileState::New(::google::protobuf::Arena* arena) const {
+  TileState* n = new TileState;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void TileState::Clear() {
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<TileState*>(16)->f)
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(type_, flags_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool TileState::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:amarlon.TileState)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 type = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &type_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(21)) goto parse_flags;
+        break;
+      }
+
+      // optional fixed32 flags = 2;
+      case 2: {
+        if (tag == 21) {
+         parse_flags:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &flags_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:amarlon.TileState)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:amarlon.TileState)
+  return false;
+#undef DO_
+}
+
+void TileState::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:amarlon.TileState)
+  // optional int32 type = 1;
+  if (this->type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->type(), output);
+  }
+
+  // optional fixed32 flags = 2;
+  if (this->flags() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->flags(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:amarlon.TileState)
+}
+
+::google::protobuf::uint8* TileState::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:amarlon.TileState)
+  // optional int32 type = 1;
+  if (this->type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->type(), target);
+  }
+
+  // optional fixed32 flags = 2;
+  if (this->flags() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->flags(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:amarlon.TileState)
+  return target;
+}
+
+int TileState::ByteSize() const {
+  int total_size = 0;
+
+  // optional int32 type = 1;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->type());
+  }
+
+  // optional fixed32 flags = 2;
+  if (this->flags() != 0) {
+    total_size += 1 + 4;
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void TileState::MergeFrom(const ::google::protobuf::Message& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const TileState* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const TileState>(
+          &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void TileState::MergeFrom(const TileState& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  if (from.type() != 0) {
+    set_type(from.type());
+  }
+  if (from.flags() != 0) {
+    set_flags(from.flags());
+  }
+}
+
+void TileState::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void TileState::CopyFrom(const TileState& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TileState::IsInitialized() const {
+
+  return true;
+}
+
+void TileState::Swap(TileState* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void TileState::InternalSwap(TileState* other) {
+  std::swap(type_, other->type_);
+  std::swap(flags_, other->flags_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata TileState::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = TileState_descriptor_;
+  metadata.reflection = TileState_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// TileState
+
+// optional int32 type = 1;
+void TileState::clear_type() {
+  type_ = 0;
+}
+ ::google::protobuf::int32 TileState::type() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileState.type)
+  return type_;
+}
+ void TileState::set_type(::google::protobuf::int32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.TileState.type)
+}
+
+// optional fixed32 flags = 2;
+void TileState::clear_flags() {
+  flags_ = 0u;
+}
+ ::google::protobuf::uint32 TileState::flags() const {
+  // @@protoc_insertion_point(field_get:amarlon.TileState.flags)
+  return flags_;
+}
+ void TileState::set_flags(::google::protobuf::uint32 value) {
+  
+  flags_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.TileState.flags)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

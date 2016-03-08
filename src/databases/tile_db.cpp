@@ -1,81 +1,56 @@
 #include "tile_db.h"
 #include <fstream>
-#include <vector>
-#include <utils/utils.h>
 #include <memory>
 
 namespace amarlon {
 
 using namespace std;
-using namespace rapidxml;
 
 TileDB::TileDB()
 {
 }
 
-template<typename T>
-T TileDB::get(TileType type, T TileDescription::*field, T defValue)
+TileDataPtr TileDB::fetch_flyweight(TileType type)
 {
-  auto it = _tiles.find( type );
-  return it != _tiles.end() ? it->second.*field : defValue;
+  auto it = _tiles.find(type);
+  if ( it != _tiles.end() ) return it->second;
+
+  return nullptr;
 }
 
-char TileDB::getChar(TileType type)
+TileDataPtr TileDB::fetch(TileType type)
 {
-  return get<char>(type, &TileDescription::character, '#');
-}
+  if ( TileDataPtr tile = fetch_flyweight(type) )
+  {
+    TileDataPtr copied_tile( new TileData );
+    copied_tile->CopyFrom(*tile);
+    return copied_tile;
+  }
 
-TCODColor TileDB::getColor(TileType type)
-{
-  return strToColor( get<std::string>(type, &TileDescription::color, "ffffff") );
-}
-
-bool TileDB::isWalkable(TileType type)
-{
-  return get<bool>(type, &TileDescription::walkable, false);
-}
-
-bool TileDB::isTransparent(TileType type)
-{
-  return get<bool>(type, &TileDescription::transparent, false);
+  return nullptr;
 }
 
 bool TileDB::load(const string& fn)
 {
-  ifstream ifs(fn);
-
-  if (ifs.is_open())
+  std::ifstream ifs(fn);
+  if ( ifs.is_open() )
   {
-    vector<char> buffer;
-    buffer.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
-    buffer.push_back('\0');
+    _tiles.clear();
 
-    parseTiles(buffer);
+    TilesData tiles;
+    tiles.ParseFromIstream(&ifs);
+
+    for ( auto it = tiles.tile().begin(); it != tiles.tile().end(); ++it )
+    {
+      TileDataPtr tile( new TileData );
+      tile->CopyFrom(*it);
+      _tiles[ static_cast<TileType>(it->id()) ] = tile;
+    }
+
+    printf("Parsed tiles %d", _tiles.size());
     return true;
   }
-
   return false;
-}
-
-void TileDB::parseTiles(vector<char>& dataToParse)
-{
-  xml_document<> doc;
-  doc.parse<0>(&dataToParse[0]);
-
-  xml_node<>* root = doc.first_node("Tiles");
-  xml_node<>* tileNode = root ? root->first_node("Tile") : nullptr;
-
-  while( tileNode != nullptr )
-  {
-    _tileParser.setSource( tileNode );
-
-    std::unique_ptr<TileDescription> tileDsc( _tileParser.parseTileDsc() );
-    if ( tileDsc ) _tiles[ static_cast<TileType>(tileDsc->type) ] = *tileDsc;
-
-    tileNode = tileNode->next_sibling();
-  }
-
-  doc.clear();
 }
 
 }

@@ -13,9 +13,13 @@ const int TILE_EXPLORED_BIT = 1;
 
 Tile::Tile()
   : _actors(new ActorContainer )
-  , _flags(0)
-  , _type(TileType::Null)
 {}
+
+Tile::Tile(const TileState& state)
+  : _actors(new ActorContainer )
+{
+  setState(state);
+}
 
 Tile::Tile(const Tile &tile)
 {
@@ -26,17 +30,33 @@ Tile &Tile::operator=(const Tile &rhs)
 {
   if ( this != &rhs )
   {
-    _type = rhs._type;
-    _flags = rhs._flags;
-    _actors = rhs._actors->clone();
+    setState(rhs._state);
+    _actors = rhs._actors->clone(); //TODO: remove when Actors moved to protobuf
   }
   return *this;
+}
+
+void Tile::setState(const TileState& state)
+{
+  _state = state;
+  if ( !_data || _data->id() != _state.type() )
+  {
+    _data = Engine::instance().getTileDB()
+                              .fetch_flyweight( static_cast<TileType>(_state.type()) );
+  }
+}
+
+const TileState &Tile::getState() const
+{
+  return _state;
 }
 
 void Tile::addActor(ActorPtr actor)
 {
   _actors->push_back(actor);
-  _actors->sort( [](ActorPtr a1, ActorPtr a2){ return a1->getTileRenderPriority() < a2->getTileRenderPriority();} );
+  _actors->sort( [](ActorPtr a1, ActorPtr a2){
+    return a1->getTileRenderPriority() < a2->getTileRenderPriority();
+  });
 }
 
 bool Tile::removeActor(ActorPtr actor)
@@ -47,24 +67,6 @@ bool Tile::removeActor(ActorPtr actor)
 ActorContainer Tile::getActors(std::function<bool(ActorPtr)> filterFun)
 {
   return _actors->filter(filterFun);
-}
-
-std::vector<unsigned char> Tile::serialize()
-{
-  SerializedTile t;
-  memset(&t, 0, sizeof(t));
-
-  t.flags = _flags;
-  t.type = static_cast<uint8_t>(_type);
-
-  unsigned char* arr = reinterpret_cast<unsigned char*>(&t);
-  return std::vector<unsigned char>{ arr, arr + sizeof(t) };
-}
-
-void Tile::deserialize(const SerializedTile &t)
-{
-  _flags = t.flags;
-  _type = static_cast<TileType>(t.type);
 }
 
 ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun)
@@ -79,37 +81,42 @@ ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun)
 
 TCODColor Tile::getColor()
 {
-  return Engine::instance().getTileDB().getColor(_type);
+  return strToColor( _data ? _data->color() : "" );
 }
 
 char Tile::getChar()
 {
-  return Engine::instance().getTileDB().getChar(_type);
+  return _data ? _data->character().front() : 'X';
 }
 
 bool Tile::isWalkable() const
 {
-  return Engine::instance().getTileDB().isWalkable(_type);
+  return _data ? _data->walkable() : false;
 }
 
 bool Tile::isTransparent() const
 {
-  return Engine::instance().getTileDB().isTransparent(_type);
+  return _data ? _data->transparent() : false;
 }
 
 bool Tile::isExplored() const
 {
-  return isBitSet(_flags, TILE_EXPLORED_BIT);
+  ::google::protobuf::uint32 f = _state.flags();
+  return isBitSet(f, TILE_EXPLORED_BIT);
 }
 
 void Tile::setExplored(bool explored)
 {
-  setBit(_flags, TILE_EXPLORED_BIT, explored);
+  ::google::protobuf::uint32 f = _state.flags();
+
+  setBit(f, TILE_EXPLORED_BIT, explored);
+
+  _state.set_flags(f);
 }
 
 TileType Tile::getType() const
 {
-  return _type;
+  return static_cast<TileType>(_state.type());
 }
 
 }

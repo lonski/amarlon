@@ -294,6 +294,13 @@ TCODMap& Map::getCODMap()
   return *_codMap;
 }
 
+//TODO: remove when map ported to protobuf
+struct SerializedTile
+{
+  uint8_t type;
+  uint8_t flags;
+};
+
 void Map::deserializeTiles(std::vector<unsigned char> tiles)
 {
   uint32 y(0), x(0);
@@ -302,7 +309,12 @@ void Map::deserializeTiles(std::vector<unsigned char> tiles)
     SerializedTile* serialized = reinterpret_cast<SerializedTile*>(&tiles[pos]);
 
     Tile& tile = getTile(x, y);
-    tile.deserialize( *serialized );
+
+    TileState state;
+    state.set_flags(serialized->flags);
+    state.set_type(serialized->type);
+
+    tile.setState(state);
 
     if ( x == getWidth() - 1 )
     {
@@ -316,6 +328,18 @@ void Map::deserializeTiles(std::vector<unsigned char> tiles)
   }
 }
 
+std::vector<unsigned char> serializeTile(const Tile& tile)
+{
+  SerializedTile t;
+  memset(&t, 0, sizeof(t));
+
+  t.flags = tile.getState().flags();
+  t.type = static_cast<uint8_t>(tile.getState().type());
+
+  unsigned char* arr = reinterpret_cast<unsigned char*>(&t);
+  return std::vector<unsigned char>{ arr, arr + sizeof(t) };
+}
+
 std::string Map::serializeTiles()
 {
   std::vector<unsigned char> v;
@@ -327,7 +351,7 @@ std::string Map::serializeTiles()
     {
       Tile& tile = *ct;
 
-      auto serialized = tile.serialize();
+      auto serialized = serializeTile(tile);
       v.insert( v.end(), serialized.begin(), serialized.end() );
     }
   }
