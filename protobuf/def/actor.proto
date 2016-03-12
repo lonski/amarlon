@@ -1,5 +1,12 @@
 syntax = "proto3";
 
+message AiData {
+  fixed32 flags  = 1;
+  int32   script = 2;
+  int32   type   = 3;
+}
+
 message ActorData{
-  int32 id = 1;
+  int32 id  = 1;
+  AiData ai = 2;
 }

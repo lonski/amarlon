@@ -11,16 +11,19 @@
 #include <fsm_state.h>
 #include <lua_state.h>
 #include <engine.h>
+#include <google/protobuf/util/message_differencer.h>
 
 namespace amarlon {
+
+/* Flag bits */
+const int IS_HIDING_BIT = 1;
+const int IS_SNEAKING_BIT = 2;
 
 const ActorFeature::Type Ai::featureType = ActorFeature::AI;
 
 Ai::Ai(DescriptionPtr dsc)
   : _fsm( new FSM(this) )
-  , _scriptId(0)
   , _trackCount(0)
-  , _type(AiType::Null)
 {
   upgrade(dsc);
   if ( getAiType() == AiType::PlayerAi )
@@ -35,7 +38,7 @@ Ai::Ai(DescriptionPtr dsc)
 
 AiType Ai::getAiType() const
 {
-  return _type;
+  return static_cast<AiType>(_data.type());
 }
 
 void Ai::upgrade(DescriptionPtr dsc)
@@ -43,8 +46,8 @@ void Ai::upgrade(DescriptionPtr dsc)
   AiDescriptionPtr aDsc = std::dynamic_pointer_cast<AiDescription>(dsc);
   if ( aDsc )
   {
-    if ( aDsc->script ) _scriptId = *aDsc->script;
-    if ( aDsc->type )   _type    = static_cast<AiType>(*aDsc->type);
+    if ( aDsc->script ) _data.set_script(*aDsc->script);
+    if ( aDsc->type )   _data.set_type(*aDsc->type);
   }
 }
 
@@ -55,13 +58,13 @@ DescriptionPtr Ai::toDescriptionStruct(ActorFeaturePtr cmp)
 
   if ( cmpAi )
   {
-    if ( _scriptId != cmpAi->_scriptId ) dsc->script = _scriptId;
-    if ( _type != cmpAi->_type ) dsc->type = static_cast<int>(_type);
+    if ( _data.script() != cmpAi->_data.script() ) dsc->script = _data.script();
+    if ( getAiType() != cmpAi->getAiType() ) dsc->type = _data.type();
   }
   else
   {
-    dsc->script = _scriptId;
-    dsc->type = static_cast<int>(_type);
+    dsc->script = _data.script();
+    dsc->type = _data.type();
   }
 
   return dsc;
@@ -79,8 +82,7 @@ bool Ai::isEqual(ActorFeaturePtr rhs) const
 
   if (crhs)
   {
-    equal = _scriptId == crhs->_scriptId;
-    equal &= _type == crhs->_type;
+    equal = *this == *crhs;
   }
 
   return equal;
@@ -89,14 +91,27 @@ bool Ai::isEqual(ActorFeaturePtr rhs) const
 ActorFeaturePtr Ai::clone()
 {
   AiPtr cloned( new Ai );
-  cloned->_trackCount = _trackCount;
-  cloned->_flags = _flags;
-  cloned->_scriptId = _scriptId;
-  cloned->_currentTarget = _currentTarget;
-  cloned->_type = _type;
-  cloned->changeState( getCurrentState() );
+
+  *cloned = *this;
 
   return cloned;
+}
+
+bool Ai::operator==(const Ai &rhs) const
+{
+  return google::protobuf::util::MessageDifferencer::Equals(_data, rhs._data);
+}
+
+Ai &Ai::operator=(const Ai &rhs)
+{
+  if ( this != &rhs )
+  {
+    _trackCount = rhs._trackCount;
+    _currentTarget = rhs._currentTarget;
+    _data.CopyFrom(rhs._data);
+    changeState(rhs.getCurrentState());
+  }
+  return *this;
 }
 
 int Ai::update()
@@ -120,9 +135,9 @@ int Ai::update()
 
 void Ai::executeScript()
 {
-  if ( getAiType() == AiType::GenericAi && _scriptId == 0) _scriptId = 1;
+  if ( getAiType() == AiType::GenericAi && _data.script() == 0) _data.set_script(1);
 
-  if ( _scriptId > 0 )
+  if ( _data.script() > 0 )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
     if ( lua.execute( getScript() ) )
@@ -232,12 +247,15 @@ void Ai::wakeUp()
 
 bool Ai::isHiding() const
 {
-  return _flags[0];
+  ::google::protobuf::uint32 f = _data.flags();
+  return isBitSet(f, IS_HIDING_BIT);
 }
 
 void Ai::setHiding(bool hiding)
 {
-  _flags.set(0, hiding);
+  ::google::protobuf::uint32 f = _data.flags();
+  setBit(f, IS_HIDING_BIT, hiding);
+
   getOwner().lock()->setVisible( !hiding );
 
   EventId event = hiding ? EventId::Actor_Hidden : EventId::Actor_CancelHidden;
@@ -246,12 +264,14 @@ void Ai::setHiding(bool hiding)
 
 bool Ai::isSneaking() const
 {
-  return _flags[2];
+  ::google::protobuf::uint32 f = _data.flags();
+  return isBitSet(f, IS_SNEAKING_BIT);
 }
 
 void Ai::setSneaking(bool sneaking)
 {
-  _flags.set(2, sneaking);
+  ::google::protobuf::uint32 f = _data.flags();
+  setBit(f, IS_SNEAKING_BIT, sneaking);
   getOwner().lock()->setVisible( !sneaking );
 }
 
@@ -262,7 +282,7 @@ bool Ai::canOperate() const
 
 std::string Ai::getScript() const
 {
-  return "scripts/ai/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  return "scripts/ai/" + std::to_string( static_cast<int>(_data.script()) ) + ".lua";
 }
 
 void Ai::setTarget(Target target)
@@ -326,8 +346,8 @@ std::string Ai::debug(const std::string &linebreak)
 {
   std::string d = " " + linebreak + "-----AI-----"+linebreak;
 
-  d += "Type = " + toStr((int)_type) + linebreak;
-  d += "Script = " + toStr(_scriptId) + linebreak;
+  d += "Type = " + toStr(_data.type()) + linebreak;
+  d += "Script = " + toStr(_data.script()) + linebreak;
   d += "TrackCount = " + toStr(_trackCount) + linebreak;
 
   d += "Current state = " + toStr((int)getCurrentState()) + linebreak;

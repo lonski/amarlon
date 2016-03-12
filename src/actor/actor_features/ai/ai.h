@@ -8,6 +8,7 @@
 #include <fsm_state_type.h>
 #include <target.h>
 #include <actor_action_result.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -36,6 +37,8 @@ public:
   static AiPtr create(DescriptionPtr dsc);
   virtual bool isEqual(ActorFeaturePtr rhs) const;
   virtual ActorFeaturePtr clone();
+  bool operator==(const Ai& rhs) const;
+  Ai& operator=(const Ai& rhs);
 
   virtual int update();
   virtual ActorActionResult performAction(ActorActionPtr action);
@@ -82,12 +85,11 @@ public:
   virtual std::string debug(const std::string &linebreak);
 
 protected:
-  std::bitset<3> _flags;
+  AiData _data;
+
   FSMPtr _fsm;
-  int _scriptId;
   Target _currentTarget;
   int _trackCount;
-  AiType _type;
 
   void executeScript();
   void updateHidingStatus(ActorActionPtr action);

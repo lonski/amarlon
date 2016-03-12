@@ -35,8 +35,101 @@ void protobuf_AssignDesc_actor_2eproto();
 void protobuf_ShutdownFile_actor_2eproto();
 
 class ActorData;
+class AiData;
 
 // ===================================================================
+
+class AiData : public ::google::protobuf::Message {
+ public:
+  AiData();
+  virtual ~AiData();
+
+  AiData(const AiData& from);
+
+  inline AiData& operator=(const AiData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AiData& default_instance();
+
+  void Swap(AiData* other);
+
+  // implements Message ----------------------------------------------
+
+  inline AiData* New() const { return New(NULL); }
+
+  AiData* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const AiData& from);
+  void MergeFrom(const AiData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(AiData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional fixed32 flags = 1;
+  void clear_flags();
+  static const int kFlagsFieldNumber = 1;
+  ::google::protobuf::uint32 flags() const;
+  void set_flags(::google::protobuf::uint32 value);
+
+  // optional int32 script = 2;
+  void clear_script();
+  static const int kScriptFieldNumber = 2;
+  ::google::protobuf::int32 script() const;
+  void set_script(::google::protobuf::int32 value);
+
+  // optional int32 type = 3;
+  void clear_type();
+  static const int kTypeFieldNumber = 3;
+  ::google::protobuf::int32 type() const;
+  void set_type(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:AiData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::uint32 flags_;
+  ::google::protobuf::int32 script_;
+  ::google::protobuf::int32 type_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_actor_2eproto();
+  friend void protobuf_AssignDesc_actor_2eproto();
+  friend void protobuf_ShutdownFile_actor_2eproto();
+
+  void InitAsDefaultInstance();
+  static AiData* default_instance_;
+};
+// -------------------------------------------------------------------
 
 class ActorData : public ::google::protobuf::Message {
  public:
@@ -100,11 +193,21 @@ class ActorData : public ::google::protobuf::Message {
   ::google::protobuf::int32 id() const;
   void set_id(::google::protobuf::int32 value);
 
+  // optional .AiData ai = 2;
+  bool has_ai() const;
+  void clear_ai();
+  static const int kAiFieldNumber = 2;
+  const ::AiData& ai() const;
+  ::AiData* mutable_ai();
+  ::AiData* release_ai();
+  void set_allocated_ai(::AiData* ai);
+
   // @@protoc_insertion_point(class_scope:ActorData)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
+  ::AiData* ai_;
   ::google::protobuf::int32 id_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_actor_2eproto();
@@ -120,6 +223,52 @@ class ActorData : public ::google::protobuf::Message {
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
+// AiData
+
+// optional fixed32 flags = 1;
+inline void AiData::clear_flags() {
+  flags_ = 0u;
+}
+inline ::google::protobuf::uint32 AiData::flags() const {
+  // @@protoc_insertion_point(field_get:AiData.flags)
+  return flags_;
+}
+inline void AiData::set_flags(::google::protobuf::uint32 value) {
+  
+  flags_ = value;
+  // @@protoc_insertion_point(field_set:AiData.flags)
+}
+
+// optional int32 script = 2;
+inline void AiData::clear_script() {
+  script_ = 0;
+}
+inline ::google::protobuf::int32 AiData::script() const {
+  // @@protoc_insertion_point(field_get:AiData.script)
+  return script_;
+}
+inline void AiData::set_script(::google::protobuf::int32 value) {
+  
+  script_ = value;
+  // @@protoc_insertion_point(field_set:AiData.script)
+}
+
+// optional int32 type = 3;
+inline void AiData::clear_type() {
+  type_ = 0;
+}
+inline ::google::protobuf::int32 AiData::type() const {
+  // @@protoc_insertion_point(field_get:AiData.type)
+  return type_;
+}
+inline void AiData::set_type(::google::protobuf::int32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:AiData.type)
+}
+
+// -------------------------------------------------------------------
+
 // ActorData
 
 // optional int32 id = 1;
@@ -136,7 +285,46 @@ inline void ActorData::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:ActorData.id)
 }
 
+// optional .AiData ai = 2;
+inline bool ActorData::has_ai() const {
+  return !_is_default_instance_ && ai_ != NULL;
+}
+inline void ActorData::clear_ai() {
+  if (GetArenaNoVirtual() == NULL && ai_ != NULL) delete ai_;
+  ai_ = NULL;
+}
+inline const ::AiData& ActorData::ai() const {
+  // @@protoc_insertion_point(field_get:ActorData.ai)
+  return ai_ != NULL ? *ai_ : *default_instance_->ai_;
+}
+inline ::AiData* ActorData::mutable_ai() {
+  
+  if (ai_ == NULL) {
+    ai_ = new ::AiData;
+  }
+  // @@protoc_insertion_point(field_mutable:ActorData.ai)
+  return ai_;
+}
+inline ::AiData* ActorData::release_ai() {
+  
+  ::AiData* temp = ai_;
+  ai_ = NULL;
+  return temp;
+}
+inline void ActorData::set_allocated_ai(::AiData* ai) {
+  delete ai_;
+  ai_ = ai;
+  if (ai) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:ActorData.ai)
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
