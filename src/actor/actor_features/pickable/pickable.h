@@ -9,6 +9,7 @@
 #include <target.h>
 #include <damage.h>
 #include <item_type.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -22,18 +23,20 @@ typedef std::shared_ptr<Pickable> PickablePtr;
 class Pickable : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
+  const static ActorFeature::Type FeatureType;
 
-  Pickable(DescriptionPtr dsc = nullptr);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  static PickablePtr create(const PickableData& data);
+
+  Pickable();
+  Pickable(const Pickable& rhs);
   virtual ~Pickable();
 
-  static PickablePtr create(DescriptionPtr dsc);
-  virtual ActorFeature::Type getType() { return featureType; }
+  bool operator==(const Pickable& rhs) const;
+  Pickable& operator=(const Pickable& rhs);
+  virtual const PickableData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
+  virtual ActorFeature::Type getFeatureType() { return FeatureType; }
   ActorPtr spilt(int amount);
 
   /**
@@ -74,24 +77,9 @@ public:
   virtual std::string getDescription();
 
 protected:
-  void toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP = nullptr);
-  void clone(Pickable* p);
-  int _usesCount;
+  PickableData _data;
 
-private:
-  bool _stackable;
-  int _amount;
-  ItemSlotType _itemSlot;
-  int _armorClass;
-  int _weight;
-  int _price;
-  TargetType _targetType;
-  Damage _damage;
-  int _scriptId;
-  ItemType _type;
-  int _range;
-  int _radius;
-
+  Pickable(const PickableData& data);
   std::string getScriptPath() const;
 
 };

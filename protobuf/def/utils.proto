@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package amarlon;
+
+message IntIntPair {
+  optional int32 first  = 1;
+  optional int32 second = 2;
+}

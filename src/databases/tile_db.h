@@ -1,6 +1,7 @@
 #ifndef TILEDB_H
 #define TILEDB_H
 
+#include <memory>
 #include <map>
 #include <tile_type.h>
 #include <tile.pb.h>

@@ -5,50 +5,75 @@
 #include <amarlon_except.h>
 #include <actor_descriptions.h>
 
+
 namespace amarlon {
 
-const ActorFeature::Type Wearer::featureType = ActorFeature::WEARER;
+const ActorFeature::Type Wearer::FeatureType = ActorFeature::WEARER;
 
-Wearer::Wearer(DescriptionPtr dsc)
+Wearer::Wearer()
   : _equippedItems( new ActorContainer )
 {
-  upgrade(dsc);
-  if ( _equippedItems ) assignItemsToSlots();
 }
 
-WearerPtr Wearer::create(DescriptionPtr dsc)
+Wearer::Wearer(const Wearer& rhs)
 {
-  return WearerPtr(new Wearer(dsc));
+  *this = rhs;
 }
 
-void Wearer::upgrade(DescriptionPtr dsc)
+Wearer::~Wearer()
 {
-  WearerDescriptionPtr wearerDsc = std::dynamic_pointer_cast<WearerDescription>(dsc);
-  if ( wearerDsc != nullptr )
+}
+
+bool Wearer::operator==(const Wearer &rhs) const
+{
+  updateData();
+  rhs.updateData();
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
+}
+
+Wearer& Wearer::operator=(const Wearer& rhs)
+{
+  if ( this != &rhs )
   {
-    for ( auto slot : wearerDsc->itemSlots )
-    {
-      _itemSlots.insert( std::make_pair((ItemSlotType)slot, nullptr) );
-    }
-
-    for ( auto aDsc : wearerDsc->eqItems )
-    {
-      _equippedItems->push_back( Actor::create(aDsc) );
-    }
-  };
+    rhs.updateData();
+    _data.CopyFrom(rhs._data);
+    initialize();
+  }
+  return *this;
 }
 
-DescriptionPtr Wearer::toDescriptionStruct(ActorFeaturePtr)
+const WearerData &Wearer::getData() const
 {
-  WearerDescriptionPtr dsc(new WearerDescription);
+  return _data;
+}
 
-  for ( auto& kv : _itemSlots )
-    dsc->itemSlots.push_back((int)kv.first);
+const google::protobuf::Message& Wearer::getDataPolymorphic() const
+{
+  return getData();
+}
 
-  for (ActorPtr a : *_equippedItems)
-    dsc->eqItems.push_back(a->toDescriptionStruct());
+void Wearer::initialize()
+{
+  _itemSlots.clear();
+  for ( auto s = _data.item_slots().begin(); s != _data.item_slots().end(); ++s )
+     _itemSlots[ static_cast<ItemSlotType>(*s) ] = nullptr;
 
-  return dsc;
+  _equippedItems->clear();
+  for ( auto a = _data.equipped_items().begin(); a != _data.equipped_items().end(); ++a )
+     _equippedItems->push_back( Actor::create(*a) );
+
+  assignItemsToSlots();
+}
+
+void Wearer::updateData() const
+{
+  _data.mutable_equipped_items()->Clear();
+  for ( auto a : *_equippedItems )
+    _data.mutable_equipped_items()->Add()->CopyFrom(a->getData());
+
+  _data.mutable_item_slots()->Clear();
+  for ( auto kv : _itemSlots )
+    _data.mutable_item_slots()->Add( static_cast<int>(kv.first) );
 }
 
 void Wearer::assignItemsToSlots()
@@ -63,39 +88,10 @@ void Wearer::assignItemsToSlots()
   }
 }
 
-ActorFeaturePtr Wearer::clone()
+Wearer::Wearer(const WearerData &data)
 {
-  WearerPtr cloned( new Wearer );
-
-  for(auto i : _itemSlots)
-  {
-    cloned->_itemSlots[ i.first ] = nullptr;
-  }
-
-  cloned->_equippedItems = _equippedItems->clone();
-  cloned->assignItemsToSlots();
-
-  return cloned;
-}
-
-bool Wearer::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  WearerPtr crhs = std::dynamic_pointer_cast<Wearer>(rhs);
-
-  if ( crhs != nullptr )
-  {
-    equal = true;
-    //compare item slots and equipped items
-    for (auto slot : ItemSlotType())
-    {
-      equal &= (hasSlot(slot) == crhs->hasSlot(slot));
-      equal &= (isEquipped(slot) == crhs->isEquipped(slot));
-      if ( equipped(slot) && crhs->equipped(slot) ) equal &=  ( *(equipped(slot)) == *(crhs->equipped(slot)) );
-    }
-  }
-
-  return equal;
+  _data.CopyFrom(data);
+  initialize();
 }
 
 bool Wearer::equip(ActorPtr item)

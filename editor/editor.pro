@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     ../protobuf/src/actor.pb.cc \
     ../protobuf/src/skill.pb.cc \
     ../protobuf/src/tile.pb.cc \
-    #../protobuf/src/actors.pb.cc \
+    ../protobuf/src/drop_rule.pb.cc \
+    ../protobuf/src/item_type.pb.cc \
     tiles/tiles_editor.cpp \
     tiles/tile_edit_dlg.cpp \
     #actors/actors_editor.cpp \
@@ -43,7 +44,8 @@ HEADERS  += editor.h \
     ../protobuf/src/skill.pb.h \
     ../protobuf/src/actor.pb.h \
     ../protobuf/src/tile.pb.h \
-    #../protobuf/src/actors.pb.h \
+    ../protobuf/src/drop_rule.pb.h \
+    ../protobuf/src/item_type.pb.h \
     spells/spell_edit.h \
     enum_mappings.h \
     tiles/tiles_editor.h \

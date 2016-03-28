@@ -12,18 +12,19 @@ class PlayableCharacter : public Character
 public:
 
   PlayableCharacter();
-  PlayableCharacter(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
-  ~PlayableCharacter();
+  PlayableCharacter(const PlayableCharacter& rhs);
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
+  ~PlayableCharacter();
 
   /* overriden functions */
   virtual int modifyExperience(int modifier);
 
   /* class specific functions */
   virtual void advanceLevel();
+
+protected:
+  friend class Character;
+  PlayableCharacter(const CharacterData& data);
 
 private:
   void advanceLevel(LevelData data);

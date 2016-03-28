@@ -11,7 +11,6 @@
 #include <fsm_state.h>
 #include <lua_state.h>
 #include <engine.h>
-#include <google/protobuf/util/message_differencer.h>
 
 namespace amarlon {
 
@@ -19,13 +18,27 @@ namespace amarlon {
 const int IS_HIDING_BIT = 1;
 const int IS_SNEAKING_BIT = 2;
 
-const ActorFeature::Type Ai::featureType = ActorFeature::AI;
-
-Ai::Ai(DescriptionPtr dsc)
-  : _fsm( new FSM(this) )
-  , _trackCount(0)
+Ai::Ai()
 {
-  upgrade(dsc);
+  initialize();
+}
+
+Ai::Ai(const Ai &rhs)
+{
+  *this = rhs;
+}
+
+Ai::Ai(const AiData &data)
+{
+  _data.CopyFrom(data);
+  initialize();
+}
+
+void Ai::initialize()
+{
+  _trackCount = 0;
+  _fsm.reset(new FSM(this));
+
   if ( getAiType() == AiType::PlayerAi )
   {
     changeState( FSMStateType::PLAYER_CONTROLLED );
@@ -41,65 +54,14 @@ AiType Ai::getAiType() const
   return static_cast<AiType>(_data.type());
 }
 
-void Ai::upgrade(DescriptionPtr dsc)
+AiPtr Ai::create(const AiData &data)
 {
-  AiDescriptionPtr aDsc = std::dynamic_pointer_cast<AiDescription>(dsc);
-  if ( aDsc )
-  {
-    if ( aDsc->script ) _data.set_script(*aDsc->script);
-    if ( aDsc->type )   _data.set_type(*aDsc->type);
-  }
-}
-
-DescriptionPtr Ai::toDescriptionStruct(ActorFeaturePtr cmp)
-{
-  AiDescriptionPtr dsc(new AiDescription);
-  AiPtr cmpAi = std::dynamic_pointer_cast<Ai>(cmp);
-
-  if ( cmpAi )
-  {
-    if ( _data.script() != cmpAi->_data.script() ) dsc->script = _data.script();
-    if ( getAiType() != cmpAi->getAiType() ) dsc->type = _data.type();
-  }
-  else
-  {
-    dsc->script = _data.script();
-    dsc->type = _data.type();
-  }
-
-  return dsc;
-}
-
-AiPtr Ai::create(DescriptionPtr dsc)
-{
-  return AiPtr( new Ai(dsc) );
-}
-
-bool Ai::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  AiPtr crhs = std::dynamic_pointer_cast<Ai>(rhs);
-
-  if (crhs)
-  {
-    equal = *this == *crhs;
-  }
-
-  return equal;
-}
-
-ActorFeaturePtr Ai::clone()
-{
-  AiPtr cloned( new Ai );
-
-  *cloned = *this;
-
-  return cloned;
+  return AiPtr( new Ai(data) );
 }
 
 bool Ai::operator==(const Ai &rhs) const
 {
-  return google::protobuf::util::MessageDifferencer::Equals(_data, rhs._data);
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
 Ai &Ai::operator=(const Ai &rhs)
@@ -112,6 +74,16 @@ Ai &Ai::operator=(const Ai &rhs)
     changeState(rhs.getCurrentState());
   }
   return *this;
+}
+
+const AiData &Ai::getData() const
+{
+  return _data;
+}
+
+const ::google::protobuf::Message& Ai::getDataPolymorphic() const
+{
+  return getData();
 }
 
 int Ai::update()
@@ -166,6 +138,11 @@ bool amarlon::Ai::changeState(amarlon::FSMStateType type)
 FSMStateType Ai::getCurrentState() const
 {
   return _fsm->getCurrentState()->getType();
+}
+
+ActorFeature::Type Ai::getFeatureType()
+{
+  return Ai::FeatureType;
 }
 
 ActorActionResult Ai::performAction(ActorActionPtr action)
@@ -358,6 +335,7 @@ std::string Ai::debug(const std::string &linebreak)
 
   return d;
 }
+
 
 }
 

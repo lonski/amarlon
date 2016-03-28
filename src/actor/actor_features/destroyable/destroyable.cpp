@@ -5,67 +5,61 @@
 #include <actor.h>
 #include <actor_descriptions.h>
 
+
 namespace amarlon {
 
-const ActorFeature::Type Destroyable::featureType = ActorFeature::DESTROYABLE;
+const ActorFeature::Type Destroyable::FeatureType = ActorFeature::DESTROYABLE;
 
-Destroyable::Destroyable(DescriptionPtr dsc)
+DestroyablePtr Destroyable::create(const DestroyableData &data)
 {
-  upgrade(dsc);
+  return DestroyablePtr( new Destroyable(data) );
+}
+
+Destroyable::Destroyable()
+{
+}
+
+Destroyable::Destroyable(const Destroyable &rhs)
+{
+  *this = rhs;
 }
 
 Destroyable::~Destroyable()
 {
 }
 
-DestroyablePtr Destroyable::create(DescriptionPtr dsc)
+bool Destroyable::operator==(const Destroyable& rhs) const
 {
-  return DestroyablePtr( new Destroyable(dsc) );
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
-void Destroyable::upgrade(DescriptionPtr dsc)
+Destroyable &Destroyable::operator=(const Destroyable& rhs)
 {
-  DestroyableDescriptionPtr destrDsc = std::dynamic_pointer_cast<DestroyableDescription>( dsc );
-  if ( destrDsc )
+  if ( this != &rhs )
   {
-    _dropRules.insert(_dropRules.end(), destrDsc->dropRules.begin(), destrDsc->dropRules.end());
+    _data.CopyFrom(rhs._data);
   }
+  return *this;
 }
 
-DescriptionPtr Destroyable::toDescriptionStruct(ActorFeaturePtr)
+const DestroyableData &Destroyable::getData() const
 {
-  DestroyableDescriptionPtr dsc(new DestroyableDescription);
-
-  dsc->dropRules = _dropRules;
-
-  return dsc;
+  return _data;
 }
 
-ActorFeaturePtr Destroyable::clone()
+const google::protobuf::Message& Destroyable::getDataPolymorphic() const
 {
-  DestroyablePtr cloned(new Destroyable);
-  cloned->_dropRules = _dropRules;
-
-  return cloned;
+  return getData();
 }
 
-bool Destroyable::isEqual(ActorFeaturePtr rhs) const
+Destroyable::Destroyable(const DestroyableData &data)
 {
-  bool equal = true;
-
-  DestroyablePtr dRhs = std::dynamic_pointer_cast<Destroyable>(rhs);
-  if ( dRhs )
-  {
-    equal = _dropRules.size() == dRhs->_dropRules.size() &&
-            std::equal(_dropRules.begin(), _dropRules.end(), dRhs->_dropRules.begin());
-  }
-
-  return equal;
+  _data.CopyFrom(data);
 }
 
-ActorFeature::Type Destroyable::getType()
+ActorFeature::Type Destroyable::getFeatureType()
 {
-  return Destroyable::featureType;
+  return Destroyable::FeatureType;
 }
 
 void Destroyable::destroy()
@@ -78,18 +72,13 @@ void Destroyable::destroy()
   }
 }
 
-const std::vector<DropRule> Destroyable::getDropRules() const
-{
-  return _dropRules;
-}
-
 ActorPtr createActor(const DropRule& rule)
 {
-  ActorPtr toDrop = Actor::create(rule.dropActorId);
+  ActorPtr toDrop = Actor::create( static_cast<ActorType>(rule.actor_id()) );
   PickablePtr pickable = toDrop->getFeature<Pickable>();
   if ( pickable )
   {
-    pickable->setAmount( dices::roll( rule.amountMin, rule.amountMax ) );
+    pickable->setAmount( dices::roll( rule.min(), rule.max() ) );
   }
 
   return toDrop;
@@ -97,15 +86,17 @@ ActorPtr createActor(const DropRule& rule)
 
 void Destroyable::processDropRules()
 {
-  for( DropRule& rule : _dropRules )
+  for( auto it = _data.droprules().begin(); it != _data.droprules().end(); ++it )
   {
-    if ( rule.chance > (dices::roll(dices::D100) / 100.0f) )
+    const DropRule& rule = *it;
+    if ( rule.chance() > (dices::roll(dices::D100) / 100.0f) )
     {
       ActorPtr toDrop = createActor(rule);
       dropOnGround( toDrop );
     }
   }
 }
+
 
 void Destroyable::dropInventory()
 {

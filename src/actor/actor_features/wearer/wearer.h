@@ -4,6 +4,7 @@
 #include <map>
 #include <actor_feature.h>
 #include <item_slot_type.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -15,18 +16,20 @@ typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 class Wearer : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
+  const static ActorFeature::Type FeatureType;
 
-  Wearer(DescriptionPtr dsc = nullptr);
-  virtual ~Wearer() {}
-  static WearerPtr create(DescriptionPtr dsc);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  static WearerPtr create(const WearerData& data);
 
-  virtual ActorFeature::Type getType() { return featureType; }
+  Wearer();
+  Wearer(const Wearer& rhs);
+  virtual ~Wearer();
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
+  bool operator==(const Wearer& rhs) const;
+  Wearer& operator=(const Wearer& rhs);
+  virtual const WearerData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
+
+  virtual ActorFeature::Type getFeatureType() { return FeatureType; }
 
   bool equip(ActorPtr item);
   ActorPtr unequip(ItemSlotType slot);
@@ -38,10 +41,14 @@ public:
   virtual std::string debug(const std::string& linebreak = "\n");
 
 private:
+  mutable WearerData _data;
   std::map<ItemSlotType, ActorPtr> _itemSlots;
   ActorContainerPtr _equippedItems;
 
+  Wearer(const WearerData& data);
   void assignItemsToSlots();
+  void initialize();
+  void updateData() const;
 
 };
 

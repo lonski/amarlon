@@ -43,7 +43,7 @@ void ClassSelectionPanel::update()
   {
     RacePtr race = Engine::instance().
         getRpgDB().
-        getRace( (RaceType)*_parent->getCharacterDsc()->race );
+        getRace( (RaceType)_parent->getPlayerDsc().character().racetype() );
 
     if ( race )
     {
@@ -123,16 +123,15 @@ void ClassSelectionPanel::setClass()
   auto cClass = getSelectedClass();
   if ( cClass && _parent )
   {
-    CharacterDescriptionPtr dsc = _parent->getCharacterDsc();
-    if ( dsc )
+    CharacterData* c = _parent->getPlayerDsc().mutable_character();
+    if ( c )
     {
-      dsc->cClass = (int)cClass->getType();
+      c->set_classtype( (int)cClass->getType() );
 
       //Add known spells
-      dsc->spellbook = SpellbookDescription();
       if ( cClass->getType() == CharacterClassType::MagicUser )
       {
-        (*dsc->spellbook).knownSpells.push_back( (int)SpellId::MagicMissile );
+        c->mutable_spellbook()->add_knownspells( (int)SpellId::MagicMissile );
       }
     }
   }

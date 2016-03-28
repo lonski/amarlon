@@ -47,11 +47,11 @@ void AbilityScoresSelectionPanel::update()
   {
     _race = Engine::instance().
         getRpgDB().
-        getRace( (RaceType)*_parent->getCharacterDsc()->race );
+        getRace( (RaceType)_parent->getPlayerDsc().character().racetype() );
 
     _class = Engine::instance().
         getRpgDB().
-        getCharacterClass( (CharacterClassType)*_parent->getCharacterDsc()->cClass );
+        getCharacterClass( (CharacterClassType)_parent->getPlayerDsc().character().classtype() );
 
     if ( _race && _class )
     {
@@ -207,10 +207,19 @@ void AbilityScoresSelectionPanel::next()
 
 void AbilityScoresSelectionPanel::setScores()
 {
-  CharacterDescriptionPtr d = _parent->getCharacterDsc();
-  if ( d )
-    for ( auto as : AbilityScore::Type() )
-      d->abilityScores[as] = getValue(as);
+  CharacterData* c = _parent->getPlayerDsc().mutable_character();
+
+  for ( auto as : AbilityScore::Type() )
+  {
+    for ( auto it = c->mutable_abilityscores()->begin(); it != c->mutable_abilityscores()->end(); ++it )
+    {
+      if ( it->first() == static_cast<int>(as) )
+      {
+        it->set_second( getValue(as) );
+        break;
+      }
+    }
+  }
 }
 
 int AbilityScoresSelectionPanel::getValue(AbilityScore::Type as)

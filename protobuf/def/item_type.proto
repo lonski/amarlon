@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+package amarlon;
+
+message ItemTypeData {
+  required int32 category       = 1;
+  required int32 amunition_type = 2;
+  required int32 armor_type      = 3;
+  required int32 weapon_type    = 4;
+}

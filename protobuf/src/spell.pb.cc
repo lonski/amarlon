@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
-#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -27,6 +26,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* SpellsData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   SpellsData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* SpellBookData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  SpellBookData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* SpellBookData_SlotData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  SpellBookData_SlotData_reflection_ = NULL;
 
 }  // namespace
 
@@ -50,31 +55,64 @@ void protobuf_AssignDesc_spell_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, range_),
   };
   SpellData_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+    new ::google::protobuf::internal::GeneratedMessageReflection(
       SpellData_descriptor_,
       SpellData::default_instance_,
       SpellData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, _unknown_fields_),
       -1,
-      -1,
-      -1,
-      sizeof(SpellData),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellData, _is_default_instance_));
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SpellData));
   SpellsData_descriptor_ = file->message_type(1);
   static const int SpellsData_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellsData, spell_),
   };
   SpellsData_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+    new ::google::protobuf::internal::GeneratedMessageReflection(
       SpellsData_descriptor_,
       SpellsData::default_instance_,
       SpellsData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellsData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellsData, _unknown_fields_),
       -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SpellsData));
+  SpellBookData_descriptor_ = file->message_type(2);
+  static const int SpellBookData_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData, knownspells_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData, spellslots_),
+  };
+  SpellBookData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      SpellBookData_descriptor_,
+      SpellBookData::default_instance_,
+      SpellBookData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData, _unknown_fields_),
       -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SpellBookData));
+  SpellBookData_SlotData_descriptor_ = SpellBookData_descriptor_->nested_type(0);
+  static const int SpellBookData_SlotData_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData_SlotData, level_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData_SlotData, isprepared_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData_SlotData, spell_id_),
+  };
+  SpellBookData_SlotData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      SpellBookData_SlotData_descriptor_,
+      SpellBookData_SlotData::default_instance_,
+      SpellBookData_SlotData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData_SlotData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellBookData_SlotData, _unknown_fields_),
       -1,
-      sizeof(SpellsData),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellsData, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpellsData, _is_default_instance_));
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SpellBookData_SlotData));
 }
 
 namespace {
@@ -88,9 +126,13 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      SpellData_descriptor_, &SpellData::default_instance());
+    SpellData_descriptor_, &SpellData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      SpellsData_descriptor_, &SpellsData::default_instance());
+    SpellsData_descriptor_, &SpellsData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    SpellBookData_descriptor_, &SpellBookData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    SpellBookData_SlotData_descriptor_, &SpellBookData_SlotData::default_instance());
 }
 
 }  // namespace
@@ -100,6 +142,10 @@ void protobuf_ShutdownFile_spell_2eproto() {
   delete SpellData_reflection_;
   delete SpellsData::default_instance_;
   delete SpellsData_reflection_;
+  delete SpellBookData::default_instance_;
+  delete SpellBookData_reflection_;
+  delete SpellBookData_SlotData::default_instance_;
+  delete SpellBookData_SlotData_reflection_;
 }
 
 void protobuf_AddDesc_spell_2eproto() {
@@ -109,19 +155,27 @@ void protobuf_AddDesc_spell_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013spell.proto\022\007amarlon\"\242\001\n\tSpellData\022\n\n\002"
-    "id\030\001 \001(\005\022\r\n\005level\030\002 \001(\005\022\022\n\nchar_class\030\003 "
-    "\001(\005\022\023\n\013target_type\030\004 \001(\005\022\014\n\004name\030\005 \001(\t\022\023"
-    "\n\013description\030\006 \001(\t\022\017\n\007passive\030\007 \001(\010\022\016\n\006"
-    "radius\030\010 \001(\005\022\r\n\005range\030\t \001(\005\"/\n\nSpellsDat"
-    "a\022!\n\005spell\030\001 \003(\0132\022.amarlon.SpellDatab\006pr"
-    "oto3", 244);
+    "\n\013spell.proto\022\007amarlon\"\262\001\n\tSpellData\022\n\n\002"
+    "id\030\001 \002(\005\022\r\n\005level\030\002 \002(\005\022\022\n\nchar_class\030\003 "
+    "\002(\005\022\026\n\013target_type\030\004 \001(\005:\0010\022\014\n\004name\030\005 \002("
+    "\t\022\023\n\013description\030\006 \002(\t\022\026\n\007passive\030\007 \001(\010:"
+    "\005false\022\021\n\006radius\030\010 \001(\005:\0010\022\020\n\005range\030\t \001(\005"
+    ":\0010\"/\n\nSpellsData\022!\n\005spell\030\001 \003(\0132\022.amarl"
+    "on.SpellData\"\241\001\n\rSpellBookData\022\023\n\013knownS"
+    "pells\030\001 \003(\005\0223\n\nspellSlots\030\002 \003(\0132\037.amarlo"
+    "n.SpellBookData.SlotData\032F\n\010SlotData\022\r\n\005"
+    "level\030\001 \002(\005\022\031\n\nisPrepared\030\002 \001(\010:\005false\022\020"
+    "\n\010spell_id\030\003 \002(\005", 416);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "spell.proto", &protobuf_RegisterTypes);
   SpellData::default_instance_ = new SpellData();
   SpellsData::default_instance_ = new SpellsData();
+  SpellBookData::default_instance_ = new SpellBookData();
+  SpellBookData_SlotData::default_instance_ = new SpellBookData_SlotData();
   SpellData::default_instance_->InitAsDefaultInstance();
   SpellsData::default_instance_->InitAsDefaultInstance();
+  SpellBookData::default_instance_->InitAsDefaultInstance();
+  SpellBookData_SlotData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_spell_2eproto);
 }
 
@@ -132,19 +186,9 @@ struct StaticDescriptorInitializer_spell_2eproto {
   }
 } static_descriptor_initializer_spell_2eproto_;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
-static void MergeFromFail(int line) {
-  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
-}
-
-}  // namespace
-
-
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int SpellData::kIdFieldNumber;
 const int SpellData::kLevelFieldNumber;
 const int SpellData::kCharClassFieldNumber;
@@ -154,39 +198,37 @@ const int SpellData::kDescriptionFieldNumber;
 const int SpellData::kPassiveFieldNumber;
 const int SpellData::kRadiusFieldNumber;
 const int SpellData::kRangeFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 SpellData::SpellData()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:amarlon.SpellData)
 }
 
 void SpellData::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
 }
 
 SpellData::SpellData(const SpellData& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:amarlon.SpellData)
 }
 
 void SpellData::SharedCtor() {
-    _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   id_ = 0;
   level_ = 0;
   char_class_ = 0;
   target_type_ = 0;
-  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   passive_ = false;
   radius_ = 0;
   range_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 SpellData::~SpellData() {
@@ -195,8 +237,12 @@ SpellData::~SpellData() {
 }
 
 void SpellData::SharedDtor() {
-  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete description_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -218,32 +264,42 @@ const SpellData& SpellData::default_instance() {
 
 SpellData* SpellData::default_instance_ = NULL;
 
-SpellData* SpellData::New(::google::protobuf::Arena* arena) const {
-  SpellData* n = new SpellData;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+SpellData* SpellData::New() const {
+  return new SpellData;
 }
 
 void SpellData::Clear() {
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<SpellData*>(16)->f)
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<SpellData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
 
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
 
-  ZR_(id_, target_type_);
-  ZR_(passive_, radius_);
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(id_, target_type_);
+    ZR_(passive_, radius_);
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        name_->clear();
+      }
+    }
+    if (has_description()) {
+      if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        description_->clear();
+      }
+    }
+  }
   range_ = 0;
 
-#undef ZR_HELPER_
+#undef OFFSET_OF_FIELD_
 #undef ZR_
 
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
 }
 
 bool SpellData::MergePartialFromCodedStream(
@@ -256,13 +312,13 @@ bool SpellData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 id = 1;
+      // required int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &id_)));
-
+          set_has_id();
         } else {
           goto handle_unusual;
         }
@@ -270,14 +326,14 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 level = 2;
+      // required int32 level = 2;
       case 2: {
         if (tag == 16) {
          parse_level:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &level_)));
-
+          set_has_level();
         } else {
           goto handle_unusual;
         }
@@ -285,14 +341,14 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 char_class = 3;
+      // required int32 char_class = 3;
       case 3: {
         if (tag == 24) {
          parse_char_class:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &char_class_)));
-
+          set_has_char_class();
         } else {
           goto handle_unusual;
         }
@@ -300,14 +356,14 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 target_type = 4;
+      // optional int32 target_type = 4 [default = 0];
       case 4: {
         if (tag == 32) {
          parse_target_type:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &target_type_)));
-
+          set_has_target_type();
         } else {
           goto handle_unusual;
         }
@@ -315,16 +371,16 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string name = 5;
+      // required string name = 5;
       case 5: {
         if (tag == 42) {
          parse_name:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "amarlon.SpellData.name"));
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "name");
         } else {
           goto handle_unusual;
         }
@@ -332,16 +388,16 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string description = 6;
+      // required string description = 6;
       case 6: {
         if (tag == 50) {
          parse_description:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_description()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->description().data(), this->description().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "amarlon.SpellData.description"));
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "description");
         } else {
           goto handle_unusual;
         }
@@ -349,14 +405,14 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional bool passive = 7;
+      // optional bool passive = 7 [default = false];
       case 7: {
         if (tag == 56) {
          parse_passive:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &passive_)));
-
+          set_has_passive();
         } else {
           goto handle_unusual;
         }
@@ -364,14 +420,14 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 radius = 8;
+      // optional int32 radius = 8 [default = 0];
       case 8: {
         if (tag == 64) {
          parse_radius:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &radius_)));
-
+          set_has_radius();
         } else {
           goto handle_unusual;
         }
@@ -379,14 +435,14 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 range = 9;
+      // optional int32 range = 9 [default = 0];
       case 9: {
         if (tag == 72) {
          parse_range:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &range_)));
-
+          set_has_range();
         } else {
           goto handle_unusual;
         }
@@ -401,7 +457,8 @@ bool SpellData::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
         break;
       }
     }
@@ -418,124 +475,132 @@ failure:
 void SpellData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SpellData)
-  // optional int32 id = 1;
-  if (this->id() != 0) {
+  // required int32 id = 1;
+  if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // optional int32 level = 2;
-  if (this->level() != 0) {
+  // required int32 level = 2;
+  if (has_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->level(), output);
   }
 
-  // optional int32 char_class = 3;
-  if (this->char_class() != 0) {
+  // required int32 char_class = 3;
+  if (has_char_class()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->char_class(), output);
   }
 
-  // optional int32 target_type = 4;
-  if (this->target_type() != 0) {
+  // optional int32 target_type = 4 [default = 0];
+  if (has_target_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->target_type(), output);
   }
 
-  // optional string name = 5;
-  if (this->name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // required string name = 5;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SpellData.name");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       5, this->name(), output);
   }
 
-  // optional string description = 6;
-  if (this->description().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // required string description = 6;
+  if (has_description()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SpellData.description");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "description");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       6, this->description(), output);
   }
 
-  // optional bool passive = 7;
-  if (this->passive() != 0) {
+  // optional bool passive = 7 [default = false];
+  if (has_passive()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->passive(), output);
   }
 
-  // optional int32 radius = 8;
-  if (this->radius() != 0) {
+  // optional int32 radius = 8 [default = 0];
+  if (has_radius()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->radius(), output);
   }
 
-  // optional int32 range = 9;
-  if (this->range() != 0) {
+  // optional int32 range = 9 [default = 0];
+  if (has_range()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->range(), output);
   }
 
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
   // @@protoc_insertion_point(serialize_end:amarlon.SpellData)
 }
 
 ::google::protobuf::uint8* SpellData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SpellData)
-  // optional int32 id = 1;
-  if (this->id() != 0) {
+  // required int32 id = 1;
+  if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // optional int32 level = 2;
-  if (this->level() != 0) {
+  // required int32 level = 2;
+  if (has_level()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->level(), target);
   }
 
-  // optional int32 char_class = 3;
-  if (this->char_class() != 0) {
+  // required int32 char_class = 3;
+  if (has_char_class()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->char_class(), target);
   }
 
-  // optional int32 target_type = 4;
-  if (this->target_type() != 0) {
+  // optional int32 target_type = 4 [default = 0];
+  if (has_target_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->target_type(), target);
   }
 
-  // optional string name = 5;
-  if (this->name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // required string name = 5;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SpellData.name");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         5, this->name(), target);
   }
 
-  // optional string description = 6;
-  if (this->description().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // required string description = 6;
+  if (has_description()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SpellData.description");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "description");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         6, this->description(), target);
   }
 
-  // optional bool passive = 7;
-  if (this->passive() != 0) {
+  // optional bool passive = 7 [default = false];
+  if (has_passive()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->passive(), target);
   }
 
-  // optional int32 radius = 8;
-  if (this->radius() != 0) {
+  // optional int32 radius = 8 [default = 0];
+  if (has_radius()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->radius(), target);
   }
 
-  // optional int32 range = 9;
-  if (this->range() != 0) {
+  // optional int32 range = 9 [default = 0];
+  if (has_range()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->range(), target);
   }
 
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:amarlon.SpellData)
   return target;
 }
@@ -543,67 +608,76 @@ void SpellData::SerializeWithCachedSizes(
 int SpellData::ByteSize() const {
   int total_size = 0;
 
-  // optional int32 id = 1;
-  if (this->id() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->id());
-  }
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->id());
+    }
 
-  // optional int32 level = 2;
-  if (this->level() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->level());
-  }
+    // required int32 level = 2;
+    if (has_level()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->level());
+    }
 
-  // optional int32 char_class = 3;
-  if (this->char_class() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->char_class());
-  }
+    // required int32 char_class = 3;
+    if (has_char_class()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->char_class());
+    }
 
-  // optional int32 target_type = 4;
-  if (this->target_type() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->target_type());
-  }
+    // optional int32 target_type = 4 [default = 0];
+    if (has_target_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->target_type());
+    }
 
-  // optional string name = 5;
-  if (this->name().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->name());
-  }
+    // required string name = 5;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
 
-  // optional string description = 6;
-  if (this->description().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->description());
-  }
+    // required string description = 6;
+    if (has_description()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->description());
+    }
 
-  // optional bool passive = 7;
-  if (this->passive() != 0) {
-    total_size += 1 + 1;
-  }
+    // optional bool passive = 7 [default = false];
+    if (has_passive()) {
+      total_size += 1 + 1;
+    }
 
-  // optional int32 radius = 8;
-  if (this->radius() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->radius());
-  }
+    // optional int32 radius = 8 [default = 0];
+    if (has_radius()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->radius());
+    }
 
-  // optional int32 range = 9;
-  if (this->range() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->range());
   }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 range = 9 [default = 0];
+    if (has_range()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->range());
+    }
 
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -611,10 +685,10 @@ int SpellData::ByteSize() const {
 }
 
 void SpellData::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const SpellData* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const SpellData>(
-          &from);
+  GOOGLE_CHECK_NE(&from, this);
+  const SpellData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SpellData*>(
+      &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -623,36 +697,39 @@ void SpellData::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void SpellData::MergeFrom(const SpellData& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.id() != 0) {
-    set_id(from.id());
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_id()) {
+      set_id(from.id());
+    }
+    if (from.has_level()) {
+      set_level(from.level());
+    }
+    if (from.has_char_class()) {
+      set_char_class(from.char_class());
+    }
+    if (from.has_target_type()) {
+      set_target_type(from.target_type());
+    }
+    if (from.has_name()) {
+      set_name(from.name());
+    }
+    if (from.has_description()) {
+      set_description(from.description());
+    }
+    if (from.has_passive()) {
+      set_passive(from.passive());
+    }
+    if (from.has_radius()) {
+      set_radius(from.radius());
+    }
   }
-  if (from.level() != 0) {
-    set_level(from.level());
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_range()) {
+      set_range(from.range());
+    }
   }
-  if (from.char_class() != 0) {
-    set_char_class(from.char_class());
-  }
-  if (from.target_type() != 0) {
-    set_target_type(from.target_type());
-  }
-  if (from.name().size() > 0) {
-
-    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
-  }
-  if (from.description().size() > 0) {
-
-    description_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.description_);
-  }
-  if (from.passive() != 0) {
-    set_passive(from.passive());
-  }
-  if (from.radius() != 0) {
-    set_radius(from.radius());
-  }
-  if (from.range() != 0) {
-    set_range(from.range());
-  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void SpellData::CopyFrom(const ::google::protobuf::Message& from) {
@@ -668,26 +745,26 @@ void SpellData::CopyFrom(const SpellData& from) {
 }
 
 bool SpellData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000037) != 0x00000037) return false;
 
   return true;
 }
 
 void SpellData::Swap(SpellData* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void SpellData::InternalSwap(SpellData* other) {
-  std::swap(id_, other->id_);
-  std::swap(level_, other->level_);
-  std::swap(char_class_, other->char_class_);
-  std::swap(target_type_, other->target_type_);
-  name_.Swap(&other->name_);
-  description_.Swap(&other->description_);
-  std::swap(passive_, other->passive_);
-  std::swap(radius_, other->radius_);
-  std::swap(range_, other->range_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(level_, other->level_);
+    std::swap(char_class_, other->char_class_);
+    std::swap(target_type_, other->target_type_);
+    std::swap(name_, other->name_);
+    std::swap(description_, other->description_);
+    std::swap(passive_, other->passive_);
+    std::swap(radius_, other->radius_);
+    std::swap(range_, other->range_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
 }
 
 ::google::protobuf::Metadata SpellData::GetMetadata() const {
@@ -698,222 +775,32 @@ void SpellData::InternalSwap(SpellData* other) {
   return metadata;
 }
 
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// SpellData
-
-// optional int32 id = 1;
-void SpellData::clear_id() {
-  id_ = 0;
-}
- ::google::protobuf::int32 SpellData::id() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.id)
-  return id_;
-}
- void SpellData::set_id(::google::protobuf::int32 value) {
-  
-  id_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.id)
-}
-
-// optional int32 level = 2;
-void SpellData::clear_level() {
-  level_ = 0;
-}
- ::google::protobuf::int32 SpellData::level() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.level)
-  return level_;
-}
- void SpellData::set_level(::google::protobuf::int32 value) {
-  
-  level_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.level)
-}
-
-// optional int32 char_class = 3;
-void SpellData::clear_char_class() {
-  char_class_ = 0;
-}
- ::google::protobuf::int32 SpellData::char_class() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.char_class)
-  return char_class_;
-}
- void SpellData::set_char_class(::google::protobuf::int32 value) {
-  
-  char_class_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.char_class)
-}
-
-// optional int32 target_type = 4;
-void SpellData::clear_target_type() {
-  target_type_ = 0;
-}
- ::google::protobuf::int32 SpellData::target_type() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.target_type)
-  return target_type_;
-}
- void SpellData::set_target_type(::google::protobuf::int32 value) {
-  
-  target_type_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.target_type)
-}
-
-// optional string name = 5;
-void SpellData::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- const ::std::string& SpellData::name() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SpellData::set_name(const ::std::string& value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.name)
-}
- void SpellData::set_name(const char* value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:amarlon.SpellData.name)
-}
- void SpellData::set_name(const char* value, size_t size) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:amarlon.SpellData.name)
-}
- ::std::string* SpellData::mutable_name() {
-  
-  // @@protoc_insertion_point(field_mutable:amarlon.SpellData.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* SpellData::release_name() {
-  
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SpellData::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:amarlon.SpellData.name)
-}
-
-// optional string description = 6;
-void SpellData::clear_description() {
-  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- const ::std::string& SpellData::description() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.description)
-  return description_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SpellData::set_description(const ::std::string& value) {
-  
-  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.description)
-}
- void SpellData::set_description(const char* value) {
-  
-  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:amarlon.SpellData.description)
-}
- void SpellData::set_description(const char* value, size_t size) {
-  
-  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:amarlon.SpellData.description)
-}
- ::std::string* SpellData::mutable_description() {
-  
-  // @@protoc_insertion_point(field_mutable:amarlon.SpellData.description)
-  return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* SpellData::release_description() {
-  
-  return description_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SpellData::set_allocated_description(::std::string* description) {
-  if (description != NULL) {
-    
-  } else {
-    
-  }
-  description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
-  // @@protoc_insertion_point(field_set_allocated:amarlon.SpellData.description)
-}
-
-// optional bool passive = 7;
-void SpellData::clear_passive() {
-  passive_ = false;
-}
- bool SpellData::passive() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.passive)
-  return passive_;
-}
- void SpellData::set_passive(bool value) {
-  
-  passive_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.passive)
-}
-
-// optional int32 radius = 8;
-void SpellData::clear_radius() {
-  radius_ = 0;
-}
- ::google::protobuf::int32 SpellData::radius() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.radius)
-  return radius_;
-}
- void SpellData::set_radius(::google::protobuf::int32 value) {
-  
-  radius_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.radius)
-}
-
-// optional int32 range = 9;
-void SpellData::clear_range() {
-  range_ = 0;
-}
- ::google::protobuf::int32 SpellData::range() const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellData.range)
-  return range_;
-}
- void SpellData::set_range(::google::protobuf::int32 value) {
-  
-  range_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SpellData.range)
-}
-
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int SpellsData::kSpellFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 SpellsData::SpellsData()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:amarlon.SpellsData)
 }
 
 void SpellsData::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
 }
 
 SpellsData::SpellsData(const SpellsData& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:amarlon.SpellsData)
 }
 
 void SpellsData::SharedCtor() {
-    _is_default_instance_ = false;
   _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 SpellsData::~SpellsData() {
@@ -943,16 +830,14 @@ const SpellsData& SpellsData::default_instance() {
 
 SpellsData* SpellsData::default_instance_ = NULL;
 
-SpellsData* SpellsData::New(::google::protobuf::Arena* arena) const {
-  SpellsData* n = new SpellsData;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+SpellsData* SpellsData::New() const {
+  return new SpellsData;
 }
 
 void SpellsData::Clear() {
   spell_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
 }
 
 bool SpellsData::MergePartialFromCodedStream(
@@ -968,15 +853,13 @@ bool SpellsData::MergePartialFromCodedStream(
       // repeated .amarlon.SpellData spell = 1;
       case 1: {
         if (tag == 10) {
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_spell:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+         parse_spell:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_spell()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_loop_spell;
-        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(10)) goto parse_spell;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -988,7 +871,8 @@ bool SpellsData::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
         break;
       }
     }
@@ -1006,11 +890,15 @@ void SpellsData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SpellsData)
   // repeated .amarlon.SpellData spell = 1;
-  for (unsigned int i = 0, n = this->spell_size(); i < n; i++) {
+  for (int i = 0; i < this->spell_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->spell(i), output);
   }
 
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
   // @@protoc_insertion_point(serialize_end:amarlon.SpellsData)
 }
 
@@ -1018,12 +906,16 @@ void SpellsData::SerializeWithCachedSizes(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SpellsData)
   // repeated .amarlon.SpellData spell = 1;
-  for (unsigned int i = 0, n = this->spell_size(); i < n; i++) {
+  for (int i = 0; i < this->spell_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->spell(i), target);
   }
 
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:amarlon.SpellsData)
   return target;
 }
@@ -1039,6 +931,11 @@ int SpellsData::ByteSize() const {
         this->spell(i));
   }
 
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -1046,10 +943,10 @@ int SpellsData::ByteSize() const {
 }
 
 void SpellsData::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const SpellsData* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const SpellsData>(
-          &from);
+  GOOGLE_CHECK_NE(&from, this);
+  const SpellsData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SpellsData*>(
+      &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -1058,8 +955,9 @@ void SpellsData::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void SpellsData::MergeFrom(const SpellsData& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_CHECK_NE(&from, this);
   spell_.MergeFrom(from.spell_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void SpellsData::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1076,17 +974,17 @@ void SpellsData::CopyFrom(const SpellsData& from) {
 
 bool SpellsData::IsInitialized() const {
 
+  if (!::google::protobuf::internal::AllAreInitialized(this->spell())) return false;
   return true;
 }
 
 void SpellsData::Swap(SpellsData* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void SpellsData::InternalSwap(SpellsData* other) {
-  spell_.UnsafeArenaSwap(&other->spell_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  if (other != this) {
+    spell_.Swap(&other->spell_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
 }
 
 ::google::protobuf::Metadata SpellsData::GetMetadata() const {
@@ -1097,40 +995,582 @@ void SpellsData::InternalSwap(SpellsData* other) {
   return metadata;
 }
 
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// SpellsData
 
-// repeated .amarlon.SpellData spell = 1;
-int SpellsData::spell_size() const {
-  return spell_.size();
-}
-void SpellsData::clear_spell() {
-  spell_.Clear();
-}
-const ::amarlon::SpellData& SpellsData::spell(int index) const {
-  // @@protoc_insertion_point(field_get:amarlon.SpellsData.spell)
-  return spell_.Get(index);
-}
-::amarlon::SpellData* SpellsData::mutable_spell(int index) {
-  // @@protoc_insertion_point(field_mutable:amarlon.SpellsData.spell)
-  return spell_.Mutable(index);
-}
-::amarlon::SpellData* SpellsData::add_spell() {
-  // @@protoc_insertion_point(field_add:amarlon.SpellsData.spell)
-  return spell_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::amarlon::SpellData >*
-SpellsData::mutable_spell() {
-  // @@protoc_insertion_point(field_mutable_list:amarlon.SpellsData.spell)
-  return &spell_;
-}
-const ::google::protobuf::RepeatedPtrField< ::amarlon::SpellData >&
-SpellsData::spell() const {
-  // @@protoc_insertion_point(field_list:amarlon.SpellsData.spell)
-  return spell_;
+// ===================================================================
+
+#ifndef _MSC_VER
+const int SpellBookData_SlotData::kLevelFieldNumber;
+const int SpellBookData_SlotData::kIsPreparedFieldNumber;
+const int SpellBookData_SlotData::kSpellIdFieldNumber;
+#endif  // !_MSC_VER
+
+SpellBookData_SlotData::SpellBookData_SlotData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:amarlon.SpellBookData.SlotData)
 }
 
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+void SpellBookData_SlotData::InitAsDefaultInstance() {
+}
+
+SpellBookData_SlotData::SpellBookData_SlotData(const SpellBookData_SlotData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:amarlon.SpellBookData.SlotData)
+}
+
+void SpellBookData_SlotData::SharedCtor() {
+  _cached_size_ = 0;
+  level_ = 0;
+  isprepared_ = false;
+  spell_id_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+SpellBookData_SlotData::~SpellBookData_SlotData() {
+  // @@protoc_insertion_point(destructor:amarlon.SpellBookData.SlotData)
+  SharedDtor();
+}
+
+void SpellBookData_SlotData::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void SpellBookData_SlotData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SpellBookData_SlotData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return SpellBookData_SlotData_descriptor_;
+}
+
+const SpellBookData_SlotData& SpellBookData_SlotData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_spell_2eproto();
+  return *default_instance_;
+}
+
+SpellBookData_SlotData* SpellBookData_SlotData::default_instance_ = NULL;
+
+SpellBookData_SlotData* SpellBookData_SlotData::New() const {
+  return new SpellBookData_SlotData;
+}
+
+void SpellBookData_SlotData::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<SpellBookData_SlotData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(level_, spell_id_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool SpellBookData_SlotData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:amarlon.SpellBookData.SlotData)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int32 level = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &level_)));
+          set_has_level();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_isPrepared;
+        break;
+      }
+
+      // optional bool isPrepared = 2 [default = false];
+      case 2: {
+        if (tag == 16) {
+         parse_isPrepared:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &isprepared_)));
+          set_has_isprepared();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_spell_id;
+        break;
+      }
+
+      // required int32 spell_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_spell_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &spell_id_)));
+          set_has_spell_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:amarlon.SpellBookData.SlotData)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:amarlon.SpellBookData.SlotData)
+  return false;
+#undef DO_
+}
+
+void SpellBookData_SlotData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:amarlon.SpellBookData.SlotData)
+  // required int32 level = 1;
+  if (has_level()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->level(), output);
+  }
+
+  // optional bool isPrepared = 2 [default = false];
+  if (has_isprepared()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->isprepared(), output);
+  }
+
+  // required int32 spell_id = 3;
+  if (has_spell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->spell_id(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:amarlon.SpellBookData.SlotData)
+}
+
+::google::protobuf::uint8* SpellBookData_SlotData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:amarlon.SpellBookData.SlotData)
+  // required int32 level = 1;
+  if (has_level()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->level(), target);
+  }
+
+  // optional bool isPrepared = 2 [default = false];
+  if (has_isprepared()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->isprepared(), target);
+  }
+
+  // required int32 spell_id = 3;
+  if (has_spell_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->spell_id(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:amarlon.SpellBookData.SlotData)
+  return target;
+}
+
+int SpellBookData_SlotData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 level = 1;
+    if (has_level()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->level());
+    }
+
+    // optional bool isPrepared = 2 [default = false];
+    if (has_isprepared()) {
+      total_size += 1 + 1;
+    }
+
+    // required int32 spell_id = 3;
+    if (has_spell_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->spell_id());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SpellBookData_SlotData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const SpellBookData_SlotData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SpellBookData_SlotData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void SpellBookData_SlotData::MergeFrom(const SpellBookData_SlotData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_level()) {
+      set_level(from.level());
+    }
+    if (from.has_isprepared()) {
+      set_isprepared(from.isprepared());
+    }
+    if (from.has_spell_id()) {
+      set_spell_id(from.spell_id());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void SpellBookData_SlotData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SpellBookData_SlotData::CopyFrom(const SpellBookData_SlotData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SpellBookData_SlotData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
+
+  return true;
+}
+
+void SpellBookData_SlotData::Swap(SpellBookData_SlotData* other) {
+  if (other != this) {
+    std::swap(level_, other->level_);
+    std::swap(isprepared_, other->isprepared_);
+    std::swap(spell_id_, other->spell_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata SpellBookData_SlotData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = SpellBookData_SlotData_descriptor_;
+  metadata.reflection = SpellBookData_SlotData_reflection_;
+  return metadata;
+}
+
+
+// -------------------------------------------------------------------
+
+#ifndef _MSC_VER
+const int SpellBookData::kKnownSpellsFieldNumber;
+const int SpellBookData::kSpellSlotsFieldNumber;
+#endif  // !_MSC_VER
+
+SpellBookData::SpellBookData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:amarlon.SpellBookData)
+}
+
+void SpellBookData::InitAsDefaultInstance() {
+}
+
+SpellBookData::SpellBookData(const SpellBookData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:amarlon.SpellBookData)
+}
+
+void SpellBookData::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+SpellBookData::~SpellBookData() {
+  // @@protoc_insertion_point(destructor:amarlon.SpellBookData)
+  SharedDtor();
+}
+
+void SpellBookData::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void SpellBookData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SpellBookData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return SpellBookData_descriptor_;
+}
+
+const SpellBookData& SpellBookData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_spell_2eproto();
+  return *default_instance_;
+}
+
+SpellBookData* SpellBookData::default_instance_ = NULL;
+
+SpellBookData* SpellBookData::New() const {
+  return new SpellBookData;
+}
+
+void SpellBookData::Clear() {
+  knownspells_.Clear();
+  spellslots_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool SpellBookData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:amarlon.SpellBookData)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated int32 knownSpells = 1;
+      case 1: {
+        if (tag == 8) {
+         parse_knownSpells:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 8, input, this->mutable_knownspells())));
+        } else if (tag == 10) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_knownspells())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(8)) goto parse_knownSpells;
+        if (input->ExpectTag(18)) goto parse_spellSlots;
+        break;
+      }
+
+      // repeated .amarlon.SpellBookData.SlotData spellSlots = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_spellSlots:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_spellslots()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_spellSlots;
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:amarlon.SpellBookData)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:amarlon.SpellBookData)
+  return false;
+#undef DO_
+}
+
+void SpellBookData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:amarlon.SpellBookData)
+  // repeated int32 knownSpells = 1;
+  for (int i = 0; i < this->knownspells_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(
+      1, this->knownspells(i), output);
+  }
+
+  // repeated .amarlon.SpellBookData.SlotData spellSlots = 2;
+  for (int i = 0; i < this->spellslots_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->spellslots(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:amarlon.SpellBookData)
+}
+
+::google::protobuf::uint8* SpellBookData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:amarlon.SpellBookData)
+  // repeated int32 knownSpells = 1;
+  for (int i = 0; i < this->knownspells_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt32ToArray(1, this->knownspells(i), target);
+  }
+
+  // repeated .amarlon.SpellBookData.SlotData spellSlots = 2;
+  for (int i = 0; i < this->spellslots_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->spellslots(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:amarlon.SpellBookData)
+  return target;
+}
+
+int SpellBookData::ByteSize() const {
+  int total_size = 0;
+
+  // repeated int32 knownSpells = 1;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->knownspells_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->knownspells(i));
+    }
+    total_size += 1 * this->knownspells_size() + data_size;
+  }
+
+  // repeated .amarlon.SpellBookData.SlotData spellSlots = 2;
+  total_size += 1 * this->spellslots_size();
+  for (int i = 0; i < this->spellslots_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->spellslots(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SpellBookData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const SpellBookData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SpellBookData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void SpellBookData::MergeFrom(const SpellBookData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  knownspells_.MergeFrom(from.knownspells_);
+  spellslots_.MergeFrom(from.spellslots_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void SpellBookData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SpellBookData::CopyFrom(const SpellBookData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SpellBookData::IsInitialized() const {
+
+  if (!::google::protobuf::internal::AllAreInitialized(this->spellslots())) return false;
+  return true;
+}
+
+void SpellBookData::Swap(SpellBookData* other) {
+  if (other != this) {
+    knownspells_.Swap(&other->knownspells_);
+    spellslots_.Swap(&other->spellslots_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata SpellBookData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = SpellBookData_descriptor_;
+  metadata.reflection = SpellBookData_reflection_;
+  return metadata;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 

@@ -133,17 +133,16 @@ void RaceSelectionPanel::setRace()
   auto race = getSelectedRace();
   if ( race )
   {
-    CharacterDescriptionPtr dsc =
-        std::dynamic_pointer_cast<CharacterDescription>
-        (_parent->getPlayerDsc()->features[ActorFeature::CHARACTER]);
+    CharacterData* c = _parent->getPlayerDsc().mutable_character();
 
-    if ( dsc )
+    if ( c )
     {
-      dsc->race = (int)race->getType();
+      c->set_racetype( (int)race->getType() );
       for( auto s : race->getSkills() )
       {
-        dsc->skills.push_back(
-              std::make_pair( static_cast<int>(s->getId()), s->getLevel() ) );
+        IntIntPair* pair = c->mutable_skills()->Add();
+        pair->set_first( static_cast<int>(s->getId()) );
+        pair->set_second( s->getLevel() );
       }
     }
   }

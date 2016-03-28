@@ -7,63 +7,34 @@
 
 namespace amarlon {
 
-Scroll::Scroll(DescriptionPtr dsc)
-  : Pickable(dsc)
+Scroll::Scroll()
 {
-  ScrollDescriptionPtr pDsc = std::dynamic_pointer_cast<ScrollDescription>(dsc);
-  if ( pDsc != nullptr )
-  {
-    _spell = Spell::create( static_cast<SpellId>(pDsc->spellId) );
-  }
 }
 
-DescriptionPtr Scroll::toDescriptionStruct(ActorFeaturePtr cmp)
+Scroll::Scroll(const Scroll &rhs)
 {
-  ScrollDescriptionPtr dsc(new ScrollDescription);
-  ScrollPtr cmpP = std::dynamic_pointer_cast<Scroll>(cmp);
+  *this = rhs;
+}
 
-  Pickable::toDescriptionStruct(dsc, cmpP);
-
-  if ( cmpP )
-  {
-    if ( _spell )
-    {
-      if ( cmpP->_spell->getId() != _spell->getId() ) dsc->spellId = (int)_spell->getId();
-    }
-  }
-  else
-  {
-    if ( _spell )
-    {
-      dsc->spellId = (int)_spell->getId();
-    }
-  }
-
-  return dsc;
+Scroll::Scroll(const PickableData &data)
+  : Pickable(data)
+{
+  _spell = Spell::create( static_cast<SpellId>(_data.spell_id()) );
 }
 
 Scroll::~Scroll()
 {
 }
 
-ActorFeaturePtr Scroll::clone()
+bool Scroll::operator==(const Scroll &rhs) const
 {
-  ScrollPtr cloned( new Scroll );
-
-  Pickable::clone( cloned.get() );
-  cloned->_spell = _spell->clone();
-
-  return cloned;
+  return Pickable::operator ==(rhs);
 }
 
-bool Scroll::isEqual(ActorFeaturePtr rhs) const
+Scroll &Scroll::operator=(const Scroll &rhs)
 {
-  ScrollPtr scroll = std::dynamic_pointer_cast<Scroll>(rhs);
-  if ( scroll )
-  {
-    return Pickable::isEqual(rhs) && _spell == scroll->_spell;
-  }
-  return false;
+  Pickable::operator =(rhs);
+  return *this;
 }
 
 bool Scroll::use(ActorPtr executor, const Target& target)
@@ -73,7 +44,7 @@ bool Scroll::use(ActorPtr executor, const Target& target)
     CharacterPtr c = executor->getFeature<Character>();
     if ( c && c->getClass() && c->getClass()->getType() == _spell->getClass() )
     {
-      --_usesCount;
+      _data.set_uses_count( getUsesCount() - 1);
       return _spell->cast(executor, target);
     }
   }
@@ -84,7 +55,8 @@ bool Scroll::transcribe(ActorPtr transcriber)
 {
   bool r = false;
 
-  --_usesCount;
+  _data.set_uses_count( getUsesCount() - 1);
+
   if ( _spell )
   {
     if ( CharacterPtr c = transcriber->getFeature<Character>() )

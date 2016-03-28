@@ -11,136 +11,73 @@
 #include <cstdio>
 #include <scroll.h>
 
+
 namespace amarlon {
 
-const ActorFeature::Type Pickable::featureType = ActorFeature::PICKABLE;
+const ActorFeature::Type Pickable::FeatureType = ActorFeature::PICKABLE;
 
-void Pickable::upgrade(DescriptionPtr dsc)
+PickablePtr Pickable::create(const PickableData& data)
 {
-  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
-  if ( pDsc != nullptr )
+  PickablePtr p;
+
+  switch( static_cast<PickableCategory>(data.item_type().category()) )
   {
-    if (pDsc->stackable)  _stackable  = *(pDsc->stackable);
-    if (pDsc->amount)     _amount     = *(pDsc->amount);
-    if (pDsc->itemSlot)   _itemSlot   = (ItemSlotType)(*pDsc->itemSlot);
-    if (pDsc->armorClass) _armorClass = *(pDsc->armorClass);
-    if (pDsc->weight)     _weight     = *(pDsc->weight);
-    if (pDsc->price)      _price      = *(pDsc->price);
-    if (pDsc->damage)     _damage     = *(pDsc->damage);
-    if (pDsc->uses)       _usesCount  = *(pDsc->uses);
-    if (pDsc->targetType) _targetType = (TargetType)(*pDsc->targetType);
-    if (pDsc->scriptId)   _scriptId   = *(pDsc->scriptId);
-    if (pDsc->range)      _range      = *(pDsc->range);
-    if (pDsc->radius)     _radius     = *(pDsc->radius);
-    if (pDsc->armorType)      _type.armor     = (ArmorType)*(pDsc->armorType);
-    if (pDsc->weaponType)     _type.weapon    = (WeaponType)*(pDsc->weaponType);
-    if (pDsc->amunitionType)  _type.amunition = (AmunitionType)*(pDsc->amunitionType);
-    if (pDsc->category)       _type.category  = (PickableCategory)*(pDsc->category);
+    case PickableCategory::Scroll: p.reset( new Scroll  (data) ); break;
+    default:                       p.reset( new Pickable(data) ); break;
   }
+
+  return p;
 }
 
-DescriptionPtr Pickable::toDescriptionStruct(ActorFeaturePtr cmp)
+Pickable::Pickable()
 {
-  PickableDescriptionPtr dsc(new PickableDescription);
-  PickablePtr cmpP = std::dynamic_pointer_cast<Pickable>(cmp);
-
-  toDescriptionStruct(dsc, cmpP);
-
-  return dsc;
 }
 
-void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
+Pickable::Pickable(const Pickable &rhs)
 {
-  if ( cmpP )
-  {
-    if ( _stackable != cmpP->_stackable ) dsc->stackable = _stackable;
-    if ( _stackable != cmpP->_stackable ) dsc->amount = _amount;
-    if ( _usesCount != cmpP->_usesCount ) dsc->uses = _usesCount;
-    if ( _itemSlot != cmpP->_itemSlot )   dsc->itemSlot = (int)_itemSlot;
-    if ( _armorClass != cmpP->_armorClass ) dsc->armorClass = _armorClass;
-    if ( _weight != cmpP->_weight ) dsc->weight = _weight;
-    if ( _price != cmpP->_price ) dsc->price = _price;
-    if ( _targetType != cmpP->_targetType ) dsc->targetType = (int)_targetType;
-    if ( _damage != cmpP->_damage ) dsc->damage = _damage.toStr();
-    if ( _scriptId != cmpP->_scriptId ) dsc->scriptId = _scriptId;
-    if ( _range != cmpP->_range ) dsc->range = _range;
-    if ( _radius != cmpP->_radius ) dsc->radius = _radius;
-    if ( _type.armor != cmpP->_type.armor ) dsc->armorType = (int)_type.armor;
-    if ( _type.weapon != cmpP->_type.weapon ) dsc->weaponType = (int)_type.weapon;
-    if ( _type.amunition != cmpP->_type.amunition ) dsc->amunitionType = (int)_type.amunition;
-    if ( _type.category != cmpP->_type.category ) dsc->category = (int)_type.category;
-  }
-  else
-  {
-    dsc->stackable = _stackable;
-    dsc->amount = _amount;
-    dsc->uses = _usesCount;
-    dsc->itemSlot = (int)_itemSlot;
-    dsc->armorClass = _armorClass;
-    dsc->weight = _weight;
-    dsc->price = _price;
-    dsc->targetType = (int)_targetType;
-    dsc->damage = _damage.toStr();
-    dsc->scriptId = _scriptId;
-    dsc->range = _range;
-    dsc->radius = _radius;
-    dsc->armorType = (int)_type.armor;
-    dsc->weaponType = (int)_type.weapon;
-    dsc->amunitionType = (int)_type.amunition;
-    dsc->category = (int)_type.category;
-  }
-}
-
-Pickable::Pickable(DescriptionPtr dsc)
-  : _usesCount(0)
-  , _stackable(false)
-  , _amount(1)
-  , _itemSlot(ItemSlotType::Null)
-  , _armorClass(0)
-  , _weight(0)
-  , _price(0)
-  , _targetType(TargetType::SINGLE_NEIGHBOUR)
-  , _scriptId(0)
-  , _range(0)
-  , _radius(0)
-{
-  upgrade(dsc);
+  *this = rhs;
 }
 
 Pickable::~Pickable()
 {
 }
 
-PickablePtr Pickable::create(DescriptionPtr dsc)
+bool Pickable::operator==(const Pickable& rhs) const
 {
-  PickablePtr p;
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
+}
 
-  PickableDescriptionPtr pDsc = std::dynamic_pointer_cast<PickableDescription>(dsc);
-  if ( pDsc )
-  {    
-    if ( pDsc->category && *pDsc->category == (int)PickableCategory::Scroll )
-    {
-      p.reset( new Scroll(pDsc) );
-    }
-    else
-    {
-      p.reset( new Pickable(dsc) );
-    }
+Pickable& Pickable::operator=(const Pickable& rhs)
+{
+  if ( this != &rhs )
+  {
+    _data.CopyFrom(rhs._data);
   }
+  return *this;
+}
 
-  return p;
+const PickableData &Pickable::getData() const
+{
+  return _data;
+}
+
+const google::protobuf::Message& Pickable::getDataPolymorphic() const
+{
+  return getData();
+}
+
+Pickable::Pickable(const PickableData& data)
+{
+  _data.CopyFrom(data);
 }
 
 ActorPtr Pickable::spilt(int amount)
 {
   ActorPtr r = ActorPtr(getOwner().lock());
 
-  if ( isStackable() && amount < _amount && amount > 0 )
+  if ( isStackable() && amount < getAmount() && amount > 0 )
   {
-    setAmount(_amount - amount);
-
-    assert( _amount > 0 );
-    assert( amount > 0 );
+    setAmount(getAmount() - amount);
 
     r = getOwner().lock()->clone();
     r->getFeature<Pickable>()->setAmount(amount);
@@ -149,63 +86,31 @@ ActorPtr Pickable::spilt(int amount)
   return r;
 }
 
-ActorFeaturePtr Pickable::clone()
-{
-  PickablePtr cloned( new Pickable );
-
-  clone( cloned.get() );
-
-  return cloned;
-}
-
-bool Pickable::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  PickablePtr crhs = std::dynamic_pointer_cast<Pickable>(rhs);
-
-  if (crhs != nullptr)
-  {
-    equal = (_stackable == crhs->_stackable);
-    equal &= (_armorClass == crhs->_armorClass);
-    equal &= (_weight == crhs->_weight);
-    equal &= (_price == crhs->_price);
-    equal &= (_damage == crhs->_damage);
-    equal &= (_targetType == crhs->_targetType);
-    equal &= (_itemSlot == crhs->_itemSlot);
-    equal &= (_scriptId == crhs->_scriptId);
-    equal &= (_type == crhs->_type);
-    equal &= (_radius == crhs->_radius);
-    equal &= (_range == crhs->_range);
-  }
-
-  return equal;
-}
-
 TargetType Pickable::getTargetType() const
 {
-  return _targetType;
+  return static_cast<TargetType>(_data.target_type());
 }
 
 int Pickable::getRange() const
 {
-  return _range;
+  return _data.range();
 }
 
 int Pickable::getRadius() const
 {
-  return _radius;
+  return _data.radius();
 }
 
 int Pickable::getScriptId() const
 {
-  return _scriptId;
+  return _data.script_id();
 }
 
 bool Pickable::use(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
-  if ( _usesCount != 0 )
+  if ( getUsesCount() != 0 )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
 
@@ -221,7 +126,7 @@ bool Pickable::use(ActorPtr executor, const Target& target)
           , &target
         );
 
-        if( r ) --_usesCount;
+        if( r ) _data.set_uses_count( getUsesCount() - 1);
       }
       catch(luabind::error& e)
       {
@@ -235,72 +140,72 @@ bool Pickable::use(ActorPtr executor, const Target& target)
 
 bool Pickable::isUsable() const
 {
-  return _scriptId != 0 && _usesCount !=0;
+  return getScriptId() != 0 && getUsesCount() !=0;
 }
 
 int Pickable::getUsesCount() const
 {
-  return _usesCount;
+  return _data.uses_count();
 }
 
 bool Pickable::isStackable() const
 {
-  return _stackable;
+  return _data.stackable();
 }
 
 ItemSlotType Pickable::getItemSlot() const
 {
-  return _itemSlot;
+  return static_cast<ItemSlotType>(_data.item_slot());
 }
 
 void Pickable::setItemSlot(const ItemSlotType &itemSlot)
 {
-  _itemSlot = itemSlot;
+  _data.set_item_slot( static_cast<int>(itemSlot) );
 }
 
 bool Pickable::isEquippable()
 {
-  return ( _itemSlot != ItemSlotType::Null );
+  return ( getItemSlot() != ItemSlotType::Null );
 }
 
 PickableCategory Pickable::getCategory() const
 {
-  return _type.category;
+  return static_cast<PickableCategory>(_data.item_type().category());
 }
 
 void Pickable::setCategory(PickableCategory category)
 {
-  _type.category = category;
+  _data.mutable_item_type()->set_category( static_cast<int>(category) );
 }
 
 ItemType Pickable::getItemType() const
 {
-  return _type;
+  return ItemType(_data.item_type());
 }
 
 void Pickable::setItemType(ItemType type)
 {
-  _type = type;
+  _data.mutable_item_type()->CopyFrom(type.getData());
 }
 
 Damage Pickable::getDamage() const
 {
-  return _damage;
+  return Damage(_data.damage() );
 }
 
 int Pickable::getArmorClass() const
 {
-  return _armorClass;
+  return _data.armor_class();
 }
 
 int Pickable::getWeight() const
 {
-  return _weight;
+  return _data.weight();
 }
 
 int Pickable::getPrice() const
 {
-  return _price;
+  return _data.price();
 }
 
 std::string Pickable::getDescription()
@@ -316,14 +221,15 @@ std::string Pickable::getDescription()
   str += "#";
   str += colorToStr(TCODColor::darkerTurquoise, true) + "Weight: " + toStr( getWeight() ) + " lbs# #";
 
-  if ( getDamage() != Damage() )
+  Damage dmg = getDamage();
+  if ( dmg != Damage() )
   {
     str += colorToStr(TCODColor::darkTurquoise, true) + "Damage: " +
-                                                        toStr(_damage.diceCount) + "d" +
-                                                        toStr(static_cast<int>(_damage.dice) );
-    if ( _damage.value != 0 )
+                                                        toStr(dmg.diceCount) + "d" +
+                                                        toStr(static_cast<int>(dmg.dice) );
+    if ( dmg.value != 0 )
     {
-      str += ( _damage.value >0 ? "+" : "-" ) + toStr(_damage.value);
+      str += ( dmg.value >0 ? "+" : "-" ) + toStr(dmg.value);
     }
 
     str += "#";
@@ -344,40 +250,19 @@ std::string Pickable::getDescription()
   return str;
 }
 
-void Pickable::clone(Pickable *p)
-{
-  if ( p )
-  {
-    p->_stackable = _stackable;
-    p->_amount = _amount;
-    p->_itemSlot = _itemSlot;
-    p->_damage = _damage;
-    p->_armorClass = _armorClass;
-    p->_weight = _weight;
-    p->_price = _price;
-    p->_usesCount = _usesCount;
-    p->_targetType = _targetType;
-    p->_itemSlot = _itemSlot;
-    p->_scriptId = _scriptId;
-    p->_type = _type;
-    p->_range = _range;
-    p->_radius = _radius;
-  }
-}
-
 std::string Pickable::getScriptPath() const
 {
-  return "scripts/items/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  return "scripts/items/" + std::to_string( static_cast<int>( getScriptId() ) ) + ".lua";
 }
 
 int Pickable::getAmount() const
 {
-  return _amount;
+  return _data.amount();
 }
 
 void Pickable::setAmount(int amount)
 {
-  _amount = amount;
+  _data.set_amount(amount);
 }
 
 }

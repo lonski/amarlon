@@ -2,6 +2,7 @@
 #define OPENABLE_H
 
 #include <actor_feature.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -16,16 +17,20 @@ class Openable : public ActorFeature
 {
 public:  
 
-  const static ActorFeature::Type featureType;  
+  const static ActorFeature::Type FeatureType;
 
-  Openable(DescriptionPtr dsc = nullptr);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  static OpenablePtr create(const OpenableData& data);
+
+  Openable();
+  Openable(const Openable& rhs);
   virtual ~Openable();
 
-  static OpenablePtr create(DescriptionPtr dsc);
+  bool operator==(const Openable& rhs) const;
+  Openable& operator=(const Openable& rhs);
+  virtual const OpenableData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
 
-  virtual ActorFeature::Type getType();
+  virtual ActorFeature::Type getFeatureType();
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
 
@@ -41,14 +46,10 @@ public:
   virtual bool unlock();
 
 protected:
-  bool _locked;
-  int _lockId;
-  int _lockLevel;
-  int _scriptId;
-  bool _closed;
+  OpenableData _data;
 
+  Openable(const OpenableData& data);
   std::string getScriptPath() const;
-
 
 };
 

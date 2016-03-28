@@ -38,6 +38,11 @@ ActorPtr ActorDB::fetch(ActorType type)
   return actor;
 }
 
+ActorData ActorDB::fetchData(ActorType type)
+{
+  return ActorData(); //TODO
+}
+
 ActorDescriptionPtr ActorDB::fetchDescription(ActorType type)
 {
   auto it = std::find_if(_descriptions.begin(), _descriptions.end(),

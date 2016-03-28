@@ -4,6 +4,7 @@
 #include <amultipanel_window.h>
 #include <actor_descriptions.h>
 #include <memory>
+#include <actor.pb.h>
 
 namespace amarlon { namespace gui {
 
@@ -29,8 +30,7 @@ public:
   virtual AWindow& setDefaults();
 
   void nextStep();
-  ActorDescriptionPtr getPlayerDsc() const;
-  CharacterDescriptionPtr getCharacterDsc() const;
+  ActorData& getPlayerDsc();
 
 private:
   enum Panel
@@ -50,7 +50,7 @@ private:
   AbilityScoresSelectionPanelPtr _scoresSelection;
   ThiefSkillsSelectionPanelPtr _thiefSkillsSelection;
 
-  ActorDescriptionPtr _player;
+  ActorData _player;
 
   void showActivePanel();
 

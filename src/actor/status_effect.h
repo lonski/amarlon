@@ -5,6 +5,7 @@
 #include <spell_id.h>
 #include <target.h>
 #include <string>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -15,6 +16,13 @@ class StatusEffect
 {
 public:
   StatusEffect(const std::string& name, const std::string& script, int duration);
+  StatusEffect(const StatusEffectData& data);
+  StatusEffect(const StatusEffect& e);
+
+  void operator=(const StatusEffect& rhs);
+  bool operator==(const StatusEffect& rhs) const;
+
+  const StatusEffectData& getData() const;
 
   bool cancel(Target target);
   int getDuration() const;
@@ -22,12 +30,8 @@ public:
   std::string getName() const;
   std::string getScript() const;
 
-  bool operator==(const StatusEffect& rhs);
-
 private:
-  std::string _name;
-  std::string _script;
-  int _duration;
+  StatusEffectData _data;
 
 };
 

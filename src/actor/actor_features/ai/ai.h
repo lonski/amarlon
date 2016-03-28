@@ -25,20 +25,18 @@ typedef std::vector<ActorPtr> ActorVector;
 class Ai : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
-  virtual ActorFeature::Type getType() { return featureType; }
-  virtual AiType getAiType() const;
+  const static ActorFeature::Type FeatureType;
 
-  Ai(DescriptionPtr dsc = nullptr);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  static AiPtr create(const AiData& data);
+
+  Ai();
+  Ai(const Ai& rhs);
   virtual ~Ai() {}
 
-  static AiPtr create(DescriptionPtr dsc);
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
-  virtual ActorFeaturePtr clone();
   bool operator==(const Ai& rhs) const;
   Ai& operator=(const Ai& rhs);
+  virtual const AiData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
 
   virtual int update();
   virtual ActorActionResult performAction(ActorActionPtr action);
@@ -54,6 +52,9 @@ public:
 
   virtual bool changeState(FSMStateType type);
   virtual FSMStateType getCurrentState() const;
+
+  virtual ActorFeature::Type getFeatureType();
+  virtual AiType getAiType() const;
 
   /**
    * @brief Checks if AI is not sleeping, not paralyzed etc
@@ -87,10 +88,13 @@ public:
 protected:
   AiData _data;
 
+  /* Non-persistent data */
   FSMPtr _fsm;
   Target _currentTarget;
   int _trackCount;
 
+  Ai(const AiData& data);
+  void initialize();
   void executeScript();
   void updateHidingStatus(ActorActionPtr action);
   void updateSneakingStatus(ActorActionPtr action);

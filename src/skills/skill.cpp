@@ -3,7 +3,7 @@
 #include <skill_db.h>
 #include <lua_state.h>
 #include <target_type.h>
-#include <google/protobuf/util/message_differencer.h>
+
 
 namespace amarlon {
 
@@ -35,7 +35,7 @@ Skill &Skill::operator=(const Skill &skill)
 
 bool Skill::operator==(const Skill &rhs)
 {
-  return google::protobuf::util::MessageDifferencer::Equals(_data, rhs._data);
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
 SkillId Skill::getId() const

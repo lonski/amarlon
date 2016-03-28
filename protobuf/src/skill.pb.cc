@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
-#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -49,31 +48,31 @@ void protobuf_AssignDesc_skill_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillData, description_),
   };
   SkillData_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+    new ::google::protobuf::internal::GeneratedMessageReflection(
       SkillData_descriptor_,
       SkillData::default_instance_,
       SkillData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillData, _unknown_fields_),
       -1,
-      -1,
-      -1,
-      sizeof(SkillData),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillData, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillData, _is_default_instance_));
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SkillData));
   SkillsData_descriptor_ = file->message_type(1);
   static const int SkillsData_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillsData, skill_),
   };
   SkillsData_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+    new ::google::protobuf::internal::GeneratedMessageReflection(
       SkillsData_descriptor_,
       SkillsData::default_instance_,
       SkillsData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillsData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillsData, _unknown_fields_),
       -1,
-      -1,
-      -1,
-      sizeof(SkillsData),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillsData, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SkillsData, _is_default_instance_));
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SkillsData));
 }
 
 namespace {
@@ -87,9 +86,9 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      SkillData_descriptor_, &SkillData::default_instance());
+    SkillData_descriptor_, &SkillData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      SkillsData_descriptor_, &SkillsData::default_instance());
+    SkillsData_descriptor_, &SkillsData::default_instance());
 }
 
 }  // namespace
@@ -108,12 +107,12 @@ void protobuf_AddDesc_skill_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013skill.proto\022\007amarlon\"\216\001\n\tSkillData\022\n\n\002"
-    "id\030\001 \001(\005\022\r\n\005level\030\002 \001(\005\022\017\n\007passive\030\003 \001(\010"
-    "\022\r\n\005range\030\004 \001(\005\022\016\n\006radius\030\005 \001(\005\022\023\n\013targe"
-    "t_type\030\006 \001(\005\022\014\n\004name\030\007 \001(\t\022\023\n\013descriptio"
-    "n\030\010 \001(\t\"/\n\nSkillsData\022!\n\005skill\030\001 \003(\0132\022.a"
-    "marlon.SkillDatab\006proto3", 224);
+    "\n\013skill.proto\022\007amarlon\"\243\001\n\tSkillData\022\n\n\002"
+    "id\030\001 \002(\005\022\020\n\005level\030\002 \001(\005:\0010\022\026\n\007passive\030\003 "
+    "\001(\010:\005false\022\020\n\005range\030\004 \001(\005:\0010\022\021\n\006radius\030\005"
+    " \001(\005:\0010\022\026\n\013target_type\030\006 \001(\005:\0010\022\014\n\004name\030"
+    "\007 \002(\t\022\025\n\013description\030\010 \001(\t:\000\"/\n\nSkillsDa"
+    "ta\022!\n\005skill\030\001 \003(\0132\022.amarlon.SkillData", 237);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "skill.proto", &protobuf_RegisterTypes);
   SkillData::default_instance_ = new SkillData();
@@ -130,19 +129,9 @@ struct StaticDescriptorInitializer_skill_2eproto {
   }
 } static_descriptor_initializer_skill_2eproto_;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
-static void MergeFromFail(int line) {
-  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
-}
-
-}  // namespace
-
-
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int SkillData::kIdFieldNumber;
 const int SkillData::kLevelFieldNumber;
 const int SkillData::kPassiveFieldNumber;
@@ -151,28 +140,25 @@ const int SkillData::kRadiusFieldNumber;
 const int SkillData::kTargetTypeFieldNumber;
 const int SkillData::kNameFieldNumber;
 const int SkillData::kDescriptionFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 SkillData::SkillData()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:amarlon.SkillData)
 }
 
 void SkillData::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
 }
 
 SkillData::SkillData(const SkillData& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:amarlon.SkillData)
 }
 
 void SkillData::SharedCtor() {
-    _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   id_ = 0;
@@ -181,8 +167,9 @@ void SkillData::SharedCtor() {
   range_ = 0;
   radius_ = 0;
   target_type_ = 0;
-  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 SkillData::~SkillData() {
@@ -191,8 +178,12 @@ SkillData::~SkillData() {
 }
 
 void SkillData::SharedDtor() {
-  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete description_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -214,30 +205,40 @@ const SkillData& SkillData::default_instance() {
 
 SkillData* SkillData::default_instance_ = NULL;
 
-SkillData* SkillData::New(::google::protobuf::Arena* arena) const {
-  SkillData* n = new SkillData;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+SkillData* SkillData::New() const {
+  return new SkillData;
 }
 
 void SkillData::Clear() {
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<SkillData*>(16)->f)
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<SkillData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
 
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
 
-  ZR_(id_, target_type_);
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(id_, target_type_);
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        name_->clear();
+      }
+    }
+    if (has_description()) {
+      if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        description_->clear();
+      }
+    }
+  }
 
-#undef ZR_HELPER_
+#undef OFFSET_OF_FIELD_
 #undef ZR_
 
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
 }
 
 bool SkillData::MergePartialFromCodedStream(
@@ -250,13 +251,13 @@ bool SkillData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 id = 1;
+      // required int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &id_)));
-
+          set_has_id();
         } else {
           goto handle_unusual;
         }
@@ -264,14 +265,14 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 level = 2;
+      // optional int32 level = 2 [default = 0];
       case 2: {
         if (tag == 16) {
          parse_level:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &level_)));
-
+          set_has_level();
         } else {
           goto handle_unusual;
         }
@@ -279,14 +280,14 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional bool passive = 3;
+      // optional bool passive = 3 [default = false];
       case 3: {
         if (tag == 24) {
          parse_passive:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &passive_)));
-
+          set_has_passive();
         } else {
           goto handle_unusual;
         }
@@ -294,14 +295,14 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 range = 4;
+      // optional int32 range = 4 [default = 0];
       case 4: {
         if (tag == 32) {
          parse_range:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &range_)));
-
+          set_has_range();
         } else {
           goto handle_unusual;
         }
@@ -309,14 +310,14 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 radius = 5;
+      // optional int32 radius = 5 [default = 0];
       case 5: {
         if (tag == 40) {
          parse_radius:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &radius_)));
-
+          set_has_radius();
         } else {
           goto handle_unusual;
         }
@@ -324,14 +325,14 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 target_type = 6;
+      // optional int32 target_type = 6 [default = 0];
       case 6: {
         if (tag == 48) {
          parse_target_type:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &target_type_)));
-
+          set_has_target_type();
         } else {
           goto handle_unusual;
         }
@@ -339,16 +340,16 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string name = 7;
+      // required string name = 7;
       case 7: {
         if (tag == 58) {
          parse_name:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "amarlon.SkillData.name"));
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "name");
         } else {
           goto handle_unusual;
         }
@@ -356,16 +357,16 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string description = 8;
+      // optional string description = 8 [default = ""];
       case 8: {
         if (tag == 66) {
          parse_description:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_description()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->description().data(), this->description().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "amarlon.SkillData.description"));
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "description");
         } else {
           goto handle_unusual;
         }
@@ -380,7 +381,8 @@ bool SkillData::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
         break;
       }
     }
@@ -397,114 +399,122 @@ failure:
 void SkillData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SkillData)
-  // optional int32 id = 1;
-  if (this->id() != 0) {
+  // required int32 id = 1;
+  if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // optional int32 level = 2;
-  if (this->level() != 0) {
+  // optional int32 level = 2 [default = 0];
+  if (has_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->level(), output);
   }
 
-  // optional bool passive = 3;
-  if (this->passive() != 0) {
+  // optional bool passive = 3 [default = false];
+  if (has_passive()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->passive(), output);
   }
 
-  // optional int32 range = 4;
-  if (this->range() != 0) {
+  // optional int32 range = 4 [default = 0];
+  if (has_range()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->range(), output);
   }
 
-  // optional int32 radius = 5;
-  if (this->radius() != 0) {
+  // optional int32 radius = 5 [default = 0];
+  if (has_radius()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->radius(), output);
   }
 
-  // optional int32 target_type = 6;
-  if (this->target_type() != 0) {
+  // optional int32 target_type = 6 [default = 0];
+  if (has_target_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->target_type(), output);
   }
 
-  // optional string name = 7;
-  if (this->name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // required string name = 7;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SkillData.name");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       7, this->name(), output);
   }
 
-  // optional string description = 8;
-  if (this->description().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // optional string description = 8 [default = ""];
+  if (has_description()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SkillData.description");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "description");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       8, this->description(), output);
   }
 
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
   // @@protoc_insertion_point(serialize_end:amarlon.SkillData)
 }
 
 ::google::protobuf::uint8* SkillData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SkillData)
-  // optional int32 id = 1;
-  if (this->id() != 0) {
+  // required int32 id = 1;
+  if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // optional int32 level = 2;
-  if (this->level() != 0) {
+  // optional int32 level = 2 [default = 0];
+  if (has_level()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->level(), target);
   }
 
-  // optional bool passive = 3;
-  if (this->passive() != 0) {
+  // optional bool passive = 3 [default = false];
+  if (has_passive()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->passive(), target);
   }
 
-  // optional int32 range = 4;
-  if (this->range() != 0) {
+  // optional int32 range = 4 [default = 0];
+  if (has_range()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->range(), target);
   }
 
-  // optional int32 radius = 5;
-  if (this->radius() != 0) {
+  // optional int32 radius = 5 [default = 0];
+  if (has_radius()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->radius(), target);
   }
 
-  // optional int32 target_type = 6;
-  if (this->target_type() != 0) {
+  // optional int32 target_type = 6 [default = 0];
+  if (has_target_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->target_type(), target);
   }
 
-  // optional string name = 7;
-  if (this->name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // required string name = 7;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SkillData.name");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         7, this->name(), target);
   }
 
-  // optional string description = 8;
-  if (this->description().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+  // optional string description = 8 [default = ""];
+  if (has_description()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "amarlon.SkillData.description");
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "description");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         8, this->description(), target);
   }
 
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:amarlon.SkillData)
   return target;
 }
@@ -512,60 +522,67 @@ void SkillData::SerializeWithCachedSizes(
 int SkillData::ByteSize() const {
   int total_size = 0;
 
-  // optional int32 id = 1;
-  if (this->id() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->id());
-  }
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->id());
+    }
 
-  // optional int32 level = 2;
-  if (this->level() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->level());
-  }
+    // optional int32 level = 2 [default = 0];
+    if (has_level()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->level());
+    }
 
-  // optional bool passive = 3;
-  if (this->passive() != 0) {
-    total_size += 1 + 1;
-  }
+    // optional bool passive = 3 [default = false];
+    if (has_passive()) {
+      total_size += 1 + 1;
+    }
 
-  // optional int32 range = 4;
-  if (this->range() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->range());
-  }
+    // optional int32 range = 4 [default = 0];
+    if (has_range()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->range());
+    }
 
-  // optional int32 radius = 5;
-  if (this->radius() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->radius());
-  }
+    // optional int32 radius = 5 [default = 0];
+    if (has_radius()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->radius());
+    }
 
-  // optional int32 target_type = 6;
-  if (this->target_type() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->target_type());
-  }
+    // optional int32 target_type = 6 [default = 0];
+    if (has_target_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->target_type());
+    }
 
-  // optional string name = 7;
-  if (this->name().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->name());
-  }
+    // required string name = 7;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
 
-  // optional string description = 8;
-  if (this->description().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->description());
-  }
+    // optional string description = 8 [default = ""];
+    if (has_description()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->description());
+    }
 
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -573,10 +590,10 @@ int SkillData::ByteSize() const {
 }
 
 void SkillData::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const SkillData* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const SkillData>(
-          &from);
+  GOOGLE_CHECK_NE(&from, this);
+  const SkillData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SkillData*>(
+      &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -585,33 +602,34 @@ void SkillData::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void SkillData::MergeFrom(const SkillData& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.id() != 0) {
-    set_id(from.id());
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_id()) {
+      set_id(from.id());
+    }
+    if (from.has_level()) {
+      set_level(from.level());
+    }
+    if (from.has_passive()) {
+      set_passive(from.passive());
+    }
+    if (from.has_range()) {
+      set_range(from.range());
+    }
+    if (from.has_radius()) {
+      set_radius(from.radius());
+    }
+    if (from.has_target_type()) {
+      set_target_type(from.target_type());
+    }
+    if (from.has_name()) {
+      set_name(from.name());
+    }
+    if (from.has_description()) {
+      set_description(from.description());
+    }
   }
-  if (from.level() != 0) {
-    set_level(from.level());
-  }
-  if (from.passive() != 0) {
-    set_passive(from.passive());
-  }
-  if (from.range() != 0) {
-    set_range(from.range());
-  }
-  if (from.radius() != 0) {
-    set_radius(from.radius());
-  }
-  if (from.target_type() != 0) {
-    set_target_type(from.target_type());
-  }
-  if (from.name().size() > 0) {
-
-    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
-  }
-  if (from.description().size() > 0) {
-
-    description_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.description_);
-  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void SkillData::CopyFrom(const ::google::protobuf::Message& from) {
@@ -627,25 +645,25 @@ void SkillData::CopyFrom(const SkillData& from) {
 }
 
 bool SkillData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000041) != 0x00000041) return false;
 
   return true;
 }
 
 void SkillData::Swap(SkillData* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void SkillData::InternalSwap(SkillData* other) {
-  std::swap(id_, other->id_);
-  std::swap(level_, other->level_);
-  std::swap(passive_, other->passive_);
-  std::swap(range_, other->range_);
-  std::swap(radius_, other->radius_);
-  std::swap(target_type_, other->target_type_);
-  name_.Swap(&other->name_);
-  description_.Swap(&other->description_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(level_, other->level_);
+    std::swap(passive_, other->passive_);
+    std::swap(range_, other->range_);
+    std::swap(radius_, other->radius_);
+    std::swap(target_type_, other->target_type_);
+    std::swap(name_, other->name_);
+    std::swap(description_, other->description_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
 }
 
 ::google::protobuf::Metadata SkillData::GetMetadata() const {
@@ -656,208 +674,32 @@ void SkillData::InternalSwap(SkillData* other) {
   return metadata;
 }
 
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// SkillData
-
-// optional int32 id = 1;
-void SkillData::clear_id() {
-  id_ = 0;
-}
- ::google::protobuf::int32 SkillData::id() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.id)
-  return id_;
-}
- void SkillData::set_id(::google::protobuf::int32 value) {
-  
-  id_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.id)
-}
-
-// optional int32 level = 2;
-void SkillData::clear_level() {
-  level_ = 0;
-}
- ::google::protobuf::int32 SkillData::level() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.level)
-  return level_;
-}
- void SkillData::set_level(::google::protobuf::int32 value) {
-  
-  level_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.level)
-}
-
-// optional bool passive = 3;
-void SkillData::clear_passive() {
-  passive_ = false;
-}
- bool SkillData::passive() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.passive)
-  return passive_;
-}
- void SkillData::set_passive(bool value) {
-  
-  passive_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.passive)
-}
-
-// optional int32 range = 4;
-void SkillData::clear_range() {
-  range_ = 0;
-}
- ::google::protobuf::int32 SkillData::range() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.range)
-  return range_;
-}
- void SkillData::set_range(::google::protobuf::int32 value) {
-  
-  range_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.range)
-}
-
-// optional int32 radius = 5;
-void SkillData::clear_radius() {
-  radius_ = 0;
-}
- ::google::protobuf::int32 SkillData::radius() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.radius)
-  return radius_;
-}
- void SkillData::set_radius(::google::protobuf::int32 value) {
-  
-  radius_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.radius)
-}
-
-// optional int32 target_type = 6;
-void SkillData::clear_target_type() {
-  target_type_ = 0;
-}
- ::google::protobuf::int32 SkillData::target_type() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.target_type)
-  return target_type_;
-}
- void SkillData::set_target_type(::google::protobuf::int32 value) {
-  
-  target_type_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.target_type)
-}
-
-// optional string name = 7;
-void SkillData::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- const ::std::string& SkillData::name() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SkillData::set_name(const ::std::string& value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.name)
-}
- void SkillData::set_name(const char* value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:amarlon.SkillData.name)
-}
- void SkillData::set_name(const char* value, size_t size) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:amarlon.SkillData.name)
-}
- ::std::string* SkillData::mutable_name() {
-  
-  // @@protoc_insertion_point(field_mutable:amarlon.SkillData.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* SkillData::release_name() {
-  
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SkillData::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:amarlon.SkillData.name)
-}
-
-// optional string description = 8;
-void SkillData::clear_description() {
-  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- const ::std::string& SkillData::description() const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillData.description)
-  return description_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SkillData::set_description(const ::std::string& value) {
-  
-  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:amarlon.SkillData.description)
-}
- void SkillData::set_description(const char* value) {
-  
-  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:amarlon.SkillData.description)
-}
- void SkillData::set_description(const char* value, size_t size) {
-  
-  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:amarlon.SkillData.description)
-}
- ::std::string* SkillData::mutable_description() {
-  
-  // @@protoc_insertion_point(field_mutable:amarlon.SkillData.description)
-  return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* SkillData::release_description() {
-  
-  return description_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void SkillData::set_allocated_description(::std::string* description) {
-  if (description != NULL) {
-    
-  } else {
-    
-  }
-  description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
-  // @@protoc_insertion_point(field_set_allocated:amarlon.SkillData.description)
-}
-
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int SkillsData::kSkillFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 SkillsData::SkillsData()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:amarlon.SkillsData)
 }
 
 void SkillsData::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
 }
 
 SkillsData::SkillsData(const SkillsData& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
+  : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:amarlon.SkillsData)
 }
 
 void SkillsData::SharedCtor() {
-    _is_default_instance_ = false;
   _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 SkillsData::~SkillsData() {
@@ -887,16 +729,14 @@ const SkillsData& SkillsData::default_instance() {
 
 SkillsData* SkillsData::default_instance_ = NULL;
 
-SkillsData* SkillsData::New(::google::protobuf::Arena* arena) const {
-  SkillsData* n = new SkillsData;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+SkillsData* SkillsData::New() const {
+  return new SkillsData;
 }
 
 void SkillsData::Clear() {
   skill_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
 }
 
 bool SkillsData::MergePartialFromCodedStream(
@@ -912,15 +752,13 @@ bool SkillsData::MergePartialFromCodedStream(
       // repeated .amarlon.SkillData skill = 1;
       case 1: {
         if (tag == 10) {
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_skill:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+         parse_skill:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_skill()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_loop_skill;
-        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(10)) goto parse_skill;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -932,7 +770,8 @@ bool SkillsData::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
         break;
       }
     }
@@ -950,11 +789,15 @@ void SkillsData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SkillsData)
   // repeated .amarlon.SkillData skill = 1;
-  for (unsigned int i = 0, n = this->skill_size(); i < n; i++) {
+  for (int i = 0; i < this->skill_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->skill(i), output);
   }
 
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
   // @@protoc_insertion_point(serialize_end:amarlon.SkillsData)
 }
 
@@ -962,12 +805,16 @@ void SkillsData::SerializeWithCachedSizes(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SkillsData)
   // repeated .amarlon.SkillData skill = 1;
-  for (unsigned int i = 0, n = this->skill_size(); i < n; i++) {
+  for (int i = 0; i < this->skill_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->skill(i), target);
   }
 
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:amarlon.SkillsData)
   return target;
 }
@@ -983,6 +830,11 @@ int SkillsData::ByteSize() const {
         this->skill(i));
   }
 
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -990,10 +842,10 @@ int SkillsData::ByteSize() const {
 }
 
 void SkillsData::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const SkillsData* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const SkillsData>(
-          &from);
+  GOOGLE_CHECK_NE(&from, this);
+  const SkillsData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SkillsData*>(
+      &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -1002,8 +854,9 @@ void SkillsData::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void SkillsData::MergeFrom(const SkillsData& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_CHECK_NE(&from, this);
   skill_.MergeFrom(from.skill_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void SkillsData::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1020,17 +873,17 @@ void SkillsData::CopyFrom(const SkillsData& from) {
 
 bool SkillsData::IsInitialized() const {
 
+  if (!::google::protobuf::internal::AllAreInitialized(this->skill())) return false;
   return true;
 }
 
 void SkillsData::Swap(SkillsData* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void SkillsData::InternalSwap(SkillsData* other) {
-  skill_.UnsafeArenaSwap(&other->skill_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  if (other != this) {
+    skill_.Swap(&other->skill_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
 }
 
 ::google::protobuf::Metadata SkillsData::GetMetadata() const {
@@ -1041,40 +894,6 @@ void SkillsData::InternalSwap(SkillsData* other) {
   return metadata;
 }
 
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// SkillsData
-
-// repeated .amarlon.SkillData skill = 1;
-int SkillsData::skill_size() const {
-  return skill_.size();
-}
-void SkillsData::clear_skill() {
-  skill_.Clear();
-}
-const ::amarlon::SkillData& SkillsData::skill(int index) const {
-  // @@protoc_insertion_point(field_get:amarlon.SkillsData.skill)
-  return skill_.Get(index);
-}
-::amarlon::SkillData* SkillsData::mutable_skill(int index) {
-  // @@protoc_insertion_point(field_mutable:amarlon.SkillsData.skill)
-  return skill_.Mutable(index);
-}
-::amarlon::SkillData* SkillsData::add_skill() {
-  // @@protoc_insertion_point(field_add:amarlon.SkillsData.skill)
-  return skill_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::amarlon::SkillData >*
-SkillsData::mutable_skill() {
-  // @@protoc_insertion_point(field_mutable_list:amarlon.SkillsData.skill)
-  return &skill_;
-}
-const ::google::protobuf::RepeatedPtrField< ::amarlon::SkillData >&
-SkillsData::skill() const {
-  // @@protoc_insertion_point(field_list:amarlon.SkillsData.skill)
-  return skill_;
-}
-
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

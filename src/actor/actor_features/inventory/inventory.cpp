@@ -6,77 +6,71 @@
 #include <actor_descriptions.h>
 #include <actor_container.h>
 
+
 namespace amarlon {
 
-const ActorFeature::Type Inventory::featureType = ActorFeature::INVENTORY;
+const ActorFeature::Type Inventory::FeatureType = ActorFeature::INVENTORY;
 
-Inventory::Inventory(DescriptionPtr dsc)
+Inventory::Inventory()
   : _items( new ActorContainer )
-  , _slotCount(0)
-  , _pushToFront(false)
 {
-  upgrade(dsc);
+}
+
+Inventory::Inventory(const Inventory& rhs)
+{
+  *this = rhs;
+}
+
+Inventory::Inventory(const InventoryData &data)
+{
+  _data.CopyFrom(data);
+  initialize();
+}
+
+void Inventory::initialize()
+{
+  _items->clear();
+  for ( auto aIt = _data.items().begin(); aIt != _data.items().end(); ++aIt)
+    _items->push_back(Actor::create(*aIt));
+}
+
+void Inventory::updateData() const
+{
+  _data.mutable_items()->Clear();
+  for ( auto a : *_items )
+    _data.mutable_items()->Add()->CopyFrom(a->getData());
 }
 
 Inventory::~Inventory()
 {
 }
 
-InventoryPtr Inventory::create(DescriptionPtr dsc)
+bool Inventory::operator==(const Inventory &rhs) const
 {
-  return InventoryPtr( new Inventory(dsc) );
+  updateData();
+  rhs.updateData();
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
-void Inventory::upgrade(DescriptionPtr dsc)
+Inventory &Inventory::operator=(const Inventory &rhs)
 {
-  InventoryDescriptionPtr contDsc = std::dynamic_pointer_cast<InventoryDescription>(dsc);
-  if ( contDsc != nullptr )
+  if ( this != &rhs )
   {
-    if ( contDsc->maxSize ) setSlotCount( *contDsc->maxSize );
-    std::for_each(contDsc->content.begin(), contDsc->content.end(), [&](ActorDescriptionPtr aDsc)
-    {
-      if ( aDsc )
-      {
-        add( Actor::create(aDsc, true) );
-      }
-    });
+    rhs.updateData();
+    _data.CopyFrom(rhs._data);
+    initialize();
   }
+  return *this;
 }
 
-DescriptionPtr Inventory::toDescriptionStruct(ActorFeaturePtr cmp)
+const InventoryData &Inventory::getData() const
 {
-  InventoryDescriptionPtr dsc(new InventoryDescription);
-
-  dsc->maxSize = _slotCount;
-  for ( ActorPtr a : *_items )
-  {
-    dsc->content.push_back( a->toDescriptionStruct() );
-  }
-
-  return dsc;
+  return _data;
 }
 
-ActorFeaturePtr Inventory::clone()
+const google::protobuf::Message& Inventory::getDataPolymorphic() const
 {
-  InventoryPtr cloned( new Inventory );
-  cloned->_slotCount = _slotCount;
-  cloned->_items = _items->clone();
-
-  return cloned;
-}
-
-bool Inventory::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  InventoryPtr crhs = std::dynamic_pointer_cast<Inventory>(rhs);
-  if (crhs != nullptr)
-  {
-    equal = (_slotCount == crhs->_slotCount);    
-    equal &= std::equal(_items->begin(), _items->end(), crhs->_items->begin(),
-                        [](ActorPtr l, ActorPtr r){ return *l == *r; });
-  }
-
-  return equal;
+  return getData();
 }
 
 void Inventory::notifyRemove(ActorPtr actor, int amount)
@@ -109,7 +103,7 @@ bool Inventory::add(ActorPtr actor, bool notify)
 {
   _items->push_back(actor);
 
-  if ( _items->size() > _slotCount ) //this means actor took new slot (not stacked)
+  if ( _items->size() > _data.slotcount() ) //this means actor took new slot (not stacked)
   {
     _items->remove( actor );
     return false;
@@ -205,12 +199,12 @@ void Inventory::sort(std::function<bool (PickablePtr, PickablePtr)> fun)
 
 size_t Inventory::slotCount() const
 {
-  return _slotCount;
+  return _data.slotcount();
 }
 
 void Inventory::setSlotCount(const size_t &maxSize)
 {
-  _slotCount = maxSize;
+  _data.set_slotcount(maxSize);
 }
 
 std::vector<ActorPtr> Inventory::items(std::function<bool(ActorPtr)> filterFun) const
@@ -243,7 +237,11 @@ std::vector<ActorPtr> Inventory::items(ActorType type) const
 
 std::string Inventory::debug(const std::string &linebreak)
 {
-  std::string d = " " + linebreak + "-----INVENTORY-----" +linebreak;
+  std::string d = " " + linebreak + "-----INVENTORY ["
+                      + toStr(_items->size()) + "/"
+                      + toStr(_data.slotcount())
+                      + "]-----" +linebreak;
+
   for(auto item : *_items)
   {
     PickablePtr p = item ? item->getFeature<Pickable>() : nullptr;

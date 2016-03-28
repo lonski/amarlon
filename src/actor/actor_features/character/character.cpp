@@ -16,244 +16,155 @@
 #include <attack_bonus_table.h>
 #include <playable_character.h>
 
+
 namespace amarlon {
 
-const ActorFeature::Type Character::featureType = ActorFeature::CHARACTER;
+const ActorFeature::Type Character::FeatureType = ActorFeature::CHARACTER;
 
-Character::Character()  
-  : Character(nullptr)
+CharacterPtr Character::create(const CharacterData& data)
 {
+  CharacterPtr c;
+
+  switch ( static_cast<CharacterType>(data.charactertype()) )
+  {
+    case CharacterType::Generic:            c.reset( new Character(data) ); break;
+    case CharacterType::PlayableCharacter:  c.reset( new PlayableCharacter(data) ); break;
+    default :;
+  }
+
+  return c;
+}
+
+Character::Character()
+  : _spellbook( new SpellBook )
+{
+}
+
+Character::Character(const Character &rhs)
+{
+  *this = rhs;
 }
 
 Character::~Character()
 {
 }
 
-Character::Character(DescriptionPtr dsc)
-  : _level(0)
-  , _hitPoints(0)
-  , _maxHitPoints(0)
-  , _defaultArmorClass(11) //no-armor AC
-  , _experience(0)
-  , _speed(0)
-  , _movePoints(0)
-  , _spellbook(new SpellBook)
-  , _team(relations::Monster)
-  , _morale(0)
+bool Character::operator==(const Character &rhs) const
 {
-  upgrade(dsc);
+  rhs.updateData();
+  updateData();
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
+}
+
+Character &Character::operator=(const Character& rhs)
+{
+  if ( this != &rhs )
+  {
+    rhs.updateData();
+    _data.CopyFrom(rhs._data);
+    initialize();
+  }
+  return *this;
+}
+
+Character::Character(const CharacterData &data)
+{
+  _data.CopyFrom(data);
+  initialize();
+}
+
+void Character::initialize()
+{
+  //Set default no-armor AC
+  if ( _data.baseac() == 0 ) _data.set_baseac(11);
 
   //roll ability scores if not defined
   for ( auto as : AbilityScore::Type() )
   {
-    if ( _abilityScores[as] == 0 )
+    if ( getAbilityScore(as) == 0 )
     {
-      MinMax constrains = _race ? _race->getAbilityScoreRestriction( as ) : MinMax();
+      RacePtr race = getRace();
+      MinMax constrains = race ? race->getAbilityScoreRestriction( as ) : MinMax();
       int roll = 0;
       while ( !constrains.allow( roll ) ) roll = dices::roll(dices::D6, 3);
-      _abilityScores[as] = roll;
+      setAbilityScore(as, roll);
     }
   }
-}
 
-void Character::upgrade(DescriptionPtr dsc)
-{
-  CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
-  if ( cDsc != nullptr )
+  //initialize spellbook
+  _spellbook.reset( new SpellBook(_data.spellbook()) );
+
+  //initialize skills
+  _skills.clear();
+  for(auto sIt = _data.skills().begin(); sIt != _data.skills().end(); ++sIt )
   {
-    if ( cDsc->experience)         _experience = *cDsc->experience;
-    if ( cDsc->cClass )
-      _class = CharacterClass::create( static_cast<CharacterClassType>(*cDsc->cClass) );
-    if ( cDsc->race )
-      _race = Race::create( static_cast<RaceType>(*cDsc->race) );
-    if ( cDsc->defaultArmorClass ) _defaultArmorClass = *cDsc->defaultArmorClass;
-    if ( cDsc->speed )             _speed = *cDsc->speed;
-    if ( cDsc->team )              _team = static_cast<relations::Team>(*cDsc->team);
-    if ( cDsc->spellbook)          _spellbook = SpellBook::create(*cDsc->spellbook);
-    if ( cDsc->morale)             _morale = *cDsc->morale;
-    if ( cDsc->damage)             _damage = *cDsc->damage;
-    if ( cDsc->level )             _level = *cDsc->level;
-    if ( cDsc->maxHitPoints )      _maxHitPoints = *cDsc->maxHitPoints;
-    if ( cDsc->hitPoints )         _hitPoints = *cDsc->hitPoints; else setHitPoints( getMaxHitPoints() );
-
-    //upgrade the ability scores
-    for ( auto kv : cDsc->abilityScores )
-    {
-      _abilityScores[ static_cast<AbilityScore::Type>(kv.first) ] = kv.second;
-    }
-
-    //upgrade skills
-    for(auto s : cDsc->skills)
-    {
-      SkillPtr skill = Skill::create( static_cast<SkillId>(s.first) );
-      skill->setLevel(s.second);
-
-      //remove if already exists
-      auto it = std::find_if(_skills.begin(), _skills.end(), [&](SkillPtr sk){
-        return sk->getId() == skill->getId();
-      });
-      if ( it != _skills.end() ) _skills.erase(it);
-
-      //insert the skill
-      _skills.push_back( skill );
-    }
-
-    //add modifiers
-    for(auto m : cDsc->modifiers)
-      addModifier( Modifier(m) );
+    SkillPtr skill = Skill::create( static_cast<SkillId>(sIt->first()) );
+    skill->setLevel( sIt->second() );
+    _skills.push_back( skill );
   }
+
+  //initialize modifiers
+  for(auto mIt = _data.modifiers().begin(); mIt != _data.modifiers().end(); ++mIt)
+    addModifier( Modifier(*mIt) );
+
 }
 
-DescriptionPtr Character::toDescriptionStruct(ActorFeaturePtr cmp)
+const CharacterData& Character::getData() const
 {
-  CharacterDescriptionPtr dsc;
-  CharacterPtr cmpChr = std::dynamic_pointer_cast<Character>(cmp);
-
-  dsc.reset( new CharacterDescription );
-  toDescriptionStruct( dsc, cmpChr );
-
-  return dsc;
+  updateData();
+  return _data;
 }
 
-void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cmp)
+const google::protobuf::Message& Character::getDataPolymorphic() const
 {
-  if ( dsc )
+  return getData();
+}
+
+ActorFeature::Type Character::getFeatureType()
+{
+  return Character::FeatureType;
+}
+
+void Character::updateData() const
+{
+  //update spellbook
+  _data.mutable_spellbook()->CopyFrom( _spellbook->getData() );
+
+  //update modifiers
+  auto* modifiersData = _data.mutable_modifiers();
+  modifiersData->Clear();
+  for ( auto m : _modifiers )
+    *(modifiersData->Add()) = m.toString();
+
+  //update skills
+  auto* skillsData = _data.mutable_skills();
+  skillsData->Clear();
+  for ( auto s : _skills )
   {
-    if ( cmp )
-    {
-      if ( cmp->_level != _level ) dsc->level = _level;
-      if ( cmp->_hitPoints != _hitPoints ) dsc->hitPoints = _hitPoints;
-      if ( cmp->_maxHitPoints != _maxHitPoints ) dsc->maxHitPoints = _maxHitPoints;
-      if ( cmp->_defaultArmorClass != _defaultArmorClass ) dsc->defaultArmorClass = _defaultArmorClass;
-      if ( cmp->_experience != _experience ) dsc->experience = _experience;
-      /*if ( cmp->_class->getType() != _class->getType() )*/ dsc->cClass = static_cast<int>(_class->getType());
-      /*if ( cmp->_race->getType() != _race->getType() )*/ dsc->race = static_cast<int>(_race->getType());
-      if ( cmp->_speed != _speed ) dsc->speed = _speed;
-      if ( cmp->_team != _team ) dsc->team = static_cast<int>(_team);
-      if ( cmp->_morale != _morale ) dsc->morale = _morale;
-      if ( cmp->_damage != _damage ) dsc->damage = _damage.toStr();
-      if ( cmp->_spellbook != _spellbook ) dsc->spellbook = *_spellbook->toDescriptionStruct();
-
-      for (Modifier& mod : _modifiers)
-        dsc->modifiers.push_back( mod.toString() );
-
-      for ( auto& kv : _abilityScores )
-        if ( cmp->_abilityScores[kv.first] != _abilityScores[kv.first] )
-          dsc->abilityScores[ (int)kv.first ] = kv.second;
-
-      for ( SkillPtr sk : _skills )
-        dsc->skills.push_back( std::make_pair((int)sk->getId(), sk->getLevel()) );
-
-      dsc->type = static_cast<int>(CharacterType::Generic);
-    }
-    else
-    {
-      dsc->level = _level;
-      dsc->hitPoints = _hitPoints;
-      dsc->maxHitPoints = _maxHitPoints;
-      dsc->defaultArmorClass = _defaultArmorClass;
-      dsc->experience = _experience;
-      dsc->cClass = static_cast<int>(_class->getType());
-      dsc->race = static_cast<int>(_race->getType());
-      dsc->speed = _speed;
-      dsc->type = static_cast<int>(CharacterType::Generic);
-      dsc->team = static_cast<int>(_team);
-      dsc->morale = _morale;
-      dsc->damage = _damage.toStr();
-      dsc->spellbook = *_spellbook->toDescriptionStruct();
-
-      for (Modifier& mod : _modifiers)
-        dsc->modifiers.push_back( mod.toString() );
-
-      for ( auto& kv : _abilityScores )
-        dsc->abilityScores[ (int)kv.first ] = kv.second;
-
-      for ( SkillPtr sk : _skills )
-        dsc->skills.push_back( std::make_pair((int)sk->getId(), sk->getLevel()) );
-
-    }
+    auto* entry = skillsData->Add();
+    entry->set_first( static_cast<int>(s->getId()) );
+    entry->set_second( s->getLevel() );
   }
-}
-
-CharacterPtr Character::create(DescriptionPtr dsc)
-{
-  CharacterPtr c;
-
-  CharacterDescriptionPtr cDsc = std::dynamic_pointer_cast<CharacterDescription>(dsc);
-  if ( cDsc && cDsc->type )
-  {
-    switch ( (CharacterType)*cDsc->type)
-    {
-      case CharacterType::Generic:            c.reset( new Character(cDsc) ); break;
-      case CharacterType::PlayableCharacter:  c.reset( new PlayableCharacter(cDsc) ); break;
-      default :;
-    }
-  }
-
-  return c;
-}
-
-bool Character::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  CharacterPtr crhs = std::dynamic_pointer_cast<Character>(rhs);
-
-  if (crhs != nullptr)
-  {
-    equal  = _defaultArmorClass  == crhs->_defaultArmorClass;
-    equal &= _level              == crhs->_level;
-    equal &= _experience         == crhs->_experience;
-    equal &= _morale             == crhs->_morale;
-    equal &= *_spellbook         == *(crhs->_spellbook);
-    equal &= _team               == crhs->_team;
-    equal &= _damage             == crhs->_damage;
-    equal &= _skills.size() == crhs->_skills.size();
-
-    equal &= _class && crhs->_class;
-    if ( equal) equal &= *_class == *(crhs->_class);
-
-    equal &= _race && crhs->_race;
-    if ( equal) equal &= *_race == *(crhs->_race);
-
-    if ( equal ) equal &= std::equal(_skills.begin(),
-                                     _skills.end(),
-                                     crhs->_skills.begin(),
-                                     [](SkillPtr a, SkillPtr b){ return *a == *b;});
-
-    //Ability Scores may be random per instance
-    //    if ( equal ) equal &= std::equal(_abilityScores.begin(),
-    //                                     _abilityScores.end(),
-    //                                     crhs->_abilityScores.begin());
-  }
-
-  return equal;
-}
-
-ActorFeaturePtr Character::clone()
-{
-  Character* c = new Character(*this);
-  cloneBase(c);
-  return ActorFeaturePtr( c );
 }
 
 bool Character::isAlive() const
 {
-  return (_hitPoints > 0);
+  return ( _data.hp() > 0);
 }
 
 int Character::getHitPoints() const
 {
-  return _hitPoints;
+  return _data.hp();
 }
 
 int Character::getMaxHitPoints() const
 {
-  return _maxHitPoints;
+  return _data.maxhp();
 }
 
 void Character::setHitPoints(int newHp)
 {
-  _hitPoints = newHp;
+  _data.set_hp(newHp);
 }
 
 int Character::modifyHitPoints(int modifier)
@@ -304,25 +215,28 @@ std::string Character::debug(const std::string& linebreak = "\n")
 {
   std::string d = " " + linebreak + "-----CHARACTER-----"+linebreak;
 
-  d += "Level = " + toStr(_level) + linebreak;
-  d += "HP = " + toStr(_hitPoints) + "/" + toStr(_maxHitPoints)  + linebreak;
-  d += "Base AC = " + toStr(_defaultArmorClass)  + linebreak;
-  d += "Experience = " + toStr(_experience)  + linebreak;
+  d += "Level = " + toStr( _data.level() ) + linebreak;
+  d += "HP = " + toStr( _data.hp() ) + "/" + toStr(_data.maxhp())  + linebreak;
+  d += "Base AC = " + toStr( _data.baseac() )  + linebreak;
+  d += "Experience = " + toStr( _data.experience() )  + linebreak;
   d += "Speed = " + toStr(getSpeed())  + linebreak;
-  d += "Team = " + toStr((int)_team)  + linebreak;
-  d += "Morale = " + toStr(_morale)  + linebreak;
-  d += "Bare hands damage = " + _damage.toStr(true)  + linebreak;
+  d += "Team = " + toStr(_data.team())  + linebreak;
+  d += "Morale = " + toStr(_data.morale())  + linebreak;
+  d += "Bare hands damage = " + getBareHandsDamage().toStr(true)  + linebreak;
   d += "Damage = " + getDamage().toStr(true)  + linebreak;
   d += " >>> Ability Scores" + linebreak;
-  for ( auto& kv : _abilityScores )
+
+  for ( auto as : AbilityScore::Type() )
   {
-    d += AbilityScore::toStr(kv.first) + " = " + toStr(kv.second)  + linebreak;
+    d += AbilityScore::toStr(as) + " = " + toStr( getAbilityScore(as) )  + linebreak;
   }
+
   d += " >>> Skills" + linebreak;
   for ( SkillPtr skill : _skills )
   {
     d+= "Skill " + skill->getName() + "ID=" + toStr( (int)skill->getId() ) + " Level=" + toStr(skill->getLevel()) + linebreak;
   }
+
   d += "----------------" + linebreak;
 
   return d;
@@ -351,7 +265,7 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
   modifyHitPoints(-1 * roll);
 
   //Die
-  if ( _hitPoints <= 0 && actor )
+  if ( _data.hp() <= 0 && actor )
   {
     actor->performAction( std::make_shared<DieAction>() );
     if ( attacker )
@@ -368,7 +282,7 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
 
 int Character::getExperience() const
 {
-  return _experience;
+  return _data.experience();
 }
 
 int Character::getExperienceToNextLevel() const
@@ -391,23 +305,23 @@ int Character::modifyExperience(int modifier)
     }
   }
 
-  _experience += modifier;
+  _data.set_experience( _data.experience() + modifier );
   return modifier;
 }
 
 int Character::getLevel() const
 {
-  return _level;
+  return _data.level();
 }
 
 CharacterClassPtr Character::getClass() const
 {
-  return _class;
+  return CharacterClass::create( static_cast<CharacterClassType>(_data.classtype()) );
 }
 
 RacePtr Character::getRace() const
 {
-  return _race;
+  return Race::create( static_cast<RaceType>(_data.racetype()) );
 }
 
 int Character::getSavingThrow(SavingThrows::Type type)
@@ -457,27 +371,27 @@ void Character::removeModifier(const Modifier &mod)
 
 relations::Team Character::getTeam() const
 {
-  return _team;
+  return static_cast<relations::Team>(_data.team());
 }
 
 void Character::setTeam(relations::Team team)
 {
-  _team = team;
+  _data.set_team( static_cast<int>(team) );
 }
 
 int Character::getSpeed()
 {
-  return std::max( _speed - calculateLoadPenalty(), 1 );
+  return std::max( _data.speed() - calculateLoadPenalty(), 1 );
 }
 
 int Character::getMovePoints()
 {
-  return _movePoints;
+  return _data.movepoints();
 }
 
 void Character::setMovePoints(int points)
 {
-  _movePoints = points;
+  _data.set_movepoints(points);
 }
 
 CarryingCapacity::LoadLevel Character::getLoadLevel()
@@ -511,9 +425,14 @@ int Character::getMissileAttackBonus()
   return it != _modifiers.end() ? base + it->Value : base;
 }
 
+Damage Character::getBareHandsDamage()
+{
+  return Damage(_data.damage());
+}
+
 Damage Character::getDamage()
 {
-  Damage damage = _damage;
+  Damage damage = getBareHandsDamage();
 
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
@@ -537,7 +456,7 @@ Damage Character::getDamage()
 int Character::getArmorClass(DamageType dmgType)
 {
   PickablePtr armor = getEquippedItem(ItemSlotType::Armor);
-  int ac = armor ? armor->getArmorClass() : _defaultArmorClass;
+  int ac = armor ? armor->getArmorClass() : _data.baseac();
 
   auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
                          [&](Modifier& mod){ return mod.Type.ac == dmgType; } );
@@ -589,7 +508,10 @@ SkillPtr Character::getSkill(SkillId id) const
 
 int Character::getAbilityScore(AbilityScore::Type as)
 {
-  return _abilityScores[ as ];
+  for ( auto it = _data.abilityscores().begin(); it != _data.abilityscores().end(); ++it )
+    if ( it->first() == static_cast<int>(as) ) return it->second();
+
+  return 0;
 }
 
 SkillPtr Character::getModifiedSkill(SkillPtr s) const
@@ -620,12 +542,12 @@ SpellBookPtr Character::getSpellBook()
 
 void Character::setLevel(int level)
 {
-  _level = level;
+  _data.set_level(level);
 }
 
 void Character::setMaxHitPoints(int maxHp)
 {
-  _maxHitPoints = maxHp;
+  _data.set_maxhp(maxHp);
 }
 
 PickablePtr Character::getEquippedItem(ItemSlotType slot)
@@ -645,18 +567,11 @@ PickablePtr Character::getEquippedItem(ItemSlotType slot)
   return item;
 }
 
-void Character::cloneBase(Character *c)
+void Character::setAbilityScore(AbilityScore::Type as, int value)
 {
-  c->_spellbook = _spellbook->clone();
-  c->_modifiers = _modifiers;
-  c->_team = _team;
-  c->_morale = _morale;
-  c->_abilityScores = _abilityScores;
-  c->_damage = _damage;
-  c->_skills.clear();
-  for ( auto s : _skills ) c->_skills.push_back( s->clone() );
+  for ( auto it = _data.mutable_abilityscores()->begin(); it != _data.mutable_abilityscores()->end(); ++it )
+    if ( it->first() == static_cast<int>(as) ) it->set_second(value);
 }
-
 
 bool Character::abilityRoll(AbilityScore::Type as, int extraModifier)
 {
@@ -679,7 +594,7 @@ int Character::getMorale()
   auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
                          [](Modifier& mod){ return mod.Type.generic == GenericModifier::MoraleModifier; } );
 
-  return it != _modifiers.end() ? _morale + it->Value : _morale;
+  return it != _modifiers.end() ? _data.morale() + it->Value : _data.morale();
 }
 
 int Character::getEquipmentWeight()

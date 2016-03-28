@@ -18,45 +18,18 @@ PlayableCharacter::PlayableCharacter()
 {
 }
 
-PlayableCharacter::PlayableCharacter(DescriptionPtr dsc)
-  : Character(dsc)
+PlayableCharacter::PlayableCharacter(const PlayableCharacter &rhs)
+  : Character(rhs)
 {
 }
 
-DescriptionPtr PlayableCharacter::toDescriptionStruct(ActorFeaturePtr cmp)
+PlayableCharacter::PlayableCharacter(const CharacterData &data)
+  : Character(data)
 {
-  CharacterDescriptionPtr dsc;
-  CharacterPtr cmpChr = std::dynamic_pointer_cast<PlayableCharacter>(cmp);
-
-  dsc.reset( new CharacterDescription );
-  Character::toDescriptionStruct( dsc, cmpChr );
-  dsc->type = static_cast<int>(CharacterType::PlayableCharacter);
-
-  return dsc;
 }
 
 PlayableCharacter::~PlayableCharacter()
 {
-}
-
-ActorFeaturePtr PlayableCharacter::clone()
-{
-  auto* c = new PlayableCharacter(*this);
-  cloneBase(c);
-  return ActorFeaturePtr( c );
-}
-
-bool PlayableCharacter::isEqual(ActorFeaturePtr rhs) const
-{  
-  bool equal = false;
-  PlayableCharacterPtr crhs = std::dynamic_pointer_cast<PlayableCharacter>(rhs);
-
-  if (crhs != nullptr)
-  {
-    equal = Character::isEqual( rhs );
-  }
-
-  return equal;
 }
 
 int PlayableCharacter::modifyExperience(int modifier)

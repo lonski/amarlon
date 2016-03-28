@@ -5,6 +5,7 @@
 #include <vector>
 #include <spell_slot.h>
 #include <character_class_type.h>
+#include <spell.pb.h>
 
 namespace amarlon {
 
@@ -19,8 +20,17 @@ class SpellBook
 {
 public:
   SpellBook();
+  SpellBook(const SpellBook& rhs);
+  SpellBook(const SpellBookData& data);
+  bool operator==(const SpellBook& rhs);
+  SpellBookPtr clone();
+
+  SpellBookData getData() const;
+
+  /*OBSOLETE, TODO: REMOVE*/
   static SpellBookPtr create(SpellbookDescription dsc);
   SpellbookDescriptionPtr toDescriptionStruct();
+  //
 
   std::vector<SpellSlotPtr> getSlots(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;}) const;
   std::vector<SpellPtr> getKnownSpells( std::function<bool(SpellPtr)> filter = [](SpellPtr){return true;} ) const;
@@ -40,10 +50,9 @@ public:
    */
   void prepareSpells();
 
-  bool operator==(const SpellBook& rhs);
-  SpellBookPtr clone();
 
 private:
+
   std::vector<SpellSlotPtr> _spellSlots;
   std::vector<SpellPtr>  _knownSpells;
 

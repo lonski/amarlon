@@ -65,7 +65,7 @@ AWindow &CharacterCreationWindow::show()
 
     if ( _enterGame )
     {
-      ActorPtr player = Actor::create( _player, false);
+      ActorPtr player = Actor::create(_player);
       player->setPosition(42, 28);
       PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
       c->advanceLevel();
@@ -85,7 +85,7 @@ AWindow& CharacterCreationWindow::setDefaults()
 {
   _activePanel = RACE_SELECTION;
   _enterGame = false;
-  _player = Engine::instance().getActorDB().fetchDescription( ActorType::Player );
+  _player = Engine::instance().getActorDB().fetchData( ActorType::Player );
 
   return *this;
 }
@@ -98,7 +98,9 @@ void CharacterCreationWindow::nextStep()
   ++cPanel;
 
   //Skip class-specific panels
-  CharacterClassType cId = (CharacterClassType)*getCharacterDsc()->cClass;
+  CharacterClassType cId =
+      static_cast<CharacterClassType>(getPlayerDsc().character().classtype());
+
   if ( cPanel != _panels.end() )
   {
     if ( (cPanel->first == THIEF_SKILLS_SELECTION && cId != CharacterClassType::Thief) )
@@ -119,16 +121,9 @@ void CharacterCreationWindow::nextStep()
   }
 }
 
-ActorDescriptionPtr CharacterCreationWindow::getPlayerDsc() const
+ActorData& CharacterCreationWindow::getPlayerDsc()
 {
   return _player;
-}
-
-CharacterDescriptionPtr CharacterCreationWindow::getCharacterDsc() const
-{
-  auto& f = getPlayerDsc()->features;
-  auto it = f.find(ActorFeature::CHARACTER);
-  return it != f.end() ? std::dynamic_pointer_cast<CharacterDescription>(it->second) : nullptr;
 }
 
 }}

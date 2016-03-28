@@ -4,6 +4,7 @@
 #include <actor_feature.h>
 #include <target.h>
 #include <trap_id.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -17,20 +18,21 @@ typedef std::shared_ptr<Actor> ActorPtr;
 class Trap : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
+  const static ActorFeature::Type FeatureType;
 
-  Trap(DescriptionPtr dsc = nullptr);
+  static TrapPtr create(const TrapData& data);
+
+  Trap();
+  Trap(const Trap& rhs);
   virtual ~Trap();
 
-  static TrapPtr create(DescriptionPtr dsc);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  bool operator==(const Trap& rhs) const;
+  Trap& operator=(const Trap& rhs);
+  virtual const TrapData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
 
-  virtual ActorFeature::Type getType();
+  virtual ActorFeature::Type getFeatureType();
   virtual TrapId getId() const;
-
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual bool trigger(Target victim);
 
@@ -49,10 +51,9 @@ public:
   virtual int getDifficulty();
 
 private:
-  TrapId _id;
-  bool _armed;
-  int _difficulty;
-  bool _detected;
+  TrapData _data;
+
+  Trap(const TrapData& data);
 
 };
 

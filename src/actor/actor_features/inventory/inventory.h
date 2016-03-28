@@ -6,6 +6,7 @@
 #include <list>
 #include <actor_feature.h>
 #include <actor_type.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -25,15 +26,20 @@ class Inventory : public ActorFeature
 public:
   typedef std::list<ActorPtr>::iterator iterator;
 
-  const static ActorFeature::Type featureType;
+  const static ActorFeature::Type FeatureType;
 
-  Inventory(DescriptionPtr dsc = nullptr);
+  static InventoryPtr create(const InventoryData& data);
+
+  Inventory();
+  Inventory(const Inventory& rhs);
   virtual ~Inventory();
-  static InventoryPtr create(DescriptionPtr dsc);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
 
-  virtual ActorFeature::Type getType() { return featureType; }
+  bool operator==(const Inventory& rhs) const;
+  Inventory& operator=(const Inventory& rhs);
+  virtual const InventoryData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
+
+  virtual ActorFeature::Type getFeatureType() { return Inventory::FeatureType; }
 
   virtual ActorFeaturePtr clone();
   virtual bool isEqual(ActorFeaturePtr rhs) const;
@@ -61,10 +67,12 @@ public:
   virtual std::string debug(const std::string& linebreak = "\n");
 
 private:
+  mutable InventoryData _data;
   ActorContainerPtr _items;
-  size_t _slotCount;
-  bool _pushToFront;
 
+  Inventory(const InventoryData& data);
+  void initialize();
+  void updateData() const;
   void notifyAdd(ActorPtr actor);
   void notifyRemove(ActorPtr actor, int amount);
 

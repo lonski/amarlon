@@ -15,6 +15,7 @@
 #include <skill_id.h>
 #include <modifier.h>
 #include <relations.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -38,19 +39,20 @@ typedef std::shared_ptr<Skill> SkillPtr;
 class Character : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
-  virtual ActorFeature::Type getType() { return featureType; }
+  const static ActorFeature::Type FeatureType;
+
+  static CharacterPtr create(const CharacterData& data);
 
   Character();
+  Character(const Character& rhs);
   virtual ~Character();
-  Character(DescriptionPtr dsc);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
-  static CharacterPtr create(DescriptionPtr dsc);
 
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
-  virtual ActorFeaturePtr clone();
+  bool operator==(const Character& rhs) const;
+  Character& operator=(const Character& rhs);
+  virtual const CharacterData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
 
+  virtual ActorFeature::Type getFeatureType();
   virtual bool isAlive() const;
   virtual int getHitPoints() const;
   virtual int getMaxHitPoints() const;
@@ -77,6 +79,7 @@ public:
   virtual int getMeleeAttackBonus();
   virtual int getMissileAttackBonus();
 
+  virtual Damage getBareHandsDamage();
   virtual Damage getDamage();
   virtual int getArmorClass(DamageType dmgType = DamageType::Physical);
   virtual SpellBookPtr getSpellBook();
@@ -107,29 +110,22 @@ public:
   virtual std::string debug(const std::string &linebreak);
 
 protected:
+  Character(const CharacterData& data);
   virtual void setLevel(int level);
   virtual void setMaxHitPoints(int maxHp);
   PickablePtr getEquippedItem(ItemSlotType slot);
   void cloneBase(Character* c);
   virtual void toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cmp = nullptr);
+  virtual void setAbilityScore(AbilityScore::Type as, int value);
 
 private:
-  int _level;
-  int _hitPoints;
-  int _maxHitPoints;
-  int _defaultArmorClass;
-  int _experience;
-  CharacterClassPtr _class;
-  RacePtr _race;
-  int _speed;
-  int _movePoints;
-  SpellBookPtr _spellbook;
-  std::vector<SkillPtr> _skills;
-  relations::Team _team;
-  std::map<AbilityScore::Type, int> _abilityScores;
-  int _morale;
-  Damage _damage;
+  mutable CharacterData _data;
 
+  std::vector<SkillPtr> _skills;
+  SpellBookPtr _spellbook;
+
+  void initialize();
+  void updateData() const;
   SkillPtr getModifiedSkill(SkillPtr s) const;
   int getEquipmentWeight();
   int calculateInventoryItemsWeight();

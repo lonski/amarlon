@@ -12,12 +12,12 @@ typedef std::shared_ptr<Spell> SpellPtr;
 class Scroll : public Pickable
 {
 public:
-  Scroll(DescriptionPtr dsc = nullptr);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  Scroll();
+  Scroll(const Scroll& rhs);
   virtual ~Scroll();
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
+  bool operator==(const Scroll& rhs) const;
+  Scroll& operator=(const Scroll& rhs);
 
   /**
    * @brief Cast the spell. Check if executor (caster) has valid class to do so.
@@ -35,6 +35,10 @@ public:
   virtual TargetType getTargetType() const;
   virtual int getRange() const;
   virtual int getRadius() const;
+
+protected:
+  friend class Pickable;
+  Scroll(const PickableData& data);
 
 private:
   SpellPtr _spell;

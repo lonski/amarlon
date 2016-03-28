@@ -8,93 +8,64 @@
 
 namespace amarlon {
 
-const ActorFeature::Type Openable::featureType = ActorFeature::OPENABLE;
+const ActorFeature::Type Openable::FeatureType = ActorFeature::OPENABLE;
 
-Openable::Openable(DescriptionPtr dsc)
-  : _locked(false)
-  , _lockId(0)
-  , _lockLevel(0)
-  , _scriptId(0)
-  , _closed(false)
+Openable::Openable(const OpenableData &data)
 {
-  upgrade(dsc);
+  _data.CopyFrom(data);
 }
 
-void Openable::upgrade(DescriptionPtr dsc)
+OpenablePtr Openable::create(const OpenableData &data)
 {
-  OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
-  if ( oDsc )
-  {
-    if ( oDsc->lockId )    _lockId    = *oDsc->lockId;
-    if ( oDsc->lockLevel ) _lockLevel = *oDsc->lockLevel;
-    if ( oDsc->locked )    _locked    = *oDsc->locked;
-    if ( oDsc->scriptId )  _scriptId  = *oDsc->scriptId;
-    if ( oDsc->closed )    _closed    = *oDsc->closed;
-  }
+  return OpenablePtr( new Openable(data) );
 }
 
-DescriptionPtr Openable::toDescriptionStruct(ActorFeaturePtr cmp)
+Openable::Openable()
 {
-  OpenableDescriptionPtr dsc(new OpenableDescription);
-  OpenablePtr cmpO = std::dynamic_pointer_cast<Openable>(cmp);
+}
 
-  if ( cmpO )
-  {
-    if ( _lockId != cmpO->_lockId )       dsc->lockId = _lockId;
-    if ( _locked != cmpO->_locked )       dsc->locked = _locked;
-    if ( _scriptId != cmpO->_scriptId )   dsc->scriptId = _scriptId;
-    if ( _closed != cmpO->_closed )       dsc->closed = _closed;
-    if ( _lockLevel != cmpO->_lockLevel ) dsc->lockLevel = _lockLevel;
-  }
-  else
-  {
-    dsc->lockId = _lockId;
-    dsc->locked = _locked;
-    dsc->scriptId = _scriptId;
-    dsc->closed = _closed;
-    dsc->lockLevel = _lockLevel;
-  }
-
-  return dsc;
+Openable::Openable(const Openable &rhs)
+{
+  *this = rhs;
 }
 
 Openable::~Openable()
 {
 }
 
-OpenablePtr Openable::create(DescriptionPtr dsc)
+bool Openable::operator==(const Openable &rhs) const
 {
-  return OpenablePtr(new Openable(dsc));
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
-ActorFeature::Type Openable::getType()
+Openable& Openable::operator=(const Openable& rhs)
 {
-  return featureType;
-}
-
-ActorFeaturePtr Openable::clone()
-{
-  return OpenablePtr(new Openable(*this));
-}
-
-bool Openable::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  OpenablePtr oRhs = std::dynamic_pointer_cast<Openable>(rhs);
-  if ( oRhs)
+  if ( this != &rhs )
   {
-    equal = _lockId == oRhs->_locked;
-    equal &= _lockLevel == oRhs->_lockLevel;
-    equal &= _scriptId == oRhs->_scriptId;
-    equal &= _closed == oRhs->_closed;
+    _data.CopyFrom(rhs._data);
   }
-  return equal;
+  return *this;
+}
+
+const OpenableData &Openable::getData() const
+{
+  return _data;
+}
+
+const google::protobuf::Message& Openable::getDataPolymorphic() const
+{
+  return getData();
+}
+
+ActorFeature::Type Openable::getFeatureType()
+{
+  return FeatureType;
 }
 
 bool Openable::open(ActorPtr executor)
 {
   bool r = false;
-  if ( _scriptId > 0 && isClosed() )
+  if ( getScriptId() > 0 && isClosed() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
 
@@ -109,7 +80,7 @@ bool Openable::open(ActorPtr executor)
           , getOwner().lock()
         );
 
-        _closed = !r;
+        _data.set_closed(!r);
 
         ActorPtr owner = getOwner().lock();
         if ( owner ) owner->interract(executor);
@@ -128,7 +99,7 @@ bool Openable::close(ActorPtr executor)
 {
   bool r = false;
 
-  if ( _scriptId > 0 && !isClosed() )
+  if ( getScriptId() > 0 && !isClosed() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
 
@@ -143,7 +114,7 @@ bool Openable::close(ActorPtr executor)
           , getOwner().lock()
         );
 
-        _closed = r;
+        _data.set_closed(r);
 
         ActorPtr owner = getOwner().lock();
         if ( owner ) owner->interract(executor);
@@ -160,7 +131,7 @@ bool Openable::close(ActorPtr executor)
 
 bool Openable::isClosed() const
 {
-  return _closed;
+  return _data.closed();
 }
 
 bool Openable::lock()
@@ -170,8 +141,8 @@ bool Openable::lock()
   {
     actor->notify(Event(EventId::Actor_Locked));
   }
-  _locked = true;
-  return _locked;
+  _data.set_locked(true);
+  return true;
 }
 
 bool Openable::unlock()
@@ -181,33 +152,33 @@ bool Openable::unlock()
   {
     actor->notify(Event(EventId::Actor_Unlocked));
   }
-  _locked = false;
-  return !_locked;
+  _data.set_locked(false);
+  return true;
 }
 
 std::string Openable::getScriptPath() const
 {
-  return "scripts/openable/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  return "scripts/openable/" + std::to_string( getScriptId() ) + ".lua";
 }
 
 bool Openable::isLocked() const
 {
-  return _locked;
+  return _data.locked();
 }
 
 int Openable::getLockId() const
 {
-  return _lockId;
+  return _data.lock_id();
 }
 
 int Openable::getLockLevel() const
 {
-  return _lockLevel;
+  return _data.lock_level();
 }
 
 int Openable::getScriptId() const
 {
-  return _scriptId;
+  return _data.script_id();
 }
 
 }

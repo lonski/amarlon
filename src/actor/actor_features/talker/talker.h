@@ -3,6 +3,7 @@
 
 #include <actor_feature.h>
 #include <dialog.h>
+#include <actor.pb.h>
 
 namespace amarlon
 {
@@ -13,15 +14,20 @@ typedef std::shared_ptr<Talker> TalkerPtr;
 class Talker : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
+  const static ActorFeature::Type FeatureType;
 
-  Talker(DescriptionPtr dsc = nullptr);
+  static TalkerPtr create(const TalkerData& data);
+
+  Talker();
+  Talker(const Talker& rhs);
   virtual ~Talker();
 
-  static TalkerPtr create(DescriptionPtr dsc);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
-  virtual ActorFeature::Type getType();
+  bool operator==(const Talker& rhs) const;
+  Talker& operator=(const Talker& rhs);
+  virtual const TalkerData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
+
+  virtual ActorFeature::Type getFeatureType();
   virtual int getId() const;
 
   /**
@@ -49,8 +55,11 @@ public:
   static std::string getScript(int id);
 
 private:
-  int _id;
+  TalkerData _data;
   std::vector<Dialog> _dialogs;
+
+  Talker(const TalkerData& data);
+  void initialize();
 
 };
 

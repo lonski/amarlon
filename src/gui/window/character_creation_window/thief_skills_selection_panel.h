@@ -25,7 +25,7 @@ public:
   virtual void manage();
   virtual void update();
   virtual void handleKey(TCOD_key_t key);
-
+  
 private:
   enum Panel
   {

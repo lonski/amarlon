@@ -4,87 +4,61 @@
 #include <lua_state.h>
 #include <actor.h>
 
+
 namespace amarlon {
 
-const ActorFeature::Type Trap::featureType = ActorFeature::TRAP;
+const ActorFeature::Type Trap::FeatureType = ActorFeature::TRAP;
 
-Trap::Trap(DescriptionPtr dsc)
-  : _id(TrapId::Null)
-  , _armed(false)
-  , _difficulty(0)
-  , _detected(false)
+TrapPtr Trap::create(const TrapData &data)
 {
-  upgrade(dsc);
+  return TrapPtr( new Trap(data) );
+}
+
+Trap::Trap()
+{
+}
+
+Trap::Trap(const TrapData& data)
+{
+  _data.CopyFrom(data);
+}
+
+Trap::Trap(const Trap &rhs)
+{
+  *this = rhs;
 }
 
 Trap::~Trap()
 {
 }
 
-TrapPtr Trap::create(DescriptionPtr dsc)
+bool Trap::operator==(const Trap &rhs) const
 {
-  return TrapPtr( new Trap(dsc) );
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
-void Trap::upgrade(DescriptionPtr dsc)
+Trap &Trap::operator=(const Trap &rhs)
 {
-  TrapDescriptionPtr tDsc = std::dynamic_pointer_cast<TrapDescription>(dsc);
-  if ( tDsc )
+  if ( this != &rhs )
   {
-    if (tDsc->armed)     _armed = *tDsc->armed;
-    if (tDsc->difficulty) _difficulty = *tDsc->difficulty;
-    if (tDsc->id)         _id = static_cast<TrapId>(*tDsc->id);
-    if (tDsc->detected)   _detected = *tDsc->detected;
+    _data.CopyFrom(rhs._data);
   }
+  return *this;
 }
 
-DescriptionPtr Trap::toDescriptionStruct(ActorFeaturePtr cmp)
+const TrapData &Trap::getData() const
 {
-  TrapDescriptionPtr dsc(new TrapDescription);
-  TrapPtr cmpT = std::dynamic_pointer_cast<Trap>(cmp);
-
-  if ( cmpT )
-  {
-    if ( _armed != cmpT->_armed ) dsc->armed = _armed;
-    if ( _id != cmpT->_id ) dsc->id = (int)_id;
-    if ( _difficulty != cmpT->_difficulty ) dsc->difficulty = _difficulty;
-    if ( _detected != cmpT->_detected ) dsc->detected = _detected;
-  }
-  else
-  {
-    dsc->armed = _armed;
-    dsc->id = (int)_id;
-    dsc->difficulty = _difficulty;
-    dsc->detected = _detected;
-  }
-
-  return dsc;
+  return _data;
 }
 
-ActorFeature::Type Trap::getType()
+const google::protobuf::Message& Trap::getDataPolymorphic() const
 {
-  return ActorFeature::TRAP;
+  return getData();
 }
 
-ActorFeaturePtr Trap::clone()
+ActorFeature::Type Trap::getFeatureType()
 {
-  return TrapPtr(new Trap(*this));
-}
-
-bool Trap::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-
-  TrapPtr tRhs = std::dynamic_pointer_cast<Trap>(rhs);
-  if ( tRhs )
-  {
-    equal =  _armed == tRhs->_armed;
-    equal &= _difficulty == tRhs->_difficulty;
-    equal &= _id == tRhs->_id;
-    equal &= _detected == tRhs->_detected;
-  }
-
-  return equal;
+  return FeatureType;
 }
 
 bool Trap::trigger(Target victim)
@@ -131,47 +105,47 @@ bool Trap::trigger(Target victim)
 
 bool Trap::isArmed() const
 {
-  return _armed;
+  return _data.is_armed();
 }
 
 void Trap::setArmed(bool armed)
 {
-  if ( armed != _armed )
+  if ( armed != isArmed() )
   {
-    _armed = armed;
-    EventId id = _armed ? EventId::TrapArmed : EventId::TrapDisarmed;
+    _data.set_is_armed(armed);
+    EventId id = isArmed() ? EventId::TrapArmed : EventId::TrapDisarmed;
     getOwner().lock()->notify( Event(id, { {"trap",getName()} }) );
   }
 }
 
 bool Trap::isDetected() const
 {
-  return _detected;
+  return _data.is_detected();
 }
 
 void Trap::setDetected(bool detected)
 {
-  _detected = detected;
+  _data.set_is_detected(detected);
 }
 
 std::string Trap::getScript() const
 {
-  return "scripts/traps/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  return "scripts/traps/" + std::to_string( static_cast<int>( getId() ) ) + ".lua";
 }
 
 std::string Trap::getName() const
 {
-  return TrapId2Str(_id);
+  return TrapId2Str( getId() );
 }
 
 int Trap::getDifficulty()
 {
-  return _difficulty;
+  return _data.difficulty();
 }
 
 TrapId Trap::getId() const
 {
-  return _id;
+  return static_cast<TrapId>(_data.id());
 }
 
 }

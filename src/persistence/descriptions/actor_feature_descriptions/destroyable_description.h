@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <description.h>
-#include <drop_rule.h>
 
 namespace amarlon {
 
@@ -12,7 +11,7 @@ struct DestroyableDescription : Description
   DestroyableDescription()
   {}
 
-  std::vector<DropRule> dropRules;
+  //std::vector<DropRule> dropRules;
 };
 
 typedef std::shared_ptr<DestroyableDescription> DestroyableDescriptionPtr;

@@ -6,7 +6,7 @@
 #include <lua_state.h>
 #include <spell_book.h>
 #include <spell_db.h>
-#include <google/protobuf/util/message_differencer.h>
+
 
 namespace amarlon {
 
@@ -38,7 +38,7 @@ Spell& Spell::operator=(const Spell& spell)
 
 bool Spell::operator==(const Spell &rhs)
 {
-  return google::protobuf::util::MessageDifferencer::Equals(_data, rhs._data);
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
 Spell::~Spell()

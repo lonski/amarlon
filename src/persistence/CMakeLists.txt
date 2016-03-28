@@ -33,7 +33,6 @@ set(HEADER_FILES
     descriptions/actor_feature_descriptions/trap_description.h
     descriptions/actor_feature_descriptions/talker_description.h
     descriptions/actor_feature_descriptions/dialog.h
-    descriptions/actor_feature_descriptions/drop_rule.h
     descriptions/description.h
     descriptions/map_description.h
     descriptions/actor_action_description.h

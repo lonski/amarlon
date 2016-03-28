@@ -6,6 +6,7 @@
 #include <pickable_category.h>
 #include <utils.h>
 #include <item_type_description.h>
+#include <item_type.pb.h>
 
 namespace amarlon {
 
@@ -80,6 +81,25 @@ struct ItemType
   ItemType()
   {
     memset(this, 0, sizeof(ItemType));
+  }
+
+  ItemType(const ItemTypeData& data)
+  {
+    memset(this, 0, sizeof(ItemType));
+    amunition = static_cast<AmunitionType>(data.amunition_type());
+    armor     = static_cast<ArmorType>(data.armor_type());
+    category  = static_cast<PickableCategory>(data.category());
+    weapon    = static_cast<WeaponType>(data.weapon_type());
+  }
+
+  ItemTypeData getData() const
+  {
+    ItemTypeData data;
+    data.set_amunition_type( static_cast<int>(amunition) );
+    data.set_armor_type    ( static_cast<int>(armor)     );
+    data.set_category      ( static_cast<int>(category)  );
+    data.set_weapon_type   ( static_cast<int>(weapon)    );
+    return data;
   }
 
   ItemType(ItemTypeDescription dsc)

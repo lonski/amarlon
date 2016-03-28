@@ -1,12 +1,119 @@
-syntax = "proto3";
+syntax = "proto2";
+
+package amarlon;
+import "spell.proto";
+import "item_type.proto";
+import "drop_rule.proto";
+import "utils.proto";
 
 message AiData {
-  fixed32 flags  = 1;
-  int32   script = 2;
-  int32   type   = 3;
+  required fixed32 flags  = 1;
+  required int32   script = 2;
+  required int32   type   = 3;
+}
+
+message CharacterData {
+  required int32 level              = 1;
+  required int32 hp                 = 2;
+  required int32 maxHP              = 3;
+  required int32 baseAC             = 4;
+  required int32 experience         = 5;
+  required int32 classType          = 6;
+  required int32 raceType           = 7;
+  required int32 speed              = 8;
+  required int32 movePoints         = 9;
+  required int32 team               = 10;
+  required int32 morale             = 11;
+  required string damage            = 12;
+  required SpellBookData spellbook  = 13;
+  required int32 characterType      = 14;
+  required int32 uses_count         = 15;
+
+  repeated IntIntPair skills        = 16;
+  repeated IntIntPair abilityScores = 17;
+
+  repeated string modifiers         = 18;
+}
+
+message DestroyableData {
+  repeated DropRule dropRules = 1;
+}
+
+message InventoryData {
+  required int32 slotCount = 1;
+  repeated ActorData items = 2;
+}
+
+message OpenableData {
+  required bool locked      = 1;
+  required bool closed      = 2;
+  required int32 lock_id    = 3;
+  required int32 lock_level = 4;
+  required int32 script_id  = 5;
+}
+
+message PickableData {
+  required bool stackable         = 1;
+  required int32 amount           = 2;
+  required int32 item_slot        = 3;
+  required int32 armor_class      = 4;
+  required int32 weight           = 5;
+  required int32 price            = 6;
+  required int32 target_type      = 7;
+  required string damage          = 8;
+  required int32 script_id        = 9;
+  required int32 range            = 10;
+  required int32 radius           = 11;
+  required ItemTypeData item_type = 12;
+  required int32 uses_count       = 13;
+  required int32 spell_id         = 14;
+}
+
+message TalkerData {
+  required int32 id = 1;
+}
+
+message TrapData {
+  required int32 id         = 1;
+  required int32 difficulty = 2;
+  required bool is_armed    = 3;
+  required bool is_detected = 4;
+}
+
+message WearerData {
+  repeated int32 item_slots         = 1;
+  repeated ActorData equipped_items = 2;
+}
+
+message StatusEffectData {
+  required string name    = 1;
+  required int32 duration = 2;
+  required string script  = 3;
 }
 
 message ActorData{
-  int32 id  = 1;
-  AiData ai = 2;
+  required int32 actor_type                  = 1;
+  required string name                       = 2;
+  required string description                = 3;
+  required int32 x                           = 4;
+  required int32 y                           = 5;
+  required int32 flags                       = 6;
+  required bool is_fov_only                  = 7;
+  required bool is_transparent               = 8;
+  required bool is_blocking                  = 9;
+  required string symbol                     = 10;
+  required int32 render_priority             = 11;
+  required string color                      = 12;
+
+  repeated StatusEffectData effects          = 13;
+
+  optional AiData ai                         = 14;
+  optional CharacterData character           = 15;
+  optional DestroyableData destroyable       = 16;
+  optional InventoryData inventory           = 17;
+  optional OpenableData openable             = 18;
+  optional PickableData pickable             = 19;
+  optional TrapData trap                     = 20;
+  optional WearerData wearer                 = 21;
+  optional TalkerData talker                 = 22;
 }

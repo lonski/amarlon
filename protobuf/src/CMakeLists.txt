@@ -3,6 +3,9 @@ set(HEADER_FILES
     skill.pb.h
     tile.pb.h
     actor.pb.h
+    drop_rule.pb.h
+    item_type.pb.h
+    utils.pb.h
 )
 
 set(SOURCE_FILES
@@ -10,6 +13,9 @@ set(SOURCE_FILES
     skill.pb.cc
     tile.pb.cc
     actor.pb.cc
+    drop_rule.pb.cc
+    item_type.pb.cc
+    utils.pb.cc
 )
 
 add_library(proto_data SHARED ${SOURCE_FILES} ${HEADER_FILES})

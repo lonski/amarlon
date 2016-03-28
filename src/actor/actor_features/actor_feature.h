@@ -4,6 +4,10 @@
 #include <memory>
 #include <map>
 
+namespace google { namespace protobuf {
+  class Message;
+}}
+
 namespace amarlon {
 
 class Actor;
@@ -37,16 +41,18 @@ public:
   virtual ~ActorFeature() = 0;
   static ActorFeaturePtr create(Type featureType, DescriptionPtr dsc);
 
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const = 0;
+
   void setOwner(ActorWPtr owner);
   ActorWPtr getOwner() const;
-  virtual ActorFeaturePtr clone() = 0;
-  virtual bool isEqual(ActorFeaturePtr rhs) const = 0;
-  virtual ActorFeature::Type getType() = 0;
+  virtual ActorFeaturePtr clone();
+  virtual bool isEqual(ActorFeaturePtr rhs) const;
   virtual std::string getDescription();
   virtual int update();
   virtual std::string debug(const std::string& = "\n") { return ""; }
-  virtual void upgrade(DescriptionPtr) = 0;
+  virtual void upgrade(DescriptionPtr);
   virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  virtual ActorFeature::Type getFeatureType() = 0;
 
 protected:
   ActorWPtr _owner;

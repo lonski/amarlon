@@ -21,7 +21,10 @@ bool StatusEffectsManager::add(StatusEffectPtr effect)
 
   if ( effect->getDuration() != 0 )
   {
-    auto it = std::find_if(_effects.begin(), _effects.end(), [&](StatusEffectPtr e){return *e == *effect;});
+    auto it = std::find_if(_effects.begin(), _effects.end(), [&](StatusEffectPtr e){
+        return e->getScript() == effect->getScript() && e->getName() == effect->getName();
+    });
+
     if ( it != _effects.end() ) //effect already applied
     {
       (*it)->setDuration( std::max((*it)->getDuration(), effect->getDuration()) );

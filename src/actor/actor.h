@@ -12,12 +12,14 @@
 #include <ai.h>
 #include <openable.h>
 #include <wearer.h>
+#include <talker.h>
 #include <destroyable.h>
 #include <inventory.h>
 #include <subject.h>
 #include <bitset>
 #include <point.h>
 #include <actor_action_result.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -35,30 +37,15 @@ class Actor : public std::enable_shared_from_this<Actor>
             , public Subject
 {
 public:
-  /**
-   * @brief Builds an actor basing on the description from ActorDatabase
-   */
-  static ActorPtr create(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
-  /**
-   * @brief Builds an actor from description structure.
-   * @param dsc - description structure, on which base actor will be build.
-   * @param prototyped - if true, actor will be build from default description from ActorDatabase
-   *        and then its content will be overriden with passed description structure.
-   *        Otherwise, actor will be build only basing on passed description scructure.
-   */
-  static ActorPtr create(ActorDescriptionPtr dsc, bool prototyped = true);
 
-  /**
-   * @brief Overrides actor's content with content from given description structure.
-   *        Fuills only changed data. All other data remain unchanged.
-   */
-  void upgrade(ActorDescriptionPtr dsc);
-  ActorDescriptionPtr toDescriptionStruct();
-  ~Actor();
+  static ActorPtr create(const ActorData&);
+  static ActorPtr create(ActorType type);
+  ActorPtr clone() const;
 
-  ActorPtr clone();  
+  virtual ~Actor();
+
   bool operator==(const Actor& rhs) const;
-  Actor& operator=(const Actor& rhs);
+  const ActorData& getData() const;
 
   /**
    * Actor properties
@@ -211,27 +198,22 @@ public:
   std::string debug(const std::string& linebreak = "\n");
   void printDebug();
 
+
 private:
-  ActorType _id;
-  int _x, _y;
+  mutable ActorData _data;
+
   MapWPtr _map;
   FeatureMap _features;
   StatusEffectsManagerPtr _effects;
-  bool _fovOnly;
-  bool _transparent;
-  bool _blocks;
-  int _priority;
-  std::string _name;
-  std::string _description;
-  TCODColor _color;
-  char _symbol;
-  std::bitset<1> _flags;
 
-  Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
-  Actor(const Actor& a);
+  Actor(const ActorData& data);
+  Actor(const Actor& rhs);
+  Actor& operator=(const Actor& rhs);
+
+  void initialize();
+  void updataData() const;
   void applyPassiveSkills();
 
-  friend class ActorSerializer;
 };
 
 typedef std::shared_ptr<Actor> ActorPtr;
@@ -239,14 +221,14 @@ typedef std::shared_ptr<Actor> ActorPtr;
 template<typename T>
 std::shared_ptr<T> Actor::getFeature() const
 {
-  auto it = _features.find( T::featureType );
+  auto it = _features.find( T::FeatureType );
   return it != _features.end() ? std::dynamic_pointer_cast<T>(it->second) : nullptr;
 }
 
 template<typename T>
 bool Actor::hasFeature()
 {
-  return _features.find( T::featureType ) != _features.end();
+  return _features.find( T::FeatureType ) != _features.end();
 }
 
 }

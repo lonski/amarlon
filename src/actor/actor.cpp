@@ -16,26 +16,44 @@
 
 namespace amarlon {
 
-ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
+/* Flag bits */
+const int ACTOR_INVISIBLE_BIT = 0;
+
+ActorPtr Actor::create(const ActorData& data)
 {
-  ActorPtr actor = Engine::instance().getActorDB().fetch(aId);
-  actor->setMap(map);
-  actor->setPosition(x,y);
-  actor->applyPassiveSkills();
+  ActorPtr actor( new Actor(data) );
+  actor->initialize();
 
   return actor;
 }
 
-ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
+ActorPtr Actor::create(ActorType type)
 {
-  ActorPtr actor;
-  if ( dsc )
-  {
-    actor = prototyped ? create( static_cast<ActorType>(*dsc->id))
-                       : ActorPtr(new Actor);
-    actor->upgrade(dsc);
-  }
-  return actor;
+  //TODO fetch from DB
+  return nullptr;
+}
+
+void Actor::initialize()
+{
+  //initialize actor features
+  if ( _data.has_ai() )          insertFeature( Ai::create(_data.ai()) );
+  if ( _data.has_character() )   insertFeature( Character::create(_data.character()) );
+  if ( _data.has_destroyable() ) insertFeature( Destroyable::create(_data.destroyable()) );
+  if ( _data.has_inventory() )   insertFeature( Inventory::create(_data.inventory()) );
+  if ( _data.has_openable() )    insertFeature( Openable::create(_data.openable()) );
+  if ( _data.has_pickable() )    insertFeature( Pickable::create(_data.pickable()) );
+  if ( _data.has_trap() )        insertFeature( Trap::create(_data.trap()) );
+  if ( _data.has_wearer() )      insertFeature( Wearer::create(_data.wearer()) );
+  if ( _data.has_talker() )      insertFeature( Talker::create(_data.talker()) );
+
+  //initialize status effects
+  _effects.reset( new StatusEffectsManager(shared_from_this()) );
+  for ( auto se = _data.effects().begin(); se != _data.effects().end(); ++se)
+    getStatusEffects().add( StatusEffectPtr(new StatusEffect(*se)) );
+
+  applyPassiveSkills();
+
+  addObserver( &Engine::instance().getMessenger() );
 }
 
 void Actor::applyPassiveSkills()
@@ -46,7 +64,7 @@ void Actor::applyPassiveSkills()
     for ( SkillPtr s : c->getSkills([](SkillPtr s){ return s->isPassive(); }))
     {
       //remove if already applied
-      _effects->remove( [&](StatusEffectPtr se){
+      getStatusEffects().remove( [&](StatusEffectPtr se){
         return se->getScript() == s->getScript();
       }, false);
 
@@ -56,110 +74,21 @@ void Actor::applyPassiveSkills()
   }
 }
 
-void Actor::upgrade(ActorDescriptionPtr dsc)
+Actor::Actor(const ActorData &data)
 {
-  if ( dsc )
-  {
-    //Base fields
-    if (dsc->id)           _id = static_cast<ActorType>(*dsc->id);
-    if (dsc->x)            _x = *(dsc->x);
-    if (dsc->y)            _y = *(dsc->y);
-    if (dsc->name)         _name = *(dsc->name);
-    if (dsc->symbol)       _symbol = *(dsc->symbol);
-    if (dsc->color)        _color = strToColor(*dsc->color);
-    if (dsc->blocks)       _blocks = *(dsc->blocks);
-    if (dsc->fovOnly)      _fovOnly = *(dsc->fovOnly);
-    if (dsc->transparent)  _transparent = *(dsc->transparent);
-    if (dsc->tilePriority) _priority = *(dsc->tilePriority);
-    if (dsc->description)  _description = *(dsc->description);
-    if (dsc->visible)      setVisible( *(dsc->visible) );
-
-    //Features
-    for (auto& f : dsc->features )
-    {
-      if ( f.second )
-      {
-        ActorFeature::Type f_type = static_cast<ActorFeature::Type>(f.first);
-        auto it = _features.find( f_type );
-        if ( it != _features.end() )
-        {
-          it->second->upgrade( f.second );
-        }
-        else
-        {
-          auto feat = ActorFeature::create( f_type, f.second);
-          feat->setOwner( shared_from_this() );
-          _features[ f_type ] = feat;
-        }
-      }
-    }
-
-    //Status Effects
-    if ( !_effects ) _effects.reset( new StatusEffectsManager( shared_from_this()) );
-    for ( auto e : dsc->statusEffects )
-    {
-      StatusEffectPtr se( new StatusEffect(e.name, e.script, e.duration));
-      getStatusEffects().add( se );
-    }
-
-    applyPassiveSkills();
-  }
+  _data.CopyFrom(data);
 }
 
-ActorDescriptionPtr Actor::toDescriptionStruct()
+Actor::~Actor()
 {
-  ActorDescriptionPtr dsc( new ActorDescription );
-  ActorPtr base = Actor::create( _id );
-
-  dsc->id = static_cast<int>( _id );
-  dsc->x = _x;
-  dsc->y = _y;
-  if ( _fovOnly     != base->_fovOnly )     dsc->fovOnly = _fovOnly;
-  if ( _transparent != base->_transparent ) dsc->transparent = _transparent;
-  if ( _blocks      != base->_blocks )      dsc->blocks = _blocks;
-  if ( _priority    != base->_priority )    dsc->tilePriority = _priority;
-  if ( _color       != base->_color )       dsc->color = colorToStr(_color);
-  if ( _symbol      != base->_symbol )      dsc->symbol = _symbol;
-  if ( _name        != base->_name )        dsc->name = _name;
-  if ( isVisible()  != base->isVisible() )  dsc->visible = isVisible();
-  if ( _description != base->_description ) dsc->description = _description;
-
-  for ( StatusEffectPtr se : _effects->getEffects() )
-  {
-    StatusEffectDsc seDsc;
-    seDsc.name     = se->getName();
-    seDsc.script   = se->getScript();
-    seDsc.duration = se->getDuration();
-
-    dsc->statusEffects.push_back( seDsc );
-  }
-
-  for ( auto& kv : _features )
-  {
-    if ( kv.second )
-    {
-      DescriptionPtr fDsc = kv.second->toDescriptionStruct( base->getFeature(kv.first) );
-      if ( fDsc ) dsc->features[ (int)kv.first ] = fDsc;
-    }
-  }
-
-  return dsc;
 }
 
-Actor::Actor(ActorType aId, int x, int y, MapPtr map)
-  : _id(aId)
-  , _x(x)
-  , _y(y)
-  , _map(map)
-  , _fovOnly(true)
-  , _transparent(false)
-  , _blocks(false)
-  , _priority( -1 )
-  , _color(TCODColor::white)
-  , _symbol('#')
+ActorPtr Actor::clone() const
 {
-  setVisible(true);
-  addObserver( &Engine::instance().getMessenger() );
+  ActorPtr cloned( new Actor(*this) );
+  cloned->initialize();
+
+  return cloned;
 }
 
 Actor::Actor(const Actor &a)
@@ -168,17 +97,65 @@ Actor::Actor(const Actor &a)
   *this = a;
 }
 
-Actor::~Actor()
+Actor& Actor::operator=(const Actor &rhs)
 {
+  if ( this != &rhs )
+  {
+    rhs.updataData();
+    _data.CopyFrom(rhs._data);
+    _map = rhs._map;
+  }
+
+  return *this;
+}
+
+bool Actor::operator==(const Actor &rhs) const
+{
+  rhs.updataData();
+  updataData();
+
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
+}
+
+void Actor::updataData() const
+{
+  //Update Actor Feature Data
+  for ( auto kv : _features )
+  {
+    if ( kv.second )
+    {
+      switch ( kv.first )
+      {
+        case ActorFeature::AI:          _data.mutable_ai()         ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::OPENABLE:    _data.mutable_openable()   ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::WEARER:      _data.mutable_wearer()     ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::INVENTORY:   _data.mutable_inventory()  ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::CHARACTER:   _data.mutable_character()  ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::PICKABLE:    _data.mutable_pickable()   ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::DESTROYABLE: _data.mutable_destroyable()->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::TRAP:        _data.mutable_trap()       ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        case ActorFeature::TALKER:      _data.mutable_talker()     ->CopyFrom( kv.second->getDataPolymorphic() ); break;
+        default:;
+      }
+    }
+  }
+
+  //Update Status Effects Data
+  auto* effects_data = _data.mutable_effects();
+  effects_data->Clear();
+  for ( auto se : getStatusEffects().getEffects() )
+    effects_data->Add()->CopyFrom( se->getData() );
+
 }
 
 void Actor::morph(ActorType newType)
 {
-  ActorPtr newActor = Engine::instance().getActorDB().fetch(newType);
+  ActorPtr newActor = Actor::create(newType);
   if ( newActor )
   {
     newActor->setPosition( getX(), getY() );
     *this = *newActor;    
+    initialize();
   }
 }
 
@@ -197,70 +174,15 @@ int Actor::update()
   return turns;
 }
 
-ActorPtr Actor::clone()
+
+const ActorData& Actor::getData() const
 {
-  ActorPtr cloned( new Actor );
-  *cloned = *this;
-  return cloned;
+  return _data;
 }
-
-Actor& Actor::operator=(const Actor &rhs)
-{
-  if ( this != &rhs )
-  {
-    _id = rhs._id;
-    _x = rhs._x;
-    _y = rhs._y;
-    _map = rhs._map;
-    _fovOnly = rhs._fovOnly;
-    _transparent = rhs._transparent;
-    _blocks = rhs._blocks;
-    _priority = rhs._priority;
-    _name = rhs._name;
-    _description = rhs._description;
-    _color = rhs._color;
-    _symbol = rhs._symbol;
-    _flags = rhs._flags;
-
-    _features.clear();
-    for ( auto af : rhs._features )
-    {
-      insertFeature( af.second->clone() );
-    }
-
-    _effects = rhs._effects->clone();
-  }
-
-  return *this;
-}
-
-bool Actor::operator==(const Actor &rhs) const
-{
-  bool equal = true;
-
-  equal &= ( getType() == rhs.getType() );
-  equal &= ( _features.size() == rhs._features.size() );
-  equal &= rhs._fovOnly == _fovOnly;
-  equal &= rhs._transparent == _transparent;
-  equal &= rhs._blocks == _blocks;
-  equal &= rhs._priority == _priority;
-  equal &= rhs._name == _name;
-  equal &= rhs._color == _color;
-  equal &= rhs._symbol == _symbol;
-
-  for ( auto af : _features)
-  {
-    ActorFeaturePtr feature = af.second;
-    equal &= ( feature->isEqual( rhs.getFeature( feature->getType() ) ) );
-  }
-
-  return equal;
-}
-
 
 void Actor::setType(ActorType newType)
 {
-  _id = newType;
+  _data.set_actor_type( static_cast<int>(newType) );
 }
 
 bool Actor::isAlive() const
@@ -322,6 +244,7 @@ bool Actor::isHostileTo(ActorPtr actor)
 
 void Actor::interract(ActorPtr actor)
 {
+  //TODO mby move 'interract' to feature and iterate over them
   TrapPtr trap = getFeature<Trap>();
   if ( trap && actor && actor->isAlive() )
   {
@@ -330,44 +253,44 @@ void Actor::interract(ActorPtr actor)
   }
 }
 
-StatusEffectsManager &Actor::getStatusEffects() const
+StatusEffectsManager& Actor::getStatusEffects() const
 {
   return *_effects;
 }
 
 bool Actor::isFovOnly() const
 {
-  return _fovOnly;
+  return _data.is_fov_only();
 }
 
 void Actor::setFovOnly(bool f)
 {
-  _fovOnly = f;
+  _data.set_is_fov_only(f);
 }
 
 bool Actor::isTransparent() const
 {
-  return _transparent;
+  return _data.is_transparent();
 }
 
 void Actor::setTransparent(bool t)
 {
-  _transparent = t;
+  _data.set_is_transparent(t);
 }
 
 bool Actor::isBlocking() const
 {
-  return _blocks;
+  return _data.is_blocking();
 }
 
 void Actor::setBlocking(bool b)
 {
-  _blocks = b;
+  _data.set_is_blocking(b);
 }
 
 int Actor::getTileRenderPriority() const
 {
-  int p = _priority;
+  int p = _data.render_priority();
 
   if ( p == -1 )
   {
@@ -380,24 +303,24 @@ int Actor::getTileRenderPriority() const
 
 ActorType Actor::getType() const
 {
-  return _id;
+  return static_cast<ActorType>(_data.actor_type());
 }
 
 std::string Actor::getName() const
 {
-  return _name;
+  return _data.name();
 }
 
 void Actor::setName(std::string n)
 {
-  _name = n;
+  _data.set_name(n);
 }
 
 std::string Actor::getDescription()
 {
   std::string str  = colorToStr(TCODColor::darkRed, true) + getName() + "# #";
 
-  str += _description + "# #";
+  str += _data.description() + "# #";
 
   for ( auto& fPair : _features )
   {
@@ -409,12 +332,12 @@ std::string Actor::getDescription()
 
 int Actor::getX() const
 {
-  return _x;
+  return _data.x();
 }
 
 int Actor::getY() const
 {
-  return _y;
+  return _data.y();
 }
 
 void Actor::setPosition(int x, int y)
@@ -422,8 +345,8 @@ void Actor::setPosition(int x, int y)
   MapPtr map = _map.lock();
   if ( map ) map->removeActor( shared_from_this() );
 
-  _x = x;
-  _y = y;
+  _data.set_x(x);
+  _data.set_y(y);
 
   if ( map ) map->addActor( shared_from_this() );
 }
@@ -445,37 +368,37 @@ void Actor::setMap(MapPtr map)
 
 bool Actor::isVisible() const
 {
-  return _flags[0];
+  ::google::protobuf::uint32 f = _data.flags();
+  return !isBitSet(f, ACTOR_INVISIBLE_BIT);
 }
 
 void Actor::setVisible(bool visible)
 {
-  _flags.set(0, visible);
+  ::google::protobuf::uint32 f = _data.flags();
+  setBit(f, ACTOR_INVISIBLE_BIT, !visible);
+  _data.set_flags(f);
 
-  if ( visible && _effects )
-  {
-    getStatusEffects().remove( "Invisibility" );
-  }
+  if ( visible ) getStatusEffects().remove( "Invisibility" );
 }
 
 TCODColor Actor::getColor() const
 {
-  return _color;
+  return strToColor(_data.color());
 }
 
 void Actor::setColor(TCODColor c)
 {
-  _color = c;
+  _data.set_color(colorToStr(c));
 }
 
 unsigned char Actor::getSymbol() const
 {
-  return _symbol;
+  return _data.symbol().front();
 }
 
 void Actor::setSymbol(unsigned char s)
 {
-  _symbol = s;
+  _data.set_symbol( std::string(1, s) );
 }
 
 ActorFeaturePtr Actor::getFeature(ActorFeature::Type afType) const
@@ -491,9 +414,9 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
   ActorFeaturePtr overwriten;
   if ( feature != nullptr )
   {
-    feature->setOwner( shared_from_this() );
+    feature->setOwner( shared_from_this() ); //TODO cannot call it from constructor!
 
-    auto it = _features.find( feature->getType() );
+    auto it = _features.find( feature->getFeatureType() );
     if ( it != _features.end() )
     {
       overwriten = it->second;
@@ -501,7 +424,7 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
     }
     else
     {
-      _features[ feature->getType() ] = ActorFeaturePtr(feature);
+      _features[ feature->getFeatureType() ] = ActorFeaturePtr(feature);
     }
   }
   return overwriten;

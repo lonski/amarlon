@@ -82,7 +82,8 @@ bool World::store(const std::string &fn)
 
     //save Player
     ActorSerializer actorSerializer(doc.get(), saveNode);
-    actorSerializer.serialize(_player->toDescriptionStruct());
+    //actorSerializer.serialize(_player->toDescriptionStruct());
+    //XXX TODO
 
     //save current Map
     xml_node<>* cMapNode = doc->allocate_node(node_element, "CurrentMap");
@@ -129,7 +130,8 @@ void World::parsePlayer(rapidxml::xml_document<> &doc)
   if(playerNode != nullptr)
   {
     ActorParser parser(playerNode);
-    _player = Actor::create( parser.parseDescription() );
+    //_player = Actor::create( parser.parseDescription() );
+    //XXX TODO
     getCurrentMap()->addActor( _player );
   }
 }

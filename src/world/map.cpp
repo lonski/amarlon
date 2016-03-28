@@ -41,7 +41,8 @@ void Map::deserialize(MapDescriptionPtr dsc)
 
       for ( ActorDescriptionPtr aDsc : dsc->actors )
       {
-        addActor( Actor::create(aDsc) );
+        //addActor( Actor::create(aDsc) );
+        //XXX TODO
       }
 
       for ( auto& kv : dsc->actions )
@@ -77,7 +78,8 @@ MapDescriptionPtr Map::toDescriptionStruct()
 
   for ( ActorPtr actor : getActors() )
   {
-    dsc->actors.push_back( actor->toDescriptionStruct() );
+    //dsc->actors.push_back( actor->toDescriptionStruct() );
+    //XXX TODO
   }
 
   return dsc;

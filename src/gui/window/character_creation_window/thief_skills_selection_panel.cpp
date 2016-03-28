@@ -199,15 +199,32 @@ void ThiefSkillsSelectionPanel::setSkills()
 {
   if ( _parent )
   {
-    CharacterDescriptionPtr dsc = _parent->getCharacterDsc();
-    if ( dsc )
+    CharacterData* c = _parent->getPlayerDsc().mutable_character();
+    if ( c )
     {
-      dsc->skills.push_back( std::make_pair( (int)SkillId::OpenLocks,   getValue(OpenLocks)) );
-      dsc->skills.push_back( std::make_pair( (int)SkillId::DisarmTraps, getValue(DisarmTraps)) );
-      dsc->skills.push_back( std::make_pair( (int)SkillId::Hide,        getValue(Hide)) );
-      dsc->skills.push_back( std::make_pair( (int)SkillId::PickPockets, getValue(PickPockets)) );
-      dsc->skills.push_back( std::make_pair( (int)SkillId::SilentMove,  getValue(SilentMove)) );
-      dsc->skills.push_back( std::make_pair( (int)SkillId::FindTraps,   getValue(FindTraps)) );
+      auto* s = c->mutable_skills()->Add();
+      s->set_first( (int)SkillId::OpenLocks );
+      s->set_second( getValue(OpenLocks) );
+
+      s = c->mutable_skills()->Add();
+      s->set_first( (int)SkillId::DisarmTraps );
+      s->set_second( getValue(DisarmTraps) );
+
+      s = c->mutable_skills()->Add();
+      s->set_first( (int)SkillId::Hide );
+      s->set_second( getValue(Hide) );
+
+      s = c->mutable_skills()->Add();
+      s->set_first( (int)SkillId::PickPockets );
+      s->set_second( getValue(PickPockets) );
+
+      s = c->mutable_skills()->Add();
+      s->set_first( (int)SkillId::SilentMove );
+      s->set_second( getValue(SilentMove) );
+
+      s = c->mutable_skills()->Add();
+      s->set_first( (int)SkillId::FindTraps );
+      s->set_second( getValue(FindTraps) );
     }
   }
 }

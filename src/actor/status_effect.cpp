@@ -6,20 +6,35 @@
 namespace amarlon {
 
 StatusEffect::StatusEffect(const std::string& name, const std::string& script, int duration)
-  : _name( name )
-  , _script( script )
-  , _duration( duration )
 {
+  _data.set_name(name);
+  _data.set_script(script);
+  _data.set_duration(duration);
+}
+
+StatusEffect::StatusEffect(const StatusEffectData &data)
+{
+  _data.CopyFrom(data);
+}
+
+StatusEffect::StatusEffect(const StatusEffect &e)
+{
+  *this = e;
+}
+
+void StatusEffect::operator=(const StatusEffect &rhs)
+{
+  _data.CopyFrom(rhs._data);
 }
 
 bool StatusEffect::cancel(Target target)
 {
   bool success = false;
 
-  if ( target && !_script.empty() )
+  if ( target && !getScript().empty() )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
-    if ( lua.execute( _script ) )
+    if ( lua.execute( getScript() ) )
     {
       target.actors.erase( std::remove_if(target.actors.begin(), target.actors.end(),[](ActorPtr a){
                              return a == nullptr;
@@ -46,28 +61,32 @@ bool StatusEffect::cancel(Target target)
 
 int StatusEffect::getDuration() const
 {
-  return _duration;
+  return _data.duration();
 }
 
 void StatusEffect::setDuration(int duration)
 {
-  _duration = duration;
+  _data.set_duration(duration);
 }
 
 std::string StatusEffect::getName() const
 {
-  return _name;
+  return _data.name();
 }
 
 std::string StatusEffect::getScript() const
 {
-  return _script;
+  return _data.script();
 }
 
-bool StatusEffect::operator==(const StatusEffect &rhs)
+bool StatusEffect::operator==(const StatusEffect &rhs) const
 {
-  return _script == rhs._script &&
-         _name == rhs._name;
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
+}
+
+const StatusEffectData &StatusEffect::getData() const
+{
+  return _data;
 }
 
 }

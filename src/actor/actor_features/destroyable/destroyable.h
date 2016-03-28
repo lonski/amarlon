@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include <actor_feature.h>
-#include <drop_rule.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -14,25 +14,27 @@ typedef std::shared_ptr<Destroyable> DestroyablePtr;
 class Destroyable : public ActorFeature
 {
 public:
-  const static ActorFeature::Type featureType;
+  const static ActorFeature::Type FeatureType;
 
-  static DestroyablePtr create(DescriptionPtr dsc);
-  virtual void upgrade(DescriptionPtr dsc);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  static DestroyablePtr create(const DestroyableData &data);
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
-  virtual ActorFeature::Type getType();
+  Destroyable();
+  Destroyable(const Destroyable& rhs);
+  virtual ~Destroyable();
+
+  bool operator==(const Destroyable& rhs) const;
+  Destroyable& operator=(const Destroyable& rhs);
+  virtual const DestroyableData& getData() const;
+  virtual const ::google::protobuf::Message& getDataPolymorphic() const;
+
+  virtual ActorFeature::Type getFeatureType();
 
   void destroy();
-  const std::vector<DropRule> getDropRules() const;
-
-  Destroyable(DescriptionPtr dsc = nullptr);
-  ~Destroyable();
 
 private:
-  std::vector<DropRule> _dropRules;
+  DestroyableData _data;
 
+  Destroyable(const DestroyableData& data);
   void dropInventory();
   void dropOnGround(ActorPtr item);
   void processDropRules();

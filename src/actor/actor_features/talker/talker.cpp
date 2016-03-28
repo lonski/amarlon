@@ -3,54 +3,63 @@
 #include <lua_state.h>
 #include <engine.h>
 
+#include <dialog_parser.h>
 
 namespace amarlon {
 
-const ActorFeature::Type Talker::featureType = ActorFeature::TALKER;
+const ActorFeature::Type Talker::FeatureType = ActorFeature::TALKER;
 
-Talker::Talker(DescriptionPtr dsc)
-  : _id(0)
+TalkerPtr Talker::create(const TalkerData &data)
 {
-  upgrade(dsc);
+  return TalkerPtr( new Talker(data) );
+}
+
+Talker::Talker()
+{
+}
+
+Talker::Talker(const Talker &rhs)
+{
+  *this = rhs;
 }
 
 Talker::~Talker()
 {
 }
 
-TalkerPtr Talker::create(DescriptionPtr dsc)
+bool Talker::operator==(const Talker &rhs) const
 {
-  return TalkerPtr(new Talker(dsc));
+  return _data.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
-void Talker::upgrade(DescriptionPtr dsc)
+Talker &Talker::operator=(const Talker &rhs)
 {
-  TalkerDescriptionPtr tDsc = std::dynamic_pointer_cast<TalkerDescription>(dsc);
-  if ( tDsc )
+  if ( this != &rhs )
   {
-    if ( tDsc->id ) _id = *tDsc->id;
-    _dialogs.insert( _dialogs.begin(), tDsc->dialogs.begin(), tDsc->dialogs.end());
+    _data.CopyFrom(rhs._data);
+    initialize();
   }
+  return *this;
 }
 
-DescriptionPtr Talker::toDescriptionStruct(ActorFeaturePtr cmp)
+const TalkerData &Talker::getData() const
 {
-  TalkerDescriptionPtr dsc(new TalkerDescription);
-
-  dsc->id = _id;
-  dsc->dialogs = _dialogs;
-
-  return dsc;
+  return _data;
 }
 
-ActorFeature::Type Talker::getType()
+const google::protobuf::Message& Talker::getDataPolymorphic() const
 {
-  return Talker::featureType;
+  return getData();
+}
+
+ActorFeature::Type Talker::getFeatureType()
+{
+  return Talker::FeatureType;
 }
 
 int Talker::getId() const
 {
-  return _id;
+  return _data.id();
 }
 
 Dialog Talker::talk(ActorPtr talker, const Dialog &dialog, const Choice &choice)
@@ -96,33 +105,25 @@ Dialog Talker::getDialog(int id) const
   return it == _dialogs.end() ? Dialog(-1) : *it;
 }
 
-ActorFeaturePtr Talker::clone()
-{
-  return TalkerPtr(new Talker(*this));
-}
-
-bool Talker::isEqual(ActorFeaturePtr rhs) const
-{
-  bool equal = false;
-  TalkerPtr tRhs = std::dynamic_pointer_cast<Talker>(rhs);
-  if ( tRhs )
-  {
-    equal =  tRhs->_id == _id
-          && _dialogs.size() == tRhs->_dialogs.size()
-          && std::equal(_dialogs.begin(), _dialogs.end(), tRhs->_dialogs.begin());
-  }
-
-  return equal;
-}
-
 std::string Talker::getScript() const
 {
-  return Talker::getScript(_id);
+  return Talker::getScript( getId() );
 }
 
 std::string Talker::getScript(int id)
 {
   return "scripts/talker/" + std::to_string(id) + "/script.lua";
+}
+
+Talker::Talker(const TalkerData &data)
+{
+  _data.CopyFrom(data);
+  initialize();
+}
+
+void Talker::initialize()
+{
+  _dialogs = DialogParser().parse( getId() );
 }
 
 }
