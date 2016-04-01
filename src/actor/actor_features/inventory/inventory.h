@@ -41,9 +41,6 @@ public:
 
   virtual ActorFeature::Type getFeatureType() { return Inventory::FeatureType; }
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
-
   bool add(ActorPtr actor, bool notify = false);
   bool remove(ActorPtr actor, bool notify = false);
   void clear();

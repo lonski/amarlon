@@ -2,7 +2,7 @@
 #define ACTORDB_H
 
 #include <string>
-#include <vector>
+#include <map>
 #include <memory>
 #include <actor_type.h>
 #include <actor.pb.h>
@@ -10,9 +10,7 @@
 namespace amarlon {
 
 class Actor;
-struct ActorDescription;
 typedef std::shared_ptr<Actor> ActorPtr;
-typedef std::shared_ptr<ActorDescription> ActorDescriptionPtr;
 
 class ActorDB
 {
@@ -29,9 +27,7 @@ public:
   bool load(const std::string& fn);
 
 private:
-  std::vector<ActorDescriptionPtr> _descriptions;
-
-  void parseActors(std::vector<char>& dataToParse);
+  std::map<ActorType, ActorData> _actors;
 
 };
 

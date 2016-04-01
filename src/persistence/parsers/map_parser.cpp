@@ -2,7 +2,6 @@
 #include <string>
 #include <xml_utils.h>
 #include <map.h>
-#include <actor_parser.h>
 #include <actor.h>
 #include <teleport_action.h>
 #include <fstream>
@@ -10,13 +9,11 @@
 namespace amarlon {
 
 MapParser::MapParser()
-  : _actorParser( new ActorParser)
 {
 }
 
 MapParser::MapParser(rapidxml::xml_node<> *xmlNode)
   : Parser(xmlNode)
-  , _actorParser( new ActorParser )
 {
 }
 
@@ -32,18 +29,18 @@ MapDescriptionPtr MapParser::parseDescription()
     mDsc->id = getAttribute<int>(_xml, "id");
     mDsc->binaryTiles = getNodeValue<std::string>( _xml->first_node("Tiles") );
 
-    //Parse Actors
-    rapidxml::xml_node<>* actorsRoot = _xml->first_node("Actors");
-    if (actorsRoot != nullptr)
-    {
-      rapidxml::xml_node<>* actorNode = actorsRoot->first_node("Actor");
-      while ( actorNode != nullptr )
-      {
-        _actorParser->setSource( actorNode );
-        mDsc->actors.push_back( _actorParser->parseDescription() );
-        actorNode = actorNode->next_sibling();
-      }
-    }
+    //XXX TODO Parse Actors
+//    rapidxml::xml_node<>* actorsRoot = _xml->first_node("Actors");
+//    if (actorsRoot != nullptr)
+//    {
+//      rapidxml::xml_node<>* actorNode = actorsRoot->first_node("Actor");
+//      while ( actorNode != nullptr )
+//      {
+//        _actorParser->setSource( actorNode );
+//        mDsc->actors.push_back( _actorParser->parseDescription() );
+//        actorNode = actorNode->next_sibling();
+//      }
+//    }
 
     //Parse Actions
     rapidxml::xml_node<>* onExitNode = _xml->first_node("OnExit");

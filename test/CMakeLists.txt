@@ -23,7 +23,6 @@ set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/databases/spell_db.h
     ${PROJECT_SOURCE_DIR}/src/databases/tile_db.h
     ${PROJECT_SOURCE_DIR}/src/databases/map_db.h
-    ${PROJECT_SOURCE_DIR}/src/persistence/parsers/actor_parser.h
     ${PROJECT_SOURCE_DIR}/src/persistence/parsers/parser.h
     ${PROJECT_SOURCE_DIR}/src/persistence/parsers/tile_parser.h
     ${PROJECT_SOURCE_DIR}/src/world/map.h

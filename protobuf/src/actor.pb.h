@@ -48,6 +48,7 @@ class TrapData;
 class WearerData;
 class StatusEffectData;
 class ActorData;
+class ActorsData;
 
 // ===================================================================
 
@@ -1647,6 +1648,88 @@ class ActorData : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static ActorData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ActorsData : public ::google::protobuf::Message {
+ public:
+  ActorsData();
+  virtual ~ActorsData();
+
+  ActorsData(const ActorsData& from);
+
+  inline ActorsData& operator=(const ActorsData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ActorsData& default_instance();
+
+  void Swap(ActorsData* other);
+
+  // implements Message ----------------------------------------------
+
+  ActorsData* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ActorsData& from);
+  void MergeFrom(const ActorsData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .amarlon.ActorData actor = 1;
+  inline int actor_size() const;
+  inline void clear_actor();
+  static const int kActorFieldNumber = 1;
+  inline const ::amarlon::ActorData& actor(int index) const;
+  inline ::amarlon::ActorData* mutable_actor(int index);
+  inline ::amarlon::ActorData* add_actor();
+  inline const ::google::protobuf::RepeatedPtrField< ::amarlon::ActorData >&
+      actor() const;
+  inline ::google::protobuf::RepeatedPtrField< ::amarlon::ActorData >*
+      mutable_actor();
+
+  // @@protoc_insertion_point(class_scope:amarlon.ActorsData)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::amarlon::ActorData > actor_;
+  friend void  protobuf_AddDesc_actor_2eproto();
+  friend void protobuf_AssignDesc_actor_2eproto();
+  friend void protobuf_ShutdownFile_actor_2eproto();
+
+  void InitAsDefaultInstance();
+  static ActorsData* default_instance_;
 };
 // ===================================================================
 
@@ -4168,6 +4251,40 @@ inline void ActorData::set_allocated_talker(::amarlon::TalkerData* talker) {
     clear_has_talker();
   }
   // @@protoc_insertion_point(field_set_allocated:amarlon.ActorData.talker)
+}
+
+// -------------------------------------------------------------------
+
+// ActorsData
+
+// repeated .amarlon.ActorData actor = 1;
+inline int ActorsData::actor_size() const {
+  return actor_.size();
+}
+inline void ActorsData::clear_actor() {
+  actor_.Clear();
+}
+inline const ::amarlon::ActorData& ActorsData::actor(int index) const {
+  // @@protoc_insertion_point(field_get:amarlon.ActorsData.actor)
+  return actor_.Get(index);
+}
+inline ::amarlon::ActorData* ActorsData::mutable_actor(int index) {
+  // @@protoc_insertion_point(field_mutable:amarlon.ActorsData.actor)
+  return actor_.Mutable(index);
+}
+inline ::amarlon::ActorData* ActorsData::add_actor() {
+  // @@protoc_insertion_point(field_add:amarlon.ActorsData.actor)
+  return actor_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::amarlon::ActorData >&
+ActorsData::actor() const {
+  // @@protoc_insertion_point(field_list:amarlon.ActorsData.actor)
+  return actor_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::amarlon::ActorData >*
+ActorsData::mutable_actor() {
+  // @@protoc_insertion_point(field_mutable_list:amarlon.ActorsData.actor)
+  return &actor_;
 }
 
 

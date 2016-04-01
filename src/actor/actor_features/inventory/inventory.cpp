@@ -11,6 +11,11 @@ namespace amarlon {
 
 const ActorFeature::Type Inventory::FeatureType = ActorFeature::INVENTORY;
 
+InventoryPtr Inventory::create(const InventoryData &data)
+{
+  return InventoryPtr( new Inventory(data) );
+}
+
 Inventory::Inventory()
   : _items( new ActorContainer )
 {

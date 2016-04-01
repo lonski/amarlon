@@ -2,8 +2,6 @@
 #include <map.h>
 #include <vector>
 #include <fstream>
-#include <actor_serializer.h>
-#include <actor_parser.h>
 #include <actor.h>
 #include <actor_descriptions.h>
 #include <utils/xml_utils.h>
@@ -81,7 +79,7 @@ bool World::store(const std::string &fn)
     doc->append_node(saveNode);
 
     //save Player
-    ActorSerializer actorSerializer(doc.get(), saveNode);
+    //ActorSerializer actorSerializer(doc.get(), saveNode);
     //actorSerializer.serialize(_player->toDescriptionStruct());
     //XXX TODO
 
@@ -129,7 +127,7 @@ void World::parsePlayer(rapidxml::xml_document<> &doc)
 
   if(playerNode != nullptr)
   {
-    ActorParser parser(playerNode);
+    //ActorParser parser(playerNode);
     //_player = Actor::create( parser.parseDescription() );
     //XXX TODO
     getCurrentMap()->addActor( _player );

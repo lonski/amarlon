@@ -3,7 +3,6 @@
 
 #include <serializer.h>
 #include <action_serializer.h>
-#include <actor_serializer.h>
 #include <memory>
 
 namespace amarlon {
@@ -19,8 +18,6 @@ public:
 
 private:
   ActionSerializer _actionSerializer;
-  ActorSerializer _actorSerializer;
-
 
 };
 

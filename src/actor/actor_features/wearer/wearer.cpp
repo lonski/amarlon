@@ -10,6 +10,11 @@ namespace amarlon {
 
 const ActorFeature::Type Wearer::FeatureType = ActorFeature::WEARER;
 
+WearerPtr Wearer::create(const WearerData &data)
+{
+  return WearerPtr( new Wearer(data) );
+}
+
 Wearer::Wearer()
   : _equippedItems( new ActorContainer )
 {

@@ -40,11 +40,12 @@ bool MapSerializer::serialize(DescriptionPtr dsc)
     xml_node<>* actorsNode = createNode(_document, "Actors", "");
     _mapNode->append_node( actorsNode );
 
-    _actorSerializer.setDestination(_document, actorsNode);
-    for ( auto a : mDsc->actors )
-    {
-      _actorSerializer.serialize(a);
-    }
+    //XXX TODO
+//    _actorSerializer.setDestination(_document, actorsNode);
+//    for ( auto a : mDsc->actors )
+//    {
+//      _actorSerializer.serialize(a);
+//    }
 
     xml_node<>* exitActionsNode = createNode(_document, "OnExit", "");
     _mapNode->append_node( exitActionsNode );

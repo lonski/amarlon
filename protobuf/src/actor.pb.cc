@@ -53,6 +53,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* ActorData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ActorData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ActorsData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ActorsData_reflection_ = NULL;
 
 }  // namespace
 
@@ -292,6 +295,21 @@ void protobuf_AssignDesc_actor_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ActorData));
+  ActorsData_descriptor_ = file->message_type(11);
+  static const int ActorsData_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorsData, actor_),
+  };
+  ActorsData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ActorsData_descriptor_,
+      ActorsData::default_instance_,
+      ActorsData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorsData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorsData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(ActorsData));
 }
 
 namespace {
@@ -326,6 +344,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     StatusEffectData_descriptor_, &StatusEffectData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ActorData_descriptor_, &ActorData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ActorsData_descriptor_, &ActorsData::default_instance());
 }
 
 }  // namespace
@@ -353,6 +373,8 @@ void protobuf_ShutdownFile_actor_2eproto() {
   delete StatusEffectData_reflection_;
   delete ActorData::default_instance_;
   delete ActorData_reflection_;
+  delete ActorsData::default_instance_;
+  delete ActorsData_reflection_;
 }
 
 void protobuf_AddDesc_actor_2eproto() {
@@ -414,7 +436,8 @@ void protobuf_AddDesc_actor_2eproto() {
     "e\030\023 \001(\0132\025.amarlon.PickableData\022\037\n\004trap\030\024"
     " \001(\0132\021.amarlon.TrapData\022#\n\006wearer\030\025 \001(\0132"
     "\023.amarlon.WearerData\022#\n\006talker\030\026 \001(\0132\023.a"
-    "marlon.TalkerData", 1937);
+    "marlon.TalkerData\"/\n\nActorsData\022!\n\005actor"
+    "\030\001 \003(\0132\022.amarlon.ActorData", 1986);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "actor.proto", &protobuf_RegisterTypes);
   AiData::default_instance_ = new AiData();
@@ -428,6 +451,7 @@ void protobuf_AddDesc_actor_2eproto() {
   WearerData::default_instance_ = new WearerData();
   StatusEffectData::default_instance_ = new StatusEffectData();
   ActorData::default_instance_ = new ActorData();
+  ActorsData::default_instance_ = new ActorsData();
   AiData::default_instance_->InitAsDefaultInstance();
   CharacterData::default_instance_->InitAsDefaultInstance();
   DestroyableData::default_instance_->InitAsDefaultInstance();
@@ -439,6 +463,7 @@ void protobuf_AddDesc_actor_2eproto() {
   WearerData::default_instance_->InitAsDefaultInstance();
   StatusEffectData::default_instance_->InitAsDefaultInstance();
   ActorData::default_instance_->InitAsDefaultInstance();
+  ActorsData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_actor_2eproto);
 }
 
@@ -5728,6 +5753,226 @@ void ActorData::Swap(ActorData* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = ActorData_descriptor_;
   metadata.reflection = ActorData_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int ActorsData::kActorFieldNumber;
+#endif  // !_MSC_VER
+
+ActorsData::ActorsData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:amarlon.ActorsData)
+}
+
+void ActorsData::InitAsDefaultInstance() {
+}
+
+ActorsData::ActorsData(const ActorsData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:amarlon.ActorsData)
+}
+
+void ActorsData::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ActorsData::~ActorsData() {
+  // @@protoc_insertion_point(destructor:amarlon.ActorsData)
+  SharedDtor();
+}
+
+void ActorsData::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void ActorsData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* ActorsData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ActorsData_descriptor_;
+}
+
+const ActorsData& ActorsData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_actor_2eproto();
+  return *default_instance_;
+}
+
+ActorsData* ActorsData::default_instance_ = NULL;
+
+ActorsData* ActorsData::New() const {
+  return new ActorsData;
+}
+
+void ActorsData::Clear() {
+  actor_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ActorsData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:amarlon.ActorsData)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .amarlon.ActorData actor = 1;
+      case 1: {
+        if (tag == 10) {
+         parse_actor:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_actor()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(10)) goto parse_actor;
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:amarlon.ActorsData)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:amarlon.ActorsData)
+  return false;
+#undef DO_
+}
+
+void ActorsData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:amarlon.ActorsData)
+  // repeated .amarlon.ActorData actor = 1;
+  for (int i = 0; i < this->actor_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->actor(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:amarlon.ActorsData)
+}
+
+::google::protobuf::uint8* ActorsData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:amarlon.ActorsData)
+  // repeated .amarlon.ActorData actor = 1;
+  for (int i = 0; i < this->actor_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->actor(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:amarlon.ActorsData)
+  return target;
+}
+
+int ActorsData::ByteSize() const {
+  int total_size = 0;
+
+  // repeated .amarlon.ActorData actor = 1;
+  total_size += 1 * this->actor_size();
+  for (int i = 0; i < this->actor_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->actor(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ActorsData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ActorsData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ActorsData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ActorsData::MergeFrom(const ActorsData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  actor_.MergeFrom(from.actor_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ActorsData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ActorsData::CopyFrom(const ActorsData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ActorsData::IsInitialized() const {
+
+  if (!::google::protobuf::internal::AllAreInitialized(this->actor())) return false;
+  return true;
+}
+
+void ActorsData::Swap(ActorsData* other) {
+  if (other != this) {
+    actor_.Swap(&other->actor_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ActorsData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ActorsData_descriptor_;
+  metadata.reflection = ActorsData_reflection_;
   return metadata;
 }
 

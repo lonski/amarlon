@@ -115,7 +115,6 @@ protected:
   virtual void setMaxHitPoints(int maxHp);
   PickablePtr getEquippedItem(ItemSlotType slot);
   void cloneBase(Character* c);
-  virtual void toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cmp = nullptr);
   virtual void setAbilityScore(AbilityScore::Type as, int value);
 
 private:

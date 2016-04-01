@@ -12,7 +12,6 @@ class Map;
 class ActorParser;
 typedef std::shared_ptr<Map> MapPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
-typedef std::shared_ptr<ActorParser> ActorParserPtr;
 
 class MapParser : public Parser
 {
@@ -21,9 +20,6 @@ public:
   MapParser(rapidxml::xml_node<>* xmlNode);
 
   MapDescriptionPtr parseDescription();
-
-private:
-  ActorParserPtr _actorParser;
 
 };
 

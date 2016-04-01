@@ -117,3 +117,7 @@ message ActorData{
   optional WearerData wearer                 = 21;
   optional TalkerData talker                 = 22;
 }
+
+message ActorsData {
+  repeated ActorData actor = 1;
+}

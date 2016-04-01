@@ -7,7 +7,6 @@
 #include <map.h>
 #include <actor_type.h>
 #include <actor.h>
-#include <actor_parser.h>
 #include <map_serializer.h>
 
 namespace amarlon {

@@ -48,9 +48,6 @@ public:
    */
   virtual Dialog getDialog(int id) const;
 
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
-
   virtual std::string getScript() const;
   static std::string getScript(int id);
 

@@ -31,8 +31,6 @@ public:
   virtual const ::google::protobuf::Message& getDataPolymorphic() const;
 
   virtual ActorFeature::Type getFeatureType();
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
 
   virtual bool open(ActorPtr executor);
   virtual bool close(ActorPtr executor);

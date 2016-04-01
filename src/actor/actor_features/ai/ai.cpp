@@ -14,6 +14,8 @@
 
 namespace amarlon {
 
+const ActorFeature::Type Ai::FeatureType = ActorFeature::AI;
+
 /* Flag bits */
 const int IS_HIDING_BIT = 1;
 const int IS_SNEAKING_BIT = 2;

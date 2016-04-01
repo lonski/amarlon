@@ -2,7 +2,6 @@ set(HEADER_FILES
     descriptions/tile_description.h
     parsers/parser.h
     parsers/tile_parser.h
-    parsers/actor_parser.h
     parsers/map_parser.h
     parsers/spell_parser.h
     parsers/rpg_parser.h
@@ -10,17 +9,6 @@ set(HEADER_FILES
     serializers/serializer.h
     serializers/map_serializer.h
     serializers/action_serializer.h
-    serializers/actor_serializer.h
-    serializers/actor_feature_serializers/actor_feature_serializer.h
-    serializers/actor_feature_serializers/pickable_serializer.h
-    serializers/actor_feature_serializers/destroyable_serializer.h
-    serializers/actor_feature_serializers/inventory_serializer.h
-    serializers/actor_feature_serializers/wearer_serializer.h
-    serializers/actor_feature_serializers/openable_serializer.h
-    serializers/actor_feature_serializers/character_serializer.h
-    serializers/actor_feature_serializers/ai_serializer.h
-    serializers/actor_feature_serializers/trap_serializer.h
-    serializers/actor_feature_serializers/talker_serializer.h
     descriptions/actor_descriptions.h
     descriptions/spell_description.h
     descriptions/actor_feature_descriptions/pickable_description.h
@@ -43,7 +31,6 @@ set(HEADER_FILES
 )
 
 set(SOURCE_FILES
-    parsers/actor_parser.cpp
     parsers/tile_parser.cpp
     parsers/map_parser.cpp
     parsers/spell_parser.cpp
@@ -51,16 +38,6 @@ set(SOURCE_FILES
     parsers/dialog_parser.cpp
     serializers/map_serializer.cpp
     serializers/action_serializer.cpp
-    serializers/actor_serializer.cpp
-    serializers/actor_feature_serializers/pickable_serializer.cpp
-    serializers/actor_feature_serializers/destroyable_serializer.cpp
-    serializers/actor_feature_serializers/inventory_serializer.cpp
-    serializers/actor_feature_serializers/wearer_serializer.cpp
-    serializers/actor_feature_serializers/openable_serializer.cpp
-    serializers/actor_feature_serializers/character_serializer.cpp
-    serializers/actor_feature_serializers/ai_serializer.cpp
-    serializers/actor_feature_serializers/trap_serializer.cpp
-    serializers/actor_feature_serializers/talker_serializer.cpp
 )
 
 add_library(persistence SHARED ${SOURCE_FILES} ${HEADER_FILES})
