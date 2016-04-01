@@ -77,8 +77,11 @@ void BagManager::manage()
       switch(operation)
       {
         case EQUIP: equip( selectedItem ); break;
-        case DROP: Engine::instance().getPlayer()->performAction( std::make_shared<DropAction>(selectedItem, getAmountToDrop(selectedItem) ) ); break;
-        //TODO display actor info text instead of test string
+        case DROP: Engine::instance()
+                          .getPlayer()
+                          ->performAction(
+                              std::make_shared<DropAction>(selectedItem,
+                                                           getAmountToDrop(selectedItem) ) ); break;
         case INSPECT:
           Engine::instance()
               .getWindowManager()

@@ -3,11 +3,9 @@
 #include <iostream>
 #include <algorithm>
 #include <memory>
-#include <xml/rapidxml_print.hpp>
 #include <map.h>
 #include <actor_type.h>
 #include <actor.h>
-#include <map_serializer.h>
 
 namespace amarlon {
 
@@ -29,7 +27,7 @@ MapPtr MapDB::fetch(MapId id)
   auto mIter = _maps.find(id);
   if ( mIter != _maps.end() )
   {
-    map = mIter->second->clone();
+    map.reset( new Map(*mIter->second) );
   }
 
   return map;
@@ -41,52 +39,19 @@ bool MapDB::load(const string& fn)
 
   if (ifs.is_open())
   {
-    vector<char> buf;
-    buf.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
-    buf.push_back('\0');
+    _maps.clear();
 
-    xml_document<> doc;
-    doc.parse<0>(&buf[0]);
+    MapsData maps;
+    maps.ParseFromIstream(&ifs);
 
-    parseMaps(doc);
+    for ( auto it = maps.map().begin(); it != maps.map().end(); ++it )
+    {
+      _maps[ static_cast<MapId>(it->id()) ] = MapPtr(new Map(*it));
+    }
 
     return true;
   }
   return false;
-}
-
-void MapDB::parseMaps(rapidxml::xml_document<>& doc)
-{
-  xml_node<>* maps = doc.first_node("Maps");
-  xml_node<>* mapNode = maps ? maps->first_node("Map") : nullptr;
-
-  while(mapNode != nullptr)
-  {
-    _mapParser.setSource( mapNode );
-
-    MapPtr map( new Map );
-    map->deserialize( _mapParser.parseDescription() );
-
-    if ( map ) _maps[ map->getId() ] = map;
-
-    mapNode = mapNode->next_sibling();
-  }
-}
-
-std::shared_ptr<xml_document<> > MapDB::serializeMaps()
-{
-  std::shared_ptr<xml_document<> > doc(new xml_document<>);
-
-  xml_node<>* mapsNode = doc->allocate_node(node_element, "Maps");
-  doc->append_node(mapsNode);
-
-  MapSerializer _mapSerializer(doc.get(), mapsNode);
-  for (auto m : _maps)
-  {
-    if (m.second) _mapSerializer.serialize( m.second->toDescriptionStruct() );
-  }
-
-  return doc;
 }
 
 bool MapDB::store(const string& fn)
@@ -94,8 +59,12 @@ bool MapDB::store(const string& fn)
   ofstream ofs(fn);
   if ( ofs.is_open() )
   {
-    ofs << *serializeMaps();
-    return true;
+    MapsData maps;
+
+    for ( auto& kv : _maps )
+      maps.add_map()->CopyFrom( kv.second->getData() );
+
+    return maps.SerializeToOstream(&ofs);
   }
   return false;
 }

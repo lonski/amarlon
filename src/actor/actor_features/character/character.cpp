@@ -5,7 +5,7 @@
 #include <spell.h>
 #include <spell_db.h>
 #include <engine.h>
-#include <actor_descriptions.h>
+
 #include <spell_book.h>
 #include <skill.h>
 #include <algorithm>

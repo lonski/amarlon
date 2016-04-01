@@ -4,7 +4,7 @@
 #include <gui.h>
 #include <amarlon_except.h>
 #include <utils.h>
-#include <actor_descriptions.h>
+
 #include <cassert>
 #include <lua_state.h>
 #include <engine.h>
@@ -44,7 +44,11 @@ Pickable::~Pickable()
 
 bool Pickable::operator==(const Pickable& rhs) const
 {
-  return _data.SerializeAsString() == rhs._data.SerializeAsString();
+  //Hack to omit amount comparision
+  PickableData tempData(_data);
+  tempData.set_amount( rhs.getAmount() );
+
+  return tempData.SerializeAsString() == rhs._data.SerializeAsString();
 }
 
 Pickable& Pickable::operator=(const Pickable& rhs)

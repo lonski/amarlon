@@ -1,8 +1,6 @@
 #include "talker.h"
-#include <talker_description.h>
 #include <lua_state.h>
 #include <engine.h>
-
 #include <dialog_parser.h>
 
 namespace amarlon {

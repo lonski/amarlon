@@ -27,11 +27,6 @@ public:
 
   SpellBookData getData() const;
 
-  /*OBSOLETE, TODO: REMOVE*/
-  static SpellBookPtr create(SpellbookDescription dsc);
-  SpellbookDescriptionPtr toDescriptionStruct();
-  //
-
   std::vector<SpellSlotPtr> getSlots(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;}) const;
   std::vector<SpellPtr> getKnownSpells( std::function<bool(SpellPtr)> filter = [](SpellPtr){return true;} ) const;
 
@@ -49,7 +44,6 @@ public:
    * @brief Prepares all spells so they will be ready to cast.
    */
   void prepareSpells();
-
 
 private:
 

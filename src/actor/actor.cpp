@@ -10,7 +10,7 @@
 #include <status_effects_manager.h>
 #include <status_effect.h>
 #include <world.h>
-#include <actor_descriptions.h>
+
 #include <trap.h>
 #include <skill.h>
 
@@ -29,8 +29,7 @@ ActorPtr Actor::create(const ActorData& data)
 
 ActorPtr Actor::create(ActorType type)
 {
-  //TODO fetch from DB
-  return nullptr;
+  return Engine::instance().getActorDB().fetch(type);
 }
 
 void Actor::initialize()
@@ -414,7 +413,7 @@ ActorFeaturePtr Actor::insertFeature(ActorFeaturePtr feature)
   ActorFeaturePtr overwriten;
   if ( feature != nullptr )
   {
-    feature->setOwner( shared_from_this() ); //TODO cannot call it from constructor!
+    feature->setOwner( shared_from_this() );
 
     auto it = _features.find( feature->getFeatureType() );
     if ( it != _features.end() )

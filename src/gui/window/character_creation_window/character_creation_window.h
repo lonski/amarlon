@@ -2,7 +2,7 @@
 #define CHARACTER_CREATION_WINDOW_H
 
 #include <amultipanel_window.h>
-#include <actor_descriptions.h>
+
 #include <memory>
 #include <actor.pb.h>
 

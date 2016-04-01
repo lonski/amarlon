@@ -4,7 +4,7 @@
 #include <experience_table.h>
 #include <race.h>
 #include <inventory.h>
-#include <actor_descriptions.h>
+
 #include <character_class.h>
 #include <spell_book.h>
 #include <engine.h>

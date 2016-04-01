@@ -2,7 +2,6 @@
 #define SPELL_SLOT
 
 #include <memory>
-#include <spellbook_description.h>
 #include <spell.h>
 
 namespace amarlon {
@@ -28,16 +27,6 @@ struct SpellSlot
   SpellSlotPtr clone() const
   {
     return SpellSlotPtr( new SpellSlot(*this) );
-  }
-
-  SpellSlotDescriptionPtr toDescriptionStruct()
-  {
-    SpellSlotDescriptionPtr dsc(new SpellSlotDescription);
-    dsc->level = level;
-    dsc->prepared = isPrepared;
-    dsc->spell = spell ? (int)spell->getId() : 0;
-
-    return dsc;
   }
 
   SpellSlot& operator=(const SpellSlot& rhs)

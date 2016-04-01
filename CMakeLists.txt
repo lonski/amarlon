@@ -34,7 +34,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${amarlon_BINARY_DIR}")
 
 add_subdirectory(src)
 add_subdirectory(src/gui/widgets)
-add_subdirectory(src/persistence)
 add_subdirectory(protobuf/src)
-#add_subdirectory(test) XXX TODO
+add_subdirectory(test)
 #add_subdirectory(map_editor)

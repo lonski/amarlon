@@ -6,6 +6,7 @@ set(HEADER_FILES
     drop_rule.pb.h
     item_type.pb.h
     utils.pb.h
+    map.pb.h
 )
 
 set(SOURCE_FILES
@@ -16,6 +17,7 @@ set(SOURCE_FILES
     drop_rule.pb.cc
     item_type.pb.cc
     utils.pb.cc
+    map.pb.cc
 )
 
 add_library(proto_data SHARED ${SOURCE_FILES} ${HEADER_FILES})

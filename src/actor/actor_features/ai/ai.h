@@ -14,12 +14,10 @@ namespace amarlon {
 
 class Ai;
 class ActorAction;
-struct AiDescription;
 class FSM;
 typedef std::shared_ptr<Ai> AiPtr;
 typedef std::shared_ptr<FSM> FSMPtr;
 typedef std::shared_ptr<ActorAction> ActorActionPtr;
-typedef std::shared_ptr<AiDescription> AiDescriptionPtr;
 typedef std::vector<ActorPtr> ActorVector;
 
 class Ai : public ActorFeature

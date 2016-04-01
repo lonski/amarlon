@@ -27,7 +27,11 @@ protected:
 
 TEST_F(MapTest, mapCreation)
 {
-  Map map(100, 60);
+  MapData data;
+  data.set_height(60);
+  data.set_width(60);
+
+  Map map(data);
 
   ASSERT_EQ(map.getWidth(), (size_t)100);
   ASSERT_EQ(map.getHeight(), (size_t)60);
@@ -35,21 +39,34 @@ TEST_F(MapTest, mapCreation)
 
 TEST_F(MapTest, mapHasTiles)
 {
-  Map map(100, 60);
+  MapData data;
+  data.set_height(60);
+  data.set_width(60);
+
+  Map map(data);
 
   ASSERT_FALSE(map.isExplored(10, 5));
 }
 
 TEST_F(MapTest, mapIsInFov_notComputed)
 {
-  Map map(100, 60);
+  MapData data;
+  data.set_height(60);
+  data.set_width(60);
+
+  Map map(data);
 
   ASSERT_FALSE(map.isInFov(10, 5));
 }
 
 TEST_F(MapTest, mapIsInFov_computed)
 {
-  Map map(100, 60);
+  MapData data;
+  data.set_height(60);
+  data.set_width(60);
+
+  Map map(data);
+
   map.computeFov(10, 10, 5);
 
   ASSERT_TRUE(map.isInFov(10, 10));
@@ -58,7 +75,9 @@ TEST_F(MapTest, mapIsInFov_computed)
 TEST_F(MapTest, addActor)
 {
   MapPtr map = mapDB.fetch(MapId::GameStart);
-  ActorPtr actor = Actor::create(ActorType::HealthPotion,1,1);
+
+  ActorPtr actor = Actor::create(ActorType::HealthPotion);
+  actor->setPosition(1,1);
 
   map->addActor(actor);
   auto actors = map->getActors(1,1);

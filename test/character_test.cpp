@@ -3,7 +3,6 @@
 #include <character.h>
 #include <playable_character.h>
 #include <engine.h>
-#include <actor_descriptions.h>
 #include <race.h>
 #include <character_type.h>
 
@@ -51,19 +50,21 @@ TEST_F(CharacterTest, carryingLoad)
   clearInventory(ziomek);
 
   //replace Character feature
-  CharacterDescriptionPtr dsc(new CharacterDescription);
-  dsc->race = (int)RaceType::Human;
-  dsc->abilityScores[AbilityScore::STR] = 10;
-  dsc->speed = 40;
-  dsc->type = (int)CharacterType::PlayableCharacter;
+  CharacterData dsc;
+  dsc.set_racetype( (int)RaceType::Human );
+  IntIntPair* as = dsc.mutable_abilityscores()->Add();
+  as->set_first( (int)AbilityScore::STR );
+  as->set_second( 10 );
+  dsc.set_speed(40);
+  dsc.set_charactertype( (int)CharacterType::PlayableCharacter );
 
-  CharacterPtr pc_ch = std::dynamic_pointer_cast<Character>( Character::create(dsc) );
+  CharacterPtr pc_ch = Character::create(dsc);
   ziomek->insertFeature( pc_ch );
   ASSERT_TRUE( pc_ch != nullptr);
 
   //ziomek should have light load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Light );
-  ASSERT_EQ( pc_ch->getSpeed(), dsc->speed);
+  ASSERT_EQ( pc_ch->getSpeed(), dsc.speed());
 
   //add some light item
   ActorPtr potka = Actor::create(ActorType::Dagger);
@@ -71,7 +72,7 @@ TEST_F(CharacterTest, carryingLoad)
 
   //ziomek should have light load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Light );
-  ASSERT_EQ( pc_ch->getSpeed(), dsc->speed);
+  ASSERT_EQ( pc_ch->getSpeed(), dsc.speed());
 
   //create heavy item
   ActorPtr armor = Actor::create(ActorType::LeatherArmor);
@@ -84,7 +85,7 @@ TEST_F(CharacterTest, carryingLoad)
 
   //ziomek should have heavy load
   ASSERT_TRUE( pc_ch->getLoadLevel() == CarryingCapacity::LoadLevel::Heavy );
-  ASSERT_EQ( pc_ch->getSpeed(), *dsc->speed - 10 );
+  ASSERT_EQ( pc_ch->getSpeed(), dsc.speed() - 10 );
 
 }
 

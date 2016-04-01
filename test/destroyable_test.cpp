@@ -5,7 +5,7 @@
 #include <actor.h>
 #undef private
 #include <engine.h>
-#include <actor_descriptions.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -50,42 +50,25 @@ TEST_F(DestroyableTest, isEqual)
   DestroyablePtr d1( new Destroyable );
   DestroyablePtr d2( new Destroyable );
 
-  EXPECT_TRUE( d1->isEqual(d2) );
+  EXPECT_TRUE( *d1 == *d2 );
 
   //create description with some rule
-  DestroyableDescriptionPtr dsc( new DestroyableDescription);
+  DestroyableData data;
 
-  DropRule rule;
-  rule.dropActorId = ActorType::GoldCoin;
-  rule.amountMin = 2;
-  rule.amountMax = 6;
-  rule.chance = 1;
-
-  dsc->dropRules.push_back( rule );
+  DropRule* rule = data.add_droprules();
+  rule->set_actor_id( (int)ActorType::GoldCoin );
+  rule->set_min(2);
+  rule->set_max(6);
+  rule->set_chance(1);
 
   //create destryable based on the description
-  d1 = std::dynamic_pointer_cast<Destroyable>( ActorFeature::create(Destroyable::featureType, dsc) );
+  d1 = Destroyable::create(data);
 
-  EXPECT_FALSE( d1->isEqual(d2) );
+  EXPECT_FALSE( *d1 == *d2 );
 
-  //add modified rule
-  DestroyableDescriptionPtr dsc2( new DestroyableDescription);
+  *d2 = *d1;
 
-  DropRule rule2;
-  rule2.dropActorId = ActorType::GoldCoin;
-  rule2.amountMin = 1;
-  rule2.amountMax = 3;
-  rule2.chance = 4;
-
-  dsc2->dropRules.push_back( rule2 );
-
-  d2->_dropRules.push_back( rule2 );
-  EXPECT_FALSE( d1->isEqual(d2) );
-
-  //add the same rule to the second destroyable
-  d2->_dropRules.clear();
-  d2->_dropRules.push_back( rule );
-  EXPECT_TRUE( d1->isEqual(d2) );
+  EXPECT_TRUE( *d1 == *d2 );
 }
 
 }

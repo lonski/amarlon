@@ -1,6 +1,5 @@
 #include "scroll.h"
 #include <spell.h>
-#include <pickable_description.h>
 #include <actor.h>
 #include <character_class.h>
 #include <spell_book.h>

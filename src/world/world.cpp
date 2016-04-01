@@ -3,8 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <actor.h>
-#include <actor_descriptions.h>
-#include <utils/xml_utils.h>
+#include <map.pb.h>
 
 using namespace rapidxml;
 
@@ -72,28 +71,18 @@ bool World::store(const std::string &fn)
   {
     getCurrentMap()->removeActor( getPlayer() );
 
-    std::shared_ptr<xml_document<> > doc = serializeMaps();
+    WorldData world;
 
-    //create node for save info
-    xml_node<>* saveNode = doc->allocate_node(node_element, "Save");
-    doc->append_node(saveNode);
+    for ( auto& kv : _maps )
+      world.mutable_map()->Add()->CopyFrom( kv.second->getData() );
 
-    //save Player
-    //ActorSerializer actorSerializer(doc.get(), saveNode);
-    //actorSerializer.serialize(_player->toDescriptionStruct());
-    //XXX TODO
-
-    //save current Map
-    xml_node<>* cMapNode = doc->allocate_node(node_element, "CurrentMap");
-    saveNode->append_node(cMapNode);
-    addAttributeEnum( cMapNode, "id", _currentMap );
-
-    ofs << *doc;
+    world.mutable_player()->CopyFrom(_player->getData());
+    world.set_current_map(static_cast<int>(_currentMap));
 
     //put back player
     getCurrentMap()->addActor( getPlayer() );
 
-    return true;
+    return world.SerializeToOstream(&ofs);
   }
   return false;
 }
@@ -104,45 +93,25 @@ bool World::load(const std::string& fn)
 
   if (ifs.is_open())
   {
-    std::vector<char> buf;
-    buf.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-    buf.push_back('\0');
+    WorldData world;
+    world.ParseFromIstream(&ifs);
 
-    xml_document<> doc;
-    doc.parse<0>(&buf[0]);
+    //Load maps
+    for ( auto it = world.map().begin(); it != world.map().end(); ++it )
+    {
+      _maps[ static_cast<MapId>(it->id()) ] = MapPtr(new Map(*it));
+    }
 
-    parseMaps(doc);
-    parseCurrentMap(doc);
-    parsePlayer(doc);
+    //Set current map
+    _currentMap = static_cast<MapId>(world.current_map());
+
+    //Load player
+    _player = Actor::create(world.player());
+    getCurrentMap()->addActor( _player );
 
     return true;
   }
   return false;
-}
-
-void World::parsePlayer(rapidxml::xml_document<> &doc)
-{
-  xml_node<>* save = doc.first_node("Save");
-  xml_node<>* playerNode = save ? save->first_node("Actor") : nullptr;
-
-  if(playerNode != nullptr)
-  {
-    //ActorParser parser(playerNode);
-    //_player = Actor::create( parser.parseDescription() );
-    //XXX TODO
-    getCurrentMap()->addActor( _player );
-  }
-}
-
-void World::parseCurrentMap(rapidxml::xml_document<> &doc)
-{
-  xml_node<>* save = doc.first_node("Save");
-  xml_node<>* cMapNode = save ? save->first_node("CurrentMap") : nullptr;
-
-  if(cMapNode != nullptr)
-  {
-    _currentMap = (MapId)getAttribute<int>(cMapNode, "id");
-  }
 }
 
 }

@@ -1,6 +1,5 @@
 #include "ai.h"
 #include <iostream>
-#include <actor_descriptions.h>
 #include <actor_action.h>
 #include <actor.h>
 #include <status_effects_manager.h>

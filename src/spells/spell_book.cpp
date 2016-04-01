@@ -1,7 +1,7 @@
 #include "spell_book.h"
 #include <algorithm>
 #include <spell.h>
-#include <actor_descriptions.h>
+
 #include <engine.h>
 #include <spell_db.h>
 
@@ -56,36 +56,6 @@ SpellBookData SpellBook::getData() const
     slot->set_isprepared( s->isPrepared );
     slot->set_spell_id( s->spell ? static_cast<int>(s->spell->getId()) : 0 );
   }
-}
-
-SpellBookPtr SpellBook::create(SpellbookDescription dsc)
-{
-  SpellBookPtr sb( new SpellBook );
-  for ( auto s : dsc.spellSlots )
-  {
-    sb->addSlot( new SpellSlot( s.level, s.prepared, Spell::create((SpellId)s.spell) ) );
-  }
-
-  for ( auto s : dsc.knownSpells )
-  {
-    sb->addKnownSpell( Spell::create((SpellId)s) );
-  }
-
-  return sb;
-}
-
-SpellbookDescriptionPtr SpellBook::toDescriptionStruct()
-{
-  SpellbookDescriptionPtr dsc(new SpellbookDescription);
-  for ( SpellPtr ks : _knownSpells )
-  {
-    dsc->knownSpells.push_back( (int)ks->getId() );
-  }
-  for ( SpellSlotPtr ss : _spellSlots  )
-  {
-    dsc->spellSlots.push_back( *ss->toDescriptionStruct() );
-  }
-  return dsc;
 }
 
 std::vector<SpellSlotPtr> SpellBook::getSlots(std::function<bool(SpellSlotPtr)> filter) const

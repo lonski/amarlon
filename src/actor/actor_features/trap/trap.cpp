@@ -1,9 +1,7 @@
 #include "trap.h"
-#include <trap_description.h>
 #include <engine.h>
 #include <lua_state.h>
 #include <actor.h>
-
 
 namespace amarlon {
 

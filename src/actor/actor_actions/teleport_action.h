@@ -20,8 +20,6 @@ public:
   virtual int getX() const;
   virtual int getY() const;
 
-  virtual DescriptionPtr toDescriptionStruct();
-
 private:
   MapId _map;
   int _x;

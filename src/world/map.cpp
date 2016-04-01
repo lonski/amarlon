@@ -5,98 +5,118 @@
 #include <actor_action.h>
 #include <utils.h>
 #include <libtcod.hpp>
-#include <tile.h>
 #include <actor_container.h>
-#include <map_description.h>
 #include <teleport_action.h>
-#include <base64.h>
 
 namespace amarlon {
 
 using namespace std;
 
-Map::Map(u32 width, u32 height, MapId id)
-  : _id(id)
-  , _width(width)
-  , _height(height)
-  , _codMap( new TCODMap(width, height) )
+Map::Map(const MapData &data)
 {
-  allocateTiles();
+  _data.CopyFrom(data);
+  initialize();
 }
 
-void Map::deserialize(MapDescriptionPtr dsc)
+const MapData &Map::getData() const
 {
-  if( dsc )
+  updateData();
+  return _data;
+}
+
+Map& Map::operator=(const Map &rhs)
+{
+  if ( this != &rhs )
   {
-    _id = static_cast<MapId>(dsc->id);
-    _width = static_cast<u32>(dsc->width);
-    _height = static_cast<u32>(dsc->height);
-    _codMap.reset( new TCODMap(_width, _height) );
+    rhs.updateData();
+    _data.CopyFrom(rhs._data);
+    initialize();
+  }
+  return *this;
+}
 
-    allocateTiles();
-    if ( !dsc->binaryTiles.empty() )
+void Map::initialize()
+{
+  _codMap.reset( new TCODMap(getWidth(), getHeight()) );
+
+  //Load Tiles
+  allocateTiles();
+  uint32 y(0), x(0);
+  for( auto it = _data.tiles().begin(); it != _data.tiles().end(); ++it )
+  {
+    Tile& tile = getTile(x, y);
+    tile.setState( *it );
+
+    if ( x == getWidth() - 1 )
     {
-      std::string s_tiles = base64_decode( dsc->binaryTiles );
-      deserializeTiles( {s_tiles.begin(), s_tiles.end()} );
-
-      for ( ActorDescriptionPtr aDsc : dsc->actors )
-      {
-        //addActor( Actor::create(aDsc) );
-        //XXX TODO
-      }
-
-      for ( auto& kv : dsc->actions )
-      {
-        Direction dir = static_cast<Direction>(kv.first);
-        ActorActionDescriptionPtr acDsc = std::dynamic_pointer_cast<ActorActionDescription>(kv.second);
-        //TODO: generalize for all ActorActions
-        //      probably it needs ActorAction::create(ActorActionDescription*) method
-        _exitActions[ dir ] = std::make_shared<TeleportAction>(
-                                               static_cast<MapId>(acDsc->teleport_MapId),
-                                               acDsc->teleport_x,
-                                               acDsc->teleport_y);
-      }
-      updateTiles();
+      x = 0;
+      ++y;
+    }
+    else
+    {
+      ++x;
     }
   }
-}
 
-MapDescriptionPtr Map::toDescriptionStruct()
-{
-  MapDescriptionPtr dsc( new MapDescription );
-
-  dsc->id          = static_cast<int>( _id );
-  dsc->width       = static_cast<int>( _width );
-  dsc->height      = static_cast<int>( _height );
-  dsc->binaryTiles = serializeTiles();
-
-  for ( auto& kv : _exitActions )
+  //Load Actors
+  for( auto it = _data.actors().begin(); it != _data.actors().end(); ++it )
   {
-    DescriptionPtr aDsc = kv.second->toDescriptionStruct();
-    if ( aDsc ) dsc->actions[ (int)kv.first ] = aDsc;
+    addActor( Actor::create(*it) );
   }
 
-  for ( ActorPtr actor : getActors() )
+  //Load Teleports
+  for( auto it = _data.teleports().begin(); it != _data.teleports().end(); ++it )
   {
-    //dsc->actors.push_back( actor->toDescriptionStruct() );
-    //XXX TODO
+    Direction direction = static_cast<Direction>(it->direction());
+
+    _exitActions[ direction ] = std::make_shared<TeleportAction>(
+                                  static_cast<MapId>(it->map_id()),
+                                  it->x(),
+                                  it->y()
+                                );
   }
 
-  return dsc;
+  updateTiles();
 }
 
 void Map::allocateTiles()
 {
   _tiles.clear();
-  for (u32 y = 0; y < _height; ++y)
+  for (u32 y = 0; y < getHeight(); ++y)
   {
     TileRow row;
-    for(u32 x = 0; x < _width; ++x)
+    for(u32 x = 0; x < getWidth(); ++x)
     {
       row.push_back(Tile());
     }
     _tiles.push_back(row);
   }
+}
+
+void Map::updateData() const
+{
+  //Update tiles
+  _data.mutable_tiles()->Clear();
+  for( const TileRow& row : _tiles )
+    for( const Tile& tile : row )
+      _data.mutable_tiles()->Add()->CopyFrom(tile.getState());
+
+  //Update Teleports
+  _data.mutable_teleports()->Clear();
+  for ( auto& kv : _exitActions )
+  {
+    TeleportActionPtr action = std::dynamic_pointer_cast<TeleportAction>(kv.second);
+    TeleportActionData* tp = _data.mutable_teleports()->Add();
+    tp->set_direction( static_cast<int>(action->getMapId()) );
+    tp->set_x( static_cast<int>(action->getX()) );
+    tp->set_y( static_cast<int>(action->getY()) );
+  }
+
+  //Update Actors
+  _data.mutable_actors()->Clear();
+  for ( ActorPtr actor : getActors() )
+    _data.mutable_actors()->Add()->CopyFrom(actor->getData());
+
 }
 
 Map::~Map()
@@ -151,9 +171,7 @@ bool Map::isTransparent(const Point &p) const
 
 void Map::addActor(ActorPtr actor)
 {
-  u32 x( actor->getX() );
-  u32 y( actor->getY() );
-  Tile& tile = getTile(x, y);
+  Tile& tile = getTile( actor->getX(), actor->getY() );
 
   tile.addActor(actor);
   actor->setMap( shared_from_this() );
@@ -161,23 +179,23 @@ void Map::addActor(ActorPtr actor)
   for ( auto a : tile.getActors() ) a->interract( actor );
 }
 
-ActorPtr Map::getFirstActor(int x, int y)
+ActorPtr Map::getFirstActor(int x, int y) const
 {
   return getTile(x, y).top();
 }
 
-std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)> filterFun)
+std::vector<ActorPtr > Map::getActors(int x, int y, std::function<bool(ActorPtr)> filterFun) const
 {
-  Tile& tile = getTile(x, y);
+  const Tile& tile = getTile(x, y);
   return tile.getActors( filterFun ).toVector();
 }
 
-std::vector<ActorPtr> Map::getActors(const Point &p, std::function<bool (ActorPtr)> filterFun)
+std::vector<ActorPtr> Map::getActors(const Point &p, std::function<bool (ActorPtr)> filterFun) const
 {
   return getActors(p.x, p.y, filterFun);
 }
 
-std::vector<ActorPtr> Map::getActors(int x, int y, int radius, std::function<bool (ActorPtr)> filterFun)
+std::vector<ActorPtr> Map::getActors(int x, int y, int radius, std::function<bool (ActorPtr)> filterFun) const
 {
   std::vector<ActorPtr> actors;
   for( uint32_t ly = 0; ly < getHeight(); ++ly )
@@ -194,18 +212,18 @@ std::vector<ActorPtr> Map::getActors(int x, int y, int radius, std::function<boo
   return actors;
 }
 
-std::vector<ActorPtr> Map::getActors(int x, int y, int radius)
+std::vector<ActorPtr> Map::getActors(int x, int y, int radius) const
 {
   return getActors(x,y,radius, [](ActorPtr){return true;});
 }
 
-std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun)
+std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun) const
 {
   std::vector<ActorPtr> r;
 
-  for(auto& tileRow : _tiles)
+  for(const auto& tileRow : _tiles)
   {
-    for(auto& tile : tileRow)
+    for(const auto& tile : tileRow)
     {
       auto actorsFromTile = tile.getActors( filterFun ).toVector();
       r.insert( r.end(), actorsFromTile.begin(), actorsFromTile.end() );
@@ -215,7 +233,7 @@ std::vector<ActorPtr> Map::getActors(std::function<bool(ActorPtr)> filterFun)
   return r;
 }
 
-std::vector<ActorPtr> Map::getActors()
+std::vector<ActorPtr> Map::getActors() const
 {
   return getActors([](ActorPtr){return true;});
 }
@@ -228,9 +246,9 @@ bool Map::removeActor(ActorPtr toRemove)
 
 void Map::render(TCODConsole *console)
 {
-  for(u32 y = 0; y < _height; ++y)
+  for(u32 y = 0; y < getHeight(); ++y)
   {
-    for(u32 x = 0; x < _width; ++x)
+    for(u32 x = 0; x < getWidth(); ++x)
     {
       renderTile(x, y, console);
     }
@@ -296,71 +314,6 @@ TCODMap& Map::getCODMap()
   return *_codMap;
 }
 
-//TODO: remove when map ported to protobuf
-struct SerializedTile
-{
-  uint8_t type;
-  uint8_t flags;
-};
-
-void Map::deserializeTiles(std::vector<unsigned char> tiles)
-{
-  uint32 y(0), x(0);
-  for (int pos = 0; pos + sizeof(SerializedTile) <= tiles.size(); pos += sizeof(SerializedTile) )
-  {
-    SerializedTile* serialized = reinterpret_cast<SerializedTile*>(&tiles[pos]);
-
-    Tile& tile = getTile(x, y);
-
-    TileState state;
-    state.set_flags(serialized->flags);
-    state.set_type(serialized->type);
-
-    tile.setState(state);
-
-    if ( x == getWidth() - 1 )
-    {
-      x = 0;
-      ++y;
-    }
-    else
-    {
-      ++x;
-    }
-  }
-}
-
-std::vector<unsigned char> serializeTile(const Tile& tile)
-{
-  SerializedTile t;
-  memset(&t, 0, sizeof(t));
-
-  t.flags = tile.getState().flags();
-  t.type = static_cast<uint8_t>(tile.getState().type());
-
-  unsigned char* arr = reinterpret_cast<unsigned char*>(&t);
-  return std::vector<unsigned char>{ arr, arr + sizeof(t) };
-}
-
-std::string Map::serializeTiles()
-{
-  std::vector<unsigned char> v;
-
-  for (auto t = _tiles.begin(); t != _tiles.end(); ++t)
-  {
-    TileRow& trow = *t;
-    for (auto ct = trow.begin(); ct != trow.end(); ++ct)
-    {
-      Tile& tile = *ct;
-
-      auto serialized = serializeTile(tile);
-      v.insert( v.end(), serialized.begin(), serialized.end() );
-    }
-  }
-
-  return base64_encode(reinterpret_cast<const unsigned char*>(&v[0]), v.size());
-}
-
 TCODColor Map::getColor(u32 x, u32 y)
 {
   return getTile(x, y).getColor();
@@ -379,12 +332,20 @@ Tile& Map::getTile(u32 x, u32 y)
   return tRow[x];
 }
 
-void Map::validateMapCoords(u32 x, u32 y)
+const Tile& Map::getTile(u32 x, u32 y) const
 {
-  if (x >= _width || y >= _height)
+  validateMapCoords(x, y);
+
+  const TileRow& tRow = _tiles[y];
+  return tRow[x];
+}
+
+void Map::validateMapCoords(u32 x, u32 y) const
+{
+  if (x >= getWidth() || y >= getHeight())
     throw amarlon_exeption("Requested map coordinates beyond map borders!\n y=" +
-                           std::to_string(y) + ", height="+std::to_string(_height) +
-                           " x="+std::to_string(x) + " width=" + std::to_string(_width) + " mapId=" + std::to_string((int)_id)
+                           std::to_string(y) + ", height="+std::to_string(getHeight()) +
+                           " x="+std::to_string(x) + " width=" + std::to_string(getWidth()) + " mapId=" + std::to_string((int)getId())
                            );
 
   if (y >= _tiles.size())
@@ -396,30 +357,22 @@ void Map::validateMapCoords(u32 x, u32 y)
 
 u32 Map::getWidth() const
 {
-  return _width;
+  return _data.width();
 }
 
-void Map::setWidth(const u32 &width)
-{
-  _width = width;
-}
 u32 Map::getHeight() const
 {
-  return _height;
+  return _data.height();
 }
 
-void Map::setHeight(const u32 &height)
-{
-  _height = height;
-}
 MapId Map::getId() const
 {
-  return _id;
+  return static_cast<MapId>(_data.id());
 }
 
 void Map::setId(const MapId &id)
 {
-  _id = id;
+  _data.set_id(static_cast<int>(id));
 }
 
 void Map::onExit(Direction direction, ActorPtr exiter)
@@ -434,26 +387,6 @@ void Map::onExit(Direction direction, ActorPtr exiter)
 const std::map<Direction, ActorActionPtr> Map::getExitActions() const
 {
   return _exitActions;
-}
-
-MapPtr Map::clone()
-{
-  MapPtr cloned = std::make_unique<Map>(_width, _height);
-  cloned->_id = _id;
-  cloned->_tiles = _tiles;
-  cloned->updateTiles();
-
-  cloned->performActionOnActors( [cloned](ActorPtr a)
-  {
-    a->setMap(cloned);
-  });
-
-  for ( auto pair : _exitActions )
-  {
-    cloned->_exitActions[ pair.first ] = ActorActionPtr{ pair.second->clone() };
-  }
-
-  return cloned;
 }
 
 void Map::performActionOnActors(std::function<void(ActorPtr )> func)

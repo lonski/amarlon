@@ -64,12 +64,12 @@ bool Tile::removeActor(ActorPtr actor)
   return _actors->remove(actor);
 }
 
-ActorContainer Tile::getActors(std::function<bool(ActorPtr)> filterFun)
+ActorContainer Tile::getActors(std::function<bool(ActorPtr)> filterFun) const
 {
   return _actors->filter(filterFun);
 }
 
-ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun)
+ActorPtr Tile::top(std::function<bool(ActorPtr)> filterFun) const
 {
   if ( !_actors->empty() )
   {

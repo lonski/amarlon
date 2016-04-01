@@ -33,9 +33,6 @@ private:
   ActorPtr _player;
   MapDBPtr _mapDB;
 
-  void parsePlayer(rapidxml::xml_document<>& doc);
-  void parseCurrentMap(rapidxml::xml_document<>& doc);
-
 };
 
 }

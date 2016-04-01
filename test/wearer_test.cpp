@@ -5,8 +5,8 @@
 #include <wearer.h>
 #undef private
 #include <engine.h>
-#include <actor_descriptions.h>
 #include <actor_container.h>
+#include <actor.pb.h>
 
 namespace amarlon {
 
@@ -19,11 +19,11 @@ public:
   {
     Engine::instance().prologue();
 
-    WearerDescriptionPtr dsc(new WearerDescription);
-    dsc->itemSlots.push_back((int)ItemSlotType::Armor);
-    dsc->itemSlots.push_back((int)ItemSlotType::Boots);
+    WearerData data;
+    data.mutable_item_slots()->Add((int)ItemSlotType::Armor);
+    data.mutable_item_slots()->Add((int)ItemSlotType::Boots);
 
-    wearer = Wearer::create(dsc);
+    wearer = Wearer::create(data);
   }
   virtual void TearDown()
   {
@@ -80,12 +80,12 @@ TEST_F(WearerTest, unequip_item)
 
 TEST_F(WearerTest, clone_wearer)
 {
-  WearerDescriptionPtr dsc(new WearerDescription);
-  dsc->itemSlots.push_back((int)ItemSlotType::LeftRing);
-  dsc->itemSlots.push_back((int)ItemSlotType::Offhand);
+  WearerData data;
+  data.mutable_item_slots()->Add( (int)ItemSlotType::LeftRing );
+  data.mutable_item_slots()->Add( (int)ItemSlotType::Offhand );
 
-  WearerPtr w1 = Wearer::create(dsc);
-  WearerPtr wcloned = std::dynamic_pointer_cast<Wearer>(w1->clone());
+  WearerPtr w1 = Wearer::create(data);
+  WearerPtr wcloned( new Wearer(*w1) );
 
   ASSERT_TRUE( wcloned->_equippedItems->size() ==  w1->_equippedItems->size() );
   for (auto slot : ItemSlotType())
@@ -93,7 +93,7 @@ TEST_F(WearerTest, clone_wearer)
     ASSERT_EQ( wcloned->hasSlot(slot), w1->hasSlot(slot) );
   }
 
-  ASSERT_TRUE( wcloned->isEqual(w1) );
+  ASSERT_TRUE( *wcloned == *w1 );
 }
 
 TEST_F(WearerTest, compare_test)
@@ -101,15 +101,15 @@ TEST_F(WearerTest, compare_test)
   WearerPtr w1 ( new Wearer );
   WearerPtr w2 ( new Wearer );
 
-  ASSERT_TRUE( w1->isEqual(w2) );
+  ASSERT_TRUE( *w1 == *w2 );
 
   //compare by slots
   w1->_itemSlots[ ItemSlotType::Armor ] = nullptr;
-  ASSERT_FALSE( w1->isEqual(w2) );
+  ASSERT_FALSE( *w1 == *w2 );
 
-  WearerDescriptionPtr dsc(new WearerDescription);
-  dsc->itemSlots.push_back((int)ItemSlotType::Armor);
-  dsc->itemSlots.push_back((int)ItemSlotType::Boots);
+  WearerData dsc;
+  dsc.mutable_item_slots()->Add((int)ItemSlotType::Armor);
+  dsc.mutable_item_slots()->Add((int)ItemSlotType::Boots);
 
   w1 = Wearer::create(dsc);
   w2 = Wearer::create(dsc);
@@ -118,17 +118,17 @@ TEST_F(WearerTest, compare_test)
   ActorPtr w1armor= Actor::create( ActorType::LeatherArmor );
 
   ASSERT_TRUE( w1->equip(w1armor) );
-  ASSERT_FALSE( w1->isEqual( w2 ) );
+  ASSERT_FALSE( *w1 == *w2 );
 
   //compare by equip - 2. both equipped same
   ActorPtr w2armor= Actor::create( ActorType::LeatherArmor);
   ASSERT_TRUE( w2->equip(w2armor) );
-  ASSERT_TRUE( w1->isEqual( w2 ) );
+  ASSERT_TRUE( *w1 == *w2 );
 
   //compare by equip - 3. both equipped different
   ActorPtr w2boots = Actor::create( ActorType::LeatherBoots );
   ASSERT_TRUE( w2->equip(w2boots) );
-  ASSERT_FALSE( w1->isEqual( w2 ) );
+  ASSERT_FALSE( *w1 == *w2 );
 
 }
 

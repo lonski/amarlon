@@ -12,12 +12,10 @@ namespace amarlon {
 
 class Actor;
 class ActorFeature;
-struct Description;
 
 typedef std::shared_ptr<Actor> ActorPtr;
-typedef std::weak_ptr<Actor> ActorWPtr;
+typedef std::weak_ptr<Actor>   ActorWPtr;
 typedef std::shared_ptr<ActorFeature> ActorFeaturePtr;
-typedef std::shared_ptr<Description> DescriptionPtr;
 
 class ActorFeature
 {
@@ -38,21 +36,17 @@ public:
   };
 
   ActorFeature();
-  virtual ~ActorFeature() = 0;
-  static ActorFeaturePtr create(Type featureType, DescriptionPtr dsc);
+  virtual ~ActorFeature();
 
   virtual const ::google::protobuf::Message& getDataPolymorphic() const = 0;
+  virtual ActorFeature::Type getFeatureType() = 0;
 
   void setOwner(ActorWPtr owner);
   ActorWPtr getOwner() const;
-  virtual ActorFeaturePtr clone();
-  virtual bool isEqual(ActorFeaturePtr rhs) const;
-  virtual std::string getDescription();
+
   virtual int update();
-  virtual std::string debug(const std::string& = "\n") { return ""; }
-  virtual void upgrade(DescriptionPtr);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
-  virtual ActorFeature::Type getFeatureType() = 0;
+  virtual std::string getDescription();
+  virtual std::string debug(const std::string& = "\n");
 
 protected:
   ActorWPtr _owner;

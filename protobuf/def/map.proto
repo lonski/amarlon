@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package amarlon;
+import "actor.proto";
+import "tile.proto";
+
+message TeleportActionData {
+	required int32 map_id    = 1;
+	required int32 x         = 2;
+	required int32 y         = 3;
+	required int32 direction = 4;
+}
+
+message MapData {
+	required int32 id        = 1;
+	required int32 width     = 2;
+	required int32 height    = 3;
+
+	repeated TileState tiles              = 4;
+	repeated TeleportActionData teleports = 5; 
+	repeated ActorData actors             = 6;
+}
+
+message MapsData {
+	repeated MapData map = 1;
+}
+
+message WorldData {
+	required int32 current_map = 1;
+	required ActorData player  = 2;
+	repeated MapData map       = 3;
+}

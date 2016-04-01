@@ -28,6 +28,8 @@ set(HEADER_FILES
     actor/actor_features/trap/trap.h
     actor/actor_features/trap/trap_id.h
     actor/actor_features/talker/talker.h
+    actor/actor_features/talker/dialog/dialog.h
+    actor/actor_features/talker/dialog/dialog_parser.h
     actor/actor.h
     actor/actor_type.h
     actor/status_effects_manager.h
@@ -143,6 +145,11 @@ set(HEADER_FILES
     rpg_system/race.h
     rpg_system/character_class.h
     rpg_system/carrying_capacity.h
+    rpg_system/parser/rpg_parser.h
+    rpg_system/parser/description.h
+    rpg_system/parser/race_description.h
+    rpg_system/parser/character_class_description.h
+    rpg_system/parser/item_type_description.h
     spells/spell.h
     spells/spell_id.h
     spells/spell_book.h
@@ -201,6 +208,7 @@ set(SOURCE_FILES
     actor/actor_features/destroyable/destroyable.cpp
     actor/actor_features/trap/trap.cpp
     actor/actor_features/talker/talker.cpp
+    actor/actor_features/talker/dialog/dialog_parser.cpp
     actor/actor.cpp
     actor/status_effects_manager.cpp
     actor/status_effect.cpp
@@ -300,7 +308,8 @@ set(SOURCE_FILES
     rpg_system/experience_table.cpp
     rpg_system/carrying_capacity.cpp
     rpg_system/character_class.cpp
-    rpg_system/race.cpp
+    rpg_system/race.cpp    
+    rpg_system/parser/rpg_parser.cpp
     spells/spell.cpp
     spells/spell_book.cpp
     animations/animation.cpp
@@ -335,6 +344,6 @@ add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS} ${PROTOBUF_LIBRARIES})
 
 add_executable(amarlon main.cpp)
-target_link_libraries(amarlon amarlon_core amarlon_widgets persistence proto_data ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
+target_link_libraries(amarlon amarlon_core amarlon_widgets proto_data ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)

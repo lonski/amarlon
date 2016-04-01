@@ -1,6 +1,5 @@
 #include "openable.h"
 #include <amarlon_except.h>
-#include <actor_descriptions.h>
 #include <actor.h>
 #include <lua_state.h>
 #include <engine.h>

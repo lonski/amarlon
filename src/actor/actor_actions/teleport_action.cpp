@@ -56,15 +56,6 @@ int TeleportAction::getY() const
   return _y;
 }
 
-DescriptionPtr TeleportAction::toDescriptionStruct()
-{
-  ActorActionDescriptionPtr aDsc( new ActorActionDescription );
-  aDsc->teleport_MapId = static_cast<int>(_map);
-  aDsc->teleport_x = _x;
-  aDsc->teleport_y = _y;
-  return aDsc;
-}
-
 void TeleportAction::removeFromCurrentMap(ActorPtr performer)
 {
   MapPtr currentMap = performer->getMap();

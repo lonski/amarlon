@@ -32,7 +32,7 @@ struct Tile
 
   void addActor(ActorPtr actor);
   bool removeActor(ActorPtr actor);
-  ActorContainer getActors( std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
+  ActorContainer getActors( std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} ) const;
 
   bool isWalkable() const;
   bool isTransparent() const;
@@ -53,7 +53,7 @@ struct Tile
   /**
    * @return Returns Actor with the highest tile render piority
    */
-  ActorPtr top(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
+  ActorPtr top(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} ) const;
 
 private:
   TileDataPtr _data;

@@ -24,6 +24,8 @@ public:
 
     guy = Actor::create(ActorType::Orc);
 
+    ASSERT_TRUE( guy->getFeature<Inventory>() != nullptr );
+
     //fill inventory
     guy->getFeature<Inventory>()->clear();
     guy->getFeature<Inventory>()->add( Actor::create(ActorType::LeatherArmor) );
@@ -62,7 +64,8 @@ TEST_F(DropActionTest, dropOnMap)
 TEST_F(DropActionTest, dropGoblinCorpse)
 {
   //kill a goblin on map to generate corpse
-  ActorPtr goblin = Actor::create(ActorType::Goblin, 1, 2 );
+  ActorPtr goblin = Actor::create(ActorType::Goblin);
+  goblin->setPosition(1,2);
   map->addActor( goblin );
   goblin->performAction( new DieAction );
 
