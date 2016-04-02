@@ -40,23 +40,23 @@ void ActorsEditor::populate()
 
   for( int i=0; i < _actorsData.actor_size(); ++i )
   {
-    const amarlon::proto::ActorData& actor = _actorsData.actor(i);
+    const amarlon::ActorData& actor = _actorsData.actor(i);
 
     ui->aTable->insertRow( ui->aTable->rowCount() );
-    ui->aTable->setItem(ui->aTable->rowCount() - 1, 0, new QTableWidgetItem( QString::number(actor.id()) ));
+    ui->aTable->setItem(ui->aTable->rowCount() - 1, 0, new QTableWidgetItem( QString::number(actor.actor_type()) ));
     ui->aTable->setItem(ui->aTable->rowCount() - 1, 1, new QTableWidgetItem( actor.name().c_str() ));
     ui->aTable->setItem(ui->aTable->rowCount() - 1, 2, new QTableWidgetItem( actor.symbol().c_str() ));
     ui->aTable->setItem(ui->aTable->rowCount() - 1, 3, new QTableWidgetItem( actor.color().c_str() ));
-    ui->aTable->setItem(ui->aTable->rowCount() - 1, 4, new QTableWidgetItem( actor.blocks() ? "Yes" : "No" ));
-    ui->aTable->setItem(ui->aTable->rowCount() - 1, 5, new QTableWidgetItem( actor.fovonly() ? "Yes" : "No" ));
-    ui->aTable->setItem(ui->aTable->rowCount() - 1, 6, new QTableWidgetItem( actor.transparent() ? "Yes" : "No" ));
+    ui->aTable->setItem(ui->aTable->rowCount() - 1, 4, new QTableWidgetItem( actor.is_blocking() ? "Yes" : "No" ));
+    ui->aTable->setItem(ui->aTable->rowCount() - 1, 5, new QTableWidgetItem( actor.is_fov_only() ? "Yes" : "No" ));
+    ui->aTable->setItem(ui->aTable->rowCount() - 1, 6, new QTableWidgetItem( actor.is_transparent() ? "Yes" : "No" ));
     ui->aTable->setItem(ui->aTable->rowCount() - 1, 7, new QTableWidgetItem( actor.description().c_str() ));
   }
 }
 
 void ActorsEditor::on_actionNew_triggered()
 {
-  _actorsData = amarlon::proto::ActorsData();
+  _actorsData = amarlon::ActorsData();
   clear();
 }
 
@@ -98,12 +98,12 @@ void ActorsEditor::on_actionNew_actor_triggered()
   populate();
 }
 
-amarlon::proto::ActorData* ActorsEditor::getActor(std::function<bool (const amarlon::proto::ActorData&)> filter)
+amarlon::ActorData* ActorsEditor::getActor(std::function<bool (const amarlon::ActorData&)> filter)
 {
   for( int i=0; i < _actorsData.actor_size(); ++i )
   {
-    const amarlon::proto::ActorData& actor = _actorsData.actor(i);
-    if ( filter(actor) ) return const_cast<amarlon::proto::ActorData*>( &actor );
+    const amarlon::ActorData& actor = _actorsData.actor(i);
+    if ( filter(actor) ) return const_cast<amarlon::ActorData*>( &actor );
   }
   return nullptr;
 }
@@ -114,7 +114,7 @@ void ActorsEditor::on_aTable_cellDoubleClicked(int row, int /*column*/)
   if ( item )
   {
     int id = item->text().toInt();
-    auto* actor = getActor([&](auto& s){ return s.id() == id; });
+    auto* actor = getActor([&](auto& s){ return s.actor_type() == id; });
     if ( actor )
     {
       _editDlg.setActor( actor );
@@ -130,11 +130,12 @@ void ActorsEditor::on_actionDelete_actor_triggered()
   if ( item )
   {
     int id = item->text().toInt();
-    for( auto it = _actorsData.actor().begin(); it != _actorsData.actor().end(); ++it )
+    int i = 0;
+    for( auto it = _actorsData.actor().begin(); it != _actorsData.actor().end(); ++it, ++i )
     {
-      if ( it->id() == id )
+      if ( it->actor_type() == id )
       {
-        _actorsData.mutable_actor()->erase(it);
+        _actorsData.mutable_actor()->DeleteSubrange(i,1);
         populate();
         break;
       }

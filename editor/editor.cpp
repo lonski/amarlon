@@ -27,7 +27,7 @@ void editor::on_pushButton_2_clicked()
 
 void editor::on_pushButton_3_clicked()
 {
-  //_actorsEditor.show();
+  _actorsEditor.show();
 }
 
 void editor::on_pushButton_4_clicked()

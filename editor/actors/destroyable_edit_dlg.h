@@ -10,7 +10,7 @@ class DestroyableEditDlg;
 
 namespace amarlon {
 namespace proto {
-class ActorData_Destroyable;
+class DestroyableData;
 }
 }
 
@@ -22,18 +22,16 @@ public:
   explicit DestroyableEditDlg(QWidget *parent = 0);
   ~DestroyableEditDlg();
 
-  void setDestroyable(amarlon::proto::ActorData_Destroyable* destroyable);
+  void setDestroyable(amarlon::DestroyableData* destroyable);
 
 private slots:
   void on_btnAdd_clicked();
-
   void on_btnEdit_clicked();
-
   void on_btnDelete_clicked();
 
 private:
   Ui::DestroyableEditDlg *ui;
-  amarlon::proto::ActorData_Destroyable* _destroyable;
+  amarlon::DestroyableData* _destroyable;
   DropRuleEditDlg _dropRulEdit;
 
   void fillForm();

@@ -2,15 +2,10 @@
 #define OPENABLE_EDIT_DLG_H
 
 #include <QDialog>
+#include <actor.pb.h>
 
 namespace Ui {
 class OpenableEditDlg;
-}
-
-namespace amarlon {
-namespace proto {
-class ActorData_Openable;
-}
 }
 
 class OpenableEditDlg : public QDialog
@@ -21,14 +16,14 @@ public:
   explicit OpenableEditDlg(QWidget *parent = 0);
   ~OpenableEditDlg();
 
-  void setOpenable(amarlon::proto::ActorData_Openable* openable);
+  void setOpenable(amarlon::OpenableData* openable);
 
 private slots:
   void on_buttonBox_accepted();
 
 private:
   Ui::OpenableEditDlg *ui;
-  amarlon::proto::ActorData_Openable* _openable;
+  amarlon::OpenableData* _openable;
 
   void fillForm();
   void fillOpenable();

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <tile_edit_dlg.h>
 #include <tile.pb.h>
+#include <functional>
 
 namespace Ui {
 class TilesEditor;

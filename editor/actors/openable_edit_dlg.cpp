@@ -1,6 +1,6 @@
 #include "openable_edit_dlg.h"
 #include "ui_openable_edit_dlg.h"
-#include <actors/actors.pb.h>
+#include <actor.pb.h>
 
 OpenableEditDlg::OpenableEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -15,7 +15,7 @@ OpenableEditDlg::~OpenableEditDlg()
   delete ui;
 }
 
-void OpenableEditDlg::setOpenable(amarlon::proto::ActorData_Openable *openable)
+void OpenableEditDlg::setOpenable(amarlon::OpenableData *openable)
 {
   _openable = openable;
   fillForm();
@@ -30,7 +30,7 @@ void OpenableEditDlg::fillForm()
 {
   if ( _openable )
   {
-    ui->fScriptID->setValue( _openable->scriptid() );
+    ui->fScriptID->setValue( _openable->script_id() );
   }
 }
 
@@ -38,6 +38,6 @@ void OpenableEditDlg::fillOpenable()
 {
   if ( _openable )
   {
-    _openable->set_scriptid( ui->fScriptID->value() );
+    _openable->set_script_id( ui->fScriptID->value() );
   }
 }

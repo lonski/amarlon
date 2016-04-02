@@ -104,11 +104,12 @@ void SkillEditor::on_actionDelete_Skill_triggered()
   if ( item )
   {
     int id = item->text().toInt();
-    for( auto it = _skillsData.skill().begin(); it != _skillsData.skill().end(); ++it )
+    int i = 0;
+    for( auto it = _skillsData.skill().begin(); it != _skillsData.skill().end(); ++it, ++i )
     {
       if ( it->id() == id )
       {
-        _skillsData.mutable_skill()->erase(it);
+        _skillsData.mutable_skill()->DeleteSubrange(i, 1);
         populate();
         break;
       }

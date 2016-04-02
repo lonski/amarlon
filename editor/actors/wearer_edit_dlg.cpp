@@ -1,6 +1,5 @@
 #include "wearer_edit_dlg.h"
 #include "ui_wearer_edit_dlg.h"
-#include <actors/actors.pb.h>
 #include <QInputDialog>
 #include <enum_mappings.h>
 
@@ -17,7 +16,7 @@ WearerEditDlg::~WearerEditDlg()
   delete ui;
 }
 
-void WearerEditDlg::setWearer(amarlon::proto::ActorData_Wearer *wearer)
+void WearerEditDlg::setWearer(amarlon::WearerData *wearer)
 {
   _wearer = wearer;
   fillForm();
@@ -43,14 +42,14 @@ void WearerEditDlg::fillForm()
     ui->sTable->setHorizontalHeaderItem(0,new QTableWidgetItem("ID"));
     ui->sTable->setHorizontalHeaderItem(1,new QTableWidgetItem("Item ID"));
 
-    for( int i=0; i < _wearer->itemslots_size(); ++i )
-    {
-      const auto& slot = _wearer->itemslots(i);
+//XXX    for( int i=0; i < _wearer->itemslots_size(); ++i )
+//    {
+//      const auto& slot = _wearer->itemslots(i);
 
-      ui->sTable->insertRow( ui->sTable->rowCount() );
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( item_slots.at(slot.id()) ));
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 1, new QTableWidgetItem( QString::number(slot.item()) ));
-    }
+//      ui->sTable->insertRow( ui->sTable->rowCount() );
+//      ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( item_slots.at(slot.id()) ));
+//      ui->sTable->setItem(ui->sTable->rowCount() - 1, 1, new QTableWidgetItem( QString::number(slot.item()) ));
+//    }
   }
 }
 
@@ -59,8 +58,8 @@ void WearerEditDlg::on_btnAdd_clicked()
 {
   if ( _wearer )
   {
-    _slotEdit.setSlot( _wearer->add_itemslots() );
-    _slotEdit.exec();
+    //_slotEdit.setSlot( _wearer->add_itemslots() );
+    //_slotEdit.exec();
     fillForm();
   }
 }
@@ -73,16 +72,16 @@ void WearerEditDlg::on_btnEdit_clicked()
     if ( item )
     {
       int id = item->text().toInt();
-      for( int i=0; i < _wearer->itemslots_size(); ++i )
-      {
-        const auto& slot = _wearer->itemslots(i);
-        if ( slot.id() == id )
-        {
-          _slotEdit.setSlot( _wearer->mutable_itemslots(i) );
-          _slotEdit.exec();
-          fillForm();
-        }
-      }
+//      for( int i=0; i < _wearer->itemslots_size(); ++i )
+//      {
+//        const auto& slot = _wearer->itemslots(i);
+//        if ( slot.id() == id )
+//        {
+//          //_slotEdit.setSlot( _wearer->mutable_itemslots(i) );
+//          //_slotEdit.exec();
+//          fillForm();
+//        }
+//      } XXX
     }
   }
 }
@@ -95,15 +94,15 @@ void WearerEditDlg::on_btnDelete_clicked()
     if ( item )
     {
       int id = item->text().toInt();
-      for( auto it = _wearer->itemslots().begin(); it != _wearer->itemslots().end(); ++it )
-      {
-        if ( it->id() == id )
-        {
-          _wearer->mutable_itemslots()->erase(it);
-          fillForm();
-          break;
-        }
-      }
+//      for( auto it = _wearer->itemslots().begin(); it != _wearer->itemslots().end(); ++it )
+//      {
+//        if ( it->id() == id )
+//        {
+//          _wearer->mutable_itemslots()->erase(it);
+//          fillForm();
+//          break;
+//        }
+//      } XXX
     }
   }
 }

@@ -127,11 +127,12 @@ void TilesEditor::on_actionDelete_tile_triggered()
   if ( item )
   {
     int id = item->text().toInt();
-    for( auto it = _tilesData.tile().begin(); it != _tilesData.tile().end(); ++it )
+    int i = 0;
+    for( auto it = _tilesData.tile().begin(); it != _tilesData.tile().end(); ++it, ++i )
     {
       if ( it->id() == id )
       {
-        _tilesData.mutable_tile()->erase(it);
+        _tilesData.mutable_tile()->DeleteSubrange(i, 1);
         populate();
         break;
       }

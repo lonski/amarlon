@@ -3,7 +3,7 @@
 #include <QDesktopWidget>
 #include <QMenu>
 #include <QMessageBox>
-#include <actors/actors.pb.h>
+#include <actor.pb.h>
 
 ActorEditDlg::ActorEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -51,7 +51,7 @@ ActorEditDlg::~ActorEditDlg()
   delete ui;
 }
 
-void ActorEditDlg::setActor(amarlon::proto::ActorData *actor)
+void ActorEditDlg::setActor(amarlon::ActorData *actor)
 {
   _actor = actor;
   fillForm();
@@ -63,7 +63,7 @@ void ActorEditDlg::new_pickable()
   {
     ui->lFeatures->addItem("Pickable");
 
-    _actor->set_allocated_pickable( new amarlon::proto::ActorData_Pickable );
+    _actor->set_allocated_pickable( new amarlon::PickableData );
     _pickableEdit.setPickable( _actor->mutable_pickable()  );
     _pickableEdit.exec();
   }
@@ -79,7 +79,7 @@ void ActorEditDlg::new_inventory()
   {
     ui->lFeatures->addItem("Inventory");
 
-    _actor->set_allocated_inventory( new amarlon::proto::ActorData_Inventory );
+    _actor->set_allocated_inventory( new amarlon::InventoryData );
     _inventoryEdit.setInventory( _actor->mutable_inventory() );
     _inventoryEdit.exec();
   }
@@ -95,7 +95,7 @@ void ActorEditDlg::new_character()
   {
     ui->lFeatures->addItem("Character");
 
-    _actor->set_allocated_character( new amarlon::proto::ActorData_Character );
+    _actor->set_allocated_character( new amarlon::CharacterData );
     _characterEdit.setCharacter( _actor->mutable_character() );
     _characterEdit.exec();
   }
@@ -111,7 +111,7 @@ void ActorEditDlg::new_destroyable()
   {
     ui->lFeatures->addItem("Destroyable");
 
-    _actor->set_allocated_destroyable( new amarlon::proto::ActorData_Destroyable );
+    _actor->set_allocated_destroyable( new amarlon::DestroyableData );
     _destroyableEdit.setDestroyable( _actor->mutable_destroyable() );
     _destroyableEdit.exec();
   }
@@ -127,7 +127,7 @@ void ActorEditDlg::new_wearer()
   {
     ui->lFeatures->addItem("Wearer");
 
-    _actor->set_allocated_wearer( new amarlon::proto::ActorData_Wearer );
+    _actor->set_allocated_wearer( new amarlon::WearerData );
     _wearerEdit.setWearer( _actor->mutable_wearer() );
     _wearerEdit.exec();
   }
@@ -143,7 +143,7 @@ void ActorEditDlg::new_ai()
   {
     ui->lFeatures->addItem("Ai");
 
-    _actor->set_allocated_ai( new amarlon::proto::ActorData_Ai );
+    _actor->set_allocated_ai( new amarlon::AiData );
     _aiEdit.setAi( _actor->mutable_ai() );
     _aiEdit.exec();
   }
@@ -159,7 +159,7 @@ void ActorEditDlg::new_openable()
   {
     ui->lFeatures->addItem("Openable");
 
-    _actor->set_allocated_openable( new amarlon::proto::ActorData_Openable );
+    _actor->set_allocated_openable( new amarlon::OpenableData );
     _openableEdit.setOpenable( _actor->mutable_openable() );
     _openableEdit.exec();
   }
@@ -173,12 +173,12 @@ void ActorEditDlg::fillForm()
 {
   if (_actor)
   {
-    ui->fBlocks->setCurrentIndex( (int)_actor->blocks() );
+    ui->fBlocks->setCurrentIndex( (int)_actor->is_blocking() );
     ui->fColor->setText( _actor->color().c_str() );
     ui->fDescription->setText( _actor->description().c_str() );
-    ui->fFOV->setCurrentIndex( (int)_actor->fovonly() );
-    ui->fTransparent->setCurrentIndex( (int)_actor->transparent() );
-    ui->fID->setValue( _actor->id() );
+    ui->fFOV->setCurrentIndex( (int)_actor->is_fov_only() );
+    ui->fTransparent->setCurrentIndex( (int)_actor->is_transparent() );
+    ui->fID->setValue( _actor->actor_type() );
     ui->fName->setText( _actor->name().c_str() );
     ui->fSymbol->setText( _actor->symbol().c_str() );
 
@@ -197,12 +197,12 @@ void ActorEditDlg::fillActor()
 {
   if (_actor)
   {
-    _actor->set_blocks( (bool)ui->fBlocks->currentIndex() );
+    _actor->set_is_blocking( (bool)ui->fBlocks->currentIndex() );
     _actor->set_color( ui->fColor->text().toStdString() );
     _actor->set_description( ui->fDescription->toPlainText().toStdString() );
-    _actor->set_fovonly( (bool)ui->fFOV->currentIndex() );
-    _actor->set_transparent( (bool)ui->fTransparent->currentIndex() );
-    _actor->set_id( ui->fID->value() );
+    _actor->set_is_fov_only( (bool)ui->fFOV->currentIndex() );
+    _actor->set_is_transparent( (bool)ui->fTransparent->currentIndex() );
+    _actor->set_actor_type( ui->fID->value() );
     _actor->set_name( ui->fName->text().toStdString() );
     _actor->set_symbol( ui->fSymbol->text().toStdString() );
   }

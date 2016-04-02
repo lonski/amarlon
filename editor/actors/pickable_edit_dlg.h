@@ -2,15 +2,10 @@
 #define PICKABLE_EDIT_DLG_H
 
 #include <QDialog>
+#include <actor.pb.h>
 
 namespace Ui {
 class PickableEditDlg;
-}
-
-namespace amarlon {
-namespace proto {
-class ActorData_Pickable;
-}
 }
 
 class PickableEditDlg : public QDialog
@@ -21,14 +16,14 @@ public:
   explicit PickableEditDlg(QWidget *parent = 0);
   ~PickableEditDlg();
 
-  void setPickable(amarlon::proto::ActorData_Pickable* pickable);
+  void setPickable(amarlon::PickableData* pickable);
 
 private slots:
   void on_buttonBox_accepted();
 
 private:
   Ui::PickableEditDlg *ui;
-  amarlon::proto::ActorData_Pickable* _pickable;
+  amarlon::PickableData* _pickable;
 
   void fillForm();
   void fillPickable();

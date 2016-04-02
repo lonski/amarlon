@@ -1,6 +1,6 @@
 #include "inventory_edit_dlg.h"
 #include "ui_inventory_edit_dlg.h"
-#include <actors/actors.pb.h>
+#include <actor.pb.h>
 #include <QInputDialog>
 
 InventoryEditDlg::InventoryEditDlg(QWidget *parent) :
@@ -16,7 +16,7 @@ InventoryEditDlg::~InventoryEditDlg()
   delete ui;
 }
 
-void InventoryEditDlg::setInventory(amarlon::proto::ActorData_Inventory *inventory)
+void InventoryEditDlg::setInventory(amarlon::InventoryData *inventory)
 {
   _inventory = inventory;
   fillForm();
@@ -31,11 +31,11 @@ void InventoryEditDlg::fillInventory()
 {
   if ( _inventory )
   {
-    _inventory->set_slotamount(ui->fSlotAmount->value());
-    _inventory->clear_item();
+    _inventory->set_slotcount(ui->fSlotAmount->value());
+    _inventory->clear_items();
 
-    for ( int i = 0; i < ui->fItems->count(); ++i )
-      _inventory->add_item( ui->fItems->item(i)->text().toInt() );
+//XXX    for ( int i = 0; i < ui->fItems->count(); ++i )
+//      _inventory->add_items( ui->fItems->item(i)->text().toInt() );
   }
 }
 
@@ -43,11 +43,11 @@ void InventoryEditDlg::fillForm()
 {
   if ( _inventory )
   {
-    ui->fSlotAmount->setValue( _inventory->slotamount() );
+    ui->fSlotAmount->setValue( _inventory->slotcount() );
     ui->fItems->clear();
-    for ( int i=0; i < _inventory->item_size(); ++i )
+    for ( int i=0; i < _inventory->items_size(); ++i )
     {
-      ui->fItems->addItem( QString::number( _inventory->item(i) ) );
+      ui->fItems->addItem( QString::number( _inventory->items(i).actor_type() ) );
     }
   }
 }

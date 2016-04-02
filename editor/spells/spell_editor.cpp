@@ -142,11 +142,12 @@ void SpellEditor::on_actionDelete_spell_triggered()
   if ( item )
   {
     int id = item->text().toInt();
-    for( auto it = _spellsData.spell().begin(); it != _spellsData.spell().end(); ++it )
+    int i = 0;
+    for( auto it = _spellsData.spell().begin(); it != _spellsData.spell().end(); ++it, ++i )
     {
       if ( it->id() == id )
       {
-        _spellsData.mutable_spell()->erase(it);
+        _spellsData.mutable_spell()->DeleteSubrange( i, 1 );
         populate();
         break;
       }

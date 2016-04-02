@@ -5,7 +5,7 @@
 #include <spell_editor.h>
 #include <tiles_editor.h>
 #include <skill_editor.h>
-//#include <actors/actors_editor.h>
+#include <actors/actors_editor.h>
 
 namespace Ui {
 class editor;
@@ -31,7 +31,7 @@ private:
   SpellEditor _spellsEditor;
   SkillEditor _skillsEditor;
   TilesEditor _tilesEditor;
-  //ActorsEditor _actorsEditor;
+  ActorsEditor _actorsEditor;
 };
 
 #endif // EDITOR_H

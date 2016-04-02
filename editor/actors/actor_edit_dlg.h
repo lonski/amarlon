@@ -29,11 +29,11 @@ public:
   explicit ActorEditDlg(QWidget *parent = 0);
   ~ActorEditDlg();
 
-  void setActor(amarlon::proto::ActorData* actor);
+  void setActor(amarlon::ActorData* actor);
 
 private:
   Ui::ActorEditDlg *ui;
-  amarlon::proto::ActorData* _actor;
+  amarlon::ActorData* _actor;
   PickableEditDlg _pickableEdit;
   OpenableEditDlg _openableEdit;
   AiEditDlg _aiEdit;

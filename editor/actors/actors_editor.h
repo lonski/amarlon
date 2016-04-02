@@ -2,7 +2,8 @@
 #define ACTORS_EDITOR_H
 
 #include <QMainWindow>
-#include <actors/actors.pb.h>
+#include <functional>
+#include <actor.pb.h>
 #include <actors/actor_edit_dlg.h>
 
 namespace Ui {
@@ -22,21 +23,19 @@ private slots:
   void on_actionOpen_triggered();
   void on_actionSave_as_triggered();
   void on_actionNew_actor_triggered();
-
   void on_aTable_cellDoubleClicked(int row, int column);
-
   void on_actionDelete_actor_triggered();
 
 private:
   Ui::ActorsEditor *ui;
-  amarlon::proto::ActorsData _actorsData;
+  amarlon::ActorsData _actorsData;
   ActorEditDlg _editDlg;
 
   void clear();
   void populate();
   void loadDatabase(const QString &fn);
   void saveDatabase(const QString &fn);
-  amarlon::proto::ActorData* getActor(std::function<bool (const amarlon::proto::ActorData&)> filter);
+  amarlon::ActorData* getActor(std::function<bool (const amarlon::ActorData&)> filter);
 
 };
 

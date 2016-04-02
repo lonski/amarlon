@@ -1,6 +1,6 @@
 #include "destroyable_edit_dlg.h"
 #include "ui_destroyable_edit_dlg.h"
-#include <actors/actors.pb.h>
+#include <actor.pb.h>
 
 DestroyableEditDlg::DestroyableEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -15,7 +15,7 @@ DestroyableEditDlg::~DestroyableEditDlg()
   delete ui;
 }
 
-void DestroyableEditDlg::setDestroyable(amarlon::proto::ActorData_Destroyable *destroyable)
+void DestroyableEditDlg::setDestroyable(amarlon::DestroyableData *destroyable)
 {
   _destroyable = destroyable;
   fillForm();
@@ -38,7 +38,7 @@ void DestroyableEditDlg::fillForm()
       const auto& rule = _destroyable->droprules(i);
 
       ui->sTable->insertRow( ui->sTable->rowCount() );
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( QString::number(rule.itemid()) ));
+      ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( QString::number(rule.actor_id()) ));
       ui->sTable->setItem(ui->sTable->rowCount() - 1, 1, new QTableWidgetItem( QString::number(rule.min()) ));
       ui->sTable->setItem(ui->sTable->rowCount() - 1, 2, new QTableWidgetItem( QString::number(rule.max()) ));
       ui->sTable->setItem(ui->sTable->rowCount() - 1, 3, new QTableWidgetItem( QString::number(rule.chance(),'g',2) ));
@@ -67,7 +67,7 @@ void DestroyableEditDlg::on_btnEdit_clicked()
       for( int i=0; i < _destroyable->droprules_size(); ++i )
       {
         const auto& rule = _destroyable->droprules(i);
-        if ( rule.itemid() == id )
+        if ( rule.actor_id() == id )
         {
           _dropRulEdit.setRule( _destroyable->mutable_droprules(i) );
           _dropRulEdit.exec();
@@ -86,11 +86,12 @@ void DestroyableEditDlg::on_btnDelete_clicked()
     if ( item )
     {
       int id = item->text().toInt();
-      for( auto it = _destroyable->droprules().begin(); it != _destroyable->droprules().end(); ++it )
+      int i = 0;
+      for( auto it = _destroyable->droprules().begin(); it != _destroyable->droprules().end(); ++it, ++i )
       {
-        if ( it->itemid() == id )
+        if ( it->actor_id() == id )
         {
-          _destroyable->mutable_droprules()->erase(it);
+          _destroyable->mutable_droprules()->DeleteSubrange(i, 1);
           fillForm();
           break;
         }

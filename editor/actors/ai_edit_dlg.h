@@ -2,15 +2,10 @@
 #define AI_EDIT_DLG_H
 
 #include <QDialog>
+#include <actor.pb.h>
 
 namespace Ui {
 class AiEditDlg;
-}
-
-namespace amarlon {
-namespace proto {
-class ActorData_Ai;
-}
 }
 
 class AiEditDlg : public QDialog
@@ -21,14 +16,14 @@ public:
   explicit AiEditDlg(QWidget *parent = 0);
   ~AiEditDlg();
 
-  void setAi(amarlon::proto::ActorData_Ai* ai);
+  void setAi(amarlon::AiData* ai);
 
 private slots:
   void on_buttonBox_accepted();
 
 private:
   Ui::AiEditDlg *ui;
-  amarlon::proto::ActorData_Ai* _ai;
+  amarlon::AiData* _ai;
 
   void fillAi();
   void fillForm();

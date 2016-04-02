@@ -1,6 +1,6 @@
 #include "ai_edit_dlg.h"
 #include "ui_ai_edit_dlg.h"
-#include <actors/actors.pb.h>
+#include <actor.pb.h>
 
 AiEditDlg::AiEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -15,7 +15,7 @@ AiEditDlg::~AiEditDlg()
   delete ui;
 }
 
-void AiEditDlg::setAi(amarlon::proto::ActorData_Ai *ai)
+void AiEditDlg::setAi(amarlon::AiData *ai)
 {
   _ai = ai;
   fillForm();

@@ -2,15 +2,10 @@
 #define INVENTORY_EDIT_DLG_H
 
 #include <QDialog>
+#include <actor.pb.h>
 
 namespace Ui {
 class InventoryEditDlg;
-}
-
-namespace amarlon {
-namespace proto {
-class ActorData_Inventory;
-}
 }
 
 class InventoryEditDlg : public QDialog
@@ -21,7 +16,7 @@ public:
   explicit InventoryEditDlg(QWidget *parent = 0);
   ~InventoryEditDlg();
 
-  void setInventory(amarlon::proto::ActorData_Inventory* inventory);
+  void setInventory(amarlon::InventoryData* inventory);
 
 private slots:
   void on_buttonBox_accepted();
@@ -34,7 +29,7 @@ private slots:
 
 private:
   Ui::InventoryEditDlg *ui;
-  amarlon::proto::ActorData_Inventory* _inventory;
+  amarlon::InventoryData* _inventory;
 
   void fillInventory();
   void fillForm();

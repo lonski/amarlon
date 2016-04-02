@@ -2,16 +2,10 @@
 #define WEARER_EDIT_DLG_H
 
 #include <QDialog>
-#include <actors/item_slot_edit_dlg.h>
+#include <actor.pb.h>
 
 namespace Ui {
 class WearerEditDlg;
-}
-
-namespace amarlon {
-namespace proto {
-class ActorData_Wearer;
-}
 }
 
 class WearerEditDlg : public QDialog
@@ -22,7 +16,7 @@ public:
   explicit WearerEditDlg(QWidget *parent = 0);
   ~WearerEditDlg();
 
-  void setWearer(amarlon::proto::ActorData_Wearer* wearer);
+  void setWearer(amarlon::WearerData* wearer);
 
 private slots:
   void on_buttonBox_accepted();
@@ -34,8 +28,7 @@ private slots:
 
 private:
   Ui::WearerEditDlg *ui;
-  amarlon::proto::ActorData_Wearer* _wearer;
-  ItemSlotEditDlg _slotEdit;
+  amarlon::WearerData* _wearer;
 
   void fillWearer();
   void fillForm();
