@@ -30,6 +30,7 @@ private slots:
 private:
   Ui::InventoryEditDlg *ui;
   amarlon::InventoryData* _inventory;
+  ::google::protobuf::RepeatedPtrField< ::amarlon::ActorData > _items;
 
   void fillInventory();
   void fillForm();

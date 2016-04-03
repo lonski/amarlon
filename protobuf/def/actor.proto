@@ -7,27 +7,27 @@ import "drop_rule.proto";
 import "utils.proto";
 
 message AiData {
-  required fixed32 flags  = 1;
-  required int32   script = 2;
-  required int32   type   = 3;
+  optional fixed32 flags  = 1;
+  optional int32   script = 2;
+  optional int32   type   = 3;
 }
 
 message CharacterData {
-  required int32 level              = 1;
-  required int32 hp                 = 2;
-  required int32 maxHP              = 3;
-  required int32 baseAC             = 4;
-  required int32 experience         = 5;
-  required int32 classType          = 6;
-  required int32 raceType           = 7;
-  required int32 speed              = 8;
-  required int32 movePoints         = 9;
-  required int32 team               = 10;
-  required int32 morale             = 11;
-  required string damage            = 12;
-  required SpellBookData spellbook  = 13;
-  required int32 characterType      = 14;
-  required int32 uses_count         = 15;
+  optional int32 level              = 1;
+  optional int32 hp                 = 2;
+  optional int32 maxHP              = 3;
+  optional int32 baseAC             = 4;
+  optional int32 experience         = 5;
+  optional int32 classType          = 6;
+  optional int32 raceType           = 7;
+  optional int32 speed              = 8;
+  optional int32 movePoints         = 9;
+  optional int32 team               = 10;
+  optional int32 morale             = 11;
+  optional string damage            = 12;
+  optional SpellBookData spellbook  = 13;
+  optional int32 characterType      = 14;
+  optional int32 uses_count         = 15;
 
   repeated IntIntPair skills        = 16;
   repeated IntIntPair abilityScores = 17;
@@ -40,44 +40,44 @@ message DestroyableData {
 }
 
 message InventoryData {
-  required int32 slotCount = 1;
+  optional int32 slotCount = 1;
   repeated ActorData items = 2;
 }
 
 message OpenableData {
-  required bool locked      = 1;
-  required bool closed      = 2;
-  required int32 lock_id    = 3;
-  required int32 lock_level = 4;
-  required int32 script_id  = 5;
+  optional bool locked      = 1;
+  optional bool closed      = 2;
+  optional int32 lock_id    = 3;
+  optional int32 lock_level = 4;
+  optional int32 script_id  = 5;
 }
 
 message PickableData {
-  required bool stackable         = 1;
-  required int32 amount           = 2;
-  required int32 item_slot        = 3;
-  required int32 armor_class      = 4;
-  required int32 weight           = 5;
-  required int32 price            = 6;
-  required int32 target_type      = 7;
-  required string damage          = 8;
-  required int32 script_id        = 9;
-  required int32 range            = 10;
-  required int32 radius           = 11;
-  required ItemTypeData item_type = 12;
-  required int32 uses_count       = 13;
-  required int32 spell_id         = 14;
+  optional bool stackable         = 1;
+  optional int32 amount           = 2;
+  optional int32 item_slot        = 3;
+  optional int32 armor_class      = 4;
+  optional int32 weight           = 5;
+  optional int32 price            = 6;
+  optional int32 target_type      = 7;
+  optional string damage          = 8;
+  optional int32 script_id        = 9;
+  optional int32 range            = 10;
+  optional int32 radius           = 11;
+  optional ItemTypeData item_type = 12;
+  optional int32 uses_count       = 13;
+  optional int32 spell_id         = 14;
 }
 
 message TalkerData {
-  required int32 id = 1;
+  optional int32 id = 1;
 }
 
 message TrapData {
-  required int32 id         = 1;
-  required int32 difficulty = 2;
-  required bool is_armed    = 3;
-  required bool is_detected = 4;
+  optional int32 id         = 1;
+  optional int32 difficulty = 2;
+  optional bool is_armed    = 3;
+  optional bool is_detected = 4;
 }
 
 message WearerData {
@@ -86,24 +86,24 @@ message WearerData {
 }
 
 message StatusEffectData {
-  required string name    = 1;
-  required int32 duration = 2;
-  required string script  = 3;
+  optional string name    = 1;
+  optional int32 duration = 2;
+  optional string script  = 3;
 }
 
 message ActorData{
-  required int32 actor_type                  = 1;
-  required string name                       = 2;
-  required string description                = 3;
-  required int32 x                           = 4;
-  required int32 y                           = 5;
-  required int32 flags                       = 6;
-  required bool is_fov_only                  = 7;
-  required bool is_transparent               = 8;
-  required bool is_blocking                  = 9;
-  required string symbol                     = 10;
-  required int32 render_priority             = 11;
-  required string color                      = 12;
+  optional int32 actor_type                  = 1;
+  optional string name                       = 2;
+  optional int32 x                           = 3;
+  optional string description                = 4;
+  optional int32 y                           = 5;
+  optional int32 flags                       = 6;
+  optional bool is_fov_only                  = 7;
+  optional bool is_transparent               = 8;
+  optional bool is_blocking                  = 9;
+  optional string symbol                     = 100;
+  optional int32 render_priority             = 11;
+  optional string color                      = 12;
 
   repeated StatusEffectData effects          = 13;
 

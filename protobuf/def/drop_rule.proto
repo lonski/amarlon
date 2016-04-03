@@ -3,8 +3,8 @@ syntax = "proto2";
 package amarlon;
 
 message DropRule {
-  required int32 actor_id = 1;
-  required int32 min = 2;
-  required int32 max = 3;
-  required float chance = 4;
+  optional int32 actor_id = 1;
+  optional int32 min = 2;
+  optional int32 max = 3;
+  optional float chance = 4;
 }

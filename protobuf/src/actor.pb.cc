@@ -263,8 +263,8 @@ void protobuf_AssignDesc_actor_2eproto() {
   static const int ActorData_offsets_[22] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, actor_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, description_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, x_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, description_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, flags_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ActorData, is_fov_only_),
@@ -390,43 +390,43 @@ void protobuf_AddDesc_actor_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\013actor.proto\022\007amarlon\032\013spell.proto\032\017ite"
     "m_type.proto\032\017drop_rule.proto\032\013utils.pro"
-    "to\"5\n\006AiData\022\r\n\005flags\030\001 \002(\007\022\016\n\006script\030\002 "
-    "\002(\005\022\014\n\004type\030\003 \002(\005\"\215\003\n\rCharacterData\022\r\n\005l"
-    "evel\030\001 \002(\005\022\n\n\002hp\030\002 \002(\005\022\r\n\005maxHP\030\003 \002(\005\022\016\n"
-    "\006baseAC\030\004 \002(\005\022\022\n\nexperience\030\005 \002(\005\022\021\n\tcla"
-    "ssType\030\006 \002(\005\022\020\n\010raceType\030\007 \002(\005\022\r\n\005speed\030"
-    "\010 \002(\005\022\022\n\nmovePoints\030\t \002(\005\022\014\n\004team\030\n \002(\005\022"
-    "\016\n\006morale\030\013 \002(\005\022\016\n\006damage\030\014 \002(\t\022)\n\tspell"
-    "book\030\r \002(\0132\026.amarlon.SpellBookData\022\025\n\rch"
-    "aracterType\030\016 \002(\005\022\022\n\nuses_count\030\017 \002(\005\022#\n"
+    "to\"5\n\006AiData\022\r\n\005flags\030\001 \001(\007\022\016\n\006script\030\002 "
+    "\001(\005\022\014\n\004type\030\003 \001(\005\"\215\003\n\rCharacterData\022\r\n\005l"
+    "evel\030\001 \001(\005\022\n\n\002hp\030\002 \001(\005\022\r\n\005maxHP\030\003 \001(\005\022\016\n"
+    "\006baseAC\030\004 \001(\005\022\022\n\nexperience\030\005 \001(\005\022\021\n\tcla"
+    "ssType\030\006 \001(\005\022\020\n\010raceType\030\007 \001(\005\022\r\n\005speed\030"
+    "\010 \001(\005\022\022\n\nmovePoints\030\t \001(\005\022\014\n\004team\030\n \001(\005\022"
+    "\016\n\006morale\030\013 \001(\005\022\016\n\006damage\030\014 \001(\t\022)\n\tspell"
+    "book\030\r \001(\0132\026.amarlon.SpellBookData\022\025\n\rch"
+    "aracterType\030\016 \001(\005\022\022\n\nuses_count\030\017 \001(\005\022#\n"
     "\006skills\030\020 \003(\0132\023.amarlon.IntIntPair\022*\n\rab"
     "ilityScores\030\021 \003(\0132\023.amarlon.IntIntPair\022\021"
     "\n\tmodifiers\030\022 \003(\t\"7\n\017DestroyableData\022$\n\t"
     "dropRules\030\001 \003(\0132\021.amarlon.DropRule\"E\n\rIn"
-    "ventoryData\022\021\n\tslotCount\030\001 \002(\005\022!\n\005items\030"
+    "ventoryData\022\021\n\tslotCount\030\001 \001(\005\022!\n\005items\030"
     "\002 \003(\0132\022.amarlon.ActorData\"f\n\014OpenableDat"
-    "a\022\016\n\006locked\030\001 \002(\010\022\016\n\006closed\030\002 \002(\010\022\017\n\007loc"
-    "k_id\030\003 \002(\005\022\022\n\nlock_level\030\004 \002(\005\022\021\n\tscript"
-    "_id\030\005 \002(\005\"\237\002\n\014PickableData\022\021\n\tstackable\030"
-    "\001 \002(\010\022\016\n\006amount\030\002 \002(\005\022\021\n\titem_slot\030\003 \002(\005"
-    "\022\023\n\013armor_class\030\004 \002(\005\022\016\n\006weight\030\005 \002(\005\022\r\n"
-    "\005price\030\006 \002(\005\022\023\n\013target_type\030\007 \002(\005\022\016\n\006dam"
-    "age\030\010 \002(\t\022\021\n\tscript_id\030\t \002(\005\022\r\n\005range\030\n "
-    "\002(\005\022\016\n\006radius\030\013 \002(\005\022(\n\titem_type\030\014 \002(\0132\025"
-    ".amarlon.ItemTypeData\022\022\n\nuses_count\030\r \002("
-    "\005\022\020\n\010spell_id\030\016 \002(\005\"\030\n\nTalkerData\022\n\n\002id\030"
-    "\001 \002(\005\"Q\n\010TrapData\022\n\n\002id\030\001 \002(\005\022\022\n\ndifficu"
-    "lty\030\002 \002(\005\022\020\n\010is_armed\030\003 \002(\010\022\023\n\013is_detect"
-    "ed\030\004 \002(\010\"L\n\nWearerData\022\022\n\nitem_slots\030\001 \003"
+    "a\022\016\n\006locked\030\001 \001(\010\022\016\n\006closed\030\002 \001(\010\022\017\n\007loc"
+    "k_id\030\003 \001(\005\022\022\n\nlock_level\030\004 \001(\005\022\021\n\tscript"
+    "_id\030\005 \001(\005\"\237\002\n\014PickableData\022\021\n\tstackable\030"
+    "\001 \001(\010\022\016\n\006amount\030\002 \001(\005\022\021\n\titem_slot\030\003 \001(\005"
+    "\022\023\n\013armor_class\030\004 \001(\005\022\016\n\006weight\030\005 \001(\005\022\r\n"
+    "\005price\030\006 \001(\005\022\023\n\013target_type\030\007 \001(\005\022\016\n\006dam"
+    "age\030\010 \001(\t\022\021\n\tscript_id\030\t \001(\005\022\r\n\005range\030\n "
+    "\001(\005\022\016\n\006radius\030\013 \001(\005\022(\n\titem_type\030\014 \001(\0132\025"
+    ".amarlon.ItemTypeData\022\022\n\nuses_count\030\r \001("
+    "\005\022\020\n\010spell_id\030\016 \001(\005\"\030\n\nTalkerData\022\n\n\002id\030"
+    "\001 \001(\005\"Q\n\010TrapData\022\n\n\002id\030\001 \001(\005\022\022\n\ndifficu"
+    "lty\030\002 \001(\005\022\020\n\010is_armed\030\003 \001(\010\022\023\n\013is_detect"
+    "ed\030\004 \001(\010\"L\n\nWearerData\022\022\n\nitem_slots\030\001 \003"
     "(\005\022*\n\016equipped_items\030\002 \003(\0132\022.amarlon.Act"
-    "orData\"B\n\020StatusEffectData\022\014\n\004name\030\001 \002(\t"
-    "\022\020\n\010duration\030\002 \002(\005\022\016\n\006script\030\003 \002(\t\"\354\004\n\tA"
-    "ctorData\022\022\n\nactor_type\030\001 \002(\005\022\014\n\004name\030\002 \002"
-    "(\t\022\023\n\013description\030\003 \002(\t\022\t\n\001x\030\004 \002(\005\022\t\n\001y\030"
-    "\005 \002(\005\022\r\n\005flags\030\006 \002(\005\022\023\n\013is_fov_only\030\007 \002("
-    "\010\022\026\n\016is_transparent\030\010 \002(\010\022\023\n\013is_blocking"
-    "\030\t \002(\010\022\016\n\006symbol\030\n \002(\t\022\027\n\017render_priorit"
-    "y\030\013 \002(\005\022\r\n\005color\030\014 \002(\t\022*\n\007effects\030\r \003(\0132"
+    "orData\"B\n\020StatusEffectData\022\014\n\004name\030\001 \001(\t"
+    "\022\020\n\010duration\030\002 \001(\005\022\016\n\006script\030\003 \001(\t\"\354\004\n\tA"
+    "ctorData\022\022\n\nactor_type\030\001 \001(\005\022\014\n\004name\030\002 \001"
+    "(\t\022\t\n\001x\030\003 \001(\005\022\023\n\013description\030\004 \001(\t\022\t\n\001y\030"
+    "\005 \001(\005\022\r\n\005flags\030\006 \001(\005\022\023\n\013is_fov_only\030\007 \001("
+    "\010\022\026\n\016is_transparent\030\010 \001(\010\022\023\n\013is_blocking"
+    "\030\t \001(\010\022\016\n\006symbol\030d \001(\t\022\027\n\017render_priorit"
+    "y\030\013 \001(\005\022\r\n\005color\030\014 \001(\t\022*\n\007effects\030\r \003(\0132"
     "\031.amarlon.StatusEffectData\022\033\n\002ai\030\016 \001(\0132\017"
     ".amarlon.AiData\022)\n\tcharacter\030\017 \001(\0132\026.ama"
     "rlon.CharacterData\022-\n\013destroyable\030\020 \001(\0132"
@@ -567,7 +567,7 @@ bool AiData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required fixed32 flags = 1;
+      // optional fixed32 flags = 1;
       case 1: {
         if (tag == 13) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -581,7 +581,7 @@ bool AiData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 script = 2;
+      // optional int32 script = 2;
       case 2: {
         if (tag == 16) {
          parse_script:
@@ -596,7 +596,7 @@ bool AiData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 type = 3;
+      // optional int32 type = 3;
       case 3: {
         if (tag == 24) {
          parse_type:
@@ -636,17 +636,17 @@ failure:
 void AiData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.AiData)
-  // required fixed32 flags = 1;
+  // optional fixed32 flags = 1;
   if (has_flags()) {
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->flags(), output);
   }
 
-  // required int32 script = 2;
+  // optional int32 script = 2;
   if (has_script()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->script(), output);
   }
 
-  // required int32 type = 3;
+  // optional int32 type = 3;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->type(), output);
   }
@@ -661,17 +661,17 @@ void AiData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* AiData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.AiData)
-  // required fixed32 flags = 1;
+  // optional fixed32 flags = 1;
   if (has_flags()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->flags(), target);
   }
 
-  // required int32 script = 2;
+  // optional int32 script = 2;
   if (has_script()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->script(), target);
   }
 
-  // required int32 type = 3;
+  // optional int32 type = 3;
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->type(), target);
   }
@@ -688,19 +688,19 @@ int AiData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required fixed32 flags = 1;
+    // optional fixed32 flags = 1;
     if (has_flags()) {
       total_size += 1 + 4;
     }
 
-    // required int32 script = 2;
+    // optional int32 script = 2;
     if (has_script()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->script());
     }
 
-    // required int32 type = 3;
+    // optional int32 type = 3;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -760,7 +760,6 @@ void AiData::CopyFrom(const AiData& from) {
 }
 
 bool AiData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
@@ -929,7 +928,7 @@ bool CharacterData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 level = 1;
+      // optional int32 level = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -943,7 +942,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 hp = 2;
+      // optional int32 hp = 2;
       case 2: {
         if (tag == 16) {
          parse_hp:
@@ -958,7 +957,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 maxHP = 3;
+      // optional int32 maxHP = 3;
       case 3: {
         if (tag == 24) {
          parse_maxHP:
@@ -973,7 +972,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 baseAC = 4;
+      // optional int32 baseAC = 4;
       case 4: {
         if (tag == 32) {
          parse_baseAC:
@@ -988,7 +987,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 experience = 5;
+      // optional int32 experience = 5;
       case 5: {
         if (tag == 40) {
          parse_experience:
@@ -1003,7 +1002,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 classType = 6;
+      // optional int32 classType = 6;
       case 6: {
         if (tag == 48) {
          parse_classType:
@@ -1018,7 +1017,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 raceType = 7;
+      // optional int32 raceType = 7;
       case 7: {
         if (tag == 56) {
          parse_raceType:
@@ -1033,7 +1032,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 speed = 8;
+      // optional int32 speed = 8;
       case 8: {
         if (tag == 64) {
          parse_speed:
@@ -1048,7 +1047,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 movePoints = 9;
+      // optional int32 movePoints = 9;
       case 9: {
         if (tag == 72) {
          parse_movePoints:
@@ -1063,7 +1062,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 team = 10;
+      // optional int32 team = 10;
       case 10: {
         if (tag == 80) {
          parse_team:
@@ -1078,7 +1077,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 morale = 11;
+      // optional int32 morale = 11;
       case 11: {
         if (tag == 88) {
          parse_morale:
@@ -1093,7 +1092,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string damage = 12;
+      // optional string damage = 12;
       case 12: {
         if (tag == 98) {
          parse_damage:
@@ -1110,7 +1109,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required .amarlon.SpellBookData spellbook = 13;
+      // optional .amarlon.SpellBookData spellbook = 13;
       case 13: {
         if (tag == 106) {
          parse_spellbook:
@@ -1123,7 +1122,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 characterType = 14;
+      // optional int32 characterType = 14;
       case 14: {
         if (tag == 112) {
          parse_characterType:
@@ -1138,7 +1137,7 @@ bool CharacterData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 uses_count = 15;
+      // optional int32 uses_count = 15;
       case 15: {
         if (tag == 120) {
          parse_uses_count:
@@ -1225,62 +1224,62 @@ failure:
 void CharacterData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.CharacterData)
-  // required int32 level = 1;
+  // optional int32 level = 1;
   if (has_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->level(), output);
   }
 
-  // required int32 hp = 2;
+  // optional int32 hp = 2;
   if (has_hp()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->hp(), output);
   }
 
-  // required int32 maxHP = 3;
+  // optional int32 maxHP = 3;
   if (has_maxhp()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->maxhp(), output);
   }
 
-  // required int32 baseAC = 4;
+  // optional int32 baseAC = 4;
   if (has_baseac()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->baseac(), output);
   }
 
-  // required int32 experience = 5;
+  // optional int32 experience = 5;
   if (has_experience()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->experience(), output);
   }
 
-  // required int32 classType = 6;
+  // optional int32 classType = 6;
   if (has_classtype()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->classtype(), output);
   }
 
-  // required int32 raceType = 7;
+  // optional int32 raceType = 7;
   if (has_racetype()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->racetype(), output);
   }
 
-  // required int32 speed = 8;
+  // optional int32 speed = 8;
   if (has_speed()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->speed(), output);
   }
 
-  // required int32 movePoints = 9;
+  // optional int32 movePoints = 9;
   if (has_movepoints()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->movepoints(), output);
   }
 
-  // required int32 team = 10;
+  // optional int32 team = 10;
   if (has_team()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->team(), output);
   }
 
-  // required int32 morale = 11;
+  // optional int32 morale = 11;
   if (has_morale()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->morale(), output);
   }
 
-  // required string damage = 12;
+  // optional string damage = 12;
   if (has_damage()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->damage().data(), this->damage().length(),
@@ -1290,18 +1289,18 @@ void CharacterData::SerializeWithCachedSizes(
       12, this->damage(), output);
   }
 
-  // required .amarlon.SpellBookData spellbook = 13;
+  // optional .amarlon.SpellBookData spellbook = 13;
   if (has_spellbook()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       13, this->spellbook(), output);
   }
 
-  // required int32 characterType = 14;
+  // optional int32 characterType = 14;
   if (has_charactertype()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->charactertype(), output);
   }
 
-  // required int32 uses_count = 15;
+  // optional int32 uses_count = 15;
   if (has_uses_count()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->uses_count(), output);
   }
@@ -1338,62 +1337,62 @@ void CharacterData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* CharacterData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.CharacterData)
-  // required int32 level = 1;
+  // optional int32 level = 1;
   if (has_level()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->level(), target);
   }
 
-  // required int32 hp = 2;
+  // optional int32 hp = 2;
   if (has_hp()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->hp(), target);
   }
 
-  // required int32 maxHP = 3;
+  // optional int32 maxHP = 3;
   if (has_maxhp()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->maxhp(), target);
   }
 
-  // required int32 baseAC = 4;
+  // optional int32 baseAC = 4;
   if (has_baseac()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->baseac(), target);
   }
 
-  // required int32 experience = 5;
+  // optional int32 experience = 5;
   if (has_experience()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->experience(), target);
   }
 
-  // required int32 classType = 6;
+  // optional int32 classType = 6;
   if (has_classtype()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->classtype(), target);
   }
 
-  // required int32 raceType = 7;
+  // optional int32 raceType = 7;
   if (has_racetype()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->racetype(), target);
   }
 
-  // required int32 speed = 8;
+  // optional int32 speed = 8;
   if (has_speed()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->speed(), target);
   }
 
-  // required int32 movePoints = 9;
+  // optional int32 movePoints = 9;
   if (has_movepoints()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->movepoints(), target);
   }
 
-  // required int32 team = 10;
+  // optional int32 team = 10;
   if (has_team()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->team(), target);
   }
 
-  // required int32 morale = 11;
+  // optional int32 morale = 11;
   if (has_morale()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->morale(), target);
   }
 
-  // required string damage = 12;
+  // optional string damage = 12;
   if (has_damage()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->damage().data(), this->damage().length(),
@@ -1404,19 +1403,19 @@ void CharacterData::SerializeWithCachedSizes(
         12, this->damage(), target);
   }
 
-  // required .amarlon.SpellBookData spellbook = 13;
+  // optional .amarlon.SpellBookData spellbook = 13;
   if (has_spellbook()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         13, this->spellbook(), target);
   }
 
-  // required int32 characterType = 14;
+  // optional int32 characterType = 14;
   if (has_charactertype()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->charactertype(), target);
   }
 
-  // required int32 uses_count = 15;
+  // optional int32 uses_count = 15;
   if (has_uses_count()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->uses_count(), target);
   }
@@ -1457,56 +1456,56 @@ int CharacterData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 level = 1;
+    // optional int32 level = 1;
     if (has_level()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->level());
     }
 
-    // required int32 hp = 2;
+    // optional int32 hp = 2;
     if (has_hp()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->hp());
     }
 
-    // required int32 maxHP = 3;
+    // optional int32 maxHP = 3;
     if (has_maxhp()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->maxhp());
     }
 
-    // required int32 baseAC = 4;
+    // optional int32 baseAC = 4;
     if (has_baseac()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->baseac());
     }
 
-    // required int32 experience = 5;
+    // optional int32 experience = 5;
     if (has_experience()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->experience());
     }
 
-    // required int32 classType = 6;
+    // optional int32 classType = 6;
     if (has_classtype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->classtype());
     }
 
-    // required int32 raceType = 7;
+    // optional int32 raceType = 7;
     if (has_racetype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->racetype());
     }
 
-    // required int32 speed = 8;
+    // optional int32 speed = 8;
     if (has_speed()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1515,49 +1514,49 @@ int CharacterData::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required int32 movePoints = 9;
+    // optional int32 movePoints = 9;
     if (has_movepoints()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->movepoints());
     }
 
-    // required int32 team = 10;
+    // optional int32 team = 10;
     if (has_team()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->team());
     }
 
-    // required int32 morale = 11;
+    // optional int32 morale = 11;
     if (has_morale()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->morale());
     }
 
-    // required string damage = 12;
+    // optional string damage = 12;
     if (has_damage()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->damage());
     }
 
-    // required .amarlon.SpellBookData spellbook = 13;
+    // optional .amarlon.SpellBookData spellbook = 13;
     if (has_spellbook()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->spellbook());
     }
 
-    // required int32 characterType = 14;
+    // optional int32 characterType = 14;
     if (has_charactertype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->charactertype());
     }
 
-    // required int32 uses_count = 15;
+    // optional int32 uses_count = 15;
     if (has_uses_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1681,11 +1680,7 @@ void CharacterData::CopyFrom(const CharacterData& from) {
 }
 
 bool CharacterData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00007fff) != 0x00007fff) return false;
 
-  if (has_spellbook()) {
-    if (!this->spellbook().IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -1922,7 +1917,6 @@ void DestroyableData::CopyFrom(const DestroyableData& from) {
 
 bool DestroyableData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->droprules())) return false;
   return true;
 }
 
@@ -2021,7 +2015,7 @@ bool InventoryData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 slotCount = 1;
+      // optional int32 slotCount = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2074,7 +2068,7 @@ failure:
 void InventoryData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.InventoryData)
-  // required int32 slotCount = 1;
+  // optional int32 slotCount = 1;
   if (has_slotcount()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->slotcount(), output);
   }
@@ -2095,7 +2089,7 @@ void InventoryData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* InventoryData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.InventoryData)
-  // required int32 slotCount = 1;
+  // optional int32 slotCount = 1;
   if (has_slotcount()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->slotcount(), target);
   }
@@ -2119,7 +2113,7 @@ int InventoryData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 slotCount = 1;
+    // optional int32 slotCount = 1;
     if (has_slotcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -2182,9 +2176,7 @@ void InventoryData::CopyFrom(const InventoryData& from) {
 }
 
 bool InventoryData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
   return true;
 }
 
@@ -2306,7 +2298,7 @@ bool OpenableData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required bool locked = 1;
+      // optional bool locked = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2320,7 +2312,7 @@ bool OpenableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool closed = 2;
+      // optional bool closed = 2;
       case 2: {
         if (tag == 16) {
          parse_closed:
@@ -2335,7 +2327,7 @@ bool OpenableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 lock_id = 3;
+      // optional int32 lock_id = 3;
       case 3: {
         if (tag == 24) {
          parse_lock_id:
@@ -2350,7 +2342,7 @@ bool OpenableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 lock_level = 4;
+      // optional int32 lock_level = 4;
       case 4: {
         if (tag == 32) {
          parse_lock_level:
@@ -2365,7 +2357,7 @@ bool OpenableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 script_id = 5;
+      // optional int32 script_id = 5;
       case 5: {
         if (tag == 40) {
          parse_script_id:
@@ -2405,27 +2397,27 @@ failure:
 void OpenableData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.OpenableData)
-  // required bool locked = 1;
+  // optional bool locked = 1;
   if (has_locked()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->locked(), output);
   }
 
-  // required bool closed = 2;
+  // optional bool closed = 2;
   if (has_closed()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->closed(), output);
   }
 
-  // required int32 lock_id = 3;
+  // optional int32 lock_id = 3;
   if (has_lock_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->lock_id(), output);
   }
 
-  // required int32 lock_level = 4;
+  // optional int32 lock_level = 4;
   if (has_lock_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->lock_level(), output);
   }
 
-  // required int32 script_id = 5;
+  // optional int32 script_id = 5;
   if (has_script_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->script_id(), output);
   }
@@ -2440,27 +2432,27 @@ void OpenableData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* OpenableData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.OpenableData)
-  // required bool locked = 1;
+  // optional bool locked = 1;
   if (has_locked()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->locked(), target);
   }
 
-  // required bool closed = 2;
+  // optional bool closed = 2;
   if (has_closed()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->closed(), target);
   }
 
-  // required int32 lock_id = 3;
+  // optional int32 lock_id = 3;
   if (has_lock_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->lock_id(), target);
   }
 
-  // required int32 lock_level = 4;
+  // optional int32 lock_level = 4;
   if (has_lock_level()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->lock_level(), target);
   }
 
-  // required int32 script_id = 5;
+  // optional int32 script_id = 5;
   if (has_script_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->script_id(), target);
   }
@@ -2477,31 +2469,31 @@ int OpenableData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required bool locked = 1;
+    // optional bool locked = 1;
     if (has_locked()) {
       total_size += 1 + 1;
     }
 
-    // required bool closed = 2;
+    // optional bool closed = 2;
     if (has_closed()) {
       total_size += 1 + 1;
     }
 
-    // required int32 lock_id = 3;
+    // optional int32 lock_id = 3;
     if (has_lock_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->lock_id());
     }
 
-    // required int32 lock_level = 4;
+    // optional int32 lock_level = 4;
     if (has_lock_level()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->lock_level());
     }
 
-    // required int32 script_id = 5;
+    // optional int32 script_id = 5;
     if (has_script_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -2567,7 +2559,6 @@ void OpenableData::CopyFrom(const OpenableData& from) {
 }
 
 bool OpenableData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -2730,7 +2721,7 @@ bool PickableData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required bool stackable = 1;
+      // optional bool stackable = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2744,7 +2735,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 amount = 2;
+      // optional int32 amount = 2;
       case 2: {
         if (tag == 16) {
          parse_amount:
@@ -2759,7 +2750,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 item_slot = 3;
+      // optional int32 item_slot = 3;
       case 3: {
         if (tag == 24) {
          parse_item_slot:
@@ -2774,7 +2765,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 armor_class = 4;
+      // optional int32 armor_class = 4;
       case 4: {
         if (tag == 32) {
          parse_armor_class:
@@ -2789,7 +2780,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 weight = 5;
+      // optional int32 weight = 5;
       case 5: {
         if (tag == 40) {
          parse_weight:
@@ -2804,7 +2795,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 price = 6;
+      // optional int32 price = 6;
       case 6: {
         if (tag == 48) {
          parse_price:
@@ -2819,7 +2810,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 target_type = 7;
+      // optional int32 target_type = 7;
       case 7: {
         if (tag == 56) {
          parse_target_type:
@@ -2834,7 +2825,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string damage = 8;
+      // optional string damage = 8;
       case 8: {
         if (tag == 66) {
          parse_damage:
@@ -2851,7 +2842,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 script_id = 9;
+      // optional int32 script_id = 9;
       case 9: {
         if (tag == 72) {
          parse_script_id:
@@ -2866,7 +2857,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 range = 10;
+      // optional int32 range = 10;
       case 10: {
         if (tag == 80) {
          parse_range:
@@ -2881,7 +2872,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 radius = 11;
+      // optional int32 radius = 11;
       case 11: {
         if (tag == 88) {
          parse_radius:
@@ -2896,7 +2887,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required .amarlon.ItemTypeData item_type = 12;
+      // optional .amarlon.ItemTypeData item_type = 12;
       case 12: {
         if (tag == 98) {
          parse_item_type:
@@ -2909,7 +2900,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 uses_count = 13;
+      // optional int32 uses_count = 13;
       case 13: {
         if (tag == 104) {
          parse_uses_count:
@@ -2924,7 +2915,7 @@ bool PickableData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 spell_id = 14;
+      // optional int32 spell_id = 14;
       case 14: {
         if (tag == 112) {
          parse_spell_id:
@@ -2964,42 +2955,42 @@ failure:
 void PickableData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.PickableData)
-  // required bool stackable = 1;
+  // optional bool stackable = 1;
   if (has_stackable()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->stackable(), output);
   }
 
-  // required int32 amount = 2;
+  // optional int32 amount = 2;
   if (has_amount()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->amount(), output);
   }
 
-  // required int32 item_slot = 3;
+  // optional int32 item_slot = 3;
   if (has_item_slot()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->item_slot(), output);
   }
 
-  // required int32 armor_class = 4;
+  // optional int32 armor_class = 4;
   if (has_armor_class()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->armor_class(), output);
   }
 
-  // required int32 weight = 5;
+  // optional int32 weight = 5;
   if (has_weight()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->weight(), output);
   }
 
-  // required int32 price = 6;
+  // optional int32 price = 6;
   if (has_price()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->price(), output);
   }
 
-  // required int32 target_type = 7;
+  // optional int32 target_type = 7;
   if (has_target_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->target_type(), output);
   }
 
-  // required string damage = 8;
+  // optional string damage = 8;
   if (has_damage()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->damage().data(), this->damage().length(),
@@ -3009,33 +3000,33 @@ void PickableData::SerializeWithCachedSizes(
       8, this->damage(), output);
   }
 
-  // required int32 script_id = 9;
+  // optional int32 script_id = 9;
   if (has_script_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->script_id(), output);
   }
 
-  // required int32 range = 10;
+  // optional int32 range = 10;
   if (has_range()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->range(), output);
   }
 
-  // required int32 radius = 11;
+  // optional int32 radius = 11;
   if (has_radius()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->radius(), output);
   }
 
-  // required .amarlon.ItemTypeData item_type = 12;
+  // optional .amarlon.ItemTypeData item_type = 12;
   if (has_item_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       12, this->item_type(), output);
   }
 
-  // required int32 uses_count = 13;
+  // optional int32 uses_count = 13;
   if (has_uses_count()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->uses_count(), output);
   }
 
-  // required int32 spell_id = 14;
+  // optional int32 spell_id = 14;
   if (has_spell_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->spell_id(), output);
   }
@@ -3050,42 +3041,42 @@ void PickableData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* PickableData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.PickableData)
-  // required bool stackable = 1;
+  // optional bool stackable = 1;
   if (has_stackable()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->stackable(), target);
   }
 
-  // required int32 amount = 2;
+  // optional int32 amount = 2;
   if (has_amount()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->amount(), target);
   }
 
-  // required int32 item_slot = 3;
+  // optional int32 item_slot = 3;
   if (has_item_slot()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->item_slot(), target);
   }
 
-  // required int32 armor_class = 4;
+  // optional int32 armor_class = 4;
   if (has_armor_class()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->armor_class(), target);
   }
 
-  // required int32 weight = 5;
+  // optional int32 weight = 5;
   if (has_weight()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->weight(), target);
   }
 
-  // required int32 price = 6;
+  // optional int32 price = 6;
   if (has_price()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->price(), target);
   }
 
-  // required int32 target_type = 7;
+  // optional int32 target_type = 7;
   if (has_target_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->target_type(), target);
   }
 
-  // required string damage = 8;
+  // optional string damage = 8;
   if (has_damage()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->damage().data(), this->damage().length(),
@@ -3096,34 +3087,34 @@ void PickableData::SerializeWithCachedSizes(
         8, this->damage(), target);
   }
 
-  // required int32 script_id = 9;
+  // optional int32 script_id = 9;
   if (has_script_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->script_id(), target);
   }
 
-  // required int32 range = 10;
+  // optional int32 range = 10;
   if (has_range()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->range(), target);
   }
 
-  // required int32 radius = 11;
+  // optional int32 radius = 11;
   if (has_radius()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->radius(), target);
   }
 
-  // required .amarlon.ItemTypeData item_type = 12;
+  // optional .amarlon.ItemTypeData item_type = 12;
   if (has_item_type()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         12, this->item_type(), target);
   }
 
-  // required int32 uses_count = 13;
+  // optional int32 uses_count = 13;
   if (has_uses_count()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->uses_count(), target);
   }
 
-  // required int32 spell_id = 14;
+  // optional int32 spell_id = 14;
   if (has_spell_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->spell_id(), target);
   }
@@ -3140,54 +3131,54 @@ int PickableData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required bool stackable = 1;
+    // optional bool stackable = 1;
     if (has_stackable()) {
       total_size += 1 + 1;
     }
 
-    // required int32 amount = 2;
+    // optional int32 amount = 2;
     if (has_amount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->amount());
     }
 
-    // required int32 item_slot = 3;
+    // optional int32 item_slot = 3;
     if (has_item_slot()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->item_slot());
     }
 
-    // required int32 armor_class = 4;
+    // optional int32 armor_class = 4;
     if (has_armor_class()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->armor_class());
     }
 
-    // required int32 weight = 5;
+    // optional int32 weight = 5;
     if (has_weight()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->weight());
     }
 
-    // required int32 price = 6;
+    // optional int32 price = 6;
     if (has_price()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->price());
     }
 
-    // required int32 target_type = 7;
+    // optional int32 target_type = 7;
     if (has_target_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->target_type());
     }
 
-    // required string damage = 8;
+    // optional string damage = 8;
     if (has_damage()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -3196,42 +3187,42 @@ int PickableData::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required int32 script_id = 9;
+    // optional int32 script_id = 9;
     if (has_script_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->script_id());
     }
 
-    // required int32 range = 10;
+    // optional int32 range = 10;
     if (has_range()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->range());
     }
 
-    // required int32 radius = 11;
+    // optional int32 radius = 11;
     if (has_radius()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->radius());
     }
 
-    // required .amarlon.ItemTypeData item_type = 12;
+    // optional .amarlon.ItemTypeData item_type = 12;
     if (has_item_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->item_type());
     }
 
-    // required int32 uses_count = 13;
+    // optional int32 uses_count = 13;
     if (has_uses_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->uses_count());
     }
 
-    // required int32 spell_id = 14;
+    // optional int32 spell_id = 14;
     if (has_spell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -3326,11 +3317,7 @@ void PickableData::CopyFrom(const PickableData& from) {
 }
 
 bool PickableData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00003fff) != 0x00003fff) return false;
 
-  if (has_item_type()) {
-    if (!this->item_type().IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -3440,7 +3427,7 @@ bool TalkerData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -3479,7 +3466,7 @@ failure:
 void TalkerData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.TalkerData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
@@ -3494,7 +3481,7 @@ void TalkerData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* TalkerData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.TalkerData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
@@ -3511,7 +3498,7 @@ int TalkerData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -3565,7 +3552,6 @@ void TalkerData::CopyFrom(const TalkerData& from) {
 }
 
 bool TalkerData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -3683,7 +3669,7 @@ bool TrapData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -3697,7 +3683,7 @@ bool TrapData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 difficulty = 2;
+      // optional int32 difficulty = 2;
       case 2: {
         if (tag == 16) {
          parse_difficulty:
@@ -3712,7 +3698,7 @@ bool TrapData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool is_armed = 3;
+      // optional bool is_armed = 3;
       case 3: {
         if (tag == 24) {
          parse_is_armed:
@@ -3727,7 +3713,7 @@ bool TrapData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool is_detected = 4;
+      // optional bool is_detected = 4;
       case 4: {
         if (tag == 32) {
          parse_is_detected:
@@ -3767,22 +3753,22 @@ failure:
 void TrapData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.TrapData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // required int32 difficulty = 2;
+  // optional int32 difficulty = 2;
   if (has_difficulty()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->difficulty(), output);
   }
 
-  // required bool is_armed = 3;
+  // optional bool is_armed = 3;
   if (has_is_armed()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->is_armed(), output);
   }
 
-  // required bool is_detected = 4;
+  // optional bool is_detected = 4;
   if (has_is_detected()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->is_detected(), output);
   }
@@ -3797,22 +3783,22 @@ void TrapData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* TrapData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.TrapData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // required int32 difficulty = 2;
+  // optional int32 difficulty = 2;
   if (has_difficulty()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->difficulty(), target);
   }
 
-  // required bool is_armed = 3;
+  // optional bool is_armed = 3;
   if (has_is_armed()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->is_armed(), target);
   }
 
-  // required bool is_detected = 4;
+  // optional bool is_detected = 4;
   if (has_is_detected()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->is_detected(), target);
   }
@@ -3829,26 +3815,26 @@ int TrapData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
     }
 
-    // required int32 difficulty = 2;
+    // optional int32 difficulty = 2;
     if (has_difficulty()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->difficulty());
     }
 
-    // required bool is_armed = 3;
+    // optional bool is_armed = 3;
     if (has_is_armed()) {
       total_size += 1 + 1;
     }
 
-    // required bool is_detected = 4;
+    // optional bool is_detected = 4;
     if (has_is_detected()) {
       total_size += 1 + 1;
     }
@@ -3909,7 +3895,6 @@ void TrapData::CopyFrom(const TrapData& from) {
 }
 
 bool TrapData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -4177,7 +4162,6 @@ void WearerData::CopyFrom(const WearerData& from) {
 
 bool WearerData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->equipped_items())) return false;
   return true;
 }
 
@@ -4298,7 +4282,7 @@ bool StatusEffectData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string name = 1;
+      // optional string name = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
@@ -4314,7 +4298,7 @@ bool StatusEffectData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 duration = 2;
+      // optional int32 duration = 2;
       case 2: {
         if (tag == 16) {
          parse_duration:
@@ -4329,7 +4313,7 @@ bool StatusEffectData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string script = 3;
+      // optional string script = 3;
       case 3: {
         if (tag == 26) {
          parse_script:
@@ -4371,7 +4355,7 @@ failure:
 void StatusEffectData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.StatusEffectData)
-  // required string name = 1;
+  // optional string name = 1;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -4381,12 +4365,12 @@ void StatusEffectData::SerializeWithCachedSizes(
       1, this->name(), output);
   }
 
-  // required int32 duration = 2;
+  // optional int32 duration = 2;
   if (has_duration()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->duration(), output);
   }
 
-  // required string script = 3;
+  // optional string script = 3;
   if (has_script()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->script().data(), this->script().length(),
@@ -4406,7 +4390,7 @@ void StatusEffectData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* StatusEffectData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.StatusEffectData)
-  // required string name = 1;
+  // optional string name = 1;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -4417,12 +4401,12 @@ void StatusEffectData::SerializeWithCachedSizes(
         1, this->name(), target);
   }
 
-  // required int32 duration = 2;
+  // optional int32 duration = 2;
   if (has_duration()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->duration(), target);
   }
 
-  // required string script = 3;
+  // optional string script = 3;
   if (has_script()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->script().data(), this->script().length(),
@@ -4445,21 +4429,21 @@ int StatusEffectData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string name = 1;
+    // optional string name = 1;
     if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
 
-    // required int32 duration = 2;
+    // optional int32 duration = 2;
     if (has_duration()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->duration());
     }
 
-    // required string script = 3;
+    // optional string script = 3;
     if (has_script()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -4519,7 +4503,6 @@ void StatusEffectData::CopyFrom(const StatusEffectData& from) {
 }
 
 bool StatusEffectData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
@@ -4549,8 +4532,8 @@ void StatusEffectData::Swap(StatusEffectData* other) {
 #ifndef _MSC_VER
 const int ActorData::kActorTypeFieldNumber;
 const int ActorData::kNameFieldNumber;
-const int ActorData::kDescriptionFieldNumber;
 const int ActorData::kXFieldNumber;
+const int ActorData::kDescriptionFieldNumber;
 const int ActorData::kYFieldNumber;
 const int ActorData::kFlagsFieldNumber;
 const int ActorData::kIsFovOnlyFieldNumber;
@@ -4601,8 +4584,8 @@ void ActorData::SharedCtor() {
   _cached_size_ = 0;
   actor_type_ = 0;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   x_ = 0;
+  description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   y_ = 0;
   flags_ = 0;
   is_fov_only_ = false;
@@ -4761,7 +4744,7 @@ bool ActorData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 actor_type = 1;
+      // optional int32 actor_type = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -4775,7 +4758,7 @@ bool ActorData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string name = 2;
+      // optional string name = 2;
       case 2: {
         if (tag == 18) {
          parse_name:
@@ -4788,13 +4771,28 @@ bool ActorData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_description;
+        if (input->ExpectTag(24)) goto parse_x;
         break;
       }
 
-      // required string description = 3;
+      // optional int32 x = 3;
       case 3: {
-        if (tag == 26) {
+        if (tag == 24) {
+         parse_x:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &x_)));
+          set_has_x();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_description;
+        break;
+      }
+
+      // optional string description = 4;
+      case 4: {
+        if (tag == 34) {
          parse_description:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_description()));
@@ -4805,26 +4803,11 @@ bool ActorData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_x;
-        break;
-      }
-
-      // required int32 x = 4;
-      case 4: {
-        if (tag == 32) {
-         parse_x:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &x_)));
-          set_has_x();
-        } else {
-          goto handle_unusual;
-        }
         if (input->ExpectTag(40)) goto parse_y;
         break;
       }
 
-      // required int32 y = 5;
+      // optional int32 y = 5;
       case 5: {
         if (tag == 40) {
          parse_y:
@@ -4839,7 +4822,7 @@ bool ActorData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 flags = 6;
+      // optional int32 flags = 6;
       case 6: {
         if (tag == 48) {
          parse_flags:
@@ -4854,7 +4837,7 @@ bool ActorData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool is_fov_only = 7;
+      // optional bool is_fov_only = 7;
       case 7: {
         if (tag == 56) {
          parse_is_fov_only:
@@ -4869,7 +4852,7 @@ bool ActorData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool is_transparent = 8;
+      // optional bool is_transparent = 8;
       case 8: {
         if (tag == 64) {
          parse_is_transparent:
@@ -4884,7 +4867,7 @@ bool ActorData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool is_blocking = 9;
+      // optional bool is_blocking = 9;
       case 9: {
         if (tag == 72) {
          parse_is_blocking:
@@ -4895,28 +4878,11 @@ bool ActorData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(82)) goto parse_symbol;
-        break;
-      }
-
-      // required string symbol = 10;
-      case 10: {
-        if (tag == 82) {
-         parse_symbol:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_symbol()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->symbol().data(), this->symbol().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "symbol");
-        } else {
-          goto handle_unusual;
-        }
         if (input->ExpectTag(88)) goto parse_render_priority;
         break;
       }
 
-      // required int32 render_priority = 11;
+      // optional int32 render_priority = 11;
       case 11: {
         if (tag == 88) {
          parse_render_priority:
@@ -4931,7 +4897,7 @@ bool ActorData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string color = 12;
+      // optional string color = 12;
       case 12: {
         if (tag == 98) {
          parse_color:
@@ -5075,6 +5041,23 @@ bool ActorData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(802)) goto parse_symbol;
+        break;
+      }
+
+      // optional string symbol = 100;
+      case 100: {
+        if (tag == 802) {
+         parse_symbol:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_symbol()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->symbol().data(), this->symbol().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "symbol");
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5104,12 +5087,12 @@ failure:
 void ActorData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.ActorData)
-  // required int32 actor_type = 1;
+  // optional int32 actor_type = 1;
   if (has_actor_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->actor_type(), output);
   }
 
-  // required string name = 2;
+  // optional string name = 2;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -5119,62 +5102,52 @@ void ActorData::SerializeWithCachedSizes(
       2, this->name(), output);
   }
 
-  // required string description = 3;
+  // optional int32 x = 3;
+  if (has_x()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->x(), output);
+  }
+
+  // optional string description = 4;
   if (has_description()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "description");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      3, this->description(), output);
+      4, this->description(), output);
   }
 
-  // required int32 x = 4;
-  if (has_x()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->x(), output);
-  }
-
-  // required int32 y = 5;
+  // optional int32 y = 5;
   if (has_y()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->y(), output);
   }
 
-  // required int32 flags = 6;
+  // optional int32 flags = 6;
   if (has_flags()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->flags(), output);
   }
 
-  // required bool is_fov_only = 7;
+  // optional bool is_fov_only = 7;
   if (has_is_fov_only()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->is_fov_only(), output);
   }
 
-  // required bool is_transparent = 8;
+  // optional bool is_transparent = 8;
   if (has_is_transparent()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->is_transparent(), output);
   }
 
-  // required bool is_blocking = 9;
+  // optional bool is_blocking = 9;
   if (has_is_blocking()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(9, this->is_blocking(), output);
   }
 
-  // required string symbol = 10;
-  if (has_symbol()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->symbol().data(), this->symbol().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "symbol");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      10, this->symbol(), output);
-  }
-
-  // required int32 render_priority = 11;
+  // optional int32 render_priority = 11;
   if (has_render_priority()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->render_priority(), output);
   }
 
-  // required string color = 12;
+  // optional string color = 12;
   if (has_color()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->color().data(), this->color().length(),
@@ -5244,6 +5217,16 @@ void ActorData::SerializeWithCachedSizes(
       22, this->talker(), output);
   }
 
+  // optional string symbol = 100;
+  if (has_symbol()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->symbol().data(), this->symbol().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "symbol");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      100, this->symbol(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -5254,12 +5237,12 @@ void ActorData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ActorData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.ActorData)
-  // required int32 actor_type = 1;
+  // optional int32 actor_type = 1;
   if (has_actor_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->actor_type(), target);
   }
 
-  // required string name = 2;
+  // optional string name = 2;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -5270,7 +5253,12 @@ void ActorData::SerializeWithCachedSizes(
         2, this->name(), target);
   }
 
-  // required string description = 3;
+  // optional int32 x = 3;
+  if (has_x()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->x(), target);
+  }
+
+  // optional string description = 4;
   if (has_description()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
@@ -5278,56 +5266,40 @@ void ActorData::SerializeWithCachedSizes(
       "description");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->description(), target);
+        4, this->description(), target);
   }
 
-  // required int32 x = 4;
-  if (has_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->x(), target);
-  }
-
-  // required int32 y = 5;
+  // optional int32 y = 5;
   if (has_y()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->y(), target);
   }
 
-  // required int32 flags = 6;
+  // optional int32 flags = 6;
   if (has_flags()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->flags(), target);
   }
 
-  // required bool is_fov_only = 7;
+  // optional bool is_fov_only = 7;
   if (has_is_fov_only()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->is_fov_only(), target);
   }
 
-  // required bool is_transparent = 8;
+  // optional bool is_transparent = 8;
   if (has_is_transparent()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->is_transparent(), target);
   }
 
-  // required bool is_blocking = 9;
+  // optional bool is_blocking = 9;
   if (has_is_blocking()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(9, this->is_blocking(), target);
   }
 
-  // required string symbol = 10;
-  if (has_symbol()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->symbol().data(), this->symbol().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "symbol");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->symbol(), target);
-  }
-
-  // required int32 render_priority = 11;
+  // optional int32 render_priority = 11;
   if (has_render_priority()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->render_priority(), target);
   }
 
-  // required string color = 12;
+  // optional string color = 12;
   if (has_color()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->color().data(), this->color().length(),
@@ -5408,6 +5380,17 @@ void ActorData::SerializeWithCachedSizes(
         22, this->talker(), target);
   }
 
+  // optional string symbol = 100;
+  if (has_symbol()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->symbol().data(), this->symbol().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "symbol");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        100, this->symbol(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -5420,80 +5403,80 @@ int ActorData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 actor_type = 1;
+    // optional int32 actor_type = 1;
     if (has_actor_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->actor_type());
     }
 
-    // required string name = 2;
+    // optional string name = 2;
     if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
 
-    // required string description = 3;
-    if (has_description()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->description());
-    }
-
-    // required int32 x = 4;
+    // optional int32 x = 3;
     if (has_x()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->x());
     }
 
-    // required int32 y = 5;
+    // optional string description = 4;
+    if (has_description()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->description());
+    }
+
+    // optional int32 y = 5;
     if (has_y()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->y());
     }
 
-    // required int32 flags = 6;
+    // optional int32 flags = 6;
     if (has_flags()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->flags());
     }
 
-    // required bool is_fov_only = 7;
+    // optional bool is_fov_only = 7;
     if (has_is_fov_only()) {
       total_size += 1 + 1;
     }
 
-    // required bool is_transparent = 8;
+    // optional bool is_transparent = 8;
     if (has_is_transparent()) {
       total_size += 1 + 1;
     }
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required bool is_blocking = 9;
+    // optional bool is_blocking = 9;
     if (has_is_blocking()) {
       total_size += 1 + 1;
     }
 
-    // required string symbol = 10;
+    // optional string symbol = 100;
     if (has_symbol()) {
-      total_size += 1 +
+      total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->symbol());
     }
 
-    // required int32 render_priority = 11;
+    // optional int32 render_priority = 11;
     if (has_render_priority()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->render_priority());
     }
 
-    // required string color = 12;
+    // optional string color = 12;
     if (has_color()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -5607,11 +5590,11 @@ void ActorData::MergeFrom(const ActorData& from) {
     if (from.has_name()) {
       set_name(from.name());
     }
-    if (from.has_description()) {
-      set_description(from.description());
-    }
     if (from.has_x()) {
       set_x(from.x());
+    }
+    if (from.has_description()) {
+      set_description(from.description());
     }
     if (from.has_y()) {
       set_y(from.y());
@@ -5685,36 +5668,7 @@ void ActorData::CopyFrom(const ActorData& from) {
 }
 
 bool ActorData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000fff) != 0x00000fff) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->effects())) return false;
-  if (has_ai()) {
-    if (!this->ai().IsInitialized()) return false;
-  }
-  if (has_character()) {
-    if (!this->character().IsInitialized()) return false;
-  }
-  if (has_destroyable()) {
-    if (!this->destroyable().IsInitialized()) return false;
-  }
-  if (has_inventory()) {
-    if (!this->inventory().IsInitialized()) return false;
-  }
-  if (has_openable()) {
-    if (!this->openable().IsInitialized()) return false;
-  }
-  if (has_pickable()) {
-    if (!this->pickable().IsInitialized()) return false;
-  }
-  if (has_trap()) {
-    if (!this->trap().IsInitialized()) return false;
-  }
-  if (has_wearer()) {
-    if (!this->wearer().IsInitialized()) return false;
-  }
-  if (has_talker()) {
-    if (!this->talker().IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -5722,8 +5676,8 @@ void ActorData::Swap(ActorData* other) {
   if (other != this) {
     std::swap(actor_type_, other->actor_type_);
     std::swap(name_, other->name_);
-    std::swap(description_, other->description_);
     std::swap(x_, other->x_);
+    std::swap(description_, other->description_);
     std::swap(y_, other->y_);
     std::swap(flags_, other->flags_);
     std::swap(is_fov_only_, other->is_fov_only_);
@@ -5955,7 +5909,6 @@ void ActorsData::CopyFrom(const ActorsData& from) {
 
 bool ActorsData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->actor())) return false;
   return true;
 }
 

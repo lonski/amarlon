@@ -108,10 +108,10 @@ void protobuf_AddDesc_skill_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\013skill.proto\022\007amarlon\"\243\001\n\tSkillData\022\n\n\002"
-    "id\030\001 \002(\005\022\020\n\005level\030\002 \001(\005:\0010\022\026\n\007passive\030\003 "
+    "id\030\001 \001(\005\022\020\n\005level\030\002 \001(\005:\0010\022\026\n\007passive\030\003 "
     "\001(\010:\005false\022\020\n\005range\030\004 \001(\005:\0010\022\021\n\006radius\030\005"
     " \001(\005:\0010\022\026\n\013target_type\030\006 \001(\005:\0010\022\014\n\004name\030"
-    "\007 \002(\t\022\025\n\013description\030\010 \001(\t:\000\"/\n\nSkillsDa"
+    "\007 \001(\t\022\025\n\013description\030\010 \001(\t:\000\"/\n\nSkillsDa"
     "ta\022!\n\005skill\030\001 \003(\0132\022.amarlon.SkillData", 237);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "skill.proto", &protobuf_RegisterTypes);
@@ -251,7 +251,7 @@ bool SkillData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -340,7 +340,7 @@ bool SkillData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string name = 7;
+      // optional string name = 7;
       case 7: {
         if (tag == 58) {
          parse_name:
@@ -399,7 +399,7 @@ failure:
 void SkillData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SkillData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
@@ -429,7 +429,7 @@ void SkillData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->target_type(), output);
   }
 
-  // required string name = 7;
+  // optional string name = 7;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -459,7 +459,7 @@ void SkillData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* SkillData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SkillData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
@@ -489,7 +489,7 @@ void SkillData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->target_type(), target);
   }
 
-  // required string name = 7;
+  // optional string name = 7;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -523,7 +523,7 @@ int SkillData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -563,7 +563,7 @@ int SkillData::ByteSize() const {
           this->target_type());
     }
 
-    // required string name = 7;
+    // optional string name = 7;
     if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -645,7 +645,6 @@ void SkillData::CopyFrom(const SkillData& from) {
 }
 
 bool SkillData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000041) != 0x00000041) return false;
 
   return true;
 }
@@ -873,7 +872,6 @@ void SkillsData::CopyFrom(const SkillsData& from) {
 
 bool SkillsData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->skill())) return false;
   return true;
 }
 

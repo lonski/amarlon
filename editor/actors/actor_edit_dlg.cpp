@@ -2,13 +2,21 @@
 #include "ui_actor_edit_dlg.h"
 #include <QDesktopWidget>
 #include <QMenu>
+#include <QDebug>
 #include <QMessageBox>
 #include <actor.pb.h>
 
-ActorEditDlg::ActorEditDlg(QWidget *parent) :
-  QDialog(parent),
-  ui(new Ui::ActorEditDlg),
-  _actor(nullptr)
+ActorEditDlg::ActorEditDlg(QWidget *parent)
+  : QDialog(parent)
+  , ui(new Ui::ActorEditDlg)
+  , _actor(nullptr)
+  , _pickableEdit(this)
+  , _openableEdit(this)
+  , _aiEdit(this)
+  , _wearerEdit(this)
+  , _destroyableEdit(this)
+  , _inventoryEdit(this)
+  , _characterEdit(this)
 {
   ui->setupUi(this);
   move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -181,6 +189,7 @@ void ActorEditDlg::fillForm()
     ui->fID->setValue( _actor->actor_type() );
     ui->fName->setText( _actor->name().c_str() );
     ui->fSymbol->setText( _actor->symbol().c_str() );
+    ui->fPriority->setValue( _actor->render_priority() );
 
     ui->lFeatures->clear();
     if ( _actor->has_inventory() ) ui->lFeatures->addItem("Inventory");
@@ -205,12 +214,8 @@ void ActorEditDlg::fillActor()
     _actor->set_actor_type( ui->fID->value() );
     _actor->set_name( ui->fName->text().toStdString() );
     _actor->set_symbol( ui->fSymbol->text().toStdString() );
+    _actor->set_render_priority( ui->fPriority->value() );
   }
-}
-
-void ActorEditDlg::on_buttonBox_accepted()
-{
-  fillActor();
 }
 
 void ActorEditDlg::on_pushButton_2_clicked()
@@ -279,4 +284,16 @@ void ActorEditDlg::on_pushButton_clicked()
 void ActorEditDlg::on_lFeatures_itemDoubleClicked(QListWidgetItem *item)
 {
     on_pushButton_clicked();
+}
+
+void ActorEditDlg::on_pushButton_4_clicked()
+{
+    fillActor();
+    accept();
+}
+
+
+void ActorEditDlg::on_cancelBtn_clicked()
+{
+    reject();
 }

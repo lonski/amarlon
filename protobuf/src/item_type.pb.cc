@@ -82,9 +82,9 @@ void protobuf_AddDesc_item_5ftype_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\017item_type.proto\022\007amarlon\"a\n\014ItemTypeDa"
-    "ta\022\020\n\010category\030\001 \002(\005\022\026\n\016amunition_type\030\002"
-    " \002(\005\022\022\n\narmor_type\030\003 \002(\005\022\023\n\013weapon_type\030"
-    "\004 \002(\005", 125);
+    "ta\022\020\n\010category\030\001 \001(\005\022\026\n\016amunition_type\030\002"
+    " \001(\005\022\022\n\narmor_type\030\003 \001(\005\022\023\n\013weapon_type\030"
+    "\004 \001(\005", 125);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "item_type.proto", &protobuf_RegisterTypes);
   ItemTypeData::default_instance_ = new ItemTypeData();
@@ -194,7 +194,7 @@ bool ItemTypeData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 category = 1;
+      // optional int32 category = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -208,7 +208,7 @@ bool ItemTypeData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 amunition_type = 2;
+      // optional int32 amunition_type = 2;
       case 2: {
         if (tag == 16) {
          parse_amunition_type:
@@ -223,7 +223,7 @@ bool ItemTypeData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 armor_type = 3;
+      // optional int32 armor_type = 3;
       case 3: {
         if (tag == 24) {
          parse_armor_type:
@@ -238,7 +238,7 @@ bool ItemTypeData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 weapon_type = 4;
+      // optional int32 weapon_type = 4;
       case 4: {
         if (tag == 32) {
          parse_weapon_type:
@@ -278,22 +278,22 @@ failure:
 void ItemTypeData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.ItemTypeData)
-  // required int32 category = 1;
+  // optional int32 category = 1;
   if (has_category()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->category(), output);
   }
 
-  // required int32 amunition_type = 2;
+  // optional int32 amunition_type = 2;
   if (has_amunition_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->amunition_type(), output);
   }
 
-  // required int32 armor_type = 3;
+  // optional int32 armor_type = 3;
   if (has_armor_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->armor_type(), output);
   }
 
-  // required int32 weapon_type = 4;
+  // optional int32 weapon_type = 4;
   if (has_weapon_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->weapon_type(), output);
   }
@@ -308,22 +308,22 @@ void ItemTypeData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ItemTypeData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.ItemTypeData)
-  // required int32 category = 1;
+  // optional int32 category = 1;
   if (has_category()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->category(), target);
   }
 
-  // required int32 amunition_type = 2;
+  // optional int32 amunition_type = 2;
   if (has_amunition_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->amunition_type(), target);
   }
 
-  // required int32 armor_type = 3;
+  // optional int32 armor_type = 3;
   if (has_armor_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->armor_type(), target);
   }
 
-  // required int32 weapon_type = 4;
+  // optional int32 weapon_type = 4;
   if (has_weapon_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->weapon_type(), target);
   }
@@ -340,28 +340,28 @@ int ItemTypeData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 category = 1;
+    // optional int32 category = 1;
     if (has_category()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->category());
     }
 
-    // required int32 amunition_type = 2;
+    // optional int32 amunition_type = 2;
     if (has_amunition_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->amunition_type());
     }
 
-    // required int32 armor_type = 3;
+    // optional int32 armor_type = 3;
     if (has_armor_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->armor_type());
     }
 
-    // required int32 weapon_type = 4;
+    // optional int32 weapon_type = 4;
     if (has_weapon_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -424,7 +424,6 @@ void ItemTypeData::CopyFrom(const ItemTypeData& from) {
 }
 
 bool ItemTypeData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }

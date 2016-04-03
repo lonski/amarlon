@@ -105,21 +105,21 @@ class AiData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required fixed32 flags = 1;
+  // optional fixed32 flags = 1;
   inline bool has_flags() const;
   inline void clear_flags();
   static const int kFlagsFieldNumber = 1;
   inline ::google::protobuf::uint32 flags() const;
   inline void set_flags(::google::protobuf::uint32 value);
 
-  // required int32 script = 2;
+  // optional int32 script = 2;
   inline bool has_script() const;
   inline void clear_script();
   static const int kScriptFieldNumber = 2;
   inline ::google::protobuf::int32 script() const;
   inline void set_script(::google::protobuf::int32 value);
 
-  // required int32 type = 3;
+  // optional int32 type = 3;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 3;
@@ -204,84 +204,84 @@ class CharacterData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 level = 1;
+  // optional int32 level = 1;
   inline bool has_level() const;
   inline void clear_level();
   static const int kLevelFieldNumber = 1;
   inline ::google::protobuf::int32 level() const;
   inline void set_level(::google::protobuf::int32 value);
 
-  // required int32 hp = 2;
+  // optional int32 hp = 2;
   inline bool has_hp() const;
   inline void clear_hp();
   static const int kHpFieldNumber = 2;
   inline ::google::protobuf::int32 hp() const;
   inline void set_hp(::google::protobuf::int32 value);
 
-  // required int32 maxHP = 3;
+  // optional int32 maxHP = 3;
   inline bool has_maxhp() const;
   inline void clear_maxhp();
   static const int kMaxHPFieldNumber = 3;
   inline ::google::protobuf::int32 maxhp() const;
   inline void set_maxhp(::google::protobuf::int32 value);
 
-  // required int32 baseAC = 4;
+  // optional int32 baseAC = 4;
   inline bool has_baseac() const;
   inline void clear_baseac();
   static const int kBaseACFieldNumber = 4;
   inline ::google::protobuf::int32 baseac() const;
   inline void set_baseac(::google::protobuf::int32 value);
 
-  // required int32 experience = 5;
+  // optional int32 experience = 5;
   inline bool has_experience() const;
   inline void clear_experience();
   static const int kExperienceFieldNumber = 5;
   inline ::google::protobuf::int32 experience() const;
   inline void set_experience(::google::protobuf::int32 value);
 
-  // required int32 classType = 6;
+  // optional int32 classType = 6;
   inline bool has_classtype() const;
   inline void clear_classtype();
   static const int kClassTypeFieldNumber = 6;
   inline ::google::protobuf::int32 classtype() const;
   inline void set_classtype(::google::protobuf::int32 value);
 
-  // required int32 raceType = 7;
+  // optional int32 raceType = 7;
   inline bool has_racetype() const;
   inline void clear_racetype();
   static const int kRaceTypeFieldNumber = 7;
   inline ::google::protobuf::int32 racetype() const;
   inline void set_racetype(::google::protobuf::int32 value);
 
-  // required int32 speed = 8;
+  // optional int32 speed = 8;
   inline bool has_speed() const;
   inline void clear_speed();
   static const int kSpeedFieldNumber = 8;
   inline ::google::protobuf::int32 speed() const;
   inline void set_speed(::google::protobuf::int32 value);
 
-  // required int32 movePoints = 9;
+  // optional int32 movePoints = 9;
   inline bool has_movepoints() const;
   inline void clear_movepoints();
   static const int kMovePointsFieldNumber = 9;
   inline ::google::protobuf::int32 movepoints() const;
   inline void set_movepoints(::google::protobuf::int32 value);
 
-  // required int32 team = 10;
+  // optional int32 team = 10;
   inline bool has_team() const;
   inline void clear_team();
   static const int kTeamFieldNumber = 10;
   inline ::google::protobuf::int32 team() const;
   inline void set_team(::google::protobuf::int32 value);
 
-  // required int32 morale = 11;
+  // optional int32 morale = 11;
   inline bool has_morale() const;
   inline void clear_morale();
   static const int kMoraleFieldNumber = 11;
   inline ::google::protobuf::int32 morale() const;
   inline void set_morale(::google::protobuf::int32 value);
 
-  // required string damage = 12;
+  // optional string damage = 12;
   inline bool has_damage() const;
   inline void clear_damage();
   static const int kDamageFieldNumber = 12;
@@ -293,7 +293,7 @@ class CharacterData : public ::google::protobuf::Message {
   inline ::std::string* release_damage();
   inline void set_allocated_damage(::std::string* damage);
 
-  // required .amarlon.SpellBookData spellbook = 13;
+  // optional .amarlon.SpellBookData spellbook = 13;
   inline bool has_spellbook() const;
   inline void clear_spellbook();
   static const int kSpellbookFieldNumber = 13;
@@ -302,14 +302,14 @@ class CharacterData : public ::google::protobuf::Message {
   inline ::amarlon::SpellBookData* release_spellbook();
   inline void set_allocated_spellbook(::amarlon::SpellBookData* spellbook);
 
-  // required int32 characterType = 14;
+  // optional int32 characterType = 14;
   inline bool has_charactertype() const;
   inline void clear_charactertype();
   static const int kCharacterTypeFieldNumber = 14;
   inline ::google::protobuf::int32 charactertype() const;
   inline void set_charactertype(::google::protobuf::int32 value);
 
-  // required int32 uses_count = 15;
+  // optional int32 uses_count = 15;
   inline bool has_uses_count() const;
   inline void clear_uses_count();
   static const int kUsesCountFieldNumber = 15;
@@ -555,7 +555,7 @@ class InventoryData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 slotCount = 1;
+  // optional int32 slotCount = 1;
   inline bool has_slotcount() const;
   inline void clear_slotcount();
   static const int kSlotCountFieldNumber = 1;
@@ -647,35 +647,35 @@ class OpenableData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool locked = 1;
+  // optional bool locked = 1;
   inline bool has_locked() const;
   inline void clear_locked();
   static const int kLockedFieldNumber = 1;
   inline bool locked() const;
   inline void set_locked(bool value);
 
-  // required bool closed = 2;
+  // optional bool closed = 2;
   inline bool has_closed() const;
   inline void clear_closed();
   static const int kClosedFieldNumber = 2;
   inline bool closed() const;
   inline void set_closed(bool value);
 
-  // required int32 lock_id = 3;
+  // optional int32 lock_id = 3;
   inline bool has_lock_id() const;
   inline void clear_lock_id();
   static const int kLockIdFieldNumber = 3;
   inline ::google::protobuf::int32 lock_id() const;
   inline void set_lock_id(::google::protobuf::int32 value);
 
-  // required int32 lock_level = 4;
+  // optional int32 lock_level = 4;
   inline bool has_lock_level() const;
   inline void clear_lock_level();
   static const int kLockLevelFieldNumber = 4;
   inline ::google::protobuf::int32 lock_level() const;
   inline void set_lock_level(::google::protobuf::int32 value);
 
-  // required int32 script_id = 5;
+  // optional int32 script_id = 5;
   inline bool has_script_id() const;
   inline void clear_script_id();
   static const int kScriptIdFieldNumber = 5;
@@ -766,56 +766,56 @@ class PickableData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool stackable = 1;
+  // optional bool stackable = 1;
   inline bool has_stackable() const;
   inline void clear_stackable();
   static const int kStackableFieldNumber = 1;
   inline bool stackable() const;
   inline void set_stackable(bool value);
 
-  // required int32 amount = 2;
+  // optional int32 amount = 2;
   inline bool has_amount() const;
   inline void clear_amount();
   static const int kAmountFieldNumber = 2;
   inline ::google::protobuf::int32 amount() const;
   inline void set_amount(::google::protobuf::int32 value);
 
-  // required int32 item_slot = 3;
+  // optional int32 item_slot = 3;
   inline bool has_item_slot() const;
   inline void clear_item_slot();
   static const int kItemSlotFieldNumber = 3;
   inline ::google::protobuf::int32 item_slot() const;
   inline void set_item_slot(::google::protobuf::int32 value);
 
-  // required int32 armor_class = 4;
+  // optional int32 armor_class = 4;
   inline bool has_armor_class() const;
   inline void clear_armor_class();
   static const int kArmorClassFieldNumber = 4;
   inline ::google::protobuf::int32 armor_class() const;
   inline void set_armor_class(::google::protobuf::int32 value);
 
-  // required int32 weight = 5;
+  // optional int32 weight = 5;
   inline bool has_weight() const;
   inline void clear_weight();
   static const int kWeightFieldNumber = 5;
   inline ::google::protobuf::int32 weight() const;
   inline void set_weight(::google::protobuf::int32 value);
 
-  // required int32 price = 6;
+  // optional int32 price = 6;
   inline bool has_price() const;
   inline void clear_price();
   static const int kPriceFieldNumber = 6;
   inline ::google::protobuf::int32 price() const;
   inline void set_price(::google::protobuf::int32 value);
 
-  // required int32 target_type = 7;
+  // optional int32 target_type = 7;
   inline bool has_target_type() const;
   inline void clear_target_type();
   static const int kTargetTypeFieldNumber = 7;
   inline ::google::protobuf::int32 target_type() const;
   inline void set_target_type(::google::protobuf::int32 value);
 
-  // required string damage = 8;
+  // optional string damage = 8;
   inline bool has_damage() const;
   inline void clear_damage();
   static const int kDamageFieldNumber = 8;
@@ -827,28 +827,28 @@ class PickableData : public ::google::protobuf::Message {
   inline ::std::string* release_damage();
   inline void set_allocated_damage(::std::string* damage);
 
-  // required int32 script_id = 9;
+  // optional int32 script_id = 9;
   inline bool has_script_id() const;
   inline void clear_script_id();
   static const int kScriptIdFieldNumber = 9;
   inline ::google::protobuf::int32 script_id() const;
   inline void set_script_id(::google::protobuf::int32 value);
 
-  // required int32 range = 10;
+  // optional int32 range = 10;
   inline bool has_range() const;
   inline void clear_range();
   static const int kRangeFieldNumber = 10;
   inline ::google::protobuf::int32 range() const;
   inline void set_range(::google::protobuf::int32 value);
 
-  // required int32 radius = 11;
+  // optional int32 radius = 11;
   inline bool has_radius() const;
   inline void clear_radius();
   static const int kRadiusFieldNumber = 11;
   inline ::google::protobuf::int32 radius() const;
   inline void set_radius(::google::protobuf::int32 value);
 
-  // required .amarlon.ItemTypeData item_type = 12;
+  // optional .amarlon.ItemTypeData item_type = 12;
   inline bool has_item_type() const;
   inline void clear_item_type();
   static const int kItemTypeFieldNumber = 12;
@@ -857,14 +857,14 @@ class PickableData : public ::google::protobuf::Message {
   inline ::amarlon::ItemTypeData* release_item_type();
   inline void set_allocated_item_type(::amarlon::ItemTypeData* item_type);
 
-  // required int32 uses_count = 13;
+  // optional int32 uses_count = 13;
   inline bool has_uses_count() const;
   inline void clear_uses_count();
   static const int kUsesCountFieldNumber = 13;
   inline ::google::protobuf::int32 uses_count() const;
   inline void set_uses_count(::google::protobuf::int32 value);
 
-  // required int32 spell_id = 14;
+  // optional int32 spell_id = 14;
   inline bool has_spell_id() const;
   inline void clear_spell_id();
   static const int kSpellIdFieldNumber = 14;
@@ -982,7 +982,7 @@ class TalkerData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
@@ -1061,28 +1061,28 @@ class TrapData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
-  // required int32 difficulty = 2;
+  // optional int32 difficulty = 2;
   inline bool has_difficulty() const;
   inline void clear_difficulty();
   static const int kDifficultyFieldNumber = 2;
   inline ::google::protobuf::int32 difficulty() const;
   inline void set_difficulty(::google::protobuf::int32 value);
 
-  // required bool is_armed = 3;
+  // optional bool is_armed = 3;
   inline bool has_is_armed() const;
   inline void clear_is_armed();
   static const int kIsArmedFieldNumber = 3;
   inline bool is_armed() const;
   inline void set_is_armed(bool value);
 
-  // required bool is_detected = 4;
+  // optional bool is_detected = 4;
   inline bool has_is_detected() const;
   inline void clear_is_detected();
   static const int kIsDetectedFieldNumber = 4;
@@ -1265,7 +1265,7 @@ class StatusEffectData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // optional string name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
@@ -1277,14 +1277,14 @@ class StatusEffectData : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required int32 duration = 2;
+  // optional int32 duration = 2;
   inline bool has_duration() const;
   inline void clear_duration();
   static const int kDurationFieldNumber = 2;
   inline ::google::protobuf::int32 duration() const;
   inline void set_duration(::google::protobuf::int32 value);
 
-  // required string script = 3;
+  // optional string script = 3;
   inline bool has_script() const;
   inline void clear_script();
   static const int kScriptFieldNumber = 3;
@@ -1374,14 +1374,14 @@ class ActorData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 actor_type = 1;
+  // optional int32 actor_type = 1;
   inline bool has_actor_type() const;
   inline void clear_actor_type();
   static const int kActorTypeFieldNumber = 1;
   inline ::google::protobuf::int32 actor_type() const;
   inline void set_actor_type(::google::protobuf::int32 value);
 
-  // required string name = 2;
+  // optional string name = 2;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 2;
@@ -1393,10 +1393,17 @@ class ActorData : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string description = 3;
+  // optional int32 x = 3;
+  inline bool has_x() const;
+  inline void clear_x();
+  static const int kXFieldNumber = 3;
+  inline ::google::protobuf::int32 x() const;
+  inline void set_x(::google::protobuf::int32 value);
+
+  // optional string description = 4;
   inline bool has_description() const;
   inline void clear_description();
-  static const int kDescriptionFieldNumber = 3;
+  static const int kDescriptionFieldNumber = 4;
   inline const ::std::string& description() const;
   inline void set_description(const ::std::string& value);
   inline void set_description(const char* value);
@@ -1405,52 +1412,45 @@ class ActorData : public ::google::protobuf::Message {
   inline ::std::string* release_description();
   inline void set_allocated_description(::std::string* description);
 
-  // required int32 x = 4;
-  inline bool has_x() const;
-  inline void clear_x();
-  static const int kXFieldNumber = 4;
-  inline ::google::protobuf::int32 x() const;
-  inline void set_x(::google::protobuf::int32 value);
-
-  // required int32 y = 5;
+  // optional int32 y = 5;
   inline bool has_y() const;
   inline void clear_y();
   static const int kYFieldNumber = 5;
   inline ::google::protobuf::int32 y() const;
   inline void set_y(::google::protobuf::int32 value);
 
-  // required int32 flags = 6;
+  // optional int32 flags = 6;
   inline bool has_flags() const;
   inline void clear_flags();
   static const int kFlagsFieldNumber = 6;
   inline ::google::protobuf::int32 flags() const;
   inline void set_flags(::google::protobuf::int32 value);
 
-  // required bool is_fov_only = 7;
+  // optional bool is_fov_only = 7;
   inline bool has_is_fov_only() const;
   inline void clear_is_fov_only();
   static const int kIsFovOnlyFieldNumber = 7;
   inline bool is_fov_only() const;
   inline void set_is_fov_only(bool value);
 
-  // required bool is_transparent = 8;
+  // optional bool is_transparent = 8;
   inline bool has_is_transparent() const;
   inline void clear_is_transparent();
   static const int kIsTransparentFieldNumber = 8;
   inline bool is_transparent() const;
   inline void set_is_transparent(bool value);
 
-  // required bool is_blocking = 9;
+  // optional bool is_blocking = 9;
   inline bool has_is_blocking() const;
   inline void clear_is_blocking();
   static const int kIsBlockingFieldNumber = 9;
   inline bool is_blocking() const;
   inline void set_is_blocking(bool value);
 
-  // required string symbol = 10;
+  // optional string symbol = 100;
   inline bool has_symbol() const;
   inline void clear_symbol();
-  static const int kSymbolFieldNumber = 10;
+  static const int kSymbolFieldNumber = 100;
   inline const ::std::string& symbol() const;
   inline void set_symbol(const ::std::string& value);
   inline void set_symbol(const char* value);
@@ -1459,14 +1459,14 @@ class ActorData : public ::google::protobuf::Message {
   inline ::std::string* release_symbol();
   inline void set_allocated_symbol(::std::string* symbol);
 
-  // required int32 render_priority = 11;
+  // optional int32 render_priority = 11;
   inline bool has_render_priority() const;
   inline void clear_render_priority();
   static const int kRenderPriorityFieldNumber = 11;
   inline ::google::protobuf::int32 render_priority() const;
   inline void set_render_priority(::google::protobuf::int32 value);
 
-  // required string color = 12;
+  // optional string color = 12;
   inline bool has_color() const;
   inline void clear_color();
   static const int kColorFieldNumber = 12;
@@ -1577,10 +1577,10 @@ class ActorData : public ::google::protobuf::Message {
   inline void clear_has_actor_type();
   inline void set_has_name();
   inline void clear_has_name();
-  inline void set_has_description();
-  inline void clear_has_description();
   inline void set_has_x();
   inline void clear_has_x();
+  inline void set_has_description();
+  inline void clear_has_description();
   inline void set_has_y();
   inline void clear_has_y();
   inline void set_has_flags();
@@ -1738,7 +1738,7 @@ class ActorsData : public ::google::protobuf::Message {
 
 // AiData
 
-// required fixed32 flags = 1;
+// optional fixed32 flags = 1;
 inline bool AiData::has_flags() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1762,7 +1762,7 @@ inline void AiData::set_flags(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:amarlon.AiData.flags)
 }
 
-// required int32 script = 2;
+// optional int32 script = 2;
 inline bool AiData::has_script() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1786,7 +1786,7 @@ inline void AiData::set_script(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.AiData.script)
 }
 
-// required int32 type = 3;
+// optional int32 type = 3;
 inline bool AiData::has_type() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1814,7 +1814,7 @@ inline void AiData::set_type(::google::protobuf::int32 value) {
 
 // CharacterData
 
-// required int32 level = 1;
+// optional int32 level = 1;
 inline bool CharacterData::has_level() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1838,7 +1838,7 @@ inline void CharacterData::set_level(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.level)
 }
 
-// required int32 hp = 2;
+// optional int32 hp = 2;
 inline bool CharacterData::has_hp() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1862,7 +1862,7 @@ inline void CharacterData::set_hp(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.hp)
 }
 
-// required int32 maxHP = 3;
+// optional int32 maxHP = 3;
 inline bool CharacterData::has_maxhp() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1886,7 +1886,7 @@ inline void CharacterData::set_maxhp(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.maxHP)
 }
 
-// required int32 baseAC = 4;
+// optional int32 baseAC = 4;
 inline bool CharacterData::has_baseac() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1910,7 +1910,7 @@ inline void CharacterData::set_baseac(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.baseAC)
 }
 
-// required int32 experience = 5;
+// optional int32 experience = 5;
 inline bool CharacterData::has_experience() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -1934,7 +1934,7 @@ inline void CharacterData::set_experience(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.experience)
 }
 
-// required int32 classType = 6;
+// optional int32 classType = 6;
 inline bool CharacterData::has_classtype() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -1958,7 +1958,7 @@ inline void CharacterData::set_classtype(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.classType)
 }
 
-// required int32 raceType = 7;
+// optional int32 raceType = 7;
 inline bool CharacterData::has_racetype() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -1982,7 +1982,7 @@ inline void CharacterData::set_racetype(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.raceType)
 }
 
-// required int32 speed = 8;
+// optional int32 speed = 8;
 inline bool CharacterData::has_speed() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -2006,7 +2006,7 @@ inline void CharacterData::set_speed(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.speed)
 }
 
-// required int32 movePoints = 9;
+// optional int32 movePoints = 9;
 inline bool CharacterData::has_movepoints() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -2030,7 +2030,7 @@ inline void CharacterData::set_movepoints(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.movePoints)
 }
 
-// required int32 team = 10;
+// optional int32 team = 10;
 inline bool CharacterData::has_team() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
@@ -2054,7 +2054,7 @@ inline void CharacterData::set_team(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.team)
 }
 
-// required int32 morale = 11;
+// optional int32 morale = 11;
 inline bool CharacterData::has_morale() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
@@ -2078,7 +2078,7 @@ inline void CharacterData::set_morale(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.morale)
 }
 
-// required string damage = 12;
+// optional string damage = 12;
 inline bool CharacterData::has_damage() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }
@@ -2154,7 +2154,7 @@ inline void CharacterData::set_allocated_damage(::std::string* damage) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.CharacterData.damage)
 }
 
-// required .amarlon.SpellBookData spellbook = 13;
+// optional .amarlon.SpellBookData spellbook = 13;
 inline bool CharacterData::has_spellbook() const {
   return (_has_bits_[0] & 0x00001000u) != 0;
 }
@@ -2195,7 +2195,7 @@ inline void CharacterData::set_allocated_spellbook(::amarlon::SpellBookData* spe
   // @@protoc_insertion_point(field_set_allocated:amarlon.CharacterData.spellbook)
 }
 
-// required int32 characterType = 14;
+// optional int32 characterType = 14;
 inline bool CharacterData::has_charactertype() const {
   return (_has_bits_[0] & 0x00002000u) != 0;
 }
@@ -2219,7 +2219,7 @@ inline void CharacterData::set_charactertype(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.CharacterData.characterType)
 }
 
-// required int32 uses_count = 15;
+// optional int32 uses_count = 15;
 inline bool CharacterData::has_uses_count() const {
   return (_has_bits_[0] & 0x00004000u) != 0;
 }
@@ -2395,7 +2395,7 @@ DestroyableData::mutable_droprules() {
 
 // InventoryData
 
-// required int32 slotCount = 1;
+// optional int32 slotCount = 1;
 inline bool InventoryData::has_slotcount() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2453,7 +2453,7 @@ InventoryData::mutable_items() {
 
 // OpenableData
 
-// required bool locked = 1;
+// optional bool locked = 1;
 inline bool OpenableData::has_locked() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2477,7 +2477,7 @@ inline void OpenableData::set_locked(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.OpenableData.locked)
 }
 
-// required bool closed = 2;
+// optional bool closed = 2;
 inline bool OpenableData::has_closed() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2501,7 +2501,7 @@ inline void OpenableData::set_closed(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.OpenableData.closed)
 }
 
-// required int32 lock_id = 3;
+// optional int32 lock_id = 3;
 inline bool OpenableData::has_lock_id() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2525,7 +2525,7 @@ inline void OpenableData::set_lock_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.OpenableData.lock_id)
 }
 
-// required int32 lock_level = 4;
+// optional int32 lock_level = 4;
 inline bool OpenableData::has_lock_level() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2549,7 +2549,7 @@ inline void OpenableData::set_lock_level(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.OpenableData.lock_level)
 }
 
-// required int32 script_id = 5;
+// optional int32 script_id = 5;
 inline bool OpenableData::has_script_id() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2577,7 +2577,7 @@ inline void OpenableData::set_script_id(::google::protobuf::int32 value) {
 
 // PickableData
 
-// required bool stackable = 1;
+// optional bool stackable = 1;
 inline bool PickableData::has_stackable() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2601,7 +2601,7 @@ inline void PickableData::set_stackable(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.stackable)
 }
 
-// required int32 amount = 2;
+// optional int32 amount = 2;
 inline bool PickableData::has_amount() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2625,7 +2625,7 @@ inline void PickableData::set_amount(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.amount)
 }
 
-// required int32 item_slot = 3;
+// optional int32 item_slot = 3;
 inline bool PickableData::has_item_slot() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2649,7 +2649,7 @@ inline void PickableData::set_item_slot(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.item_slot)
 }
 
-// required int32 armor_class = 4;
+// optional int32 armor_class = 4;
 inline bool PickableData::has_armor_class() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2673,7 +2673,7 @@ inline void PickableData::set_armor_class(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.armor_class)
 }
 
-// required int32 weight = 5;
+// optional int32 weight = 5;
 inline bool PickableData::has_weight() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2697,7 +2697,7 @@ inline void PickableData::set_weight(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.weight)
 }
 
-// required int32 price = 6;
+// optional int32 price = 6;
 inline bool PickableData::has_price() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -2721,7 +2721,7 @@ inline void PickableData::set_price(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.price)
 }
 
-// required int32 target_type = 7;
+// optional int32 target_type = 7;
 inline bool PickableData::has_target_type() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -2745,7 +2745,7 @@ inline void PickableData::set_target_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.target_type)
 }
 
-// required string damage = 8;
+// optional string damage = 8;
 inline bool PickableData::has_damage() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -2821,7 +2821,7 @@ inline void PickableData::set_allocated_damage(::std::string* damage) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.PickableData.damage)
 }
 
-// required int32 script_id = 9;
+// optional int32 script_id = 9;
 inline bool PickableData::has_script_id() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -2845,7 +2845,7 @@ inline void PickableData::set_script_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.script_id)
 }
 
-// required int32 range = 10;
+// optional int32 range = 10;
 inline bool PickableData::has_range() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
@@ -2869,7 +2869,7 @@ inline void PickableData::set_range(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.range)
 }
 
-// required int32 radius = 11;
+// optional int32 radius = 11;
 inline bool PickableData::has_radius() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
@@ -2893,7 +2893,7 @@ inline void PickableData::set_radius(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.radius)
 }
 
-// required .amarlon.ItemTypeData item_type = 12;
+// optional .amarlon.ItemTypeData item_type = 12;
 inline bool PickableData::has_item_type() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }
@@ -2934,7 +2934,7 @@ inline void PickableData::set_allocated_item_type(::amarlon::ItemTypeData* item_
   // @@protoc_insertion_point(field_set_allocated:amarlon.PickableData.item_type)
 }
 
-// required int32 uses_count = 13;
+// optional int32 uses_count = 13;
 inline bool PickableData::has_uses_count() const {
   return (_has_bits_[0] & 0x00001000u) != 0;
 }
@@ -2958,7 +2958,7 @@ inline void PickableData::set_uses_count(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.PickableData.uses_count)
 }
 
-// required int32 spell_id = 14;
+// optional int32 spell_id = 14;
 inline bool PickableData::has_spell_id() const {
   return (_has_bits_[0] & 0x00002000u) != 0;
 }
@@ -2986,7 +2986,7 @@ inline void PickableData::set_spell_id(::google::protobuf::int32 value) {
 
 // TalkerData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool TalkerData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3014,7 +3014,7 @@ inline void TalkerData::set_id(::google::protobuf::int32 value) {
 
 // TrapData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool TrapData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3038,7 +3038,7 @@ inline void TrapData::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TrapData.id)
 }
 
-// required int32 difficulty = 2;
+// optional int32 difficulty = 2;
 inline bool TrapData::has_difficulty() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3062,7 +3062,7 @@ inline void TrapData::set_difficulty(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TrapData.difficulty)
 }
 
-// required bool is_armed = 3;
+// optional bool is_armed = 3;
 inline bool TrapData::has_is_armed() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3086,7 +3086,7 @@ inline void TrapData::set_is_armed(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.TrapData.is_armed)
 }
 
-// required bool is_detected = 4;
+// optional bool is_detected = 4;
 inline bool TrapData::has_is_detected() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3178,7 +3178,7 @@ WearerData::mutable_equipped_items() {
 
 // StatusEffectData
 
-// required string name = 1;
+// optional string name = 1;
 inline bool StatusEffectData::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3254,7 +3254,7 @@ inline void StatusEffectData::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.StatusEffectData.name)
 }
 
-// required int32 duration = 2;
+// optional int32 duration = 2;
 inline bool StatusEffectData::has_duration() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3278,7 +3278,7 @@ inline void StatusEffectData::set_duration(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.StatusEffectData.duration)
 }
 
-// required string script = 3;
+// optional string script = 3;
 inline bool StatusEffectData::has_script() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3358,7 +3358,7 @@ inline void StatusEffectData::set_allocated_script(::std::string* script) {
 
 // ActorData
 
-// required int32 actor_type = 1;
+// optional int32 actor_type = 1;
 inline bool ActorData::has_actor_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3382,7 +3382,7 @@ inline void ActorData::set_actor_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.actor_type)
 }
 
-// required string name = 2;
+// optional string name = 2;
 inline bool ActorData::has_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3458,15 +3458,39 @@ inline void ActorData::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.ActorData.name)
 }
 
-// required string description = 3;
-inline bool ActorData::has_description() const {
+// optional int32 x = 3;
+inline bool ActorData::has_x() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void ActorData::set_has_description() {
+inline void ActorData::set_has_x() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void ActorData::clear_has_description() {
+inline void ActorData::clear_has_x() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void ActorData::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline ::google::protobuf::int32 ActorData::x() const {
+  // @@protoc_insertion_point(field_get:amarlon.ActorData.x)
+  return x_;
+}
+inline void ActorData::set_x(::google::protobuf::int32 value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:amarlon.ActorData.x)
+}
+
+// optional string description = 4;
+inline bool ActorData::has_description() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void ActorData::set_has_description() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void ActorData::clear_has_description() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void ActorData::clear_description() {
   if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -3534,31 +3558,7 @@ inline void ActorData::set_allocated_description(::std::string* description) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.ActorData.description)
 }
 
-// required int32 x = 4;
-inline bool ActorData::has_x() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void ActorData::set_has_x() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void ActorData::clear_has_x() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void ActorData::clear_x() {
-  x_ = 0;
-  clear_has_x();
-}
-inline ::google::protobuf::int32 ActorData::x() const {
-  // @@protoc_insertion_point(field_get:amarlon.ActorData.x)
-  return x_;
-}
-inline void ActorData::set_x(::google::protobuf::int32 value) {
-  set_has_x();
-  x_ = value;
-  // @@protoc_insertion_point(field_set:amarlon.ActorData.x)
-}
-
-// required int32 y = 5;
+// optional int32 y = 5;
 inline bool ActorData::has_y() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -3582,7 +3582,7 @@ inline void ActorData::set_y(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.y)
 }
 
-// required int32 flags = 6;
+// optional int32 flags = 6;
 inline bool ActorData::has_flags() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -3606,7 +3606,7 @@ inline void ActorData::set_flags(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.flags)
 }
 
-// required bool is_fov_only = 7;
+// optional bool is_fov_only = 7;
 inline bool ActorData::has_is_fov_only() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -3630,7 +3630,7 @@ inline void ActorData::set_is_fov_only(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.is_fov_only)
 }
 
-// required bool is_transparent = 8;
+// optional bool is_transparent = 8;
 inline bool ActorData::has_is_transparent() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -3654,7 +3654,7 @@ inline void ActorData::set_is_transparent(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.is_transparent)
 }
 
-// required bool is_blocking = 9;
+// optional bool is_blocking = 9;
 inline bool ActorData::has_is_blocking() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -3678,7 +3678,7 @@ inline void ActorData::set_is_blocking(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.is_blocking)
 }
 
-// required string symbol = 10;
+// optional string symbol = 100;
 inline bool ActorData::has_symbol() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
@@ -3754,7 +3754,7 @@ inline void ActorData::set_allocated_symbol(::std::string* symbol) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.ActorData.symbol)
 }
 
-// required int32 render_priority = 11;
+// optional int32 render_priority = 11;
 inline bool ActorData::has_render_priority() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
@@ -3778,7 +3778,7 @@ inline void ActorData::set_render_priority(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ActorData.render_priority)
 }
 
-// required string color = 12;
+// optional string color = 12;
 inline bool ActorData::has_color() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }

@@ -90,28 +90,28 @@ class ItemTypeData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 category = 1;
+  // optional int32 category = 1;
   inline bool has_category() const;
   inline void clear_category();
   static const int kCategoryFieldNumber = 1;
   inline ::google::protobuf::int32 category() const;
   inline void set_category(::google::protobuf::int32 value);
 
-  // required int32 amunition_type = 2;
+  // optional int32 amunition_type = 2;
   inline bool has_amunition_type() const;
   inline void clear_amunition_type();
   static const int kAmunitionTypeFieldNumber = 2;
   inline ::google::protobuf::int32 amunition_type() const;
   inline void set_amunition_type(::google::protobuf::int32 value);
 
-  // required int32 armor_type = 3;
+  // optional int32 armor_type = 3;
   inline bool has_armor_type() const;
   inline void clear_armor_type();
   static const int kArmorTypeFieldNumber = 3;
   inline ::google::protobuf::int32 armor_type() const;
   inline void set_armor_type(::google::protobuf::int32 value);
 
-  // required int32 weapon_type = 4;
+  // optional int32 weapon_type = 4;
   inline bool has_weapon_type() const;
   inline void clear_weapon_type();
   static const int kWeaponTypeFieldNumber = 4;
@@ -151,7 +151,7 @@ class ItemTypeData : public ::google::protobuf::Message {
 
 // ItemTypeData
 
-// required int32 category = 1;
+// optional int32 category = 1;
 inline bool ItemTypeData::has_category() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -175,7 +175,7 @@ inline void ItemTypeData::set_category(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ItemTypeData.category)
 }
 
-// required int32 amunition_type = 2;
+// optional int32 amunition_type = 2;
 inline bool ItemTypeData::has_amunition_type() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -199,7 +199,7 @@ inline void ItemTypeData::set_amunition_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ItemTypeData.amunition_type)
 }
 
-// required int32 armor_type = 3;
+// optional int32 armor_type = 3;
 inline bool ItemTypeData::has_armor_type() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -223,7 +223,7 @@ inline void ItemTypeData::set_armor_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.ItemTypeData.armor_type)
 }
 
-// required int32 weapon_type = 4;
+// optional int32 weapon_type = 4;
 inline bool ItemTypeData::has_weapon_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }

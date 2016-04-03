@@ -24,14 +24,35 @@ static QStringList target_types = {
 };
 
 static QStringList pickable_categories = {
+  "Uncategorized",
   "Miscellaneous",
   "Weapon",
   "Armor",
   "Jewelery",
-  "Potions",
-  "Scrolls",
+  "Potion",
+  "Scroll",
   "Amunition",
   "Wealth"
+};
+
+static QStringList weapon_types = {
+  "NoType",
+  "Sword",
+  "Blunt",
+  "Dagger",
+  "Staff",
+  "Bow"
+};
+
+static QStringList armor_types = {
+  "NoType",
+  "Cloth",
+  "Leather"
+};
+
+static QStringList amunition_types = {
+  "NoType",
+  "Arrow"
 };
 
 static QStringList item_slots = {
@@ -47,9 +68,7 @@ static QStringList item_slots = {
   "Left ring",
   "Right ring",
   "Cloak",
-  "Arrows",
-  "Bolts",
-  "Bullets",
+  "Arrows"
 };
 
 static QStringList races = {

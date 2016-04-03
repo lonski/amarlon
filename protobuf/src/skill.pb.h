@@ -91,7 +91,7 @@ class SkillData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
@@ -133,7 +133,7 @@ class SkillData : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 target_type() const;
   inline void set_target_type(::google::protobuf::int32 value);
 
-  // required string name = 7;
+  // optional string name = 7;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 7;
@@ -284,7 +284,7 @@ class SkillsData : public ::google::protobuf::Message {
 
 // SkillData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool SkillData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -428,7 +428,7 @@ inline void SkillData::set_target_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.SkillData.target_type)
 }
 
-// required string name = 7;
+// optional string name = 7;
 inline bool SkillData::has_name() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }

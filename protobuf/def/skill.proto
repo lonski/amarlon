@@ -3,14 +3,14 @@ syntax = "proto2";
 package amarlon;
 
 message SkillData {
-	required int32  id          = 1;
-	optional int32  level       = 2 [default=0];
-	optional bool passive       = 3 [default=false];
+  optional int32  id          = 1;
+  optional int32  level       = 2 [default=0];
+  optional bool passive       = 3 [default=false];
   optional int32 range        = 4 [default=0];
   optional int32 radius       = 5 [default=0];
-	optional int32 target_type  = 6 [default=0];
-	required string name        = 7;
-	optional string description = 8 [default=""];
+  optional int32 target_type  = 6 [default=0];
+  optional string name        = 7;
+  optional string description = 8 [default=""];
 }
 
 message SkillsData {

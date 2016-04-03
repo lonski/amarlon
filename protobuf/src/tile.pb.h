@@ -92,14 +92,14 @@ class TileData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
-  // required string name = 2;
+  // optional string name = 2;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 2;
@@ -118,7 +118,7 @@ class TileData : public ::google::protobuf::Message {
   inline bool transparent() const;
   inline void set_transparent(bool value);
 
-  // required string color = 4;
+  // optional string color = 4;
   inline bool has_color() const;
   inline void clear_color();
   static const int kColorFieldNumber = 4;
@@ -137,7 +137,7 @@ class TileData : public ::google::protobuf::Message {
   inline bool walkable() const;
   inline void set_walkable(bool value);
 
-  // required string character = 6;
+  // optional string character = 6;
   inline bool has_character() const;
   inline void clear_character();
   static const int kCharacterFieldNumber = 6;
@@ -318,14 +318,14 @@ class TileState : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 type = 1;
+  // optional int32 type = 1;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 1;
   inline ::google::protobuf::int32 type() const;
   inline void set_type(::google::protobuf::int32 value);
 
-  // required fixed32 flags = 2;
+  // optional fixed32 flags = 2;
   inline bool has_flags() const;
   inline void clear_flags();
   static const int kFlagsFieldNumber = 2;
@@ -359,7 +359,7 @@ class TileState : public ::google::protobuf::Message {
 
 // TileData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool TileData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -383,7 +383,7 @@ inline void TileData::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TileData.id)
 }
 
-// required string name = 2;
+// optional string name = 2;
 inline bool TileData::has_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -483,7 +483,7 @@ inline void TileData::set_transparent(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.TileData.transparent)
 }
 
-// required string color = 4;
+// optional string color = 4;
 inline bool TileData::has_color() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -583,7 +583,7 @@ inline void TileData::set_walkable(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.TileData.walkable)
 }
 
-// required string character = 6;
+// optional string character = 6;
 inline bool TileData::has_character() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -697,7 +697,7 @@ TilesData::mutable_tile() {
 
 // TileState
 
-// required int32 type = 1;
+// optional int32 type = 1;
 inline bool TileState::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -721,7 +721,7 @@ inline void TileState::set_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TileState.type)
 }
 
-// required fixed32 flags = 2;
+// optional fixed32 flags = 2;
 inline bool TileState::has_flags() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }

@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     actors/inventory_edit_dlg.cpp \
     actors/character_edit_dlg.cpp \
     skills/skill_editor.cpp \
-    skills/skill_edit.cpp
+    skills/skill_edit.cpp \
+    actors/actor_choose.cpp
 
 HEADERS  += editor.h \
     spells/spell_editor.h \
@@ -63,7 +64,8 @@ HEADERS  += editor.h \
     actors/inventory_edit_dlg.h \
     actors/character_edit_dlg.h \
     skills/skill_editor.h \
-    skills/skill_edit.h
+    skills/skill_edit.h \
+    actors/actor_choose.h
 
 FORMS    += editor.ui \
     spells/spell_editor.ui \
@@ -81,7 +83,8 @@ FORMS    += editor.ui \
     actors/inventory_edit_dlg.ui \
     actors/character_edit_dlg.ui \
     skills/skill_editor.ui \
-    skills/skill_edit.ui
+    skills/skill_edit.ui \
+    actors/actor_choose.ui
 
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lprotobuf
 

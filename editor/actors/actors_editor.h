@@ -18,6 +18,8 @@ public:
   explicit ActorsEditor(QWidget *parent = 0);
   ~ActorsEditor();
 
+  const amarlon::ActorsData getActorsData() const;
+
 private slots:
   void on_actionNew_triggered();
   void on_actionOpen_triggered();

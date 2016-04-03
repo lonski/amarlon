@@ -4,9 +4,10 @@
 #include <fstream>
 #include <QDesktopWidget>
 
-ActorsEditor::ActorsEditor(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::ActorsEditor)
+ActorsEditor::ActorsEditor(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::ActorsEditor)
+  , _editDlg(this)
 {
   ui->setupUi(this);
   move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -16,6 +17,11 @@ ActorsEditor::ActorsEditor(QWidget *parent) :
 ActorsEditor::~ActorsEditor()
 {
   delete ui;
+}
+
+const amarlon::ActorsData ActorsEditor::getActorsData() const
+{
+  return _actorsData;
 }
 
 void ActorsEditor::clear()

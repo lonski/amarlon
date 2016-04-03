@@ -158,14 +158,14 @@ void protobuf_AddDesc_map_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\tmap.proto\022\007amarlon\032\013actor.proto\032\ntile."
     "proto\"M\n\022TeleportActionData\022\016\n\006map_id\030\001 "
-    "\002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\022\021\n\tdirection\030\004"
-    " \002(\005\"\253\001\n\007MapData\022\n\n\002id\030\001 \002(\005\022\r\n\005width\030\002 "
-    "\002(\005\022\016\n\006height\030\003 \002(\005\022!\n\005tiles\030\004 \003(\0132\022.ama"
+    "\001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022\021\n\tdirection\030\004"
+    " \001(\005\"\253\001\n\007MapData\022\n\n\002id\030\001 \001(\005\022\r\n\005width\030\002 "
+    "\001(\005\022\016\n\006height\030\003 \001(\005\022!\n\005tiles\030\004 \003(\0132\022.ama"
     "rlon.TileState\022.\n\tteleports\030\005 \003(\0132\033.amar"
     "lon.TeleportActionData\022\"\n\006actors\030\006 \003(\0132\022"
     ".amarlon.ActorData\")\n\010MapsData\022\035\n\003map\030\001 "
     "\003(\0132\020.amarlon.MapData\"c\n\tWorldData\022\023\n\013cu"
-    "rrent_map\030\001 \002(\005\022\"\n\006player\030\002 \002(\0132\022.amarlo"
+    "rrent_map\030\001 \001(\005\022\"\n\006player\030\002 \001(\0132\022.amarlo"
     "n.ActorData\022\035\n\003map\030\003 \003(\0132\020.amarlon.MapDa"
     "ta", 442);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
@@ -283,7 +283,7 @@ bool TeleportActionData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 map_id = 1;
+      // optional int32 map_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -297,7 +297,7 @@ bool TeleportActionData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 x = 2;
+      // optional int32 x = 2;
       case 2: {
         if (tag == 16) {
          parse_x:
@@ -312,7 +312,7 @@ bool TeleportActionData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 y = 3;
+      // optional int32 y = 3;
       case 3: {
         if (tag == 24) {
          parse_y:
@@ -327,7 +327,7 @@ bool TeleportActionData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 direction = 4;
+      // optional int32 direction = 4;
       case 4: {
         if (tag == 32) {
          parse_direction:
@@ -367,22 +367,22 @@ failure:
 void TeleportActionData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.TeleportActionData)
-  // required int32 map_id = 1;
+  // optional int32 map_id = 1;
   if (has_map_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->map_id(), output);
   }
 
-  // required int32 x = 2;
+  // optional int32 x = 2;
   if (has_x()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->x(), output);
   }
 
-  // required int32 y = 3;
+  // optional int32 y = 3;
   if (has_y()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->y(), output);
   }
 
-  // required int32 direction = 4;
+  // optional int32 direction = 4;
   if (has_direction()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->direction(), output);
   }
@@ -397,22 +397,22 @@ void TeleportActionData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* TeleportActionData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.TeleportActionData)
-  // required int32 map_id = 1;
+  // optional int32 map_id = 1;
   if (has_map_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->map_id(), target);
   }
 
-  // required int32 x = 2;
+  // optional int32 x = 2;
   if (has_x()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->x(), target);
   }
 
-  // required int32 y = 3;
+  // optional int32 y = 3;
   if (has_y()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->y(), target);
   }
 
-  // required int32 direction = 4;
+  // optional int32 direction = 4;
   if (has_direction()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->direction(), target);
   }
@@ -429,28 +429,28 @@ int TeleportActionData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 map_id = 1;
+    // optional int32 map_id = 1;
     if (has_map_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->map_id());
     }
 
-    // required int32 x = 2;
+    // optional int32 x = 2;
     if (has_x()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->x());
     }
 
-    // required int32 y = 3;
+    // optional int32 y = 3;
     if (has_y()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->y());
     }
 
-    // required int32 direction = 4;
+    // optional int32 direction = 4;
     if (has_direction()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -513,7 +513,6 @@ void TeleportActionData::CopyFrom(const TeleportActionData& from) {
 }
 
 bool TeleportActionData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -641,7 +640,7 @@ bool MapData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -655,7 +654,7 @@ bool MapData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 width = 2;
+      // optional int32 width = 2;
       case 2: {
         if (tag == 16) {
          parse_width:
@@ -670,7 +669,7 @@ bool MapData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 height = 3;
+      // optional int32 height = 3;
       case 3: {
         if (tag == 24) {
          parse_height:
@@ -752,17 +751,17 @@ failure:
 void MapData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.MapData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // required int32 width = 2;
+  // optional int32 width = 2;
   if (has_width()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->width(), output);
   }
 
-  // required int32 height = 3;
+  // optional int32 height = 3;
   if (has_height()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->height(), output);
   }
@@ -795,17 +794,17 @@ void MapData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* MapData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.MapData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // required int32 width = 2;
+  // optional int32 width = 2;
   if (has_width()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->width(), target);
   }
 
-  // required int32 height = 3;
+  // optional int32 height = 3;
   if (has_height()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->height(), target);
   }
@@ -843,21 +842,21 @@ int MapData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
     }
 
-    // required int32 width = 2;
+    // optional int32 width = 2;
     if (has_width()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->width());
     }
 
-    // required int32 height = 3;
+    // optional int32 height = 3;
     if (has_height()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -944,11 +943,7 @@ void MapData::CopyFrom(const MapData& from) {
 }
 
 bool MapData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->tiles())) return false;
-  if (!::google::protobuf::internal::AllAreInitialized(this->teleports())) return false;
-  if (!::google::protobuf::internal::AllAreInitialized(this->actors())) return false;
   return true;
 }
 
@@ -1173,7 +1168,6 @@ void MapsData::CopyFrom(const MapsData& from) {
 
 bool MapsData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->map())) return false;
   return true;
 }
 
@@ -1281,7 +1275,7 @@ bool WorldData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 current_map = 1;
+      // optional int32 current_map = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -1295,7 +1289,7 @@ bool WorldData::MergePartialFromCodedStream(
         break;
       }
 
-      // required .amarlon.ActorData player = 2;
+      // optional .amarlon.ActorData player = 2;
       case 2: {
         if (tag == 18) {
          parse_player:
@@ -1347,12 +1341,12 @@ failure:
 void WorldData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.WorldData)
-  // required int32 current_map = 1;
+  // optional int32 current_map = 1;
   if (has_current_map()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->current_map(), output);
   }
 
-  // required .amarlon.ActorData player = 2;
+  // optional .amarlon.ActorData player = 2;
   if (has_player()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->player(), output);
@@ -1374,12 +1368,12 @@ void WorldData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* WorldData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.WorldData)
-  // required int32 current_map = 1;
+  // optional int32 current_map = 1;
   if (has_current_map()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->current_map(), target);
   }
 
-  // required .amarlon.ActorData player = 2;
+  // optional .amarlon.ActorData player = 2;
   if (has_player()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1405,14 +1399,14 @@ int WorldData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 current_map = 1;
+    // optional int32 current_map = 1;
     if (has_current_map()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->current_map());
     }
 
-    // required .amarlon.ActorData player = 2;
+    // optional .amarlon.ActorData player = 2;
     if (has_player()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1478,12 +1472,7 @@ void WorldData::CopyFrom(const WorldData& from) {
 }
 
 bool WorldData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
-  if (has_player()) {
-    if (!this->player().IsInitialized()) return false;
-  }
-  if (!::google::protobuf::internal::AllAreInitialized(this->map())) return false;
   return true;
 }
 

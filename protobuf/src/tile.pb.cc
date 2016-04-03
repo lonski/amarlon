@@ -129,11 +129,11 @@ void protobuf_AddDesc_tile_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\ntile.proto\022\007amarlon\"{\n\010TileData\022\n\n\002id\030"
-    "\001 \002(\005\022\014\n\004name\030\002 \002(\t\022\032\n\013transparent\030\003 \001(\010"
-    ":\005false\022\r\n\005color\030\004 \002(\t\022\027\n\010walkable\030\005 \001(\010"
-    ":\005false\022\021\n\tcharacter\030\006 \002(\t\",\n\tTilesData\022"
+    "\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\032\n\013transparent\030\003 \001(\010"
+    ":\005false\022\r\n\005color\030\004 \001(\t\022\027\n\010walkable\030\005 \001(\010"
+    ":\005false\022\021\n\tcharacter\030\006 \001(\t\",\n\tTilesData\022"
     "\037\n\004tile\030\001 \003(\0132\021.amarlon.TileData\"(\n\tTile"
-    "State\022\014\n\004type\030\001 \002(\005\022\r\n\005flags\030\002 \002(\007", 234);
+    "State\022\014\n\004type\030\001 \001(\005\022\r\n\005flags\030\002 \001(\007", 234);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "tile.proto", &protobuf_RegisterTypes);
   TileData::default_instance_ = new TileData();
@@ -278,7 +278,7 @@ bool TileData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -292,7 +292,7 @@ bool TileData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string name = 2;
+      // optional string name = 2;
       case 2: {
         if (tag == 18) {
          parse_name:
@@ -324,7 +324,7 @@ bool TileData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string color = 4;
+      // optional string color = 4;
       case 4: {
         if (tag == 34) {
          parse_color:
@@ -356,7 +356,7 @@ bool TileData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string character = 6;
+      // optional string character = 6;
       case 6: {
         if (tag == 50) {
          parse_character:
@@ -398,12 +398,12 @@ failure:
 void TileData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.TileData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // required string name = 2;
+  // optional string name = 2;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -418,7 +418,7 @@ void TileData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->transparent(), output);
   }
 
-  // required string color = 4;
+  // optional string color = 4;
   if (has_color()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->color().data(), this->color().length(),
@@ -433,7 +433,7 @@ void TileData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->walkable(), output);
   }
 
-  // required string character = 6;
+  // optional string character = 6;
   if (has_character()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->character().data(), this->character().length(),
@@ -453,12 +453,12 @@ void TileData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* TileData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.TileData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // required string name = 2;
+  // optional string name = 2;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -474,7 +474,7 @@ void TileData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->transparent(), target);
   }
 
-  // required string color = 4;
+  // optional string color = 4;
   if (has_color()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->color().data(), this->color().length(),
@@ -490,7 +490,7 @@ void TileData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->walkable(), target);
   }
 
-  // required string character = 6;
+  // optional string character = 6;
   if (has_character()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->character().data(), this->character().length(),
@@ -513,14 +513,14 @@ int TileData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
     }
 
-    // required string name = 2;
+    // optional string name = 2;
     if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -532,7 +532,7 @@ int TileData::ByteSize() const {
       total_size += 1 + 1;
     }
 
-    // required string color = 4;
+    // optional string color = 4;
     if (has_color()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -544,7 +544,7 @@ int TileData::ByteSize() const {
       total_size += 1 + 1;
     }
 
-    // required string character = 6;
+    // optional string character = 6;
     if (has_character()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -613,7 +613,6 @@ void TileData::CopyFrom(const TileData& from) {
 }
 
 bool TileData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000002b) != 0x0000002b) return false;
 
   return true;
 }
@@ -839,7 +838,6 @@ void TilesData::CopyFrom(const TilesData& from) {
 
 bool TilesData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->tile())) return false;
   return true;
 }
 
@@ -952,7 +950,7 @@ bool TileState::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 type = 1;
+      // optional int32 type = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -966,7 +964,7 @@ bool TileState::MergePartialFromCodedStream(
         break;
       }
 
-      // required fixed32 flags = 2;
+      // optional fixed32 flags = 2;
       case 2: {
         if (tag == 21) {
          parse_flags:
@@ -1006,12 +1004,12 @@ failure:
 void TileState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.TileState)
-  // required int32 type = 1;
+  // optional int32 type = 1;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->type(), output);
   }
 
-  // required fixed32 flags = 2;
+  // optional fixed32 flags = 2;
   if (has_flags()) {
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->flags(), output);
   }
@@ -1026,12 +1024,12 @@ void TileState::SerializeWithCachedSizes(
 ::google::protobuf::uint8* TileState::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.TileState)
-  // required int32 type = 1;
+  // optional int32 type = 1;
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->type(), target);
   }
 
-  // required fixed32 flags = 2;
+  // optional fixed32 flags = 2;
   if (has_flags()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->flags(), target);
   }
@@ -1048,14 +1046,14 @@ int TileState::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 type = 1;
+    // optional int32 type = 1;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->type());
     }
 
-    // required fixed32 flags = 2;
+    // optional fixed32 flags = 2;
     if (has_flags()) {
       total_size += 1 + 4;
     }
@@ -1110,7 +1108,6 @@ void TileState::CopyFrom(const TileState& from) {
 }
 
 bool TileState::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }

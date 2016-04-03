@@ -95,28 +95,28 @@ class TeleportActionData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 map_id = 1;
+  // optional int32 map_id = 1;
   inline bool has_map_id() const;
   inline void clear_map_id();
   static const int kMapIdFieldNumber = 1;
   inline ::google::protobuf::int32 map_id() const;
   inline void set_map_id(::google::protobuf::int32 value);
 
-  // required int32 x = 2;
+  // optional int32 x = 2;
   inline bool has_x() const;
   inline void clear_x();
   static const int kXFieldNumber = 2;
   inline ::google::protobuf::int32 x() const;
   inline void set_x(::google::protobuf::int32 value);
 
-  // required int32 y = 3;
+  // optional int32 y = 3;
   inline bool has_y() const;
   inline void clear_y();
   static const int kYFieldNumber = 3;
   inline ::google::protobuf::int32 y() const;
   inline void set_y(::google::protobuf::int32 value);
 
-  // required int32 direction = 4;
+  // optional int32 direction = 4;
   inline bool has_direction() const;
   inline void clear_direction();
   static const int kDirectionFieldNumber = 4;
@@ -204,21 +204,21 @@ class MapData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
-  // required int32 width = 2;
+  // optional int32 width = 2;
   inline bool has_width() const;
   inline void clear_width();
   static const int kWidthFieldNumber = 2;
   inline ::google::protobuf::int32 width() const;
   inline void set_width(::google::protobuf::int32 value);
 
-  // required int32 height = 3;
+  // optional int32 height = 3;
   inline bool has_height() const;
   inline void clear_height();
   static const int kHeightFieldNumber = 3;
@@ -424,14 +424,14 @@ class WorldData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 current_map = 1;
+  // optional int32 current_map = 1;
   inline bool has_current_map() const;
   inline void clear_current_map();
   static const int kCurrentMapFieldNumber = 1;
   inline ::google::protobuf::int32 current_map() const;
   inline void set_current_map(::google::protobuf::int32 value);
 
-  // required .amarlon.ActorData player = 2;
+  // optional .amarlon.ActorData player = 2;
   inline bool has_player() const;
   inline void clear_player();
   static const int kPlayerFieldNumber = 2;
@@ -480,7 +480,7 @@ class WorldData : public ::google::protobuf::Message {
 
 // TeleportActionData
 
-// required int32 map_id = 1;
+// optional int32 map_id = 1;
 inline bool TeleportActionData::has_map_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -504,7 +504,7 @@ inline void TeleportActionData::set_map_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TeleportActionData.map_id)
 }
 
-// required int32 x = 2;
+// optional int32 x = 2;
 inline bool TeleportActionData::has_x() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -528,7 +528,7 @@ inline void TeleportActionData::set_x(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TeleportActionData.x)
 }
 
-// required int32 y = 3;
+// optional int32 y = 3;
 inline bool TeleportActionData::has_y() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -552,7 +552,7 @@ inline void TeleportActionData::set_y(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.TeleportActionData.y)
 }
 
-// required int32 direction = 4;
+// optional int32 direction = 4;
 inline bool TeleportActionData::has_direction() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -580,7 +580,7 @@ inline void TeleportActionData::set_direction(::google::protobuf::int32 value) {
 
 // MapData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool MapData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -604,7 +604,7 @@ inline void MapData::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.MapData.id)
 }
 
-// required int32 width = 2;
+// optional int32 width = 2;
 inline bool MapData::has_width() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -628,7 +628,7 @@ inline void MapData::set_width(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.MapData.width)
 }
 
-// required int32 height = 3;
+// optional int32 height = 3;
 inline bool MapData::has_height() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -780,7 +780,7 @@ MapsData::mutable_map() {
 
 // WorldData
 
-// required int32 current_map = 1;
+// optional int32 current_map = 1;
 inline bool WorldData::has_current_map() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -804,7 +804,7 @@ inline void WorldData::set_current_map(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.WorldData.current_map)
 }
 
-// required .amarlon.ActorData player = 2;
+// optional .amarlon.ActorData player = 2;
 inline bool WorldData::has_player() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }

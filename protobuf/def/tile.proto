@@ -3,12 +3,12 @@ syntax = "proto2";
 package amarlon;
 
 message TileData {
-  required int32  id        = 1;
-  required string name      = 2;
+  optional int32  id        = 1;
+  optional string name      = 2;
   optional bool transparent = 3 [default=false];
-  required string color     = 4;
+  optional string color     = 4;
   optional bool walkable    = 5 [default=false];
-  required string character = 6;
+  optional string character = 6;
 }
 
 message TilesData {
@@ -16,6 +16,6 @@ message TilesData {
 }
 
 message TileState {
-  required int32 type    = 1;
-  required fixed32 flags = 2;
+  optional int32 type    = 1;
+  optional fixed32 flags = 2;
 }

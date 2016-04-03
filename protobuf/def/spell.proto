@@ -3,12 +3,12 @@ syntax = "proto2";
 package amarlon;
 
 message SpellData {
-	required int32  id          = 1;
-	required int32  level       = 2;
-	required int32  char_class  = 3;
+	optional int32  id          = 1;
+	optional int32  level       = 2;
+	optional int32  char_class  = 3;
 	optional int32  target_type = 4 [default=0];
-	required string name        = 5;
-	required string description = 6;
+	optional string name        = 5;
+	optional string description = 6;
 	optional bool   passive     = 7 [default=false];
 	optional int32  radius      = 8 [default=0];
 	optional int32  range       = 9 [default=0];
@@ -20,9 +20,9 @@ message SpellsData {
 
 message SpellBookData {
 	message SlotData{
-		required int32 level     = 1;
+		optional int32 level     = 1;
 		optional bool isPrepared = 2 [default=false];
-		required int32 spell_id  = 3;
+		optional int32 spell_id  = 3;
 	}
 
 	repeated int32    knownSpells = 1;	

@@ -156,16 +156,16 @@ void protobuf_AddDesc_spell_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\013spell.proto\022\007amarlon\"\262\001\n\tSpellData\022\n\n\002"
-    "id\030\001 \002(\005\022\r\n\005level\030\002 \002(\005\022\022\n\nchar_class\030\003 "
-    "\002(\005\022\026\n\013target_type\030\004 \001(\005:\0010\022\014\n\004name\030\005 \002("
-    "\t\022\023\n\013description\030\006 \002(\t\022\026\n\007passive\030\007 \001(\010:"
+    "id\030\001 \001(\005\022\r\n\005level\030\002 \001(\005\022\022\n\nchar_class\030\003 "
+    "\001(\005\022\026\n\013target_type\030\004 \001(\005:\0010\022\014\n\004name\030\005 \001("
+    "\t\022\023\n\013description\030\006 \001(\t\022\026\n\007passive\030\007 \001(\010:"
     "\005false\022\021\n\006radius\030\010 \001(\005:\0010\022\020\n\005range\030\t \001(\005"
     ":\0010\"/\n\nSpellsData\022!\n\005spell\030\001 \003(\0132\022.amarl"
     "on.SpellData\"\241\001\n\rSpellBookData\022\023\n\013knownS"
     "pells\030\001 \003(\005\0223\n\nspellSlots\030\002 \003(\0132\037.amarlo"
     "n.SpellBookData.SlotData\032F\n\010SlotData\022\r\n\005"
-    "level\030\001 \002(\005\022\031\n\nisPrepared\030\002 \001(\010:\005false\022\020"
-    "\n\010spell_id\030\003 \002(\005", 416);
+    "level\030\001 \001(\005\022\031\n\nisPrepared\030\002 \001(\010:\005false\022\020"
+    "\n\010spell_id\030\003 \001(\005", 416);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "spell.proto", &protobuf_RegisterTypes);
   SpellData::default_instance_ = new SpellData();
@@ -312,7 +312,7 @@ bool SpellData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -326,7 +326,7 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 level = 2;
+      // optional int32 level = 2;
       case 2: {
         if (tag == 16) {
          parse_level:
@@ -341,7 +341,7 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 char_class = 3;
+      // optional int32 char_class = 3;
       case 3: {
         if (tag == 24) {
          parse_char_class:
@@ -371,7 +371,7 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string name = 5;
+      // optional string name = 5;
       case 5: {
         if (tag == 42) {
          parse_name:
@@ -388,7 +388,7 @@ bool SpellData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string description = 6;
+      // optional string description = 6;
       case 6: {
         if (tag == 50) {
          parse_description:
@@ -475,17 +475,17 @@ failure:
 void SpellData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SpellData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // required int32 level = 2;
+  // optional int32 level = 2;
   if (has_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->level(), output);
   }
 
-  // required int32 char_class = 3;
+  // optional int32 char_class = 3;
   if (has_char_class()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->char_class(), output);
   }
@@ -495,7 +495,7 @@ void SpellData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->target_type(), output);
   }
 
-  // required string name = 5;
+  // optional string name = 5;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -505,7 +505,7 @@ void SpellData::SerializeWithCachedSizes(
       5, this->name(), output);
   }
 
-  // required string description = 6;
+  // optional string description = 6;
   if (has_description()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
@@ -540,17 +540,17 @@ void SpellData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* SpellData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SpellData)
-  // required int32 id = 1;
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // required int32 level = 2;
+  // optional int32 level = 2;
   if (has_level()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->level(), target);
   }
 
-  // required int32 char_class = 3;
+  // optional int32 char_class = 3;
   if (has_char_class()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->char_class(), target);
   }
@@ -560,7 +560,7 @@ void SpellData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->target_type(), target);
   }
 
-  // required string name = 5;
+  // optional string name = 5;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
@@ -571,7 +571,7 @@ void SpellData::SerializeWithCachedSizes(
         5, this->name(), target);
   }
 
-  // required string description = 6;
+  // optional string description = 6;
   if (has_description()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), this->description().length(),
@@ -609,21 +609,21 @@ int SpellData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
     }
 
-    // required int32 level = 2;
+    // optional int32 level = 2;
     if (has_level()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->level());
     }
 
-    // required int32 char_class = 3;
+    // optional int32 char_class = 3;
     if (has_char_class()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -637,14 +637,14 @@ int SpellData::ByteSize() const {
           this->target_type());
     }
 
-    // required string name = 5;
+    // optional string name = 5;
     if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
 
-    // required string description = 6;
+    // optional string description = 6;
     if (has_description()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -745,7 +745,6 @@ void SpellData::CopyFrom(const SpellData& from) {
 }
 
 bool SpellData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000037) != 0x00000037) return false;
 
   return true;
 }
@@ -974,7 +973,6 @@ void SpellsData::CopyFrom(const SpellsData& from) {
 
 bool SpellsData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->spell())) return false;
   return true;
 }
 
@@ -1089,7 +1087,7 @@ bool SpellBookData_SlotData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 level = 1;
+      // optional int32 level = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -1118,7 +1116,7 @@ bool SpellBookData_SlotData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 spell_id = 3;
+      // optional int32 spell_id = 3;
       case 3: {
         if (tag == 24) {
          parse_spell_id:
@@ -1158,7 +1156,7 @@ failure:
 void SpellBookData_SlotData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.SpellBookData.SlotData)
-  // required int32 level = 1;
+  // optional int32 level = 1;
   if (has_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->level(), output);
   }
@@ -1168,7 +1166,7 @@ void SpellBookData_SlotData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->isprepared(), output);
   }
 
-  // required int32 spell_id = 3;
+  // optional int32 spell_id = 3;
   if (has_spell_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->spell_id(), output);
   }
@@ -1183,7 +1181,7 @@ void SpellBookData_SlotData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* SpellBookData_SlotData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.SpellBookData.SlotData)
-  // required int32 level = 1;
+  // optional int32 level = 1;
   if (has_level()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->level(), target);
   }
@@ -1193,7 +1191,7 @@ void SpellBookData_SlotData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->isprepared(), target);
   }
 
-  // required int32 spell_id = 3;
+  // optional int32 spell_id = 3;
   if (has_spell_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->spell_id(), target);
   }
@@ -1210,7 +1208,7 @@ int SpellBookData_SlotData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 level = 1;
+    // optional int32 level = 1;
     if (has_level()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1222,7 +1220,7 @@ int SpellBookData_SlotData::ByteSize() const {
       total_size += 1 + 1;
     }
 
-    // required int32 spell_id = 3;
+    // optional int32 spell_id = 3;
     if (has_spell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1282,7 +1280,6 @@ void SpellBookData_SlotData::CopyFrom(const SpellBookData_SlotData& from) {
 }
 
 bool SpellBookData_SlotData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
 
   return true;
 }
@@ -1549,7 +1546,6 @@ void SpellBookData::CopyFrom(const SpellBookData& from) {
 
 bool SpellBookData::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->spellslots())) return false;
   return true;
 }
 

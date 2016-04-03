@@ -93,21 +93,21 @@ class SpellData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
-  // required int32 level = 2;
+  // optional int32 level = 2;
   inline bool has_level() const;
   inline void clear_level();
   static const int kLevelFieldNumber = 2;
   inline ::google::protobuf::int32 level() const;
   inline void set_level(::google::protobuf::int32 value);
 
-  // required int32 char_class = 3;
+  // optional int32 char_class = 3;
   inline bool has_char_class() const;
   inline void clear_char_class();
   static const int kCharClassFieldNumber = 3;
@@ -121,7 +121,7 @@ class SpellData : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 target_type() const;
   inline void set_target_type(::google::protobuf::int32 value);
 
-  // required string name = 5;
+  // optional string name = 5;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 5;
@@ -133,7 +133,7 @@ class SpellData : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string description = 6;
+  // optional string description = 6;
   inline bool has_description() const;
   inline void clear_description();
   static const int kDescriptionFieldNumber = 6;
@@ -344,7 +344,7 @@ class SpellBookData_SlotData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 level = 1;
+  // optional int32 level = 1;
   inline bool has_level() const;
   inline void clear_level();
   static const int kLevelFieldNumber = 1;
@@ -358,7 +358,7 @@ class SpellBookData_SlotData : public ::google::protobuf::Message {
   inline bool isprepared() const;
   inline void set_isprepared(bool value);
 
-  // required int32 spell_id = 3;
+  // optional int32 spell_id = 3;
   inline bool has_spell_id() const;
   inline void clear_spell_id();
   static const int kSpellIdFieldNumber = 3;
@@ -492,7 +492,7 @@ class SpellBookData : public ::google::protobuf::Message {
 
 // SpellData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool SpellData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -516,7 +516,7 @@ inline void SpellData::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.SpellData.id)
 }
 
-// required int32 level = 2;
+// optional int32 level = 2;
 inline bool SpellData::has_level() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -540,7 +540,7 @@ inline void SpellData::set_level(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.SpellData.level)
 }
 
-// required int32 char_class = 3;
+// optional int32 char_class = 3;
 inline bool SpellData::has_char_class() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -588,7 +588,7 @@ inline void SpellData::set_target_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.SpellData.target_type)
 }
 
-// required string name = 5;
+// optional string name = 5;
 inline bool SpellData::has_name() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -664,7 +664,7 @@ inline void SpellData::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:amarlon.SpellData.name)
 }
 
-// required string description = 6;
+// optional string description = 6;
 inline bool SpellData::has_description() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -850,7 +850,7 @@ SpellsData::mutable_spell() {
 
 // SpellBookData_SlotData
 
-// required int32 level = 1;
+// optional int32 level = 1;
 inline bool SpellBookData_SlotData::has_level() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -898,7 +898,7 @@ inline void SpellBookData_SlotData::set_isprepared(bool value) {
   // @@protoc_insertion_point(field_set:amarlon.SpellBookData.SlotData.isPrepared)
 }
 
-// required int32 spell_id = 3;
+// optional int32 spell_id = 3;
 inline bool SpellBookData_SlotData::has_spell_id() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }

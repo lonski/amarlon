@@ -54,10 +54,11 @@ private slots:
   void fillForm();
   void fillActor();
 
-  void on_buttonBox_accepted();
   void on_pushButton_2_clicked();
   void on_pushButton_clicked();
   void on_lFeatures_itemDoubleClicked(QListWidgetItem *item);
+  void on_pushButton_4_clicked();
+  void on_cancelBtn_clicked();
 };
 
 #endif // ACTOR_EDIT_DLG_H
