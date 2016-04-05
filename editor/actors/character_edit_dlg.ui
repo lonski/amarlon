@@ -19,6 +19,16 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="fCharType"/>
+       </item>
+       <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Class</string>
@@ -37,6 +47,16 @@
        </item>
        <item>
         <widget class="QComboBox" name="fRace"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>Team</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="fTeam"/>
        </item>
        <item>
         <widget class="QLabel" name="label">
@@ -87,20 +107,6 @@
        </item>
        <item>
         <widget class="QSpinBox" name="fHP"/>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>HP Bonus</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="fHPBonus">
-         <property name="minimum">
-          <number>-99</number>
-         </property>
-        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_11">
@@ -205,7 +211,7 @@
          <item>
           <widget class="QLabel" name="label_18">
            <property name="text">
-            <string>Spells</string>
+            <string>Modifiers</string>
            </property>
           </widget>
          </item>
@@ -235,7 +241,70 @@
           </layout>
          </item>
          <item>
-          <widget class="QListWidget" name="fSpells"/>
+          <widget class="QListWidget" name="fModifiers"/>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Skills</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="btnAddSkill">
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnEditSkill">
+               <property name="text">
+                <string>Edit</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnDeleteSkill">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="fSkills">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Spellbook</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnEditSpellbook">
+             <property name="text">
+              <string>Edit spellbook</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>

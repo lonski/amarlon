@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QSpinBox" name="fItem"/>
+    <widget class="QComboBox" name="fItem"/>
    </item>
    <item>
     <widget class="QLabel" name="label_2">

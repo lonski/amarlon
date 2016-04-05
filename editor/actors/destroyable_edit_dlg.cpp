@@ -1,6 +1,7 @@
 #include "destroyable_edit_dlg.h"
 #include "ui_destroyable_edit_dlg.h"
 #include <actor.pb.h>
+#include <enum_mappings.h>
 
 DestroyableEditDlg::DestroyableEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -27,11 +28,12 @@ void DestroyableEditDlg::fillForm()
   {
     ui->sTable->clear();
     ui->sTable->setRowCount(0);
-    ui->sTable->setColumnCount(4);
+    ui->sTable->setColumnCount(5);
     ui->sTable->setHorizontalHeaderItem(0,new QTableWidgetItem("Item ID"));
-    ui->sTable->setHorizontalHeaderItem(1,new QTableWidgetItem("Amount Min"));
-    ui->sTable->setHorizontalHeaderItem(1,new QTableWidgetItem("Amount Max"));
-    ui->sTable->setHorizontalHeaderItem(1,new QTableWidgetItem("Chance"));
+    ui->sTable->setHorizontalHeaderItem(1,new QTableWidgetItem("Name"));
+    ui->sTable->setHorizontalHeaderItem(2,new QTableWidgetItem("Amount Min"));
+    ui->sTable->setHorizontalHeaderItem(3,new QTableWidgetItem("Amount Max"));
+    ui->sTable->setHorizontalHeaderItem(4,new QTableWidgetItem("Chance"));
 
     for( int i=0; i < _destroyable->droprules_size(); ++i )
     {
@@ -39,9 +41,12 @@ void DestroyableEditDlg::fillForm()
 
       ui->sTable->insertRow( ui->sTable->rowCount() );
       ui->sTable->setItem(ui->sTable->rowCount() - 1, 0, new QTableWidgetItem( QString::number(rule.actor_id()) ));
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 1, new QTableWidgetItem( QString::number(rule.min()) ));
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 2, new QTableWidgetItem( QString::number(rule.max()) ));
-      ui->sTable->setItem(ui->sTable->rowCount() - 1, 3, new QTableWidgetItem( QString::number(rule.chance(),'g',2) ));
+      ui->sTable->setItem(ui->sTable->rowCount() - 1, 1,
+                          new QTableWidgetItem(
+                            actors.size() > rule.actor_id() ? actors[rule.actor_id()] : "!ERROR!" ));
+      ui->sTable->setItem(ui->sTable->rowCount() - 1, 2, new QTableWidgetItem( QString::number(rule.min()) ));
+      ui->sTable->setItem(ui->sTable->rowCount() - 1, 3, new QTableWidgetItem( QString::number(rule.max()) ));
+      ui->sTable->setItem(ui->sTable->rowCount() - 1, 4, new QTableWidgetItem( QString::number(rule.chance() / 100.f,'g',2) ));
     }
   }
 }

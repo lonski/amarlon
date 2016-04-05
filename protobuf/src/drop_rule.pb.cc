@@ -82,8 +82,8 @@ void protobuf_AddDesc_drop_5frule_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\017drop_rule.proto\022\007amarlon\"F\n\010DropRule\022\020"
-    "\n\010actor_id\030\001 \001(\005\022\013\n\003min\030\002 \001(\005\022\013\n\003max\030\003 \001"
-    "(\005\022\016\n\006chance\030\004 \001(\002", 98);
+    "\n\010actor_id\030\002 \001(\005\022\013\n\003min\030\003 \001(\005\022\013\n\003max\030\004 \001"
+    "(\005\022\016\n\006chance\030\001 \001(\005", 98);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "drop_rule.proto", &protobuf_RegisterTypes);
   DropRule::default_instance_ = new DropRule();
@@ -193,9 +193,24 @@ bool DropRule::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 actor_id = 1;
+      // optional int32 chance = 1;
       case 1: {
         if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &chance_)));
+          set_has_chance();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_actor_id;
+        break;
+      }
+
+      // optional int32 actor_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_actor_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &actor_id_)));
@@ -203,13 +218,13 @@ bool DropRule::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_min;
+        if (input->ExpectTag(24)) goto parse_min;
         break;
       }
 
-      // optional int32 min = 2;
-      case 2: {
-        if (tag == 16) {
+      // optional int32 min = 3;
+      case 3: {
+        if (tag == 24) {
          parse_min:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -218,33 +233,18 @@ bool DropRule::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_max;
+        if (input->ExpectTag(32)) goto parse_max;
         break;
       }
 
-      // optional int32 max = 3;
-      case 3: {
-        if (tag == 24) {
+      // optional int32 max = 4;
+      case 4: {
+        if (tag == 32) {
          parse_max:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &max_)));
           set_has_max();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(37)) goto parse_chance;
-        break;
-      }
-
-      // optional float chance = 4;
-      case 4: {
-        if (tag == 37) {
-         parse_chance:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &chance_)));
-          set_has_chance();
         } else {
           goto handle_unusual;
         }
@@ -277,24 +277,24 @@ failure:
 void DropRule::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:amarlon.DropRule)
-  // optional int32 actor_id = 1;
-  if (has_actor_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->actor_id(), output);
-  }
-
-  // optional int32 min = 2;
-  if (has_min()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->min(), output);
-  }
-
-  // optional int32 max = 3;
-  if (has_max()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->max(), output);
-  }
-
-  // optional float chance = 4;
+  // optional int32 chance = 1;
   if (has_chance()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->chance(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->chance(), output);
+  }
+
+  // optional int32 actor_id = 2;
+  if (has_actor_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->actor_id(), output);
+  }
+
+  // optional int32 min = 3;
+  if (has_min()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->min(), output);
+  }
+
+  // optional int32 max = 4;
+  if (has_max()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->max(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -307,24 +307,24 @@ void DropRule::SerializeWithCachedSizes(
 ::google::protobuf::uint8* DropRule::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:amarlon.DropRule)
-  // optional int32 actor_id = 1;
-  if (has_actor_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->actor_id(), target);
-  }
-
-  // optional int32 min = 2;
-  if (has_min()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->min(), target);
-  }
-
-  // optional int32 max = 3;
-  if (has_max()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->max(), target);
-  }
-
-  // optional float chance = 4;
+  // optional int32 chance = 1;
   if (has_chance()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->chance(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->chance(), target);
+  }
+
+  // optional int32 actor_id = 2;
+  if (has_actor_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->actor_id(), target);
+  }
+
+  // optional int32 min = 3;
+  if (has_min()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->min(), target);
+  }
+
+  // optional int32 max = 4;
+  if (has_max()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->max(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -339,30 +339,32 @@ int DropRule::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 actor_id = 1;
+    // optional int32 actor_id = 2;
     if (has_actor_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->actor_id());
     }
 
-    // optional int32 min = 2;
+    // optional int32 min = 3;
     if (has_min()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->min());
     }
 
-    // optional int32 max = 3;
+    // optional int32 max = 4;
     if (has_max()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->max());
     }
 
-    // optional float chance = 4;
+    // optional int32 chance = 1;
     if (has_chance()) {
-      total_size += 1 + 4;
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->chance());
     }
 
   }

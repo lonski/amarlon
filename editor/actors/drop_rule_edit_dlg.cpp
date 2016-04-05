@@ -1,6 +1,7 @@
 #include "drop_rule_edit_dlg.h"
 #include "ui_drop_rule_edit_dlg.h"
 #include <actor.pb.h>
+#include <enum_mappings.h>
 
 DropRuleEditDlg::DropRuleEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -8,6 +9,7 @@ DropRuleEditDlg::DropRuleEditDlg(QWidget *parent) :
   _rule(nullptr)
 {
   ui->setupUi(this);
+  ui->fItem->addItems(actors);
 }
 
 DropRuleEditDlg::~DropRuleEditDlg()
@@ -25,8 +27,8 @@ void DropRuleEditDlg::fillForm()
 {
   if ( _rule )
   {
-    ui->fChance->setValue( _rule->chance() );
-    ui->fItem->setValue( _rule->actor_id() );
+    ui->fChance->setValue( _rule->chance() / 100.f );
+    ui->fItem->setCurrentIndex( _rule->actor_id() );
     ui->fMin->setValue( _rule->min() );
     ui->fMax->setValue( _rule->max() );
   }
@@ -36,8 +38,8 @@ void DropRuleEditDlg::fillRule()
 {
   if ( _rule )
   {
-    _rule->set_chance( ui->fChance->value() );
-    _rule->set_actor_id( ui->fItem->value() );
+    _rule->set_chance( ui->fChance->value() * 100 );
+    _rule->set_actor_id( ui->fItem->currentIndex() );
     _rule->set_max( ui->fMax->value() );
     _rule->set_min( ui->fMin->value() );
   }

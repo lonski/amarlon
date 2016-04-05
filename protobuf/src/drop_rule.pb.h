@@ -90,33 +90,33 @@ class DropRule : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int32 actor_id = 1;
+  // optional int32 actor_id = 2;
   inline bool has_actor_id() const;
   inline void clear_actor_id();
-  static const int kActorIdFieldNumber = 1;
+  static const int kActorIdFieldNumber = 2;
   inline ::google::protobuf::int32 actor_id() const;
   inline void set_actor_id(::google::protobuf::int32 value);
 
-  // optional int32 min = 2;
+  // optional int32 min = 3;
   inline bool has_min() const;
   inline void clear_min();
-  static const int kMinFieldNumber = 2;
+  static const int kMinFieldNumber = 3;
   inline ::google::protobuf::int32 min() const;
   inline void set_min(::google::protobuf::int32 value);
 
-  // optional int32 max = 3;
+  // optional int32 max = 4;
   inline bool has_max() const;
   inline void clear_max();
-  static const int kMaxFieldNumber = 3;
+  static const int kMaxFieldNumber = 4;
   inline ::google::protobuf::int32 max() const;
   inline void set_max(::google::protobuf::int32 value);
 
-  // optional float chance = 4;
+  // optional int32 chance = 1;
   inline bool has_chance() const;
   inline void clear_chance();
-  static const int kChanceFieldNumber = 4;
-  inline float chance() const;
-  inline void set_chance(float value);
+  static const int kChanceFieldNumber = 1;
+  inline ::google::protobuf::int32 chance() const;
+  inline void set_chance(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:amarlon.DropRule)
  private:
@@ -136,7 +136,7 @@ class DropRule : public ::google::protobuf::Message {
   ::google::protobuf::int32 actor_id_;
   ::google::protobuf::int32 min_;
   ::google::protobuf::int32 max_;
-  float chance_;
+  ::google::protobuf::int32 chance_;
   friend void  protobuf_AddDesc_drop_5frule_2eproto();
   friend void protobuf_AssignDesc_drop_5frule_2eproto();
   friend void protobuf_ShutdownFile_drop_5frule_2eproto();
@@ -151,7 +151,7 @@ class DropRule : public ::google::protobuf::Message {
 
 // DropRule
 
-// optional int32 actor_id = 1;
+// optional int32 actor_id = 2;
 inline bool DropRule::has_actor_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -175,7 +175,7 @@ inline void DropRule::set_actor_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.DropRule.actor_id)
 }
 
-// optional int32 min = 2;
+// optional int32 min = 3;
 inline bool DropRule::has_min() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -199,7 +199,7 @@ inline void DropRule::set_min(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.DropRule.min)
 }
 
-// optional int32 max = 3;
+// optional int32 max = 4;
 inline bool DropRule::has_max() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -223,7 +223,7 @@ inline void DropRule::set_max(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:amarlon.DropRule.max)
 }
 
-// optional float chance = 4;
+// optional int32 chance = 1;
 inline bool DropRule::has_chance() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -237,11 +237,11 @@ inline void DropRule::clear_chance() {
   chance_ = 0;
   clear_has_chance();
 }
-inline float DropRule::chance() const {
+inline ::google::protobuf::int32 DropRule::chance() const {
   // @@protoc_insertion_point(field_get:amarlon.DropRule.chance)
   return chance_;
 }
-inline void DropRule::set_chance(float value) {
+inline void DropRule::set_chance(::google::protobuf::int32 value) {
   set_has_chance();
   chance_ = value;
   // @@protoc_insertion_point(field_set:amarlon.DropRule.chance)

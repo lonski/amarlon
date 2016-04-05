@@ -82,5 +82,81 @@ static QStringList races = {
   "Undead"
 };
 
+static QStringList character_types = {
+  "NoType",
+  "Generic",
+  "PlayableCharacter"
+};
+
+static QStringList relation_teams = {
+  "Monster"      ,
+  "NPC"          ,
+  "Player"       ,
+  "PcHostileNPC"
+};
+
+static QStringList skills = {
+  "Null"            ,
+  "OpenLocks"       ,
+  "DisarmTraps"     ,
+  "Hide"            ,
+  "PickPockets"     ,
+  "SilentMove"      ,
+  "FindTraps"       ,
+  "Darkvision"      ,
+  "DwarfRacial"     ,
+  "ElfRacial"       ,
+  "HalflingRacial"  ,
+  "HumanRacial"     ,
+};
+
+static QStringList spells = {
+  "Null"            ,
+  "CureLightWounds" ,
+  "MagicMissile"    ,
+  "Fireball"        ,
+  "Bless"           ,
+  "Shield"          ,
+  "Sleep"
+};
+
+static QStringList actors = {
+  "Null",
+  "Player" ,
+  "Orc" ,
+  "DoorClosed" ,
+  "DoorOpen" ,
+  "Bed" ,
+  "Locker" ,
+  "Wardrobe" ,
+  "Chair" ,
+  "Furnace" ,
+  "Table" ,
+  "Worktop" ,
+  "BootleOfWine" ,
+  "HealthPotion" ,
+  "CookBook" ,
+  "Corpse"  ,
+  "PantryKey" ,
+  "LeatherBoots" ,
+  "LeatherArmor" ,
+  "GoldCoin" ,
+  "BlackAle" ,
+  "Dagger" ,
+  "Goblin" ,
+  "BladeTrap" ,
+  "ScrollFireball" ,
+  "Toilet" ,
+  "Beer" ,
+  "Arrow" ,
+  "ShortBow" ,
+  "Tero" ,
+  "ShortSword" ,
+  "Arrow_P1" ,
+  "End"
+};
+
+
+
 #endif // ENUM_MAPPINGS
 

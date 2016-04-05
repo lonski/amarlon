@@ -2,9 +2,9 @@
 #include "ui_editor.h"
 #include <QDesktopWidget>
 
-editor::editor(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::editor)
+editor::editor(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::editor)
 {
   ui->setupUi(this);
   move(QApplication::desktop()->screen()->rect().center() - rect().center());

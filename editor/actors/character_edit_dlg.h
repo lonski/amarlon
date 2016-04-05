@@ -28,6 +28,11 @@ private slots:
   void on_pushButton_2_clicked();
   void on_pushButton_3_clicked();
   void on_buttonBox_accepted();
+  void on_btnAddSkill_clicked();
+  void on_btnEditSkill_clicked();
+  void on_btnDeleteSkill_clicked();
+
+  void on_btnEditSpellbook_clicked();
 
 private:
   Ui::CharacterEditDlg *ui;

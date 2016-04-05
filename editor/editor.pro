@@ -37,7 +37,11 @@ SOURCES += main.cpp\
     actors/character_edit_dlg.cpp \
     skills/skill_editor.cpp \
     skills/skill_edit.cpp \
-    actors/actor_choose.cpp
+    actors/actor_choose.cpp \
+    actors/character_skill_edit.cpp \
+    actors/spellbook_edit.cpp \
+    actors/spell_select_dialog.cpp \
+    actors/spell_slot_dialog.cpp
 
 HEADERS  += editor.h \
     spells/spell_editor.h \
@@ -65,7 +69,11 @@ HEADERS  += editor.h \
     actors/character_edit_dlg.h \
     skills/skill_editor.h \
     skills/skill_edit.h \
-    actors/actor_choose.h
+    actors/actor_choose.h \
+    actors/character_skill_edit.h \
+    actors/spellbook_edit.h \
+    actors/spell_select_dialog.h \
+    actors/spell_slot_dialog.h
 
 FORMS    += editor.ui \
     spells/spell_editor.ui \
@@ -84,7 +92,11 @@ FORMS    += editor.ui \
     actors/character_edit_dlg.ui \
     skills/skill_editor.ui \
     skills/skill_edit.ui \
-    actors/actor_choose.ui
+    actors/actor_choose.ui \
+    actors/character_skill_edit.ui \
+    actors/spellbook_edit.ui \
+    actors/spell_select_dialog.ui \
+    actors/spell_slot_dialog.ui
 
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lprotobuf
 
