@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <actor.pb.h>
+#include <enum_mappings.h>
 
 ActorEditDlg::ActorEditDlg(QWidget *parent)
   : QDialog(parent)
@@ -52,6 +53,7 @@ ActorEditDlg::ActorEditDlg(QWidget *parent)
   feature_menu->addAction(openable);
 
   ui->btnAddFeature->setMenu(feature_menu);
+  ui->fID->addItems(actors);
 }
 
 ActorEditDlg::~ActorEditDlg()
@@ -186,7 +188,7 @@ void ActorEditDlg::fillForm()
     ui->fDescription->setText( _actor->description().c_str() );
     ui->fFOV->setCurrentIndex( (int)_actor->is_fov_only() );
     ui->fTransparent->setCurrentIndex( (int)_actor->is_transparent() );
-    ui->fID->setValue( _actor->actor_type() );
+    ui->fID->setCurrentIndex( _actor->actor_type() );
     ui->fName->setText( _actor->name().c_str() );
     ui->fSymbol->setText( _actor->symbol().c_str() );
     ui->fPriority->setValue( _actor->render_priority() );
@@ -211,7 +213,7 @@ void ActorEditDlg::fillActor()
     _actor->set_description( ui->fDescription->toPlainText().toStdString() );
     _actor->set_is_fov_only( (bool)ui->fFOV->currentIndex() );
     _actor->set_is_transparent( (bool)ui->fTransparent->currentIndex() );
-    _actor->set_actor_type( ui->fID->value() );
+    _actor->set_actor_type( ui->fID->currentIndex() );
     _actor->set_name( ui->fName->text().toStdString() );
     _actor->set_symbol( ui->fSymbol->text().toStdString() );
     _actor->set_render_priority( ui->fPriority->value() );

@@ -34,7 +34,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="fID"/>
+      <widget class="QComboBox" name="fID"/>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
