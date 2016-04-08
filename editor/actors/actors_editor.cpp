@@ -120,7 +120,7 @@ void ActorsEditor::on_aTable_cellDoubleClicked(int row, int /*column*/)
   if ( item )
   {
     int id = item->text().toInt();
-    auto* actor = getActor([&](auto& s){ return s.actor_type() == id; });
+    auto* actor = getActor([&](const amarlon::ActorData& s){ return s.actor_type() == id; });
     if ( actor )
     {
       _editDlg.setActor( actor );

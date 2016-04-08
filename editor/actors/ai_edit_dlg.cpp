@@ -1,6 +1,7 @@
 #include "ai_edit_dlg.h"
 #include "ui_ai_edit_dlg.h"
 #include <actor.pb.h>
+#include <enum_mappings.h>
 
 AiEditDlg::AiEditDlg(QWidget *parent) :
   QDialog(parent),
@@ -8,6 +9,7 @@ AiEditDlg::AiEditDlg(QWidget *parent) :
   _ai(nullptr)
 {
   ui->setupUi(this);
+  ui->fType->addItems(ai_types);
 }
 
 AiEditDlg::~AiEditDlg()
@@ -30,7 +32,8 @@ void AiEditDlg::fillAi()
 {
   if ( _ai )
   {
-    _ai->set_type( ui->fType->value() );
+    _ai->set_type( ui->fType->currentIndex() );
+    _ai->set_script( ui->fScript->value() );
   }
 }
 
@@ -38,6 +41,7 @@ void AiEditDlg::fillForm()
 {
   if ( _ai )
   {
-    ui->fType->setValue( _ai->type() );
+    ui->fType->setCurrentIndex( _ai->type() );
+    ui->fScript->setValue( _ai->script() );
   }
 }

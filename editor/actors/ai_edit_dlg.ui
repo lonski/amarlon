@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>184</width>
-    <height>98</height>
+    <width>174</width>
+    <height>131</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,24 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Type</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QSpinBox" name="fType"/>
+    <widget class="QComboBox" name="fType"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Script</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="fScript"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

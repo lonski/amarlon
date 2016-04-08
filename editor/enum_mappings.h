@@ -156,6 +156,12 @@ static QStringList actors = {
   "End"
 };
 
+static QStringList ai_types {
+    "Null" ,
+    "GenericAi" ,
+    "PlayerAi"
+};
+
 
 
 #endif // ENUM_MAPPINGS
