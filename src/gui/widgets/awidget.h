@@ -21,6 +21,11 @@ public:
     WINDOW_BOTTOM_LEFT
   };
 
+  static int consoleWidth;
+  static int consoleHeight;
+  static int screenWidth;
+  static int screenHeight;
+
   AWidget();
   virtual ~AWidget() {}
 

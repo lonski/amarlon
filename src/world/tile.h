@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <tile_type.h>
 #include <libtcod.hpp>
+#include <serialized_tile.h>
 
 namespace amarlon {
 
@@ -14,12 +15,6 @@ class Map;
 class Actor;
 typedef std::shared_ptr<ActorContainer> ActorContainerPtr;
 typedef std::shared_ptr<Actor> ActorPtr;
-
-struct SerializedTile
-{
-  uint8_t type;
-  uint8_t flags;
-};
 
 struct Tile
 {

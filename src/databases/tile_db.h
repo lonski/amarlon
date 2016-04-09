@@ -18,6 +18,7 @@ public:
   TileDB();
 
   char getChar(TileType type);
+  std::string getName(TileType type);
   TCODColor getColor(TileType type);
   bool isWalkable(TileType type);
   bool isTransparent(TileType type);

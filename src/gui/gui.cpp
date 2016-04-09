@@ -24,6 +24,10 @@ Gui::Gui()
   setupRightPanel();
   setupLogPanel();
   setupViewPanel();
+
+  AWidget::consoleHeight = Engine::consoleHeight;
+  AWidget::consoleWidth = Engine::consoleWidth;
+  AWidget::screenHeight = Engine::screenHeight;
 }
 
 void Gui::setupRightPanel()

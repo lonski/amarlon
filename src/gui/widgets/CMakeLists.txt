@@ -26,5 +26,5 @@ set(SOURCE_FILES
     apanel_button.cpp
 )
 
-add_library(amarlon_widgets STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(amarlon_widgets ${TCOD_LIBRARIES})
+add_library(a_widgets SHARED ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(a_widgets ${TCOD_LIBRARIES})

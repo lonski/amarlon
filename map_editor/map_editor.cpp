@@ -1,278 +1,268 @@
 #include "map_editor.h"
-#include <iostream>
-#include <fstream>
-#include <QFile>
-#include <QFileDialog>
-#include <QInputDialog>
-#include <QDebug>
-#include "ui_map_editor.h"
-#include "xml/rapidxml_print.hpp"
+#include <widgets/aslot_menu_item.h>
+#include <widgets/alabel_menu_item.h>
 
-using namespace rapidxml;
+namespace amarlon { namespace map_editor {
 
-MapEditor::MapEditor(QWidget *parent)
-  : QMainWindow(parent)
-  , ui(new Ui::MapEditor)
+MapEditor::MapEditor()
+  : _screenHeight(0)
+  , _screenWidth(0)
+  , _panelWidth(30)
+  , _quit(false)
+  , _mapOpened(false)
+  , _activePanel(Panel::MainMenu)
 {
-  ui->setupUi(this);
 
-  cols = 100;
-  rows = 60;
+}
 
-  ui->map->setColumnCount(cols);
-  ui->map->setRowCount(rows);
-
-  for (int i=0; i < cols; ++i)
-    ui->map->setColumnWidth(i, 15);
-
-  for (int i=0; i < rows; ++i)
-    ui->map->setRowHeight(i, 15);
-
-  for(int col = 0; col < cols; ++col)
+void MapEditor::handleInput(TCOD_mouse_t mouse)
+{
+  _lastInput = mouse;
+  if ( _activePanel == Panel::MapEdit )
   {
-    for (int row = 0; row < rows; ++row)
+    _mapEditPanel->handleInput(mouse);
+  }
+}
+
+void MapEditor::processInput(const std::vector<gui::AWidgetPtr>& widgets, int xoffset, int yoffset)
+{
+  for ( gui::AWidgetPtr w : widgets )
+  {
+    gui::AMenuItemPtr btn = std::dynamic_pointer_cast<gui::AMenuItem>(w);
+    if ( btn )
     {
-      ui->map->setItem(row, col, new QTableWidgetItem("#"));
+      if ( (w->getX()+xoffset <= _lastInput.cx) && (w->getX()+xoffset + w->getWidth() > _lastInput.cx) &&
+           (w->getY()+yoffset <= _lastInput.cy) && (w->getY()+yoffset + w->getHeight() > _lastInput.cy ) )
+      {
+        btn->select();
+        if ( _lastInput.lbutton_pressed )
+        {
+          btn->executeCallback();
+        }
+      }
+      else
+      {
+        btn->deselect();
+      }
     }
   }
 }
 
-MapEditor::~MapEditor()
+void MapEditor::render()
 {
-  delete ui;
-}
+  _panel->render(*TCODConsole::root);
 
-QString MapEditor::dumpTilesToString()
-{
-  QString mapStr;
-
-  for(int row = 0; row < rows; ++row)
+  if ( _activePanel == Panel::MapEdit )
   {
-    for (int col = 0; col < cols; ++col)
+    if ( _lastInput.cx < 100 )
     {
-      QTableWidgetItem* item = ui->map->item(row, col);
-      mapStr += ( item->text()[0] );
+      highlightCell(_lastInput.cx, _lastInput.cy);
     }
-    mapStr += "\n";
   }
 
-  if (mapStr.size())
-    mapStr.remove(mapStr.size()-1, 1);
+  processInput(_panel->getWidgets(),
+               _panel->getX(),
+               _panel->getY());
 
-  return mapStr;
-}
-
-void MapEditor::on_actionSave_triggered()
-{
-  QString fileName = QFileDialog::getSaveFileName(this, "Save", "", "XML (*.xml);;All Files (*)");
-
-
-  xml_document<> doc;
-  xml_node<>* mapsRoot = doc.allocate_node(node_element,"Maps");
-  doc.append_node(mapsRoot);
-
-  //map node
-  xml_node<>* mapNode = doc.allocate_node(node_element,"Map");
-  mapsRoot->append_node(mapNode);
-
-  std::string mapId = std::to_string((int)ui->mapId->currentIndex());
-  xml_attribute<>* atrMapId = doc.allocate_attribute("id", doc.allocate_string(mapId.c_str()));
-  mapNode->append_attribute( atrMapId );
-
-  std::string mapWidth = "100";
-  xml_attribute<>* atrMapW = doc.allocate_attribute("width", doc.allocate_string(mapWidth.c_str()));
-  mapNode->append_attribute( atrMapW );
-
-  std::string mapHeight = "60";
-  xml_attribute<>* atrMapH = doc.allocate_attribute("height", doc.allocate_string(mapHeight.c_str()));
-  mapNode->append_attribute( atrMapH );
-
-  //tiles
-  QString mapStr = dumpTilesToString();
-  xml_node<>* tilesNode = doc.allocate_node(node_element, "Tiles", doc.allocate_string(mapStr.toStdString().c_str()) );
-  mapNode->append_node(tilesNode);
-
-  //actors
-  xml_node<>* actorsRoot = doc.allocate_node(node_element, "Actors");
-  mapNode->append_node(actorsRoot);
-
-  for (auto aIter = _actors.begin(); aIter != _actors.end(); ++aIter)
+  if ( _activePanel == Panel::MapEdit )
   {
-    ActorData& data = *aIter;
-
-    xml_node<>* actorNode = doc.allocate_node(node_element,"Actor");
-    actorsRoot->append_node(actorNode);
-
-    //id
-    std::string aIdStr = std::to_string((int)data.id);
-    xml_attribute<>* atrId = doc.allocate_attribute("id", doc.allocate_string(aIdStr.c_str()));
-    actorNode->append_attribute( atrId );
-
-    //pos
-    std::string posX = std::to_string(data.x);
-    std::string posY = std::to_string(data.y);
-
-    xml_attribute<>* atrX = doc.allocate_attribute("x", doc.allocate_string(posX.c_str()));
-    xml_attribute<>* atrY = doc.allocate_attribute("y", doc.allocate_string(posY.c_str()));
-
-    actorNode->append_attribute( atrX );
-    actorNode->append_attribute( atrY );
+    processInput(_mapEditPanel->getSidebar()->getWidgets(),
+                 _mapEditPanel->getSidebar()->getX(),
+                 _mapEditPanel->getSidebar()->getY());
   }
-
-  std::ofstream file(fileName.toStdString());
-  file << doc;
-  file.close();
-}
-
-void MapEditor::on_map_itemChanged(QTableWidgetItem *item)
-{
-  QList<QTableWidgetItem*> sel = ui->map->selectedItems();
-  for (QList<QTableWidgetItem*>::iterator it = sel.begin(); it != sel.end(); ++it)
-    (*it)->setText(item->text());
-}
-
-void MapEditor::dumpActorsToList(int row, int column)
-{
-  for (auto a = _actors.begin(); a != _actors.end(); ++a)
+  else
   {
-    if (a->x == column && a->y == row)
-    {
-      int uId = (int)a->id;
-      if (uId < ui->aType->count())
-        ui->aList->addItem( ui->aType->itemText(uId) );
-    }
+    processInput(_mapChoosePanel->getWidgets(),
+                 _mapChoosePanel->getX(),
+                 _mapChoosePanel->getY());
+
+    processInput(_mainMenuPanel->getWidgets(),
+                 _mainMenuPanel->getX(),
+                 _mainMenuPanel->getY());
   }
 }
 
-void MapEditor::on_map_cellClicked(int row, int column)
+void MapEditor::init()
 {
-  ui->aType->setCurrentIndex(-1);
-  ui->posX->setValue(column);
-  ui->posY->setValue(row);
-  ui->aList->clear();
+  config.load("config.cfg");
 
-  dumpActorsToList(row, column);
+  TCODConsole::root->setCustomFont(config.getFont(),TCOD_FONT_LAYOUT_TCOD | TCOD_FONT_TYPE_GREYSCALE);
+
+  _screenWidth = std::stol( config.get("console_width") ) + _panelWidth;
+  _screenHeight = std::stol( config.get("console_height") );
+
+  TCODConsole::initRoot(_screenWidth,
+                        _screenHeight,
+                        "Amarlon Map Editor", false, TCOD_RENDERER_SDL);
+
+  TCODConsole::root->setFullscreen( std::stol(config.get("fullscreen")) );
+  TCODMouse::showCursor(true);
+
+  _tileDB.load( config.get("tiles_file") );
+
+  _panel.reset( new gui::APanel(_screenWidth, _screenHeight) );
+  _panel->setFrame(false);
+  _panel->setPosition(0,0);
+
+  configureStatusMessage();
+  configureMainMenu();
+  configureMapChoosePanel();
+  configureMapEditPanel();
+
+  renderMainMenu();
 }
 
-void MapEditor::on_actionLoad_triggered()
+void MapEditor::configureMapEditPanel()
 {
-  QFileDialog dialog;
-  dialog.setFileMode(QFileDialog::Directory);
-  dialog.setOption(QFileDialog::ShowDirsOnly);
-
-  QString dir = dialog.getExistingDirectory(this,"Set directory with amarlon xml's");
-
-  _actors.clear();
-
-//  Map::Tiles.loadTiles(dir.toStdString() + "/tiles.xml");
-//  Map::Gateway.loadMaps(dir.toStdString() + "/maps.xml");
-//  Actor::DB.loadActors(dir.toStdString() + "/actors.xml");
-
-//  ui->aType->clear();
-//  for (int aT = (int)ActorType::Null; aT != (int)ActorType::End; ++aT)
-//  {
-//    ui->aType->addItem( Actor::DB.getName((ActorType)aT).c_str() );
-//  }
-
-//  currentMap = Map::Gateway.fetch(MapId::GameStart);
-
-//  std::string mapStr = currentMap->tilesToStr();
-
-//  int y = 0;
-//  int x = 0;
-//  for (auto it = mapStr.begin(); it != mapStr.end(); ++it)
-//  {
-//    if (*it == '\n')
-//    {
-//      ++y;
-//      x = 0;
-//    }
-//    else
-//    {
-//      ui->map->setItem(y, x, new QTableWidgetItem( QString( *it ) ));
-//      ++x;
-//    }
-//  }
-
-//  std::vector<ActorPtr> actors = currentMap->getActors(nullptr);
-//  for ( auto a = actors.begin();
-//        a != actors.end();
-//        ++a)
-//  {
-//    ActorPtr cA = *a;
-//    _actors.push_back( ActorData(cA->getId(), cA->getX(), cA->getY()) );
-
-//    QTableWidgetItem* cMapGridItem = ui->map->item(cA->getY(), cA->getX());
-//    cMapGridItem->setBackgroundColor(Qt::red);
-//  }
-
+  _mapEditPanel.reset( new MapEditPanel );
+  _mapEditPanel->setPosition(0, 0);
+  _mapEditPanel->setMapEditor(this);
 }
 
-void MapEditor::on_saveActor_clicked()
+void MapEditor::configureStatusMessage()
 {
-  if (ui->aType->currentIndex() > 0)
+  _statusMsg.reset( new gui::ALabel );
+  _statusMsg->setPosition(2, 2);
+  _statusMsg->setAutosize(false);
+  _statusMsg->setWidth( 90 );
+}
+
+void MapEditor::configureMainMenu()
+{
+  _mainMenuPanel.reset( new gui::APanel(20,20) );
+  _mainMenuPanel->setPosition(2,5);
+  _mainMenuPanel->setFrame(false);
+
+  int y = 0;
+
+  gui::ASlotMenuItem* loadMapBtn = new gui::ASlotMenuItem(20,"","Load maps","");
+  y += 0;
+  loadMapBtn->setPosition( 0, y );
+  loadMapBtn->setCallback([&](){
+    if ( _db.load( config.get("maps_file") ) )
+    {
+      setStatusMessage("Success, loaded " + std::to_string(_db.getMapCount()) + " maps.");
+      listMaps();
+    }
+    else
+    {
+      setStatusMessage("ERROR: Load map failed!");
+    }
+  });
+
+  gui::ASlotMenuItem* quitBtn = new gui::ASlotMenuItem(20,"","Quit","");
+  y += 5;
+  quitBtn->setPosition( 0, y );
+  quitBtn->setCallback([&](){
+    _quit = true;
+  });
+
+  _mainMenuPanel->addWidget(loadMapBtn);
+  _mainMenuPanel->addWidget(quitBtn);
+}
+
+void MapEditor::configureMapChoosePanel()
+{
+  _mapChoosePanel.reset( new gui::APanel(30, 50) );
+  _mapChoosePanel->setPosition(26, 5);
+  _mapChoosePanel->setFrame(false);
+}
+
+void MapEditor::listMaps()
+{
+  int x(1), y(2);
+
+  _mapChoosePanel->removeAllWidgets();
+
+  gui::ALabel* title = new gui::ALabel;
+  title->setValue( "Choose map to edit:" );
+  title->setPosition(x,y - 1);
+  _mapChoosePanel->addWidget(title);
+
+  for ( auto& kv : _db.getMaps() )
   {
-    ActorData data;
-    data.x = ui->posX->value();
-    data.y = ui->posY->value();
-    data.id = ui->aType->currentIndex();
+    gui::ALabelMenuItem* i = new gui::ALabelMenuItem( kv.second->name, [=](){
+      loadMap(kv.first);
+    });
+    i->setPosition(x, ++y);
 
-    _actors.push_back(data);
-
-    ui->map->item(data.y, data.x)->setBackgroundColor(Qt::red);
-    ui->map->clearSelection();
-    ui->aList->addItem( ui->aType->itemText((int)data.id) );
+    _mapChoosePanel->addWidget(i);
   }
 }
 
-//remove actor
-void MapEditor::on_pushButton_clicked()
+void MapEditor::loadMap(MapId id)
 {
-  int column = ui->posX->value();
-  int row = ui->posY->value();
+  _mapEditPanel->setMap( _db.getMap(id) );
+  _mapEditPanel->setTileDB(&_tileDB);
+  renderMapEditPanel();
+}
 
-  QString aName = ui->aList->currentItem()->text();
-  int uId = ui->aType->findText(aName);
+bool MapEditor::isQuitting()
+{
+  return _quit;
+}
 
-  for (auto a = _actors.begin(); a != _actors.end(); ++a)
+void MapEditor::storeMaps()
+{
+  _db.store( config.get("maps_file") );
+}
+
+int MapEditor::screenWidth() const
+{
+  return _screenWidth;
+}
+
+int MapEditor::screenHeight() const
+{
+  return _screenHeight;
+}
+
+void MapEditor::renderMainMenu()
+{
+  _panel->removeAllWidgets();
+
+  _panel->addWidget(_statusMsg);
+  _panel->addWidget(_mainMenuPanel);
+  _panel->addWidget(_mapChoosePanel);
+
+  if ( _mapOpened )
   {
-    if (a->x == column && a->y == row && (int)a->id == uId)
-    {
-      _actors.erase(a);
-      ui->aList->clear();
-      dumpActorsToList(row, column);
-      if (ui->aList->count() == 0)
-        ui->map->item(row, column)->setBackgroundColor(Qt::white);
-      break;
-    }
+    gui::ASlotMenuItem* backBtn = new gui::ASlotMenuItem(20,"","Back","");
+    backBtn->setPosition( 108, 5 );
+    backBtn->setCallback([&](){
+      renderMapEditPanel();
+    });
+    _panel->addWidget(backBtn);
   }
+
+  _activePanel = Panel::MainMenu;
 }
 
-void MapEditor::on_pushButton_2_clicked()
+void MapEditor::renderMapEditPanel()
 {
-    bool ok = false;
-    QString newName = QInputDialog::getText(this,"Podaj nazwę typu nowego aktora", "Nawa", QLineEdit::Normal, "", &ok);
-    if (ok)
-    {
-        ui->aType->addItem(newName);
-    }
+  _panel->removeAllWidgets();
+  _panel->addWidget(_statusMsg);
+  _panel->addWidget(_mapEditPanel);
+  setIsMapOpened(true);
+  _activePanel = Panel::MapEdit;
 }
 
-void MapEditor::on_pushButton_3_clicked()
+void MapEditor::setIsMapOpened(bool isOpened)
 {
-    bool ok = false;
-    QString newName = QInputDialog::getText(this,"Podaj nazwę nowej mapy", "Nawa", QLineEdit::Normal, "", &ok);
-    if (ok)
-    {
-        ui->mapId->addItem(newName);
-    }
+  _mapOpened = isOpened;
 }
 
-void MapEditor::on_aList_itemClicked(QListWidgetItem*)
+void MapEditor::setStatusMessage(const std::string &msg)
 {
-//  QString aName = item->text();
-//  int uId = ui->aType->findText(aName);
-
-//  if (uId < ui->aType->count())
-  //    ui->aType->setCurrentIndex(uId);
+  _statusMsg->setValue(msg);
 }
+
+void MapEditor::highlightCell(uint32_t x, uint32_t y)
+{
+  TCODColor fgcol = TCODConsole::root->getCharForeground(x, y);
+  TCODColor bgcol = TCODConsole::root->getCharBackground(x, y);
+  TCODConsole::root->setCharForeground(x, y, TCODColor::lerp(fgcol, TCODColor::yellow, 0.6));
+  TCODConsole::root->setCharBackground(x, y, TCODColor::lerp(bgcol, TCODColor::yellow, 0.1));
+}
+
+}}

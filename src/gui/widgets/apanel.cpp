@@ -18,6 +18,17 @@ APanel::~APanel()
 void APanel::render(TCODConsole &console)
 {
   initPanelConsole();
+
+  for(int y = 0; y < getHeight(); ++y)
+  {
+    for(int x = 0; x < getWidth(); ++x)
+    {
+      _panelConsole->setChar( x, y, ' ' );
+      _panelConsole->setCharBackground( x, y, TCODColor::black );
+      _panelConsole->setCharForeground( x, y, TCODColor::black );
+    }
+  }
+
   renderFrame();
   renderWidgets();
 
@@ -115,6 +126,11 @@ int APanel::getHeight() const
 void APanel::removeAllWidgets()
 {
   _widgets.clear();
+}
+
+std::vector<AWidgetPtr> APanel::getWidgets()
+{
+  return _widgets;
 }
 
 }}

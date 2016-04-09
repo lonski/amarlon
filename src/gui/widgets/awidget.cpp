@@ -1,7 +1,11 @@
 #include "awidget.h"
-#include <engine.h>
 
 namespace amarlon { namespace gui {
+
+int AWidget::consoleWidth = 100;
+int AWidget::consoleHeight = 60;
+int AWidget::screenWidth = 120;
+int AWidget::screenHeight = 75;
 
 AWidget::AWidget()
   : _x(0)
@@ -40,25 +44,25 @@ void AWidget::setPosition(AWidget::PositionFlag position)
   {
     case WINDOW_CENTER:
     {
-      setPosition( Engine::screenWidth / 2 - getWidth() / 2,
-                   Engine::screenHeight / 2 - getHeight() / 2);
+      setPosition( AWidget::screenWidth / 2 - getWidth() / 2,
+                   AWidget::screenHeight / 2 - getHeight() / 2);
       break;
     }
     case GAME_SCREEN_CENTER:
     {
-      setPosition( Engine::consoleWidth / 2 - getWidth() / 2,
-                   Engine::consoleHeight / 2 - getHeight() / 2);
+      setPosition( AWidget::consoleWidth / 2 - getWidth() / 2,
+                   AWidget::consoleHeight / 2 - getHeight() / 2);
       break;
     }
     case GAME_SCREEN_BOTTOM:
     {
-      setPosition( Engine::consoleWidth / 2 - getWidth() / 2,
-                   Engine::consoleHeight - getHeight());
+      setPosition( AWidget::consoleWidth / 2 - getWidth() / 2,
+                   AWidget::consoleHeight - getHeight());
       break;
     }
     case WINDOW_BOTTOM_LEFT:
     {
-      setPosition( 0, Engine::screenHeight - getHeight());
+      setPosition( 0, AWidget::screenHeight - getHeight());
       break;
     }
   }

@@ -25,6 +25,11 @@ char TileDB::getChar(TileType type)
   return get<char>(type, &TileDescription::character, '#');
 }
 
+string TileDB::getName(TileType type)
+{
+  return get<std::string>(type, &TileDescription::name, "Null");
+}
+
 TCODColor TileDB::getColor(TileType type)
 {
   return strToColor( get<std::string>(type, &TileDescription::color, "ffffff") );

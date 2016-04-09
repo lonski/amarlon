@@ -15,9 +15,16 @@ void ALabel::render(TCODConsole &console)
 {
   console.setDefaultForeground(_color);
   console.setDefaultBackground(_bgcolor);
+
+  std::string val = _value;
+  while (!_autosize && val.size() < getWidth() )
+  {
+    val += " ";
+  }
+
   console.printEx(getX(), getY(),
                   TCOD_BKGND_SET,
-                  TCOD_LEFT, "%s", _value.c_str());
+                  TCOD_LEFT, "%s", val.c_str());
 
   if ( _autosize ) setWidth(_value.size());
 }

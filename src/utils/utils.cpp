@@ -21,33 +21,6 @@ std::string getItemNameAndAmount(ActorPtr a)
   return value;
 }
 
-TCODColor strToColor(const std::string &str)
-{
-  TCODColor col;
-  if (str.size() == 6)
-  {
-    std::stringstream ss;
-    int r(0),g(0),b(0);
-
-    ss << std::hex << str.substr(0,2);
-    ss >> r;
-    col.r = r;
-
-    ss.clear();
-
-    ss << std::hex << str.substr(2,2);
-    ss >> g;
-    col.g = g;
-    ss.clear();
-
-    ss << std::hex << str.substr(4,2);
-    ss >> b;
-    col.b = b;
-
-  }
-  return col;
-}
-
 bool handleDirectionKey(const TCOD_key_t& key, int &dx, int &dy)
 {
   bool handled = true;

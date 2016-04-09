@@ -43,7 +43,7 @@ void Inventory::upgrade(DescriptionPtr dsc)
   }
 }
 
-DescriptionPtr Inventory::toDescriptionStruct(ActorFeaturePtr cmp)
+DescriptionPtr Inventory::toDescriptionStruct(ActorFeaturePtr)
 {
   InventoryDescriptionPtr dsc(new InventoryDescription);
 

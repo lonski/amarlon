@@ -22,6 +22,7 @@ TileDescription* TileParser::parseTileDsc()
     tileDsc->color = getAttribute<std::string>(_xml, "color");
     tileDsc->walkable = getAttribute<bool>(_xml, "walkable");
     tileDsc->transparent = getAttribute<bool>(_xml, "transparent");
+    tileDsc->name = getAttribute<std::string>(_xml, "name");
   }
 
   return tileDsc;

@@ -12,6 +12,7 @@ struct TileDescription : Description
   std::string color;
   bool walkable;
   bool transparent;
+  std::string name;
 };
 
 }

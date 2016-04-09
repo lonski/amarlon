@@ -17,6 +17,7 @@ struct MapDescription : Description
   int id;
   int width;
   int height;
+  std::string name;
   std::string binaryTiles;
   std::vector<ActorDescriptionPtr> actors;
   std::map<int /*direction*/, DescriptionPtr> actions;

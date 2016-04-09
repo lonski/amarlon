@@ -36,6 +36,8 @@ public:
 
   virtual void removeAllWidgets();
 
+  virtual std::vector< AWidgetPtr > getWidgets();
+
 private:
   bool _frame;
   TCODColor _frameColor;
@@ -43,6 +45,8 @@ private:
   TCODColor _titleColor;
 
   std::vector< AWidgetPtr > _widgets;
+
+protected:
   std::unique_ptr<TCODConsole> _panelConsole;
 
   void renderFrame();

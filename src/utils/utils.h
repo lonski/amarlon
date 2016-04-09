@@ -22,7 +22,34 @@ typedef std::shared_ptr<DirectPath> DirectPathPtr;
 std::vector<std::string> explode(const std::string& str, char ch);
 std::string tolowers(const std::string& str);
 std::string colorToStr(TCODColor color, bool braces = false);
-TCODColor strToColor(const std::string& str);
+
+static inline TCODColor strToColor(const std::string &str)
+{
+  TCODColor col;
+  if (str.size() == 6)
+  {
+    std::stringstream ss;
+    int r(0),g(0),b(0);
+
+    ss << std::hex << str.substr(0,2);
+    ss >> r;
+    col.r = r;
+
+    ss.clear();
+
+    ss << std::hex << str.substr(2,2);
+    ss >> g;
+    col.g = g;
+    ss.clear();
+
+    ss << std::hex << str.substr(4,2);
+    ss >> b;
+    col.b = b;
+
+  }
+  return col;
+}
+
 bool handleDirectionKey(const TCOD_key_t& key, int& dx, int& dy);
 std::string getItemNameAndAmount(ActorPtr a);
 float calculateDistance(int ox, int oy, int tx, int ty);

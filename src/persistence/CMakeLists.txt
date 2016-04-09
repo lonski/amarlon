@@ -67,5 +67,5 @@ set(SOURCE_FILES
     serializers/actor_feature_serializers/talker_serializer.cpp
 )
 
-add_library(persistence SHARED ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(persistence)
+add_library(a_persistence SHARED ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(a_persistence)

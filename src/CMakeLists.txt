@@ -331,10 +331,10 @@ set(SOURCE_FILES
     skills/skill.cpp
 )
 
-add_library(amarlon_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(amarlon_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
+add_library(a_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(a_core ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_executable(amarlon main.cpp)
-target_link_libraries(amarlon amarlon_core amarlon_widgets persistence ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
+target_link_libraries(amarlon a_core a_widgets a_persistence ${TCOD_LIBRARIES} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_custom_command(TARGET amarlon POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/resources $<TARGET_FILE_DIR:amarlon>)

@@ -30,6 +30,7 @@ MapDescriptionPtr MapParser::parseDescription()
     mDsc->width = getAttribute<int>(_xml, "width");
     mDsc->height = getAttribute<int>(_xml, "height");
     mDsc->id = getAttribute<int>(_xml, "id");
+    mDsc->name = getAttribute<std::string>(_xml, "name");
     mDsc->binaryTiles = getNodeValue<std::string>( _xml->first_node("Tiles") );
 
     //Parse Actors
