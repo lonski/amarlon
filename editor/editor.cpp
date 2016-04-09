@@ -34,3 +34,8 @@ void editor::on_pushButton_4_clicked()
 {
   _skillsEditor.show();
 }
+
+void editor::on_pushButton_5_clicked()
+{
+  _mapsEditor.show();
+}

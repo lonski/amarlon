@@ -162,7 +162,36 @@ static QStringList ai_types {
     "PlayerAi"
 };
 
+static QStringList trap_id {
+    "Null" ,
+    "BladeTrap"
+};
 
+static QStringList maps {
+  "Null",
+  "GameStart",
+  "Test"
+};
+
+static QStringList tiles {
+  "X",
+  ".", //PlainFloot
+  "#", //PlainWall
+  "T", //Tree,
+  ",", //Grass,
+  "-", //Dirt,
+  "=", //water
+};
+
+static QStringList tile_types {
+  "None (X)",
+  "PlainFloor (.)", //PlainFloot
+  "PlainWall (#)", //PlainWall
+  "Tree (T)", //Tree,
+  "Grass (,)", //Grass,
+  "Dirt (-)", //Dirt,
+  "water (=)", //water
+};
 
 #endif // ENUM_MAPPINGS
 

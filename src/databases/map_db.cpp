@@ -46,7 +46,7 @@ bool MapDB::load(const string& fn)
 
     for ( auto it = maps.map().begin(); it != maps.map().end(); ++it )
     {
-      _maps[ static_cast<MapId>(it->id()) ] = MapPtr(new Map(*it));
+      _maps[ static_cast<MapId>(it->id()) ] = Map::create(*it);
     }
 
     return true;

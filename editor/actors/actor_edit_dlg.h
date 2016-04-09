@@ -10,6 +10,8 @@
 #include <actors/destroyable_edit_dlg.h>
 #include <actors/inventory_edit_dlg.h>
 #include <actors/character_edit_dlg.h>
+#include <actors/trap_edit_dialog.h>
+#include <actors/talker_edit_dialog.h>
 
 namespace Ui {
 class ActorEditDlg;
@@ -41,6 +43,8 @@ private:
   DestroyableEditDlg _destroyableEdit;
   InventoryEditDlg _inventoryEdit;
   CharacterEditDlg _characterEdit;
+  TrapEditDialog _trapEdit;
+  TalkerEditDialog _talkerEdit;
 
 private slots:
   void new_pickable();
@@ -50,6 +54,8 @@ private slots:
   void new_wearer();
   void new_ai();
   void new_openable();
+  void new_trap();
+  void new_talker();
 
   void fillForm();
   void fillActor();

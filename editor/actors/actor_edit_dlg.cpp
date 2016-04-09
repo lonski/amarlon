@@ -52,6 +52,14 @@ ActorEditDlg::ActorEditDlg(QWidget *parent)
   connect(openable, SIGNAL(triggered()), this, SLOT(new_openable()));
   feature_menu->addAction(openable);
 
+  QAction* trap = new QAction("Trap", this);
+  connect(trap, SIGNAL(triggered()), this, SLOT(new_trap()));
+  feature_menu->addAction(trap);
+
+  QAction* talker = new QAction("Talker", this);
+  connect(talker, SIGNAL(triggered()), this, SLOT(new_talker()));
+  feature_menu->addAction(talker);
+
   ui->btnAddFeature->setMenu(feature_menu);
   ui->fID->addItems(actors);
 }
@@ -179,6 +187,38 @@ void ActorEditDlg::new_openable()
   }
 }
 
+void ActorEditDlg::new_trap()
+{
+    if ( ui->lFeatures->findItems("Trap", Qt::MatchExactly).isEmpty() )
+    {
+      ui->lFeatures->addItem("Trap");
+
+      _actor->set_allocated_trap( new amarlon::TrapData );
+      _trapEdit.setTrap( _actor->mutable_trap() );
+      _trapEdit.exec();
+    }
+    else
+    {
+      QMessageBox::critical(this, "Error","Actor already has Trap feature.");
+    }
+}
+
+void ActorEditDlg::new_talker()
+{
+    if ( ui->lFeatures->findItems("Talker", Qt::MatchExactly).isEmpty() )
+    {
+      ui->lFeatures->addItem("Talker");
+
+      _actor->set_allocated_talker( new amarlon::TalkerData );
+      _talkerEdit.setTalker( _actor->mutable_talker() );
+      _talkerEdit.exec();
+    }
+    else
+    {
+      QMessageBox::critical(this, "Error","Actor already has Talker feature.");
+    }
+}
+
 void ActorEditDlg::fillForm()
 {
   if (_actor)
@@ -201,6 +241,8 @@ void ActorEditDlg::fillForm()
     if ( _actor->has_ai() ) ui->lFeatures->addItem("Ai");
     if ( _actor->has_openable() ) ui->lFeatures->addItem("Openable");
     if ( _actor->has_pickable() ) ui->lFeatures->addItem("Pickable");
+    if ( _actor->has_trap() ) ui->lFeatures->addItem("Trap");
+    if ( _actor->has_talker() ) ui->lFeatures->addItem("Talker");
   }
 }
 
@@ -233,6 +275,8 @@ void ActorEditDlg::on_pushButton_2_clicked()
     else if ( feat == "Ai" ) _actor->clear_ai();
     else if ( feat == "Openable" ) _actor->clear_openable();
     else if ( feat == "Pickable" ) _actor->clear_pickable();
+    else if ( feat == "Trap" ) _actor->clear_trap();
+    else if ( feat == "Talker" ) _actor->clear_talker();
 
     delete items.first();
   }
@@ -279,6 +323,16 @@ void ActorEditDlg::on_pushButton_clicked()
     {
       _characterEdit.setCharacter( _actor->mutable_character() );
       _characterEdit.exec();
+    }
+    else if ( feat == "Trap" )
+    {
+      _trapEdit.setTrap( _actor->mutable_trap() );
+      _trapEdit.exec();
+    }
+    else if ( feat == "Talker" )
+    {
+      _talkerEdit.setTalker( _actor->mutable_talker() );
+      _talkerEdit.exec();
     }
   }
 }

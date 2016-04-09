@@ -6,6 +6,7 @@
 #include <tiles_editor.h>
 #include <skill_editor.h>
 #include <actors/actors_editor.h>
+#include <maps/maps_editor.h>
 
 namespace Ui {
 class editor;
@@ -23,8 +24,8 @@ private slots:
   void on_pushButton_clicked();
   void on_pushButton_2_clicked();
   void on_pushButton_3_clicked();
-
   void on_pushButton_4_clicked();
+  void on_pushButton_5_clicked();
 
 private:
   Ui::editor *ui;
@@ -32,6 +33,7 @@ private:
   SkillEditor _skillsEditor;
   TilesEditor _tilesEditor;
   ActorsEditor _actorsEditor;
+  MapsEditor _mapsEditor;
 };
 
 #endif // EDITOR_H

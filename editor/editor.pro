@@ -23,6 +23,7 @@ SOURCES += main.cpp\
     ../protobuf/src/item_type.pb.cc \
     ../protobuf/src/utils.pb.cc \
     ../protobuf/src/actor.pb.cc \
+    ../protobuf/src/map.pb.cc \
     tiles/tiles_editor.cpp \
     tiles/tile_edit_dlg.cpp \
     actors/actors_editor.cpp \
@@ -42,7 +43,11 @@ SOURCES += main.cpp\
     actors/spellbook_edit.cpp \
     actors/spell_select_dialog.cpp \
     actors/spell_slot_dialog.cpp \
-    actors/item_slot_dialog.cpp
+    actors/item_slot_dialog.cpp \
+    actors/trap_edit_dialog.cpp \
+    actors/talker_edit_dialog.cpp \
+    maps/maps_editor.cpp \
+    maps/map_edit_dialog.cpp
 
 HEADERS  += editor.h \
     spells/spell_editor.h \
@@ -54,6 +59,7 @@ HEADERS  += editor.h \
     ../protobuf/src/item_type.pb.h \
     ../protobuf/src/utils.pb.h \
     ../protobuf/src/actor.pb.h \
+    ../protobuf/src/map.pb.h \
     spells/spell_edit.h \
     enum_mappings.h \
     tiles/tiles_editor.h \
@@ -75,7 +81,11 @@ HEADERS  += editor.h \
     actors/spellbook_edit.h \
     actors/spell_select_dialog.h \
     actors/spell_slot_dialog.h \
-    actors/item_slot_dialog.h
+    actors/item_slot_dialog.h \
+    actors/trap_edit_dialog.h \
+    actors/talker_edit_dialog.h \
+    maps/maps_editor.h \
+    maps/map_edit_dialog.h
 
 FORMS    += editor.ui \
     spells/spell_editor.ui \
@@ -99,7 +109,11 @@ FORMS    += editor.ui \
     actors/spellbook_edit.ui \
     actors/spell_select_dialog.ui \
     actors/spell_slot_dialog.ui \
-    actors/item_slot_dialog.ui
+    actors/item_slot_dialog.ui \
+    actors/trap_edit_dialog.ui \
+    actors/talkereditdialog.ui \
+    maps/mapseditor.ui \
+    maps/mapeditdialog.ui
 
 unix:!macx|win32: LIBS += -L$$PWD/../lib/ -lprotobuf
 
@@ -109,6 +123,7 @@ INCLUDEPATH += actors
 INCLUDEPATH += tiles
 INCLUDEPATH += spells
 INCLUDEPATH += skills
+INCLUDEPATH += maps
 INCLUDEPATH += $$PWD/../protobuf/src
 DEPENDPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../protobuf
@@ -117,3 +132,4 @@ DEPENDPATH += spells
 DEPENDPATH += skills
 DEPENDPATH += actors
 DEPENDPATH += tiles
+DEPENDPATH += maps

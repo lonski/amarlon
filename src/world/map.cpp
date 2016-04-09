@@ -15,7 +15,13 @@ using namespace std;
 Map::Map(const MapData &data)
 {
   _data.CopyFrom(data);
-  initialize();
+}
+
+MapPtr Map::create(const MapData &data)
+{
+  MapPtr map( new Map(data) );
+  map->initialize();
+  return map;
 }
 
 const MapData &Map::getData() const

@@ -128,7 +128,7 @@ ActorFeature::Type Character::getFeatureType()
 void Character::updateData() const
 {
   //update spellbook
-  _data.mutable_spellbook()->CopyFrom( _spellbook->getData() );
+  //_data.mutable_spellbook()->CopyFrom( _spellbook->getData() );
 
   //update modifiers
   auto* modifiersData = _data.mutable_modifiers();

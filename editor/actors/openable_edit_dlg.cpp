@@ -31,6 +31,10 @@ void OpenableEditDlg::fillForm()
   if ( _openable )
   {
     ui->fScriptID->setValue( _openable->script_id() );
+    ui->fIsLocked->setCurrentIndex( (int)_openable->locked() );
+    ui->fIsClosed->setCurrentIndex( (int)_openable->closed() );
+    ui->fLockId->setValue( _openable->lock_id() );
+    ui->fLockLevel->setValue( _openable->lock_level() );
   }
 }
 
@@ -39,5 +43,9 @@ void OpenableEditDlg::fillOpenable()
   if ( _openable )
   {
     _openable->set_script_id( ui->fScriptID->value() );
+    _openable->set_locked( ui->fIsLocked->currentText() == "True" ? true : false );
+    _openable->set_closed( ui->fIsClosed->currentText() == "True" ? true : false );
+    _openable->set_lock_id( ui->fLockId->value() );
+    _openable->set_lock_level( ui->fLockLevel->value() );
   }
 }

@@ -61,7 +61,7 @@ void Wearer::initialize()
   for ( auto s = _data.item_slots().begin(); s != _data.item_slots().end(); ++s )
      _itemSlots[ static_cast<ItemSlotType>(*s) ] = nullptr;
 
-  _equippedItems->clear();
+  _equippedItems.reset(new ActorContainer);
   for ( auto a = _data.equipped_items().begin(); a != _data.equipped_items().end(); ++a )
      _equippedItems->push_back( Actor::create(*a) );
 

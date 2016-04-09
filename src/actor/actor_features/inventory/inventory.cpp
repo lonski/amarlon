@@ -34,7 +34,7 @@ Inventory::Inventory(const InventoryData &data)
 
 void Inventory::initialize()
 {
-  _items->clear();
+  _items.reset(new ActorContainer );
   for ( auto aIt = _data.items().begin(); aIt != _data.items().end(); ++aIt)
     _items->push_back(Actor::create(*aIt));
 }

@@ -99,7 +99,7 @@ bool World::load(const std::string& fn)
     //Load maps
     for ( auto it = world.map().begin(); it != world.map().end(); ++it )
     {
-      _maps[ static_cast<MapId>(it->id()) ] = MapPtr(new Map(*it));
+      _maps[ static_cast<MapId>(it->id()) ] = Map::create(*it);
     }
 
     //Set current map

@@ -33,7 +33,7 @@ public:
   typedef std::vector<Tile> TileRow;
   typedef std::vector< TileRow > TileMatrix;
 
-  Map(const MapData& data);
+  static MapPtr create(const MapData& data);
   const MapData& getData() const;
   Map& operator=(const Map& rhs);
 
@@ -83,6 +83,7 @@ private:
   std::shared_ptr<TCODMap> _codMap;
   std::map<Direction, ActorActionPtr> _exitActions;
 
+  Map(const MapData& data);
   Tile& getTile(u32 x, u32 y);
   const Tile& getTile(u32 x, u32 y) const;
   void dateMapCoords(u32 x, u32 y);
