@@ -1,6 +1,7 @@
 #include "map_editor.h"
 #include <widgets/aslot_menu_item.h>
 #include <widgets/alabel_menu_item.h>
+#include "editor_utils.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -18,37 +19,27 @@ MapEditor::MapEditor()
 void MapEditor::handleInput(TCOD_mouse_t mouse)
 {
   _lastInput = mouse;
+
+  processInput(_lastInput,
+               _panel->getWidgets(),
+               _panel->getX(),
+               _panel->getY());
+
   if ( _activePanel == Panel::MapEdit )
   {
     _mapEditPanel->handleInput(mouse);
   }
-}
-
-void MapEditor::processInput(const std::vector<gui::AWidgetPtr>& widgets, int xoffset, int yoffset)
-{
-  for ( gui::AWidgetPtr w : widgets )
+  else
   {
-    gui::AMenuItemPtr btn = std::dynamic_pointer_cast<gui::AMenuItem>(w);
-    if ( btn )
-    {
-      if ( (w->getX()+xoffset <= _lastInput.cx) && (w->getX()+xoffset + w->getWidth() > _lastInput.cx) &&
-           (w->getY()+yoffset <= _lastInput.cy) && (w->getY()+yoffset + w->getHeight() > _lastInput.cy ) )
-      {
-        btn->select();
-        if ( _lastInput.lbutton_pressed )
-        {
-          btn->executeCallback();
-        }
-        if ( _lastInput.rbutton_pressed )
-        {
-          btn->executeCallback2();
-        }
-      }
-      else
-      {
-        btn->deselect();
-      }
-    }
+    processInput(_lastInput,
+                 _mapChoosePanel->getWidgets(),
+                 _mapChoosePanel->getX(),
+                 _mapChoosePanel->getY());
+
+    processInput(_lastInput,
+                 _mainMenuPanel->getWidgets(),
+                 _mainMenuPanel->getX(),
+                 _mainMenuPanel->getY());
   }
 }
 
@@ -64,26 +55,7 @@ void MapEditor::render()
     }
   }
 
-  processInput(_panel->getWidgets(),
-               _panel->getX(),
-               _panel->getY());
 
-  if ( _activePanel == Panel::MapEdit )
-  {
-    processInput(_mapEditPanel->getSidebar()->getWidgets(),
-                 _mapEditPanel->getSidebar()->getX(),
-                 _mapEditPanel->getSidebar()->getY());
-  }
-  else
-  {
-    processInput(_mapChoosePanel->getWidgets(),
-                 _mapChoosePanel->getX(),
-                 _mapChoosePanel->getY());
-
-    processInput(_mainMenuPanel->getWidgets(),
-                 _mainMenuPanel->getX(),
-                 _mainMenuPanel->getY());
-  }
 }
 
 void MapEditor::init()
@@ -103,6 +75,7 @@ void MapEditor::init()
   TCODMouse::showCursor(true);
 
   _tileDB.load( config.get("tiles_file") );
+  _actorsDB.load( config.get("actors_file") );
 
   _panel.reset( new gui::APanel(_screenWidth, _screenHeight) );
   _panel->setFrame(false);
@@ -198,6 +171,7 @@ void MapEditor::loadMap(int id)
 {
   _mapEditPanel->setMap( _db.getMap(id) );
   _mapEditPanel->setTileDB(&_tileDB);
+  _mapEditPanel->setActorsDB(&_actorsDB);
   renderMapEditPanel();
 }
 

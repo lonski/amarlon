@@ -27,7 +27,8 @@ char TileDB::getChar(TileType type)
 
 string TileDB::getName(TileType type)
 {
-  return get<std::string>(type, &TileDescription::name, "Null");
+  if ( type == TileType::Null ) return "Null";
+  return get<std::string>(type, &TileDescription::name, "NO NAME");
 }
 
 TCODColor TileDB::getColor(TileType type)

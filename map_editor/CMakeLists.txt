@@ -6,6 +6,8 @@ set(HEADER_FILES
   maps_database.h
   map_edit_panel.h
   map_view_panel.h
+  actors_database.h
+  editor_utils.h
 )
 
 set(SOURCE_FILES
@@ -17,6 +19,7 @@ set(SOURCE_FILES
   maps_database.cpp
   map_edit_panel.cpp
   map_view_panel.cpp
+  actors_database.cpp
 )
 
 add_library(a_mapeditor STATIC ${SOURCE_FILES} ${HEADER_FILES})

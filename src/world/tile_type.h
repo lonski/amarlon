@@ -12,6 +12,7 @@ enum class TileType
   Grass,
   Dirt,
   Water,
+  TransparentWall,
   END
 };
 

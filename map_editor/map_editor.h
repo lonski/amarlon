@@ -11,6 +11,7 @@
 #include <tile_db.h>
 #include "maps_database.h"
 #include "map_edit_panel.h"
+#include "actors_database.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -49,7 +50,7 @@ private:
   gui::ALabelPtr _statusMsg;
   bool _mapOpened;
   Panel _activePanel;
-
+  ActorsDatabase _actorsDB;
 
   gui::APanelPtr _panel;
   gui::APanelPtr _mainMenuPanel;
@@ -65,7 +66,6 @@ private:
   void listMaps();
   void loadMap(int id);
   void highlightCell(uint32_t x, uint32_t y);
-  void processInput(const std::vector<gui::AWidgetPtr> &widgets, int xoffset = 0, int yoffset = 0);
 
 };
 

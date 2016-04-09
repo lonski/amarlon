@@ -2,6 +2,8 @@
 #include <base64.h>
 #include <aslot_menu_item.h>
 #include "map_editor.h"
+#include <actor_descriptions.h>
+#include "editor_utils.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -11,6 +13,7 @@ MapEditPanel::MapEditPanel(int w, int h)
   , _editor(nullptr)
   , _selectedTile ( TileType::Null )
   , _selectedTile_Right ( TileType::Null )
+  , _renderActors(true)
 {
   init();
 }
@@ -23,6 +26,7 @@ void MapEditPanel::render(TCODConsole &console)
 
   if (_map && _tileDb)
   {
+    //render tiles
     for(int y = 0; y < _map->height; ++y)
     {
       for(int x = 0; x < _map->width; ++x)
@@ -33,6 +37,31 @@ void MapEditPanel::render(TCODConsole &console)
         _panelConsole->setCharForeground( x, y, _tileDb->getColor( (TileType)tile.type ) );
       }
     }
+
+    //render actors
+    if ( _renderActors )
+    {
+      for ( ActorDescriptionPtr a : _map->actors )
+      {
+        if ( a->x && a->y && a->symbol )
+        {
+          _panelConsole->setChar( *a->x, *a->y, *a->symbol );
+          if ( a->color )
+            _panelConsole->setCharForeground( *a->x, *a->y, strToColor(*a->color) );
+        }
+        else if ( _actorsDb && a->x && a->y && a->id)
+        {
+          ActorDescriptionPtr dsc = _actorsDb->fetch(*a->id);
+          if ( dsc && dsc->symbol )
+          {
+            _panelConsole->setChar( *a->x, *a->y, *dsc->symbol );
+            if ( dsc->color )
+              _panelConsole->setCharForeground( *a->x, *a->y, strToColor(*dsc->color) );
+          }
+        }
+      }
+    }
+
   }
 
   TCODConsole::blit(_panelConsole.get(), 0, 0, _panelConsole->getWidth(), _panelConsole->getHeight(), &console, getX(), getY() );
@@ -75,6 +104,11 @@ void MapEditPanel::setTileDB(TileDB *db)
   init();
 }
 
+void MapEditPanel::setActorsDB(ActorsDatabase *db)
+{
+  _actorsDb = db;
+}
+
 void MapEditPanel::setMapEditor(MapEditor *editor)
 {
   _editor = editor;
@@ -87,6 +121,11 @@ gui::APanelPtr MapEditPanel::getSidebar() const
 
 void MapEditPanel::handleInput(TCOD_mouse_t mouse)
 {
+  processInput(mouse,
+               getSidebar()->getWidgets(),
+               getSidebar()->getX(),
+               getSidebar()->getY());
+
   if ( mouse.cx < 100 )
   {
     if ( mouse.lbutton )
@@ -161,8 +200,6 @@ void MapEditPanel::init()
 
     for ( TileType id : TileType() )
     {
-      if ( id != TileType::END && id != TileType::Null )
-      {
         gui::ALabelMenuItem* tileBtn = new gui::ALabelMenuItem(
               _tileDb->getName(id), [=](){
                 _selectedTile = id;
@@ -174,7 +211,6 @@ void MapEditPanel::init()
         });
         tileBtn->setPosition(2, y++);
         _sidebar->addWidget(tileBtn);
-      }
     }
   }
 
@@ -228,6 +264,23 @@ void MapEditPanel::init()
   _sidebar->addWidget(moveRightBtn);
 
   ++y;
+  gui::ALabelMenuItem* showActorsBtn = new gui::ALabelMenuItem("Show actors");
+  showActorsBtn->setCallback( [&](){
+          _renderActors = true;
+        });
+  showActorsBtn->setPosition(2, y);
+  y += showActorsBtn->getHeight();
+  _sidebar->addWidget(showActorsBtn);
+
+  gui::ALabelMenuItem* hideActorsBtn = new gui::ALabelMenuItem("Hide actors");
+  hideActorsBtn->setCallback( [&](){
+          _renderActors = false;
+        });
+  hideActorsBtn->setPosition(2, y);
+  y += hideActorsBtn->getHeight();
+  _sidebar->addWidget(hideActorsBtn);
+
+  ++y;
   gui::ALabelMenuItem* saveBtn = new gui::ALabelMenuItem("Save to file");
   saveBtn->setPosition(2,y);
   saveBtn->setCallback([=](){
@@ -276,14 +329,20 @@ void MapEditPanel::tileRClickAction(int x, int y)
 
 void MapEditPanel::tileLButtonHoldAction(int x, int y)
 {
-  SerializedTile& tile = _tiles[y][x];
-  tile.type = (int)_selectedTile;
+  if ( _selectedTile != TileType::Null )
+  {
+    SerializedTile& tile = _tiles[y][x];
+    tile.type = (int)_selectedTile;
+  }
 }
 
 void MapEditPanel::tileRButtonHoldAction(int x, int y)
 {
-  SerializedTile& tile = _tiles[y][x];
-  tile.type = (int)_selectedTile_Right;
+  if ( _selectedTile_Right != TileType::Null )
+  {
+    SerializedTile& tile = _tiles[y][x];
+    tile.type = (int)_selectedTile_Right;
+  }
 }
 
 void MapEditPanel::tileMoveAction(int x, int y)
@@ -337,6 +396,9 @@ void MapEditPanel::moveUp()
         _tiles[y][x].type = (int)_selectedTile_Right;
     }
   }
+
+  for ( ActorDescriptionPtr a : _map->actors )
+    *a->y = *a->y - 1;
 }
 
 void MapEditPanel::moveDown()
@@ -351,6 +413,9 @@ void MapEditPanel::moveDown()
         _tiles[y][x].type = (int)_selectedTile_Right;
     }
   }
+
+  for ( ActorDescriptionPtr a : _map->actors )
+    *a->y = *a->y + 1;
 }
 
 void MapEditPanel::moveLeft()
@@ -365,6 +430,9 @@ void MapEditPanel::moveLeft()
         _tiles[y][x].type = (int)_selectedTile_Right;
     }
   }
+
+  for ( ActorDescriptionPtr a : _map->actors )
+    *a->x = *a->x - 1;
 }
 
 void MapEditPanel::moveRight()
@@ -379,6 +447,9 @@ void MapEditPanel::moveRight()
         _tiles[y][x].type = (int)_selectedTile_Right;
     }
   }
+
+  for ( ActorDescriptionPtr a : _map->actors )
+    *a->x = *a->x + 1;
 }
 
 }}

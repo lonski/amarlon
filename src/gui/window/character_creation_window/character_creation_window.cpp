@@ -65,11 +65,11 @@ AWindow &CharacterCreationWindow::show()
     if ( _enterGame )
     {
       ActorPtr player = Actor::create( _player, false);
-      player->setPosition(42, 28);
+      player->setPosition(57, 58);
       PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
       c->advanceLevel();
 
-      Engine::instance().getWorld().changeMap( 1 );
+      Engine::instance().getWorld().changeMap( 2 );
       Engine::instance().getWorld().setPlayer( player );
 
       Engine::instance().enterGame();

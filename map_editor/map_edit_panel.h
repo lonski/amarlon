@@ -5,6 +5,7 @@
 #include <map_description.h>
 #include <serialized_tile.h>
 #include <widgets/alabel.h>
+#include "actors_database.h"
 #include <tile_db.h>
 
 namespace amarlon { namespace map_editor {
@@ -23,6 +24,7 @@ public:
 
   void setMap(MapDescriptionPtr map);
   void setTileDB(TileDB* db);
+  void setActorsDB(ActorsDatabase* db);
   void setMapEditor(MapEditor* editor);
 
   gui::APanelPtr getSidebar() const;
@@ -40,6 +42,8 @@ private:
   gui::ALabelPtr _selectedTileLabel_Right;
   gui::ALabelPtr _xCoord;
   gui::ALabelPtr _yCoord;
+  bool _renderActors;
+  ActorsDatabase* _actorsDb;
 
   void init();
   void allocateTiles();
