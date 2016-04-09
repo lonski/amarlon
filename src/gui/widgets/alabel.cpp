@@ -11,6 +11,17 @@ ALabel::ALabel()
 {
 }
 
+ALabel::ALabel(const std::string &value, int x, int y)
+  : _color(TCODColor::white)
+  , _bgcolor(TCODColor::black)
+  , _autosize(true)
+  , _width(0)
+  , _height(0)
+{
+  setValue(value);
+  setPosition(x,y);
+}
+
 void ALabel::render(TCODConsole &console)
 {
   console.setDefaultForeground(_color);

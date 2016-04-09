@@ -11,6 +11,7 @@ class ALabel : public AWidget
 {
 public:
   ALabel();
+  ALabel(const std::string& value, int x = 0, int y = 0);
   virtual ~ALabel() {}
 
   virtual void render(TCODConsole& console);

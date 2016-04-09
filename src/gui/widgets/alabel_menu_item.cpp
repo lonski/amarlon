@@ -19,6 +19,16 @@ ALabelMenuItem::ALabelMenuItem(const std::string &text, std::function<void()> cb
   setCallback(cback);
 }
 
+ALabelMenuItem::ALabelMenuItem(int x, int y, const std::string &text, std::function<void ()> cback)
+  : _label(new ALabel)
+  , _selected(false)
+{
+  setValue(text);
+  setColor(TCODColor::lightChartreuse);
+  setCallback(cback);
+  setPosition(x,y);
+}
+
 void ALabelMenuItem::render(TCODConsole &console)
 {
   _label->setPosition( getX(), getY() );

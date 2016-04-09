@@ -14,6 +14,7 @@ public:
   ~APanel();
   virtual void render(TCODConsole& console);
   void addWidget(AWidget* widget);
+  bool removeWidget(AWidget* widget);
   void addWidget(const AWidgetPtr& widget);
 
   std::string getTitle() const;

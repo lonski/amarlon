@@ -6,6 +6,7 @@
 #include <serialized_tile.h>
 #include <widgets/alabel.h>
 #include "actors_database.h"
+#include "tile_inspect_panel.h"
 #include <tile_db.h>
 
 namespace amarlon { namespace map_editor {
@@ -44,6 +45,7 @@ private:
   gui::ALabelPtr _yCoord;
   bool _renderActors;
   ActorsDatabase* _actorsDb;
+  std::shared_ptr<TileInspectPanel> _tileInspect;
 
   void init();
   void allocateTiles();

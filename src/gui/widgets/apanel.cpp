@@ -61,8 +61,23 @@ void APanel::addWidget(AWidget *widget)
   _widgets.push_back( AWidgetPtr(widget) );
 }
 
+bool APanel::removeWidget(AWidget *widget)
+{
+  for ( auto it = _widgets.begin(); it != _widgets.end(); ++it )
+    if ( it->get() == widget )
+    {
+      _widgets.erase(it);
+      return true;
+    }
+
+  return false;
+}
+
 void APanel::addWidget(const AWidgetPtr& widget)
 {
+  for ( auto w : _widgets )
+    if ( w.get() == widget.get() ) return;
+
   _widgets.push_back( widget );
 }
 

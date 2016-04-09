@@ -126,6 +126,18 @@ void MapEditPanel::handleInput(TCOD_mouse_t mouse)
                getSidebar()->getX(),
                getSidebar()->getY());
 
+  for ( auto w : getWidgets() )
+  {
+    TileInspectPanel* inspect = dynamic_cast<TileInspectPanel*>(w.get());
+    if ( inspect )
+    {
+      processInput(mouse,
+                   inspect->getWidgets(),
+                   inspect->getX(),
+                   inspect->getY());
+    }
+  }
+
   if ( mouse.cx < 100 )
   {
     if ( mouse.lbutton )
@@ -154,6 +166,8 @@ void MapEditPanel::init()
   setFrame(false);
   _sidebar.reset( new gui::APanel(30,60));
   _sidebar->setPosition(100,0);
+
+  _tileInspect.reset( new TileInspectPanel );
 
   gui::ALabel* coordsTitle = new gui::ALabel;
   coordsTitle->setValue("== Coordinates: ==");
@@ -281,7 +295,7 @@ void MapEditPanel::init()
   _sidebar->addWidget(hideActorsBtn);
 
   ++y;
-  gui::ALabelMenuItem* saveBtn = new gui::ALabelMenuItem("Save to file");
+  gui::ALabelMenuItem* saveBtn = new gui::ALabelMenuItem("[SAVE TO FILE]");
   saveBtn->setPosition(2,y);
   saveBtn->setCallback([=](){
     save();
@@ -290,7 +304,7 @@ void MapEditPanel::init()
   y += saveBtn->getHeight();
   _sidebar->addWidget(saveBtn);
 
-  gui::ALabelMenuItem* menuBtn = new gui::ALabelMenuItem("Main menu");
+  gui::ALabelMenuItem* menuBtn = new gui::ALabelMenuItem("[MAIN MENU]");
   menuBtn->setPosition(2,y);
   menuBtn->setCallback([=](){
     _editor->renderMainMenu();
@@ -319,7 +333,16 @@ void MapEditPanel::allocateTiles()
 
 void MapEditPanel::tileClickAction(int x, int y)
 {
+  if ( _selectedTile == TileType::Null && _map && _actorsDb)
+  {
+    std::vector<ActorDescriptionPtr> actorsOnTile;
+    for(ActorDescriptionPtr a : _map->actors )
+      if ( *a->x == x && *a->y == y )
+        actorsOnTile.push_back( a );
 
+    _tileInspect->init(x,y,actorsOnTile,_actorsDb, this);
+    addWidget(_tileInspect);
+  }
 }
 
 void MapEditPanel::tileRClickAction(int x, int y)
