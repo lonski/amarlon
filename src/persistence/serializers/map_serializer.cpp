@@ -34,6 +34,7 @@ bool MapSerializer::serialize(DescriptionPtr dsc)
 
     addAttribute(_mapNode, "height", mDsc->height );
     addAttribute(_mapNode,  "width", mDsc->width );
+    addAttribute(_mapNode,  "name", mDsc->name );
     addAttributeEnum(_mapNode, "id", mDsc->id );
     _mapNode->append_node( createNode(_document, "Tiles", mDsc->binaryTiles) );
 

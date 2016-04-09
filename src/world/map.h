@@ -77,6 +77,7 @@ public:
   void setHeight(const u32 &height);
   int getId() const;
   void setId(const int &id);
+  std::string getName() const;
 
   void onExit(Direction direction, ActorPtr exiter);
   const std::map<Direction, ActorActionPtr> getExitActions() const;
@@ -86,6 +87,7 @@ public:
 private:
   int _id;
   u32 _width, _height;
+  std::string _name;
   TileMatrix _tiles;
   std::shared_ptr<TCODMap> _codMap;
   std::map<Direction, ActorActionPtr> _exitActions;

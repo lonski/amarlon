@@ -31,6 +31,7 @@ void Map::deserialize(MapDescriptionPtr dsc)
     _id = dsc->id;
     _width = static_cast<u32>(dsc->width);
     _height = static_cast<u32>(dsc->height);
+    _name = dsc->name;
     _codMap.reset( new TCODMap(_width, _height) );
 
     allocateTiles();
@@ -67,6 +68,7 @@ MapDescriptionPtr Map::toDescriptionStruct()
   dsc->id          = static_cast<int>( _id );
   dsc->width       = static_cast<int>( _width );
   dsc->height      = static_cast<int>( _height );
+  dsc->name        = _name;
   dsc->binaryTiles = serializeTiles();
 
   for ( auto& kv : _exitActions )
@@ -394,6 +396,11 @@ int Map::getId() const
 void Map::setId(const int &id)
 {
   _id = id;
+}
+
+string Map::getName() const
+{
+  return _name;
 }
 
 void Map::onExit(Direction direction, ActorPtr exiter)

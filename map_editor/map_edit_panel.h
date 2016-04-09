@@ -50,6 +50,10 @@ private:
   void tileMoveAction(int x, int y);
   void save();
   void fillWholeMap();
+  void moveUp();
+  void moveDown();
+  void moveLeft();
+  void moveRight();
 };
 
 }}

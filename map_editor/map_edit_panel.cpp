@@ -186,7 +186,7 @@ void MapEditPanel::init()
   _sidebar->addWidget(operationsTitle);
 
   ++y;
-  gui::ASlotMenuItem* fillBtn = new gui::ASlotMenuItem(26,"","Fill whole map","");
+  gui::ALabelMenuItem* fillBtn = new gui::ALabelMenuItem("Fill whole map");
   fillBtn->setCallback( [=](){
           fillWholeMap();
         });
@@ -194,7 +194,41 @@ void MapEditPanel::init()
   y += fillBtn->getHeight();
   _sidebar->addWidget(fillBtn);
 
-  gui::ASlotMenuItem* saveBtn = new gui::ASlotMenuItem(26,"","Save","");
+  ++y;
+  gui::ALabelMenuItem* moveUpBtn = new gui::ALabelMenuItem("Move up");
+  moveUpBtn->setCallback( [=](){
+          moveUp();
+        });
+  moveUpBtn->setPosition(2, y);
+  y += moveUpBtn->getHeight();
+  _sidebar->addWidget(moveUpBtn);
+
+  gui::ALabelMenuItem* moveDownBtn = new gui::ALabelMenuItem("Move down");
+  moveDownBtn->setCallback( [=](){
+          moveDown();
+        });
+  moveDownBtn->setPosition(2, y);
+  y += moveDownBtn->getHeight();
+  _sidebar->addWidget(moveDownBtn);
+
+  gui::ALabelMenuItem* moveleftBtn = new gui::ALabelMenuItem("Move left");
+  moveleftBtn->setCallback( [=](){
+          moveLeft();
+        });
+  moveleftBtn->setPosition(2, y);
+  y += moveleftBtn->getHeight();
+  _sidebar->addWidget(moveleftBtn);
+
+  gui::ALabelMenuItem* moveRightBtn = new gui::ALabelMenuItem("Move right");
+  moveRightBtn->setCallback( [=](){
+          moveRight();
+        });
+  moveRightBtn->setPosition(2, y);
+  y += moveRightBtn->getHeight();
+  _sidebar->addWidget(moveRightBtn);
+
+  ++y;
+  gui::ALabelMenuItem* saveBtn = new gui::ALabelMenuItem("Save to file");
   saveBtn->setPosition(2,y);
   saveBtn->setCallback([=](){
     save();
@@ -203,7 +237,7 @@ void MapEditPanel::init()
   y += saveBtn->getHeight();
   _sidebar->addWidget(saveBtn);
 
-  gui::ASlotMenuItem* menuBtn = new gui::ASlotMenuItem(26,"","Main menu","");
+  gui::ALabelMenuItem* menuBtn = new gui::ALabelMenuItem("Main menu");
   menuBtn->setPosition(2,y);
   menuBtn->setCallback([=](){
     _editor->renderMainMenu();
@@ -287,6 +321,62 @@ void MapEditPanel::fillWholeMap()
     for(int x = 0; x < _map->width; ++x)
     {
       _tiles[y][x].type = (int)_selectedTile;
+    }
+  }
+}
+
+void MapEditPanel::moveUp()
+{
+  for (int y = 0; y < _map->height; ++y)
+  {
+    for(int x = 0; x < _map->width; ++x)
+    {
+      if ( y+1 < _map->height )
+        _tiles[y][x].type = _tiles[y+1][x].type;
+      else
+        _tiles[y][x].type = (int)_selectedTile_Right;
+    }
+  }
+}
+
+void MapEditPanel::moveDown()
+{
+  for (int y = _map->height - 1; y >=0 ; --y)
+  {
+    for(int x = 0; x < _map->width; ++x)
+    {
+      if ( y-1 >= 0 )
+        _tiles[y][x].type = _tiles[y-1][x].type;
+      else
+        _tiles[y][x].type = (int)_selectedTile_Right;
+    }
+  }
+}
+
+void MapEditPanel::moveLeft()
+{
+  for (int y = 0; y < _map->height; ++y)
+  {
+    for(int x = 0; x < _map->width; ++x)
+    {
+      if ( x+1 < _map->width )
+        _tiles[y][x].type = _tiles[y][x+1].type;
+      else
+        _tiles[y][x].type = (int)_selectedTile_Right;
+    }
+  }
+}
+
+void MapEditPanel::moveRight()
+{
+  for (int y = 0; y < _map->height; ++y)
+  {
+    for(int x = _map->width - 1; x >=0 ; --x)
+    {
+      if ( x-1 >= 0 )
+        _tiles[y][x].type = _tiles[y][x-1].type;
+      else
+        _tiles[y][x].type = (int)_selectedTile_Right;
     }
   }
 }
