@@ -37,8 +37,8 @@ public:
   MOCK_METHOD1(setWidth, void(const u32));
   MOCK_CONST_METHOD0(getHeight, u32());
   MOCK_METHOD1(setHeight, void(const u32));
-  MOCK_CONST_METHOD0(getId, MapId());
-  MOCK_METHOD1(setId, void(const MapId));
+  MOCK_CONST_METHOD0(getId, int());
+  MOCK_METHOD1(setId, void(const int));
 
   MapMock()
    : Map(100,100)

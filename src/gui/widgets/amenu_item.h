@@ -14,6 +14,7 @@ public:
     : _object(nullptr)
     , _rawObject(nullptr)
     , _callBack([](){})
+    , _callBack2([](){})
   {}
 
   virtual ~AMenuItem() {}
@@ -45,10 +46,21 @@ public:
     _callBack();
   }
 
+  virtual void setCallback2( std::function<void()> fun )
+  {
+    _callBack2 = fun;
+  }
+
+  virtual void executeCallback2()
+  {
+    _callBack2();
+  }
+
 private:
   std::shared_ptr<void> _object;
   void* _rawObject;
   std::function<void()> _callBack;
+  std::function<void()> _callBack2;
 
 };
 

@@ -5,7 +5,6 @@
 #include <class_selection_panel.h>
 #include <ability_scores_selection_panel.h>
 #include <actor_db.h>
-#include <map_id.h>
 #include <world.h>
 #include <actor.h>
 #include <playable_character.h>
@@ -70,7 +69,7 @@ AWindow &CharacterCreationWindow::show()
       PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
       c->advanceLevel();
 
-      Engine::instance().getWorld().changeMap( MapId::GameStart );
+      Engine::instance().getWorld().changeMap( 1 );
       Engine::instance().getWorld().setPlayer( player );
 
       Engine::instance().enterGame();

@@ -23,7 +23,7 @@ MapDB::~MapDB()
 {
 }
 
-MapPtr MapDB::fetch(MapId id)
+MapPtr MapDB::fetch(int id)
 {
   MapPtr map;
 

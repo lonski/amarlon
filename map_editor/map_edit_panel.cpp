@@ -10,6 +10,7 @@ MapEditPanel::MapEditPanel(int w, int h)
   , _tileDb(nullptr)
   , _editor(nullptr)
   , _selectedTile ( TileType::Null )
+  , _selectedTile_Right ( TileType::Null )
 {
   init();
 }
@@ -92,6 +93,14 @@ void MapEditPanel::handleInput(TCOD_mouse_t mouse)
     {
       tileLButtonHoldAction(mouse.cx, mouse.cy);
     }
+    if ( mouse.rbutton )
+    {
+      tileRButtonHoldAction(mouse.cx, mouse.cy);
+    }
+    if ( mouse.rbutton_pressed )
+    {
+      tileRClickAction(mouse.cx, mouse.cy);
+    }
     if ( mouse.lbutton_pressed ) {
       tileClickAction(mouse.cx, mouse.cy);
     }
@@ -138,10 +147,16 @@ void MapEditPanel::init()
     ++y;
 
     _selectedTileLabel.reset( new gui::ALabel );
-    _selectedTileLabel->setValue( "Selected: [" + _tileDb->getName(_selectedTile) + "]" );
+    _selectedTileLabel->setValue( "Selected L: [" + _tileDb->getName(_selectedTile) + "]" );
     _selectedTileLabel->setColor(TCODColor::cyan);
     _selectedTileLabel->setPosition(2, y++);
     _sidebar->addWidget(_selectedTileLabel);
+
+    _selectedTileLabel_Right.reset( new gui::ALabel );
+    _selectedTileLabel_Right->setValue( "Selected R: [" + _tileDb->getName(_selectedTile_Right) + "]" );
+    _selectedTileLabel_Right->setColor(TCODColor::cyan);
+    _selectedTileLabel_Right->setPosition(2, y++);
+    _sidebar->addWidget(_selectedTileLabel_Right);
     y++;
 
     for ( TileType id : TileType() )
@@ -151,8 +166,12 @@ void MapEditPanel::init()
         gui::ALabelMenuItem* tileBtn = new gui::ALabelMenuItem(
               _tileDb->getName(id), [=](){
                 _selectedTile = id;
-                _selectedTileLabel->setValue( "Selected: [" + _tileDb->getName(_selectedTile) + "]" );
+                _selectedTileLabel->setValue( "Selected L: [" + _tileDb->getName(_selectedTile) + "]" );
               });
+        tileBtn->setCallback2([=](){
+          _selectedTile_Right = id;
+          _selectedTileLabel_Right->setValue( "Selected R: [" + _tileDb->getName(_selectedTile_Right) + "]" );
+        });
         tileBtn->setPosition(2, y++);
         _sidebar->addWidget(tileBtn);
       }
@@ -216,10 +235,21 @@ void MapEditPanel::tileClickAction(int x, int y)
 
 }
 
+void MapEditPanel::tileRClickAction(int x, int y)
+{
+
+}
+
 void MapEditPanel::tileLButtonHoldAction(int x, int y)
 {
   SerializedTile& tile = _tiles[y][x];
   tile.type = (int)_selectedTile;
+}
+
+void MapEditPanel::tileRButtonHoldAction(int x, int y)
+{
+  SerializedTile& tile = _tiles[y][x];
+  tile.type = (int)_selectedTile_Right;
 }
 
 void MapEditPanel::tileMoveAction(int x, int y)

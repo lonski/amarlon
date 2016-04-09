@@ -35,14 +35,18 @@ private:
   TileMatrix _tiles;
   TileDB* _tileDb;
   TileType _selectedTile;
+  TileType _selectedTile_Right;
   gui::ALabelPtr _selectedTileLabel;
+  gui::ALabelPtr _selectedTileLabel_Right;
   gui::ALabelPtr _xCoord;
   gui::ALabelPtr _yCoord;
 
   void init();
   void allocateTiles();
   void tileClickAction(int x, int y);
+  void tileRClickAction(int x, int y);
   void tileLButtonHoldAction(int x, int y);
+  void tileRButtonHoldAction(int x, int y);
   void tileMoveAction(int x, int y);
   void save();
   void fillWholeMap();

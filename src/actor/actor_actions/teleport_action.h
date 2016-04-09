@@ -3,27 +3,26 @@
 
 #include <memory>
 #include <actor_action.h>
-#include <map_id.h>
 
 namespace amarlon {
 
 class TeleportAction : public ActorAction
 {
 public:
-  TeleportAction(MapId map, int x, int y);
+  TeleportAction(int map, int x, int y);
   virtual ~TeleportAction();
 
   virtual ActorActionResult perform(ActorPtr performer);
   virtual ActorActionUPtr clone();
 
-  virtual MapId getMapId() const;
+  virtual int getMapId() const;
   virtual int getX() const;
   virtual int getY() const;
 
   virtual DescriptionPtr toDescriptionStruct();
 
 private:
-  MapId _map;
+  int _map;
   int _x;
   int _y;
 

@@ -28,7 +28,7 @@ class MapDBTest : public ::testing::Test
 TEST_F(MapDBTest, fetchOfNonExistingMap_GivesNull)
 {
   MapDB gateway;
-  MapPtr map ( gateway.fetch(MapId::Null) );
+  MapPtr map ( gateway.fetch(0) );
 
   ASSERT_TRUE(map == nullptr);
 }
@@ -37,17 +37,17 @@ TEST_F(MapDBTest, fetchExistingMap_givesMap)
 {
   MapDB gateway;
   gateway.load("data/maps.xml");
-  MapPtr map (gateway.fetch(MapId::GameStart));
+  MapPtr map (gateway.fetch(1));
 
   ASSERT_TRUE(map != nullptr);
-  ASSERT_EQ(map->getId(), MapId::GameStart );
+  ASSERT_EQ(map->getId(), 1 );
 }
 
 TEST_F(MapDBTest, mapHasValidTiles)
 {
   MapDB gateway;
   gateway.load("data/maps.xml");
-  MapPtr map ( gateway.fetch(MapId::GameStart) );
+  MapPtr map ( gateway.fetch(1) );
 
   EXPECT_EQ(map->getChar(39,27), Engine::instance().getTileDB().getChar(TileType::PlainFloor));
 }
@@ -56,7 +56,7 @@ TEST_F(MapDBTest, mapHasValidTiles2)
 {
   MapDB gateway;
   gateway.load("data/maps.xml");
-  MapPtr map ( gateway.fetch(MapId::GameStart) );
+  MapPtr map ( gateway.fetch(1) );
 
   EXPECT_EQ(map->getChar(1,1), Engine::instance().getTileDB().getChar(TileType::Tree));
 }

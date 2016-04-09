@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <map>
-#include <map_id.h>
 #include <map_db.h>
 
 namespace amarlon {
@@ -19,9 +18,9 @@ public:
   World(const std::string& mapsFile);
   virtual ~World();
 
-  virtual MapPtr fetch(MapId id);
+  virtual MapPtr fetch(int id);
   virtual MapPtr getCurrentMap();
-  virtual void changeMap(MapId id);
+  virtual void changeMap(int id);
   virtual const ActorPtr getPlayer();
   virtual void setPlayer(ActorPtr player);
 
@@ -29,7 +28,7 @@ public:
   bool load(const std::string& fn);
 
 private:  
-  MapId _currentMap;
+  int _currentMap;
   ActorPtr _player;
   MapDBPtr _mapDB;
 

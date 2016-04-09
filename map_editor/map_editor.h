@@ -63,7 +63,7 @@ private:
   void configureMapChoosePanel();
   void loadMaps();
   void listMaps();
-  void loadMap(MapId id);
+  void loadMap(int id);
   void highlightCell(uint32_t x, uint32_t y);
   void processInput(const std::vector<gui::AWidgetPtr> &widgets, int xoffset = 0, int yoffset = 0);
 

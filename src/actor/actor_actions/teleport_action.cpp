@@ -6,7 +6,7 @@
 
 namespace amarlon {
 
-TeleportAction::TeleportAction(MapId map, int x, int y)
+TeleportAction::TeleportAction(int map, int x, int y)
   : _map(map)
   , _x(x)
   , _y(y)
@@ -41,7 +41,7 @@ ActorActionUPtr TeleportAction::clone()
   return std::move(cloned);
 }
 
-MapId TeleportAction::getMapId() const
+int TeleportAction::getMapId() const
 {
   return _map;
 }

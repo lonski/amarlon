@@ -13,7 +13,7 @@ using namespace rapidxml;
 namespace amarlon {
 
 World::World(const std::string& mapsFile)
-  : _currentMap(MapId::Null)
+  : _currentMap(0)
   , _mapDB( new MapDB )
 {
   _mapDB->load( mapsFile );
@@ -28,7 +28,7 @@ MapPtr World::getCurrentMap()
   return fetch(_currentMap);
 }
 
-MapPtr World::fetch(MapId id)
+MapPtr World::fetch(int id)
 {
   MapPtr map;
 
@@ -46,7 +46,7 @@ MapPtr World::fetch(MapId id)
   return map;
 }
 
-void World::changeMap(MapId id)
+void World::changeMap(int id)
 {
   _currentMap = id;
 }
@@ -141,7 +141,7 @@ void World::parseCurrentMap(rapidxml::xml_document<> &doc)
 
   if(cMapNode != nullptr)
   {
-    _currentMap = (MapId)getAttribute<int>(cMapNode, "id");
+    _currentMap = getAttribute<int>(cMapNode, "id");
   }
 }
 

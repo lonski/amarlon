@@ -7,7 +7,6 @@
 #include <map>
 #include <stdexcept>
 #include <libtcod.hpp>
-#include <map_id.h>
 #include <directions.h>
 #include <point.h>
 
@@ -34,7 +33,7 @@ public:
   typedef std::vector< std::vector<Tile> > TileMatrix;
   typedef std::vector<Tile> TileRow;
 
-  Map(u32 width = 100, u32 height = 60, MapId id = MapId::Null);
+  Map(u32 width = 100, u32 height = 60, int id = 0);
   void deserializeTiles(std::vector<unsigned char> tiles);
   std::string serializeTiles();
   void deserialize(MapDescriptionPtr dsc);
@@ -76,8 +75,8 @@ public:
   void setWidth(const u32 &width);
   u32 getHeight() const;
   void setHeight(const u32 &height);
-  MapId getId() const;
-  void setId(const MapId &id);
+  int getId() const;
+  void setId(const int &id);
 
   void onExit(Direction direction, ActorPtr exiter);
   const std::map<Direction, ActorActionPtr> getExitActions() const;
@@ -85,7 +84,7 @@ public:
   friend class MapParser;
 
 private:
-  MapId _id;
+  int _id;
   u32 _width, _height;
   TileMatrix _tiles;
   std::shared_ptr<TCODMap> _codMap;

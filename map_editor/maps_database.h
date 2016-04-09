@@ -3,7 +3,6 @@
 
 #include <string>
 #include <persistence/descriptions/map_description.h>
-#include <world/map_id.h>
 
 namespace amarlon { namespace map_editor {
 
@@ -15,11 +14,11 @@ public:
   bool load(const std::string& fn);
   bool store(const std::string& fn);
   size_t getMapCount() const;
-  std::map<MapId, MapDescriptionPtr> getMaps() const;
-  MapDescriptionPtr getMap(MapId id) const;
+  std::map<int, MapDescriptionPtr> getMaps() const;
+  MapDescriptionPtr getMap(int id) const;
 
 private:
-  std::map<MapId, MapDescriptionPtr> _maps;
+  std::map<int, MapDescriptionPtr> _maps;
 
 };
 

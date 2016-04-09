@@ -15,7 +15,7 @@ namespace amarlon {
 
 using namespace std;
 
-Map::Map(u32 width, u32 height, MapId id)
+Map::Map(u32 width, u32 height, int id)
   : _id(id)
   , _width(width)
   , _height(height)
@@ -28,7 +28,7 @@ void Map::deserialize(MapDescriptionPtr dsc)
 {
   if( dsc )
   {
-    _id = static_cast<MapId>(dsc->id);
+    _id = dsc->id;
     _width = static_cast<u32>(dsc->width);
     _height = static_cast<u32>(dsc->height);
     _codMap.reset( new TCODMap(_width, _height) );
@@ -51,7 +51,7 @@ void Map::deserialize(MapDescriptionPtr dsc)
         //TODO: generalize for all ActorActions
         //      probably it needs ActorAction::create(ActorActionDescription*) method
         _exitActions[ dir ] = std::make_shared<TeleportAction>(
-                                               static_cast<MapId>(acDsc->teleport_MapId),
+                                               acDsc->teleport_MapId,
                                                acDsc->teleport_x,
                                                acDsc->teleport_y);
       }
@@ -358,7 +358,7 @@ void Map::validateMapCoords(u32 x, u32 y)
   if (x >= _width || y >= _height)
     throw amarlon_exeption("Requested map coordinates beyond map borders!\n y=" +
                            std::to_string(y) + ", height="+std::to_string(_height) +
-                           " x="+std::to_string(x) + " width=" + std::to_string(_width) + " mapId=" + std::to_string((int)_id)
+                           " x="+std::to_string(x) + " width=" + std::to_string(_width) + " mapId=" + std::to_string(_id)
                            );
 
   if (y >= _tiles.size())
@@ -386,12 +386,12 @@ void Map::setHeight(const u32 &height)
 {
   _height = height;
 }
-MapId Map::getId() const
+int Map::getId() const
 {
   return _id;
 }
 
-void Map::setId(const MapId &id)
+void Map::setId(const int &id)
 {
   _id = id;
 }

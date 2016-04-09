@@ -39,6 +39,10 @@ void MapEditor::processInput(const std::vector<gui::AWidgetPtr>& widgets, int xo
         {
           btn->executeCallback();
         }
+        if ( _lastInput.rbutton_pressed )
+        {
+          btn->executeCallback2();
+        }
       }
       else
       {
@@ -190,7 +194,7 @@ void MapEditor::listMaps()
   }
 }
 
-void MapEditor::loadMap(MapId id)
+void MapEditor::loadMap(int id)
 {
   _mapEditPanel->setMap( _db.getMap(id) );
   _mapEditPanel->setTileDB(&_tileDB);

@@ -110,7 +110,6 @@ set(HEADER_FILES
     utils/key.h
     utils/point.h
     world/map.h
-    world/map_id.h
     world/tile_type.h
     world/tile.h
     command_executor.h

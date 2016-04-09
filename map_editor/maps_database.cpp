@@ -39,7 +39,7 @@ bool MapsDatabase::load(const std::string &fn)
 
       MapDescriptionPtr dsc = parser.parseDescription();
 
-      if ( dsc ) _maps[ (MapId)dsc->id ] = dsc;
+      if ( dsc ) _maps[ dsc->id ] = dsc;
 
       mapNode = mapNode->next_sibling();
     }
@@ -76,12 +76,12 @@ size_t MapsDatabase::getMapCount() const
   return _maps.size();
 }
 
-std::map<MapId, MapDescriptionPtr> MapsDatabase::getMaps() const
+std::map<int, MapDescriptionPtr> MapsDatabase::getMaps() const
 {
   return _maps;
 }
 
-MapDescriptionPtr MapsDatabase::getMap(MapId id) const
+MapDescriptionPtr MapsDatabase::getMap(int id) const
 {
   auto it = _maps.find(id);
   return it != _maps.end() ? it->second : nullptr;

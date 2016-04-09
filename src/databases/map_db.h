@@ -6,7 +6,6 @@
 #include <memory>
 #include <xml/rapidxml.hpp>
 #include <xml/rapidxml_print.hpp>
-#include <world/map_id.h>
 #include <persistence/parsers/map_parser.h>
 
 namespace amarlon {
@@ -22,13 +21,13 @@ public:
   MapDB();
   virtual ~MapDB();
 
-  virtual MapPtr fetch(MapId id);
+  virtual MapPtr fetch(int id);
   virtual bool load(const std::string& fn);
   virtual bool store(const std::string& fn);
 
 protected:
   MapParser _mapParser;
-  std::map<MapId, MapPtr> _maps;  
+  std::map<int, MapPtr> _maps;
 
   void parseMaps(rapidxml::xml_document<> &doc);
   std::shared_ptr< rapidxml::xml_document<> > serializeMaps();

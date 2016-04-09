@@ -57,7 +57,7 @@ TEST_F(MapTest, mapIsInFov_computed)
 
 TEST_F(MapTest, addActor)
 {
-  MapPtr map = mapDB.fetch(MapId::GameStart);
+  MapPtr map = mapDB.fetch(1);
   ActorPtr actor = Actor::create(ActorType::HealthPotion,1,1);
 
   map->addActor(actor);
