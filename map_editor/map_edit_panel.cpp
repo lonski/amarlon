@@ -121,10 +121,7 @@ gui::APanelPtr MapEditPanel::getSidebar() const
 
 void MapEditPanel::handleInput(TCOD_mouse_t mouse)
 {
-  processInput(mouse,
-               getSidebar()->getWidgets(),
-               getSidebar()->getX(),
-               getSidebar()->getY());
+  bool anotherPanelOnTop = false;
 
   for ( auto w : getWidgets() )
   {
@@ -135,7 +132,17 @@ void MapEditPanel::handleInput(TCOD_mouse_t mouse)
                    inspect->getWidgets(),
                    inspect->getX(),
                    inspect->getY());
+      anotherPanelOnTop = true;
+      break;
     }
+  }
+
+  if ( !anotherPanelOnTop )
+  {
+    processInput(mouse,
+                 getSidebar()->getWidgets(),
+                 getSidebar()->getX(),
+                 getSidebar()->getY());
   }
 
   if ( mouse.cx < 100 )
