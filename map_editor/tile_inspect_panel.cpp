@@ -13,7 +13,11 @@ TileInspectPanel::TileInspectPanel()
 
 void TileInspectPanel::handleInput(TCOD_mouse_t mouse)
 {
-  if ( _actorChoose->getProperty<bool>("panel_active") )
+  if ( _actorMenu->getProperty<bool>("panel_active") )
+  {
+    _actorMenu->handleInput(mouse);
+  }
+  else if ( _actorChoose->getProperty<bool>("panel_active") )
   {
     _actorChoose->handleInput(mouse);
   }
@@ -35,6 +39,25 @@ void TileInspectPanel::handleInput(TCOD_mouse_t mouse)
 
       init(_x,_y, _actors, _db, _parent, _map);
     }
+    else if ( _actorUnderManage && _map )
+    {
+      if ( _actorMenu->choosen() == ActorMenuPanel::ARemove )
+      {
+          for ( auto it = _map->actors.begin(); it != _map->actors.end(); ++it)
+            if ( it->get() == _actorUnderManage.get() ) {
+              _map->actors.erase(it);
+
+              _actors.clear();
+              for(ActorDescriptionPtr a : _map->actors )
+                if ( *a->x == _x && *a->y == _y )
+                  _actors.push_back( a );
+
+              init(_x,_y, _actors, _db, _parent, _map);
+
+              break;
+            }
+      }
+    }
   }
 }
 
@@ -50,6 +73,8 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   _map = map;
   _actorChoose.reset( new ActorChoosePanel(_db,this) );
   _actorChoose->setProperty<bool>("panel_active", false);
+  _actorMenu.reset( new ActorMenuPanel(this) );
+  _actorMenu->setProperty<bool>("panel_active", false);
 
   removeAllWidgets();
 
@@ -79,8 +104,10 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   {
     ActorDescriptionPtr def = _db->fetch(*a->id);
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
-                                       *def->name + " [ID"+std::to_string(*a->id)+"]", [](){
-      //TODO something
+                                       *def->name + " [ID"+std::to_string(*a->id)+"]", [this, a](){
+      _actorMenu->setProperty<bool>("panel_active", true);
+      _actorUnderManage = a;
+      addWidget(_actorMenu);
     } ));
   }
 

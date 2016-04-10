@@ -7,6 +7,7 @@
 #include "actors_database.h"
 #include "actor_choose_panel.h"
 #include <map_description.h>
+#include "actor_menu.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -24,12 +25,14 @@ public:
 
 private:
   std::shared_ptr<ActorChoosePanel> _actorChoose;
+  std::shared_ptr<ActorMenuPanel> _actorMenu;
   int _x;
   int _y;
   std::vector<ActorDescriptionPtr> _actors;
   ActorsDatabase* _db;
   gui::APanel* _parent;
   MapDescriptionPtr _map;
+  ActorDescriptionPtr _actorUnderManage;
 
   void addActor(ActorDescriptionPtr a);
 
