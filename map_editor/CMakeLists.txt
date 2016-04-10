@@ -29,7 +29,7 @@ set(SOURCE_FILES
 )
 
 add_library(a_mapeditor STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(a_mapeditor ${TCOD_LIBRARIES})
+target_link_libraries(a_mapeditor ${TCOD_LIBRARIES} ${CMAKE_DL_LIBS})
 
 add_executable(map_editor main.cpp)
-target_link_libraries(map_editor a_mapeditor a_widgets a_persistence ${TCOD_LIBRARIES})
+target_link_libraries(map_editor a_mapeditor a_widgets a_persistence ${TCOD_LIBRARIES} ${CMAKE_DL_LIBS})
