@@ -34,7 +34,10 @@ int CmdLook::execute()
       auto objectIter = std::find_if(target.actors.begin(), target.actors.end(), [](ActorPtr a){ return !a->hasFeature<Character>() && !a->hasFeature<Pickable>();});
       if ( objectIter != target.actors.end() )
       {
-        Engine::instance().getPlayer()->notify(Event(EventId::Player_Look_At,{{"item",(*objectIter)->getName()}}));
+        Engine::instance().getPlayer()->notify(Event(EventId::Player_Look_At,{
+                                                       {"item",(*objectIter)->getName()},
+                                                       {"inscription",(*objectIter)->getInscription()}
+                                                     }));
       }
       else
       {

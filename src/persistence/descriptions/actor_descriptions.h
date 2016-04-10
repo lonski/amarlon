@@ -32,6 +32,7 @@ struct ActorDescription : Description
   std::experimental::optional<int> x;
   std::experimental::optional<int> y;
   std::experimental::optional<std::string> name;
+  std::experimental::optional<std::string> inscription;
   std::experimental::optional<unsigned char> symbol;
   std::experimental::optional<std::string> color;
   std::experimental::optional<bool> blocks;

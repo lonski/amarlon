@@ -29,6 +29,7 @@ ActorDescriptionPtr ActorParser::parseDescription()
 
     if ( attributeExists(_xml, "id") )           actorDsc->id           = getAttribute<int>(_xml, "id");
     if ( attributeExists(_xml, "name") )         actorDsc->name         = getAttribute<std::string>(_xml, "name");
+    if ( attributeExists(_xml, "inscription") )  actorDsc->inscription  = getAttribute<std::string>(_xml, "inscription");
     if ( attributeExists(_xml, "prototype") )    actorDsc->prototype    = getAttribute<int>(_xml, "prototype");
     if ( attributeExists(_xml, "x") )            actorDsc->x            = getAttribute<int>(_xml, "x");
     if ( attributeExists(_xml, "y") )            actorDsc->y            = getAttribute<int>(_xml, "y");

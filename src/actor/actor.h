@@ -75,6 +75,8 @@ public:
   std::string getName() const;
   void setName(std::string n);
 
+  std::string getInscription() const;
+
   bool isBlocking() const;
   void setBlocking(bool b);
 
@@ -222,6 +224,7 @@ private:
   bool _blocks;
   int _priority;
   std::string _name;
+  std::string _inscription;
   std::string _description;
   TCODColor _color;
   char _symbol;

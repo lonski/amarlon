@@ -168,8 +168,17 @@ void Messenger::onNotify(Subject *subject, Event event)
 
           if ( event.params.find("item") != event.params.end() )
           {
-            const char* format = "You see a(n) %s.";
-            sprintf(msg, format, event.params["item"].c_str());
+            if ( event.params.find("inscription") != event.params.end() )
+            {
+              const char* format = "%s with inscription '%s'.";
+              sprintf(msg, format, event.params["item"].c_str()
+                                 , event.params["inscription"].c_str());
+            }
+            else
+            {
+              const char* format = "You see a(n) %s.";
+              sprintf(msg, format, event.params["item"].c_str());
+            }
           }
           else
           {

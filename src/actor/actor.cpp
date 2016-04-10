@@ -65,6 +65,7 @@ void Actor::upgrade(ActorDescriptionPtr dsc)
     if (dsc->x)            _x = *(dsc->x);
     if (dsc->y)            _y = *(dsc->y);
     if (dsc->name)         _name = *(dsc->name);
+    if (dsc->inscription)  _inscription = *(dsc->inscription);
     if (dsc->symbol)       _symbol = *(dsc->symbol);
     if (dsc->color)        _color = strToColor(*dsc->color);
     if (dsc->blocks)       _blocks = *(dsc->blocks);
@@ -121,6 +122,8 @@ ActorDescriptionPtr Actor::toDescriptionStruct()
   if ( _color       != base->_color )       dsc->color = colorToStr(_color);
   if ( _symbol      != base->_symbol )      dsc->symbol = _symbol;
   if ( _name        != base->_name )        dsc->name = _name;
+  if ( _inscription != base->_inscription ) dsc->inscription = _inscription;
+
   if ( isVisible()  != base->isVisible() )  dsc->visible = isVisible();
   if ( _description != base->_description ) dsc->description = _description;
 
@@ -217,6 +220,7 @@ Actor& Actor::operator=(const Actor &rhs)
     _blocks = rhs._blocks;
     _priority = rhs._priority;
     _name = rhs._name;
+    _inscription= rhs._inscription;
     _description = rhs._description;
     _color = rhs._color;
     _symbol = rhs._symbol;
@@ -245,6 +249,7 @@ bool Actor::operator==(const Actor &rhs) const
   equal &= rhs._blocks == _blocks;
   equal &= rhs._priority == _priority;
   equal &= rhs._name == _name;
+  equal &= rhs._inscription == _inscription;
   equal &= rhs._color == _color;
   equal &= rhs._symbol == _symbol;
 
@@ -391,6 +396,11 @@ std::string Actor::getName() const
 void Actor::setName(std::string n)
 {
   _name = n;
+}
+
+std::string Actor::getInscription() const
+{
+  return _inscription;
 }
 
 std::string Actor::getDescription()

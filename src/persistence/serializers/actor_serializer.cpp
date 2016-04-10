@@ -59,6 +59,7 @@ bool ActorSerializer::serialize(DescriptionPtr dsc)
     if ( aDsc->visible )      addAttribute( _actorNode, "visible", (int)*aDsc->visible );
     if ( aDsc->tilePriority ) addAttribute( _actorNode, "tilePriority", *aDsc->tilePriority );
     if ( aDsc->name )         addAttribute( _actorNode, "name", *aDsc->name );
+    if ( aDsc->inscription )  addAttribute( _actorNode, "inscription", *aDsc->inscription );
     if ( aDsc->color )        addAttribute( _actorNode, "color", *aDsc->color );
     if ( aDsc->symbol )       addAttribute( _actorNode, "character", *aDsc->symbol );
 
