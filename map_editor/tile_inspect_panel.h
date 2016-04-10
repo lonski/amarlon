@@ -5,6 +5,8 @@
 #include <actor_descriptions.h>
 #include <apanel.h>
 #include "actors_database.h"
+#include "actor_choose_panel.h"
+#include <map_description.h>
 
 namespace amarlon { namespace map_editor {
 
@@ -12,11 +14,24 @@ class TileInspectPanel : public gui::APanel
 {
 public:
   TileInspectPanel();
+  void handleInput(TCOD_mouse_t mouse);
 
   void init(int x, int y,
             const std::vector<ActorDescriptionPtr>&actors,
             ActorsDatabase* actorDb,
-            gui::APanel* parent);
+            gui::APanel* parent,
+            MapDescriptionPtr map);
+
+private:
+  std::shared_ptr<ActorChoosePanel> _actorChoose;
+  int _x;
+  int _y;
+  std::vector<ActorDescriptionPtr> _actors;
+  ActorsDatabase* _db;
+  gui::APanel* _parent;
+  MapDescriptionPtr _map;
+
+  void addActor(ActorDescriptionPtr a);
 
 
 };

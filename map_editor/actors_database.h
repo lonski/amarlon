@@ -12,6 +12,7 @@ public:
 
   ActorDescriptionPtr fetch(int id);
   void load(const std::string& fn);
+  std::map<int, ActorDescriptionPtr> getActors() const;
 
 private:
   std::map<int, ActorDescriptionPtr> _actors;

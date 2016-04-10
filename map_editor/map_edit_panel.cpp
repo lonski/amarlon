@@ -128,10 +128,7 @@ void MapEditPanel::handleInput(TCOD_mouse_t mouse)
     TileInspectPanel* inspect = dynamic_cast<TileInspectPanel*>(w.get());
     if ( inspect )
     {
-      processInput(mouse,
-                   inspect->getWidgets(),
-                   inspect->getX(),
-                   inspect->getY());
+      inspect->handleInput(mouse);
       anotherPanelOnTop = true;
       break;
     }
@@ -347,7 +344,7 @@ void MapEditPanel::tileClickAction(int x, int y)
       if ( *a->x == x && *a->y == y )
         actorsOnTile.push_back( a );
 
-    _tileInspect->init(x,y,actorsOnTile,_actorsDb, this);
+    _tileInspect->init(x,y,actorsOnTile,_actorsDb, this, _map);
     addWidget(_tileInspect);
   }
 }

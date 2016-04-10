@@ -54,10 +54,10 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Destroyable>	
 		<Description>Orcs are grotesque humanoids bent on war and domination. They have lupine ears, reddish eyes, truncated, upturned noses, and black hair (but very little body hair). An adult male orc is a little over 6 feet tall and weighs about 210 pounds; females are slightly smaller. Orcs prefer wearing vivid colors that many humans would consider unpleasant, such as blood red, mustard yellow, yellow-green, and deep purple. They utilize all manner of weapons and armor scavenged from battlefields.</Description>
 	</Actor>
-	<Actor name="Door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
+	<Actor name="Closed door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
 		<Openable scriptId="1" closed="1" />
 	</Actor>
-	<Actor name="Door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Opened door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
 		<Openable scriptId="1" closed="0" />
 	</Actor>
 	<Actor name="Bed" id="5" character="177" color="efefef" transparent="1" blocks="0" fovOnly="0"/>

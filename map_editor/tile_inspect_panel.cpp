@@ -1,6 +1,7 @@
 #include "tile_inspect_panel.h"
 #include <alabel.h>
 #include <alabel_menu_item.h>
+#include "editor_utils.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -10,9 +11,46 @@ TileInspectPanel::TileInspectPanel()
 
 }
 
-void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr> &actors,
-                            ActorsDatabase *actorDb, gui::APanel *parent)
+void TileInspectPanel::handleInput(TCOD_mouse_t mouse)
 {
+  if ( _actorChoose->getProperty<bool>("panel_active") )
+  {
+    _actorChoose->handleInput(mouse);
+  }
+  else
+  {
+    processInput(mouse,
+                 getWidgets(),
+                 getX(),
+                 getY());
+    if ( _actorChoose->getSelected() )
+    {
+      addActor(_actorChoose->getSelected());
+      _actorChoose->setSelected(nullptr);
+
+      _actors.clear();
+      for(ActorDescriptionPtr a : _map->actors )
+        if ( *a->x == _x && *a->y == _y )
+          _actors.push_back( a );
+
+      init(_x,_y, _actors, _db, _parent, _map);
+    }
+  }
+}
+
+void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr> &actors,
+                            ActorsDatabase *actorDb, gui::APanel *parent,
+                            MapDescriptionPtr map)
+{
+  _x = x;
+  _y = y;
+  _actors = actors;
+  _db = actorDb;
+  _parent = parent;
+  _map = map;
+  _actorChoose.reset( new ActorChoosePanel(_db,this) );
+  _actorChoose->setProperty<bool>("panel_active", false);
+
   removeAllWidgets();
 
   setPosition( 100, 0 );
@@ -26,8 +64,8 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   addWidget(title);
 
   ++y_pos;
-  addWidget( new gui::ALabel("X: "+std::to_string(x), 2, y_pos++) );
-  addWidget( new gui::ALabel("Y: "+std::to_string(y), 2, y_pos++) );
+  addWidget( new gui::ALabel("X: "+std::to_string(_x), 2, y_pos++) );
+  addWidget( new gui::ALabel("Y: "+std::to_string(_y), 2, y_pos++) );
 
   ++y_pos;
   gui::ALabel* title2 = new gui::ALabel;
@@ -37,11 +75,11 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   addWidget(title2);
 
   ++y_pos;
-  for ( ActorDescriptionPtr a : actors )
+  for ( ActorDescriptionPtr a : _actors )
   {
-    ActorDescriptionPtr def = actorDb->fetch(*a->id);
+    ActorDescriptionPtr def = _db->fetch(*a->id);
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
-                                       *def->name + "["+std::to_string(*a->id)+"]", [](){
+                                       *def->name + " [ID"+std::to_string(*a->id)+"]", [](){
       //TODO something
     } ));
   }
@@ -55,15 +93,28 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
 
   y_pos+=2;
   addWidget( new gui::ALabelMenuItem(2, y_pos++,
-                                     "Add actor", [](){
-    //TODO
+                                     "Add actor", [=](){
+    _actorChoose->setProperty<bool>("panel_active", true);
+    addWidget(_actorChoose);
   } ));
 
   y_pos += 2;
   addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                      "[CLOSE]", [=](){
-    parent->removeWidget(this);
+    _parent->removeWidget(this);
   } ));
+}
+
+void TileInspectPanel::addActor(ActorDescriptionPtr a)
+{
+  if ( _map )
+  {
+    ActorDescriptionPtr dsc(new ActorDescription );
+    dsc->id = *a->id;
+    dsc->x = _x;
+    dsc->y = _y;
+    _map->actors.push_back(dsc);
+  }
 }
 
 }}

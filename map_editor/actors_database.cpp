@@ -52,4 +52,9 @@ void ActorsDatabase::load(const std::string &fn)
   }
 }
 
+std::map<int, ActorDescriptionPtr> ActorsDatabase::getActors() const
+{
+  return _actors;
+}
+
 }}
