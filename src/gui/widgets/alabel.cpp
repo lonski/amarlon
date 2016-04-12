@@ -28,7 +28,7 @@ void ALabel::render(TCODConsole &console)
   console.setDefaultBackground(_bgcolor);
 
   std::string val = _value;
-  while (!_autosize && val.size() < getWidth() )
+  while (!_autosize && val.size() < static_cast<size_t>(getWidth()) )
   {
     val += " ";
   }

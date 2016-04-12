@@ -33,7 +33,7 @@ void Talker::upgrade(DescriptionPtr dsc)
   }
 }
 
-DescriptionPtr Talker::toDescriptionStruct(ActorFeaturePtr cmp)
+DescriptionPtr Talker::toDescriptionStruct(ActorFeaturePtr /*cmp*/)
 {
   TalkerDescriptionPtr dsc(new TalkerDescription);
 

@@ -13,7 +13,7 @@ public:
     ARemove
   };
   ActorMenuPanel(APanel* parent);
-  void handleInput(TCOD_mouse_t mouse);
+  void handleInput(TCOD_mouse_t mouse, TCOD_key_t key);
   void init();
 
   ActorMenuPanel::Action choosen() const;

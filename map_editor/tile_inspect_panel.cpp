@@ -11,19 +11,19 @@ TileInspectPanel::TileInspectPanel()
 
 }
 
-void TileInspectPanel::handleInput(TCOD_mouse_t mouse)
+void TileInspectPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 {
   if ( _actorMenu->getProperty<bool>("panel_active") )
   {
-    _actorMenu->handleInput(mouse);
+    _actorMenu->handleInput(mouse, key);
   }
   else if ( _actorChoose->getProperty<bool>("panel_active") )
   {
-    _actorChoose->handleInput(mouse);
+    _actorChoose->handleInput(mouse, key);
   }
   else
   {
-    processInput(mouse,
+    processInput(mouse, key,
                  getWidgets(),
                  getX(),
                  getY());

@@ -15,7 +15,7 @@ class TileInspectPanel : public gui::APanel
 {
 public:
   TileInspectPanel();
-  void handleInput(TCOD_mouse_t mouse);
+  void handleInput(TCOD_mouse_t mouse, TCOD_key_t key);
 
   void init(int x, int y,
             const std::vector<ActorDescriptionPtr>&actors,

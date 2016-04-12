@@ -16,27 +16,28 @@ MapEditor::MapEditor()
 
 }
 
-void MapEditor::handleInput(TCOD_mouse_t mouse)
+void MapEditor::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 {
   _lastInput = mouse;
+  _lastInputKey = key;
 
-  processInput(_lastInput,
+  processInput(_lastInput, _lastInputKey,
                _panel->getWidgets(),
                _panel->getX(),
                _panel->getY());
 
   if ( _activePanel == Panel::MapEdit )
   {
-    _mapEditPanel->handleInput(mouse);
+    _mapEditPanel->handleInput(_lastInput, _lastInputKey);
   }
   else
   {
-    processInput(_lastInput,
+    processInput(_lastInput, _lastInputKey,
                  _mapChoosePanel->getWidgets(),
                  _mapChoosePanel->getX(),
                  _mapChoosePanel->getY());
 
-    processInput(_lastInput,
+    processInput(_lastInput, _lastInputKey,
                  _mainMenuPanel->getWidgets(),
                  _mainMenuPanel->getX(),
                  _mainMenuPanel->getY());

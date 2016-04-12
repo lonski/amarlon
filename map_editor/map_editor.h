@@ -20,7 +20,7 @@ class MapEditor
 public:
   MapEditor();
 
-  void handleInput(TCOD_mouse_t mouse);
+  void handleInput(TCOD_mouse_t mouse, TCOD_key_t key);
   void render();
   void init();
   bool isQuitting();
@@ -44,6 +44,7 @@ private:
   int _screenWidth;
   int _panelWidth;
   TCOD_mouse_t _lastInput;
+  TCOD_key_t _lastInputKey;
   bool _quit;
   MapsDatabase _db;
   TileDB _tileDB;

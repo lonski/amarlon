@@ -12,8 +12,9 @@ int main()
     TCODConsole::root->flush();
 
     TCOD_mouse_t mouse;
-    TCODSystem::waitForEvent(TCOD_EVENT_MOUSE, NULL, &mouse, true);
-    editor.handleInput(mouse);
+    TCOD_key_t key;
+    TCODSystem::waitForEvent(TCOD_EVENT_MOUSE|TCOD_EVENT_KEY_PRESS, &key, &mouse, false);
+    editor.handleInput(mouse, key);
   }
 
   return 0;

@@ -29,9 +29,9 @@ void ActorChoosePanel::render(TCODConsole &console)
   APanel::render(console);
 }
 
-void ActorChoosePanel::handleInput(TCOD_mouse_t mouse)
+void ActorChoosePanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 {
-  processInput(mouse,
+  processInput(mouse, key,
                getWidgets(),
                getX()+ _parent? _parent->getX():0,
                getY()+ _parent? _parent->getY():0);

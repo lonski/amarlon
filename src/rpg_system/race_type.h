@@ -14,7 +14,8 @@ enum class RaceType
   Halfling = 4,
   Orc      = 5,
   Goblin   = 6,
-  Undead   = 7
+  Undead   = 7,
+  Animal   = 8
 };
 
 inline RaceType operator++(RaceType& x) { return x = (RaceType)(std::underlying_type<RaceType>::type(x) + 1); }

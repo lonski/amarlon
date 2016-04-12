@@ -85,7 +85,7 @@ void MapEditPanel::setMap(MapDescriptionPtr map)
 
       _tiles[y][x] =  *serialized;
 
-      if ( x == _map->width - 1 )
+      if ( x == static_cast<size_t>(_map->width - 1) )
       {
         x = 0;
         ++y;
@@ -119,7 +119,7 @@ gui::APanelPtr MapEditPanel::getSidebar() const
   return _sidebar;
 }
 
-void MapEditPanel::handleInput(TCOD_mouse_t mouse)
+void MapEditPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 {
   bool anotherPanelOnTop = false;
 
@@ -128,7 +128,7 @@ void MapEditPanel::handleInput(TCOD_mouse_t mouse)
     TileInspectPanel* inspect = dynamic_cast<TileInspectPanel*>(w.get());
     if ( inspect )
     {
-      inspect->handleInput(mouse);
+      inspect->handleInput(mouse, key);
       anotherPanelOnTop = true;
       break;
     }
@@ -136,7 +136,7 @@ void MapEditPanel::handleInput(TCOD_mouse_t mouse)
 
   if ( !anotherPanelOnTop )
   {
-    processInput(mouse,
+    processInput(mouse, key,
                  getSidebar()->getWidgets(),
                  getSidebar()->getX(),
                  getSidebar()->getY());
@@ -349,7 +349,7 @@ void MapEditPanel::tileClickAction(int x, int y)
   }
 }
 
-void MapEditPanel::tileRClickAction(int x, int y)
+void MapEditPanel::tileRClickAction(int /*x*/, int /*y*/)
 {
 
 }

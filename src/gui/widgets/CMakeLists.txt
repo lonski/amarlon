@@ -11,6 +11,7 @@ set(HEADER_FILES
     asub_panel.h
     ahorizontal_menu.h
     apanel_button.h
+    atext_edit.h
 )
 
 set(SOURCE_FILES
@@ -24,6 +25,7 @@ set(SOURCE_FILES
     amenu.cpp
     ahorizontal_menu.cpp
     apanel_button.cpp
+    atext_edit.cpp
 )
 
 add_library(a_widgets SHARED ${SOURCE_FILES} ${HEADER_FILES})

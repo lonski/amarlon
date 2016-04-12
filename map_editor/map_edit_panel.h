@@ -29,14 +29,14 @@ public:
   void setMapEditor(MapEditor* editor);
 
   gui::APanelPtr getSidebar() const;
-  void handleInput(TCOD_mouse_t mouse);
+  void handleInput(TCOD_mouse_t mouse, TCOD_key_t key);
 
 private:
   MapDescriptionPtr _map;
   gui::APanelPtr _sidebar;
+  TileDB* _tileDb;
   MapEditor* _editor;
   TileMatrix _tiles;
-  TileDB* _tileDb;
   TileType _selectedTile;
   TileType _selectedTile_Right;
   gui::ALabelPtr _selectedTileLabel;

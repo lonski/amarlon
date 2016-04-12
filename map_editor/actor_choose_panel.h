@@ -14,7 +14,7 @@ public:
   ActorDescriptionPtr getSelected() const;
   void setSelected(ActorDescriptionPtr dsc);
   virtual void render(TCODConsole& console);
-  void handleInput(TCOD_mouse_t mouse);
+  void handleInput(TCOD_mouse_t mouse, TCOD_key_t key);
   void init();
 
 private:
