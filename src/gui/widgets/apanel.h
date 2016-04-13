@@ -41,11 +41,15 @@ public:
 
   virtual std::vector< AWidgetPtr > getWidgets();
 
+  bool isActive() const;
+  void setActive(bool active);
+
 private:
   bool _frame;
   TCODColor _frameColor;
   std::string _title;
   TCODColor _titleColor;
+  bool _active;
 
   std::vector< AWidgetPtr > _widgets;
 

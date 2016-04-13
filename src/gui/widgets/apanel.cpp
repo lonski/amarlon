@@ -7,6 +7,7 @@ APanel::APanel(int w, int h)
   : _frame(true)
   , _frameColor(TCODColor::darkerOrange)
   , _titleColor(TCODColor::lighterOrange)
+  , _active(false)
   , _panelConsole( new TCODConsole(w, h) )
 {
 }
@@ -146,6 +147,16 @@ void APanel::removeAllWidgets()
 std::vector<AWidgetPtr> APanel::getWidgets()
 {
   return _widgets;
+}
+
+bool APanel::isActive() const
+{
+    return _active;
+}
+
+void APanel::setActive(bool active)
+{
+    _active = active;
 }
 
 }}

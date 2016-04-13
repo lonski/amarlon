@@ -62,8 +62,7 @@ void ActorChoosePanel::init()
                                          + *def->name,
                                          [def, this](){
         _selectedActor = def;
-        _parent->removeWidget(this);
-        setProperty<bool>("panel_active", false);
+        setActive(false);
       } ));
     }
 
@@ -71,8 +70,7 @@ void ActorChoosePanel::init()
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                        "[CLOSE]", [=](){
       _selectedActor = nullptr;
-      setProperty<bool>("panel_active", false);
-      _parent->removeWidget(this);
+      setActive(false);
     } ));
   }
 }

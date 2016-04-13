@@ -74,14 +74,12 @@ void ActorEditPanel::init()
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                        "[SAVE]", [=](){
       saveActor();
-      setProperty<bool>("panel_active", false);
-      _parent->removeWidget(this);
+      setActive(false);
     } ));
     ++y_pos;
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                        "[CLOSE]", [=](){
-      setProperty<bool>("panel_active", false);
-      _parent->removeWidget(this);
+      setActive(false);
     } ));
   }
 }

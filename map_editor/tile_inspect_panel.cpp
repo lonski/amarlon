@@ -13,24 +13,23 @@ TileInspectPanel::TileInspectPanel()
 
 void TileInspectPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 {
-  if ( _actorMenu->getProperty<bool>("panel_active") )
-  {
-    _actorMenu->handleInput(mouse, key);
-  }
-  else if ( _actorChoose->getProperty<bool>("panel_active") )
-  {
-    _actorChoose->handleInput(mouse, key);
-  }
-  else if ( _actorEdit->getProperty<bool>("panel_active") )
-  {
-    _actorEdit->handleInput(mouse, key );
-  }
-  else
+  bool panelActive = false;
+
+  for ( auto& kv : _panels )
+    if ( kv.second && kv.second->isActive() )
+    {
+      panelActive = true;
+      kv.second->handleInput(mouse, key);
+      break;
+    }
+
+  if ( !panelActive )
   {
     processInput(mouse, key,
                  getWidgets(),
                  getX(),
                  getY());
+
     if ( _actorChoose->getSelected() )
     {
       addActor(_actorChoose->getSelected());
@@ -65,16 +64,26 @@ void TileInspectPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
       else if ( _actorMenu->choosen() == ActorMenuPanel::AEdit )
       {
         _actorMenu->setChoosen(ActorMenuPanel::ANoAction);
-        _actorEdit->setProperty<bool>("panel_active", true);
         _actorEdit->setActor(_actorUnderManage);
-        addWidget(_actorEdit);
-        removeWidget(_actorMenu.get());
-        _actorMenu->setProperty<bool>("panel_active", false);
-        removeWidget(_actorChoose.get());
-        _actorChoose->setProperty<bool>("panel_active", false);
+        _actorEdit->setActive(true);
       }
     }
   }
+}
+
+void TileInspectPanel::render(TCODConsole &console)
+{
+  for ( auto& kv : _panels )
+    if ( kv.second )
+    {
+      if ( kv.second->isActive() )
+        addWidget(kv.second);
+      else
+        removeWidget(kv.second.get());
+    }
+
+
+  gui::APanel::render(console);
 }
 
 void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr> &actors,
@@ -87,12 +96,15 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   _db = actorDb;
   _parent = parent;
   _map = map;
+
   _actorChoose.reset( new ActorChoosePanel(_db,this) );
-  _actorChoose->setProperty<bool>("panel_active", false);
+  _panels[EPanel_ActorChoose] = _actorChoose;
+
   _actorMenu.reset( new ActorMenuPanel(this) );
-  _actorMenu->setProperty<bool>("panel_active", false);
+  _panels[EPanel_ActorMenu] = _actorMenu;
+
   _actorEdit.reset( new ActorEditPanel(_db, this) );
-  _actorEdit->setProperty<bool>("panel_active", false);
+  _panels[EPanel_ActorEdit] = _actorEdit;
 
   removeAllWidgets();
 
@@ -123,9 +135,8 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
     ActorDescriptionPtr def = _db->fetch(*a->id);
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                        *def->name + " [ID"+std::to_string(*a->id)+"]", [this, a](){
-      _actorMenu->setProperty<bool>("panel_active", true);
+      _actorMenu->setActive(true);
       _actorUnderManage = a;
-      addWidget(_actorMenu);
     } ));
   }
 
@@ -139,8 +150,7 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   y_pos+=2;
   addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                      "Add actor", [=](){
-    _actorChoose->setProperty<bool>("panel_active", true);
-    addWidget(_actorChoose);
+    _actorChoose->setActive(true);
   } ));
 
   y_pos += 2;

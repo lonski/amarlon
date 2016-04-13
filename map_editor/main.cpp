@@ -15,6 +15,7 @@ int main()
     TCOD_key_t key;
     TCODSystem::checkForEvent(TCOD_EVENT_MOUSE|TCOD_EVENT_KEY_PRESS, &key, &mouse);
     editor.handleInput(mouse, key);
+    fflush(stdout);
   }
 
   return 0;

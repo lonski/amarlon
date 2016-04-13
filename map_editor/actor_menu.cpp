@@ -41,8 +41,7 @@ void ActorMenuPanel::init()
                                      "Remove",
                                      [this](){
     _choosen = ARemove;
-    if ( _parent) _parent->removeWidget(this);
-    setProperty<bool>("panel_active", false);
+    setActive(false);
   } ));
 
   ++y_pos;
@@ -50,16 +49,14 @@ void ActorMenuPanel::init()
                                      "Edit",
                                      [this](){
     _choosen = AEdit;
-    if ( _parent) _parent->removeWidget(this);
-    setProperty<bool>("panel_active", false);
+    setActive(false);
   } ));
 
   y_pos += 2;
   addWidget( new gui::ALabelMenuItem(2, y_pos++,
                                      "[CLOSE]", [=](){
     _choosen = ANoAction;
-    setProperty<bool>("panel_active", false);
-    if (_parent) _parent->removeWidget(this);
+    setActive(false);
   } ));
 }
 
