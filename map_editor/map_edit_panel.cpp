@@ -56,7 +56,7 @@ void MapEditPanel::render(TCODConsole &console)
           {
             _panelConsole->setChar( *a->x, *a->y, *dsc->symbol );
             if ( dsc->color )
-              _panelConsole->setCharForeground( *a->x, *a->y, strToColor(*dsc->color) );
+              _panelConsole->setCharForeground( *a->x, *a->y, strToColor( a->color ? *a->color : *dsc->color) );
           }
         }
       }
