@@ -13,7 +13,7 @@ int main()
 
     TCOD_mouse_t mouse;
     TCOD_key_t key;
-    TCODSystem::waitForEvent(TCOD_EVENT_MOUSE|TCOD_EVENT_KEY_PRESS, &key, &mouse, false);
+    TCODSystem::checkForEvent(TCOD_EVENT_MOUSE|TCOD_EVENT_KEY_PRESS, &key, &mouse);
     editor.handleInput(mouse, key);
   }
 

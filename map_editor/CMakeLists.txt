@@ -11,6 +11,7 @@ set(HEADER_FILES
   tile_inspect_panel.h
   actor_choose_panel.h
   actor_menu.h
+  actor_edit_panel.h
 )
 
 set(SOURCE_FILES
@@ -26,6 +27,7 @@ set(SOURCE_FILES
   tile_inspect_panel.cpp
   actor_choose_panel.cpp
   actor_menu.cpp
+  actor_edit_panel.cpp
 )
 
 add_library(a_mapeditor STATIC ${SOURCE_FILES} ${HEADER_FILES})

@@ -8,6 +8,7 @@
 #include "actor_choose_panel.h"
 #include <map_description.h>
 #include "actor_menu.h"
+#include "actor_edit_panel.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -33,6 +34,7 @@ private:
   gui::APanel* _parent;
   MapDescriptionPtr _map;
   ActorDescriptionPtr _actorUnderManage;
+  std::shared_ptr<ActorEditPanel> _actorEdit;
 
   void addActor(ActorDescriptionPtr a);
 

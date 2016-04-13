@@ -35,12 +35,18 @@ public:
   std::string getTitle() const;
   void setTitle(const std::string &title);
 
+  void setText(const std::string &text);
+
+  TCODColor getTitleColor() const;
+  void setTitleColor(const TCODColor &titleColor);
+
 private:
   bool _active;
   std::string _text;
   unsigned _width;
   TCODColor _backgroundColor;
   TCODColor _textColor;
+  TCODColor _titleColor;
   std::string _title;
   int _totalAlign;
 

@@ -7,7 +7,8 @@ ATextEdit::ATextEdit(int x, int y, int width, const std::string &title)
     : _active(false)
     , _width(width)
     , _backgroundColor(TCODColor::darkestGrey)
-    , _textColor(TCODColor::white)
+    , _textColor(TCODColor::yellow)
+    , _titleColor(TCODColor::white)
     , _title(title)
 {
   setPosition(x,y);
@@ -15,12 +16,12 @@ ATextEdit::ATextEdit(int x, int y, int width, const std::string &title)
 
 void ATextEdit::render(TCODConsole &console)
 {
-  console.setDefaultForeground(_textColor);
 
   std::string buf = _text;
   if ( _active ) buf += "|";
   while ( buf.size() < (_width - _title.size()) ) buf += " ";
 
+  console.setDefaultForeground(_titleColor);
   if ( !_title.empty() )
     console.printEx(getX(), getY(),
                     TCOD_BKGND_DEFAULT, TCOD_LEFT,
@@ -29,6 +30,7 @@ void ATextEdit::render(TCODConsole &console)
   console.setDefaultBackground( _active ? TCODColor::lerp(_backgroundColor, TCODColor::yellow, 0.1)
                                         : _backgroundColor);
 
+  console.setDefaultForeground(_textColor);
   console.printEx(getX() + (_title.empty()?0:_title.size()+1), getY(),
                   TCOD_BKGND_SET, TCOD_LEFT,
                   "%s", buf.c_str() );
@@ -89,7 +91,13 @@ std::string ATextEdit::getText() const
 
 int ATextEdit::getInt() const
 {
-  return std::stoi(_text);
+  int i(0);
+
+  try{
+    i = std::stol(_text);
+  }catch(...){}
+
+  return i;
 }
 
 TCODColor ATextEdit::getBackgroundColor() const
@@ -120,6 +128,21 @@ std::string ATextEdit::getTitle() const
 void ATextEdit::setTitle(const std::string &title)
 {
   _title = title;
+}
+
+void ATextEdit::setText(const std::string &text)
+{
+    _text = text;
+}
+
+TCODColor ATextEdit::getTitleColor() const
+{
+  return _titleColor;
+}
+
+void ATextEdit::setTitleColor(const TCODColor &titleColor)
+{
+  _titleColor = titleColor;
 }
 
 }}

@@ -10,7 +10,8 @@ class ActorMenuPanel : public gui::APanel
 public:
   enum Action{
     ANoAction,
-    ARemove
+    ARemove,
+    AEdit
   };
   ActorMenuPanel(APanel* parent);
   void handleInput(TCOD_mouse_t mouse, TCOD_key_t key);

@@ -2,7 +2,6 @@
 #include <alabel.h>
 #include <alabel_menu_item.h>
 #include "editor_utils.h"
-#include <atext_edit.h>
 
 namespace amarlon { namespace map_editor {
 
@@ -46,10 +45,14 @@ void ActorMenuPanel::init()
     setProperty<bool>("panel_active", false);
   } ));
 
-//  ++y_pos;
-//  addWidget( new gui::ATextEdit(2, y_pos++, 25, "Name") );
-//  ++y_pos;
-//  addWidget( new gui::ATextEdit(2, y_pos++, 25, "Inscription") );
+  ++y_pos;
+  addWidget( new gui::ALabelMenuItem(2, y_pos++,
+                                     "Edit",
+                                     [this](){
+    _choosen = AEdit;
+    if ( _parent) _parent->removeWidget(this);
+    setProperty<bool>("panel_active", false);
+  } ));
 
   y_pos += 2;
   addWidget( new gui::ALabelMenuItem(2, y_pos++,

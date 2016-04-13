@@ -21,6 +21,10 @@ void TileInspectPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
   {
     _actorChoose->handleInput(mouse, key);
   }
+  else if ( _actorEdit->getProperty<bool>("panel_active") )
+  {
+    _actorEdit->handleInput(mouse, key );
+  }
   else
   {
     processInput(mouse, key,
@@ -43,6 +47,7 @@ void TileInspectPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
     {
       if ( _actorMenu->choosen() == ActorMenuPanel::ARemove )
       {
+          _actorMenu->setChoosen(ActorMenuPanel::ANoAction);
           for ( auto it = _map->actors.begin(); it != _map->actors.end(); ++it)
             if ( it->get() == _actorUnderManage.get() ) {
               _map->actors.erase(it);
@@ -56,6 +61,17 @@ void TileInspectPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 
               break;
             }
+      }
+      else if ( _actorMenu->choosen() == ActorMenuPanel::AEdit )
+      {
+        _actorMenu->setChoosen(ActorMenuPanel::ANoAction);
+        _actorEdit->setProperty<bool>("panel_active", true);
+        _actorEdit->setActor(_actorUnderManage);
+        addWidget(_actorEdit);
+        removeWidget(_actorMenu.get());
+        _actorMenu->setProperty<bool>("panel_active", false);
+        removeWidget(_actorChoose.get());
+        _actorChoose->setProperty<bool>("panel_active", false);
       }
     }
   }
@@ -75,6 +91,8 @@ void TileInspectPanel::init(int x, int y, const std::vector<ActorDescriptionPtr>
   _actorChoose->setProperty<bool>("panel_active", false);
   _actorMenu.reset( new ActorMenuPanel(this) );
   _actorMenu->setProperty<bool>("panel_active", false);
+  _actorEdit.reset( new ActorEditPanel(_db, this) );
+  _actorEdit->setProperty<bool>("panel_active", false);
 
   removeAllWidgets();
 

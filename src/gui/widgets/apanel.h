@@ -17,6 +17,8 @@ public:
   bool removeWidget(AWidget* widget);
   void addWidget(const AWidgetPtr& widget);
 
+  virtual void handleInput(TCOD_mouse_t /*mouse*/, TCOD_key_t /*key*/) {}
+
   std::string getTitle() const;
   void setTitle(const std::string &title);
 
