@@ -248,6 +248,11 @@ bool Pickable::isStackable() const
   return _stackable;
 }
 
+void Pickable::setStackable(bool stackable)
+{
+  _stackable = stackable;
+}
+
 ItemSlotType Pickable::getItemSlot() const
 {
   return _itemSlot;
@@ -296,6 +301,11 @@ int Pickable::getArmorClass() const
 int Pickable::getWeight() const
 {
   return _weight;
+}
+
+void Pickable::setWeight(int weight)
+{
+  _weight = weight;
 }
 
 int Pickable::getPrice() const

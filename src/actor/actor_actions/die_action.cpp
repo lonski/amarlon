@@ -37,7 +37,22 @@ ActorActionResult DieAction::perform(ActorPtr performer)
     }
 
     _performer->notify(Event(EventId::Actor_Died));
-    _performer->morph( 15 /* Corpse */);
+
+    _performer->setName( _performer->getName() + " corpse");
+    _performer->setColor( TCODColor::red );
+    _performer->setSymbol('%');
+    _performer->setBlocking(false);
+    _performer->setTransparent(true);
+    _performer->setFovOnly(false);
+    _performer->removeAllFeatures();
+
+    PickablePtr pickable( new Pickable );
+    pickable->setCategory( PickableCategory::Miscellaneous );
+    pickable->setStackable(false);
+    pickable->setAmount(1);
+    pickable->setWeight(20);
+    //TODO: get real information about weight
+    _performer->insertFeature( pickable );
   }
 
   return _performer != nullptr ? ActorActionResult::Ok : ActorActionResult::Nok;

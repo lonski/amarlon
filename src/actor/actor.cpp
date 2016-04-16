@@ -340,6 +340,11 @@ StatusEffectsManager &Actor::getStatusEffects() const
   return *_effects;
 }
 
+void Actor::removeAllFeatures()
+{
+  _features.clear();
+}
+
 bool Actor::isFovOnly() const
 {
   return _fovOnly;

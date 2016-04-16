@@ -117,6 +117,8 @@ bool Inventory::add(ActorPtr actor, bool notify)
 
   if ( notify ) notifyAdd(actor);
 
+  actor->setMap(nullptr);
+
   return true;
 }
 

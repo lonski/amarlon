@@ -55,6 +55,7 @@ public:
   void setAmount(int getAmount);
 
   bool isStackable() const;
+  void setStackable(bool stackable);
 
   ItemSlotType getItemSlot() const;
   void setItemSlot(const ItemSlotType &getItemSlot);
@@ -68,8 +69,10 @@ public:
 
   Damage getDamage() const;
   int getArmorClass() const;
-  int getWeight() const;
   int getPrice() const;
+
+  int getWeight() const;
+  void setWeight(int weight);
 
   virtual std::string getDescription();
 

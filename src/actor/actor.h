@@ -163,6 +163,11 @@ public:
   StatusEffectsManager& getStatusEffects() const;
 
   /**
+   * @brief Deletes all Actor Features from this actor.
+   */
+  void removeAllFeatures();
+
+  /**
    * @brief adds actor feature or overwrites existing one
    * @param feature to be inserted
    * @return overwriten feature if any, otherwise empty pointer
