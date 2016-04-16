@@ -3,6 +3,7 @@
 #include <alabel_menu_item.h>
 #include <alabel.h>
 #include "openable_edit_panel.h"
+#include "pickable_edit_panel.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -72,6 +73,9 @@ void ActorEditPanel::init()
 
   _panels[ ActorFeature::OPENABLE ] = std::shared_ptr<ActorFeatureEditPanel>
       (new OpenableEditPanel(_db));
+
+  _panels[ ActorFeature::PICKABLE ] = std::shared_ptr<ActorFeatureEditPanel>
+      (new PickableEditPanel(_db));
 
   if ( _parent )
   {

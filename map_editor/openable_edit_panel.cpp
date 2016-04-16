@@ -31,27 +31,38 @@ void OpenableEditPanel::init()
     {
       ++y_pos;
       _fClosed.reset(new gui::ATextEdit(2, y_pos++, 25, "Closed"));
-      _fClosed->setText( std::to_string( getField<bool>( &OpenableDescription::closed ) ) );
+      _fClosed->setText( std::to_string(
+                           getField<bool, OpenableDescription>
+                           ( &OpenableDescription::closed, (int)ActorFeature::OPENABLE ) ) );
+
       addWidget( _fClosed );
 
       ++y_pos;
       _fLocked.reset(new gui::ATextEdit(2, y_pos++, 25, "Locked"));
-      _fLocked->setText( std::to_string( getField<bool>( &OpenableDescription::locked ) ) );
+      _fLocked->setText( std::to_string(
+                           getField<bool, OpenableDescription>
+                           ( &OpenableDescription::locked, (int)ActorFeature::OPENABLE ) ) );
       addWidget( _fLocked );
 
       ++y_pos;
       _fLockId.reset(new gui::ATextEdit(2, y_pos++, 25, "Lock ID"));
-      _fLockId->setText( std::to_string( getField<int>( &OpenableDescription::lockId ) ) );
+      _fLockId->setText( std::to_string(
+                           getField<int, OpenableDescription>
+                           ( &OpenableDescription::lockId, (int)ActorFeature::OPENABLE ) ) );
       addWidget( _fLockId );
 
       ++y_pos;
       _fLockLevel.reset(new gui::ATextEdit(2, y_pos++, 25, "Lock level"));
-      _fLockLevel->setText( std::to_string( getField<int>( &OpenableDescription::lockLevel ) ) );
+      _fLockLevel->setText( std::to_string(
+                              getField<int, OpenableDescription>
+                              ( &OpenableDescription::lockLevel, (int)ActorFeature::OPENABLE ) ) );
       addWidget( _fLockLevel );
 
       ++y_pos;
       _fScriptId.reset(new gui::ATextEdit(2, y_pos++, 25, "Script ID"));
-      _fScriptId->setText( std::to_string( getField<int>( &OpenableDescription::scriptId ) ) );
+      _fScriptId->setText( std::to_string(
+                             getField<int, OpenableDescription>
+                             ( &OpenableDescription::scriptId, (int)ActorFeature::OPENABLE ) ) );
       addWidget( _fScriptId );
     }
 
@@ -71,24 +82,17 @@ void OpenableEditPanel::init()
 
 void OpenableEditPanel::saveActor()
 {
-  saveField<bool>( &OpenableDescription::closed, _fClosed->getText() == "1");
-  saveField<bool>( &OpenableDescription::locked, _fLocked->getText() == "1");
-  saveField<int>( &OpenableDescription::lockId, _fLockId->getInt());
-  saveField<int>( &OpenableDescription::lockLevel, _fLockLevel->getInt());
-  saveField<int>( &OpenableDescription::scriptId, _fScriptId->getInt());
+  saveField<bool,OpenableDescription>
+      ( &OpenableDescription::closed, (int)ActorFeature::OPENABLE, _fClosed->getText() == "1");
+  saveField<bool,OpenableDescription>
+      ( &OpenableDescription::locked, (int)ActorFeature::OPENABLE, _fLocked->getText() == "1");
+  saveField<int,OpenableDescription>
+      ( &OpenableDescription::lockId, (int)ActorFeature::OPENABLE, _fLockId->getInt());
+  saveField<int,OpenableDescription>
+      ( &OpenableDescription::lockLevel, (int)ActorFeature::OPENABLE, _fLockLevel->getInt());
+  saveField<int,OpenableDescription>
+      ( &OpenableDescription::scriptId, (int)ActorFeature::OPENABLE, _fScriptId->getInt());
 }
 
-OpenableDescriptionPtr OpenableEditPanel::getOpenable() const
-{
-  return std::dynamic_pointer_cast<OpenableDescription>(
-        _actor->features[ (int)ActorFeature::OPENABLE ] );
-}
-
-OpenableDescriptionPtr OpenableEditPanel::getOpenablePrototype() const
-{
-  ActorDescriptionPtr prototype = _db->fetch( *_actor->id );
-  return std::dynamic_pointer_cast<OpenableDescription>(
-        prototype->features[ (int)ActorFeature::OPENABLE ] );
-}
 
 }}
