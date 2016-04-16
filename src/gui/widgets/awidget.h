@@ -56,10 +56,14 @@ public:
   template<typename T> inline T getProperty(const std::string& propertyName);
   template<typename T> inline void setProperty(const std::string& propertyName, const T& propertyValue);
 
+  AWidget* getParent() const;
+  void setParent(AWidget *parent);
+
 private:
   std::map<std::string, std::string> _properties;
   int _x;
   int _y;  
+  AWidget* _parent;
 
 };
 

@@ -5,6 +5,8 @@
 #include <actor_descriptions.h>
 #include <atext_edit.h>
 #include "actors_database.h"
+#include "actor_feature_edit_panel.h"
+#include <actor_feature.h>
 
 namespace amarlon { namespace map_editor {
 
@@ -27,6 +29,8 @@ private:
   gui::ATextEditPtr _finscription;
   gui::ATextEditPtr _fcolor;
   gui::ATextEditPtr _fpriority;
+
+  std::map<ActorFeature::Type, std::shared_ptr<ActorFeatureEditPanel> > _panels;
 
   void saveActor();
 

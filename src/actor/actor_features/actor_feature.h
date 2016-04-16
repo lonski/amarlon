@@ -58,6 +58,18 @@ inline ActorFeature::Type operator*(ActorFeature::Type c) {return c;}
 inline ActorFeature::Type begin(ActorFeature::Type) {return ActorFeature::Type::FT_NULL;}
 inline ActorFeature::Type end(ActorFeature::Type)   {return ActorFeature::Type::FT_END;}
 
+static std::map<ActorFeature::Type, std::string> ActorFeatureToStr {
+  { ActorFeature::AI,          "Ai" },
+  { ActorFeature::OPENABLE,    "Openable" },
+  { ActorFeature::WEARER,      "Wearer" },
+  { ActorFeature::INVENTORY,   "Inventory" },
+  { ActorFeature::CHARACTER,   "Character" },
+  { ActorFeature::PICKABLE,    "Pickable" },
+  { ActorFeature::DESTROYABLE, "Destroyable" },
+  { ActorFeature::TRAP,        "Trap" },
+  { ActorFeature::TALKER,      "Talker" }
+};
+
 typedef std::map<ActorFeature::Type, ActorFeaturePtr> FeatureMap;
 
 }

@@ -12,6 +12,8 @@ set(HEADER_FILES
   actor_choose_panel.h
   actor_menu.h
   actor_edit_panel.h
+  actor_feature_edit_panel.h
+  openable_edit_panel.h
 )
 
 set(SOURCE_FILES
@@ -28,6 +30,8 @@ set(SOURCE_FILES
   actor_choose_panel.cpp
   actor_menu.cpp
   actor_edit_panel.cpp
+  actor_feature_edit_panel.cpp
+  openable_edit_panel.cpp
 )
 
 add_library(a_mapeditor STATIC ${SOURCE_FILES} ${HEADER_FILES})

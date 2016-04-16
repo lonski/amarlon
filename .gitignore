@@ -20,3 +20,4 @@ include/gtest
 doc/
 include
 lib
+RELEASE/

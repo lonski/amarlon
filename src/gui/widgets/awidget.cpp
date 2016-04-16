@@ -10,6 +10,7 @@ int AWidget::screenHeight = 75;
 AWidget::AWidget()
   : _x(0)
   , _y(0)  
+  , _parent(nullptr)
 {
 }
 
@@ -66,6 +67,16 @@ void AWidget::setPosition(AWidget::PositionFlag position)
       break;
     }
   }
+}
+
+AWidget *AWidget::getParent() const
+{
+    return _parent;
+}
+
+void AWidget::setParent(AWidget *parent)
+{
+    _parent = parent;
 }
 
 }}

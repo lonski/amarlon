@@ -2,6 +2,7 @@
 #include "editor_utils.h"
 #include <alabel_menu_item.h>
 #include <alabel.h>
+#include "openable_edit_panel.h"
 
 namespace amarlon { namespace map_editor {
 
@@ -15,10 +16,23 @@ ActorEditPanel::ActorEditPanel(ActorsDatabase *db, APanel *parent)
 
 void ActorEditPanel::handleInput(TCOD_mouse_t mouse, TCOD_key_t key)
 {
-  processInput(mouse, key,
-               getWidgets(),
-               getX()+ _parent? _parent->getX():0,
-               getY()+ _parent? _parent->getY():0);
+  bool panelActive = false;
+
+  for ( auto& kv : _panels )
+    if ( kv.second && kv.second->isActive() )
+    {
+      panelActive = true;
+      kv.second->handleInput(mouse, key);
+      break;
+    }
+
+  if ( !panelActive )
+  {
+    processInput(mouse, key,
+                 getWidgets(),
+                 getX()+ _parent? _parent->getX():0,
+                 getY()+ _parent? _parent->getY():0);
+  }
 }
 
 ActorDescriptionPtr ActorEditPanel::actor() const
@@ -29,6 +43,7 @@ ActorDescriptionPtr ActorEditPanel::actor() const
 void ActorEditPanel::setActor(const ActorDescriptionPtr &actor)
 {
   _actor = actor;
+  init();
   ActorDescriptionPtr proto = _db ? _db->fetch(*_actor->id) : nullptr;
 
   _fname->setText( actor->name ? *actor->name
@@ -55,6 +70,9 @@ void ActorEditPanel::init()
   title->setColor(TCODColor::copper);
   addWidget(title);
 
+  _panels[ ActorFeature::OPENABLE ] = std::shared_ptr<ActorFeatureEditPanel>
+      (new OpenableEditPanel(_db));
+
   if ( _parent )
   {
     ++y_pos;
@@ -69,6 +87,32 @@ void ActorEditPanel::init()
     ++y_pos;
     _fpriority.reset(new gui::ATextEdit(2, y_pos++, 25, "Priority"));
     addWidget( _fpriority );
+
+    if ( _actor && _db )
+    {
+      ActorDescriptionPtr proto = _db->fetch(*_actor->id);
+      for ( auto ft : ActorFeature::Type() )
+      {
+        auto f = _actor->features[(int)ft];
+        if ( !f ) f = proto->features[(int)ft];
+
+        if ( f )
+        {
+          ++y_pos;
+          addWidget(new gui::ALabelMenuItem(2, y_pos++,
+                                            ActorFeatureToStr[ ft ],
+                    [this, ft](){
+            auto it = _panels.find(ft);
+            if ( it != _panels.end() )
+            {
+              addWidget(it->second);
+              it->second->setActive(true);
+              it->second->setActor(_actor);
+            }
+          }));
+        }
+      }
+    }
 
     y_pos += 2;
     addWidget( new gui::ALabelMenuItem(2, y_pos++,
