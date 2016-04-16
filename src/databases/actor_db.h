@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <actor_type.h>
 
 namespace amarlon {
 
@@ -18,8 +17,8 @@ class ActorDB
 public:
   ActorDB();
 
-  ActorPtr fetch(ActorType type);
-  ActorDescriptionPtr fetchDescription(ActorType type);
+  ActorPtr fetch(int type);
+  ActorDescriptionPtr fetchDescription(int type);
 
   /**
    * @brief loads given file, parses xml and creates actor descriptions

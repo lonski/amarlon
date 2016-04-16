@@ -16,7 +16,7 @@ ActorDB::ActorDB()
 {
 }
 
-ActorPtr ActorDB::fetch(ActorType type)
+ActorPtr ActorDB::fetch(int type)
 {
   ActorPtr actor;
 
@@ -26,7 +26,7 @@ ActorPtr ActorDB::fetch(ActorType type)
   {
     if ( (*it)->prototype )
     {
-      actor = Actor::create( static_cast<ActorType>(*(*it)->prototype) );
+      actor = Actor::create( *(*it)->prototype );
       actor->upgrade(*it);
     }
     else
@@ -38,7 +38,7 @@ ActorPtr ActorDB::fetch(ActorType type)
   return actor;
 }
 
-ActorDescriptionPtr ActorDB::fetchDescription(ActorType type)
+ActorDescriptionPtr ActorDB::fetchDescription(int type)
 {
   auto it = std::find_if(_descriptions.begin(), _descriptions.end(),
                          [type](ActorDescriptionPtr a){ return a->id == (int)type; });

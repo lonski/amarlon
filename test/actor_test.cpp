@@ -24,32 +24,32 @@ class ActorTest : public ::testing::Test
 
 TEST_F(ActorTest, playerControlled)
 {
-  ActorPtr p = Actor::create(ActorType::Player);
+  ActorPtr p = Actor::create(1 /*Player*/);
   ASSERT_TRUE( p->isPlayerControlled() );
 }
 
 TEST_F(ActorTest, actorEqual)
 {
-  std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
-  std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
+  std::shared_ptr<Actor> a1 = Actor::create( 2 /*Orc*/ );
+  std::shared_ptr<Actor> a2 = Actor::create( 2 /*Orc*/ );
 
   ASSERT_TRUE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_diferrent_id)
 {
-  std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
-  std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
+  std::shared_ptr<Actor> a1 = Actor::create( 2 /*Orc*/ );
+  std::shared_ptr<Actor> a2 = Actor::create( 2 /*Orc*/ );
 
-  a2->setType( ActorType::Bed );
+  a2->setType( 5 /* Bed */ );
 
   ASSERT_FALSE( *a1 == *a2 );
 }
 
 TEST_F(ActorTest, actorEqual_different_container)
 {
-  std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
-  std::shared_ptr<Actor> a2 = Actor::create( ActorType::Orc );
+  std::shared_ptr<Actor> a1 = Actor::create( 2 /*Orc*/ );
+  std::shared_ptr<Actor> a2 = Actor::create( 2 /*Orc*/ );
 
   InventoryDescriptionPtr iDsc(new InventoryDescription);
   iDsc->maxSize = 10;
@@ -72,7 +72,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   //existing, same content
   c2->setSlotCount( c1->slotCount() );
 
-  ActorPtr ca1 = Actor::create(ActorType::HealthPotion);
+  ActorPtr ca1 = Actor::create( 13 /*HealthPotion*/);
   ActorPtr ca2 = ca1->clone();
 
   c1->add(ca1);
@@ -82,8 +82,8 @@ TEST_F(ActorTest, actorEqual_different_container)
   ASSERT_TRUE( *a1 == *a2 );
 
   //existing, different content
-  ActorPtr ca1b = Actor::create(ActorType::CookBook);
-  ActorPtr ca2b = Actor::create(ActorType::BootleOfWine);
+  ActorPtr ca1b = Actor::create(14 /*CookBook*/);
+  ActorPtr ca2b = Actor::create(12 /*BootleOfWine*/);
 
   c1->add(ca1b);
   c2->add(ca2b);
@@ -95,7 +95,7 @@ TEST_F(ActorTest, actorEqual_different_container)
   c2->remove( ca2b );
 
   //exisrting different content 2
-  ActorPtr ca1c = Actor::create(ActorType::CookBook);
+  ActorPtr ca1c = Actor::create(14 /*CookBook*/);
   ActorPtr ca2c = ca1c->clone();
 
   AiDescriptionPtr dsc = std::make_shared<AiDescription>();
@@ -110,7 +110,7 @@ TEST_F(ActorTest, actorEqual_different_container)
 
 TEST_F(ActorTest, actorEqual_different_openable)
 {
-  std::shared_ptr<Actor> a1 = Actor::create(ActorType::DoorOpen);
+  std::shared_ptr<Actor> a1 = Actor::create( 4 /*DoorOpen*/);
   std::shared_ptr<Actor> a2 ( a1->clone() );
 
   ASSERT_TRUE( *a1 == *a2 );
@@ -122,7 +122,7 @@ TEST_F(ActorTest, actorEqual_different_openable)
 
 TEST_F(ActorTest, actorEqual_different_pickable)
 {
-  std::shared_ptr<Actor> a1 = Actor::create(ActorType::HealthPotion);
+  std::shared_ptr<Actor> a1 = Actor::create(13 /*HealthPotion*/);
   std::shared_ptr<Actor> a2 ( a1->clone() );
 
   ASSERT_TRUE( *a1 == *a2 );
@@ -135,7 +135,7 @@ TEST_F(ActorTest, actorEqual_different_pickable)
 
 TEST_F(ActorTest, actorEqual_different_fighter)
 {
-  std::shared_ptr<Actor> a1 = Actor::create( ActorType::Orc );
+  std::shared_ptr<Actor> a1 = Actor::create( 2 /*Orc*/ );
   std::shared_ptr<Actor> a2 ( a1->clone() );
 
   ASSERT_TRUE( *a1 == *a2 );
@@ -152,7 +152,7 @@ TEST_F(ActorTest, actorEqual_different_fighter)
 
 TEST_F(ActorTest, spilt)
 {
-  ActorPtr actor = Actor::create(ActorType::BootleOfWine);
+  ActorPtr actor = Actor::create(12 /*BootleOfWine*/);
   PickablePtr p = actor->getFeature<Pickable>();
   p->setAmount(5);
 

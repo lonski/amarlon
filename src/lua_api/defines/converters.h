@@ -5,7 +5,6 @@
 #include <damage_type.h>
 #include <character_class_type.h>
 #include <target_type.h>
-#include <actor_type.h>
 #include <trap_id.h>
 #include <utils.h>
 #include <skill_id.h>
@@ -45,7 +44,6 @@ namespace luabind
     LUABIND_DEFINE_ENUMCLASS(amarlon::DamageType)
     LUABIND_DEFINE_ENUMCLASS(amarlon::CharacterClassType)
     LUABIND_DEFINE_ENUMCLASS(amarlon::TargetType)
-    LUABIND_DEFINE_ENUMCLASS(amarlon::ActorType)
     LUABIND_DEFINE_ENUMCLASS(amarlon::TrapId)
     LUABIND_DEFINE_ENUMCLASS(amarlon::SkillId)
     LUABIND_DEFINE_ENUMCLASS(amarlon::GenericModifier)

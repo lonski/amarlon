@@ -29,7 +29,6 @@ set(HEADER_FILES
     actor/actor_features/trap/trap_id.h
     actor/actor_features/talker/talker.h
     actor/actor.h
-    actor/actor_type.h
     actor/status_effects_manager.h
     actor/status_effect.h
     commands/cmd_help.h

@@ -241,7 +241,7 @@ void Messenger::onNotify(Subject *subject, Event event)
         break;
         case EventId::Item_Added:
         {
-          if ( actor->getType() == ActorType::Player )
+          if ( actor->getType() == 1 /*Player*/ )
           {
             color = TCODColor::gold;
             const char* format = "Earned %s.";
@@ -252,7 +252,7 @@ void Messenger::onNotify(Subject *subject, Event event)
         break;
         case EventId::Item_Removed:
         {
-          if ( actor->getType() == ActorType::Player )
+          if ( actor->getType() == 1 /*Player*/ )
           {
             color = TCODColor::grey;
             const char* format = "%s dissapeard.";

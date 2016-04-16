@@ -37,7 +37,7 @@ ActorActionResult DieAction::perform(ActorPtr performer)
     }
 
     _performer->notify(Event(EventId::Actor_Died));
-    _performer->morph(ActorType::Corpse);
+    _performer->morph( 15 /* Corpse */);
   }
 
   return _performer != nullptr ? ActorActionResult::Ok : ActorActionResult::Nok;

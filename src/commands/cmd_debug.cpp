@@ -115,7 +115,7 @@ void CmdDebug::createItem()
   wnd.show();
 
   ActorPtr player = Engine::instance().getPlayer();
-  ActorPtr a = Actor::create( (ActorType)fromStr<int>(wnd.getText()) );
+  ActorPtr a = Actor::create( fromStr<int>(wnd.getText()) );
 
   Engine::instance().render();
   Engine::instance().flush();

@@ -5,7 +5,6 @@
 #include <vector>
 #include <list>
 #include <actor_feature.h>
-#include <actor_type.h>
 
 namespace amarlon {
 
@@ -56,7 +55,7 @@ public:
 
   std::vector<ActorPtr> items(std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;}) const;
   std::vector<ActorPtr> items(std::function<bool(PickablePtr)> filterFun) const;
-  std::vector<ActorPtr> items(ActorType type) const;
+  std::vector<ActorPtr> items(int type) const;
 
   virtual std::string debug(const std::string& linebreak = "\n");
 

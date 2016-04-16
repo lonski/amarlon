@@ -384,7 +384,7 @@ DestroyableDescriptionPtr ActorParser::parseDestroyableDsc()
       {
         DropRule rule;
 
-        rule.dropActorId = static_cast<ActorType>( getAttribute<int>(dropRuleNode, "dropActorId") );
+        rule.dropActorId = getAttribute<int>(dropRuleNode, "dropActorId");
         rule.amountMin = getAttribute<uint32_t>(dropRuleNode, "amountMin");
         rule.amountMax = getAttribute<uint32_t>(dropRuleNode, "amountMax");
         rule.chance = getAttribute<float>(dropRuleNode, "chance");

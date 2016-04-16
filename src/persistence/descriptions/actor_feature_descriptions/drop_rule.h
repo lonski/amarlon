@@ -2,13 +2,12 @@
 #define DROP_RULE
 
 #include <stdint.h>
-#include <actor_type.h>
 
 namespace amarlon {
 
 struct DropRule
 {
-  ActorType dropActorId;
+  int dropActorId;
   int amountMin;
   int amountMax;
   float chance;

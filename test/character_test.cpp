@@ -44,7 +44,7 @@ void clearBody(ActorPtr actor)
 
 TEST_F(CharacterTest, carryingLoad)
 {
-  ActorPtr ziomek = Actor::create(ActorType::Orc);
+  ActorPtr ziomek = Actor::create(2 /*Orc*/);
 
   //clear all items carried by ziomek
   clearBody(ziomek);
@@ -66,7 +66,7 @@ TEST_F(CharacterTest, carryingLoad)
   ASSERT_EQ( pc_ch->getSpeed(), dsc->speed);
 
   //add some light item
-  ActorPtr potka = Actor::create(ActorType::Dagger);
+  ActorPtr potka = Actor::create(24 /*Dagger*/);
   ASSERT_TRUE(ziomek->getFeature<Inventory>()->add(potka));
 
   //ziomek should have light load
@@ -74,7 +74,7 @@ TEST_F(CharacterTest, carryingLoad)
   ASSERT_EQ( pc_ch->getSpeed(), dsc->speed);
 
   //create heavy item
-  ActorPtr armor = Actor::create(ActorType::LeatherArmor);
+  ActorPtr armor = Actor::create( 20 /*LeatherArmor*/);
 
   CarryingCapacity::Data cData = CarryingCapacity::get(pc_ch->getAbilityScore(AbilityScore::STR), pc_ch->getRace()->getType() );
   int count = (cData.heavy / armor->getFeature<Pickable>()->getWeight()) + 1;

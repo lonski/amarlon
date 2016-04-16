@@ -29,7 +29,7 @@ public:
 
 TEST_F(DestroyableTest, orcIsDestroyable)
 {
-  ActorPtr orc( Actor::create(ActorType::Orc) );
+  ActorPtr orc( Actor::create( 2 /*Orc*/) );
 
   DestroyablePtr destr = orc->getFeature<Destroyable>();
 
@@ -38,7 +38,7 @@ TEST_F(DestroyableTest, orcIsDestroyable)
 
 TEST_F(DestroyableTest, ownerIsSet)
 {
-  ActorPtr orc = Actor::create(ActorType::Orc);
+  ActorPtr orc = Actor::create(2);
   DestroyablePtr destr = orc->getFeature<Destroyable>();
 
   ASSERT_TRUE( destr != nullptr );
@@ -56,7 +56,7 @@ TEST_F(DestroyableTest, isEqual)
   DestroyableDescriptionPtr dsc( new DestroyableDescription);
 
   DropRule rule;
-  rule.dropActorId = ActorType::GoldCoin;
+  rule.dropActorId = 22;
   rule.amountMin = 2;
   rule.amountMax = 6;
   rule.chance = 1;
@@ -72,7 +72,7 @@ TEST_F(DestroyableTest, isEqual)
   DestroyableDescriptionPtr dsc2( new DestroyableDescription);
 
   DropRule rule2;
-  rule2.dropActorId = ActorType::GoldCoin;
+  rule2.dropActorId = 22;
   rule2.amountMin = 1;
   rule2.amountMax = 3;
   rule2.chance = 4;

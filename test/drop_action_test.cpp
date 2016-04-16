@@ -22,12 +22,12 @@ public:
     Engine::instance().prologue();
     Engine::instance().enterGame();
 
-    guy = Actor::create(ActorType::Orc);
+    guy = Actor::create(2);
 
     //fill inventory
     guy->getFeature<Inventory>()->clear();
-    guy->getFeature<Inventory>()->add( Actor::create(ActorType::LeatherArmor) );
-    guy->getFeature<Inventory>()->add( Actor::create(ActorType::Corpse) );
+    guy->getFeature<Inventory>()->add( Actor::create(20) );
+    guy->getFeature<Inventory>()->add( Actor::create(15) );
 
     //put guy on map
     guy->setPosition( 1,1);
@@ -62,7 +62,7 @@ TEST_F(DropActionTest, dropOnMap)
 TEST_F(DropActionTest, dropGoblinCorpse)
 {
   //kill a goblin on map to generate corpse
-  ActorPtr goblin = Actor::create(ActorType::Goblin, 1, 2 );
+  ActorPtr goblin = Actor::create(25, 1, 2 );
   map->addActor( goblin );
   goblin->performAction( new DieAction );
 

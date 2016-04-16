@@ -16,7 +16,7 @@
 
 namespace amarlon {
 
-ActorPtr Actor::create(ActorType aId, int x, int y, MapPtr map)
+ActorPtr Actor::create(int aId, int x, int y, MapPtr map)
 {
   ActorPtr actor = Engine::instance().getActorDB().fetch(aId);
   actor->setMap(map);
@@ -31,7 +31,7 @@ ActorPtr Actor::create(ActorDescriptionPtr dsc, bool prototyped)
   ActorPtr actor;
   if ( dsc )
   {
-    actor = prototyped ? create( static_cast<ActorType>(*dsc->id))
+    actor = prototyped ? create( *dsc->id)
                        : ActorPtr(new Actor);
     actor->upgrade(dsc);
   }
@@ -61,7 +61,7 @@ void Actor::upgrade(ActorDescriptionPtr dsc)
   if ( dsc )
   {
     //Base fields
-    if (dsc->id)           _id = static_cast<ActorType>(*dsc->id);
+    if (dsc->id)           _id = *dsc->id;
     if (dsc->x)            _x = *(dsc->x);
     if (dsc->y)            _y = *(dsc->y);
     if (dsc->name)         _name = *(dsc->name);
@@ -149,7 +149,7 @@ ActorDescriptionPtr Actor::toDescriptionStruct()
   return dsc;
 }
 
-Actor::Actor(ActorType aId, int x, int y, MapPtr map)
+Actor::Actor(int aId, int x, int y, MapPtr map)
   : _id(aId)
   , _x(x)
   , _y(y)
@@ -175,7 +175,7 @@ Actor::~Actor()
 {
 }
 
-void Actor::morph(ActorType newType)
+void Actor::morph(int newType)
 {
   ActorPtr newActor = Engine::instance().getActorDB().fetch(newType);
   if ( newActor )
@@ -263,7 +263,7 @@ bool Actor::operator==(const Actor &rhs) const
 }
 
 
-void Actor::setType(ActorType newType)
+void Actor::setType(int newType)
 {
   _id = newType;
 }
@@ -383,7 +383,7 @@ int Actor::getTileRenderPriority() const
   return p;
 }
 
-ActorType Actor::getType() const
+int Actor::getType() const
 {
   return _id;
 }

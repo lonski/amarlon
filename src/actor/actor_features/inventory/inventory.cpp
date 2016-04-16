@@ -146,7 +146,7 @@ bool Inventory::modifyGoldAmount(int modifier, bool notify)
 {
   bool r = false;
 
-  auto i = items(ActorType::GoldCoin);
+  auto i = items( 22 /*Gold Coin*/);
   if ( !i.empty() )
   {
     PickablePtr p = i.front()->getFeature<Pickable>();
@@ -174,7 +174,7 @@ int Inventory::getGoldAmount() const
 {
   int amount = 0;
 
-  auto i = items(ActorType::GoldCoin);
+  auto i = items( 22 /*Gold Coin*/);
   if ( !i.empty() )
   {
     PickablePtr p = i.front()->getFeature<Pickable>();
@@ -236,7 +236,7 @@ std::vector<ActorPtr> Inventory::items(std::function<bool (PickablePtr)> filterF
   });
 }
 
-std::vector<ActorPtr> Inventory::items(ActorType type) const
+std::vector<ActorPtr> Inventory::items(int type) const
 {
   return items([&type](ActorPtr a){ return a->getType() == type;});
 }

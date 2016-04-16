@@ -26,15 +26,15 @@ public:
 
 TEST_F(PickableTest, equality)
 {
-  PickablePtr p1 = Actor::create(ActorType::Arrow)->getFeature<Pickable>();
-  PickablePtr p2 = Actor::create(ActorType::Arrow_P1)->getFeature<Pickable>();
+  PickablePtr p1 = Actor::create(30)->getFeature<Pickable>();
+  PickablePtr p2 = Actor::create(34)->getFeature<Pickable>();
   EXPECT_FALSE( p1->isEqual(p2) );
 }
 
 TEST_F(PickableTest, upgrade)
 {
   //create regular coin
-  ActorPtr gold = Actor::create(ActorType::GoldCoin);
+  ActorPtr gold = Actor::create(22);
   ASSERT_TRUE(gold != nullptr );
   PickablePtr coin = gold->getFeature<Pickable>();
   PickablePtr originalCoin

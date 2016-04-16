@@ -84,7 +84,7 @@ AWindow& CharacterCreationWindow::setDefaults()
 {
   _activePanel = RACE_SELECTION;
   _enterGame = false;
-  _player = Engine::instance().getActorDB().fetchDescription( ActorType::Player );
+  _player = Engine::instance().getActorDB().fetchDescription( 1 /*Player*/ );
 
   return *this;
 }

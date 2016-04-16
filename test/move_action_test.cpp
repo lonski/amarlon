@@ -26,7 +26,7 @@ public:
 
 TEST_F(MoveActionTest, actorWithoutMap)
 {
-  ActorPtr orc = Actor::create(ActorType::Orc);
+  ActorPtr orc = Actor::create(2);
   EXPECT_FALSE(orc->performAction(new MoveAction(1, 1)) == ActorActionResult::Ok);
 }
 

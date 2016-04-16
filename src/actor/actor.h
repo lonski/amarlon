@@ -4,7 +4,6 @@
 #include <string>
 #include <memory>
 #include <libtcod.hpp>
-#include <actor_type.h>
 #include <amarlon_except.h>
 #include <actor_feature.h>
 #include <pickable.h>
@@ -38,7 +37,7 @@ public:
   /**
    * @brief Builds an actor basing on the description from ActorDatabase
    */
-  static ActorPtr create(ActorType aId, int x = 0, int y = 0, MapPtr map = nullptr);
+  static ActorPtr create(int aId, int x = 0, int y = 0, MapPtr map = nullptr);
   /**
    * @brief Builds an actor from description structure.
    * @param dsc - description structure, on which base actor will be build.
@@ -63,8 +62,8 @@ public:
   /**
    * Actor properties
    */
-  ActorType getType() const;
-  void setType(ActorType newType);
+  int getType() const;
+  void setType(int newType);
 
   unsigned char getSymbol() const;
   void setSymbol(unsigned char s);
@@ -117,7 +116,7 @@ public:
    * @brief Changes the actor type, removes all ActorFeatures
    *        and loads new, default, features.
    */
-  void morph(ActorType newType);
+  void morph(int newType);
 
   /**
    * @brief Allows player to take its turn. Ticks the time
@@ -214,7 +213,7 @@ public:
   void printDebug();
 
 private:
-  ActorType _id;
+  int _id;
   int _x, _y;
   MapWPtr _map;
   FeatureMap _features;
@@ -230,7 +229,7 @@ private:
   char _symbol;
   std::bitset<1> _flags;
 
-  Actor(ActorType aId = ActorType::Null, int x = 0, int y = 0, MapPtr map = nullptr);
+  Actor(int aId = 0, int x = 0, int y = 0, MapPtr map = nullptr);
   Actor(const Actor& a);
   void applyPassiveSkills();
 

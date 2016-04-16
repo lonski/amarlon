@@ -5,7 +5,6 @@ include_directories(${GMOCK_INCLUDE_DIRS})
 
 set(HEADER_FILES
     ${PROJECT_SOURCE_DIR}/src/actor/actor.h
-    ${PROJECT_SOURCE_DIR}/src/actor/actor_type.h
     ${PROJECT_SOURCE_DIR}/src/actor/status_effects_manager.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/inventory/inventory.h

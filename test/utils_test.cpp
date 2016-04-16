@@ -39,7 +39,7 @@ TEST(ActorContainerTest, removeStacked)
   Engine::instance().prologue();
 
   //create 10 arrows
-  ActorPtr arrows = Engine::instance().getActorDB().fetch(ActorType::Arrow);
+  ActorPtr arrows = Engine::instance().getActorDB().fetch( 30 /*Arrow*/);
   PickablePtr p = arrows->getFeature<Pickable>();
   p->setAmount(10);
 
