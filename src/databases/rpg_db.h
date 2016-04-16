@@ -13,7 +13,7 @@ class RpgDB
 {
 public:
   RpgDB();
-  virtual ~RpgDB();
+  ~RpgDB();
 
   const std::vector<RacePtr> getRaces() const;
   RacePtr getRace(RaceType id) const;
@@ -21,7 +21,7 @@ public:
   const std::vector<CharacterClassPtr> getCharacterClasses() const;
   CharacterClassPtr getCharacterClass(CharacterClassType id) const;
 
-  virtual bool load(const std::string& fn);
+  bool load(const std::string& fn);
 
 private:
   RpgParser _parser;

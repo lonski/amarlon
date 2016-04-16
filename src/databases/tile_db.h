@@ -24,12 +24,14 @@ public:
   bool isTransparent(TileType type);
 
   void load(const std::string &fn);
+  void loadPlugin(const std::string &fn);
 
 private:
   TileParser _tileParser;
   std::map<TileType, TileDescription> _tiles;
+  std::map<TileType, TileDescription> _pluginTiles;
 
-  void parseTiles(std::vector<char>& dataToParse);
+  void parseTiles(std::vector<char>& dataToParse, std::map<TileType, TileDescription>& dst);
 
   template<typename T>
   T get(TileType type, T TileDescription::*field, T defValue);

@@ -18,19 +18,22 @@ class SkillDB
 {
 public:
   SkillDB();
-  virtual ~SkillDB();
+  ~SkillDB();
 
   std::string getScript(SkillId id) const;
   std::string getName(SkillId id) const;
 
-  virtual SkillPtr fetch(SkillId id);
-  virtual bool load(const std::string& fn);
+  SkillPtr fetch(SkillId id);
+  bool load(const std::string& fn);
+  bool loadPlugin(const std::string& fn);
 
 protected:
   SkillParser _parser;
   std::map<SkillId, SkillDescriptionPtr> _skills;
+  std::map<SkillId, SkillDescriptionPtr> _pluginSkills;
 
-  void parseSkills(std::vector<char> &buf);
+  void parseSkills(std::vector<char> &buf, std::map<SkillId, SkillDescriptionPtr>& dst);
+  SkillDescriptionPtr fetchDescription(SkillId id) const;
 
 };
 

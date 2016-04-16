@@ -16,6 +16,7 @@
 #include <status_effects_manager.h>
 #include <skill_db.h>
 #include <rpg_db.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -46,21 +47,34 @@ void Engine::prologue()
   _gui.reset( new gui::Gui );
   _sysCmdExecutor.reset( new SystemCommandExecutor );
 
-  _spellDB.reset(new SpellDB );
-  _tileDB.reset( new TileDB );
-  _skillsDB.reset(new SkillDB );
-  _rpgDB.reset( new RpgDB );
-  _actorsDB.reset( new ActorDB );
+  _world    .reset( new World );
+  _spellDB  .reset( new SpellDB );
+  _tileDB   .reset( new TileDB );
+  _skillsDB .reset( new SkillDB );
+  _rpgDB    .reset( new RpgDB );
+  _actorsDB .reset( new ActorDB );
   _messenger.reset( new Messenger( _gui ) );
-  _luaState.reset( new lua_api::LuaState );
+  _luaState .reset( new lua_api::LuaState );
+  _module   .reset( new Module( _config->get("active_module") ) );
 
   getLuaState().registerAPI();
+
   getSpellDB().load( _config->get("spells_file") );
+  getSpellDB().loadPlugin( getModule().getPath() + _config->get("spells_file") );
+
   getSkillDB().load( _config->get("skills_file") );
+  getSkillDB().loadPlugin( getModule().getPath() + _config->get("skills_file") );
+
   getTileDB ().load( _config->get("tiles_file" ) );
-  getRpgDB().load( _config->get("rpg_file") );
+  getTileDB ().loadPlugin( getModule().getPath() + _config->get("tiles_file" ) );
+
+  getRpgDB  ().load( _config->get("rpg_file") );
+
   getActorDB().load( _config->get("actors_file") );
-  _world.reset( new World( _config->get("maps_file") ) );
+  getActorDB().loadPlugin( getModule().getPath() + _config->get("actors_file") );
+
+  getWorld  ().load( _config->get("maps_file") );
+  getWorld  ().loadPlugin( getModule().getPath() + _config->get("maps_file") );
 
 }
 
@@ -245,6 +259,11 @@ Messenger &Engine::getMessenger() const
 lua_api::LuaState &Engine::getLuaState() const
 {
   return *_luaState;
+}
+
+Module &Engine::getModule() const
+{
+  return *_module;
 }
 
 const ActorPtr Engine::getPlayer() const

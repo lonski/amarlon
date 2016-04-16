@@ -12,11 +12,10 @@ using namespace rapidxml;
 
 namespace amarlon {
 
-World::World(const std::string& mapsFile)
+World::World()
   : _currentMap(0)
   , _mapDB( new MapDB )
 {
-  _mapDB->load( mapsFile );
 }
 
 World::~World()
@@ -115,6 +114,26 @@ bool World::load(const std::string& fn)
     parseMaps(doc);
     parseCurrentMap(doc);
     parsePlayer(doc);
+
+    return true;
+  }
+  return false;
+}
+
+bool World::loadPlugin(const std::string &fn)
+{
+  std::ifstream ifs(fn);
+
+  if (ifs.is_open())
+  {
+    std::vector<char> buf;
+    buf.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+    buf.push_back('\0');
+
+    xml_document<> doc;
+    doc.parse<0>(&buf[0]);
+
+    parseMaps(doc);
 
     return true;
   }

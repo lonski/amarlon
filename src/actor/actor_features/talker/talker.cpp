@@ -2,7 +2,7 @@
 #include <talker_description.h>
 #include <lua_state.h>
 #include <engine.h>
-
+#include <module.h>
 
 namespace amarlon {
 
@@ -122,7 +122,10 @@ std::string Talker::getScript() const
 
 std::string Talker::getScript(int id)
 {
-  return "scripts/talker/" + std::to_string(id) + "/script.lua";
+  std::string default_script = "scripts/talker/" + std::to_string(id) + "/script.lua";
+  std::string module_script = Engine::instance().getModule().getPath() + default_script;
+
+  return file_exists(module_script) ? module_script : default_script;
 }
 
 }

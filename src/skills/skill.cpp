@@ -21,7 +21,7 @@ SkillId Skill::getId() const
 
 std::string Skill::getScript() const
 {
-  return "scripts/skills/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  return Engine::instance().getSkillDB().getScript( getId() );
 }
 
 int Skill::getLevel() const

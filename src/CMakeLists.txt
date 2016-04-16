@@ -176,6 +176,7 @@ set(HEADER_FILES
     databases/spell_db.h
     databases/skill_db.h
     databases/rpg_db.h
+    module.h
 )
 
 set(SOURCE_FILES
@@ -327,6 +328,7 @@ set(SOURCE_FILES
     databases/skill_db.cpp
     databases/rpg_db.cpp
     skills/skill.cpp
+    module.cpp
 )
 
 add_library(a_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

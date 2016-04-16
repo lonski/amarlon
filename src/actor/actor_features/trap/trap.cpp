@@ -3,6 +3,7 @@
 #include <engine.h>
 #include <lua_state.h>
 #include <actor.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -156,7 +157,10 @@ void Trap::setDetected(bool detected)
 
 std::string Trap::getScript() const
 {
-  return "scripts/traps/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  std::string default_script = "scripts/traps/" + std::to_string( static_cast<int>(_id) ) + ".lua";
+  std::string module_script = Engine::instance().getModule().getPath() + default_script;
+
+  return file_exists(module_script) ? module_script : default_script;
 }
 
 std::string Trap::getName() const

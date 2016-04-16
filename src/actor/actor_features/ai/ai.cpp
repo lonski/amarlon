@@ -11,6 +11,7 @@
 #include <fsm_state.h>
 #include <lua_state.h>
 #include <engine.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -262,7 +263,10 @@ bool Ai::canOperate() const
 
 std::string Ai::getScript() const
 {
-  return "scripts/ai/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  std::string default_script = "scripts/ai/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  std::string module_script = Engine::instance().getModule().getPath() + default_script;
+
+  return file_exists(module_script) ? module_script : default_script;
 }
 
 void Ai::setTarget(Target target)

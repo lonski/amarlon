@@ -10,6 +10,7 @@
 #include <engine.h>
 #include <cstdio>
 #include <scroll.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -377,7 +378,10 @@ void Pickable::clone(Pickable *p)
 
 std::string Pickable::getScriptPath() const
 {
-  return "scripts/items/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  std::string default_script = "scripts/items/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  std::string module_script = Engine::instance().getModule().getPath() + default_script;
+
+  return file_exists(module_script) ? module_script : default_script;
 }
 
 int Pickable::getAmount() const

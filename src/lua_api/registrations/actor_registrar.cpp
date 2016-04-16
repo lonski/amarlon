@@ -20,7 +20,7 @@ void ActorRegistrar::reg(lua_State* state)
   module( state )
   [
       class_<ActorDB>("ActorDB")
-        .def("fetch", &ActorDB::fetch),
+        .def("fetch", (ActorPtr(ActorDB::*)(int))&ActorDB::fetch),
 
       class_<ActorPtr>("ActorPtr")
         .def(constructor<>())

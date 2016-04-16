@@ -76,7 +76,10 @@ void MapEditor::init()
   TCODMouse::showCursor(true);
 
   _tileDB.load( config.get("tiles_file") );
+  _tileDB.loadPlugin( "modules/" + config.get("active_module") + "/" + config.get("tiles_file") );
+
   _actorsDB.load( config.get("actors_file") );
+  _actorsDB.loadPlugin( "modules/" + config.get("active_module") + "/" + config.get("actors_file") );
 
   _panel.reset( new gui::APanel(_screenWidth, _screenHeight) );
   _panel->setFrame(false);
@@ -113,11 +116,28 @@ void MapEditor::configureMainMenu()
 
   int y = 0;
 
-  gui::ASlotMenuItem* loadMapBtn = new gui::ASlotMenuItem(20,"","Load maps","");
+  gui::ASlotMenuItem* loadMapBtn = new gui::ASlotMenuItem(20,"","Load","");
   y += 0;
   loadMapBtn->setPosition( 0, y );
   loadMapBtn->setCallback([&](){
     if ( _db.load( config.get("maps_file") ) )
+    {
+      setStatusMessage("Success, loaded " + std::to_string(_db.getMapCount()) + " maps.");
+      listMaps();
+    }
+    else
+    {
+      setStatusMessage("ERROR: Load map failed!");
+    }
+  });
+
+  gui::ASlotMenuItem* loadPluginMapBtn = new gui::ASlotMenuItem(20,"","Load plugin","");
+  y += 5;
+  loadPluginMapBtn->setPosition( 0, y );
+  loadPluginMapBtn->setCallback([&](){
+    std::string path = "modules/" + config.get("active_module") + "/" + config.get("maps_file");
+    printf("%s\n",path.c_str());
+    if ( _db.load( path ) )
     {
       setStatusMessage("Success, loaded " + std::to_string(_db.getMapCount()) + " maps.");
       listMaps();
@@ -136,6 +156,7 @@ void MapEditor::configureMainMenu()
   });
 
   _mainMenuPanel->addWidget(loadMapBtn);
+  _mainMenuPanel->addWidget(loadPluginMapBtn);
   _mainMenuPanel->addWidget(quitBtn);
 }
 

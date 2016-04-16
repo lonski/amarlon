@@ -18,26 +18,30 @@ class SpellDB
 {
 public:
   SpellDB();
-  virtual ~SpellDB();
+  ~SpellDB();
 
-  virtual std::string getName(SpellId id);
-  virtual int getLevel(SpellId id);
-  virtual CharacterClassType getClass(SpellId id);
-  virtual TargetType getTargetType(SpellId id);
-  virtual int getRange(SpellId id);
-  virtual int getRadius(SpellId id);
-  virtual std::string getDescription(SpellId id);
+  std::string getName(SpellId id);
+  int getLevel(SpellId id);
+  CharacterClassType getClass(SpellId id);
+  TargetType getTargetType(SpellId id);
+  int getRange(SpellId id);
+  int getRadius(SpellId id);
+  std::string getDescription(SpellId id);
   std::string getScript(SpellId id) const;
 
-  virtual std::vector<SpellPtr> getSpells( std::function<bool(SpellPtr)> filter );
-  virtual SpellPtr fetch(SpellId id);
-  virtual bool load(const std::string& fn);
+  std::vector<SpellPtr> getSpells( std::function<bool(SpellPtr)> filter );
+  SpellPtr fetch(SpellId id);
+  bool load(const std::string& fn);
+  bool loadPlugin(const std::string& fn);
 
 protected:
   SpellParser _spellParser;
   std::map<SpellId, SpellDescriptionPtr> _spells;
+  std::map<SpellId, SpellDescriptionPtr> _pluginSpells;
 
-  void parseSpells(std::vector<char> &buf);
+  void parseSpells(std::vector<char> &buf, std::map<SpellId, SpellDescriptionPtr>& dst);
+  std::vector<SpellDescriptionPtr> getMergedSpells();
+  SpellDescriptionPtr fetchDescription(SpellId id) const;
 
 };
 

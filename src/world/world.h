@@ -15,7 +15,7 @@ typedef std::shared_ptr<Actor> ActorPtr;
 class World : public MapDB
 {
 public:
-  World(const std::string& mapsFile);
+  World();
   virtual ~World();
 
   virtual MapPtr fetch(int id);
@@ -25,7 +25,8 @@ public:
   virtual void setPlayer(ActorPtr player);
 
   virtual bool store(const std::string& fn);
-  bool load(const std::string& fn);
+  virtual bool load(const std::string& fn);
+  virtual bool loadPlugin(const std::string& fn);
 
 private:  
   int _currentMap;

@@ -5,6 +5,7 @@
 #include <lua_state.h>
 #include <engine.h>
 #include <message_box.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -187,7 +188,10 @@ bool Openable::unlock()
 
 std::string Openable::getScriptPath() const
 {
-  return "scripts/openable/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  std::string default_script = "scripts/openable/" + std::to_string( static_cast<int>(_scriptId) ) + ".lua";
+  std::string module_script = Engine::instance().getModule().getPath() + default_script;
+
+  return file_exists(module_script) ? module_script : default_script;
 }
 
 bool Openable::isLocked() const

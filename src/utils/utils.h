@@ -11,6 +11,7 @@
 #include "libtcod.hpp"
 #include <target.h>
 #include <point.h>
+#include <fstream>
 
 namespace amarlon {
 
@@ -48,6 +49,12 @@ static inline TCODColor strToColor(const std::string &str)
 
   }
   return col;
+}
+
+static inline bool file_exists(const std::string& fn)
+{
+  std::ifstream file(fn);
+  return file.is_open();
 }
 
 bool handleDirectionKey(const TCOD_key_t& key, int& dx, int& dy);

@@ -6,7 +6,6 @@
 #include <colored_string.h>
 #include <window_manager.h>
 
-
 namespace amarlon {
 
 class Configuration;
@@ -21,6 +20,7 @@ class ActorDB;
 class SkillDB;
 class RpgDB;
 class Messenger;
+class Module;
 
 namespace lua_api {
   class LuaState;
@@ -37,6 +37,7 @@ typedef std::shared_ptr<TileDB> TileDBPtr;
 typedef std::shared_ptr<ActorDB> ActorDBPtr;
 typedef std::shared_ptr<Configuration> ConfigurationPtr;
 typedef std::shared_ptr<Messenger> MessengerPtr;
+typedef std::shared_ptr<Module> ModulePtr;
 
 namespace gui {
   class Gui;
@@ -92,6 +93,7 @@ public:
   RpgDB&             getRpgDB()     const;
   Messenger&         getMessenger() const;
   lua_api::LuaState& getLuaState()  const;
+  Module&            getModule()    const;
 
   const ActorPtr getPlayer() const;
   TCOD_key_t getLastInput() const;
@@ -111,6 +113,7 @@ private:
   RpgDBPtr _rpgDB;
   MessengerPtr _messenger;
   lua_api::LuaStatePtr _luaState;
+  ModulePtr _module;
 
   bool _quit;
   bool _running;

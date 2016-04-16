@@ -26,10 +26,19 @@ public:
    */
   void load(const std::string& fn);
 
+  /**
+   * @brief Loads file which contains additional actor definitions
+   *        or overrides base actors.
+   */
+  void loadPlugin(const std::string& fn);
+
 private:
   std::vector<ActorDescriptionPtr> _descriptions;
+  std::vector<ActorDescriptionPtr> _pluginDescriptions;
 
-  void parseActors(std::vector<char>& dataToParse);
+  void parseActors(std::vector<char>& dataToParse, std::vector<ActorDescriptionPtr>& dst);
+  ActorPtr fetch(int type, std::vector<ActorDescriptionPtr>& src);
+  ActorDescriptionPtr fetchDescription(int type, std::vector<ActorDescriptionPtr>& src);
 
 };
 
