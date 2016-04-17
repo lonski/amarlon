@@ -2,6 +2,7 @@
 #define OPENABLE_H
 
 #include <actor_feature.h>
+#include <openable_description.h>
 
 namespace amarlon {
 
@@ -40,14 +41,20 @@ public:
   virtual bool lock();
   virtual bool unlock();
 
+  virtual std::string debug(const std::string &linebreak);
+
 protected:
   bool _locked;
   int _lockId;
   int _lockLevel;
   int _scriptId;
   bool _closed;
+  OpenableState _closedState;
+  OpenableState _openedState;
 
   std::string getScriptPath() const;
+  bool executeScript(const std::string& fun, ActorPtr executor);
+  bool applyState(const OpenableState& state);
 
 
 };

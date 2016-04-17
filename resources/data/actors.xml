@@ -29,30 +29,30 @@ When new actor is created with given ID as parameter, then the template will be 
 		<Pickable stackable="1" amount="1" category="8"/>
 	</Actor>
 	<Actor name="Wooden door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
-		<Openable scriptId="1" closed="1" />
+		<Openable closed="1">
+			<StateOpened character="/" transparent="1" blocks="0"/>
+			<StateClosed character="+" transparent="0" blocks="1"/>
+		</Openable>
 	</Actor>
-	<Actor name="Wooden door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
-		<Openable scriptId="1" closed="0" />
+	<Actor name="Metal door" id="4" character="+" color="D1DBDD" transparent="0" blocks="1" fovOnly="0">
+		<Openable closed="1">
+			<StateOpened character="/" transparent="1" blocks="0"/>
+			<StateClosed character="+" transparent="0" blocks="1"/>
+		</Openable>
 	</Actor>
-	<Actor name="Metal door" id="5" character="+" color="D1DBDD" transparent="0" blocks="1" fovOnly="0">
-		<Openable scriptId="1" closed="1" />
-	</Actor>
-	<Actor name="Metal door" id="6" character="/" color="D1DBDD" transparent="1" blocks="0" fovOnly="0">
-		<Openable scriptId="1" closed="0" />
-	</Actor>	
-	<Actor name="Metal bars" id="7" character="+" color="D1DBDD" transparent="1" blocks="1" fovOnly="0">
-		<Openable scriptId="1" closed="1" />
-	</Actor>
-	<Actor name="Metal bars" id="8" character="/" color="D1DBDD" transparent="1" blocks="0" fovOnly="0">
-		<Openable scriptId="1" closed="0" />
+	<Actor name="Metal bars" id="5" character="+" color="D1DBDD" transparent="1" blocks="1" fovOnly="0">
+		<Openable closed="1">
+			<StateOpened character="/" transparent="1" blocks="0"/>
+			<StateClosed character="+" transparent="0" blocks="1"/>
+		</Openable>
 	</Actor>
 	<Actor name="Fence" id="9" character="-" color="9D5B03" transparent="1" blocks="1" fovOnly="0"/>
 	<Actor name="Fence" id="10" character="|" color="9D5B03" transparent="1" blocks="1" fovOnly="0"/>
 	<Actor name="Fence door" id="11" character="+" color="9D5B03" transparent="1" blocks="1" fovOnly="0">
-		<Openable scriptId="1" closed="1" />
-	</Actor>
-	<Actor name="Fence door" id="12" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
-		<Openable scriptId="1" closed="0" />
+		<Openable closed="1">
+			<StateOpened character="/" transparent="1" blocks="0"/>
+			<StateClosed character="+" transparent="0" blocks="1"/>
+		</Openable>
 	</Actor>	
 	<Actor name="Horse" id="13" character="h" color="543D37" transparent="1" blocks="1" fovOnly="1">
 		<Character level="1" experience="10" class="1" race="8" armorClass="11" maxHitPoints="6" damage="1d6+0#1" morale="6" speed="80" team="4"/>

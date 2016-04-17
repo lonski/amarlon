@@ -328,6 +328,38 @@ OpenableDescriptionPtr ActorParser::parseOpenableDsc()
       if (attributeExists(openableNode,"lockLevel")) opDsc->lockLevel = getAttribute<int>(openableNode, "lockLevel");
       if (attributeExists(openableNode,"scriptId"))  opDsc->scriptId = getAttribute<int>(openableNode, "scriptId");
       if (attributeExists(openableNode,"closed"))    opDsc->closed = getAttribute<bool>(openableNode, "closed");
+
+      xml_node<>* openedNode = openableNode->first_node("StateOpened");
+      if ( openedNode )
+      {
+        OpenableState s;
+        s.blocks = getAttribute<bool>(openedNode, "blocks");
+        s.transparent = getAttribute<bool>(openedNode, "transparent");
+
+        std::string charStr = getAttribute<std::string>(openedNode, "character");
+        if (charStr.size() > 1 || std::isdigit(charStr[0]))
+          s.symbol = (unsigned char)std::stol(charStr);
+        else
+          s.symbol = charStr[0];
+
+        opDsc->openedState = s;
+      }
+
+      xml_node<>* closedNode = openableNode->first_node("StateClosed");
+      if ( closedNode )
+      {
+        OpenableState s;
+        s.blocks = getAttribute<bool>(closedNode, "blocks");
+        s.transparent = getAttribute<bool>(closedNode, "transparent");
+
+        std::string charStr = getAttribute<std::string>(closedNode, "character");
+        if (charStr.size() > 1 || std::isdigit(charStr[0]))
+          s.symbol = (unsigned char)std::stol(charStr);
+        else
+          s.symbol = charStr[0];
+
+        opDsc->closedState = s;
+      }
     }
   }
 

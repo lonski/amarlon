@@ -204,7 +204,12 @@ bool MapEditor::isQuitting()
 
 void MapEditor::storeMaps()
 {
-  _db.store( config.get("maps_file") );
+  std::string module = config.get("active_module");
+
+  if ( module.empty() )
+    _db.store( config.get("maps_file") );
+  else
+    _db.store( "modules/" + module + "/" + config.get("maps_file") );
 }
 
 int MapEditor::screenWidth() const

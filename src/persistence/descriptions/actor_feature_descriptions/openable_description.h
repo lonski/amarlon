@@ -6,6 +6,24 @@
 
 namespace amarlon {
 
+struct OpenableState
+{
+  unsigned char symbol;
+  bool transparent;
+  bool blocks;
+
+  bool operator==(const OpenableState& rhs) const
+  {
+    return symbol == rhs.symbol && transparent == rhs.transparent
+        && blocks == rhs.blocks;
+  }
+
+  bool operator!=(const OpenableState& rhs) const
+  {
+    return !(*this == rhs);
+  }
+};
+
 struct OpenableDescription : Description
 {
   std::experimental::optional<int>  lockId;
@@ -13,6 +31,8 @@ struct OpenableDescription : Description
   std::experimental::optional<int>  scriptId;
   std::experimental::optional<bool> closed;
   std::experimental::optional<int>  lockLevel;
+  std::experimental::optional<OpenableState> openedState;
+  std::experimental::optional<OpenableState> closedState;
 
   bool any()
   {

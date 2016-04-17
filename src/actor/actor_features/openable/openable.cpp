@@ -26,12 +26,16 @@ void Openable::upgrade(DescriptionPtr dsc)
   OpenableDescriptionPtr oDsc = std::dynamic_pointer_cast<OpenableDescription>(dsc);
   if ( oDsc )
   {
-    if ( oDsc->lockId )    _lockId    = *oDsc->lockId;
-    if ( oDsc->lockLevel ) _lockLevel = *oDsc->lockLevel;
-    if ( oDsc->locked )    _locked    = *oDsc->locked;
-    if ( oDsc->scriptId )  _scriptId  = *oDsc->scriptId;
-    if ( oDsc->closed )    _closed    = *oDsc->closed;
+    if ( oDsc->lockId )      _lockId      = *oDsc->lockId;
+    if ( oDsc->lockLevel )   _lockLevel   = *oDsc->lockLevel;
+    if ( oDsc->locked )      _locked      = *oDsc->locked;
+    if ( oDsc->scriptId )    _scriptId    = *oDsc->scriptId;
+    if ( oDsc->closed )      _closed      = *oDsc->closed;
+    if ( oDsc->openedState ) _openedState = *oDsc->openedState;
+    if ( oDsc->closedState ) _closedState = *oDsc->closedState;
   }
+
+  isClosed() ? applyState(_closedState) : applyState(_openedState);
 }
 
 DescriptionPtr Openable::toDescriptionStruct(ActorFeaturePtr cmp)
@@ -45,7 +49,9 @@ DescriptionPtr Openable::toDescriptionStruct(ActorFeaturePtr cmp)
     if ( _locked != cmpO->_locked )       dsc->locked = _locked;
     if ( _scriptId != cmpO->_scriptId )   dsc->scriptId = _scriptId;
     if ( _closed != cmpO->_closed )       dsc->closed = _closed;
-    if ( _lockLevel != cmpO->_lockLevel ) dsc->lockLevel = _lockLevel;
+    if ( _lockLevel != cmpO->_lockLevel ) dsc->lockLevel = _lockLevel;    
+    if ( _openedState != cmpO->_openedState ) dsc->openedState = _openedState;
+    if ( _closedState != cmpO->_closedState ) dsc->closedState = _closedState;
   }
   else
   {
@@ -54,6 +60,8 @@ DescriptionPtr Openable::toDescriptionStruct(ActorFeaturePtr cmp)
     dsc->scriptId = _scriptId;
     dsc->closed = _closed;
     dsc->lockLevel = _lockLevel;
+    dsc->openedState = _openedState;
+    dsc->closedState = _closedState;
   }
 
   return dsc;
@@ -88,14 +96,17 @@ bool Openable::isEqual(ActorFeaturePtr rhs) const
     equal &= _lockLevel == oRhs->_lockLevel;
     equal &= _scriptId == oRhs->_scriptId;
     equal &= _closed == oRhs->_closed;
+    equal &= _openedState == oRhs->_openedState;
+    equal &= _closedState == oRhs->_closedState;
   }
   return equal;
 }
 
-bool Openable::open(ActorPtr executor)
+bool Openable::executeScript(const std::string &fun, ActorPtr executor)
 {
-  bool r = false;
-  if ( _scriptId > 0 && isClosed() )
+  bool r = true;
+
+  if ( _scriptId > 0 )
   {
     lua_api::LuaState& lua = Engine::instance().getLuaState();
 
@@ -105,20 +116,48 @@ bool Openable::open(ActorPtr executor)
       {
         r = luabind::call_function<bool>(
             lua()
-          , "onOpen"
+          , fun.c_str()
           , executor
           , getOwner().lock()
         );
-
-        _closed = !r;
-
-        ActorPtr owner = getOwner().lock();
-        if ( owner ) owner->interract(executor);
       }
       catch(luabind::error& e)
       {
+        r = false;
         lua.logError(e);
       }
+    }
+  }
+
+  return r;
+}
+
+bool Openable::applyState(const OpenableState& state)
+{
+  ActorPtr owner = getOwner().lock();
+  if ( owner )
+  {
+    owner->setSymbol( state.symbol );
+    owner->setTransparent( state.transparent );
+    owner->setBlocking( state.blocks );
+    return true;
+  }
+  return false;
+}
+
+bool Openable::open(ActorPtr executor)
+{
+  bool r = false;
+
+  if ( isClosed() )
+  {
+    if ( applyState(_openedState) && executeScript("onOpen", executor) )
+    {
+      r = true;
+      _closed = false;
+
+      ActorPtr owner = getOwner().lock();
+      if ( owner ) owner->interract(executor);
     }
   }
 
@@ -129,30 +168,15 @@ bool Openable::close(ActorPtr executor)
 {
   bool r = false;
 
-  if ( _scriptId > 0 && !isClosed() )
+  if ( !isClosed() )
   {
-    lua_api::LuaState& lua = Engine::instance().getLuaState();
-
-    if ( lua.execute( getScriptPath() ) )
+    if ( applyState(_closedState) && executeScript("onClose", executor) )
     {
-      try
-      {
-        r = luabind::call_function<bool>(
-            lua()
-          , "onClose"
-          , executor
-          , getOwner().lock()
-        );
+      r = true;
+      _closed = true;
 
-        _closed = r;
-
-        ActorPtr owner = getOwner().lock();
-        if ( owner ) owner->interract(executor);
-      }
-      catch(luabind::error& e)
-      {
-        lua.logError(e);
-      }
+      ActorPtr owner = getOwner().lock();
+      if ( owner ) owner->interract(executor);
     }
   }
 
@@ -184,6 +208,31 @@ bool Openable::unlock()
   }
   _locked = false;
   return !_locked;
+}
+
+std::string Openable::debug(const std::string &linebreak)
+{
+  std::string d = " " + linebreak + "-----OPENABLE-----"+linebreak;
+
+  d += "Locked = " + std::string( _locked ? "True" : "False") + linebreak;
+  d += "LockId = " + toStr(_lockId)  + linebreak;
+  d += "Lock level = " + toStr(_lockLevel)  + linebreak;
+  d += "Closed = " + std::string( _closed ? "True" : "False") + linebreak;
+  d += "Script ID = " + toStr(_scriptId)  + linebreak;
+
+  d += ">>> Opened State" + linebreak;
+  d += "    Symbol = " + std::string(1, _openedState.symbol) + linebreak;
+  d += "    Blocks = " + std::string( _openedState.blocks ? "True" : "False") + linebreak;
+  d += "    Transparent = " + std::string( _openedState.transparent ? "True" : "False") + linebreak;
+
+  d += ">>> Closed State" + linebreak;
+  d += "    Symbol = " + std::string(1, _closedState.symbol) + linebreak;
+  d += "    Blocks = " + std::string( _closedState.blocks ? "True" : "False") + linebreak;
+  d += "    Transparent = " + std::string( _closedState.transparent ? "True" : "False") + linebreak;
+
+  d += "----------------" + linebreak;
+
+  return d;
 }
 
 std::string Openable::getScriptPath() const
