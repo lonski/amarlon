@@ -47,11 +47,7 @@ bool Configuration::save(const std::string &fn)
 std::string Configuration::get(const std::string &tag)
 {
   auto found = _config.find(tag);
-
-  if ( found != _config.end() )
-    return found->second;
-  else
-    throw std::runtime_error("Configuration tag \""+tag+"\" not available!");
+  return found != _config.end() ? found->second : "";
 }
 
 Configuration& Configuration::set(const std::string &tag, const std::string &value)

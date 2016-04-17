@@ -1,0 +1,20 @@
+<Actors>
+	<Actor name="Bank clerk" id="1001" character="@" color="BDB76B" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="10" class="1" race="1" maxHitPoints="4" speed="30" team="1" morale="4">
+			<AbilityScores STR="6" INT="16" WIS="16" DEX="8" CON="8" CHA="8"/>
+		</Character>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Description>An older man with tired eyes.</Description>
+	</Actor>
+	<Actor name="Bank president" id="1002" character="@" color="EEE685" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="10" class="1" race="1" maxHitPoints="4" speed="30" team="1" morale="4">
+			<AbilityScores STR="6" INT="16" WIS="16" DEX="8" CON="8" CHA="8"/>
+		</Character>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Description>Old, crooked man with short, white hair.</Description>
+	</Actor>
+	<Actor name="Counter" id="1003" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Hay" id="1004" character="#" color="dac586" transparent="0" blocks="1" fovOnly="0"/>
+</Actors>

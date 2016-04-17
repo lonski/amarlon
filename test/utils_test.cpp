@@ -10,6 +10,8 @@
 #include <engine.h>
 #include <actor_db.h>
 #include <actor.h>
+#include <module.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -37,6 +39,7 @@ TEST(PointTest, operator_minus)
 TEST(ActorContainerTest, removeStacked)
 {
   Engine::instance().prologue();
+  Engine::instance().loadModule( Module("testing") );
 
   //create 10 arrows
   ActorPtr arrows = Engine::instance().getActorDB().fetch( 30 /*Arrow*/);

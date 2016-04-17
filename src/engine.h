@@ -81,6 +81,7 @@ public:
   void flush();
   void update();
   void processInput();
+  void loadModule(const Module& module);
 
   gui::Gui&           getGui() const;
   gui::WindowManager& getWindowManager() const;

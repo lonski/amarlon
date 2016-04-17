@@ -7,6 +7,7 @@
 #include <engine.h>
 #include <actor_descriptions.h>
 #include <actor_container.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -18,6 +19,7 @@ public:
   virtual void SetUp()
   {
     Engine::instance().prologue();
+    Engine::instance().loadModule( Module("testing") );
 
     WearerDescriptionPtr dsc(new WearerDescription);
     dsc->itemSlots.push_back((int)ItemSlotType::Armor);

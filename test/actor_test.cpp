@@ -4,6 +4,7 @@
 #include <engine.h>
 #include <actor_descriptions.h>
 #include <character_type.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -12,7 +13,7 @@ class ActorTest : public ::testing::Test
   virtual void SetUp()
   {
     Engine::instance().prologue();
-    //Engine::instance().enterGame();
+    Engine::instance().loadModule( Module("testing") );
   }
 
   virtual void TearDown()

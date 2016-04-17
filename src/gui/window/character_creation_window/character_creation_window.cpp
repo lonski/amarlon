@@ -9,6 +9,7 @@
 #include <actor.h>
 #include <playable_character.h>
 #include <thief_skills_selection_panel.h>
+#include <module.h>
 
 namespace amarlon { namespace gui {
 
@@ -65,11 +66,12 @@ AWindow &CharacterCreationWindow::show()
     if ( _enterGame )
     {
       ActorPtr player = Actor::create( _player, false);
-      player->setPosition(57, 58);
+      player->setPosition( Engine::instance().getModule().getStartX(),
+                           Engine::instance().getModule().getStartY());
       PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
       c->advanceLevel();
 
-      Engine::instance().getWorld().changeMap( 2 );
+      Engine::instance().getWorld().changeMap( Engine::instance().getModule().getStartMap() );
       Engine::instance().getWorld().setPlayer( player );
 
       Engine::instance().enterGame();

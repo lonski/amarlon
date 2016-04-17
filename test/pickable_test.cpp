@@ -5,6 +5,7 @@
 #include <actor_db.h>
 #include <actor_descriptions.h>
 #include <pickable_description.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -16,6 +17,7 @@ public:
   virtual void SetUp()
   {
     Engine::instance().prologue();
+    Engine::instance().loadModule( Module("testing") );
   }
   virtual void TearDown()
   {

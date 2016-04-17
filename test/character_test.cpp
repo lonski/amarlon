@@ -6,6 +6,7 @@
 #include <actor_descriptions.h>
 #include <race.h>
 #include <character_type.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -19,6 +20,7 @@ public:
   virtual void SetUp()
   {
     Engine::instance().prologue();
+    Engine::instance().loadModule( Module("testing") );
   }
 
   virtual void TearDown()

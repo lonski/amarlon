@@ -4,6 +4,7 @@
 #include <map.h>
 #include <configuration.h>
 #include <engine.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -17,6 +18,7 @@ public:
   virtual void SetUp()
   {
     Engine::instance().prologue();
+    Engine::instance().loadModule( Module("testing") );
   }
   virtual void TearDown()
   {

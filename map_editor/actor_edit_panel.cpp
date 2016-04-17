@@ -45,7 +45,7 @@ void ActorEditPanel::setActor(const ActorDescriptionPtr &actor)
 {
   _actor = actor;
   init();
-  ActorDescriptionPtr proto = _db ? _db->fetch(*_actor->id) : nullptr;
+  ActorDescriptionPtr proto = _db ? _db->fetch( *_actor->id ) : nullptr;
 
   _fname->setText( actor->name ? *actor->name
                                : proto && proto->name ? *proto->name : "" );
@@ -55,6 +55,12 @@ void ActorEditPanel::setActor(const ActorDescriptionPtr &actor)
                                  : proto && proto->color ? *proto->color : "" );
   _fpriority->setText( actor->tilePriority ? std::to_string(*actor->tilePriority)
                                  : proto && proto->tilePriority ? std::to_string(*proto->tilePriority) : "" );
+  unsigned char c = (actor->symbol ? *actor->symbol
+                                   : (proto && proto->symbol ? *proto->symbol : '#'));
+  _fsymbol->setText( std::string(1, c) );
+
+  _fprototype->setText( actor->prototype ? std::to_string(*actor->prototype)
+                                 : proto && proto->prototype ? std::to_string(*proto->prototype) : "" );
 }
 
 void ActorEditPanel::init()
@@ -83,6 +89,9 @@ void ActorEditPanel::init()
     _fname.reset(new gui::ATextEdit(2, y_pos++, 25, "Name"));
     addWidget( _fname );
     ++y_pos;
+    _fsymbol.reset(new gui::ATextEdit(2, y_pos++, 25, "Symbol"));
+    addWidget( _fsymbol );
+    ++y_pos;
     _finscription.reset(new gui::ATextEdit(2, y_pos++, 25, "Inscription"));
     addWidget( _finscription );
     ++y_pos;
@@ -91,6 +100,9 @@ void ActorEditPanel::init()
     ++y_pos;
     _fpriority.reset(new gui::ATextEdit(2, y_pos++, 25, "Priority"));
     addWidget( _fpriority );
+    ++y_pos;
+    _fprototype.reset(new gui::ATextEdit(2, y_pos++, 25, "Prototype"));
+    addWidget( _fprototype );
 
     if ( _actor && _db )
     {
@@ -146,6 +158,10 @@ void ActorEditPanel::saveActor()
         if ( !_fcolor->getText().empty() ) _actor->color = _fcolor->getText();
       if ( !proto || !proto->tilePriority || _fpriority->getInt() != *proto->tilePriority )
         if (_fpriority->getInt() != 0) _actor->tilePriority = _fpriority->getInt();
+      if ( !proto || !proto->symbol || _fsymbol->getText().front() != *proto->symbol )
+        if ( !_fsymbol->getText().empty() ) _actor->symbol = _fsymbol->getText().front();
+      if ( !proto || !proto->prototype || _fprototype->getInt() != *proto->prototype )
+        if (_fprototype->getInt() != 0) _actor->prototype = _fprototype->getInt();
     }
   }
 }

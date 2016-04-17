@@ -168,6 +168,7 @@ void TileInspectPanel::addActor(ActorDescriptionPtr a)
     dsc->id = *a->id;
     dsc->x = _x;
     dsc->y = _y;
+
     _map->actors.push_back(dsc);
   }
 }

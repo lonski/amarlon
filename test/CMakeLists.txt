@@ -4,6 +4,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 include_directories(${GMOCK_INCLUDE_DIRS})
 
 set(HEADER_FILES
+    ${PROJECT_SOURCE_DIR}/src/module.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor.h
     ${PROJECT_SOURCE_DIR}/src/actor/status_effects_manager.h
     ${PROJECT_SOURCE_DIR}/src/actor/actor_features/actor_feature.h

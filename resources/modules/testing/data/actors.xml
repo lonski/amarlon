@@ -1,0 +1,167 @@
+<!--
+This file contains actor definitions. 
+The actors here are the templates. 
+Here are defined default parameters which can be overloaded. 
+When new actor is created with given ID as parameter, then the template will be loaded.
+-->
+<Actors>
+	<Actor name="Player" id="1" character="@" color="ffffff" transparent="1" blocks="1" fovOnly="1">
+		<Inventory maxSize="20"/>
+		<PlayerAi/>
+		<PlayableCharacter speed="40" team="2"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Destroyable/>
+	</Actor>	
+	<Actor name="Orc" id="2" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="25" class="1" race="5" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="0"/>
+		<Ai script="1"/>
+		<Wearer>
+			<ItemSlot type="3"/>
+			<ItemSlot type="12"/>
+			<ItemSlot type="7"/>
+			<Actor id="20"/>
+			<Actor id="30">
+				<Pickable amount="2"/>
+			</Actor>
+			<Actor id="31"/>
+		</Wearer>
+		<Inventory maxSize="20">
+			<Actor id="23"/>
+			<Actor id="24"/>
+			<Actor id="33"/>
+			<Actor id="30">
+				<Pickable amount="2"/>
+			</Actor>
+			<Actor id="34">
+				<Pickable amount="1"/>
+			</Actor>
+		</Inventory>
+		<Destroyable>
+			<DropRule dropActorId="22" amountMin="4" amountMax="10" chance="0.6"/>
+		</Destroyable>	
+		<Description>Orcs are grotesque humanoids bent on war and domination. They have lupine ears, reddish eyes, truncated, upturned noses, and black hair (but very little body hair). An adult male orc is a little over 6 feet tall and weighs about 210 pounds; females are slightly smaller. Orcs prefer wearing vivid colors that many humans would consider unpleasant, such as blood red, mustard yellow, yellow-green, and deep purple. They utilize all manner of weapons and armor scavenged from battlefields.</Description>
+	</Actor>
+	<Actor name="Closed door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
+		<Openable scriptId="1" closed="1" />
+	</Actor>
+	<Actor name="Opened door" id="4" character="/" color="9D5B03" transparent="1" blocks="0" fovOnly="0">
+		<Openable scriptId="1" closed="0" />
+	</Actor>
+	<Actor name="Bed" id="5" character="177" color="efefef" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Locker" id="6" character="226" color="906030" transparent="1" blocks="1" fovOnly="0"/>
+	<Actor name="Wardrobe" id="7" character="224" color="906030" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Chair" id="8" character="=" color="FFC000" transparent="1" blocks="0" fovOnly="0"/>
+	<Actor name="Furnace" id="9" character="&" color="eeeeee" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Table" id="10" character="10" color="906030" transparent="1" blocks="1" fovOnly="0"/>
+	<Actor name="Worktop" id="11" character="224" color="F9E04B" transparent="0" blocks="1" fovOnly="0"/>
+	<Actor name="Bootle of wine" id="12" character="!" color="ff0000" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="5"/>
+	</Actor>
+	<Actor name="Health potion" id="13" character="!" color="0099FF" transparent="1" blocks="0" fovOnly="0">
+		<Pickable scriptId="1" stackable="1" amount="1" category="5" uses="1" targetType="4"/>
+	</Actor>
+	<Actor name="Cook book" id="14" character="34" color="CC6600" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="1"/>
+	</Actor>
+	<Actor name="Corpse" id="15" character="%" color="cc0000" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="1"/>
+	</Actor>
+	<Actor name="Pantry key" id="16" character=";" color="999966" transparent="1" blocks="0" fovOnly="0">
+		<Pickable scriptId="2" stackable="0" amount="1" uses="-1" targetType="0"/>
+	</Actor>
+	<Actor name="Leather boots" id="18" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="6" category="3"/>
+	</Actor>
+	<Actor name="Belt of hill giant strength" id="19" character="[" color="FFCC66" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="4" category="3"/>
+	</Actor>
+	<Actor name="Leather armor" id="20" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" itemSlot="3" category="3" armorClass="13" weight="15" price="20"/>
+		<Description>Leather armor is made up of multiple overlapping pieces of leather, boiled to increase their natural toughness and then deliberately stitched together. Although not as sturdy as metal armor, the flexibility it allows wearers makes it among the most widely used types of armor.</Description>
+	</Actor>	
+	<Actor name="Gold coin" id="22" character="$" color="E2B227" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="8"/>
+	</Actor>
+	<Actor name="Black Ale" id="23" character="!" color="808080" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="5"/>
+	</Actor>
+	<Actor name="Dagger" id="24" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d4+0#1" armorClass="0" weight="1" price="2" weaponType="3"/>
+		<Description>A dagger is a fighting knife. Its blade is usually less than 1 foot long, and can be curved or straight, with one edge or two. Dagger designs vary widely, and can have many different names (such as a thrusting dagger being called a "dirk").</Description>
+	</Actor>
+	<Actor name="Goblin" id="25" character="g" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="10" class="1" race="6" armorClass="11" maxHitPoints="7" damage="1d6+0#1" morale="7" speed="30" team="0"/>
+		<Ai script="1"/>
+		<Destroyable>
+			<DropRule dropActorId="22" amountMin="1" amountMax="4" chance="0.5"/>
+		</Destroyable>
+		<Description>Goblins are small, wicked humanoids that favor ambushes, overwhelming odds, dirty tricks, and any other edge they can devise. An adult goblin stands 3 to 3.5 feet tall and weigh 40 to 45 pounds. Its eyes are usually bright and crafty-looking, varying in color from red to yellow. A goblin’s skin color ranges from yellow through any shade of orange to a deep red; usually all members of a single tribe are about the same color. Goblins wear clothing of dark leather, tending toward drab, soiled-looking colors. They have Darkvision with a 30' range</Description>
+	</Actor>	
+	<Actor name="Blade Trap" id="26" character=" " color="000000" transparent="1" blocks="0" fovOnly="0">
+		<Trap id="1" armed="1" difficulty="20"/>
+	</Actor>
+	<Actor name="Scroll: Fireball" id="27" character="?" color="FFFFFF" transparent="1" blocks="0" fovOnly="0">
+		<Scroll spell="3" stackable="1" amount="1" category="6" uses="1" />
+	</Actor>
+	<Actor name="Toilet" id="28" character="o" color="4D2600" transparent="1" blocks="0" fovOnly="0">
+		<Talker id="1"/>
+	</Actor>
+	<Actor name="Beer" id="29" character="!" color="B36B00" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="5"/>
+	</Actor>
+	<Actor name="Arrow" id="30" character="/" color="cd8500" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="7" amunitionType="1" itemSlot="12" damage="1d6+0#6"/>
+	</Actor>
+	<Actor name="Short bow" id="31" character="}" color="663300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" weaponType="5" range="10" itemSlot="7" amunitionType="1"/>
+	</Actor>
+	<Actor name="Tero" id="32" character="@" color="ccff99" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="30" class="2" race="2" maxHitPoints="12" speed="40" team="1" morale="8">
+			<AbilityScores STR="16" INT="10" WIS="16" DEX="10" CON="18" CHA="8"/>
+			<Spellbook>
+				<Slots>
+					<Slot level="1" prepared="1" spell="1"/>
+					<Slot level="1" prepared="1" spell="1"/>
+					<Slot level="2" prepared="1" spell="4"/>
+				</Slots>
+				<Known>
+					<Spell id="1"/>
+					<Spell id="4"/>
+				</Known>
+			</Spellbook>
+		</Character>
+		<Wearer>
+			<ItemSlot type="3"/>
+			<ItemSlot type="7"/>
+			<Actor id="20"/>
+			<Actor id="24"/>
+		</Wearer>
+		<Talker id="2"/>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Description>Some weird dwarf wandering around.</Description>
+	</Actor>
+	<Actor name="Short sword" id="33" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d6+0#1" armorClass="0" weight="3" price="6" weaponType="1"/>
+		<Description>In essence, this weapon is a smaller version of the longsword but longer than a dagger or dirk, having many of the same parts including a generally double-edged blade, cross-guard, grip, and pommel.</Description>
+	</Actor>
+	<Actor name="Arrow +1" id="34" character="/" color="cd8500" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="1" amount="1" category="7" amunitionType="1" itemSlot="12" damage="1d6+1#6"/>
+	</Actor>
+	<Actor id="35" name="Orc berserker" prototype="2" color="ff5555">
+		<Character damage="1d12+0#1"/>		
+	</Actor>
+</Actors>

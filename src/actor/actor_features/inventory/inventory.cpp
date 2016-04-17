@@ -148,7 +148,7 @@ bool Inventory::modifyGoldAmount(int modifier, bool notify)
 {
   bool r = false;
 
-  auto i = items( 22 /*Gold Coin*/);
+  auto i = items( 2 /*Gold Coin*/);
   if ( !i.empty() )
   {
     PickablePtr p = i.front()->getFeature<Pickable>();
@@ -176,7 +176,7 @@ int Inventory::getGoldAmount() const
 {
   int amount = 0;
 
-  auto i = items( 22 /*Gold Coin*/);
+  auto i = items( 2 /*Gold Coin*/);
   if ( !i.empty() )
   {
     PickablePtr p = i.front()->getFeature<Pickable>();

@@ -15,8 +15,36 @@ ActorsDatabase::ActorsDatabase()
 
 ActorDescriptionPtr ActorsDatabase::fetch(int id)
 {
+  ActorDescriptionPtr dsc;
+
   auto it = _actors.find(id);
-  return it != _actors.end() ? it->second : nullptr;
+
+  if ( it != _actors.end() )
+  {
+    if ( it->second->prototype )
+    {
+      ActorDescriptionPtr a = it->second;
+      dsc.reset( new ActorDescription );
+      auto it_proto = _actors.find(*a->prototype);
+      *dsc = *it_proto->second;
+
+      if ( a->color ) dsc->color = *a->color;
+      if ( a->blocks ) dsc->blocks = *a->blocks;
+      if ( a->fovOnly ) dsc->fovOnly = *a->fovOnly;
+      if ( a->inscription ) dsc->inscription = *a->inscription;
+      if ( a->name ) dsc->name = *a->name;
+      if ( a->prototype ) dsc->prototype = *a->prototype;
+      if ( a->symbol ) dsc->symbol = *a->symbol;
+      if ( a->tilePriority ) dsc->tilePriority = *a->tilePriority;
+      if ( a->transparent ) dsc->transparent = *a->transparent;
+    }
+    else
+    {
+      dsc = it->second;
+    }
+  }
+
+  return dsc;
 }
 
 void ActorsDatabase::parse(std::vector<char> buffer)

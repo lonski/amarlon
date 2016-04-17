@@ -58,24 +58,29 @@ void Engine::prologue()
   _module   .reset( new Module( _config->get("active_module") ) );
 
   getLuaState().registerAPI();
+  loadModule( getModule() );
+}
+
+void Engine::loadModule(const Module& module)
+{
+  *_module = module;
 
   getSpellDB().load( _config->get("spells_file") );
-  getSpellDB().loadPlugin( getModule().getPath() + _config->get("spells_file") );
+  getSpellDB().loadPlugin( module.getPath() + _config->get("spells_file") );
 
   getSkillDB().load( _config->get("skills_file") );
-  getSkillDB().loadPlugin( getModule().getPath() + _config->get("skills_file") );
+  getSkillDB().loadPlugin( module.getPath() + _config->get("skills_file") );
 
   getTileDB ().load( _config->get("tiles_file" ) );
-  getTileDB ().loadPlugin( getModule().getPath() + _config->get("tiles_file" ) );
+  getTileDB ().loadPlugin( module.getPath() + _config->get("tiles_file" ) );
 
   getRpgDB  ().load( _config->get("rpg_file") );
 
   getActorDB().load( _config->get("actors_file") );
-  getActorDB().loadPlugin( getModule().getPath() + _config->get("actors_file") );
+  getActorDB().loadPlugin( module.getPath() + _config->get("actors_file") );
 
   getWorld  ().load( _config->get("maps_file") );
-  getWorld  ().loadPlugin( getModule().getPath() + _config->get("maps_file") );
-
+  getWorld  ().loadPlugin( module.getPath() + _config->get("maps_file") );
 }
 
 void Engine::enterGame(const std::string& savedGameFn)

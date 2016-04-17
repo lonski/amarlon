@@ -5,6 +5,8 @@
 #include <actor.h>
 #include <map_db.h>
 #include <engine.h>
+#include <module.h>
+#include <world.h>
 
 namespace amarlon {
 
@@ -13,15 +15,12 @@ class MapTest : public ::testing::Test
   virtual void SetUp()
   {
     Engine::instance().prologue();
-    mapDB.load("data/maps.xml");
+    Engine::instance().loadModule( Module("testing") );
   }
 
   virtual void TearDown()
   {
   }
-
-protected:
-  MapDB mapDB;
 
 };
 
@@ -57,7 +56,7 @@ TEST_F(MapTest, mapIsInFov_computed)
 
 TEST_F(MapTest, addActor)
 {
-  MapPtr map = mapDB.fetch(1);
+  MapPtr map = Engine::instance().getWorld().fetch(1);
   ActorPtr actor = Actor::create( 13 /*HeathPotion*/,1,1);
 
   map->addActor(actor);

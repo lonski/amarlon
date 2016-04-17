@@ -29,6 +29,8 @@ private:
   gui::ATextEditPtr _finscription;
   gui::ATextEditPtr _fcolor;
   gui::ATextEditPtr _fpriority;
+  gui::ATextEditPtr _fsymbol;
+  gui::ATextEditPtr _fprototype;
 
   std::map<ActorFeature::Type, std::shared_ptr<ActorFeatureEditPanel> > _panels;
 

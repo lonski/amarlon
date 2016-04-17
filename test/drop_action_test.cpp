@@ -7,6 +7,7 @@
 #include <world.h>
 #include <die_action.h>
 #include <pickup_action.h>
+#include <module.h>
 
 namespace amarlon {
 
@@ -20,6 +21,7 @@ public:
   virtual void SetUp()
   {
     Engine::instance().prologue();
+    Engine::instance().loadModule( Module("testing") );
     Engine::instance().enterGame();
 
     guy = Actor::create(2);
