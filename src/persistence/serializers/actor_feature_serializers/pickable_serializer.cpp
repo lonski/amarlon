@@ -57,6 +57,7 @@ bool PickableSerializer::serialize(DescriptionPtr dsc)
       if ( pDsc->weaponType )    addAttribute( _pickableNode, "weaponType",    *pDsc->weaponType );
       if ( pDsc->amunitionType ) addAttribute( _pickableNode, "amunitionType", *pDsc->amunitionType );
       if ( pDsc->category )      addAttribute( _pickableNode, "category",      *pDsc->category );
+      if ( pDsc->weaponSize )    addAttribute( _pickableNode, "weaponSize",    *pDsc->weaponSize );
     }
   }
 

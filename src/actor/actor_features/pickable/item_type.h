@@ -16,7 +16,10 @@ enum class WeaponType
   Blunt  = 2,
   Dagger = 3,
   Staff  = 4,
-  Bow    = 5
+  Bow    = 5,
+  Axe    = 6,
+  Crossbow = 7,
+  Sling    = 8
   /* When adding new types here
    * remember to fill
    * ItemType::isMeleeWeapon()
@@ -33,6 +36,24 @@ static inline const char* WeaponType2Str(WeaponType t)
           "Dagger",
           "Staff",
           "Bow"
+          }[(int)t];
+}
+
+enum class WeaponSize
+{
+  NoSize = 0,
+  Size_S = 1,
+  Size_M = 2,
+  Size_L = 3
+};
+
+static inline const char* WeaponSize2Str(WeaponSize t)
+{
+  return (const char *[]){
+          "NoSize",
+          "Size_S",
+          "Size_M",
+          "Size_L"
           }[(int)t];
 }
 
@@ -55,14 +76,19 @@ static inline const char* ArmorType2Str(ArmorType t)
 enum class AmunitionType
 {
   NoType  = 0,
-  Arrow   = 1
+  ShortBowArrow   = 1,
+  LongBowArrow    = 2,
+  LightQuarrel    = 3,
+  HeavyQuarrel    = 4,
+  Bullet          = 5
 };
 
 static inline const char* AmunitionType2Str(AmunitionType t)
 {
   return (const char *[]){
           "NoType",
-          "Arrow"
+          "Shortbow Arrow",
+          "Longbow Arrow"
           }[(int)t];
 }
 
@@ -75,10 +101,11 @@ struct ItemType
 
   ItemType(ItemTypeDescription dsc)
   {
-    if ( dsc.amunitionType ) amunition = (AmunitionType)*dsc.amunitionType;
-    if ( dsc.armorType )     armor     = (ArmorType)*dsc.armorType;
-    if ( dsc.category )      category  = (PickableCategory)*dsc.category;
-    if ( dsc.weaponType )    weapon    = (WeaponType)*dsc.weaponType;
+    if ( dsc.amunitionType ) amunition  = (AmunitionType)*dsc.amunitionType;
+    if ( dsc.armorType )     armor      = (ArmorType)*dsc.armorType;
+    if ( dsc.category )      category   = (PickableCategory)*dsc.category;
+    if ( dsc.weaponType )    weapon     = (WeaponType)*dsc.weaponType;
+    if ( dsc.weaponSize )    weaponSize = (WeaponSize)*dsc.weaponSize;
   }
 
   void merge(const ItemType& rhs)
@@ -87,6 +114,7 @@ struct ItemType
     if ( rhs.weapon != WeaponType::NoType ) weapon = rhs.weapon;
     if ( rhs.armor != ArmorType::NoType ) armor = rhs.armor;
     if ( rhs.amunition != AmunitionType::NoType ) amunition = rhs.amunition;
+    if ( rhs.weaponSize != WeaponSize::NoSize ) weaponSize = rhs.weaponSize;
   }
 
   bool operator==(const ItemType& rhs) const
@@ -94,7 +122,8 @@ struct ItemType
     return category == rhs.category &&
            weapon == rhs.weapon &&
            armor == rhs.armor &&
-           amunition == rhs.amunition;
+           amunition == rhs.amunition &&
+           weaponSize == rhs.weaponSize;
   }
 
   bool isMeleeWeapon() const
@@ -102,19 +131,23 @@ struct ItemType
     return weapon == WeaponType::Blunt  ||
            weapon == WeaponType::Dagger ||
            weapon == WeaponType::Staff  ||
-           weapon == WeaponType::Sword;
+           weapon == WeaponType::Sword  ||
+           weapon == WeaponType::Axe;
 
   }
 
   bool isRangeWeapon() const
   {
-    return weapon == WeaponType::Bow;
+    return weapon == WeaponType::Bow ||
+           weapon == WeaponType::Crossbow ||
+           weapon == WeaponType::Sling;
   }
 
   PickableCategory category;
   WeaponType weapon;
   ArmorType armor;
   AmunitionType amunition;
+  WeaponSize weaponSize;
 };
 
 class ItemTypeRestriction

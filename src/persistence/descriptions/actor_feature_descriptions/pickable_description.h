@@ -24,13 +24,14 @@ struct PickableDescription : Description
   std::experimental::optional<int> weaponType;
   std::experimental::optional<int> amunitionType;
   std::experimental::optional<int> category;
+  std::experimental::optional<int> weaponSize;
 
   virtual bool any()
   {
     return stackable || amount || uses || itemSlot || armorClass ||
            weight || price || targetType || damage || scriptId ||
            range || radius || armorType || weaponType || amunitionType ||
-           category;
+           category || weaponSize;
   }
 };
 
@@ -41,12 +42,6 @@ struct ScrollDescription : PickableDescription
   {}
 
   int spellId;
-
-  virtual bool any()
-  {
-    return true;
-  }
-
 };
 
 typedef std::shared_ptr<PickableDescription> PickableDescriptionPtr;

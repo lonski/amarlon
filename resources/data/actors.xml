@@ -25,9 +25,13 @@ When new actor is created with given ID as parameter, then the template will be 
 		</Wearer>
 		<Destroyable/>
 	</Actor>	
-	<Actor name="Gold coin" id="2" character="$" color="E2B227" transparent="1" blocks="0" fovOnly="0">
+	<Actor name="Coin" id="2" character="$" color="E2B227" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="1" amount="1" category="8"/>
 	</Actor>
+	
+	<!--
+		===== DOORS =====
+	-->
 	<Actor name="Wooden door" id="3" character="+" color="9D5B03" transparent="0" blocks="1" fovOnly="0">
 		<Openable closed="1">
 			<StateOpened character="/" transparent="1" blocks="0"/>
@@ -54,10 +58,94 @@ When new actor is created with given ID as parameter, then the template will be 
 			<StateClosed character="+" transparent="0" blocks="1"/>
 		</Openable>
 	</Actor>	
+	
 	<Actor name="Horse" id="13" character="h" color="543D37" transparent="1" blocks="1" fovOnly="1">
 		<Character level="1" experience="10" class="1" race="8" armorClass="11" maxHitPoints="6" damage="1d6+0#1" morale="6" speed="80" team="4"/>
 		<Ai script="1"/>
 		<Destroyable/>
 		<Description>A rideable horse.</Description>
 	</Actor>
+	
+	<!--
+		===== WEAPONS =====
+	-->
+	<!-- Axes -->
+	<Actor name="Hand Axe" id="50" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d6+0#1" weight="5" price="40" weaponType="6" weaponSize="1"/>
+	</Actor>
+	<Actor name="Battle Axe" id="51" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d8+0#1" weight="7" price="70" weaponType="6" weaponSize="2"/>
+	</Actor>
+	<Actor name="Great Axe" id="52" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d10+0#1" weight="15" price="140" weaponType="6" weaponSize="3"/>
+	</Actor>
+	<!-- Range -->
+	<Actor name="Shortbow" id="60" character="{" color="9D5B03" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" weight="2" price="250" weaponType="5" weaponSize="2" amunitionType="1" range="10"/>
+	</Actor>	
+	<Actor name="Longbow" id="61" character="{" color="9D5B03" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" weight="3" price="600" weaponType="5" weaponSize="3" amunitionType="2" range="14"/>
+	</Actor>
+	<Actor name="Light Crossbow" id="62" character="{" color="9D5B03" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" weight="7" price="300" weaponType="7" weaponSize="2" amunitionType="3" range="12"/>
+	</Actor>	
+	<Actor name="Heavy Crossbow" id="63" character="{" color="9D5B03" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" weight="4" price="500" weaponType="7" weaponSize="3" amunitionType="4" range="16"/>
+	</Actor>
+	<Actor name="Sling" id="64" character="{" color="9D5B03" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" weight="1" price="10" weaponType="8" weaponSize="1" amunitionType="5" range="6"/>
+	</Actor>
+	<!-- Amunition -->
+	<Actor name="Shortbow Arrow" id="70" character="\" color="cd8500" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="1" amount="1" category="7" amunitionType="1" itemSlot="12" damage="1d6+0#6" price="1"/>
+	</Actor>	
+	<Actor name="Longbow Arrow" id="71" character="\" color="cd8500" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="1" amount="1" category="7" amunitionType="2" itemSlot="12" damage="1d8+0#6" price="2"/>
+	</Actor>
+	<Actor name="Light Quarrel" id="72" character="\" color="b5b5b5" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="1" amount="1" category="7" amunitionType="3" itemSlot="12" damage="1d6+0#6" price="2"/>
+	</Actor>
+	<Actor name="Heavy Quarrel" id="73" character="\" color="b5b5b5" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="1" amount="1" category="7" amunitionType="4" itemSlot="12" damage="1d8+0#6" price="4"/>
+	</Actor>
+	<Actor name="Bullet" id="74" character="*" color="b5b5b5" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="1" amount="1" category="7" amunitionType="5" itemSlot="12" damage="1d4+0#6" price="1"/>
+	</Actor>
+	<Actor name="Stone" id="75" character="*" color="b5b5b5" transparent="1" blocks="0" fovOnly="0" >
+		<Pickable stackable="1" amount="1" category="7" amunitionType="5" itemSlot="12" damage="1d3+0#6"/>
+	</Actor>
+	<!-- Daggers -->
+	<Actor name="Dagger" id="80" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d4+0#1" weight="1" price="20" weaponType="3" weaponSize="1"/>
+	</Actor>
+	<!-- Swords -->
+	<Actor name="Shortsword" id="90" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d6+0#1" weight="3" price="60" weaponType="1" weaponSize="1"/>
+	</Actor>
+	<Actor name="Longsword" id="91" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d8+0#1" weight="4" price="100" weaponType="1" weaponSize="2"/>
+	</Actor>
+	<Actor name="Two-Handed Sword" id="92" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d10+0#1" weight="10" price="180" weaponType="1" weaponSize="3"/>
+	</Actor>
+	<!-- Blunts -->
+	<Actor name="Warhammer" id="100" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d6+0#1" weight="6" price="40" weaponType="2" weaponSize="1"/>
+	</Actor>
+	<Actor name="Mace" id="101" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d8+0#1" weight="10" price="60" weaponType="2" weaponSize="2"/>
+	</Actor>
+	<Actor name="Maul" id="102" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d10+0#1" weight="16" price="100" weaponType="2" weaponSize="3"/>
+	</Actor>
+	<Actor name="Club" id="103" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d4+0#1" weight="1" price="2" weaponType="2" weaponSize="2"/>
+	</Actor>
+	<Actor name="Quarterstaff" id="104" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d6+0#1" weight="4" price="20" weaponType="2" weaponSize="3"/>
+	</Actor>
+	<Actor name="Pole Arm" id="105" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d10+0#1" weight="15" price="90" weaponType="2" weaponSize="3"/>
+	</Actor>
+	
 </Actors>

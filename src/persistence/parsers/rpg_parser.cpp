@@ -59,6 +59,7 @@ std::vector<CharacterClassDescriptionPtr> RpgParser::parseCharacterClasses()
             if ( attributeExists(onlyNode, "weapon") ) t.weaponType = getAttribute<int>(onlyNode, "weapon");
             if ( attributeExists(onlyNode, "amunition") ) t.amunitionType = getAttribute<int>(onlyNode, "amunition");
             if ( attributeExists(onlyNode, "category") ) t.category = getAttribute<int>(onlyNode, "category");
+            if ( attributeExists(onlyNode, "weaponSize") ) t.weaponSize = getAttribute<int>(onlyNode, "weaponSize");
 
             cClass->itemTypeRestrictions.push_back( t );
             onlyNode = onlyNode->next_sibling();

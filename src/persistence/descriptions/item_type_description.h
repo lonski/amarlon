@@ -12,6 +12,7 @@ struct ItemTypeDescription : Description
   std::experimental::optional<int> weaponType;
   std::experimental::optional<int> amunitionType;
   std::experimental::optional<int> category;
+  std::experimental::optional<int> weaponSize;
 };
 
 }

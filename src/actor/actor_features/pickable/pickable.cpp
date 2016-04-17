@@ -37,6 +37,7 @@ void Pickable::upgrade(DescriptionPtr dsc)
     if (pDsc->weaponType)     _type.weapon    = (WeaponType)*(pDsc->weaponType);
     if (pDsc->amunitionType)  _type.amunition = (AmunitionType)*(pDsc->amunitionType);
     if (pDsc->category)       _type.category  = (PickableCategory)*(pDsc->category);
+    if (pDsc->weaponSize)     _type.weaponSize  = (WeaponSize)*(pDsc->weaponSize);
   }
 }
 
@@ -70,6 +71,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     if ( _type.weapon != cmpP->_type.weapon ) dsc->weaponType = (int)_type.weapon;
     if ( _type.amunition != cmpP->_type.amunition ) dsc->amunitionType = (int)_type.amunition;
     if ( _type.category != cmpP->_type.category ) dsc->category = (int)_type.category;
+    if ( _type.weaponSize != cmpP->_type.weaponSize ) dsc->weaponSize = (int)_type.weaponSize;
   }
   else
   {
@@ -89,6 +91,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     dsc->weaponType = (int)_type.weapon;
     dsc->amunitionType = (int)_type.amunition;
     dsc->category = (int)_type.category;
+    dsc->weaponSize = (int)_type.weaponSize;
   }
 }
 
