@@ -4,6 +4,8 @@
 #include <actor.h>
 #include <amarlon_except.h>
 #include <actor_descriptions.h>
+#include <character.h>
+#include <race.h>
 
 namespace amarlon {
 
@@ -28,7 +30,7 @@ void Wearer::upgrade(DescriptionPtr dsc)
   {
     for ( auto slot : wearerDsc->itemSlots )
     {
-      _itemSlots.insert( std::make_pair((ItemSlotType)slot, nullptr) );
+      _itemSlots.insert( std::make_pair((ItemSlotType)slot, std::make_pair(nullptr,false) ) );
     }
 
     for ( auto aDsc : wearerDsc->eqItems )
@@ -58,8 +60,17 @@ void Wearer::assignItemsToSlots()
     PickablePtr pickable = a ? a->getFeature<Pickable>() : nullptr;
     if ( pickable && hasSlot( pickable->getItemSlot() ))
     {
-      _itemSlots[ pickable->getItemSlot() ] = a;
+      _itemSlots[ pickable->getItemSlot() ] = std::make_pair(a, false);
     }
+  }
+}
+
+void Wearer::setBlocked(ItemSlotType slot, bool blocked)
+{
+  if ( hasSlot(slot) && !isEquipped(slot) )
+  {
+    auto& p = _itemSlots[slot];
+    p.second = blocked;
   }
 }
 
@@ -69,7 +80,7 @@ ActorFeaturePtr Wearer::clone()
 
   for(auto i : _itemSlots)
   {
-    cloned->_itemSlots[ i.first ] = nullptr;
+    cloned->_itemSlots[ i.first ] = std::make_pair(nullptr, false);
   }
 
   cloned->_equippedItems = _equippedItems->clone();
@@ -98,22 +109,33 @@ bool Wearer::isEqual(ActorFeaturePtr rhs) const
   return equal;
 }
 
+RaceType getRace(ActorPtr actor)
+{
+  if ( !actor ) return RaceType::NoRace;
+
+  CharacterPtr c = actor->getFeature<Character>();
+
+  return c ? c->getRace()->getType() : RaceType::NoRace;
+}
+
 bool Wearer::equip(ActorPtr item)
 {
-  bool r = false;
+  if ( !item ) return false;
 
-  if ( item != nullptr && item->hasFeature<Pickable>())
+  PickablePtr pickable = item->getFeature<Pickable>();
+  if ( !pickable ) return false;
+
+  ItemSlotType slot = pickable->getItemSlot();
+
+  if ( hasSlot(slot) && !isEquipped(slot) )
   {
-    ItemSlotType slot = item->getFeature<Pickable>()->getItemSlot();
-    if ( _itemSlots.count(slot) && !isEquipped(slot) )
-    {    
-      _equippedItems->push_back(item);
-      _itemSlots[slot] = item;
-      r = true;
-    }
+    _equippedItems->push_back(item);
+    _itemSlots[slot] = std::make_pair(item, false);
+
+    return true;
   }
 
-  return r;
+  return false;
 }
 
 ActorPtr Wearer::unequip(ItemSlotType slot)
@@ -123,7 +145,7 @@ ActorPtr Wearer::unequip(ItemSlotType slot)
   if (r)
   {
     _equippedItems->remove(r);
-    _itemSlots[slot] = nullptr;
+    _itemSlots[slot] = std::make_pair(nullptr, false);
   }
 
   return r;
@@ -133,7 +155,7 @@ ActorPtr Wearer::unequip(ActorPtr actor)
 {
   for (const auto& p : _itemSlots)
   {
-    if ( p.second == actor )
+    if ( p.second.first == actor )
     {
       return unequip(p.first);
     }
@@ -146,13 +168,19 @@ bool Wearer::isEquipped(ItemSlotType slot) const
   return (equipped(slot) != nullptr);
 }
 
+bool Wearer::isBlocked(ItemSlotType slot) const
+{
+  auto it = _itemSlots.find(slot);
+  return it != _itemSlots.end() ? it->second.second : false;
+}
+
 ActorPtr Wearer::equipped(ItemSlotType slot) const
 {
   ActorPtr r;
   auto it = _itemSlots.find(slot);
   if (it != _itemSlots.end())
   {
-    r = it->second;
+    r = it->second.first;
   }
 
   return r;
@@ -169,11 +197,13 @@ std::string Wearer::debug(const std::string &linebreak)
   for(auto slot : _itemSlots)
   {
     ActorPtr eq = equipped(slot.first);
+    bool blocked = isBlocked(slot.first);
     PickablePtr p = eq ? eq->getFeature<Pickable>() : nullptr;
     d += ItemSlotType2Str(slot.first);
     d +=  ": "
         + (eq ? eq->getName() : "<none>")
-        + (p ? " [" + toStr(p->getAmount()) + "]" : "" ) + linebreak;
+        + (p ? " [" + toStr(p->getAmount()) + "]" : "" )
+        + ( blocked ? " [BLOCKED] " : "" ) + linebreak;
   }
   d.append("----------------"+linebreak);
   return d;

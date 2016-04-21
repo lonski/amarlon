@@ -8,6 +8,12 @@ namespace amarlon {
 
 struct OpenableState
 {
+  OpenableState()
+    : symbol('#')
+    , transparent(false)
+    , blocks(false)
+  {}
+
   unsigned char symbol;
   bool transparent;
   bool blocks;

@@ -33,7 +33,7 @@ Character::Character(DescriptionPtr dsc)
   : _level(0)
   , _hitPoints(0)
   , _maxHitPoints(0)
-  , _defaultArmorClass(11) //no-armor AC
+  , _baseArmorClass(11) //no-armor AC
   , _experience(0)
   , _speed(0)
   , _movePoints(0)
@@ -66,7 +66,7 @@ void Character::upgrade(DescriptionPtr dsc)
       _class = CharacterClass::create( static_cast<CharacterClassType>(*cDsc->cClass) );
     if ( cDsc->race )
       _race = Race::create( static_cast<RaceType>(*cDsc->race) );
-    if ( cDsc->defaultArmorClass ) _defaultArmorClass = *cDsc->defaultArmorClass;
+    if ( cDsc->defaultArmorClass ) _baseArmorClass = *cDsc->defaultArmorClass;
     if ( cDsc->speed )             _speed = *cDsc->speed;
     if ( cDsc->team )              _team = static_cast<relations::Team>(*cDsc->team);
     if ( cDsc->spellbook)          _spellbook = SpellBook::create(*cDsc->spellbook);
@@ -123,7 +123,7 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
       if ( cmp->_level != _level ) dsc->level = _level;
       if ( cmp->_hitPoints != _hitPoints ) dsc->hitPoints = _hitPoints;
       if ( cmp->_maxHitPoints != _maxHitPoints ) dsc->maxHitPoints = _maxHitPoints;
-      if ( cmp->_defaultArmorClass != _defaultArmorClass ) dsc->defaultArmorClass = _defaultArmorClass;
+      if ( cmp->_baseArmorClass != _baseArmorClass ) dsc->defaultArmorClass = _baseArmorClass;
       if ( cmp->_experience != _experience ) dsc->experience = _experience;
       /*if ( cmp->_class->getType() != _class->getType() )*/ dsc->cClass = static_cast<int>(_class->getType());
       /*if ( cmp->_race->getType() != _race->getType() )*/ dsc->race = static_cast<int>(_race->getType());
@@ -150,7 +150,7 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
       dsc->level = _level;
       dsc->hitPoints = _hitPoints;
       dsc->maxHitPoints = _maxHitPoints;
-      dsc->defaultArmorClass = _defaultArmorClass;
+      dsc->defaultArmorClass = _baseArmorClass;
       dsc->experience = _experience;
       dsc->cClass = static_cast<int>(_class->getType());
       dsc->race = static_cast<int>(_race->getType());
@@ -199,7 +199,7 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
 
   if (crhs != nullptr)
   {
-    equal  = _defaultArmorClass  == crhs->_defaultArmorClass;
+    equal  = _baseArmorClass  == crhs->_baseArmorClass;
     equal &= _level              == crhs->_level;
     equal &= _experience         == crhs->_experience;
     equal &= _morale             == crhs->_morale;
@@ -305,7 +305,8 @@ std::string Character::debug(const std::string& linebreak = "\n")
 
   d += "Level = " + toStr(_level) + linebreak;
   d += "HP = " + toStr(_hitPoints) + "/" + toStr(_maxHitPoints)  + linebreak;
-  d += "Base AC = " + toStr(_defaultArmorClass)  + linebreak;
+  d += "Base AC = " + toStr(_baseArmorClass)  + linebreak;
+  d += "AC (Physical) = " + toStr(getArmorClass())  + linebreak;
   d += "Experience = " + toStr(_experience)  + linebreak;
   d += "Speed = " + toStr(getSpeed())  + linebreak;
   d += "Team = " + toStr((int)_team)  + linebreak;
@@ -535,13 +536,36 @@ Damage Character::getDamage()
 
 int Character::getArmorClass(DamageType dmgType)
 {
-  PickablePtr armor = getEquippedItem(ItemSlotType::Armor);
-  int ac = armor ? armor->getArmorClass() : _defaultArmorClass;
+  int ac = _baseArmorClass + accumulateEquippedItemsAC();
 
   auto it = std::find_if(_modifiers.begin(), _modifiers.end(),
                          [&](Modifier& mod){ return mod.Type.ac == dmgType; } );
 
   return it != _modifiers.end() ? ac + it->Value : ac;
+}
+
+int Character::accumulateEquippedItemsAC()
+{
+  int ac = 0;
+
+  if ( ActorPtr owner = getOwner().lock() )
+  {
+    if ( WearerPtr wearer = owner->getFeature<Wearer>() )
+    {
+      for ( ItemSlotType slot : ItemSlotType() )
+      {
+        if ( ActorPtr eq = wearer->equipped(slot) )
+        {
+          if ( PickablePtr item = eq->getFeature<Pickable>() )
+          {
+            ac += item->getArmorClass();
+          }
+        }
+      }
+    }
+  }
+
+  return ac;
 }
 
 std::string Character::getDescription()

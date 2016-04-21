@@ -87,6 +87,7 @@ set(SOURCE_FILES
     drop_action_test.cpp
     status_effects_manager_test.cpp
     pickable_test.cpp
+    equip_test.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1 -DTESTING=1")

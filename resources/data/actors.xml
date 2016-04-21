@@ -147,5 +147,21 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor name="Pole Arm" id="105" character="\" color="DEDEDE" transparent="1" blocks="0" fovOnly="0">
 		<Pickable stackable="0" amount="1" category="2" itemSlot="7" damage="1d10+0#1" weight="15" price="90" weaponType="2" weaponSize="3"/>
 	</Actor>
-	
+	<!--
+		===== ARMOR =====
+	-->
+	<!-- Body -->
+	<Actor name="Leather Armor" id="110" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="3" itemSlot="3" weight="15" price="200" armorType="2" armorClass="2"/>
+	</Actor>
+	<Actor name="Chain Mail" id="111" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="3" itemSlot="3" weight="40" price="600" armorType="3" armorClass="4"/>
+	</Actor>
+	<Actor name="Plate Mail" id="112" character="[" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="3" itemSlot="3" weight="50" price="3000" armorType="3" armorClass="6"/>
+	</Actor>
+	<!-- Shields -->
+	<Actor name="Shield" id="120" character="]" color="993300" transparent="1" blocks="0" fovOnly="0">
+		<Pickable stackable="0" amount="1" category="9" itemSlot="8" weight="5" price="70" armorClass="1"/>
+	</Actor>
 </Actors>

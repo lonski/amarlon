@@ -164,4 +164,124 @@ When new actor is created with given ID as parameter, then the template will be 
 	<Actor id="35" name="Orc berserker" prototype="2" color="ff5555">
 		<Character damage="1d12+0#1"/>		
 	</Actor>
+	<Actor name="Player" id="1" character="@" color="ffffff" transparent="1" blocks="1" fovOnly="1">
+		<Inventory maxSize="20"/>
+		<PlayerAi/>
+		<PlayableCharacter speed="40" team="2"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Destroyable/>
+	</Actor>	
+	<Actor name="Test Halfling" id="5000" character="h" color="ddffaa" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="25" class="1" race="4" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="1"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Inventory maxSize="20"/>
+	</Actor>
+	<Actor name="Test Human" id="5001" character="h" color="ddffaa" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="25" class="1" race="1" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="1"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Inventory maxSize="20"/>
+	</Actor>
+	<Actor name="Test Elf" id="5002" character="h" color="ddffaa" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="25" class="1" race="3" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="1"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Inventory maxSize="20"/>
+	</Actor>
+	<Actor name="Test Dwarf" id="5003" character="h" color="ddffaa" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="25" class="1" race="2" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="1"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Inventory maxSize="20"/>
+	</Actor>
+	<Actor name="Test Orc" id="5004" character="o" color="ddffaa" transparent="1" blocks="1" fovOnly="1">
+		<Character level="1" experience="25" class="1" race="5" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="1"/>
+		<Wearer>
+			<ItemSlot type="1"/>
+			<ItemSlot type="2"/>
+			<ItemSlot type="3"/>
+			<ItemSlot type="4"/>
+			<ItemSlot type="5"/>
+			<ItemSlot type="6"/>
+			<ItemSlot type="7"/>
+			<ItemSlot type="8"/>
+			<ItemSlot type="9"/>
+			<ItemSlot type="10"/>
+			<ItemSlot type="11"/>
+			<ItemSlot type="12"/>
+		</Wearer>
+		<Ai script="1"/>
+		<Destroyable/>
+		<Inventory maxSize="20"/>
+	</Actor>
 </Actors>

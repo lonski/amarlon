@@ -526,7 +526,7 @@ ActorActionResult Actor::performAction(ActorActionPtr action)
 {
   AiPtr ai = getFeature<Ai>();
   return ai ? ai->performAction(action)
-            : ActorActionResult::Nok;
+            : ActorActionResult::MissingAI;
 }
 
 ActorActionResult Actor::performAction(ActorAction *action)

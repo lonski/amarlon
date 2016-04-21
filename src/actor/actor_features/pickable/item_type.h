@@ -61,7 +61,8 @@ enum class ArmorType
 {
   NoType  = 0,
   Cloth   = 1,
-  Leather = 2
+  Light   = 2,
+  Heavy   = 3
 };
 
 static inline const char* ArmorType2Str(ArmorType t)

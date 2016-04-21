@@ -106,18 +106,20 @@ public:
 
   virtual std::string debug(const std::string &linebreak);
 
+
 protected:
   virtual void setLevel(int level);
   virtual void setMaxHitPoints(int maxHp);
   PickablePtr getEquippedItem(ItemSlotType slot);
   void cloneBase(Character* c);
   virtual void toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cmp = nullptr);
+  int accumulateEquippedItemsAC();
 
 private:
   int _level;
   int _hitPoints;
   int _maxHitPoints;
-  int _defaultArmorClass;
+  int _baseArmorClass;
   int _experience;
   CharacterClassPtr _class;
   RacePtr _race;

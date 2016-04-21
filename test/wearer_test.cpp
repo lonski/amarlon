@@ -8,6 +8,7 @@
 #include <actor_descriptions.h>
 #include <actor_container.h>
 #include <module.h>
+#include <race.h>
 
 namespace amarlon {
 
@@ -106,7 +107,7 @@ TEST_F(WearerTest, compare_test)
   ASSERT_TRUE( w1->isEqual(w2) );
 
   //compare by slots
-  w1->_itemSlots[ ItemSlotType::Armor ] = nullptr;
+  w1->_itemSlots[ ItemSlotType::Armor ] = std::make_pair(nullptr, false);
   ASSERT_FALSE( w1->isEqual(w2) );
 
   WearerDescriptionPtr dsc(new WearerDescription);

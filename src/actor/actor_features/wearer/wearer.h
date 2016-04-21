@@ -32,13 +32,15 @@ public:
   ActorPtr unequip(ItemSlotType slot);
   ActorPtr unequip(ActorPtr actor);
   bool isEquipped(ItemSlotType slot) const;
+  bool isBlocked(ItemSlotType slot) const;
   ActorPtr equipped(ItemSlotType slot) const;
   bool hasSlot(ItemSlotType slot) const;
+  void setBlocked(ItemSlotType slot, bool blocked);
 
   virtual std::string debug(const std::string& linebreak = "\n");
 
 private:
-  std::map<ItemSlotType, ActorPtr> _itemSlots;
+  std::map<ItemSlotType, std::pair<ActorPtr, bool> > _itemSlots;
   ActorContainerPtr _equippedItems;
 
   void assignItemsToSlots();

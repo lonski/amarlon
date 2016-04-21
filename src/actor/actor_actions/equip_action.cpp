@@ -1,6 +1,7 @@
 #include "equip_action.h"
 #include <actor.h>
 #include <item_slot_type.h>
+#include <race.h>
 
 namespace amarlon{
 
@@ -16,34 +17,50 @@ EquipAction::~EquipAction()
 ActorActionResult EquipAction::perform(ActorPtr performer)
 {
   _performer = performer;
-  ActorActionResult r = ActorActionResult::Nok;
 
   WearerPtr wearer = _performer->getFeature<Wearer>();
   if ( wearer )
   {
     ItemSlotType slot = aquireItemSlotType();
-    if ( wearer->hasSlot( slot ) )
+
+    if ( !wearer->hasSlot(slot) )
+      return ActorActionResult::NoProperSlot;
+
+    if ( wearer->isBlocked(slot) )
+      return ActorActionResult::SlotBlocked;
+
+    if ( wearer->isEquipped(slot) )
+      return ActorActionResult::AlreadyEquiped;
+
+    CharacterPtr c = _performer->getFeature<Character>();
+    PickablePtr  p = _toEquip->getFeature<Pickable>();
+
+    if ( !c || !p )
+      return ActorActionResult::InvalidObject;
+
+    WeaponSize weaponSize = p->getItemType().weaponSize;
+    RaceType raceType = c->getRace()->getType();
+
+    //Halfling cannot equip large weapons
+    if ( slot       == ItemSlotType::MainHand &&
+         weaponSize == WeaponSize::Size_L     &&
+         raceType   == RaceType::Halfling )
+      return ActorActionResult::Nok;
+
+    //Equip large (or medium for halfling) weapons as 2H
+    if (  weaponSize == WeaponSize::Size_L ||
+         (raceType   == RaceType::Halfling && weaponSize == WeaponSize::Size_M) )
+      wearer->setBlocked(ItemSlotType::Offhand, true);
+
+    if ( wearer->equip(_toEquip) )
     {
-      if ( !wearer->isEquipped(slot) )
-      {
-        if ( wearer->equip(_toEquip) )
-        {
-          removeFromInventory();
-          r = ActorActionResult::Ok;
-        }
-      }
-      else
-      {
-        r = ActorActionResult::AlreadyEquiped;
-      }
+      removeFromInventory();
+      return ActorActionResult::Ok;
     }
-    else
-    {
-      r = ActorActionResult::NoProperSlot;
-    }
+
   }
 
-  return r;
+  return ActorActionResult::InvalidObject;
 }
 
 ActorActionUPtr EquipAction::clone()

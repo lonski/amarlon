@@ -12,7 +12,10 @@ enum class ActorActionResult
   IncorrectTarget,
   ItemsMissing,
   InventoryFull,
-  NotEquipped
+  NotEquipped,
+  SlotBlocked,
+  InvalidObject,
+  MissingAI
 };
 
 }

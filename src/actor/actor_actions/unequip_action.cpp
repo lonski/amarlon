@@ -31,6 +31,10 @@ ActorActionResult UnEquipAction::perform(ActorPtr performer)
     if ( wearer && wearer->isEquipped( _slot ) )
     {
       ActorPtr unequipped = wearer->unequip( _slot );
+
+      if ( _slot == ItemSlotType::MainHand && wearer->isBlocked(ItemSlotType::Offhand) )
+        wearer->setBlocked(ItemSlotType::Offhand, false);
+
       InventoryPtr inventory = performer->getFeature<Inventory>();
       if ( inventory && inventory->add(unequipped) )
       {
