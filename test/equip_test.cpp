@@ -62,6 +62,23 @@ TEST_F(EquipTest, cannotEquipOnBlockedSlot)
              (int)ActorActionResult::Ok );
 }
 
+TEST_F(EquipTest, equipping2hWeaponRemovesOffhand)
+{
+  ActorPtr typek = Actor::create( 5001/*Test Human*/ );
+  WearerPtr w = typek->getFeature<Wearer>();
+  ActorPtr sword2H = Actor::create(92);
+  ActorPtr shield = Actor::create(120);
+
+  ASSERT_EQ( (int)typek->performAction( new EquipAction(shield) ),
+             (int)ActorActionResult::Ok );
+
+  ASSERT_EQ( (int)typek->performAction( new EquipAction(sword2H) ),
+             (int)ActorActionResult::Ok );
+
+  ASSERT_FALSE( w->isEquipped(ItemSlotType::Offhand) );
+
+}
+
 class EquipsLargeWeapons2H_WearerTest : public EquipTest
                                       , public ::testing::WithParamInterface< std::pair<int,WeaponSize> >
 {

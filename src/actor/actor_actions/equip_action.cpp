@@ -2,6 +2,7 @@
 #include <actor.h>
 #include <item_slot_type.h>
 #include <race.h>
+#include <unequip_action.h>
 
 namespace amarlon{
 
@@ -50,7 +51,15 @@ ActorActionResult EquipAction::perform(ActorPtr performer)
     //Equip large (or medium for halfling) weapons as 2H
     if (  weaponSize == WeaponSize::Size_L ||
          (raceType   == RaceType::Halfling && weaponSize == WeaponSize::Size_M) )
+    {
+      if ( ActorPtr offhand = wearer->equipped(ItemSlotType::Offhand) )
+      {
+        ActorActionResult r = _performer->performAction( new UnEquipAction(offhand) );
+        if ( r != ActorActionResult::Ok ) return r;
+      }
+
       wearer->setBlocked(ItemSlotType::Offhand, true);
+    }
 
     if ( wearer->equip(_toEquip) )
     {
