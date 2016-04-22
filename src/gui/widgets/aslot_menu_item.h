@@ -46,6 +46,9 @@ public:
   virtual int getHeight() const;
   virtual int getWidth() const;
 
+  TCODColor getFrameColor() const;
+  void setFrameColor(const TCODColor &frameColor);
+
 private:
   APanel _panel;
   ABarPtr _background;

@@ -119,11 +119,17 @@ void BagManager::equip(ActorPtr item)
       msgBox( "You haven't got appropriate slot to equip this item.", gui::MsgType::Error);
       break;
 
-    case ActorActionResult::Nok:
+    case ActorActionResult::SlotBlocked:
+      msgBox( "Cannot equip item. This slot is blocked.", gui::MsgType::Error);
+      break;
+
+    case ActorActionResult::Ok:
+      break;
+
+    default:
       msgBox( "Cannot equip item!", gui::MsgType::Error );
       break;
 
-    default:;
   }
 }
 

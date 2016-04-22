@@ -25,7 +25,7 @@ ASlotMenuItem::ASlotMenuItem(int width,
   , _slotValue(new ALabel)
   , _selected(false)
 {
-  _panel.setFrameColor(color);
+  _panel.setFrameColor( color );
 
   InitalizeNameLabel(name);
   initalizeValueLabel(value);
@@ -97,6 +97,16 @@ int ASlotMenuItem::getHeight() const
 int ASlotMenuItem::getWidth() const
 {
   return _panel.getWidth();
+}
+
+TCODColor ASlotMenuItem::getFrameColor() const
+{
+  return _panel.getFrameColor();
+}
+
+void ASlotMenuItem::setFrameColor(const TCODColor &frameColor)
+{
+  _panel.setFrameColor(frameColor);
 }
 
 void ASlotMenuItem::setValue(const std::string &value)

@@ -11,6 +11,9 @@ namespace amarlon {
   class Actor;
 namespace gui {
 
+class ASlotMenuItem;
+typedef std::shared_ptr<ASlotMenuItem> ASlotMenuItemPtr;
+
 class BodyManager : public ASubPanel
 {
 public:  
@@ -22,7 +25,7 @@ public:
   void selectPrevious();
   void activate();
   void deactivate();
-
+  
 private:
   AMenuPtr _bodyMenu;
 
@@ -31,6 +34,7 @@ private:
   std::vector<ActorPtr> getEquipableItemsList(ItemSlotType slot);
   bool unequipItem(ItemSlotType slot);
   std::string getSlotValueForItem(ActorPtr item);
+  void applySlotColor(ItemSlotType slot, ASlotMenuItemPtr itemSlot);
 
 };
 

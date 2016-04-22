@@ -23,18 +23,33 @@ BodyManager::BodyManager(int w, int h)
   addWidget(_bodyMenu);
 }
 
+void BodyManager::applySlotColor(ItemSlotType slot, ASlotMenuItemPtr itemSlot)
+{
+  WearerPtr wearer = Engine::instance().getPlayer()->getFeature<Wearer>();
+
+  if ( wearer->isBlocked(slot) )
+  {
+    itemSlot->setFrameColor( TCODColor::lightGrey );
+  }
+  else
+  {
+    itemSlot->setFrameColor( TCODColor::darkYellow );
+  }
+}
+
 void BodyManager::manage()
 {
   AMenuItemPtr item = _bodyMenu->getSelectedItem();
   if ( item )
   {
     ItemSlotType slot = static_cast<ItemSlotType>( item->getProperty<int>("ItemSlotType") );
+    WearerPtr wearer = Engine::instance().getPlayer()->getFeature<Wearer>();
 
-    if ( Engine::instance().getPlayer()->getFeature<Wearer>()->isEquipped( slot ) )
+    if ( wearer->isEquipped( slot ) )
     {
       if ( unequipItem(slot) )
       {
-        item->setValue("");
+        fillBodySlots();
       }
     }
     else
@@ -83,6 +98,8 @@ void BodyManager::fillBodySlots()
         {
           slotMenuItem->setValue( "" );
         }
+
+        applySlotColor(slot, slotMenuItem);
 
         _bodyMenu->addItem( slotMenuItem );
       }
@@ -163,7 +180,16 @@ bool BodyManager::equipItem(ActorPtr toEquip)
     case ActorActionResult::NoProperSlot:
       msgBox( "There is no proper slot to equip this item!", gui::MsgType::Error );
       break;
-    default:;
+    case ActorActionResult::SlotBlocked:
+      msgBox( "Cannot equip item. This slot is blocked.", gui::MsgType::Error);
+      break;
+
+    case ActorActionResult::Ok:
+      break;
+
+    default:
+      msgBox( "Cannot equip item!", gui::MsgType::Error );
+      break;
   }
 
   return r == ActorActionResult::Ok;
