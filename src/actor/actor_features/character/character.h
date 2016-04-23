@@ -104,8 +104,10 @@ public:
   virtual void setTeam(relations::Team team);
   void turnHostileTo(ActorPtr attacker);
 
-  virtual std::string debug(const std::string &linebreak);
+  SpeciesType getSpecies() const;
+  void setSpecies(const SpeciesType &species);
 
+  virtual std::string debug(const std::string &linebreak);
 
 protected:
   virtual void setLevel(int level);
@@ -131,6 +133,7 @@ private:
   std::map<AbilityScore::Type, int> _abilityScores;
   int _morale;
   Damage _damage;
+  SpeciesType _species;
 
   SkillPtr getModifiedSkill(SkillPtr s) const;
   int getEquipmentWeight();

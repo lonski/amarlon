@@ -177,6 +177,10 @@ set(HEADER_FILES
     databases/skill_db.h
     databases/rpg_db.h
     module.h
+    treasure_generator/treasure_generator.h
+    treasure_generator/treasure_type.h
+    treasure_generator/base_item_data.h
+    treasure_generator/magic_weapon_generator.h
 )
 
 set(SOURCE_FILES
@@ -329,6 +333,8 @@ set(SOURCE_FILES
     databases/rpg_db.cpp
     skills/skill.cpp
     module.cpp
+    treasure_generator/treasure_generator.cpp
+    treasure_generator/magic_weapon_generator.cpp
 )
 
 add_library(a_core STATIC ${SOURCE_FILES} ${HEADER_FILES})

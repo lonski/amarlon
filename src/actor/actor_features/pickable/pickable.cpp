@@ -297,6 +297,16 @@ Damage Pickable::getDamage() const
   return _damage;
 }
 
+Damage* Pickable::getMutableDamage()
+{
+  return &_damage;
+}
+
+void Pickable::setDamage(const Damage& dmg)
+{
+  _damage = dmg;
+}
+
 int Pickable::getArmorClass() const
 {
   return _armorClass;
@@ -332,12 +342,22 @@ std::string Pickable::getDescription()
 
   if ( getDamage() != Damage() )
   {
-    str += colorToStr(TCODColor::darkTurquoise, true) + "Damage: " +
-                                                        toStr(_damage.diceCount) + "d" +
-                                                        toStr(static_cast<int>(_damage.dice) );
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Damage: ";
+
+    if ( _damage.dice != dices::NoDice )
+    {
+      str += toStr(_damage.diceCount) + "d" + toStr(static_cast<int>(_damage.dice) );
+    }
+
     if ( _damage.value != 0 )
     {
       str += ( _damage.value >0 ? "+" : "-" ) + toStr(_damage.value);
+    }
+
+    for ( auto& kv : _damage.specialDamage )
+    {
+      str += ( kv.second >0 ? ", +" : ", -" ) + toStr(kv.second);
+      str += " vs " + std::string(SpeciesType2Str[kv.first]);
     }
 
     str += "#";

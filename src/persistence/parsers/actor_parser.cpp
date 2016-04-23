@@ -204,6 +204,7 @@ CharacterDescriptionPtr ActorParser::parseCharacterDsc()
       if ( attributeExists(characterNode, "team") )         dsc->team = getAttribute<int>(characterNode, "team");
       if ( attributeExists(characterNode, "morale") )       dsc->morale = getAttribute<int>(characterNode, "morale");
       if ( attributeExists(characterNode, "damage") )       dsc->damage = getAttribute<std::string>(characterNode, "damage");
+      if ( attributeExists(characterNode, "species") )      dsc->species = getAttribute<int>(characterNode, "species");
 
       //Parse Spellbook
       xml_node<>* spellbookNode = characterNode->first_node("Spellbook");

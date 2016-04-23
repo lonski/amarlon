@@ -17,6 +17,7 @@
 #include <skill_db.h>
 #include <rpg_db.h>
 #include <module.h>
+#include <treasure_generator.h>
 
 namespace amarlon {
 
@@ -47,15 +48,16 @@ void Engine::prologue()
   _gui.reset( new gui::Gui );
   _sysCmdExecutor.reset( new SystemCommandExecutor );
 
-  _world    .reset( new World );
-  _spellDB  .reset( new SpellDB );
-  _tileDB   .reset( new TileDB );
-  _skillsDB .reset( new SkillDB );
-  _rpgDB    .reset( new RpgDB );
-  _actorsDB .reset( new ActorDB );
-  _messenger.reset( new Messenger( _gui ) );
-  _luaState .reset( new lua_api::LuaState );
-  _module   .reset( new Module( _config->get("active_module") ) );
+  _world            .reset( new World );
+  _spellDB          .reset( new SpellDB );
+  _tileDB           .reset( new TileDB );
+  _skillsDB         .reset( new SkillDB );
+  _rpgDB            .reset( new RpgDB );
+  _actorsDB         .reset( new ActorDB );
+  _messenger        .reset( new Messenger( _gui ) );
+  _luaState         .reset( new lua_api::LuaState );
+  _module           .reset( new Module( _config->get("active_module") ) );
+  _treasureGenerator.reset( new TreasureGenerator );
 
   getLuaState().registerAPI();
   loadModule( getModule() );
@@ -75,6 +77,7 @@ void Engine::loadModule(const Module& module)
   getTileDB ().loadPlugin( module.getPath() + _config->get("tiles_file" ) );
 
   getRpgDB  ().load( _config->get("rpg_file") );
+  getTreasureGenerator().load( _config->get("treasure_generator_file") );
 
   getActorDB().load( _config->get("actors_file") );
   getActorDB().loadPlugin( module.getPath() + _config->get("actors_file") );
@@ -269,6 +272,11 @@ lua_api::LuaState &Engine::getLuaState() const
 Module &Engine::getModule() const
 {
   return *_module;
+}
+
+TreasureGenerator &Engine::getTreasureGenerator() const
+{
+  return *_treasureGenerator;
 }
 
 const ActorPtr Engine::getPlayer() const

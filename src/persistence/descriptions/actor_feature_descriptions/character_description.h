@@ -24,6 +24,7 @@ struct CharacterDescription : Description
   std::experimental::optional<int> morale;
   std::experimental::optional<std::string> damage;
   std::experimental::optional<SpellbookDescription> spellbook;
+  std::experimental::optional<int> species;
 
   std::vector< std::pair<int,int> > skills;
   std::vector<std::string> modifiers;

@@ -19,9 +19,13 @@ namespace amarlon {
 ActorPtr Actor::create(int aId, int x, int y, MapPtr map)
 {
   ActorPtr actor = Engine::instance().getActorDB().fetch(aId);
-  actor->setMap(map);
-  actor->setPosition(x,y);
-  actor->applyPassiveSkills();
+
+  if ( actor )
+  {
+    actor->setMap(map);
+    actor->setPosition(x,y);
+    actor->applyPassiveSkills();
+  }
 
   return actor;
 }

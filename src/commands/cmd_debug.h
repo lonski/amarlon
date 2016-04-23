@@ -21,6 +21,7 @@ private:
   void showInfo(ActorPtr a);
   void createItem();
   void toggleInvisibility();
+  void generateMagicWeapon();
 
 };
 

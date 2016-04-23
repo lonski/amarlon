@@ -10,6 +10,7 @@
 #include <input_dialog.h>
 #include <direction_selector.h>
 #include <map.h>
+#include <treasure_generator.h>
 
 namespace amarlon {
 
@@ -50,6 +51,9 @@ int CmdDebug::execute()
                       new gui::ALabelMenuItem("Toggle invisibility",
                                               [&](){ toggleInvisibility(); })) );
 
+  menu.addMenuItem( gui::ALabelMenuItemPtr(
+                      new gui::ALabelMenuItem("Generate magic weapon",
+                                              [&](){ generateMagicWeapon(); })) );
   menu.show();
 
   return 0;
@@ -135,6 +139,22 @@ void CmdDebug::toggleInvisibility()
   {
     player->setVisible( !player->isVisible() );
   }
+}
+
+void CmdDebug::generateMagicWeapon()
+{
+  ActorPtr player = Engine::instance().getPlayer();
+  ActorPtr a = Engine::instance().getTreasureGenerator().generateMagicWeapon();
+
+  Engine::instance().render();
+  Engine::instance().flush();
+
+  int dx(0), dy(0);
+  DirectionSelector selector("Select a direction..");
+  selector.select(dx, dy);
+
+  a->setPosition(player->getX() + dx, player->getY() + dy);
+  player->getMap()->addActor(a);
 }
 
 }

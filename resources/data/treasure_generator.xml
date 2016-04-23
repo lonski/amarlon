@@ -1,0 +1,35 @@
+<TreasureGenerator>
+	<ItemBases>
+		<ItemBase type="Weapon">
+			<Item id="50"/>
+			<Item id="51"/>
+			<Item id="52"/>
+			<Item id="60"/>
+			<Item id="61"/>
+			<Item id="62"/>
+			<Item id="63"/>
+			<Item id="64"/>
+			<Item id="70"/>
+			<Item id="71"/>
+			<Item id="72"/>
+			<Item id="73"/>
+			<Item id="74"/>
+			<Item id="75"/>
+			<Item id="80"/>
+			<Item id="90"/>
+			<Item id="91"/>
+			<Item id="92"/>
+			<Item id="100"/>
+			<Item id="101"/>
+			<Item id="102"/>
+			<Item id="103"/>
+			<Item id="104"/>
+		</ItemBase>
+		<ItemBase type="Armor">
+			<Item id="110"/>
+			<Item id="111"/>
+			<Item id="112"/>
+			<Item id="120"/>
+		</ItemBase>
+	</ItemBases>
+</TreasureGenerator>

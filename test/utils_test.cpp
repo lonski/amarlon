@@ -74,6 +74,19 @@ TEST(DamageTest, parseValid)
   ASSERT_EQ(dmg.type, DamageType::Fire );
 }
 
+TEST(DamageTest, parseValid_withSpecialDamage)
+{
+  std::string str("3d4+2#3@1-1|2-3");
+  Damage dmg(str);
+
+  ASSERT_EQ(dmg.value, 2);
+  ASSERT_EQ(dmg.dice, dices::D4);
+  ASSERT_EQ(dmg.diceCount, 3);
+  ASSERT_EQ(dmg.type, DamageType::Fire );
+  ASSERT_EQ(dmg.specialDamage[SpeciesType::Dragon], 1 );
+  ASSERT_EQ(dmg.specialDamage[SpeciesType::Enchanted], 3 );
+}
+
 TEST(DamageTest, parseInvalid)
 {
   std::string str("3d4#3");
@@ -85,7 +98,12 @@ TEST(DamageTest, parseInvalid)
 TEST(DamageTest, serialize)
 {
   Damage d(4, 2, dices::D6, DamageType::Lighting);
-  ASSERT_EQ( "2d6+4#5", std::string(d) );
+  ASSERT_EQ( "2d6+4#5@", std::string(d) );
+
+  d.specialDamage[SpeciesType::Undead] = 3;
+  d.specialDamage[SpeciesType::Dragon] = 1;
+
+  ASSERT_EQ( "2d6+4#5@1-1|6-3|", std::string(d) );
 }
 
 TEST(ExpDataTable, get)
@@ -140,4 +158,5 @@ TEST(UtilsTest, diceTest)
 }
 
 }
+
 

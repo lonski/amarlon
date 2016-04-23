@@ -48,6 +48,7 @@ bool CharacterSerializer::serialize(DescriptionPtr dsc)
     if ( cDsc->race )              addAttribute( cNode, "race",         *cDsc->race              );
     if ( cDsc->team )              addAttribute( cNode, "team",         *cDsc->team              );
     if ( cDsc->morale )            addAttribute( cNode, "morale",       *cDsc->morale            );
+    if ( cDsc->species )           addAttribute( cNode, "species",      *cDsc->species           );
 
     serializeAbilityScores(cDsc, cNode);
     serializeModifiers(cDsc, cNode);

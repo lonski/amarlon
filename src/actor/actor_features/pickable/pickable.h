@@ -68,6 +68,9 @@ public:
   void setItemType(ItemType type);
 
   Damage getDamage() const;
+  Damage* getMutableDamage();
+  void setDamage(const Damage& dmg);
+
   int getArmorClass() const;
   int getPrice() const;
 

@@ -40,6 +40,7 @@ Character::Character(DescriptionPtr dsc)
   , _spellbook(new SpellBook)
   , _team(relations::Monster)
   , _morale(0)
+  , _species(SpeciesType::Null)
 {
   upgrade(dsc);
 
@@ -75,6 +76,7 @@ void Character::upgrade(DescriptionPtr dsc)
     if ( cDsc->level )             _level = *cDsc->level;
     if ( cDsc->maxHitPoints )      _maxHitPoints = *cDsc->maxHitPoints;
     if ( cDsc->hitPoints )         _hitPoints = *cDsc->hitPoints; else setHitPoints( getMaxHitPoints() );
+    if ( cDsc->species )           _species = static_cast<SpeciesType>(*cDsc->species);
 
     //upgrade the ability scores
     for ( auto kv : cDsc->abilityScores )
@@ -125,13 +127,14 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
       if ( cmp->_maxHitPoints != _maxHitPoints ) dsc->maxHitPoints = _maxHitPoints;
       if ( cmp->_baseArmorClass != _baseArmorClass ) dsc->defaultArmorClass = _baseArmorClass;
       if ( cmp->_experience != _experience ) dsc->experience = _experience;
-      /*if ( cmp->_class->getType() != _class->getType() )*/ dsc->cClass = static_cast<int>(_class->getType());
-      /*if ( cmp->_race->getType() != _race->getType() )*/ dsc->race = static_cast<int>(_race->getType());
+      if (_class) dsc->cClass = static_cast<int>(_class->getType());
+      if (_race) dsc->race = static_cast<int>(_race->getType());
       if ( cmp->_speed != _speed ) dsc->speed = _speed;
       if ( cmp->_team != _team ) dsc->team = static_cast<int>(_team);
       if ( cmp->_morale != _morale ) dsc->morale = _morale;
       if ( cmp->_damage != _damage ) dsc->damage = _damage.toStr();
       if ( cmp->_spellbook != _spellbook ) dsc->spellbook = *_spellbook->toDescriptionStruct();
+      if ( cmp->_species != _species ) dsc->species = static_cast<int>(_species);
 
       for (Modifier& mod : _modifiers)
         dsc->modifiers.push_back( mod.toString() );
@@ -160,6 +163,7 @@ void Character::toDescriptionStruct(CharacterDescriptionPtr dsc, CharacterPtr cm
       dsc->morale = _morale;
       dsc->damage = _damage.toStr();
       dsc->spellbook = *_spellbook->toDescriptionStruct();
+      dsc->species = static_cast<int>(_species);
 
       for (Modifier& mod : _modifiers)
         dsc->modifiers.push_back( mod.toString() );
@@ -207,6 +211,7 @@ bool Character::isEqual(ActorFeaturePtr rhs) const
     equal &= _team               == crhs->_team;
     equal &= _damage             == crhs->_damage;
     equal &= _skills.size() == crhs->_skills.size();
+    equal &= _species            == crhs->_species;
 
     equal &= _class && crhs->_class;
     if ( equal) equal &= *_class == *(crhs->_class);
@@ -274,7 +279,7 @@ int Character::modifyHitPoints(int modifier)
 
 int Character::takeHeal(Damage heal, ActorPtr healer)
 {
-  int healed = modifyHitPoints(heal.roll());
+  int healed = modifyHitPoints(heal.roll(getSpecies()));
 
   ActorPtr actor = getOwner().lock();
   if ( actor )
@@ -310,6 +315,7 @@ std::string Character::debug(const std::string& linebreak = "\n")
   d += "Experience = " + toStr(_experience)  + linebreak;
   d += "Speed = " + toStr(getSpeed())  + linebreak;
   d += "Team = " + toStr((int)_team)  + linebreak;
+  d += "Species = " + toStr((int)_species)  + linebreak;
   d += "Morale = " + toStr(_morale)  + linebreak;
   d += "Bare hands damage = " + _damage.toStr(true)  + linebreak;
   d += "Damage = " + getDamage().toStr(true)  + linebreak;
@@ -333,7 +339,7 @@ int Character::takeDamage(Damage dmg, ActorPtr attacker)
   turnHostileTo(attacker);
 
   //TODO: handle damage resists
-  int roll = dmg.roll();
+  int roll = dmg.roll(getSpecies());
 
   ActorPtr actor = getOwner().lock();
   if ( actor )
@@ -518,11 +524,12 @@ Damage Character::getDamage()
   PickablePtr weapon = getEquippedItem(ItemSlotType::MainHand);
   if ( weapon )
   {
-    if ( weapon->getItemType().weapon == WeaponType::Bow ) //take missile damage
+    if ( weapon->getItemType().isRangeWeapon() ) //take missile damage
     {
       PickablePtr amunition = getEquippedItem(ItemSlotType::Amunition);
       damage = amunition ? amunition->getDamage() : Damage();
       damage.value += getModifier( AbilityScore::DEX );
+      damage += weapon->getDamage();
     }
     else //melee weapon
     {
@@ -566,6 +573,16 @@ int Character::accumulateEquippedItemsAC()
   }
 
   return ac;
+}
+
+SpeciesType Character::getSpecies() const
+{
+  return _species;
+}
+
+void Character::setSpecies(const SpeciesType &species)
+{
+  _species = species;
 }
 
 std::string Character::getDescription()
@@ -673,6 +690,7 @@ void Character::cloneBase(Character *c)
   c->_spellbook = _spellbook->clone();
   c->_modifiers = _modifiers;
   c->_team = _team;
+  c->_species = _species;
   c->_morale = _morale;
   c->_abilityScores = _abilityScores;
   c->_damage = _damage;

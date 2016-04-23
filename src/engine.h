@@ -21,6 +21,7 @@ class SkillDB;
 class RpgDB;
 class Messenger;
 class Module;
+class TreasureGenerator;
 
 namespace lua_api {
   class LuaState;
@@ -38,6 +39,7 @@ typedef std::shared_ptr<ActorDB> ActorDBPtr;
 typedef std::shared_ptr<Configuration> ConfigurationPtr;
 typedef std::shared_ptr<Messenger> MessengerPtr;
 typedef std::shared_ptr<Module> ModulePtr;
+typedef std::shared_ptr<TreasureGenerator> TreasureGeneratorPtr;
 
 namespace gui {
   class Gui;
@@ -86,15 +88,16 @@ public:
   gui::Gui&           getGui() const;
   gui::WindowManager& getWindowManager() const;
 
-  World&             getWorld()     const;
-  TileDB&            getTileDB()    const;
-  ActorDB&           getActorDB()   const;
-  SpellDB&           getSpellDB()   const;
-  SkillDB&           getSkillDB()   const;
-  RpgDB&             getRpgDB()     const;
-  Messenger&         getMessenger() const;
-  lua_api::LuaState& getLuaState()  const;
-  Module&            getModule()    const;
+  World&             getWorld()             const;
+  TileDB&            getTileDB()            const;
+  ActorDB&           getActorDB()           const;
+  SpellDB&           getSpellDB()           const;
+  SkillDB&           getSkillDB()           const;
+  RpgDB&             getRpgDB()             const;
+  Messenger&         getMessenger()         const;
+  lua_api::LuaState& getLuaState()          const;
+  Module&            getModule()            const;
+  TreasureGenerator& getTreasureGenerator() const;
 
   const ActorPtr getPlayer() const;
   TCOD_key_t getLastInput() const;
@@ -115,6 +118,7 @@ private:
   MessengerPtr _messenger;
   lua_api::LuaStatePtr _luaState;
   ModulePtr _module;
+  TreasureGeneratorPtr _treasureGenerator;
 
   bool _quit;
   bool _running;

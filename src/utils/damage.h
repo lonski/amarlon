@@ -5,6 +5,8 @@
 #include <dices.h>
 #include <string>
 #include <utils.h>
+#include <map>
+#include <species_type.h>
 
 namespace amarlon {
 
@@ -21,13 +23,16 @@ struct Damage
   int diceCount;
   dices::Dice dice;
   DamageType type;
+  std::map<SpeciesType, int> specialDamage;
 
-  int roll() const;
+  int roll(SpeciesType vs = SpeciesType::Null) const;
 
   bool operator==(const Damage& rhs) const;
   bool operator!=(const Damage& rhs) const;
   bool operator>(const Damage& rhs) const;
   bool operator<(const Damage& rhs) const;
+  Damage& operator+=(const Damage& rhs);
+  Damage& operator-=(const Damage& rhs);
   operator std::string() const;
   std::string toStr(bool displaySafe = false) const;
   int toInt() const;
