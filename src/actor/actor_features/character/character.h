@@ -107,6 +107,8 @@ public:
   SpeciesType getSpecies() const;
   void setSpecies(const SpeciesType &species);
 
+  virtual void tickDay();
+
   virtual std::string debug(const std::string &linebreak);
 
 protected:

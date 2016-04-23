@@ -47,6 +47,7 @@ public:
   virtual std::string debug(const std::string& = "\n") { return ""; }
   virtual void upgrade(DescriptionPtr) = 0;
   virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
+  virtual void tickDay() {}
 
 protected:
   ActorWPtr _owner;

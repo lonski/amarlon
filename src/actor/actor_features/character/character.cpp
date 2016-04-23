@@ -585,6 +585,11 @@ void Character::setSpecies(const SpeciesType &species)
   _species = species;
 }
 
+void Character::tickDay()
+{
+  rest();
+}
+
 std::string Character::getDescription()
 {
   std::string str = colorToStr(TCODColor::darkerTurquoise, true)

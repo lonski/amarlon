@@ -6,6 +6,8 @@
 #include <actor_descriptions.h>
 #include <pickable_description.h>
 #include <module.h>
+#include <use_action.h>
+#include <pickup_action.h>
 
 namespace amarlon {
 
@@ -60,6 +62,56 @@ TEST_F(PickableTest, upgrade)
   ASSERT_TRUE( coin->isEqual(originalCoin) );
 }
 
+TEST_F(PickableTest, dailyUse)
+{
+  ActorPtr potion = Actor::create(13);
+  ASSERT_TRUE( potion != nullptr );
+
+  PickablePtr p = potion->getFeature<Pickable>();
+  p->setUseType( UseType::DailyUse );
+  p->setUsesCount( 1 );
+
+  ASSERT_TRUE( p->isUsable() );
+  ASSERT_EQ( p->getUsesCount(), 1 );
+
+  //Create an owner of this item
+  ActorPtr orc = Actor::create(2);
+
+  ASSERT_EQ( orc->performAction( new PickUpAction(potion) ),
+             ActorActionResult::Ok );
+
+  //Use item
+  ASSERT_EQ( orc->performAction( new UseAction(orc, potion) ),
+             ActorActionResult::Ok );
+
+  //Check if item is still in inventory
+  bool itemPresent = false;
+  InventoryPtr inv = orc->getFeature<Inventory>();
+  for ( ActorPtr a : inv->items() )
+  {
+    if ( a.get() == potion.get() )
+    {
+      itemPresent = true;
+      break;
+    }
+  }
+
+  ASSERT_TRUE(itemPresent);
+
+  //No charges, but still is usable
+  ASSERT_EQ( p->getUsesCount(), 0 );
+  ASSERT_TRUE( p->isUsable() );
+
+  //Tick a day to recharge
+  potion->tickDay();
+
+  //Item should be charged and rady to use
+  ASSERT_EQ( p->getUsesCount(), 1 );
+  ASSERT_EQ( orc->performAction( new UseAction(orc, potion) ),
+             ActorActionResult::Ok );
+
+
+}
 
 }
 

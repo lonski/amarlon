@@ -18,10 +18,10 @@ ActorActionResult UseAction::perform(ActorPtr performer)
   ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
 
-  PickablePtr pickable = _toUse->getFeature<Pickable>();
-  if ( pickable != nullptr && pickable->use( _performer, _target ) )
+  PickablePtr p = _toUse->getFeature<Pickable>();
+  if ( p != nullptr && p->use( _performer, _target ) )
   {
-    if ( pickable->getUsesCount() == 0 )
+    if ( p->getUsesCount() == 0 && p->getUseType() == UseType::FixedUses )
     {
       removeUsedItemFromInventory();
     }

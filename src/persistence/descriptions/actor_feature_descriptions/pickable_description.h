@@ -25,13 +25,14 @@ struct PickableDescription : Description
   std::experimental::optional<int> amunitionType;
   std::experimental::optional<int> category;
   std::experimental::optional<int> weaponSize;
+  std::experimental::optional<int> useType;
 
   virtual bool any()
   {
     return stackable || amount || uses || itemSlot || armorClass ||
            weight || price || targetType || damage || scriptId ||
            range || radius || armorType || weaponType || amunitionType ||
-           category || weaponSize;
+           category || weaponSize || useType;
   }
 };
 

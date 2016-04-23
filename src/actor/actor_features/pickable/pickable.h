@@ -9,6 +9,7 @@
 #include <target.h>
 #include <damage.h>
 #include <item_type.h>
+#include <use_type.h>
 
 namespace amarlon {
 
@@ -40,12 +41,18 @@ public:
    * @brief Executes Lua script defined by scriptId.
    */
   virtual bool use(ActorPtr executor, const Target& target);
+
   /**
    * @brief Defines if item can be used.
-   * @return True if script id is defined and uses count != 0
    */
   virtual bool isUsable() const;
+
   virtual int getUsesCount() const;
+  virtual void setUsesCount(int uses);
+
+  virtual UseType getUseType() const;
+  virtual void setUseType(UseType t);
+
   virtual TargetType getTargetType() const;
   virtual int getRange() const;
   virtual int getRadius() const;
@@ -79,6 +86,8 @@ public:
 
   virtual std::string getDescription();
 
+  virtual void tickDay();
+
 protected:
   void toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP = nullptr);
   void clone(Pickable* p);
@@ -97,6 +106,7 @@ private:
   ItemType _type;
   int _range;
   int _radius;
+  UseType _useType;
 
   std::string getScriptPath() const;
 

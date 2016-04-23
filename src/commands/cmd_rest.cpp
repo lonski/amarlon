@@ -58,9 +58,9 @@ void CmdRest::tickTime()
 void CmdRest::restoreCharacters()
 {
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
-  for ( auto actor : map->getActors([](ActorPtr a){return a->hasFeature<Character>();}) )
+  for ( auto actor : map->getActors() )
   {
-    actor->getFeature<Character>()->rest();
+    actor->tickDay();
   }
 }
 

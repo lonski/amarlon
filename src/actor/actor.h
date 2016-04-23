@@ -119,6 +119,11 @@ public:
   void morph(int newType);
 
   /**
+   * @brief Perform rest actions
+   */
+  void tickDay();
+
+  /**
    * @brief Allows player to take its turn. Ticks the time
    *        - updates AI and updates the effects status
    * @return Amount of turns the update took.

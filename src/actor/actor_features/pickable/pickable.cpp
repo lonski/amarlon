@@ -38,6 +38,7 @@ void Pickable::upgrade(DescriptionPtr dsc)
     if (pDsc->amunitionType)  _type.amunition = (AmunitionType)*(pDsc->amunitionType);
     if (pDsc->category)       _type.category  = (PickableCategory)*(pDsc->category);
     if (pDsc->weaponSize)     _type.weaponSize  = (WeaponSize)*(pDsc->weaponSize);
+    if (pDsc->useType)        _useType = (UseType)(*pDsc->useType);
   }
 }
 
@@ -63,6 +64,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     if ( _weight != cmpP->_weight ) dsc->weight = _weight;
     if ( _price != cmpP->_price ) dsc->price = _price;
     if ( _targetType != cmpP->_targetType ) dsc->targetType = (int)_targetType;
+    if ( _useType != cmpP->_useType ) dsc->useType = (int)_useType;
     if ( _damage != cmpP->_damage ) dsc->damage = _damage.toStr();
     if ( _scriptId != cmpP->_scriptId ) dsc->scriptId = _scriptId;
     if ( _range != cmpP->_range ) dsc->range = _range;
@@ -83,6 +85,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     dsc->weight = _weight;
     dsc->price = _price;
     dsc->targetType = (int)_targetType;
+    dsc->useType = (int)_useType;
     dsc->damage = _damage.toStr();
     dsc->scriptId = _scriptId;
     dsc->range = _range;
@@ -107,6 +110,7 @@ Pickable::Pickable(DescriptionPtr dsc)
   , _scriptId(0)
   , _range(0)
   , _radius(0)
+  , _useType(UseType::FixedUses)
 {
   upgrade(dsc);
 }
@@ -175,6 +179,7 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_price == crhs->_price);
     equal &= (_damage == crhs->_damage);
     equal &= (_targetType == crhs->_targetType);
+    equal &= (_useType == crhs->_useType);
     equal &= (_itemSlot == crhs->_itemSlot);
     equal &= (_scriptId == crhs->_scriptId);
     equal &= (_type == crhs->_type);
@@ -239,12 +244,28 @@ bool Pickable::use(ActorPtr executor, const Target& target)
 
 bool Pickable::isUsable() const
 {
-  return _scriptId != 0 && _usesCount !=0;
+  return _scriptId != 0 &&
+      ( _usesCount !=0 || _useType == UseType::DailyUse);
 }
 
 int Pickable::getUsesCount() const
 {
   return _usesCount;
+}
+
+void Pickable::setUsesCount(int uses)
+{
+  _usesCount = uses;
+}
+
+UseType Pickable::getUseType() const
+{
+  return _useType;
+}
+
+void Pickable::setUseType(UseType t)
+{
+  _useType = t;
 }
 
 bool Pickable::isStackable() const
@@ -375,7 +396,18 @@ std::string Pickable::getDescription()
     str += colorToStr(TCODColor::darkTurquoise, true) + "Radius: " + toStr(getRadius()) + "#";
   }
 
+  if ( isUsable() )
+  {
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Uses: " + toStr(_usesCount) + "#";
+  }
+
   return str;
+}
+
+void Pickable::tickDay()
+{
+  if ( getUseType() == UseType::DailyUse )
+    _usesCount = 1;
 }
 
 void Pickable::clone(Pickable *p)
@@ -391,6 +423,7 @@ void Pickable::clone(Pickable *p)
     p->_price = _price;
     p->_usesCount = _usesCount;
     p->_targetType = _targetType;
+    p->_useType = _useType;
     p->_itemSlot = _itemSlot;
     p->_scriptId = _scriptId;
     p->_type = _type;

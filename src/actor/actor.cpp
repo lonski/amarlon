@@ -189,6 +189,12 @@ void Actor::morph(int newType)
   }
 }
 
+void Actor::tickDay()
+{
+  for ( auto& kv : _features )
+    kv.second->tickDay();
+}
+
 int Actor::update()
 {
   int turns = 0;
