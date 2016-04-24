@@ -94,11 +94,15 @@ void InputDialog::renderInput()
 
 void InputDialog::blitConsole()
 {
-  int posX = Engine::consoleWidth  / 2 - _console->getWidth()  / 2;
-  int posY = Engine::consoleHeight / 2 - _console->getHeight() / 2;
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
+  {
+    int posX = Engine::consoleWidth  / 2 - _console->getWidth()  / 2;
+    int posY = Engine::consoleHeight / 2 - _console->getHeight() / 2;
 
-  TCODConsole::blit(_console.get(), 0, 0, _console->getWidth(), _console->getHeight(), TCODConsole::root, posX, posY);
-  TCODConsole::flush();
+    TCODConsole::blit(_console.get(), 0, 0, _console->getWidth(), _console->getHeight(), console, posX, posY);
+    TCODConsole::flush();
+  }
 }
 
 void InputDialog::handlePressedKey(const TCOD_key_t &key)

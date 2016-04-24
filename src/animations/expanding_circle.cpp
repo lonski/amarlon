@@ -23,21 +23,25 @@ AnimationPtr ExpandingCircle::clone()
 
 void ExpandingCircle::run()
 {
-  TCODConsole& console = *TCODConsole::root;
-
-  //Target start  = getStartLocation();
-  Target stop = getEndLocation();
-  for(int r = 0; r <= _radius; ++r)
+  if ( Engine::instance().getConsole())
   {
-    Engine::instance().render();
-    TCODConsole::root->flush();
-    drawCircle(r, stop, _ch, _color);
-    console.flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
-  }
+    //Target start  = getStartLocation();
+    Target stop = getEndLocation();
+    for(int r = 0; r <= _radius; ++r)
+    {
+      Engine::instance().render();
+      Engine::instance().flush();
 
-  Engine::instance().render();
-  console.flush();
+      drawCircle(r, stop, _ch, _color);
+
+      Engine::instance().flush();
+
+      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    }
+
+    Engine::instance().render();
+    Engine::instance().flush();
+  }
 }
 
 Type ExpandingCircle::getType() const

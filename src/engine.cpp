@@ -32,6 +32,7 @@ int Engine::screenHeight = 60 + Engine::bottomPanelHeight;
 Engine::Engine()
   : _quit(false)
   , _running(false)
+  , _console(nullptr)
 {
   _windowManager.reset( new gui::WindowManager );
 }
@@ -121,6 +122,7 @@ bool Engine::isRunning() const
 
 void Engine::initializeConsole()
 {
+
   TCODConsole::root->setCustomFont(_config->getFont(),TCOD_FONT_LAYOUT_TCOD | TCOD_FONT_TYPE_GREYSCALE);
   TCODConsole::initRoot(Engine::screenWidth, Engine::screenHeight, "Amarlon", false, TCOD_RENDERER_SDL);
   TCODConsole::root->setFullscreen( std::stol(_config->get("fullscreen")) );
@@ -132,6 +134,8 @@ void Engine::initializeConsole()
   Engine::bottomPanelHeight = std::stol( _config->get("bottom_panel_height") );;
   Engine::screenWidth       = Engine::consoleWidth + Engine::rightPanelWidth;
   Engine::screenHeight      = Engine::consoleHeight + Engine::bottomPanelHeight;
+
+  _console = TCODConsole::root;
 }
 
 void Engine::epilogue()
@@ -153,42 +157,46 @@ void Engine::epilogue()
 
 void Engine::render()
 {
-  TCODConsole::root->clear();
-  MapPtr map = getWorld().getCurrentMap();
-
-  if ( map )
+  if ( getConsole() )
   {
-    map->computeFov(getPlayer()->getX(), getPlayer()->getY(), FovRadius);
-    map->render(TCODConsole::root);
-  }
+    getConsole()->clear();
+    MapPtr map = getWorld().getCurrentMap();
 
-  if (_gui)
-  {
-    _gui->setPlayerName(getPlayer()->getName());
-    _gui->setViewList(getActorsBenethPlayersFeet());
-    _gui->setEffectsList( getPlayer()->getStatusEffects().getEffectsStringList() );
-
-    CharacterPtr c = getPlayer()->getFeature<Character>();
-    if ( c )
+    if ( map )
     {
-      _gui->setHpBar(c->getHitPoints(), c->getMaxHitPoints());
-      _gui->setExpBar(c->getExperience(), c->getExperienceToNextLevel());
-      _gui->setPlayerLevel( toStr(c->getLevel()) );
-    }
-    else
-    {
-      _gui->setHpBar(0, 1);
-      _gui->setExpBar(0, 1);
-      _gui->setPlayerLevel("");
+      map->computeFov(getPlayer()->getX(), getPlayer()->getY(), FovRadius);
+      map->render(getConsole());
     }
 
-    _gui->render();
+    if (_gui)
+    {
+      _gui->setPlayerName(getPlayer()->getName());
+      _gui->setViewList(getActorsBenethPlayersFeet());
+      _gui->setEffectsList( getPlayer()->getStatusEffects().getEffectsStringList() );
+
+      CharacterPtr c = getPlayer()->getFeature<Character>();
+      if ( c )
+      {
+        _gui->setHpBar(c->getHitPoints(), c->getMaxHitPoints());
+        _gui->setExpBar(c->getExperience(), c->getExperienceToNextLevel());
+        _gui->setPlayerLevel( toStr(c->getLevel()) );
+      }
+      else
+      {
+        _gui->setHpBar(0, 1);
+        _gui->setExpBar(0, 1);
+        _gui->setPlayerLevel("");
+      }
+
+      _gui->render();
+    }
   }
 }
 
 void Engine::flush()
 {
-  TCODConsole::root->flush();
+  if ( getConsole() )
+    getConsole()->flush();
 }
 
 void Engine::update()
@@ -277,6 +285,11 @@ Module &Engine::getModule() const
 TreasureGenerator &Engine::getTreasureGenerator() const
 {
   return *_treasureGenerator;
+}
+
+TCODConsole* Engine::getConsole()
+{
+  return _console;
 }
 
 const ActorPtr Engine::getPlayer() const

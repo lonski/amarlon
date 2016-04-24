@@ -22,55 +22,58 @@ LoadSaveGameWindow::~LoadSaveGameWindow()
 
 AWindow &LoadSaveGameWindow::show()
 {
-  TCODConsole& console = *TCODConsole::root;
-  TCOD_key_t key;
-  bool exit = false;
-
-  _menu->selectNext();
-
-  while( !(exit) && !(TCODConsole::isWindowClosed()) )
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    render(console);
-    console.flush();
+    TCOD_key_t key;
+    bool exit = false;
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+    _menu->selectNext();
 
-    switch ( key.vk )
+    while( !(exit) && !(TCODConsole::isWindowClosed()) )
     {
-      case TCODK_DOWN:
-      case TCODK_KP2:
-      {
-        _menu->selectNext();
-        break;
-      }
-      case TCODK_UP:
-      case TCODK_KP8:
-      {
-        _menu->selectPrevious();
-        break;
-      }
-      case TCODK_ENTER:
-      case TCODK_KPENTER:
-      {
-        if ( _mode == SAVE )
-        {
-          auto item = _menu->getSelectedItem();
-          if ( item )
-          {
-            item->setValue( promptForName( item->getValue() ) );
-          }
-        }
-        exit = true;
-        break;
-      }
-      case TCODK_ESCAPE:
-      {
-        _menu->deselect();
-        exit = true;
-        break;
-      }
+      render(*console);
+      console->flush();
 
-      default:;
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+
+      switch ( key.vk )
+      {
+        case TCODK_DOWN:
+        case TCODK_KP2:
+        {
+          _menu->selectNext();
+          break;
+        }
+        case TCODK_UP:
+        case TCODK_KP8:
+        {
+          _menu->selectPrevious();
+          break;
+        }
+        case TCODK_ENTER:
+        case TCODK_KPENTER:
+        {
+          if ( _mode == SAVE )
+          {
+            auto item = _menu->getSelectedItem();
+            if ( item )
+            {
+              item->setValue( promptForName( item->getValue() ) );
+            }
+          }
+          exit = true;
+          break;
+        }
+        case TCODK_ESCAPE:
+        {
+          _menu->deselect();
+          exit = true;
+          break;
+        }
+
+        default:;
+      }
     }
   }
 

@@ -20,44 +20,46 @@ AnimationPtr Blink::clone()
 
 void Blink::run()
 {
-  TCODConsole& console = *TCODConsole::root;
-
-  Target target = getEndLocation();
-
-  TCODColor originalColor = console.getCharForeground(target.x, target.y);
-  TCODColor newColor = originalColor;
-
-  int rDiff = _targetColor.r - originalColor.r;
-  int rStep = rDiff / (_frames / 2);
-  int gDiff = _targetColor.g - originalColor.g;
-  int gStep = gDiff / (_frames / 2);
-  int bDiff = _targetColor.b - originalColor.b;
-  int bStep = bDiff / (_frames / 2);
-
-  for(int f = 0; f < _frames/2; ++f)
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    newColor.r += rStep;
-    newColor.g += gStep;
-    newColor.b += bStep;
+    Target target = getEndLocation();
 
-    console.setCharForeground(target.x, target.y, newColor);
-    console.flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    TCODColor originalColor = console->getCharForeground(target.x, target.y);
+    TCODColor newColor = originalColor;
+
+    int rDiff = _targetColor.r - originalColor.r;
+    int rStep = rDiff / (_frames / 2);
+    int gDiff = _targetColor.g - originalColor.g;
+    int gStep = gDiff / (_frames / 2);
+    int bDiff = _targetColor.b - originalColor.b;
+    int bStep = bDiff / (_frames / 2);
+
+    for(int f = 0; f < _frames/2; ++f)
+    {
+      newColor.r += rStep;
+      newColor.g += gStep;
+      newColor.b += bStep;
+
+      console->setCharForeground(target.x, target.y, newColor);
+      console->flush();
+      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    }
+
+    for(int f = 0; f < _frames/2; ++f)
+    {
+      newColor.r -= rStep;
+      newColor.g -= gStep;
+      newColor.b -= bStep;
+
+      console->setCharForeground(target.x, target.y, newColor);
+      console->flush();
+      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    }
+
+    Engine::instance().render();
+    Engine::instance().flush();
   }
-
-  for(int f = 0; f < _frames/2; ++f)
-  {
-    newColor.r -= rStep;
-    newColor.g -= gStep;
-    newColor.b -= bStep;
-
-    console.setCharForeground(target.x, target.y, newColor);
-    console.flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
-  }
-
-  Engine::instance().render();
-  console.flush();
 }
 
 Type Blink::getType() const

@@ -41,7 +41,7 @@ int CmdTalk::execute()
     while( talk.first.id != -1 );
 
     Engine::instance().render();
-    TCODConsole::root->flush();
+    Engine::instance().flush();
   }
 
   return turns;

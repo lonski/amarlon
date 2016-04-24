@@ -127,7 +127,7 @@ void ShotAction::renderMissile(const Point& prev, const Point& current, ActorPtr
 
   Engine::instance().render();
   setTile(current, c, missile->getColor());
-  TCODConsole::root->flush();
+  Engine::instance().flush();
 }
 
 ActorPtr ShotAction::getTarget(const Point& p)

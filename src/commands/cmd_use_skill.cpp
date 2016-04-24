@@ -28,7 +28,7 @@ int CmdUseSkill::execute()
   if ( SkillPtr skill = getSkill() )
   {
     Engine::instance().render();
-    TCODConsole::root->flush();
+    Engine::instance().flush();
     ActorPtr player = Engine::instance().getPlayer();
 
     TargetSelectorPtr selector( TargetSelector::create( skill->getTargetType() ) );

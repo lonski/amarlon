@@ -1,5 +1,6 @@
 #include "text_window.h"
 #include <utils/utils.h>
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 
@@ -19,19 +20,23 @@ AWindow& TextWindow::setDefaults()
 
 AWindow& TextWindow::show()
 {
-  TCOD_key_t key;
-  key.vk = TCODK_NONE;
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
+  {
+    TCOD_key_t key;
+    key.vk = TCODK_NONE;
 
-  while( !exitCondition(key) &&
-         !(TCODConsole::isWindowClosed()))
-  {  
-    displayText();
+    while( !exitCondition(key) &&
+           !(TCODConsole::isWindowClosed()))
+    {
+      displayText();
 
-    render(*TCODConsole::root);
-    TCODConsole::root->flush();
+      render(*console);
+      Engine::instance().flush();
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
-    handleKey(key);
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+      handleKey(key);
+    }
   }
 
   return *this;

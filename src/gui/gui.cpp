@@ -111,11 +111,16 @@ void Gui::clearLog()
 
 void Gui::setStatusMessage(const std::string &status)
 {
-  TCODConsole::root->print(
-    (Engine::consoleWidth - status.size()) / 2,
-    1,
-    status.c_str()
-  );
+  TCODConsole* console = Engine::instance().getConsole();
+
+  if ( console )
+  {
+    console->print(
+      (Engine::consoleWidth - status.size()) / 2,
+      1,
+      status.c_str()
+    );
+  }
 }
 
 void Gui::clearStatusMessage()
@@ -125,7 +130,14 @@ void Gui::clearStatusMessage()
 
 void Gui::render()
 {
-  std::for_each(_widgets.begin(), _widgets.end(), [](AWidgetPtr w){ w->render(*TCODConsole::root);});
+  TCODConsole* console = Engine::instance().getConsole();
+
+  if ( console )
+  {
+    std::for_each(_widgets.begin(), _widgets.end(), [console](AWidgetPtr w){
+      w->render(*console);
+    });
+  }
 }
 
 void Gui::setViewList(const std::vector<ColoredString> &items)

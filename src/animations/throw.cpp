@@ -22,28 +22,31 @@ AnimationPtr Throw::clone()
 
 void Throw::run()
 {
-  TCODConsole& console = *TCODConsole::root;
-
-  Target start  = getStartLocation();
-  Target stop = getEndLocation();
-
-  DirectPathPtr path = calculateDirectPath(start, stop);
-  while( path && !path->isEmpty() )
+  if ( Engine::instance().getConsole() )
   {
-    Point p = path->walk();
-    if ( p.isNonZero() )
+    Target start  = getStartLocation();
+    Target stop = getEndLocation();
+
+    DirectPathPtr path = calculateDirectPath(start, stop);
+    while( path && !path->isEmpty() )
     {
-      Engine::instance().render();
-      TCODConsole::root->flush();
-      setTile(p, _ch, _color);
+      Point p = path->walk();
+      if ( p.isNonZero() )
+      {
+        Engine::instance().render();
+        Engine::instance().flush();
 
-      console.flush();
-      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+        setTile(p, _ch, _color);
+
+        Engine::instance().flush();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+      }
     }
-  }
 
-  Engine::instance().render();
-  console.flush();
+    Engine::instance().render();
+    Engine::instance().flush();
+  }
 }
 
 Type Throw::getType() const

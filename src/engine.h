@@ -99,6 +99,8 @@ public:
   Module&            getModule()            const;
   TreasureGenerator& getTreasureGenerator() const;
 
+  TCODConsole* getConsole();
+
   const ActorPtr getPlayer() const;
   TCOD_key_t getLastInput() const;
   void setLastInput(TCOD_key_t key);
@@ -123,6 +125,7 @@ private:
   bool _quit;
   bool _running;
   TCOD_key_t _lastInput;
+  TCODConsole* _console;
 
   std::vector<ColoredString> getActorsBenethPlayersFeet();
   int updatePlayerControlledActors(MapPtr map);

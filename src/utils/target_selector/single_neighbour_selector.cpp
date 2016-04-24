@@ -16,7 +16,7 @@ SingleNeighbourSelector::SingleNeighbourSelector(const std::string& selectionMes
 Target SingleNeighbourSelector::select(std::function<bool(ActorPtr)> filterFun)
 {
   Engine::instance().getGui().setStatusMessage( _selectionMessage );
-  TCODConsole::root->flush();
+  Engine::instance().flush();
   MapPtr map = Engine::instance().getPlayer()->getMap();
   ActorPtr player = Engine::instance().getPlayer();
 
@@ -25,7 +25,7 @@ Target SingleNeighbourSelector::select(std::function<bool(ActorPtr)> filterFun)
 
   Engine::instance().getGui().clearStatusMessage();
   Engine::instance().render();
-  TCODConsole::root->flush();
+  Engine::instance().flush();
 
   return selected ? Target(map->getActors(player->getX()+dx, player->getY()+dy, filterFun),
                            player->getX()+dx,

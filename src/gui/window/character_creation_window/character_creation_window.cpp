@@ -50,35 +50,38 @@ void CharacterCreationWindow::showActivePanel()
 
 AWindow &CharacterCreationWindow::show()
 {
-  showActivePanel();
-
-  TCOD_key_t key;
-
-  while( !TCODConsole::isWindowClosed() )
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    render(*TCODConsole::root);
-    TCODConsole::root->flush();
+    showActivePanel();
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+    TCOD_key_t key;
 
-    _panels[_activePanel]->handleKey(key);
-
-    if ( _enterGame )
+    while( !TCODConsole::isWindowClosed() )
     {
-      ActorPtr player = Actor::create( _player, false);
-      player->setPosition( Engine::instance().getModule().getStartX(),
-                           Engine::instance().getModule().getStartY());
-      PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
-      c->advanceLevel();
+      render(*console);
+      Engine::instance().flush();
 
-      Engine::instance().getWorld().changeMap( Engine::instance().getModule().getStartMap() );
-      Engine::instance().getWorld().setPlayer( player );
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
 
-      Engine::instance().enterGame();
-      break;
+      _panels[_activePanel]->handleKey(key);
+
+      if ( _enterGame )
+      {
+        ActorPtr player = Actor::create( _player, false);
+        player->setPosition( Engine::instance().getModule().getStartX(),
+                             Engine::instance().getModule().getStartY());
+        PlayableCharacterPtr c = player->getFeature<PlayableCharacter>();
+        c->advanceLevel();
+
+        Engine::instance().getWorld().changeMap( Engine::instance().getModule().getStartMap() );
+        Engine::instance().getWorld().setPlayer( player );
+
+        Engine::instance().enterGame();
+        break;
+      }
     }
   }
-
   return *this;
 }
 

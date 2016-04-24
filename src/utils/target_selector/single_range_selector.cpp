@@ -65,7 +65,7 @@ void SingleRangeSelector::render()
     Engine::instance().render();
     Engine::instance().getGui().setStatusMessage( _selectionMessage );
     highlightCell(tEnd.x, tEnd.y);
-    TCODConsole::root->flush();
+    Engine::instance().flush();
 }
 
 }

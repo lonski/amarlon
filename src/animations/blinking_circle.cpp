@@ -22,48 +22,51 @@ AnimationPtr BlinkingCircle::clone()
 
 void BlinkingCircle::run()
 {
-  TCODConsole& console = *TCODConsole::root;
-  Engine::instance().render();
-  console.flush();
-
-  Target target = getEndLocation();
-
-  TCODColor originalColor = TCODColor::black;
-  TCODColor newColor = originalColor;
-
-  int rDiff = _targetColor.r - originalColor.r;
-  int rStep = rDiff / (_frames / 2);
-  int gDiff = _targetColor.g - originalColor.g;
-  int gStep = gDiff / (_frames / 2);
-  int bDiff = _targetColor.b - originalColor.b;
-  int bStep = bDiff / (_frames / 2);
-
-  for(int f = 0; f < _frames/2; ++f)
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    newColor.r += rStep;
-    newColor.g += gStep;
-    newColor.b += bStep;
+    Engine::instance().render();
+    Engine::instance().flush();
 
-    highlightFilledCircle(_radius, target, newColor);
+    Target target = getEndLocation();
 
-    console.flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    TCODColor originalColor = TCODColor::black;
+    TCODColor newColor = originalColor;
+
+    int rDiff = _targetColor.r - originalColor.r;
+    int rStep = rDiff / (_frames / 2);
+    int gDiff = _targetColor.g - originalColor.g;
+    int gStep = gDiff / (_frames / 2);
+    int bDiff = _targetColor.b - originalColor.b;
+    int bStep = bDiff / (_frames / 2);
+
+    for(int f = 0; f < _frames/2; ++f)
+    {
+      newColor.r += rStep;
+      newColor.g += gStep;
+      newColor.b += bStep;
+
+      highlightFilledCircle(_radius, target, newColor);
+
+      console->flush();
+      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    }
+
+    for(int f = 0; f < _frames/2; ++f)
+    {
+      newColor.r -= rStep;
+      newColor.g -= gStep;
+      newColor.b -= bStep;
+
+      highlightFilledCircle(_radius, target, newColor);
+
+      console->flush();
+      std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
+    }
+
+    Engine::instance().render();
+    Engine::instance().flush();
   }
-
-  for(int f = 0; f < _frames/2; ++f)
-  {
-    newColor.r -= rStep;
-    newColor.g -= gStep;
-    newColor.b -= bStep;
-
-    highlightFilledCircle(_radius, target, newColor);
-
-    console.flush();
-    std::this_thread::sleep_for(std::chrono::milliseconds(_frameDelay));
-  }
-
-  Engine::instance().render();
-  console.flush();
 }
 
 Type BlinkingCircle::getType() const

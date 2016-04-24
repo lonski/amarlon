@@ -1,4 +1,5 @@
 #include "menu_window.h"
+#include <engine.h>
 
 namespace amarlon { namespace gui {
 
@@ -10,49 +11,52 @@ MenuWindow::MenuWindow()
 
 AWindow& MenuWindow::show()
 {
-  TCODConsole& console = *TCODConsole::root;
-  TCOD_key_t key;
-
-  init();
-  _menu->selectNext();
-
-  while( !(key.vk == TCODK_ESCAPE) &&
-         !(key.vk == TCODK_ENTER ) &&
-         !(key.vk == TCODK_KPENTER) &&
-         !(TCODConsole::isWindowClosed()))
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    render(console);
-    console.flush();
+    TCOD_key_t key;
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+    init();
+    _menu->selectNext();
 
-    switch ( key.vk )
+    while( !(key.vk == TCODK_ESCAPE) &&
+           !(key.vk == TCODK_ENTER ) &&
+           !(key.vk == TCODK_KPENTER) &&
+           !(TCODConsole::isWindowClosed()))
     {
-      case TCODK_DOWN:
-      case TCODK_KP2:
+      render(*console);
+      console->flush();
+
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+
+      switch ( key.vk )
       {
-        _menu->selectNext();
-        break;
-      }
-      case TCODK_UP:
-      case TCODK_KP8:
-      {
-        _menu->selectPrevious();
-        break;
+        case TCODK_DOWN:
+        case TCODK_KP2:
+        {
+          _menu->selectNext();
+          break;
+        }
+        case TCODK_UP:
+        case TCODK_KP8:
+        {
+          _menu->selectPrevious();
+          break;
+        }
+
+        default:;
       }
 
-      default:;
     }
 
-  }
+    if ( key.vk == TCODK_ESCAPE )
+    {
+      _menu->deselect();
+    }
 
-  if ( key.vk == TCODK_ESCAPE )
-  {
-    _menu->deselect();
+    auto item = getSelectedItem();
+    if ( item ) item->executeCallback();
   }
-
-  auto item = getSelectedItem();
-  if ( item ) item->executeCallback();
 
   return *this;
 }

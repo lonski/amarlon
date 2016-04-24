@@ -109,54 +109,56 @@ bool GameMenu::quit_game()
 
 AWindow& GameMenu::show()
 {
-  TCODConsole& console = *TCODConsole::root;
-  TCOD_key_t key;
-  bool exit = false;
-
-  fillMenuSlots();
-  _menu->selectNext();
-
-  while( !(exit) && !(TCODConsole::isWindowClosed()) )
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    render(console);
-    console.flush();
+    TCOD_key_t key;
+    bool exit = false;
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+    fillMenuSlots();
+    _menu->selectNext();
 
-    switch ( key.vk )
+    while( !(exit) && !(TCODConsole::isWindowClosed()) )
     {
-      case TCODK_DOWN:
-      case TCODK_KP2:
-      {
-        _menu->selectNext();
-        break;
-      }
-      case TCODK_UP:
-      case TCODK_KP8:
-      {
-        _menu->selectPrevious();
-        break;
-      }
-      case TCODK_ENTER:
-      case TCODK_KPENTER:
-      {
-        auto item = _menu->getSelectedItem();
-        auto fun = _functions[ item->getValue() ];
+      render(*console);
+      console->flush();
 
-        exit = (this->*fun)();
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
 
-        break;
-      }
-      case TCODK_ESCAPE:
+      switch ( key.vk )
       {
-        exit = Engine::instance().isRunning();
-        break;
-      }
+        case TCODK_DOWN:
+        case TCODK_KP2:
+        {
+          _menu->selectNext();
+          break;
+        }
+        case TCODK_UP:
+        case TCODK_KP8:
+        {
+          _menu->selectPrevious();
+          break;
+        }
+        case TCODK_ENTER:
+        case TCODK_KPENTER:
+        {
+          auto item = _menu->getSelectedItem();
+          auto fun = _functions[ item->getValue() ];
 
-      default:;
+          exit = (this->*fun)();
+
+          break;
+        }
+        case TCODK_ESCAPE:
+        {
+          exit = Engine::instance().isRunning();
+          break;
+        }
+
+        default:;
+      }
     }
   }
-
   return *this;
 }
 

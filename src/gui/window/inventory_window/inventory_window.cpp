@@ -61,21 +61,25 @@ AWindow& InventoryWindow::refreshData()
 
 AWindow& InventoryWindow::show()
 {
-  refreshData();
-
-  TCOD_key_t key;
-
-  while( !TCODConsole::isWindowClosed() )
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    render(*TCODConsole::root);
-    TCODConsole::root->flush();
+    refreshData();
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+    TCOD_key_t key;
 
-    handleKey(key);
+    while( !TCODConsole::isWindowClosed() )
+    {
+      render(*console);
+      Engine::instance().flush();
 
-    if ( (key.vk == TCODK_CHAR && key.c == 'i') || (key.vk == TCODK_ESCAPE) )
-      break;
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+
+      handleKey(key);
+
+      if ( (key.vk == TCODK_CHAR && key.c == 'i') || (key.vk == TCODK_ESCAPE) )
+        break;
+    }
   }
 
   return *this;

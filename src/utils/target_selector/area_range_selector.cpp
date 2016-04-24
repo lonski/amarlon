@@ -29,7 +29,7 @@ void AreaRangeSelector::render()
   highlightCell(tEnd.x, tEnd.y);
   highlightFilledCircle( getRadius(), tEnd);
   if ( _renderPath ) renderPath(tStart, tEnd);
-  TCODConsole::root->flush();
+  Engine::instance().flush();
 }
 
 Target AreaRangeSelector::select(std::function<bool (ActorPtr)> filterFun)

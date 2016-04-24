@@ -16,19 +16,23 @@ AMultiPanelWindow::~AMultiPanelWindow()
 
 AWindow& AMultiPanelWindow::show()
 {
-  TCOD_key_t key;
-
-  while( !TCODConsole::isWindowClosed() )
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
   {
-    loopUpdate();
-    render(*TCODConsole::root);
-    TCODConsole::root->flush();
+    TCOD_key_t key;
 
-    TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+    while( !TCODConsole::isWindowClosed() )
+    {
+      loopUpdate();
+      render(*console);
+      Engine::instance().flush();
 
-    handleKey(key);
+      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
 
-    if ( exitWindow(key) ) break;
+      handleKey(key);
+
+      if ( exitWindow(key) ) break;
+    }
   }
 
   return *this;

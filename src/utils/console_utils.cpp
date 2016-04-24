@@ -30,9 +30,10 @@ void drawCircle(int radius, Target center, char c, TCODColor color)
 }
 
 void highlightFilledCircle(int range, Target center, TCODColor color)
-{
+{  
   MapPtr map = Engine::instance().getWorld().getCurrentMap();
-  if ( map )
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( map && console )
   {
     for( uint32_t y = 0; y < map->getHeight(); ++y )
     {
@@ -40,7 +41,7 @@ void highlightFilledCircle(int range, Target center, TCODColor color)
       {
         if ( calculateDistance(center.x, center.y, x, y ) <= range )
         {
-          TCODConsole::root->setCharBackground(x,y, color);
+          console->setCharBackground(x,y, color);
         }
       }
     }
@@ -49,8 +50,12 @@ void highlightFilledCircle(int range, Target center, TCODColor color)
 
 void setTile(uint32_t x, uint32_t y, char c, TCODColor color)
 {
-  TCODConsole::root->setChar(x,y,c);
-  TCODConsole::root->setCharForeground(x,y,color);
+  TCODConsole* console = Engine::instance().getConsole();
+  if ( console )
+  {
+    console->setChar(x,y,c);
+    console->setCharForeground(x,y,color);
+  }
 }
 
 void setTile(const Point &p, char c, TCODColor color)
@@ -78,10 +83,15 @@ void renderPath(Target start, Target end)
 
 void highlightCell(uint32_t x, uint32_t y)
 {
-  TCODColor fgcol = TCODConsole::root->getCharForeground(x, y);
-  TCODColor bgcol = TCODConsole::root->getCharBackground(x, y);
-  TCODConsole::root->setCharForeground(x, y, TCODColor::lerp(fgcol, TCODColor::yellow, 0.6));
-  TCODConsole::root->setCharBackground(x, y, TCODColor::lerp(bgcol, TCODColor::yellow, 0.1));
+  TCODConsole* console = Engine::instance().getConsole();
+
+  if ( console )
+  {
+    TCODColor fgcol = console->getCharForeground(x, y);
+    TCODColor bgcol = console->getCharBackground(x, y);
+    console->setCharForeground(x, y, TCODColor::lerp(fgcol, TCODColor::yellow, 0.6));
+    console->setCharBackground(x, y, TCODColor::lerp(bgcol, TCODColor::yellow, 0.1));
+  }
 }
 
 

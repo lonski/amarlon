@@ -29,7 +29,7 @@ ActorActionResult TeleportAction::perform(ActorPtr performer)
   {
     Engine::instance().getWorld().changeMap( _map );
     Engine::instance().render();
-    TCODConsole::root->flush();
+    Engine::instance().flush();
   }
 
   return ActorActionResult::Ok;

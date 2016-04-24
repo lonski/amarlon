@@ -27,7 +27,7 @@ int CmdCast::execute()
   SpellPtr spell = getSpell();
 
   Engine::instance().render();
-  TCODConsole::root->flush();
+  Engine::instance().flush();
   ActorPtr player = Engine::instance().getPlayer();
 
   if ( spell )

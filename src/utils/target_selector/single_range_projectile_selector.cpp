@@ -69,7 +69,7 @@ void SingleRangeProjectileSelector::render()
   highlightFilledCircle( getRange(), Target({player}, player->getX(), player->getY()));
   Engine::instance().getGui().setStatusMessage( _selectionMessage );
 
-  TCODConsole::root->flush();
+  Engine::instance().flush();
 }
 
 }

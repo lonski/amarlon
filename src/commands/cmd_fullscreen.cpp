@@ -1,4 +1,5 @@
 #include "cmd_fullscreen.h"
+#include <engine.h>
 
 namespace amarlon {
 
@@ -13,7 +14,11 @@ bool CmdFullscreen::accept(const TCOD_key_t& key)
 
 int CmdFullscreen::execute()
 {
-  TCODConsole::root->setFullscreen( !TCODConsole::root->isFullscreen() );
+  TCODConsole* console = Engine::instance().getConsole();
+
+  if ( console )
+    console->setFullscreen( !console->isFullscreen() );
+
   return 0;
 }
 

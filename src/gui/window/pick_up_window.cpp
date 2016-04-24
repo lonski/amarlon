@@ -50,43 +50,46 @@ AWindow& PickUpWindow::show()
     init();
     _menu->selectNext();
 
-    TCODConsole& console = *TCODConsole::root;
-    TCOD_key_t key;
-
-    while( !(key.vk == TCODK_ESCAPE) &&
-           !(TCODConsole::isWindowClosed()) &&
-           _menu->getItemCount() > 0)
+    TCODConsole* console = Engine::instance().getConsole();
+    if ( console )
     {
-      render(console);
-      console.flush();
+      TCOD_key_t key;
 
-      TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
-
-      switch ( key.vk )
+      while( !(key.vk == TCODK_ESCAPE) &&
+             !(TCODConsole::isWindowClosed()) &&
+             _menu->getItemCount() > 0)
       {
-        case TCODK_DOWN:
-        case TCODK_KP2:
-        {
-          _menu->selectNext();
-          break;
-        }
-        case TCODK_UP:
-        case TCODK_KP8:
-        {
-          _menu->selectPrevious();
-          break;
-        }
-        case TCODK_ENTER:
-        case TCODK_KPENTER:
-        {
-          choose();
-          _menu->selectNext();
-          Engine::instance().render();
-          TCODConsole::root->flush();
-          break;
-        }
+        render(*console);
+        console->flush();
 
-        default:;
+        TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL,true);
+
+        switch ( key.vk )
+        {
+          case TCODK_DOWN:
+          case TCODK_KP2:
+          {
+            _menu->selectNext();
+            break;
+          }
+          case TCODK_UP:
+          case TCODK_KP8:
+          {
+            _menu->selectPrevious();
+            break;
+          }
+          case TCODK_ENTER:
+          case TCODK_KPENTER:
+          {
+            choose();
+            _menu->selectNext();
+            Engine::instance().render();
+            Engine::instance().flush();
+            break;
+          }
+
+          default:;
+        }
       }
     }
   }
