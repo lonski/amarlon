@@ -193,6 +193,8 @@ void Actor::tickDay()
 {
   for ( auto& kv : _features )
     kv.second->tickDay();
+
+  getStatusEffects().tick(1, GameTimeUnit::Day);
 }
 
 int Actor::update()

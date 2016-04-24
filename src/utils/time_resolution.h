@@ -3,10 +3,10 @@
 
 namespace amarlon {
 
-enum class TimeResolution
+enum class GameTimeUnit
 {
-  Tick = 0,
-  Day  = 1
+  Tick = 1,
+  Day  = 720
 };
 
 }

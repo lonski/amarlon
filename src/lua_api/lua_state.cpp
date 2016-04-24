@@ -40,13 +40,20 @@ void LuaState::registerAPI()
   RegistrationManager::instance().registerAll(_state);
 }
 
+bool LuaState::function_exists(const char* fun_name)
+{
+  luabind::object g = luabind::globals( _state );
+  luabind::object fun = g[ fun_name ];
+
+  return fun.is_valid() && luabind::type(fun) == LUA_TFUNCTION;
+}
+
 void LuaState::logError(const luabind::error &e) const
 {
   luabind::object error_msg(luabind::from_stack(e.state(), -1));
   std::ostringstream str;
   str << "Lua run-time error: \n" << error_msg;
   printf("%s\n", str.str().c_str());
-  gui::msgBox(str.str(), gui::MsgType::Error);
 }
 
 void LuaState::logError(const std::exception &e) const

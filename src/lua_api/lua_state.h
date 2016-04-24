@@ -30,6 +30,12 @@ public:
   bool execute(const std::string& path);
   lua_State* operator()() const;
 
+  /**
+   * @brief Check if function of given name is
+   *        present in current state
+   */
+  bool function_exists(const char* fun_name);
+
   void registerAPI();
   void logError(const luabind::error& e) const;
   void logError(const std::exception &e) const;

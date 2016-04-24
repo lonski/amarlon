@@ -87,7 +87,7 @@ void StatusEffectsManager::removeAll()
   _effects.clear();
 }
 
-void StatusEffectsManager::tick(int time)
+void StatusEffectsManager::tick(int time, GameTimeUnit res)
 {
   auto it = _effects.begin();
   while ( it != _effects.end())
@@ -97,8 +97,13 @@ void StatusEffectsManager::tick(int time)
 
     if ( e->getDuration() != -1 ) //omit permament effects
     {
-      e->setDuration( e->getDuration() - time );
+      e->setDuration( e->getDuration() - time*(int)res );
       erase = e->getDuration() <= 0;
+    }
+
+    if ( res == GameTimeUnit::Day && _owner.lock() )
+    {
+      e->tickDay(_owner.lock());
     }
 
     if ( erase )

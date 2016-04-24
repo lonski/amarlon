@@ -7,6 +7,7 @@
 #include <spell_id.h>
 #include <target.h>
 #include <colored_string.h>
+#include <time_resolution.h>
 
 namespace amarlon {
 
@@ -35,7 +36,7 @@ public:
   void remove(std::function<bool(StatusEffectPtr)> cmp,
               bool notify = true);
   void removeAll();
-  void tick(int time = 1);
+  void tick(int time = 1, GameTimeUnit res = GameTimeUnit::Tick);
 
   std::vector<StatusEffectPtr> getEffects() const;
   std::vector<ColoredString> getEffectsStringList() const;

@@ -17,6 +17,7 @@ public:
   StatusEffect(const std::string& name, const std::string& script, int duration);
 
   bool cancel(Target target);
+  bool tickDay(Target target);
   int getDuration() const;
   void setDuration(int duration);
   std::string getName() const;
