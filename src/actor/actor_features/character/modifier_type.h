@@ -14,7 +14,8 @@ enum class GenericModifier
   AttackBonus            = 0,
   MoraleModifier         = 1,
   MissileAttackBonus     = 2,
-  ExperiencePercentBonus = 3
+  ExperiencePercentBonus = 3,
+  CharacterTeam          = 4
 };
 
 struct ModifierType

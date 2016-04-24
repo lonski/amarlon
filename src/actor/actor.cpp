@@ -191,10 +191,10 @@ void Actor::morph(int newType)
 
 void Actor::tickDay()
 {
+  getStatusEffects().tick(1, GameTimeUnit::Day);
+
   for ( auto& kv : _features )
     kv.second->tickDay();
-
-  getStatusEffects().tick(1, GameTimeUnit::Day);
 }
 
 int Actor::update()

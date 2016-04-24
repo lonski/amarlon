@@ -81,5 +81,44 @@ TEST_F(CharmPersonTest, whenNotRessisted_StatusEffectIsAdded)
   ASSERT_TRUE(cast_success);
 }
 
+TEST_F(CharmPersonTest, eachDay_saving_throw_reroll)
+{
+  ActorPtr player = Engine::instance().getPlayer();
+  ActorPtr human = Actor::create( 5001 );
+
+  SpellPtr spell =
+      Engine::instance().getSpellDB().fetch( SpellId::CharmPerson );
+
+  CharacterPtr c = human->getFeature<Character>();
+  relations::Team old_team = c->getTeam();
+
+  ASSERT_FALSE( c->getTeam() == relations::Player );
+
+  //assure spell is cast
+  while ( spell->cast(player, human) != CastResult::Success) {}
+
+  //Team should be changed to be players ally
+  ASSERT_TRUE( c->getTeam() == relations::Player );
+
+  //do some regular game ticks - it should not remove effect
+  int ticks = 50;
+  while ( ticks-- ) human->update();
+  ASSERT_TRUE( human->getStatusEffects().hasEffect( spell->getName() ) );
+
+  //tick some days - every day try to remove effect
+  int days = 100;
+  bool hasEffect = true;
+  while ( days-- && hasEffect )
+  {
+    human->tickDay();
+    hasEffect = human->getStatusEffects().hasEffect( spell->getName() );
+  }
+
+  ASSERT_FALSE( hasEffect );
+
+  //Team should be set back to old one
+  ASSERT_EQ( (int)c->getTeam(), (int)old_team );
+}
+
 }
 

@@ -62,7 +62,7 @@ void StatusEffectsManager::remove(std::function<bool (StatusEffectPtr)> cmp, boo
   }
 }
 
-void StatusEffectsManager::remove(const std::string& name, bool notify)
+void StatusEffectsManager::remove(std::string name, bool notify)
 {
   auto it = std::find_if(_effects.begin(),
                          _effects.end(),
@@ -92,18 +92,19 @@ void StatusEffectsManager::tick(int time, GameTimeUnit res)
   auto it = _effects.begin();
   while ( it != _effects.end())
   {
-    auto& e = *it;
+    StatusEffectPtr e = *it;
     bool erase = false;
+
+    if ( res == GameTimeUnit::Day )
+    {
+      for ( int t = 0; t < time; ++t )
+        e->tickDay( _owner.lock() );
+    }
 
     if ( e->getDuration() != -1 ) //omit permament effects
     {
       e->setDuration( e->getDuration() - time*(int)res );
       erase = e->getDuration() <= 0;
-    }
-
-    if ( res == GameTimeUnit::Day && _owner.lock() )
-    {
-      e->tickDay(_owner.lock());
     }
 
     if ( erase )

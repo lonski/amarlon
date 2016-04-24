@@ -463,7 +463,11 @@ void Character::removeModifier(const Modifier &mod)
 
 relations::Team Character::getTeam() const
 {
-  return _team;
+  auto it = std::find_if(_modifiers.begin(), _modifiers.end(), [](Modifier m){
+              return m.Type.generic = GenericModifier::CharacterTeam;
+            });
+
+  return it != _modifiers.end() ? static_cast<relations::Team>(it->Value) : _team;
 }
 
 void Character::setTeam(relations::Team team)

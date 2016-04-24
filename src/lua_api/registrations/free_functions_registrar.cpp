@@ -8,7 +8,7 @@ namespace amarlon {
 
 void log(std::string msg)
 {
-  printf("%s", msg.c_str());
+  printf("%s\n", msg.c_str());
 }
 
 void msg(std::string msg)

@@ -5,12 +5,23 @@ RACE_HUMAN = 1
 CAST_RESULT_SUCCESS = 0
 CAST_RESULT_RESSISTED = 1
 SPELL_SAVING_THROW = 4
+PLAYER_TEAM = 2
+MODIFIER_TYPE_CHARACTER_TEAM = 4
+
+function createModifier()
+	mod = Modifier(PLAYER_TEAM)
+	mod.Type.generic = MODIFIER_TYPE_CHARACTER_TEAM
+			
+	return mod
+end
 
 function doSavingRoll(actor, caster)
 	c = actor:get():character():get()
 	savingThrowBonus = 0
 	
-	if actor:get():isHostileTo(caster) then savingThrowBonus = 5 end
+	if caster ~= nil then
+		if actor:get():isHostileTo(caster) then savingThrowBonus = 5 end
+	end
 	
 	return c:rollSavingThrow(SPELL_SAVING_THROW + savingThrowBonus)
 end
@@ -41,6 +52,10 @@ function onCast(caster, target, spell)
 		effect = StatusEffect(spell:getName(), spell:getScript(), -1)
 		actor:get():getStatusEffects():add( effect )
 	end
+	
+	local function addModifier(actor)
+		c = actor:get():character():get():addModifier( createModifier() )
+	end
 		
 	ret = CAST_RESULT_RESSISTED
 	
@@ -52,6 +67,7 @@ function onCast(caster, target, spell)
 			if c:getLevel() <= MAXIMUM_VICTIM_LEVEL or race:getType() == RACE_HUMAN then
 				if not doSavingRoll(a, caster) then
 					addStatusEffect(a)
+					addModifier(a)
 					playAnimationSuccess(a:get())
 					ret = CAST_RESULT_SUCCESS
 				end
@@ -63,5 +79,23 @@ function onCast(caster, target, spell)
 end
 
 function onCancel(target)
+	actor = target:getFirstActor()
+	if actor:get() ~= nil then
+		actor:get():character():get():removeModifier( createModifier() )
+	end
+
 	return true;
+end
+
+function onDayTick(target, effect)
+	
+	actor = target:getFirstActor()
+	
+	if actor:get() ~= nil and effect ~= nil then
+		if doSavingRoll(actor, nil) then
+			effect:setDuration(1)			
+		end
+	end
+
+	return true
 end

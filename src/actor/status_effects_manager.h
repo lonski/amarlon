@@ -32,7 +32,7 @@ public:
 
   bool add(StatusEffectPtr effect);
   void remove(StatusEffectPtr effect, bool notify = true);
-  void remove(const std::string &name, bool notify = true);
+  void remove(std::string name, bool notify = true);
   void remove(std::function<bool(StatusEffectPtr)> cmp,
               bool notify = true);
   void removeAll();

@@ -21,10 +21,6 @@ bool StatusEffect::cancel(Target target)
     lua_api::LuaState& lua = Engine::instance().getLuaState();
     if ( lua.execute( _script ) && lua.function_exists("onCancel") )
     {
-      target.actors.erase( std::remove_if(target.actors.begin(), target.actors.end(),[](ActorPtr a){
-                             return a == nullptr;
-                           }));
-
       try
       {
         success = luabind::call_function<bool>(
@@ -53,16 +49,13 @@ bool StatusEffect::tickDay(Target target)
     lua_api::LuaState& lua = Engine::instance().getLuaState();
     if ( lua.execute( _script ) && lua.function_exists("onDayTick") )
     {
-      target.actors.erase( std::remove_if(target.actors.begin(), target.actors.end(),[](ActorPtr a){
-                             return a == nullptr;
-                           }));
-
       try
       {
         success = luabind::call_function<bool>(
             lua()
           , "onDayTick"
           , &target
+          , this
         );
       }
       catch(luabind::error& e)
@@ -70,7 +63,6 @@ bool StatusEffect::tickDay(Target target)
         lua.logError(e);
       }
     }
-
   }
 
   return success;
