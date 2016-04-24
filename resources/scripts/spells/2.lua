@@ -1,6 +1,8 @@
 --Spell: Magic Missile
 SPELL_ID = 2
 SHIELD = "Shield"
+CAST_RESULT_SUCCESS = 0
+CAST_RESULT_RESSISTED = 1
 
 function onCast(caster, target, spell)
 	
@@ -26,20 +28,27 @@ function onCast(caster, target, spell)
 	end
 
 	local function strike(enemy)
+		result = false
+		
 	 	for i=1,count do
 	 		c = enemy:get():character():get()
 	 		if c ~= nil then 
 	 			if enemy:get():getStatusEffects():hasEffect(SHIELD) == false then
 	 				c:takeDamage( dmg, caster )
+					result = true
 	 			end
 	 			playAnimation()
 	 		end
 	 	end
+		
+		return result
 	end
 	
+	ret = CAST_RESULT_RESSISTED
+	
 	for a in target.actors do
-		strike(a)
+		if strike(a) then ret = CAST_RESULT_SUCCESS end
 	end
 
-	return true
+	return ret
 end

@@ -12,6 +12,8 @@
 #include <modifier_type.h>
 #include <fsm_state_type.h>
 #include <actor_action_result.h>
+#include <species_type.h>
+#include <race_type.h>
 
 /**
   * Use this mactro for quick luabind converter creating for an Enum Class
@@ -49,6 +51,8 @@ namespace luabind
     LUABIND_DEFINE_ENUMCLASS(amarlon::GenericModifier)
     LUABIND_DEFINE_ENUMCLASS(amarlon::FSMStateType)
     LUABIND_DEFINE_ENUMCLASS(amarlon::ActorActionResult)
+    LUABIND_DEFINE_ENUMCLASS(amarlon::SpeciesType)
+    LUABIND_DEFINE_ENUMCLASS(amarlon::RaceType)
 
     //Converter for TCODColor
     template <>

@@ -3,6 +3,8 @@ SPELL_ID = 5
 
 DMG_PHYSICAL = 1
 DMG_MISSILE  = 6
+CAST_RESULT_SUCCESS = 0
+CAST_RESULT_RESSISTED = 1
 
 function getModifiers()
 	
@@ -52,7 +54,7 @@ function onCast(caster, target, spell)
 		playAnimation(a)
 	end
 
-	return true
+	return CAST_RESULT_SUCCESS
 end
 
 function onCancel(target)

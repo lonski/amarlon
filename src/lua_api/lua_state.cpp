@@ -45,6 +45,7 @@ void LuaState::logError(const luabind::error &e) const
   luabind::object error_msg(luabind::from_stack(e.state(), -1));
   std::ostringstream str;
   str << "Lua run-time error: \n" << error_msg;
+  printf("%s\n", str.str().c_str());
   gui::msgBox(str.str(), gui::MsgType::Error);
 }
 

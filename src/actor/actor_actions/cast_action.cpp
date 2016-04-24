@@ -3,6 +3,7 @@
 #include <spell.h>
 #include <message_box.h>
 #include <character_class.h>
+#include <spell_book.h>
 
 namespace amarlon {
 
@@ -26,8 +27,28 @@ ActorActionResult CastAction::perform(ActorPtr caster)
     CharacterPtr character = _caster->getFeature<Character>();
     if ( character )
     {
-      _spell->cast(_caster, _target);
-      result = ActorActionResult::Ok; //Casting action succedded, even if the spell failed
+      if ( _spell->cast(_caster, _target) != CastResult::Nok )
+      {
+        //Set spell prepared = false in caster's spellbook
+        CharacterPtr character = _caster->getFeature<Character>();
+        if ( character && character->getSpellBook() )
+        {
+          auto sSlots = character->
+                        getSpellBook()->
+                        getSlots([&](SpellSlotPtr s){
+                          return s->spell &&
+                                 s->isPrepared &&
+                                 s->spell->getId() == _spell->getId();
+                        });
+
+          if ( !sSlots.empty() )
+          {
+            sSlots.front()->isPrepared = false;
+          }
+        }
+
+        result = ActorActionResult::Ok;
+      }
     }
   }
 

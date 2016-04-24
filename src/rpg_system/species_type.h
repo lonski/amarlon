@@ -8,13 +8,14 @@ namespace amarlon
 
 enum class SpeciesType
 {
-  Null,
-  Dragon,
-  Enchanted,
-  Lycanthrope,
-  Regenerator,
-  SpellUser,
-  Undead
+  Null        = 0,
+  Dragon      = 1,
+  Enchanted   = 2,
+  Lycanthrope = 3,
+  Regenerator = 4,
+  SpellUser   = 5,
+  Undead      = 6,
+  Humanoid    = 7
 };
 
 static std::map<SpeciesType, const char*> SpeciesType2Str {
@@ -25,6 +26,7 @@ static std::map<SpeciesType, const char*> SpeciesType2Str {
   { SpeciesType::Regenerator, "Regenerators" },
   { SpeciesType::SpellUser,   "Spell users" },
   { SpeciesType::Undead,      "Undead" },
+  { SpeciesType::Humanoid,    "Humanoid" },
 };
 
 }

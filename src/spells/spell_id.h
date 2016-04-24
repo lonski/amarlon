@@ -11,7 +11,8 @@ enum class SpellId
   Fireball        = 3,
   Bless           = 4,
   Shield          = 5,
-  Sleep           = 6
+  Sleep           = 6,
+  CharmPerson     = 8
 };
 
 }

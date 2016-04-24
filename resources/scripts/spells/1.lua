@@ -1,5 +1,7 @@
 --Spell: Cure Light Wounds
 SPELL_ID = 1
+CAST_RESULT_SUCCESS = 0
+CAST_RESULT_RESSISTED = 1
 
 function onCast(caster, target, spell)
 
@@ -23,5 +25,5 @@ function onCast(caster, target, spell)
 		end
 	end
 
-	return true
+	return CAST_RESULT_SUCCESS
 end

@@ -1,5 +1,7 @@
 --Spell: Fireball
 SPELL_ID = 3
+CAST_RESULT_SUCCESS = 0
+CAST_RESULT_RESSISTED = 1
 
 function onCast(caster, target, spell)
 
@@ -31,5 +33,5 @@ function onCast(caster, target, spell)
 	 	if c ~= nil then c:takeDamage( dmg, caster ) end
 	end
 
-	return true
+	return CAST_RESULT_SUCCESS
 end

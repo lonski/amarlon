@@ -68,7 +68,9 @@ void ActorRegistrar::reg(lua_State* state)
         .def("abilityRoll", &Character::abilityRoll )
         .def("getArmorClass", &Character::getArmorClass )
         .def("addModifier", &Character::addModifier)
-        .def("removeModifier", &Character::removeModifier),
+        .def("removeModifier", &Character::removeModifier)
+        .def("getSpecies", &Character::getSpecies)
+        .def("getRace", &Character::getRace),
 
       class_<OpenablePtr>("OpenablePtr")
         .def("get", &OpenablePtr::get),

@@ -5,7 +5,6 @@
 #include <engine.h>
 #include <spell_db.h>
 #include <lua_state.h>
-#include <spell_book.h>
 
 namespace amarlon {
 
@@ -30,9 +29,9 @@ SpellPtr Spell::clone()
   return s;
 }
 
-bool Spell::cast(ActorPtr caster, Target target)
+CastResult Spell::cast(ActorPtr caster, Target target)
 {
-  bool success = false;
+  CastResult r = CastResult::Nok;
 
   if ( target )
   {
@@ -41,13 +40,15 @@ bool Spell::cast(ActorPtr caster, Target target)
     {
       try
       {
-        success = luabind::call_function<bool>(
+        int code = luabind::call_function<int>(
             lua()
           , "onCast"
           , caster
           , &target
           , this
         );
+
+        r = static_cast<CastResult>(code);
       }
       catch(luabind::error& e)
       {
@@ -56,28 +57,7 @@ bool Spell::cast(ActorPtr caster, Target target)
     }
   }
 
-  //Set spell prepared = false in caster's spellbook
-  if ( success )
-  {
-    CharacterPtr character = caster->getFeature<Character>();
-    if ( character && character->getSpellBook() )
-    {
-      auto sSlots = character->
-                    getSpellBook()->
-                    getSlots([&](SpellSlotPtr s){
-                      return s->spell &&
-                             s->isPrepared &&
-                             s->spell->getId() == _id;
-                    });
-
-      if ( !sSlots.empty() )
-      {
-        sSlots.front()->isPrepared = false;
-      }
-    }
-  }
-
-  return success;
+  return r;
 }
 
 SpellId Spell::getId() const

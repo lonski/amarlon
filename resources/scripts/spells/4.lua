@@ -3,6 +3,8 @@ SPELL_ID = 4
 SPELL_SAVING_THROW = 4
 AB_MODIFIER_TYPE = 0
 MORALE_MODIFIER_TYPE = 1
+CAST_RESULT_SUCCESS = 0
+CAST_RESULT_RESSISTED = 1
 
 function getModifiers()
 	
@@ -66,7 +68,7 @@ function onCast(caster, target, spell)
 		end
 	end
 
-	return true
+	return CAST_RESULT_SUCCESS
 end
 
 function onCancel(target)

@@ -1,6 +1,8 @@
 --Spell: Sleep
 SPELL_ID = 6
 SPELL_SAVING_THROW = 4
+CAST_RESULT_SUCCESS = 0
+CAST_RESULT_RESSISTED = 1
 
 function onCast(caster, target, spell)
 	
@@ -30,7 +32,7 @@ function onCast(caster, target, spell)
 	end
 
 	playAreaAnimation()
-
+	
 	for a in target.actors do
 		if not a:get():isAllyOf(caster) then
 			c = a:get():character():get()
@@ -45,7 +47,7 @@ function onCast(caster, target, spell)
 		end
 	end
 
-	return true
+	return CAST_RESULT_SUCCESS
 end
 
 function onCancel(target)

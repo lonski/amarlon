@@ -78,8 +78,11 @@ void StatusEffectsManager::remove(const std::string& name, bool notify)
 
 void StatusEffectsManager::removeAll()
 {
-  for ( auto e : _effects )
-    e->cancel(_owner.lock());
+  ActorPtr owner = _owner.lock();
+
+  if ( owner )
+    for ( auto e : _effects )
+      e->cancel(owner);
 
   _effects.clear();
 }

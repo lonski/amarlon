@@ -5,7 +5,7 @@ Here are defined default parameters which can be overloaded.
 When new actor is created with given ID as parameter, then the template will be loaded.
 -->
 <Actors>
-	<Actor name="Player" id="1" character="@" color="ffffff" transparent="1" blocks="1" fovOnly="1">
+	<Actor name="Player" id="1" character="@" color="ffffff" transparent="1" blocks="1" fovOnly="1" species="7">
 		<Inventory maxSize="20"/>
 		<PlayerAi/>
 		<PlayableCharacter speed="40" team="2"/>
@@ -167,7 +167,7 @@ When new actor is created with given ID as parameter, then the template will be 
 	<!--
 		===== MONSTERS =====
 	-->	
-	<Actor name="Orc" id="200" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1">
+	<Actor name="Orc" id="200" character="o" color="00ff00" transparent="1" blocks="1" fovOnly="1" species="7">
 		<Character level="1" experience="25" class="1" race="5" armorClass="11" maxHitPoints="8" damage="1d8+0#1" morale="8" speed="40" team="0"/>
 		<Ai script="1"/>
 		<Wearer>

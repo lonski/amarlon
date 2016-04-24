@@ -89,6 +89,7 @@ set(SOURCE_FILES
     pickable_test.cpp
     equip_test.cpp
     treasure_generator_test.cpp
+    spell/charm_person_test.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_HAS_PTHREAD=1 -DTESTING=1")

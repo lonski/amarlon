@@ -12,6 +12,7 @@
 #include <map_registrar.h>
 #include <modifier_registrar.h>
 #include <dialog_registarar.h>
+#include <race_registrar.h>
 
 namespace amarlon { namespace lua_api {
 
@@ -27,6 +28,7 @@ void RegistrationManager::registerAll(lua_State* state)
   MapRegistrar().reg(state);
   ModifierRegistrar().reg(state);
   DialogRegistrar().reg(state);
+  RaceRegistrar().reg(state);
 
   FreeFunctionRegistrar().reg(state);
   GlobalsRegistrar().reg(state);

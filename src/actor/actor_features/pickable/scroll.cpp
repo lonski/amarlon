@@ -74,7 +74,7 @@ bool Scroll::use(ActorPtr executor, const Target& target)
     if ( c && c->getClass() && c->getClass()->getType() == _spell->getClass() )
     {
       --_usesCount;
-      return _spell->cast(executor, target);
+      return _spell->cast(executor, target) != CastResult::Nok;
     }
   }
   return false;

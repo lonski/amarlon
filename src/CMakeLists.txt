@@ -168,6 +168,7 @@ set(HEADER_FILES
     lua_api/registrations/map_registrar.h
     lua_api/registrations/modifier_registrar.h
     lua_api/registrations/dialog_registarar.h
+    lua_api/registrations/race_registrar.h
     skills/skill.h
     skills/skill_id.h
     databases/map_db.h
@@ -325,6 +326,7 @@ set(SOURCE_FILES
     lua_api/registrations/map_registrar.cpp
     lua_api/registrations/modifier_registrar.cpp
     lua_api/registrations/dialog_registarar.cpp
+    lua_api/registrations/race_registrar.cpp
     databases/actor_db.cpp
     databases/map_db.cpp
     databases/tile_db.cpp

@@ -15,6 +15,13 @@ class Spell;
 typedef std::shared_ptr<Actor>  ActorPtr;
 typedef std::shared_ptr<Spell>  SpellPtr;
 
+enum class CastResult
+{
+  Success   = 0,
+  Ressisted = 1,
+  Nok       = 10
+};
+
 class Spell
 {
 public:
@@ -25,7 +32,7 @@ public:
 
   virtual SpellPtr clone();
 
-  virtual bool cast(ActorPtr caster, Target target);
+  virtual CastResult cast(ActorPtr caster, Target target);
 
   virtual SpellId getId() const;
   virtual std::string getName() const;
