@@ -13,7 +13,6 @@ class Scroll : public Pickable
 {
 public:
   Scroll(DescriptionPtr dsc = nullptr);
-  virtual DescriptionPtr toDescriptionStruct(ActorFeaturePtr cmp = nullptr);
   virtual ~Scroll();
 
   virtual ActorFeaturePtr clone();
@@ -29,15 +28,10 @@ public:
    */
   virtual bool transcribe(ActorPtr transcriber);
 
-  SpellPtr getSpell() const;
-
   virtual bool isUsable() const;
   virtual TargetType getTargetType() const;
   virtual int getRange() const;
   virtual int getRadius() const;
-
-private:
-  SpellPtr _spell;
 
 };
 

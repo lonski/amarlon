@@ -35,7 +35,10 @@ static inline const char* WeaponType2Str(WeaponType t)
           "Blunt",
           "Dagger",
           "Staff",
-          "Bow"
+          "Bow",
+          "Axe",
+          "Crossbow",
+          "Sling",
           }[(int)t];
 }
 
@@ -70,7 +73,8 @@ static inline const char* ArmorType2Str(ArmorType t)
   return (const char *[]){
           "NoType",
           "Cloth",
-          "Leather"
+          "Light",
+          "Heavy"
           }[(int)t];
 }
 
@@ -89,7 +93,10 @@ static inline const char* AmunitionType2Str(AmunitionType t)
   return (const char *[]){
           "NoType",
           "Shortbow Arrow",
-          "Longbow Arrow"
+          "Longbow Arrow",
+          "Light Quarrel",
+          "Heavy Quarrel",
+          "Bullet",
           }[(int)t];
 }
 
@@ -102,6 +109,7 @@ struct ItemType
 
   ItemType(ItemTypeDescription dsc)
   {
+    memset(this, 0, sizeof(ItemType));
     if ( dsc.amunitionType ) amunition  = (AmunitionType)*dsc.amunitionType;
     if ( dsc.armorType )     armor      = (ArmorType)*dsc.armorType;
     if ( dsc.category )      category   = (PickableCategory)*dsc.category;

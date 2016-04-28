@@ -39,6 +39,7 @@ void Pickable::upgrade(DescriptionPtr dsc)
     if (pDsc->category)       _type.category  = (PickableCategory)*(pDsc->category);
     if (pDsc->weaponSize)     _type.weaponSize  = (WeaponSize)*(pDsc->weaponSize);
     if (pDsc->useType)        _useType = (UseType)(*pDsc->useType);
+    if (pDsc->spellId)        _spell = Spell::create( static_cast<SpellId>(*pDsc->spellId) );
   }
 }
 
@@ -74,6 +75,8 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     if ( _type.amunition != cmpP->_type.amunition ) dsc->amunitionType = (int)_type.amunition;
     if ( _type.category != cmpP->_type.category ) dsc->category = (int)_type.category;
     if ( _type.weaponSize != cmpP->_type.weaponSize ) dsc->weaponSize = (int)_type.weaponSize;
+    if ( (_spell && !cmpP->_spell) || (_spell && cmpP->_spell && _spell->getId() != cmpP->_spell->getId()) )
+      dsc->spellId = (int)_spell->getId();
   }
   else
   {
@@ -95,6 +98,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     dsc->amunitionType = (int)_type.amunition;
     dsc->category = (int)_type.category;
     dsc->weaponSize = (int)_type.weaponSize;
+    if ( _spell) dsc->spellId = (int)_spell->getId();
   }
 }
 
@@ -185,6 +189,8 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
     equal &= (_type == crhs->_type);
     equal &= (_radius == crhs->_radius);
     equal &= (_range == crhs->_range);
+    equal &= ( ( _spell && crhs->_spell && _spell->getId() == crhs->_spell->getId() ) ||
+               (!_spell && !crhs->_spell) );
   }
 
   return equal;
@@ -343,6 +349,11 @@ void Pickable::setWeight(int weight)
   _weight = weight;
 }
 
+SpellPtr Pickable::getSpell() const
+{
+  return _spell;
+}
+
 int Pickable::getPrice() const
 {
   return _price;
@@ -429,6 +440,7 @@ void Pickable::clone(Pickable *p)
     p->_type = _type;
     p->_range = _range;
     p->_radius = _radius;
+    if ( _spell) p->_spell = _spell->clone();
   }
 }
 

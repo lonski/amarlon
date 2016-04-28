@@ -128,19 +128,9 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
 
   if ( _xml != nullptr )
   {
-    xml_node<>* pickableNode = _xml->first_node("Scroll");
-    if ( pickableNode )
-    {
-      ScrollDescriptionPtr sDsc( new ScrollDescription );
-      if ( attributeExists( pickableNode, "spell") )
-        sDsc->spellId = getAttribute<int>(pickableNode, "spell");
-      pickDsc = sDsc;
-    }
-    else
-    {
-      pickableNode = _xml->first_node("Pickable");
-      if ( pickableNode ) pickDsc.reset( new PickableDescription );
-    }
+    xml_node<>* pickableNode = _xml->first_node("Pickable");
+
+    if ( pickableNode ) pickDsc.reset( new PickableDescription );
 
     if (pickableNode != nullptr)
     {
@@ -161,6 +151,8 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( attributeExists( pickableNode, "amunitionType") ) pickDsc->amunitionType = getAttribute<int>(pickableNode, "amunitionType");
       if ( attributeExists( pickableNode, "category") )      pickDsc->category = getAttribute<int>(pickableNode, "category");
       if ( attributeExists( pickableNode, "weaponSize") )    pickDsc->weaponSize = getAttribute<int>(pickableNode, "weaponSize");
+      if ( attributeExists( pickableNode, "spell") )         pickDsc->spellId = getAttribute<int>(pickableNode, "spell");
+
     }
   }
 

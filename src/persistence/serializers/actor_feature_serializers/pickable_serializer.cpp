@@ -28,19 +28,11 @@ bool PickableSerializer::serialize(DescriptionPtr dsc)
     if ( pDsc->any() )
     {
       xml_node<>* _pickableNode = nullptr;
-
-      if ( ScrollDescriptionPtr sDsc = std::dynamic_pointer_cast<ScrollDescription>(dsc) )
-      {
-        _pickableNode = _document->allocate_node(node_element, "Scroll");
-        addAttribute( _pickableNode, "spell", sDsc->spellId );
-      }
-      else
-      {
-        _pickableNode = _document->allocate_node(node_element, "Pickable");
-      }
+      _pickableNode = _document->allocate_node(node_element, "Pickable");
 
       _xml->append_node( _pickableNode );
 
+      if ( pDsc->spellId )       addAttribute( _pickableNode, "spell",      *pDsc->spellId );
       if ( pDsc->scriptId )      addAttribute( _pickableNode, "scriptId",   *pDsc->scriptId );
       if ( pDsc->stackable )     addAttribute( _pickableNode, "stackable",  *pDsc->stackable );
       if ( pDsc->amount )        addAttribute( _pickableNode, "amount",     *pDsc->amount );

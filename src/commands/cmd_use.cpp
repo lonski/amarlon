@@ -11,6 +11,7 @@
 #include <menu_window.h>
 #include <alabel_menu_item.h>
 #include <transcribe_action.h>
+#include <character_class.h>
 
 namespace amarlon {
 
@@ -36,21 +37,29 @@ int CmdUse::execute()
     ScrollPtr scroll = item->getFeature<Scroll>();
     if ( scroll && !knowSpell( scroll->getSpell() ) )
     {
-      gui::ALabelMenuItemPtr castItem( new gui::ALabelMenuItem("Cast") );
-      gui::ALabelMenuItemPtr transcribeItem( new gui::ALabelMenuItem("Transcribe") );
-
-      auto& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
-            window.addMenuItem( castItem );
-            window.addMenuItem( transcribeItem );
-            window.show();
-
-      if ( window.getSelectedItem() == castItem )
+      CharacterPtr c = Engine::instance().getPlayer()->getFeature<Character>();
+      if ( c && c->getClass() && c->getClass()->getType() == scroll->getSpell()->getClass() )
       {
-        turns = useItem(item);
+        gui::ALabelMenuItemPtr castItem( new gui::ALabelMenuItem("Cast") );
+        gui::ALabelMenuItemPtr transcribeItem( new gui::ALabelMenuItem("Transcribe") );
+
+        auto& window = Engine::instance().getWindowManager().getWindow<gui::MenuWindow>();
+              window.addMenuItem( castItem );
+              window.addMenuItem( transcribeItem );
+              window.show();
+
+        if ( window.getSelectedItem() == castItem )
+        {
+          turns = useItem(item);
+        }
+        else
+        {
+          turns = transcribeScroll( scroll );
+        }
       }
       else
       {
-        turns = transcribeScroll( scroll );
+        gui::msgBox("You don't know how to use this scroll.", gui::MsgType::Error );
       }
     }
     else

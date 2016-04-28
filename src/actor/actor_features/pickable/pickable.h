@@ -10,6 +10,7 @@
 #include <damage.h>
 #include <item_type.h>
 #include <use_type.h>
+#include <spell.h>
 
 namespace amarlon {
 
@@ -84,6 +85,8 @@ public:
   int getWeight() const;
   void setWeight(int weight);
 
+  SpellPtr getSpell() const;
+
   virtual std::string getDescription();
 
   virtual void tickDay();
@@ -107,6 +110,7 @@ private:
   int _range;
   int _radius;
   UseType _useType;
+  SpellPtr _spell;
 
   std::string getScriptPath() const;
 
