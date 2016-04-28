@@ -111,6 +111,11 @@ std::string Spell::getDescription() const
   return str;
 }
 
+std::string Spell::getRawDescription() const
+{
+  return _flyweight ? _flyweight->description : "";
+}
+
 bool Spell::operator==(const Spell &rhs)
 {
   return _id == rhs._id;

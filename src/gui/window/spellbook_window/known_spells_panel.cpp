@@ -78,6 +78,9 @@ void KnownSpellsPanel::manage()
       auto& window = Engine::instance()
                    .getWindowManager()
                    .getWindow<FixedSizeTextWindow>();
+
+            window .setWidth(60);
+            window .setHeight(40);
             window .setText( spell->getDescription() );
             window .setPosition(AWindow::GAME_SCREEN_CENTER);
             window .show();

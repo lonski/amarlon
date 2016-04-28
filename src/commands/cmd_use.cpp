@@ -52,7 +52,7 @@ int CmdUse::execute()
         {
           turns = useItem(item);
         }
-        else
+        else if ( window.getSelectedItem() == transcribeItem )
         {
           turns = transcribeScroll( scroll );
         }
@@ -83,9 +83,25 @@ int CmdUse::useItem(ActorPtr item)
     tSelector->setRange( pickable->getRange() );
     tSelector->setRadius( pickable->getRadius() );
 
+    //If multiple stacked items, then take one
+    ActorPtr itemStack = item;
+    if ( item != nullptr && item->getFeature<Pickable>()->isStackable() )
+      item = item->getFeature<Pickable>()->spilt(1);
+
     if ( tSelector != nullptr )
     {
-      Engine::instance().getPlayer()->performAction( std::make_shared<UseAction>( tSelector->select(), item) );
+      if ( Engine::instance().getPlayer()->performAction
+           ( std::make_shared<UseAction>( tSelector->select(), item) )
+              == ActorActionResult::Nok )
+      {
+        //put back item to stack
+        if ( pickable->isStackable() && itemStack)
+        {
+          PickablePtr p = itemStack->getFeature<Pickable>();
+          p->setAmount( p->getAmount() + pickable->getAmount() );
+        }
+      }
+
       ++turns;
     }
   }
@@ -146,8 +162,6 @@ ActorPtr CmdUse::acquireItemToUse()
     }
   }
   else gui::msgBox("You don't have any usable items!", gui::MsgType::Warning);
-
-  if ( item != nullptr && item->getFeature<Pickable>()->isStackable() ) item = item->getFeature<Pickable>()->spilt(1);
 
   return item;
 }

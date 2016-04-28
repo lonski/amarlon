@@ -18,6 +18,9 @@ AWindow& FixedSizeTextWindow::setDefaults()
 {
   removeAllWidgets();
 
+  setWidth(60);
+  setHeight(40);
+
   _lineCount = getHeight() - 2*MARGIN;
   _lineWidth = getWidth() - 2*MARGIN;
   _lineStart = 0;

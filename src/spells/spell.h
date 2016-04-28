@@ -42,6 +42,7 @@ public:
   virtual int getRange() const;
   virtual int getRadius() const;
   virtual std::string getDescription() const;
+  virtual std::string getRawDescription() const;
   std::string getScript() const;
 
   bool operator==(const Spell& rhs);

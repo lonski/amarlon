@@ -71,7 +71,7 @@ bool Scroll::transcribe(ActorPtr transcriber)
 
 bool Scroll::isUsable() const
 {
-  return getSpell() != nullptr;
+  return ( getUsesCount() !=0 || getUseType() == UseType::DailyUse) && getSpell() != nullptr;
 }
 
 TargetType Scroll::getTargetType() const

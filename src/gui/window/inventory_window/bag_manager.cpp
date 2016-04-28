@@ -85,6 +85,7 @@ void BagManager::manage()
               .getWindow<FixedSizeTextWindow>()
               .setText( selectedItem->getDescription() )
               .show();
+
           break;
         default:;
       }

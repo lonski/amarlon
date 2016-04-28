@@ -91,6 +91,8 @@ public:
 
   virtual void tickDay();
 
+  virtual std::string debug(const std::string &linebreak);
+
 protected:
   void toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP = nullptr);
   void clone(Pickable* p);

@@ -409,7 +409,24 @@ std::string Pickable::getDescription()
 
   if ( isUsable() )
   {
-    str += colorToStr(TCODColor::darkTurquoise, true) + "Uses: " + toStr(_usesCount) + "#";
+    str += colorToStr(TCODColor::darkTurquoise, true) + "Uses: ";
+    switch ( getUseType() )
+    {
+      case UseType::DailyUse: str += "once per day#"; break;
+      default: str += toStr(_usesCount) + "#"; break;
+    }
+  }
+
+  if ( getSpell() )
+  {
+    str += " # #";
+    str += colorToStr(TCODColor::purple, true) + "Can cast " + getSpell()->getName();
+
+    if ( !getSpell()->getRawDescription().empty() )
+    {
+      str += ": # #";
+      str += getSpell()->getRawDescription();
+    }
   }
 
   return str;
@@ -419,6 +436,21 @@ void Pickable::tickDay()
 {
   if ( getUseType() == UseType::DailyUse )
     _usesCount = 1;
+}
+
+std::string Pickable::debug(const std::string &linebreak)
+{
+  std::string d = " " + linebreak + "-----PICKABLE-----"+linebreak;
+
+  d += "Stackable = " + std::string(isStackable() ? "True" : "False") + linebreak;
+  d += "Amount = " + toStr(_amount) + linebreak;
+  d += "Usable = " + std::string(isUsable() ? "True" : "False") + linebreak;
+  d += "Uses = " + toStr(getUsesCount()) + linebreak;
+  d += "UseType = " + toStr((int)getUseType()) + linebreak;
+
+  d += "----------------" + linebreak;
+
+  return d;
 }
 
 void Pickable::clone(Pickable *p)
