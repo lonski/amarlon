@@ -57,6 +57,8 @@ public:
   std::vector<ActorPtr> items(std::function<bool(PickablePtr)> filterFun) const;
   std::vector<ActorPtr> items(int type) const;
 
+  virtual void tickDay();
+
   virtual std::string debug(const std::string& linebreak = "\n");
 
 private:

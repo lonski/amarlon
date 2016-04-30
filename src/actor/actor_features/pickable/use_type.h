@@ -6,7 +6,8 @@ namespace amarlon {
 enum class UseType
 {
   FixedUses,
-  DailyUse
+  DailyUse,
+  InfiniteUse
 };
 
 }

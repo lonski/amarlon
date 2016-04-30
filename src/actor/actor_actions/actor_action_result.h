@@ -15,7 +15,8 @@ enum class ActorActionResult
   NotEquipped,
   SlotBlocked,
   InvalidObject,
-  MissingAI
+  MissingAI,
+  CursedItem
 };
 
 }

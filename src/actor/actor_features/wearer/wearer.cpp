@@ -74,6 +74,17 @@ void Wearer::setBlocked(ItemSlotType slot, bool blocked)
   }
 }
 
+std::vector<ActorPtr> Wearer::getAllEquippedItems() const
+{
+  return _equippedItems->toVector();
+}
+
+void Wearer::tickDay()
+{
+  for ( ActorPtr a : *_equippedItems )
+    a->tickDay();
+}
+
 ActorFeaturePtr Wearer::clone()
 {
   WearerPtr cloned( new Wearer );

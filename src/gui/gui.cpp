@@ -11,12 +11,12 @@ namespace amarlon { namespace gui {
 
 Gui::Gui()
   : rightConWidth( Engine::rightPanelWidth )
-  , rightConHeight(Engine::screenHeight)
-  , bottomConWidth(Engine::screenWidth - Engine::rightPanelWidth)
+  , rightConHeight(Engine::screenHeight - Engine::bottomPanelHeight )
+  , bottomConWidth(Engine::screenWidth )
   , bottomConHeight(Engine::bottomPanelHeight)
-  , logConWidth( bottomConWidth / 10 * 7 )
+  , logConWidth( bottomConWidth / 10 * 6 )
   , logConHeight(bottomConHeight)
-  , viewConWidth(bottomConWidth / 10 * 3)
+  , viewConWidth(bottomConWidth / 10 * 4)
   , viewConHeight(bottomConHeight)
   , LogSize( logConHeight - 3 ) // 3 is for frame
   , _frameColor(TCODColor::darkerOrange)

@@ -50,6 +50,14 @@ std::vector<SpellSlotPtr> SpellBook::getSlots(std::function<bool(SpellSlotPtr)> 
   return spells;
 }
 
+std::vector<SpellPtr> SpellBook::getSpells(std::function<bool (SpellSlotPtr)> filter) const
+{
+  std::vector<SpellPtr> spells;
+  for(auto s : _spellSlots) if ( s->spell && filter(s) ) spells.push_back(s->spell);
+
+  return spells;
+}
+
 std::vector<SpellPtr> SpellBook::getKnownSpells(std::function<bool(SpellPtr)> filter) const
 {
   std::vector<SpellPtr> spells;

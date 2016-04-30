@@ -2,6 +2,7 @@
 #define WEARER_H
 
 #include <map>
+#include <vector>
 #include <actor_feature.h>
 #include <item_slot_type.h>
 
@@ -36,6 +37,9 @@ public:
   ActorPtr equipped(ItemSlotType slot) const;
   bool hasSlot(ItemSlotType slot) const;
   void setBlocked(ItemSlotType slot, bool blocked);
+  std::vector<ActorPtr> getAllEquippedItems() const;
+
+  virtual void tickDay();
 
   virtual std::string debug(const std::string& linebreak = "\n");
 

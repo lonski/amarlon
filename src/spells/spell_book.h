@@ -23,6 +23,7 @@ public:
   SpellbookDescriptionPtr toDescriptionStruct();
 
   std::vector<SpellSlotPtr> getSlots(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;}) const;
+  std::vector<SpellPtr> getSpells(std::function<bool(SpellSlotPtr)> filter = [](SpellSlotPtr){return true;}) const;
   std::vector<SpellPtr> getKnownSpells( std::function<bool(SpellPtr)> filter = [](SpellPtr){return true;} ) const;
 
   void addSlot(SpellSlotPtr slot);

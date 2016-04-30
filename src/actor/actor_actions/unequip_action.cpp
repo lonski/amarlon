@@ -21,38 +21,41 @@ UnEquipAction::~UnEquipAction()
 
 ActorActionResult UnEquipAction::perform(ActorPtr performer)
 {
-  ActorActionResult r = ActorActionResult::Nok;
   _performer = performer;
   aquireItemSlotType();
 
-  if ( _slot != ItemSlotType::Null )
+  if ( _slot == ItemSlotType::Null )
+    return ActorActionResult::Nok;
+
+  WearerPtr wearer = _performer->getFeature<Wearer>();
+
+  if ( !wearer )
+    return ActorActionResult::Nok;
+
+  ActorPtr equippedItem = wearer->equipped(_slot);
+
+  if ( !equippedItem )
+    return ActorActionResult::NotEquipped;
+
+  if ( equippedItem->getFeature<Pickable>()->isCursed() )
+    return ActorActionResult::CursedItem;
+
+  ActorPtr unequipped = wearer->unequip( _slot );
+  InventoryPtr inventory = performer->getFeature<Inventory>();
+
+  if ( !inventory )
+    return ActorActionResult::Nok;
+
+  if ( !inventory->add(unequipped) )
   {
-    WearerPtr wearer = _performer->getFeature<Wearer>();
-    if ( wearer && wearer->isEquipped( _slot ) )
-    {
-      ActorPtr unequipped = wearer->unequip( _slot );
-
-      if ( _slot == ItemSlotType::MainHand && wearer->isBlocked(ItemSlotType::Offhand) )
-        wearer->setBlocked(ItemSlotType::Offhand, false);
-
-      InventoryPtr inventory = performer->getFeature<Inventory>();
-      if ( inventory && inventory->add(unequipped) )
-      {
-        r = ActorActionResult::Ok;
-      }
-      else
-      {
-        wearer->equip(unequipped);
-        r = ActorActionResult::InventoryFull;
-      }
-    }
-    else
-    {
-      r = ActorActionResult::NotEquipped;
-    }
+    wearer->equip(unequipped);
+    return ActorActionResult::InventoryFull;
   }
 
-  return r;
+  if ( _slot == ItemSlotType::MainHand && wearer->isBlocked(ItemSlotType::Offhand) )
+    wearer->setBlocked(ItemSlotType::Offhand, false);
+
+  return ActorActionResult::Ok;
 }
 
 ActorActionUPtr UnEquipAction::clone()

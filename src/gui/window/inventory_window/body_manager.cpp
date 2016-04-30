@@ -118,6 +118,10 @@ bool BodyManager::unequipItem(ItemSlotType slot)
       msgBox("Item cannot be unequipped:#Not enough space in inventory", gui::MsgType::Error);
       break;
 
+    case ActorActionResult::CursedItem:
+      msgBox("This item is cursed and cannot be unequipped!", gui::MsgType::Error);
+      break;
+
     case ActorActionResult::Nok:
       msgBox("Item cannot be unequipped!", gui::MsgType::Error);
       break;

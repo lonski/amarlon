@@ -23,6 +23,8 @@ set(HEADER_FILES
     actor/actor_features/pickable/item_type.h
     actor/actor_features/pickable/pickable.h
     actor/actor_features/pickable/scroll.h
+    actor/actor_features/pickable/use_type.h
+    actor/actor_features/pickable/use_restriction.h
     actor/actor_features/pickable/pickable_category.h
     actor/actor_features/destroyable/destroyable.h
     actor/actor_features/trap/trap.h

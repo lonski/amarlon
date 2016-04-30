@@ -168,8 +168,25 @@ ActorPtr CmdUse::acquireItemToUse()
 
 std::vector<ActorPtr> CmdUse::getUsableItems()
 {
-  auto filter = [&](ActorPtr a){ return a->getFeature<Pickable>()->isUsable(); };
-  return Engine::instance().getPlayer()->getFeature<Inventory>()->items(filter);
+  std::vector<ActorPtr> items;
+  ActorPtr player = Engine::instance().getPlayer();
+
+  auto filter = [&](ActorPtr a){
+    PickablePtr p = a->getFeature<Pickable>();
+    return p->isUsable() && p->getUseRestriction() == UseRestriction::Null;
+  };
+
+  items = player->getFeature<Inventory>()->items(filter);
+
+  //Get equipped usable items
+  WearerPtr w = player->getFeature<Wearer>();
+  for ( ActorPtr a : w->getAllEquippedItems() )
+  {
+    PickablePtr p = a->getFeature<Pickable>();
+    if ( p->isUsable() ) items.push_back(a);
+  }
+
+  return items;
 }
 
 }

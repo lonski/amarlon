@@ -11,6 +11,7 @@
 #include <item_type.h>
 #include <use_type.h>
 #include <spell.h>
+#include <use_restriction.h>
 
 namespace amarlon {
 
@@ -86,12 +87,19 @@ public:
   void setWeight(int weight);
 
   SpellPtr getSpell() const;
+  void setSpell(SpellPtr spell);
 
   virtual std::string getDescription();
 
   virtual void tickDay();
 
   virtual std::string debug(const std::string &linebreak);
+
+  UseRestriction getUseRestriction() const;
+  void setUseRestriction(UseRestriction useRestriction);
+
+  bool isCursed() const;
+  void setCursed(bool cursed);
 
 protected:
   void toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP = nullptr);
@@ -113,6 +121,8 @@ private:
   int _radius;
   UseType _useType;
   SpellPtr _spell;
+  UseRestriction _useRestriction;
+  bool _cursed;
 
   std::string getScriptPath() const;
 

@@ -243,6 +243,12 @@ std::vector<ActorPtr> Inventory::items(int type) const
   return items([&type](ActorPtr a){ return a->getType() == type;});
 }
 
+void Inventory::tickDay()
+{
+  for ( ActorPtr a : *_items )
+    a->tickDay();
+}
+
 std::string Inventory::debug(const std::string &linebreak)
 {
   std::string d = " " + linebreak + "-----INVENTORY-----" +linebreak;

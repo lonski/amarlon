@@ -14,9 +14,11 @@ public:
 
 private:
   void rollWeaponBonuses(ActorPtr actor);
+  void rollSpecialAbility(ActorPtr actor);
   void applyDamageBonus(ActorPtr actor, int roll);
   std::pair<int, int> getMeleeDamageBonus(int roll);
   std::pair<int, int> getRangedDamageBonus(int roll);
+  void randomAmountForMagicAmunition(ActorPtr actor);
 
 };
 

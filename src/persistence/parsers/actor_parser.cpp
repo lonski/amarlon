@@ -136,6 +136,7 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
     {
       if ( attributeExists( pickableNode, "scriptId") )   pickDsc->scriptId = getAttribute<int>(pickableNode, "scriptId");
       if ( attributeExists( pickableNode, "stackable") )  pickDsc->stackable = getAttribute<bool>(pickableNode, "stackable");
+      if ( attributeExists( pickableNode, "cursed") )     pickDsc->cursed = getAttribute<bool>(pickableNode, "cursed");
       if ( attributeExists( pickableNode, "amount") )     pickDsc->amount = getAttribute<int>(pickableNode, "amount");
       if ( attributeExists( pickableNode, "itemSlot") )   pickDsc->itemSlot = getAttribute<int>(pickableNode, "itemSlot");
       if ( attributeExists( pickableNode, "armorClass") ) pickDsc->armorClass = getAttribute<int>(pickableNode, "armorClass");
@@ -152,6 +153,8 @@ PickableDescriptionPtr ActorParser::parsePickableDsc()
       if ( attributeExists( pickableNode, "category") )      pickDsc->category = getAttribute<int>(pickableNode, "category");
       if ( attributeExists( pickableNode, "weaponSize") )    pickDsc->weaponSize = getAttribute<int>(pickableNode, "weaponSize");
       if ( attributeExists( pickableNode, "spell") )         pickDsc->spellId = getAttribute<int>(pickableNode, "spell");
+      if ( attributeExists( pickableNode, "useType") )         pickDsc->useType = getAttribute<int>(pickableNode, "useType");
+      if ( attributeExists( pickableNode, "useRestriction") )         pickDsc->useRestriction = getAttribute<int>(pickableNode, "useRestriction");
 
     }
   }

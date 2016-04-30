@@ -17,10 +17,21 @@ ActorPtr MagicWeaponGenerator::generate(const std::vector<int> baseIDs)
     if ( actor )
     {
       rollWeaponBonuses(actor);
+      randomAmountForMagicAmunition(actor);
     }
+
     return actor;
   }
   return nullptr;
+}
+
+void MagicWeaponGenerator::randomAmountForMagicAmunition(ActorPtr actor)
+{
+  PickablePtr p = actor->getFeature<Pickable>();
+  if ( p->getItemType().category == PickableCategory::Amunition )
+  {
+    p->setAmount( dices::roll(1,10));
+  }
 }
 
 void MagicWeaponGenerator::rollWeaponBonuses(ActorPtr actor)
@@ -30,13 +41,49 @@ void MagicWeaponGenerator::rollWeaponBonuses(ActorPtr actor)
 
   applyDamageBonus(actor, roll);
 
-  if ( p->getItemType().isMeleeWeapon() && roll >= 86 && roll <= 95 )
+  if ( roll >= 96 ) //Cursed
   {
-    rollWeaponBonuses(actor);
-    //TODO: Add special ability
+    p->setCursed(true);
+  }
+  else if ( p->getItemType().isMeleeWeapon() && roll >= 86 && roll <= 95 )
+  {
+    applyDamageBonus(actor, dices::roll(dices::D100));
+    rollSpecialAbility(actor);
   }
 
-  //TODO: Apply Curse
+}
+
+void MagicWeaponGenerator::rollSpecialAbility(ActorPtr actor)
+{
+  PickablePtr item = actor->getFeature<Pickable>();
+
+  int roll = dices::roll(dices::D20);
+
+  //TODO: Implement weapon special abilities
+  static std::map<int, std::pair<SpellId,UseType> > spellIds = {
+    { 20, std::make_pair(SpellId::Null,        UseType::InfiniteUse) },
+    { 19, std::make_pair(SpellId::Null,        UseType::InfiniteUse) },
+    { 16, std::make_pair(SpellId::Null,        UseType::InfiniteUse) },
+    { 12, std::make_pair(SpellId::Null,        UseType::InfiniteUse)  },
+    { 11, std::make_pair(SpellId::CharmPerson, UseType::DailyUse) },
+    {  9, std::make_pair(SpellId::Null,        UseType::InfiniteUse)  }
+  };
+
+  auto it = std::find_if(spellIds.begin(), spellIds.end(), [roll](auto& kv){
+    return roll <= kv.first;
+  });
+
+  if ( it->second.first != SpellId::Null )
+  {
+    SpellPtr spell = Spell::create(it->second.first);
+
+    item->setSpell(spell);
+    item->setUseType(it->second.second);
+    item->setUseRestriction(UseRestriction::UsableWhenEquipped);
+    item->setUsesCount(1);
+
+    actor->setName( actor->getName() + " of " + spell->getName());
+  }
 }
 
 void MagicWeaponGenerator::applyDamageBonus(ActorPtr actor, int roll)
@@ -46,20 +93,18 @@ void MagicWeaponGenerator::applyDamageBonus(ActorPtr actor, int roll)
   std::pair<int,int> bonus = p->getItemType().isMeleeWeapon() ? getMeleeDamageBonus(roll)
                                                               : getRangedDamageBonus(roll);
 
-  if ( bonus.first > 0 )
+  if ( bonus.first != 0 )
   {
     p->getMutableDamage()->value += bonus.first;
-    actor->setName( actor->getName() + " +" + std::to_string(bonus.first));
+    actor->setName( actor->getName() + " +" + std::to_string(std::abs(bonus.first)));
   }
 
-  if ( bonus.second > 0 )
+  if ( bonus.second != 0 )
   {
     int speciesRoll = dices::roll(dices::D6);
 
     int dmg = p->getDamage().specialDamage[ (SpeciesType)speciesRoll ];
     p->getMutableDamage()->specialDamage[ (SpeciesType)speciesRoll ] = dmg + bonus.second;
-
-    actor->setName( actor->getName() + " of slaying" );
   }
 }
 

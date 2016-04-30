@@ -35,6 +35,7 @@ bool PickableSerializer::serialize(DescriptionPtr dsc)
       if ( pDsc->spellId )       addAttribute( _pickableNode, "spell",      *pDsc->spellId );
       if ( pDsc->scriptId )      addAttribute( _pickableNode, "scriptId",   *pDsc->scriptId );
       if ( pDsc->stackable )     addAttribute( _pickableNode, "stackable",  *pDsc->stackable );
+      if ( pDsc->cursed )     addAttribute( _pickableNode, "cursed",  *pDsc->cursed );
       if ( pDsc->amount )        addAttribute( _pickableNode, "amount",     *pDsc->amount );
       if ( pDsc->armorClass )    addAttribute( _pickableNode, "armorClass", *pDsc->armorClass );
       if ( pDsc->weight )        addAttribute( _pickableNode, "weight",     *pDsc->weight );
@@ -50,6 +51,8 @@ bool PickableSerializer::serialize(DescriptionPtr dsc)
       if ( pDsc->amunitionType ) addAttribute( _pickableNode, "amunitionType", *pDsc->amunitionType );
       if ( pDsc->category )      addAttribute( _pickableNode, "category",      *pDsc->category );
       if ( pDsc->weaponSize )    addAttribute( _pickableNode, "weaponSize",    *pDsc->weaponSize );
+      if ( pDsc->useType )       addAttribute( _pickableNode, "useType",    *pDsc->useType );
+      if ( pDsc->useRestriction )addAttribute( _pickableNode, "useRestriction",    *pDsc->useRestriction );
     }
   }
 

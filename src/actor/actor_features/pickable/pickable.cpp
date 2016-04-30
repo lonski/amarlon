@@ -22,6 +22,7 @@ void Pickable::upgrade(DescriptionPtr dsc)
   if ( pDsc != nullptr )
   {
     if (pDsc->stackable)  _stackable  = *(pDsc->stackable);
+    if (pDsc->cursed)     _cursed  = *(pDsc->cursed);
     if (pDsc->amount)     _amount     = *(pDsc->amount);
     if (pDsc->itemSlot)   _itemSlot   = (ItemSlotType)(*pDsc->itemSlot);
     if (pDsc->armorClass) _armorClass = *(pDsc->armorClass);
@@ -39,6 +40,7 @@ void Pickable::upgrade(DescriptionPtr dsc)
     if (pDsc->category)       _type.category  = (PickableCategory)*(pDsc->category);
     if (pDsc->weaponSize)     _type.weaponSize  = (WeaponSize)*(pDsc->weaponSize);
     if (pDsc->useType)        _useType = (UseType)(*pDsc->useType);
+    if (pDsc->useRestriction) _useRestriction = (UseRestriction)(*pDsc->useRestriction);
     if (pDsc->spellId)        _spell = Spell::create( static_cast<SpellId>(*pDsc->spellId) );
   }
 }
@@ -58,7 +60,8 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
   if ( cmpP )
   {
     if ( _stackable != cmpP->_stackable ) dsc->stackable = _stackable;
-    if ( _stackable != cmpP->_stackable ) dsc->amount = _amount;
+    if ( _cursed != cmpP->_cursed ) dsc->cursed = _cursed;
+    if ( _amount != cmpP->_amount ) dsc->amount = _amount;
     if ( _usesCount != cmpP->_usesCount ) dsc->uses = _usesCount;
     if ( _itemSlot != cmpP->_itemSlot )   dsc->itemSlot = (int)_itemSlot;
     if ( _armorClass != cmpP->_armorClass ) dsc->armorClass = _armorClass;
@@ -66,6 +69,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     if ( _price != cmpP->_price ) dsc->price = _price;
     if ( _targetType != cmpP->_targetType ) dsc->targetType = (int)_targetType;
     if ( _useType != cmpP->_useType ) dsc->useType = (int)_useType;
+    if ( _useRestriction != cmpP->_useRestriction ) dsc->useType = (int)_useRestriction;
     if ( _damage != cmpP->_damage ) dsc->damage = _damage.toStr();
     if ( _scriptId != cmpP->_scriptId ) dsc->scriptId = _scriptId;
     if ( _range != cmpP->_range ) dsc->range = _range;
@@ -81,6 +85,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
   else
   {
     dsc->stackable = _stackable;
+    dsc->cursed = _cursed;
     dsc->amount = _amount;
     dsc->uses = _usesCount;
     dsc->itemSlot = (int)_itemSlot;
@@ -89,6 +94,7 @@ void Pickable::toDescriptionStruct(PickableDescriptionPtr dsc, PickablePtr cmpP)
     dsc->price = _price;
     dsc->targetType = (int)_targetType;
     dsc->useType = (int)_useType;
+    dsc->useRestriction = (int)_useRestriction;
     dsc->damage = _damage.toStr();
     dsc->scriptId = _scriptId;
     dsc->range = _range;
@@ -115,6 +121,8 @@ Pickable::Pickable(DescriptionPtr dsc)
   , _range(0)
   , _radius(0)
   , _useType(UseType::FixedUses)
+  , _useRestriction(UseRestriction::Null)
+  , _cursed(false)
 {
   upgrade(dsc);
 }
@@ -178,12 +186,14 @@ bool Pickable::isEqual(ActorFeaturePtr rhs) const
   if (crhs != nullptr)
   {
     equal = (_stackable == crhs->_stackable);
+    equal &= (_cursed == crhs->_cursed);
     equal &= (_armorClass == crhs->_armorClass);
     equal &= (_weight == crhs->_weight);
     equal &= (_price == crhs->_price);
     equal &= (_damage == crhs->_damage);
     equal &= (_targetType == crhs->_targetType);
     equal &= (_useType == crhs->_useType);
+    equal &= (_useRestriction == crhs->_useRestriction);
     equal &= (_itemSlot == crhs->_itemSlot);
     equal &= (_scriptId == crhs->_scriptId);
     equal &= (_type == crhs->_type);
@@ -220,38 +230,45 @@ bool Pickable::use(ActorPtr executor, const Target& target)
 {
   bool r = false;
 
-  if ( _usesCount != 0 )
+  if ( isUsable() )
   {
-    lua_api::LuaState& lua = Engine::instance().getLuaState();
-
-    if ( lua.execute( getScriptPath() ) )
+    if ( getSpell() )
     {
-      try
-      {
-        r = luabind::call_function<bool>(
-            lua()
-          , "onUse"
-          , executor
-          , getOwner().lock()
-          , &target
-        );
+      r = getSpell()->cast(executor, target) != CastResult::Nok;
+    }
+    else
+    {
+      lua_api::LuaState& lua = Engine::instance().getLuaState();
 
-        if( r ) --_usesCount;
-      }
-      catch(luabind::error& e)
+      if ( lua.execute( getScriptPath() ) )
       {
-        lua.logError(e);
+        try
+        {
+          r = luabind::call_function<bool>(
+              lua()
+            , "onUse"
+            , executor
+            , getOwner().lock()
+            , &target
+          );
+
+        }
+        catch(luabind::error& e)
+        {
+          lua.logError(e);
+        }
       }
     }
   }
+
+  if( r ) --_usesCount;
 
   return r;
 }
 
 bool Pickable::isUsable() const
 {
-  return _scriptId != 0 &&
-      ( _usesCount !=0 || _useType == UseType::DailyUse);
+  return _usesCount > 0 || _useType == UseType::InfiniteUse;
 }
 
 int Pickable::getUsesCount() const
@@ -354,6 +371,11 @@ SpellPtr Pickable::getSpell() const
   return _spell;
 }
 
+void Pickable::setSpell(SpellPtr spell)
+{
+  _spell = spell;
+}
+
 int Pickable::getPrice() const
 {
   return _price;
@@ -383,7 +405,7 @@ std::string Pickable::getDescription()
 
     if ( _damage.value != 0 )
     {
-      str += ( _damage.value >0 ? "+" : "-" ) + toStr(_damage.value);
+      str += ( _damage.value > 0 || isCursed() ? "+" : "-" ) + toStr(std::abs(_damage.value));
     }
 
     for ( auto& kv : _damage.specialDamage )
@@ -447,6 +469,8 @@ std::string Pickable::debug(const std::string &linebreak)
   d += "Usable = " + std::string(isUsable() ? "True" : "False") + linebreak;
   d += "Uses = " + toStr(getUsesCount()) + linebreak;
   d += "UseType = " + toStr((int)getUseType()) + linebreak;
+  d += "UseRestriction = " + toStr((int)getUseRestriction()) + linebreak;
+  d += "Cursed = " + std::string(isCursed() ? "True" : "False") + linebreak;
 
   d += "----------------" + linebreak;
 
@@ -458,6 +482,7 @@ void Pickable::clone(Pickable *p)
   if ( p )
   {
     p->_stackable = _stackable;
+    p->_cursed = _cursed;
     p->_amount = _amount;
     p->_itemSlot = _itemSlot;
     p->_damage = _damage;
@@ -467,6 +492,7 @@ void Pickable::clone(Pickable *p)
     p->_usesCount = _usesCount;
     p->_targetType = _targetType;
     p->_useType = _useType;
+    p->_useRestriction = _useRestriction;
     p->_itemSlot = _itemSlot;
     p->_scriptId = _scriptId;
     p->_type = _type;
@@ -474,6 +500,26 @@ void Pickable::clone(Pickable *p)
     p->_radius = _radius;
     if ( _spell) p->_spell = _spell->clone();
   }
+}
+
+bool Pickable::isCursed() const
+{
+  return _cursed;
+}
+
+void Pickable::setCursed(bool cursed)
+{
+  _cursed = cursed;
+}
+
+UseRestriction Pickable::getUseRestriction() const
+{
+  return _useRestriction;
+}
+
+void Pickable::setUseRestriction(UseRestriction useRestriction)
+{
+  _useRestriction = useRestriction;
 }
 
 std::string Pickable::getScriptPath() const

@@ -27,6 +27,17 @@ TEST(DamageTest, operators)
   EXPECT_TRUE( d2.toInt() > d1.toInt() );
 }
 
+TEST(DamageTest, parse)
+{
+  Damage d1("1d4+1#1");
+
+  EXPECT_EQ( d1.value, 1 );
+
+  Damage d2("1d4+-1#1");
+
+  EXPECT_EQ( d2.value, -1 );
+}
+
 TEST(PointTest, operator_minus)
 {
   Point p1(10, 5);

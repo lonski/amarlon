@@ -9,6 +9,7 @@ namespace amarlon {
 struct PickableDescription : Description
 {
   std::experimental::optional<bool> stackable;
+  std::experimental::optional<bool> cursed;
   std::experimental::optional<int> amount;
   std::experimental::optional<int> uses;
   std::experimental::optional<int> itemSlot;
@@ -26,6 +27,7 @@ struct PickableDescription : Description
   std::experimental::optional<int> category;
   std::experimental::optional<int> weaponSize;
   std::experimental::optional<int> useType;
+  std::experimental::optional<int> useRestriction;
   std::experimental::optional<int> spellId;
 
   virtual bool any()
@@ -33,7 +35,8 @@ struct PickableDescription : Description
     return stackable || amount || uses || itemSlot || armorClass ||
            weight || price || targetType || damage || scriptId ||
            range || radius || armorType || weaponType || amunitionType ||
-           category || weaponSize || useType || spellId;
+           category || weaponSize || useType || spellId || useRestriction ||
+           cursed;
   }
 };
 

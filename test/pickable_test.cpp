@@ -98,10 +98,6 @@ TEST_F(PickableTest, dailyUse)
 
   ASSERT_TRUE(itemPresent);
 
-  //No charges, but still is usable
-  ASSERT_EQ( p->getUsesCount(), 0 );
-  ASSERT_TRUE( p->isUsable() );
-
   //Tick a day to recharge
   potion->tickDay();
 
