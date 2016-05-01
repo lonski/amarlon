@@ -60,6 +60,7 @@ public:
   static int screenHeight;
 
   static int FovRadius;
+  static int FovRadiusTorch;
 
   ~Engine();
 

@@ -50,6 +50,8 @@ public:
   bool isBlocked(const Point& p);
   bool isTransparent(int x, int y) const;
   bool isTransparent(const Point& p) const;
+  bool isDark(int x, int y) const;
+  bool isDark(const Point& p) const;
 
   void addActor(ActorPtr actor);
   bool removeActor(ActorPtr toRemove);
@@ -93,9 +95,10 @@ private:
   std::map<Direction, ActorActionPtr> _exitActions;
 
   Tile& getTile(u32 x, u32 y);
+  const Tile& getTile(u32 x, u32 y) const;
   void dateMapCoords(u32 x, u32 y);
   void renderTile(u32 x, u32 y, TCODConsole *console);
-  void validateMapCoords(u32 x, u32 y);
+  void validateMapCoords(u32 x, u32 y) const;
   void allocateTiles();
 
 };

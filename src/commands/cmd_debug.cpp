@@ -40,6 +40,10 @@ int CmdDebug::execute()
                                               [&](){ inspectActor(); })) );
 
   menu.addMenuItem( gui::ALabelMenuItemPtr(
+                      new gui::ALabelMenuItem("Inspect tile",
+                                              [&](){ inspectTile(); })) );
+
+  menu.addMenuItem( gui::ALabelMenuItemPtr(
                       new gui::ALabelMenuItem("Advance player level",
                                               [&](){ advancePlayerLevel(); })) );
 
@@ -57,6 +61,33 @@ int CmdDebug::execute()
   menu.show();
 
   return 0;
+}
+
+void CmdDebug::inspectTile()
+{
+  SingleRangeSelector selector("Select a tile to inspect...");
+  selector.setRange(666);
+  Target target = selector.select();
+  MapPtr map = Engine::instance().getPlayer()->getMap();
+  Point p(target.x, target.y);
+
+  if (p.isNonZero() && map )
+  {
+    std::stringstream ss;
+    ss << "Tile Info:" << " # #";
+    ss << "X = " << target.x << " #";
+    ss << "Y = " << target.y << " #";
+    ss << "Is Dark = " << (map->isDark(p) ? "True" : "False" ) << " #";
+    ss << "Is Transparent = " << (map->isTransparent(p) ? "True" : "False" ) << " #";
+    ss << "Is Blocked = " << (map->isBlocked(p) ? "True" : "False" ) << " #";
+
+    gui::FixedSizeTextWindow& wnd = Engine::instance()
+                                  . getWindowManager()
+                                  . getWindow<gui::FixedSizeTextWindow>();
+    wnd.setText( ss.str() );
+    wnd.show();
+  }
+
 }
 
 void CmdDebug::inspectActor()

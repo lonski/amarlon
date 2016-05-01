@@ -40,12 +40,14 @@ private:
   TileType _selectedTile;
   TileType _selectedTile_Right;
   gui::ALabelPtr _selectedTileLabel;
+  gui::ALabelPtr _selectedTileFlagLabel;
   gui::ALabelPtr _selectedTileLabel_Right;
   gui::ALabelPtr _xCoord;
   gui::ALabelPtr _yCoord;
   bool _renderActors;
   ActorsDatabase* _actorsDb;
   std::shared_ptr<TileInspectPanel> _tileInspect;
+  int _selectedFlagBit;
 
   void init();
   void allocateTiles();

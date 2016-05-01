@@ -17,6 +17,7 @@ public:
 
 private:
   void inspectActor();
+  void inspectTile();
   void advancePlayerLevel();
   void showInfo(ActorPtr a);
   void createItem();

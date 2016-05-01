@@ -29,6 +29,7 @@ struct Tile
   bool removeActor(ActorPtr actor);
   ActorContainer getActors( std::function<bool(ActorPtr)> filterFun = [](ActorPtr){return true;} );
 
+  bool isDark() const;
   bool isWalkable() const;
   bool isTransparent() const;
   bool isExplored() const;

@@ -117,7 +117,8 @@ bool Map::isInFov(int x, int y)
 {
   bool inFov = _codMap->isInFov(x,y);
 
-  if (inFov) getTile(x,y).setExplored(true);
+  Tile& tile = getTile(x,y);
+  if (inFov && !tile.isDark()) tile.setExplored(true);
 
   return inFov;
 }
@@ -147,6 +148,16 @@ bool Map::isTransparent(int x, int y) const
 bool Map::isTransparent(const Point &p) const
 {
   return isTransparent(p.x, p.y);
+}
+
+bool Map::isDark(int x, int y) const
+{
+  return getTile(x,y).isDark();
+}
+
+bool Map::isDark(const Point &p) const
+{
+  return isDark(p.x, p.y);
 }
 
 void Map::addActor(ActorPtr actor)
@@ -282,8 +293,9 @@ void Map::updateTile(u32 x, u32 y)
 
   bool walkable    = tile.isWalkable();
   bool transparent = actor ? actor->isTransparent(): tile.isTransparent();
+  bool dark        = tile.isDark();
 
-  _codMap->setProperties( x, y, transparent, walkable );
+  _codMap->setProperties( x, y, transparent && !dark, walkable );
 }
 
 void Map::computeFov(int x, int y, int radius)
@@ -355,7 +367,15 @@ Tile& Map::getTile(u32 x, u32 y)
   return tRow[x];
 }
 
-void Map::validateMapCoords(u32 x, u32 y)
+const Tile &Map::getTile(u32 x, u32 y) const
+{
+  validateMapCoords(x, y);
+
+  const TileRow& tRow = _tiles[y];
+  return tRow[x];
+}
+
+void Map::validateMapCoords(u32 x, u32 y) const
 {
   if (x >= _width || y >= _height)
     throw amarlon_exeption("Requested map coordinates beyond map borders!\n y=" +

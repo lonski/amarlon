@@ -14,6 +14,7 @@ MapEditPanel::MapEditPanel(int w, int h)
   , _selectedTile ( TileType::Null )
   , _selectedTile_Right ( TileType::Null )
   , _renderActors(true)
+  , _selectedFlagBit(0)
 {
   init();
 }
@@ -33,8 +34,14 @@ void MapEditPanel::render(TCODConsole &console)
       {
         SerializedTile& tile = _tiles[y][x];
 
+        TCODColor color = _tileDb->getColor( (TileType)tile.type );
+        if ( isBitSet(tile.flags, 2) /*DARK*/ )
+        {
+          color = TCODColor::lerp(color, TCODColor::black, 0.7);
+        }
+
         _panelConsole->setChar( x, y, _tileDb->getChar( (TileType)tile.type ) );
-        _panelConsole->setCharForeground( x, y, _tileDb->getColor( (TileType)tile.type ) );
+        _panelConsole->setCharForeground( x, y, color );
       }
     }
 
@@ -233,6 +240,37 @@ void MapEditPanel::init()
   }
 
   ++y;
+  gui::ALabel* tileFlagTitle = new gui::ALabel;
+  tileFlagTitle->setValue("== Tile flags: ==");
+  tileFlagTitle->setPosition(2, y++);
+  tileFlagTitle->setColor(TCODColor::copper);
+  _sidebar->addWidget(tileFlagTitle);
+  ++y;
+
+  _selectedTileFlagLabel.reset( new gui::ALabel );
+  _selectedTileFlagLabel->setValue( "Selected: None" );
+  _selectedTileFlagLabel->setColor(TCODColor::cyan);
+  _selectedTileFlagLabel->setPosition(2, y++);
+  _sidebar->addWidget(_selectedTileFlagLabel);
+  ++y;
+
+  gui::ALabelMenuItem* tileFlagNoneBtn = new gui::ALabelMenuItem(
+        "None", [=](){
+          _selectedFlagBit = 0;
+          _selectedTileFlagLabel->setValue( "Selected L: None" );
+        });
+  tileFlagNoneBtn->setPosition(2, y++);
+  _sidebar->addWidget(tileFlagNoneBtn);
+
+  gui::ALabelMenuItem* tileFlagBtn = new gui::ALabelMenuItem(
+        "Dark (Bit 2)", [=](){
+          _selectedFlagBit = 2;
+          _selectedTileFlagLabel->setValue( "Selected: Dark" );
+        });
+  tileFlagBtn->setPosition(2, y++);
+  _sidebar->addWidget(tileFlagBtn);
+
+  ++y;
   gui::ALabel* operationsTitle = new gui::ALabel;
   operationsTitle->setValue("== Operations: ==");
   operationsTitle->setPosition(2, y++);
@@ -337,7 +375,7 @@ void MapEditPanel::allocateTiles()
 
 void MapEditPanel::tileClickAction(int x, int y)
 {
-  if ( _selectedTile == TileType::Null && _map && _actorsDb)
+  if ( _selectedTile == TileType::Null && _map && _actorsDb && _selectedFlagBit == 0)
   {
     std::vector<ActorDescriptionPtr> actorsOnTile;
     for(ActorDescriptionPtr a : _map->actors )
@@ -361,6 +399,13 @@ void MapEditPanel::tileLButtonHoldAction(int x, int y)
     SerializedTile& tile = _tiles[y][x];
     tile.type = (int)_selectedTile;
   }
+
+  if ( _selectedFlagBit > 0 )
+  {
+    SerializedTile& tile = _tiles[y][x];
+    setBit(tile.flags, _selectedFlagBit, true);
+  }
+
 }
 
 void MapEditPanel::tileRButtonHoldAction(int x, int y)
@@ -369,6 +414,12 @@ void MapEditPanel::tileRButtonHoldAction(int x, int y)
   {
     SerializedTile& tile = _tiles[y][x];
     tile.type = (int)_selectedTile_Right;
+  }
+
+  if ( _selectedFlagBit > 0 )
+  {
+    SerializedTile& tile = _tiles[y][x];
+    setBit(tile.flags, _selectedFlagBit, false);
   }
 }
 

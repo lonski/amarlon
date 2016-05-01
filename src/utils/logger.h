@@ -82,7 +82,10 @@ private:
   bool openStream();
   bool closeStream();
 
-  void tprintf(const char* format);
+  void tprintf(const char* format)
+  {
+      _log << format;
+  }
 
   template<typename T, typename... Targs>
   void tprintf(const char* format, T value, Targs... Fargs)

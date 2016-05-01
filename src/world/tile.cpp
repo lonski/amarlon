@@ -10,6 +10,7 @@ namespace amarlon {
 
 /* Flag bits */
 const int TILE_EXPLORED_BIT = 1;
+const int TILE_DARK_BIT     = 2;
 
 Tile::Tile()
   : _actors(new ActorContainer )
@@ -47,6 +48,11 @@ bool Tile::removeActor(ActorPtr actor)
 ActorContainer Tile::getActors(std::function<bool(ActorPtr)> filterFun)
 {
   return _actors->filter(filterFun);
+}
+
+bool Tile::isDark() const
+{
+  return isBitSet(_flags, TILE_DARK_BIT);
 }
 
 std::vector<unsigned char> Tile::serialize()

@@ -19,10 +19,12 @@
 #include <module.h>
 #include <treasure_generator.h>
 #include <logger.h>
+#include <tile.h>
 
 namespace amarlon {
 
 int Engine::FovRadius = 20;
+int Engine::FovRadiusTorch = 5;
 int Engine::consoleWidth = 100;
 int Engine::consoleHeight = 60;
 int Engine::rightPanelWidth = 20;
@@ -178,7 +180,17 @@ void Engine::render()
 
     if ( map )
     {
-      map->computeFov(getPlayer()->getX(), getPlayer()->getY(), FovRadius);
+      int x( getPlayer()->getX() );
+      int y( getPlayer()->getY() );
+      int fovRadius( Engine::FovRadius );
+
+      if ( map->isDark(x,y) )
+      {
+        fovRadius = getPlayer()->getStatusEffects().hasEffect("Light")
+                      ? Engine::FovRadiusTorch : 1;
+      }
+
+      map->computeFov(x, y, fovRadius);
       map->render(getConsole());
     }
 
