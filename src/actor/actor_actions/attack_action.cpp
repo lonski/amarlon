@@ -1,7 +1,7 @@
 #include "attack_action.h"
 #include <actor.h>
 #include <dices.h>
-
+#include <logger.h>
 
 namespace amarlon {
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <engine.h>
+#include <logger.h>
 
 int main()
 {
@@ -9,6 +10,8 @@ int main()
     amarlon::Engine::instance().prologue();
     amarlon::Engine::instance().initializeConsole();
     amarlon::Engine::instance().showGameMenu();
+
+    LOG(amarlon::LogType::Info, amarlon::LogFeature::General, "Amarlon engine started.");
 
     while ( !TCODConsole::isWindowClosed() && !amarlon::Engine::instance().isQuiting() )
     {
@@ -22,12 +25,18 @@ int main()
   }
   catch(std::exception &e)
   {
-    std::cout << "\nError: " << e.what() << std::endl;
+    LOG(amarlon::LogType::Error,
+        amarlon::LogFeature::General,
+        e.what());
+
     amarlon::Engine::instance().epilogue();
   }
   catch(...)
   {
-    std::cout << "\nUnknown error has occured.";
+    LOG(amarlon::LogType::Error,
+        amarlon::LogFeature::General,
+        "Unknown error has occured.");
+
     amarlon::Engine::instance().epilogue();
   }
 

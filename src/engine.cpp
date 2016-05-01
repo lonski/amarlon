@@ -18,6 +18,7 @@
 #include <rpg_db.h>
 #include <module.h>
 #include <treasure_generator.h>
+#include <logger.h>
 
 namespace amarlon {
 
@@ -46,6 +47,8 @@ void Engine::prologue()
   _config.reset( new Configuration );
   _config->load("config.cfg");
 
+  configureLogger();
+
   _gui.reset( new gui::Gui );
   _sysCmdExecutor.reset( new SystemCommandExecutor );
 
@@ -62,6 +65,17 @@ void Engine::prologue()
 
   getLuaState().registerAPI();
   loadModule( getModule() );
+}
+
+void Engine::configureLogger()
+{
+  for ( auto s : explode(_config->get("disabled_log_types"), ';') )
+    Logger::instance().setTypeState(s, false);
+
+  for ( auto s : explode(_config->get("disabled_log_features"), ';') )
+    Logger::instance().setFeatureState(s, false);
+
+  Logger::instance().clearFile();
 }
 
 void Engine::loadModule(const Module& module)

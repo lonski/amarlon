@@ -130,6 +130,7 @@ private:
   std::vector<ColoredString> getActorsBenethPlayersFeet();
   int updatePlayerControlledActors(MapPtr map);
   void updateNonPlayerControlledActors(MapPtr map);
+  void configureLogger();
 
 };
 

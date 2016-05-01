@@ -184,6 +184,7 @@ set(HEADER_FILES
     treasure_generator/treasure_type.h
     treasure_generator/base_item_data.h
     treasure_generator/magic_weapon_generator.h
+    utils/logger.h
 )
 
 set(SOURCE_FILES
@@ -339,6 +340,7 @@ set(SOURCE_FILES
     module.cpp
     treasure_generator/treasure_generator.cpp
     treasure_generator/magic_weapon_generator.cpp
+    utils/logger.cpp
 )
 
 add_library(a_core STATIC ${SOURCE_FILES} ${HEADER_FILES})
