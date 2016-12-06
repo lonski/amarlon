@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/lonski/amarlon.svg?branch=master)](https://travis-ci.org/lonski/amarlon)
 
 Read more at github wiki: https://github.com/lonski/amarlon/wiki<br/>
-Visit Amarlon webpage: http://amarlon.eu
+Visit Amarlon webpage: http://amarlon.lonski.pl
 
 ### What is Amarlon (or what I wish it will be) ?
 
@@ -14,11 +14,7 @@ Amarlon is a cRPG game made in ASCII graphics. The look is similar to roguelike 
 
 ### A taste of the look
 
-[![Image1](http://amarlon.eu/gallery_img/mini/amarlon1.png)](http://amarlon.eu/gallery_img/amarlon1.png)
-[![Image2](http://amarlon.eu/gallery_img/mini/amarlon2.png)](http://amarlon.eu/gallery_img/amarlon2.png)
-[![Image3](http://amarlon.eu/gallery_img/mini/insp_item.png)](http://amarlon.eu/gallery_img/insp_item.png)
-[![Image4](http://amarlon.eu/gallery_img/mini/spellbook_1.png)](http://amarlon.eu/gallery_img/spellbook_1.png)
-
-### Contribution
-
-Would you like to join the project? Then you're warmly welcomed! Feel free to contact me (michal@lonski.pl) to discuss the details.
+[![Image1](http://amarlon.lonski.pl/gallery_img/mini/amarlon1.png)](http://amarlon.eu/gallery_img/amarlon1.png)
+[![Image2](http://amarlon.lonski.pl/gallery_img/mini/amarlon2.png)](http://amarlon.eu/gallery_img/amarlon2.png)
+[![Image3](http://amarlon.lonski.pl/gallery_img/mini/insp_item.png)](http://amarlon.eu/gallery_img/insp_item.png)
+[![Image4](http://amarlon.lonski.pl/gallery_img/mini/spellbook_1.png)](http://amarlon.eu/gallery_img/spellbook_1.png)
