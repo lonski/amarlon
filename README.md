@@ -12,7 +12,7 @@ Amarlon is a cRPG game made in ASCII graphics. The look is similar to roguelike 
 
 ### A taste of the look
 
-[![Image1](https://files.lonski.pl/amarlon/mini/amarlon1.png)](https://files.lonski.pl/amarlon/amarlon1.png)
-[![Image2](https://files.lonski.pl/amarlon/mini/amarlon2.png)](https://files.lonski.pl/amarlon/amarlon2.png)
-[![Image3](https://files.lonski.pl/amarlon/mini/insp_item.png)](https://files.lonski.pl/amarlon/insp_item.png)
-[![Image4](https://files.lonski.pl/amarlon/mini/spellbook_1.png)](https://files.lonski.pl/amarlon/spellbook_1.png)
+[![Image1](screenshots/mini/amarlon1.png)](screenshots/amarlon1.png)
+[![Image2](screenshots/mini/amarlon2.png)](screenshots/amarlon2.png)
+[![Image3](screenshots/mini/insp_item.png)](screenshots/insp_item.png)
+[![Image4](screenshots/mini/spellbook_1.png)](screenshots/spellbook_1.png)
